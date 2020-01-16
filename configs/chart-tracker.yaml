@@ -1,0 +1,8 @@
+log:
+  level: debug
+  pretty: true
+db:
+  url: postgres://postgres@localhost:5432/hub
+tracker:
+  num-workers: 50
+  repo-name: helm/stable
