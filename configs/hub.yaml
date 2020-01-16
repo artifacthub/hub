@@ -6,4 +6,4 @@ db:
 server:
   addr: localhost:8000
   shutdown-timeout: 1m
-  static-files-path: ../../web/public
+  static-files-path: ../../web/public/build
