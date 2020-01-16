@@ -34,10 +34,12 @@ func (h *handlers) setupRouter() {
 	r.PanicHandler = panicHandler
 
 	// Routes
+	// API
 	r.GET("/api/v1/search", h.search)
 	r.GET("/api/v1/package/:package_id", h.getPackage)
 	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
-	r.ServeFiles("/static/*filepath", http.Dir(h.cfg.GetString("server.static-files-path")))
+	// Static files
+	r.NotFound = http.FileServer(http.Dir(h.cfg.GetString("server.static-files-path")))
 
 	// Wrap router with access handler middleware and return it
 	h.router = accessHandler()(r)
