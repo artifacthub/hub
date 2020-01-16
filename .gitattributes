@@ -1,1 +1,2 @@
-web/public/** linguist-generated
+web/public/public/** linguist-generated
+*.sql linguist-language=SQL
