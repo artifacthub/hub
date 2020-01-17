@@ -1,0 +1,41 @@
+.md p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 {
+  border-bottom: 1px solid var(--border-md);
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 25px 0;
+}
+
+.md hr {
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--border-md);
+  border: 0;
+}
+
+.md pre {
+  background-color: var(--code-bg-md);
+  padding: 16px !important;
+  border-radius: 3px;
+}
+
+.md table {
+  display: block;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.md table th, .md table tr, .md table td {
+  border: 1px solid var(--border-md);
+  padding: 6px 13px;
+}
+
+.md table tr:nth-child(2n) {
+  background-color: var(--code-bg-md) !important;
+}

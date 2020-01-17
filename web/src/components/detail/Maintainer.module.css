@@ -1,0 +1,7 @@
+.link {
+  color: var(--color-1-800);
+}
+
+.link:hover {
+  color: inherit;
+}

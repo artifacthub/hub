@@ -1,0 +1,9 @@
+.jumbotron {
+  background-color: var(--color-1-800) !important;
+  color: var(--white);
+}
+
+.search {
+  min-width: 250px;
+  max-width: 500px;
+}

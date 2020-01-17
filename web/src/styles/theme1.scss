@@ -1,0 +1,25 @@
+$enable-rounded: false;
+
+$theme-colors: (
+  primary: #1A2A75,
+);
+
+:root {
+  --border-md: #eaecef;
+  --code-bg-md: #f6f8fa;
+
+  --color-1-50: #D5D8E5;
+  --color-1-100: #ABB1CC;
+  --color-1-200: #828AB3;
+  --color-1-300: #58649A;
+  --color-1-400: #2E3D81;
+  --color-1-500: #1A2A75;
+  --color-1-600: #18276B;
+  --color-1-700: #131F56;
+  --color-1-800: #0F1740;
+  --color-1-900: #0A102B;
+
+  --color-black-5: rgba(0, 0, 0, .05);
+}
+
+@import '~bootstrap/scss/bootstrap.scss';

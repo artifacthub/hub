@@ -1,0 +1,12 @@
+.navbar {
+  background-color: var(--color-1-800);
+  color: var(--white);
+}
+
+.sidebar {
+  width: 250px;
+}
+
+.main {
+  flex: 1;
+}
