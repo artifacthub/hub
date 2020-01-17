@@ -1,0 +1,33 @@
+.searchBar {
+  background-color: var(--white);
+  line-height: 1.5rem;
+  height: 36px;
+  border-radius: 18px;
+  padding: .375rem .75rem;
+}
+
+.searchBar:hover {
+  box-shadow: 0 0 0 0.2rem var(--color-1-800);
+}
+
+.big {
+  height: 50px;
+  border-radius: 25px;
+}
+
+.icon {
+  color: var(--color-1-700);
+}
+
+.input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+}
+
+.input:focus {
+  background-color: var(--white);
+  border: none;
+  outline: 0;
+  box-shadow: none;
+}

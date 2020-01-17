@@ -1,0 +1,13 @@
+.footer {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-1-900);
+  color: var(--white);
+}
+
+.link {
+  color: var(--white);
+}
+
+.link:hover {
+  color: inherit;
+}

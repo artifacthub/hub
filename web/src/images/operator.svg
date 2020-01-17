@@ -1,0 +1,17 @@
+<svg width="582" height="402" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <style>.cls-1{fill:#c00;}.cls-2{fill:#fff;}</style>
+ </defs>
+ <title>operator_logo_sdk_color</title>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="404" width="584" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="Page-1">
+   <path d="m67.8,22a42.5,42.5 0 1 1 -42.5,42.5a42.51,42.51 0 0 1 42.5,-42.5" class="cls-1" id="Fill-1"/>
+   <path d="m42.83,71l34.55,-44c0.77,1.52 0,2.38 -0.3,3.29c-3.14,8.61 -6.23,17.28 -9.52,25.84c-0.81,2.17 -0.46,2.68 1.82,2.68l22.24,0c0.6,0 1.41,-0.3 1.77,0.36s-0.41,1.16 -0.76,1.67l-28.32,37.49c-0.45,0.61 -0.9,1.52 -1.72,1.07s-0.3,-1.37 0,-2.13c2.18,-8 4.26,-15.91 6.53,-23.86c0.57,-1.87 0,-2.28 -1.71,-2.23l-21.13,0l-3.45,-0.18z" class="cls-2" id="Fill-5"/>
+  </g>
+ </g>
+</svg>

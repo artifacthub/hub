@@ -1,0 +1,22 @@
+.wrapper {
+  padding-top: 70px;
+}
+
+.info {
+  border: 3px solid var(--color-1-700) !important;
+}
+
+.imageWrapper {
+  top: -40px;
+  left: calc(50% - 40px);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 3px solid var(--color-1-700)
+}
+
+.image {
+  max-width: calc(100% - 8px);
+  max-height: calc(100% - 8px);
+}
