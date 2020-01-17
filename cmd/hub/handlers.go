@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"path"
 	"runtime/debug"
 	"time"
 
@@ -33,13 +34,15 @@ func (h *handlers) setupRouter() {
 	// Recover panics from http handlers
 	r.PanicHandler = panicHandler
 
-	// Routes
 	// API
 	r.GET("/api/v1/search", h.search)
 	r.GET("/api/v1/package/:package_id", h.getPackage)
 	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
+
 	// Static files
-	r.NotFound = http.FileServer(http.Dir(h.cfg.GetString("server.static-files-path")))
+	staticFilesPath := path.Join(h.cfg.GetString("server.web-build-path"), "static")
+	r.ServeFiles("/static/*filepath", http.Dir(staticFilesPath))
+	r.NotFound = h.serveFile("index.html")
 
 	// Wrap router with access handler middleware and return it
 	h.router = accessHandler()(r)
@@ -79,6 +82,12 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 		http.Error(w, "", http.StatusInternalServerError)
 	}
 	renderJSON(w, jsonData)
+}
+
+func (h *handlers) serveFile(name string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.web-build-path"), name))
+	})
 }
 
 func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
