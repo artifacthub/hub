@@ -41,13 +41,13 @@ create table if not exists package (
     logo_url text check (logo_url <> ''),
     keywords text[],
     latest_version text not null check (latest_version <> ''),
-    last_updated timestamptz default current_timestamp not null,
     tsdoc tsvector generated always as (
         generate_package_tsdoc(name, display_name, description, keywords)
     ) stored,
     package_kind_id integer not null references package_kind on delete restrict,
     chart_repository_id uuid references chart_repository on delete restrict,
-    check (package_kind_id <> 0 or chart_repository_id is not null)
+    check (package_kind_id <> 0 or chart_repository_id is not null),
+    unique (chart_repository_id, name)
 );
 
 create index package_tsdoc_idx on package using gin (tsdoc);
@@ -58,9 +58,9 @@ create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,
     version text not null check (version <> ''),
     app_version text check (app_version <> ''),
+    digest text not null check (digest <> ''),
     readme text check (readme <> ''),
     links jsonb,
-    released_on timestamptz default current_timestamp not null,
     primary key (package_id, version)
 );
 
