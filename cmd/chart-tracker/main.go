@@ -27,7 +27,7 @@ func main() {
 	}
 
 	// Shutdown gracefully when SIGINT or SIGTERM signal is received
-	log.Info().Msg("Chart tracker started")
+	log.Info().Int("pid", os.Getpid()).Msg("Chart tracker started")
 	ctx, cancel := context.WithCancel(context.Background())
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
@@ -43,21 +43,21 @@ func main() {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
 	hubApi := hub.New(db)
-	repo, err := hubApi.GetChartRepositoryByName(ctx, cfg.GetString("tracker.repo-name"))
+	cr, err := hubApi.GetChartRepositoryByName(ctx, cfg.GetString("tracker.repo-name"))
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error getting chart repository")
 	}
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	dispatcher, err := newDispatcher(repo.URL)
+	dispatcher, err := newDispatcher(ctx, hubApi, cr)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Dispatcher creation failed")
 	}
 	wg.Add(1)
 	go dispatcher.run(ctx, &wg)
 	for i := 0; i < cfg.GetInt("tracker.num-workers"); i++ {
-		w := newWorker(ctx, i, hubApi, repo)
+		w := newWorker(ctx, i, hubApi, cr)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}

@@ -29,6 +29,12 @@ func (h *Hub) GetChartRepositories(ctx context.Context) ([]*ChartRepository, err
 	return r, err
 }
 
+func (h *Hub) GetChartRepositoryPackagesDigest(ctx context.Context, chart_repository_id string) (map[string]string, error) {
+	pd := make(map[string]string)
+	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1)", chart_repository_id)
+	return pd, err
+}
+
 func (h *Hub) SearchPackages(ctx context.Context, query *Query) ([]byte, error) {
 	queryJSON, err := json.Marshal(query)
 	if err != nil {

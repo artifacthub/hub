@@ -79,6 +79,7 @@ func (w *worker) processChartVersion(chartVersion *repo.ChartVersion) error {
 		Keywords:        md.Keywords,
 		Version:         md.Version,
 		AppVersion:      md.AppVersion,
+		Digest:          chartVersion.Digest,
 		ChartRepository: w.repo,
 	}
 	readme := getFile(chart, "README.md")

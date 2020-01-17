@@ -17,7 +17,7 @@ func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {
 	if err != nil {
 		return nil, err
 	}
-	poolConfig.MaxConns = 10
+	poolConfig.MaxConns = 50
 	poolConfig.MaxConnLifetime = 30 * time.Minute
 	poolConfig.HealthCheckPeriod = 30 * time.Second
 	poolConfig.ConnConfig.Logger = zerologadapter.NewLogger(log.Logger)

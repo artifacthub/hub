@@ -49,7 +49,7 @@ type Package struct {
 	Version           string            `json:"version"`
 	AvailableVersions []string          `json:"available_versions"`
 	AppVersion        string            `json:"app_version"`
-	LastUpdated       int64             `json:"last_updated"`
+	Digest            string            `json:"digest"`
 	Maintainers       []*Maintainer     `json:"maintainers"`
 	ChartRepository   *ChartRepository  `json:"chart_repository"`
 	OperatorProvider  *OperatorProvider `json:"operator_provider"`
