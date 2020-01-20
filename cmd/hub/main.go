@@ -52,7 +52,7 @@ func main() {
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 	<-shutdown
 	log.Info().Msg("Hub server shutting down..")
-	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetDuration("server.shutdown-timeout"))
+	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetDuration("server.shutdownTimeout"))
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal().Err(err).Msg("Hub server shutdown failed")

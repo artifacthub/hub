@@ -20,7 +20,7 @@ func main() {
 	}
 	fields := map[string]interface{}{
 		"cmd":  "chart-tracker",
-		"repo": cfg.GetString("tracker.repo-name"),
+		"repo": cfg.GetString("tracker.repoName"),
 	}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("Logger setup failed")
@@ -43,7 +43,7 @@ func main() {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
 	hubApi := hub.New(db)
-	cr, err := hubApi.GetChartRepositoryByName(ctx, cfg.GetString("tracker.repo-name"))
+	cr, err := hubApi.GetChartRepositoryByName(ctx, cfg.GetString("tracker.repoName"))
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error getting chart repository")
 	}
@@ -56,7 +56,7 @@ func main() {
 	}
 	wg.Add(1)
 	go dispatcher.run(ctx, &wg)
-	for i := 0; i < cfg.GetInt("tracker.num-workers"); i++ {
+	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
 		w := newWorker(ctx, i, hubApi, cr)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)

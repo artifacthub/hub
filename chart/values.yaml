@@ -1,0 +1,24 @@
+nameOverride: ""
+fullnameOverride: ""
+imagePullSecrets: []
+pullPolicy: IfNotPresent
+
+db:
+  url: postgres://postgres@192.168.64.1:5432/hub
+
+log:
+  level: info
+  pretty: false
+
+hub:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+  service:
+    type: ClusterIP
+    port: 80
+  deploy:
+    replicaCount: 1
+    image:
+      repository: tegioz/hub

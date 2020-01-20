@@ -14,7 +14,6 @@ func SetupConfig(cmd string) (*viper.Viper, error) {
 	// Config file
 	cfg.SetConfigName(cmd)
 	cfg.AddConfigPath("$HOME/.cfg")
-	cfg.AddConfigPath("../../configs")
 	if err := cfg.ReadInConfig(); err != nil {
 		log.Fatal().Err(err)
 	}
