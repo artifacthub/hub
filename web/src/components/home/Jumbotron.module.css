@@ -1,9 +1,22 @@
 .jumbotron {
-  background-color: var(--color-1-800) !important;
+  border-radius: 0 !important;
+  background-color: var(--color-1-900) !important;
+  background: linear-gradient(130deg, var(--color-1-500) 0%, var(--color-1-700) 100%);
   color: var(--white);
+  padding-top: 7rem !important;
 }
 
 .search {
   min-width: 250px;
   max-width: 500px;
+}
+
+.separator {
+  background-color: var(--color-1-900);
+  width: 3px;
+  height: 30px;
+}
+
+.counterWrapper {
+  width: 100px;
 }

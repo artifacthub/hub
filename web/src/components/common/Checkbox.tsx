@@ -25,6 +25,7 @@ const CheckBox = (props: Props) => {
         id={props.name}
         onChange={handleOnChange}
         checked={props.checked}
+        disabled
       />
       <label className="custom-control-label" htmlFor={props.name}>{props.label}</label>
     </div>

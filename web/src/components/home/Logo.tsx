@@ -3,12 +3,12 @@ import logo from '../../images/cncf.svg';
 import styles from './Logo.module.css';
 
 const Logo = () => (
-  <div className="mt-auto text-center mb-5">
+  <div className="mt-auto text-center mb-5 pt-4 pt-2">
     <img className={styles.logo} src={logo} alt="Logo CNCF" />
 
-    <div className="pt-3">
+    <h5 className="pt-4">
       Hub is a <a href="https://www.cncf.io/" className={`font-weight-bold ${styles.link}`}>Cloud Native Computing Foundation</a> sandbox project.
-    </div>
+    </h5>
   </div>
 );
 

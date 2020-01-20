@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto+Mono|Archivo+Black);
+
+$font-family-sans-serif: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-monospace:  'Roboto Mono', 'Liberation Mono', 'Courier New', monospace !default;
+
+$theme-colors: (
+  primary: #659DBD,
+  secondary: #39596C,
+);
+
+$body-bg: #f4f4f4;
+$body-color: #38383f;
+
+:root {
+  --border-md: #eaecef;
+  --code-bg-md: #f6f8fa;
+
+  --color-1-100: #F1F6FA;
+  --color-1-500: #659DBD;
+  --color-1-700: #39596C;
+  --color-1-900: #1C2C35;
+
+  --color-1-2: rgba(28, 44, 53, .02);
+  --color-1-5: rgba(28, 44, 53, .05);
+  --color-1-10: rgba(28, 44, 53, .10);
+  --color-1-20: rgba(28, 44, 53, .20);
+
+  --color-2-500: #B0CEE0;
+
+  --color-2-10: rgba(176, 206, 224, .10);
+
+  --color-black-5: rgba(0, 0, 0, .05);
+  --color-black-15: rgba(0, 0, 0, .15);
+  --color-black-25: rgba(0, 0, 0, .25);
+
+  --logo-font: 'Archivo Black', cursive;
+
+  --color-font: $body-color;
+  --body-bg: $body-bg;
+}
+
+@import '~bootstrap/scss/bootstrap.scss';

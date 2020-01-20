@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import isNull from 'lodash/isNull';
-import { FaBoxes } from 'react-icons/fa';
 import { Package, PackageKind } from '../../types';
 import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
@@ -17,41 +16,49 @@ const PACKAGE_KIND = {
 };
 
 const Card = (props: Props) => (
-  <div className="col-sm-12 col-lg-6 col-xl-4 p-2">
+  <div className="col-12 pt-3 pb-3">
     <div className={`card h-100 ${styles.card}`}>
-      <Link className={`text-decoration-none ${styles.link}`} to={`/detail/${props.package.package_id}`}>
-        <div className={`d-flex align-items-end justify-content-between p-2 border-bottom text-uppercase ${styles.topHeader}`}>
-          {(() => {
-            switch (props.package.kind) {
-              case PackageKind.Chart:
-                return (
-                  <div className="d-flex align-items-center">
-                    <FaBoxes className="mr-2" />
-                    {props.package.chart_repository.display_name || props.package.chart_repository.name}
-                  </div>
-                );
-              default:
-                return null;
-            }
-          })()}
+      <Link className={`text-decoration-none ${styles.link}`} to={`/package/${props.package.package_id}`}>
+        <div className={`card-body ${styles.body}`}>
+          <div className="d-flex align-items-start justify-content-between mb-3">
+            <div className="d-flex align-items-center">
+              <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
+                <Image src={props.package.logo_url} alt={`Logo ${props.package.display_name}`} className={styles.image} />
+              </div>
 
-          <div className="d-flex align-items-center">
-            {PACKAGE_KIND[props.package.kind]}
-            <PackageIcon className={`ml-2 ${styles.icon}`} kind={props.package.kind} />
-          </div>
-        </div>
+              <div className="ml-3 flex-grow-1">
+                <div className={`card-title font-weight-bolder mb-2 ${styles.title}`}>
+                  <h5>{isNull(props.package.display_name) ? props.package.name : props.package.display_name}</h5>
+                </div>
 
-        <div className="card-body">
-          <div className="d-flex align-items-center mb-3">
-            <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
-              <Image src={props.package.logo_url} alt={`Logo ${props.package.display_name}`} className={styles.image} />
+                <div className={`card-subtitle d-flex flex-wrap align-items-center mt-1 ${styles.subtitle}`}>
+                  {(() => {
+                    switch (props.package.kind) {
+                      case PackageKind.Chart:
+                        return (
+                          <>
+                            <div className="mr-2 text-nowrap">
+                              <span className="text-muted text-uppercase mr-1">Repository: </span>
+                              {props.package.chart_repository.display_name || props.package.chart_repository.name}
+                            </div>
+
+                            <div className="text-nowrap">
+                              <span className="text-muted text-uppercase mr-1">Version: </span>
+                              {props.package.latest_version}
+                            </div>
+                          </>
+                        );
+                      default:
+                        return null;
+                    }
+                  })()}
+                </div>
+              </div>
             </div>
 
-            <div className={`ml-3 ${styles.header}`}>
-              <div className={`card-title font-weight-bolder mb-2 ${styles.title}`}>
-                {isNull(props.package.display_name) ? props.package.name : props.package.display_name}
-              </div>
-              <div className={`card-subtitle text-muted ${styles.subtitle}`}>{props.package.latest_version}</div>
+            <div className={`d-flex align-items-center text-uppercase ${styles.kind}`}>
+              <PackageIcon className={`mr-2 ${styles.icon}`} kind={props.package.kind} />
+              {PACKAGE_KIND[props.package.kind]}
             </div>
           </div>
 

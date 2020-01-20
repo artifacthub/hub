@@ -1,0 +1,16 @@
+.tooltip {
+  bottom: -40px;
+  right: 0;
+}
+
+.tooltipArrow {
+  right: 10px;
+}
+
+.tooltipArrow::before {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+.tooltipContent {
+  background-color: var(--color-1-900) !important;
+}

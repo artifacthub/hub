@@ -1,0 +1,10 @@
+.tabs {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+.active {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-color: var(--color-1-900) !important;
+  border-bottom: 0 !important;
+}

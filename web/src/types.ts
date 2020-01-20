@@ -6,10 +6,11 @@ export enum PackageKind {
 export interface ChartRepository {
   name: string;
   display_name: string;
+  url: string;
 }
 
 export interface MaintainerInfo {
-  name: string;
+  name?: string;
   email: string;
 }
 
@@ -40,9 +41,15 @@ export interface SearchQuery {
   text?: string;
   activeKeywords: string[];
   activePackageKinds: string[];
+  activeRepositories: string[];
 }
 
 export interface SearchParams extends SearchQuery {
   keywords: string[];
   packageKinds: string[];
+}
+
+export interface Stats {
+  packages: number;
+  releases: number;
 }

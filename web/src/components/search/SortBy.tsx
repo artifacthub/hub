@@ -31,7 +31,7 @@ const SortBy = (props: Props) => {
 
   return (
     <div className="dropdown">
-      <button className={`btn btn-sm text-uppercase dropdown-toggle ${styles.button}`} type="button" onClick={() => setOpenStatus(!openStatus)}>
+      <button className={`btn btn-sm pr-0 text-uppercase dropdown-toggle ${styles.button}`} type="button" onClick={() => setOpenStatus(!openStatus)}>
         Sort by
       </button>
 

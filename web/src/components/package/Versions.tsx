@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import compareVersions from 'compare-versions';
 import { GoCheck } from 'react-icons/go';
 import ExpandableList from '../common/ExpandableList';
 import styles from './Versions.module.css';
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const Versions = (props: Props) => {
-  const allVersions = props.available_versions.map((av_version: string) => (
+  const sortedVersions = props.available_versions.sort(compareVersions).reverse();
+  const allVersions = sortedVersions.map((av_version: string) => (
     <div key={av_version}>
       {av_version === props.version ? (
         <div className="d-flex align-items-center">
@@ -21,7 +23,7 @@ const Versions = (props: Props) => {
       ) : (
         <Link
           className={`ml-1 ${styles.link}`}
-          to={`/detail/${props.package_id}/${av_version}`}
+          to={`/package/${props.package_id}/${av_version}`}
         >
           {av_version}
         </Link>

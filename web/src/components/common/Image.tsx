@@ -14,7 +14,7 @@ const Image = (props: Props) => {
   return (
     <img
       alt={props.alt}
-      src={error || isNull(props.src) ? placeholder : props.src}
+      src={error || isNull(props.src) ? placeholder : `${props.src}?raw=true`}
       className={props.className}
       onError={() => setError(true)}
     />
