@@ -40,7 +40,7 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
 
 	// Static files
-	staticFilesPath := path.Join(h.cfg.GetString("server.web-build-path"), "static")
+	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
 	r.ServeFiles("/static/*filepath", http.Dir(staticFilesPath))
 	r.NotFound = h.serveFile("index.html")
 
@@ -86,7 +86,7 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 
 func (h *handlers) serveFile(name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.web-build-path"), name))
+		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), name))
 	})
 }
 

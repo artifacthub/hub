@@ -1,0 +1,21 @@
+{{- if .Values.hub.ingress.enabled -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: hub
+  labels:
+    app.kubernetes.io/component: hub
+    {{- include "chart.labels" . | nindent 4 }}
+  {{- with .Values.hub.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  backend:
+    serviceName: hub
+    servicePort: {{ .Values.hub.service.port }}
+{{- end }}

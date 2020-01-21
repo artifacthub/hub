@@ -5,5 +5,5 @@ db:
   url: postgres://postgres@localhost:5432/hub
 server:
   addr: localhost:8000
-  shutdown-timeout: 1m
-  web-build-path: ../../web/build
+  shutdownTimeout: 1m
+  webBuildPath: ../../web/build

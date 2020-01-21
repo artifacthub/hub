@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hub
+  labels:
+    app.kubernetes.io/component: hub
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.hub.deploy.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: hub
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: hub
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: hub
+          image: "{{ .Values.hub.deploy.image.repository }}"
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          volumeMounts:
+          - name: hub-config
+            mountPath: "/home/hub/.cfg"
+            readOnly: true
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+      volumes:
+      - name: hub-config
+        secret:
+          secretName: hub-config
