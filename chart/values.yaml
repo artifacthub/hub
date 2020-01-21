@@ -22,3 +22,8 @@ hub:
     replicaCount: 1
     image:
       repository: tegioz/hub
+  server:
+    basicAuth:
+      enabled: true
+      username: hub
+      password: changeme

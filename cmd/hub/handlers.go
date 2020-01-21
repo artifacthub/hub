@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/subtle"
 	"net/http"
 	"path"
 	"runtime/debug"
@@ -44,8 +45,11 @@ func (h *handlers) setupRouter() {
 	r.ServeFiles("/static/*filepath", http.Dir(staticFilesPath))
 	r.NotFound = h.serveFile("index.html")
 
-	// Wrap router with access handler middleware and return it
+	// Apply middleware
 	h.router = accessHandler()(r)
+	if h.cfg.GetBool("server.basicAuth.enabled") {
+		h.router = h.basicAuth(h.router)
+	}
 }
 
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -87,6 +91,23 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 func (h *handlers) serveFile(name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), name))
+	})
+}
+
+func (h *handlers) basicAuth(next http.Handler) http.Handler {
+	username := h.cfg.GetString("server.basicAuth.username")
+	password := h.cfg.GetString("server.basicAuth.password")
+	realm := "Hub"
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user, pass, ok := r.BasicAuth()
+		if !ok || subtle.ConstantTimeCompare([]byte(user), []byte(username)) != 1 || subtle.ConstantTimeCompare([]byte(pass), []byte(password)) != 1 {
+			w.Header().Set("WWW-Authenticate", "Basic realm="+realm+`"`)
+			w.WriteHeader(401)
+			_, _ = w.Write([]byte("Unauthorized\n"))
+			return
+		}
+		next.ServeHTTP(w, r)
 	})
 }
 

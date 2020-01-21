@@ -7,3 +7,7 @@ server:
   addr: localhost:8000
   shutdownTimeout: 1m
   webBuildPath: ../../web/build
+  basicAuth:
+    enabled: true
+    username: hub
+    password: changeme
