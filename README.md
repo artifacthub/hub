@@ -1,3 +1,3 @@
 # Hub
 
-Discover & launch great Kubernetes-ready apps
+Find, install and publish Kubernetes packages.
