@@ -3,7 +3,6 @@ package util
 import (
 	"strings"
 
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
 
@@ -15,7 +14,7 @@ func SetupConfig(cmd string) (*viper.Viper, error) {
 	cfg.SetConfigName(cmd)
 	cfg.AddConfigPath("$HOME/.cfg")
 	if err := cfg.ReadInConfig(); err != nil {
-		log.Fatal().Err(err)
+		return nil, err
 	}
 
 	// Environment variables
