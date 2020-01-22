@@ -35,6 +35,10 @@ func (h *Hub) GetChartRepositoryPackagesDigest(ctx context.Context, chart_reposi
 	return pd, err
 }
 
+func (h *Hub) GetStatsJSON(ctx context.Context) ([]byte, error) {
+	return h.dbQueryJSON(ctx, "select get_stats()")
+}
+
 func (h *Hub) SearchPackages(ctx context.Context, query *Query) ([]byte, error) {
 	queryJSON, err := json.Marshal(query)
 	if err != nil {

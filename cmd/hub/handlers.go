@@ -36,6 +36,7 @@ func (h *handlers) setupRouter() {
 	r.PanicHandler = panicHandler
 
 	// API
+	r.GET("/api/v1/stats", h.getStats)
 	r.GET("/api/v1/search", h.search)
 	r.GET("/api/v1/package/:package_id", h.getPackage)
 	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
@@ -50,6 +51,15 @@ func (h *handlers) setupRouter() {
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		h.router = h.basicAuth(h.router)
 	}
+}
+
+func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	jsonData, err := h.hubApi.GetStatsJSON(r.Context())
+	if err != nil {
+		log.Error().Err(err).Msg("getStats failed")
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+	renderJSON(w, jsonData)
 }
 
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

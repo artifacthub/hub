@@ -171,6 +171,42 @@ end
 $$ language plpgsql;
 
 
+create or replace function get_stats()
+returns setof json as $$
+    select json_build_object(
+        'packages', (select count(*) from package),
+        'releases', (select count(*) from snapshot)
+    );
+$$ language sql;
+
+
+create or replace function search_packages(p_query jsonb)
+returns setof json as $$
+    select json_build_object(
+        'packages', (
+            select coalesce(json_agg(json_build_object(
+                'package_id', p.package_id,
+                'kind', p.package_kind_id,
+                'name', p.name,
+                'display_name', p.display_name,
+                'description', p.description,
+                'logo_url', p.logo_url,
+                'latest_version', p.latest_version,
+                'chart_repository', (
+                    select json_build_object(
+                        'name', r.name,
+                        'display_name', r.display_name
+                    )
+                )
+            )), '[]')
+            from package p
+            join chart_repository r using (chart_repository_id)
+            where to_tsquery(p_query->>'text') @@ p.tsdoc
+        )
+    );
+$$ language sql;
+
+
 create or replace function get_package_version(p_package_id uuid, p_version text)
 returns setof json as $$
     select json_build_object(
@@ -222,31 +258,4 @@ returns setof json as $$
     select get_package_version(p_package_id, p.latest_version)
     from package p
     where p.package_id = p_package_id;
-$$ language sql;
-
-
-create or replace function search_packages(p_query jsonb)
-returns setof json as $$
-    select json_build_object(
-        'packages', (
-            select coalesce(json_agg(json_build_object(
-                'package_id', p.package_id,
-                'kind', p.package_kind_id,
-                'name', p.name,
-                'display_name', p.display_name,
-                'description', p.description,
-                'logo_url', p.logo_url,
-                'latest_version', p.latest_version,
-                'chart_repository', (
-                    select json_build_object(
-                        'name', r.name,
-                        'display_name', r.display_name
-                    )
-                )
-            )), '[]')
-            from package p
-            join chart_repository r using (chart_repository_id)
-            where to_tsquery(p_query->>'text') @@ p.tsdoc
-        )
-    );
 $$ language sql;
