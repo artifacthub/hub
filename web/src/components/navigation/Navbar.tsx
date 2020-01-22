@@ -1,42 +1,50 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiPackage } from 'react-icons/fi';
+import { FiHexagon } from 'react-icons/fi';
+import classnames from 'classnames';
 import SearchBar from '../common/SearchBar';
 import Login from './Login';
 import styles from './Navbar.module.css';
-
-interface Props {
-  location: {
-    pathname: string;
-  };
-}
 
 const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="navbar navbar-top navbar-expand-md navbar-dark bg-primary">
-      <div className="container-fluid">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-          <FiPackage className="mr-2" /> CNCF Hub
+    <nav className={classnames(
+      'navbar navbar-top navbar-expand-sm navbar-dark',
+      styles.navbar,
+      {[styles.homeNavbar]: location.pathname === '/'}
+    )}>
+      <div className="container">
+        <Link className={`navbar-brand d-flex align-items-center ${styles.brand}`} to="/">
+          <FiHexagon className="mr-2" />
+          HUB
         </Link>
 
-        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto ${styles.search}`} />}
+        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto w-100 flex-grow-1 ${styles.search}`} />}
 
         <div className="collapse navbar-collapse" id="navbarNav">
           {/* TODO - login */}
           <ul className="navbar-nav align-items-center ml-auto">
-            <li className="nav-item">
+            <li className="nav-item position-relative ml-4">
+              <button
+                type="button"
+                className={classnames(
+                  'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                  styles.button,
+                )}
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                onClick={() => console.log('TO DO')}
+              >
+                Sign up
+              </button>
+            </li>
+
+            <li className="nav-item ml-4 position-relative">
               <Login />
             </li>
           </ul>
         </div>
-
-        {/* <div className=" ml-2 d-md-none">
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-        </div> */}
       </div>
     </nav>
   );

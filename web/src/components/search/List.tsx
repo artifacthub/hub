@@ -12,7 +12,7 @@ const List = (props: Props) => {
   const sortedPackages = orderBy(props.packages, ['name'], [props.sortBy]);
 
   return (
-    <div className="row no-gutters m-2">
+    <div className="row no-gutters mb-2">
       {sortedPackages.map((packageItem: Package) => <Card key={packageItem.package_id} package={packageItem} />)}
     </div>
   );

@@ -1,13 +1,10 @@
 .footer {
-  padding: 0.5rem 1rem;
+  padding: 1.5rem;
   background-color: var(--color-1-900);
   color: var(--white);
 }
 
-.link {
-  color: var(--white);
-}
-
-.link:hover {
-  color: inherit;
+.brand {
+  font-family: var(--logo-font);
+  font-size: 2rem;
 }

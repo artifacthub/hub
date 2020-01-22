@@ -19,9 +19,11 @@
     "@types/react-syntax-highlighter": "^11.0.4",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
+    "compare-versions": "^3.5.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
+    "react-countup": "^4.3.2",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
     "react-markdown": "^4.3.1",
@@ -31,7 +33,7 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_API_ENDPOINT=http://localhost:8000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

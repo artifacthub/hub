@@ -42,9 +42,9 @@ const SearchBar = (props: Props) => {
         <FiSearch className={`ml-1 mr-3 d-none d-sm-block ${styles.icon}`} />
 
         <input
-          className={styles.input}
+          className={`flex-grow-1 ${styles.input}`}
           type="text"
-          placeholder="Search..."
+          placeholder="Search packages"
           aria-label="Search"
           value={value}
           onChange={onChange}

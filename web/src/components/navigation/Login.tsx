@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
-import { TiUser } from 'react-icons/ti';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import styles from './Login.module.css';
 
 const Login = () => {
   const [openStatus, setOpenStatus] = useState(false);
@@ -12,25 +12,32 @@ const Login = () => {
     <>
       <button
         type="button"
-        className="btn btn-outline-light btn-sm rounded-pill d-flex align-items-center text-uppercase"
+        className={classnames(
+          'btn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
+          styles.button,
+          {[styles.active]: openStatus},
+        )}
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         onClick={() => setOpenStatus(true)}
       >
-        <TiUser className="mr-2" />
-        Login
+        Log in
       </button>
 
       <form ref={ref} className={classnames(
         'dropdown-menu dropdown-menu-right p-4',
+        styles.dropdown,
         {'show': openStatus},
       )}>
         <div className="form-group">
           <label htmlFor="email">Email address</label>
           <input type="email" className="form-control" id="email" placeholder="email@example.com" />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input type="password" className="form-control" id="password" placeholder="Password" />
         </div>
+
         <div className="form-group">
           <div className="form-check">
             <input type="checkbox" className="form-check-input" id="rememberMe" />
@@ -39,7 +46,10 @@ const Login = () => {
             </label>
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">Sign in</button>
+
+        <div className="text-right">
+          <button type="submit" className="btn btn-secondary">Log in</button>
+        </div>
       </form>
     </>
   );

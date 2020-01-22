@@ -1,0 +1,7 @@
+.link {
+  color: var(--color-font) !important;
+}
+
+.link:hover {
+  color: inherit;
+}

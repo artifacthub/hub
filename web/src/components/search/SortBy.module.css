@@ -1,7 +1,3 @@
-.button {
-  color: var(--white) !important;
-}
-
 .button:focus {
   box-shadow: none !important;
 }

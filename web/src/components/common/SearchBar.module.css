@@ -4,10 +4,11 @@
   height: 36px;
   border-radius: 18px;
   padding: .375rem .75rem;
+  box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
-.searchBar:hover {
-  box-shadow: 0 0 0 0.2rem var(--color-1-800);
+.searchBar:not(.big):hover {
+  box-shadow: 0 0 0 0.3rem var(--color-black-25);
 }
 
 .big {
@@ -20,7 +21,6 @@
 }
 
 .input {
-  flex: 1;
   background-color: transparent;
   border: none;
 }

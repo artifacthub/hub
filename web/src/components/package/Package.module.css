@@ -1,0 +1,13 @@
+.readme {
+  flex: 0 0 calc(100% - 300px);
+  max-width: calc(100% - 300px);
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .readme {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
