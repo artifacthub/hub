@@ -7,10 +7,7 @@ create table if not exists chart_repository (
     url text not null check (url <> '') unique
 );
 
-insert into chart_repository (name, display_name, url)
-values ('helm/stable', 'Helm Stable', 'https://kubernetes-charts.storage.googleapis.com/');
-insert into chart_repository (name, display_name, url)
-values ('helm/incubator', 'Helm Incubator', 'https://kubernetes-charts-incubator.storage.googleapis.com/');
+{{ template "data/charts-repos.sql" }}
 
 create table if not exists package_kind (
     package_kind_id integer primary key,
@@ -66,7 +63,7 @@ create table if not exists snapshot (
 
 create table if not exists maintainer (
     maintainer_id uuid primary key default uuid_generate_v4(),
-    name text not null check (name <> ''),
+    name text not null,
     email text not null check (email <> '') unique
 );
 

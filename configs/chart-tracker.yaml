@@ -4,5 +4,5 @@ log:
 db:
   url: postgres://postgres@localhost:5432/hub
 tracker:
-  numWorkers: 100
-  repoName: helm/stable
+  numWorkers: 50
+  repositoriesNames: []

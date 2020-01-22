@@ -19,8 +19,7 @@ func main() {
 		log.Fatal().Err(err).Msg("Configuration setup failed")
 	}
 	fields := map[string]interface{}{
-		"cmd":  "chart-tracker",
-		"repo": cfg.GetString("tracker.repoName"),
+		"cmd": "chart-tracker",
 	}
 	if err := util.SetupLogger(cfg, fields); err != nil {
 		log.Fatal().Err(err).Msg("Logger setup failed")
@@ -37,27 +36,20 @@ func main() {
 		log.Info().Msg("Chart tracker shutting down..")
 	}()
 
-	// Get chart repository details from database
+	// Setup database and hub api
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
 	hubApi := hub.New(db)
-	cr, err := hubApi.GetChartRepositoryByName(ctx, cfg.GetString("tracker.repoName"))
-	if err != nil {
-		log.Fatal().Err(err).Msg("Error getting chart repository")
-	}
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	dispatcher, err := newDispatcher(ctx, hubApi, cr)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Dispatcher creation failed")
-	}
+	dispatcher := newDispatcher(ctx, hubApi)
 	wg.Add(1)
-	go dispatcher.run(ctx, &wg)
+	go dispatcher.run(&wg, cfg.GetStringSlice("tracker.repositoriesNames"))
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := newWorker(ctx, i, hubApi, cr)
+		w := newWorker(ctx, i, hubApi)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}
