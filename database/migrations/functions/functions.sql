@@ -204,7 +204,8 @@ returns setof json as $$
         'chart_repository', (
             select json_build_object(
                 'name', r.name,
-                'display_name', r.display_name
+                'display_name', r.display_name,
+                'url', r.url
             )
         )
     )
