@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"strings"
 	"sync"
 
 	"github.com/rs/zerolog"
@@ -10,45 +11,45 @@ import (
 	"github.com/tegioz/hub/internal/hub"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/repo"
 )
 
 type worker struct {
 	ctx    context.Context
 	id     int
 	hubApi *hub.Hub
-	repo   *hub.ChartRepository
 	logger zerolog.Logger
 }
 
-func newWorker(ctx context.Context, id int, hubApi *hub.Hub, repo *hub.ChartRepository) *worker {
+func newWorker(ctx context.Context, id int, hubApi *hub.Hub) *worker {
 	return &worker{
 		ctx:    ctx,
 		id:     id,
 		hubApi: hubApi,
-		repo:   repo,
 		logger: log.With().Int("worker", id).Logger(),
 	}
 }
 
-func (w *worker) run(wg *sync.WaitGroup, queue chan *repo.ChartVersion) {
+func (w *worker) run(wg *sync.WaitGroup, queue chan *job) {
 	defer wg.Done()
 	for {
 		select {
-		case chartVersion, ok := <-queue:
+		case j, ok := <-queue:
 			if !ok {
 				return
 			}
+			md := j.chartVersion.Metadata
 			log.Debug().
-				Str("chart", chartVersion.Metadata.Name).
-				Str("version", chartVersion.Metadata.Version).
-				Msg("Processing chart version")
-			if err := w.processChartVersion(chartVersion); err != nil {
+				Str("repo", j.repo.Name).
+				Str("chart", md.Name).
+				Str("version", md.Version).
+				Msg("Handling job")
+			if err := w.handleJob(j); err != nil {
 				w.logger.Error().
 					Err(err).
-					Str("chart", chartVersion.Metadata.Name).
-					Str("version", chartVersion.Metadata.Version).
-					Msg("Error processing chart version")
+					Str("repo", j.repo.Name).
+					Str("chart", md.Name).
+					Str("version", md.Version).
+					Msg("Error handling job")
 			}
 		case <-w.ctx.Done():
 			return
@@ -56,13 +57,23 @@ func (w *worker) run(wg *sync.WaitGroup, queue chan *repo.ChartVersion) {
 	}
 }
 
-func (w *worker) processChartVersion(chartVersion *repo.ChartVersion) error {
+func (w *worker) handleJob(j *job) error {
 	// Load chart from remote archive in memory
-	resp, err := http.Get(chartVersion.URLs[0])
+	url := j.chartVersion.URLs[0]
+	if !strings.HasPrefix(url, "http") {
+		url = j.repo.URL + url
+	}
+	resp, err := http.Get(url)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode >= 400 {
+		if resp.StatusCode != http.StatusNotFound {
+			log.Error().Str("url", url).Int("code", resp.StatusCode).Send()
+		}
+		return nil
+	}
 	chart, err := loader.LoadArchive(resp.Body)
 	if err != nil {
 		return err
@@ -79,8 +90,8 @@ func (w *worker) processChartVersion(chartVersion *repo.ChartVersion) error {
 		Keywords:        md.Keywords,
 		Version:         md.Version,
 		AppVersion:      md.AppVersion,
-		Digest:          chartVersion.Digest,
-		ChartRepository: w.repo,
+		Digest:          j.chartVersion.Digest,
+		ChartRepository: j.repo,
 	}
 	readme := getFile(chart, "README.md")
 	if readme != nil {
