@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../images/cncf.svg';
+import ExternalLink from '../common/ExternalLink';
 import styles from './Logo.module.css';
 
 const Logo = () => (
@@ -7,7 +8,7 @@ const Logo = () => (
     <img className={styles.logo} src={logo} alt="Logo CNCF" />
 
     <h5 className="pt-4">
-      Hub is a <a href="https://www.cncf.io/" className={`font-weight-bold ${styles.link}`}>Cloud Native Computing Foundation</a> sandbox project.
+      Hub is a <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">Cloud Native Computing Foundation</ExternalLink> sandbox project.
     </h5>
   </div>
 );

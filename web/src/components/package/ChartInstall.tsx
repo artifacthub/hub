@@ -3,10 +3,11 @@ import classnames from 'classnames';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { ChartRepository } from '../../types';
-import styles from './ChartInstall.module.css';
 import NoData from '../common/NoData';
 import InfoTitle from './InfoTitle';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import ExternalLink from '../common/ExternalLink';
+import styles from './ChartInstall.module.css';
 
 interface Props {
   name: string;
@@ -85,9 +86,9 @@ const ChartInstall = (props: Props) => {
                   </SyntaxHighlighter>
 
                   <div className="mt-2">
-                    <a href="https://helm.sh/docs/intro/quickstart/" target="_blank" rel="noopener noreferrer" className="btn btn-link pl-0">
+                    <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
                       Need Helm?
-                    </a>
+                    </ExternalLink>
                   </div>
                 </div>
               );
