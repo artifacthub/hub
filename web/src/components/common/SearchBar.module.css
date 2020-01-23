@@ -3,7 +3,6 @@
   line-height: 1.5rem;
   height: 36px;
   border-radius: 18px;
-  padding: .375rem .75rem;
   box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
@@ -16,13 +15,15 @@
   border-radius: 25px;
 }
 
-.icon {
+.iconWrapper {
   color: var(--color-1-700);
+  padding: .375rem .75rem;
 }
 
 .input {
   background-color: transparent;
   border: none;
+  padding: .375rem 0;
 }
 
 .input:focus {
@@ -30,4 +31,8 @@
   border: none;
   outline: 0;
   box-shadow: none;
+}
+
+.inputClean {
+  padding-right: .75rem !important;
 }
