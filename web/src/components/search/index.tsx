@@ -19,8 +19,8 @@ const Search = () => {
   const { packages, isLoading } = usePackageSearch(searchText);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
-  }
+    // TODO change
+  };
 
   return (
     <>

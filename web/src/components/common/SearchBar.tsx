@@ -24,6 +24,13 @@ const SearchBar = (props: Props) => {
 
   const cleanSearch = (): void => {
     setValue('');
+    forceFocus();
+  };
+
+  const forceFocus = (): void => {
+    if (!isNull(inputEl) && !isNull(inputEl.current)) {
+      inputEl.current.focus();
+    }
   };
 
   useEffect(() => {
@@ -47,7 +54,7 @@ const SearchBar = (props: Props) => {
       <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
         <div
           className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
-          onClick={() => !isNull(inputEl) && !isNull(inputEl.current) ? inputEl.current.focus() : null}
+          onClick={forceFocus}
         >
           <FiSearch />
         </div>
