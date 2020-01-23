@@ -38,7 +38,7 @@ func (w *worker) run(wg *sync.WaitGroup, queue chan *job) {
 				return
 			}
 			md := j.chartVersion.Metadata
-			log.Debug().
+			w.logger.Debug().
 				Str("repo", j.repo.Name).
 				Str("chart", md.Name).
 				Str("version", md.Version).
@@ -70,7 +70,7 @@ func (w *worker) handleJob(j *job) error {
 	defer resp.Body.Close()
 	if resp.StatusCode >= 400 {
 		if resp.StatusCode != http.StatusNotFound {
-			log.Error().Str("url", url).Int("code", resp.StatusCode).Send()
+			w.logger.Error().Str("url", url).Int("code", resp.StatusCode).Send()
 		}
 		return nil
 	}
