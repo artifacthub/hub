@@ -37,7 +37,7 @@ const Info = (props: Props) => (
         {isNull(props.package.home_url) ? (
           <p>-</p>
         ) : (
-          <ExternalLink href={props.package.home_url} className="text-primary d-flex align-items-center">
+          <ExternalLink href={props.package.home_url} className="text-primary d-flex align-items-center mb-3">
             <TiHome className="text-muted mr-2" />
             <>Home url</>
           </ExternalLink>
