@@ -21,7 +21,7 @@ export interface Package {
   display_name: string | null;
   description: string;
   logo_url: string | null;
-  latest_version: string;
+  app_version: string;
   chart_repository: ChartRepository;
 }
 

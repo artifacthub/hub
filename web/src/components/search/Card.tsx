@@ -44,7 +44,7 @@ const Card = (props: Props) => (
 
                             <div className="text-nowrap">
                               <span className="text-muted text-uppercase mr-1">Version: </span>
-                              {props.package.latest_version}
+                              {props.package.app_version || '-'}
                             </div>
                           </>
                         );
