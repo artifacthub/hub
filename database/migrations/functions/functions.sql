@@ -191,7 +191,7 @@ returns setof json as $$
                 'display_name', p.display_name,
                 'description', p.description,
                 'logo_url', p.logo_url,
-                'latest_version', p.latest_version,
+                'app_version', s.app_version,
                 'chart_repository', (
                     select json_build_object(
                         'name', r.name,
@@ -201,7 +201,9 @@ returns setof json as $$
             )), '[]')
             from package p
             join chart_repository r using (chart_repository_id)
+            join snapshot s using (package_id)
             where to_tsquery(p_query->>'text') @@ p.tsdoc
+            and p.latest_version = s.version
         )
     );
 $$ language sql;
