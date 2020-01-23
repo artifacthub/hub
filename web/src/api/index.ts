@@ -13,7 +13,7 @@ const API = {
     return fetchApi(`${API_ROUTE}/package/${id}${version ? `/${version}` : ''}`);
   },
   searchPackages: (q: string): Promise<PackagesList> => {
-    return fetchApi(`${API_ROUTE}/search?q=${q}`);
+    return fetchApi(`${API_ROUTE}/search?q=${encodeURIComponent(q)}`);
   },
   getStats: (): Promise<Stats> => {
     return fetchApi(`${API_ROUTE}/stats`);

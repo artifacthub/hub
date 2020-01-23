@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Install = (props: Props) => {
-  console.log(props);
   const header = (
     <>
       <div className="d-flex align-items-center">
