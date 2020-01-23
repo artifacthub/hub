@@ -8,6 +8,6 @@ server:
   shutdownTimeout: 1m
   webBuildPath: ../../web/build
   basicAuth:
-    enabled: true
+    enabled: false
     username: hub
     password: changeme

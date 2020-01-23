@@ -44,7 +44,7 @@ func (h *handlers) setupRouter() {
 	// Static files
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
 	r.ServeFiles("/static/*filepath", http.Dir(staticFilesPath))
-	r.NotFound = h.serveFile("index.html")
+	r.NotFound = http.HandlerFunc(h.serveIndex)
 
 	// Apply middleware
 	h.router = accessHandler()(r)
@@ -96,6 +96,11 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 		http.Error(w, "", http.StatusInternalServerError)
 	}
 	renderJSON(w, jsonData)
+}
+
+func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
+	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
 }
 
 func (h *handlers) serveFile(name string) http.Handler {
