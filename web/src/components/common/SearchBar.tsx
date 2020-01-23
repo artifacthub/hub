@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import getSearchParams from '../../utils/getSearchParams';
 import { FiSearch } from 'react-icons/fi';
 import styles from './SearchBar.module.css';
+import isNull from 'lodash/isNull';
 
 interface Props {
   formClassName?: string;
@@ -15,17 +16,22 @@ const SearchBar = (props: Props) => {
   const history = useHistory();
   const params = getSearchParams(location.search);
   const [value, setValue] = useState(params.text || '');
+  const inputEl = useRef<HTMLInputElement>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
   }
+
+  const cleanSearch = (): void => {
+    setValue('');
+  };
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
       if (e.keyCode === 13) {
         e.preventDefault();
-        history.push(`/search?text=${value}`);
+        history.push(`/search?text=${encodeURIComponent(value)}`);
       }
     }
 
@@ -38,17 +44,38 @@ const SearchBar = (props: Props) => {
 
   return (
     <form className={props.formClassName}>
-      <div className={`d-flex align-items-center ${styles.searchBar} ${styles[props.size]}`}>
-        <FiSearch className={`ml-1 mr-3 d-none d-sm-block ${styles.icon}`} />
+      <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
+        <div
+          className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
+          onClick={() => !isNull(inputEl) && !isNull(inputEl.current) ? inputEl.current.focus() : null}
+        >
+          <FiSearch />
+        </div>
 
         <input
+          ref={inputEl}
           className={`flex-grow-1 ${styles.input}`}
           type="text"
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
+          spellCheck="false"
           placeholder="Search packages"
           aria-label="Search"
           value={value}
           onChange={onChange}
         />
+
+        {value !== '' && (
+          <button
+            type="button"
+            className={`close ${styles.inputClean}`}
+            aria-label="Close"
+            onClick={cleanSearch}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        )}
       </div>
     </form>
   );
