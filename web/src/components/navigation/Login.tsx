@@ -48,7 +48,7 @@ const Login = () => {
         </div>
 
         <div className="text-right">
-          <button type="submit" className="btn btn-secondary">Log in</button>
+          <button type="button" className="btn btn-secondary" onClick={() => setOpenStatus(false)}>Log in</button>
         </div>
       </form>
     </>

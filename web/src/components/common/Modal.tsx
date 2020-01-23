@@ -28,12 +28,12 @@ const Modal = (props: Props) => {
         {props.buttonTitle}
       </button>
 
-      {openStatus && <div className="modal-backdrop fade show" />}
+      {openStatus && <div className={`modal-backdrop fade ${styles.activeBackdrop}`} />}
 
       <div className={classnames(
           'modal fade',
           styles.modal,
-          {'show d-block': openStatus},
+          {[`${styles.active} d-block`]: openStatus},
         )}
         role="dialog"
       >
