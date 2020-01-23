@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import compareVersions from 'compare-versions';
-import { GoCheck } from 'react-icons/go';
 import ExpandableList from '../common/ExpandableList';
-import styles from './Versions.module.css';
 
 interface Props {
   package_id: string;
@@ -16,14 +14,13 @@ const Versions = (props: Props) => {
   const allVersions = sortedVersions.map((av_version: string) => (
     <div key={av_version}>
       {av_version === props.version ? (
-        <div className="d-flex align-items-center">
-          <GoCheck className="mr-1" />
+        <div className="d-flex align-items-center text-truncate">
           {av_version}
         </div>
       ) : (
         <Link
-          className={`ml-1 ${styles.link}`}
           to={`/package/${props.package_id}/${av_version}`}
+          className="text-truncate d-block"
         >
           {av_version}
         </Link>
@@ -31,7 +28,7 @@ const Versions = (props: Props) => {
     </div>
   ));
 
-  return <ExpandableList items={allVersions} />;
+  return <div className="mb-3"><ExpandableList items={allVersions} /></div>;
 };
 
 export default Versions;

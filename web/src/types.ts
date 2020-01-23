@@ -29,7 +29,8 @@ export interface PackageDetail extends Package {
   readme: string | null;
   available_versions: string[];
   version: string;
-  app_version: string;
+  home_url: string | null;
+  keywords: string[];
   maintainers: MaintainerInfo[];
 }
 

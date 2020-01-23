@@ -4,6 +4,7 @@ import isNull from 'lodash/isNull';
 import SearchBar from '../common/SearchBar';
 import useFetchStats from '../../hooks/useFetchStats';
 import CountUpNumber from './CountUpNumber';
+import ExternalLink from '../common/ExternalLink';
 import styles from './Jumbotron.module.css';
 
 const Jumbotron = () => {
@@ -47,12 +48,12 @@ const Jumbotron = () => {
       </div>
 
       <div className="mt-5 text-center">
-        <a className="btn btn-secondary" href="https://github.com/tegioz/hub" rel="noopener noreferrer" target="_blank">
+        <ExternalLink className="btn btn-secondary" href="https://github.com/tegioz/hub">
           <div className="d-flex align-items-center">
             <FaGithub className="mr-2" />
             GitHub
           </div>
-        </a>
+        </ExternalLink>
       </div>
     </div>
   );
