@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import isNull from 'lodash/isNull';
 import getSearchParams from '../../utils/getSearchParams';
 import { FiSearch } from 'react-icons/fi';
 import styles from './SearchBar.module.css';
-import isNull from 'lodash/isNull';
 
 interface Props {
   formClassName?: string;
@@ -36,9 +36,12 @@ const SearchBar = (props: Props) => {
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
-      if (e.keyCode === 13) {
+      if (e.keyCode === 13 && value !== '') {
         e.preventDefault();
-        history.push(`/search?text=${encodeURIComponent(value)}`);
+        history.push({
+          pathname: '/search',
+          search: `?text=${encodeURIComponent(value)}`,
+        });
       }
     }
 
@@ -50,7 +53,7 @@ const SearchBar = (props: Props) => {
   }, [history, value]);
 
   return (
-    <form className={props.formClassName}>
+    <div className={props.formClassName}>
       <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
         <div
           className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
@@ -84,7 +87,7 @@ const SearchBar = (props: Props) => {
           </button>
         )}
       </div>
-    </form>
+    </div>
   );
 }
 

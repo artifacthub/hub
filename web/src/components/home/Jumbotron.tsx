@@ -1,11 +1,10 @@
 import React from 'react';
 import { FaGithub } from 'react-icons/fa';
-import isNull from 'lodash/isNull';
 import SearchBar from '../common/SearchBar';
 import useFetchStats from '../../hooks/useFetchStats';
-import CountUpNumber from './CountUpNumber';
 import ExternalLink from '../common/ExternalLink';
 import styles from './Jumbotron.module.css';
+import InfoSection from './InfoSection';
 
 const Jumbotron = () => {
   const { stats, isLoading } = useFetchStats();
@@ -26,25 +25,9 @@ const Jumbotron = () => {
       </div>
 
       <div className="d-flex align-items-center justify-content-center mt-5">
-        <div className={`text-center ${styles.counterWrapper}`}>
-          {isNull(stats) ? (
-            <h3><div className="spinner-grow text-primary" /></h3>
-          ) : (
-            <CountUpNumber number={stats.packages} />
-          )}
-          <small className="text-uppercase">Packages</small>
-        </div>
-
+        <InfoSection isLoading={isLoading} stats={stats} type="packages" />
         <div className={`ml-5 mr-5 ${styles.separator}`} />
-
-        <div className={`text-center ${styles.counterWrapper}`}>
-          {isNull(stats) ? (
-            <h3><div className="spinner-grow text-primary" /></h3>
-          ) : (
-            <CountUpNumber number={stats.releases} />
-          )}
-          <small className="text-uppercase">Releases</small>
-        </div>
+        <InfoSection isLoading={isLoading} stats={stats} type="releases" />
       </div>
 
       <div className="mt-5 text-center">

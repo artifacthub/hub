@@ -1,14 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import SubNavbar from './SubNavbar';
 import styles from './BackToResults.module.css';
 
 const BackToResults = () => {
   const history = useHistory();
+  const { packageVersion } = useParams();
 
   // Back to results is not displayed when page is refreshed
-  if (history.action === 'POP') return null;
+  if (history.action === 'POP' || packageVersion) return null;
 
   return (
     <SubNavbar>
