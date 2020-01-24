@@ -95,7 +95,7 @@ const ChartInstall = (props: Props) => {
             default:
               return (
                 <div className="tab-pane fade show active">
-                  <NoData content="Sorry, the information for Install is missing." />
+                  <NoData>Sorry, the information for Install is missing.</NoData>
                 </div>
               );
           }

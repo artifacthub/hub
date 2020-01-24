@@ -1,8 +1,6 @@
 import { PackagesList, PackageDetail, Stats } from '../types';
 import fetchApi from '../utils/fetchApi';
 
-console.log(process.env);
-
 let API_ROUTE = '/api/v1';
 if (process.env.NODE_ENV === 'development') {
   API_ROUTE = `${process.env.REACT_APP_API_ENDPOINT}${API_ROUTE}`;

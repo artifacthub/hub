@@ -49,7 +49,12 @@ const Search = () => {
 
               <div className="flex-grow-1">
                 {packages.length === 0 ? (
-                  <NoData content="No packages matching your search criteria were found" />
+                  <NoData>
+                    <>
+                      We're sorry!
+                      <p className="h6 mb-0 mt-3">We can't seem to find any packages that match your search for "<span className="font-weight-bold">{searchText}</span>"</p>
+                    </>
+                  </NoData>
                 ) : (
                   <List sortBy={sortBy} packages={packages} />
                 )}

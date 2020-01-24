@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './NoData.module.css';
 
 interface Props {
-  content: string;
+  children: string | JSX.Element;
 }
 
 const NoData = (props: Props) => (
-  <div className="ml-auto mr-auto mt-5 w-75 text-center p-5 border bg-light">
-    <div className={styles.text}>{props.content}</div>
+  <div className="alert alert-primary ml-auto mr-auto mt-5 w-75 text-center p-5 border">
+    <div className="h3">{props.children}</div>
   </div>
 );
 
