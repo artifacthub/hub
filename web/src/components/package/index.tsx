@@ -26,12 +26,12 @@ const Detail = () => {
         ) : (
           <>
             {isNull(detail) ? (
-              <NoData content="No data available for this package" />
+              <NoData>No data available for this package</NoData>
             ) : (
               <div className="row">
                 <div className={styles.readme}>
                   {isNull(detail!.readme) ? (
-                    <NoData content="No README file available for this package" />
+                    <NoData>No README file available for this package</NoData>
                   ) : (
                     <Readme markdownContent={detail.readme} />
                   )}
