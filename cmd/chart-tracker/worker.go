@@ -3,8 +3,11 @@ package main
 import (
 	"context"
 	"net/http"
-	"strings"
+	"net/url"
+	"path"
+	"runtime/debug"
 	"sync"
+	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -14,10 +17,11 @@ import (
 )
 
 type worker struct {
-	ctx    context.Context
-	id     int
-	hubApi *hub.Hub
-	logger zerolog.Logger
+	ctx        context.Context
+	id         int
+	hubApi     *hub.Hub
+	logger     zerolog.Logger
+	httpClient *http.Client
 }
 
 func newWorker(ctx context.Context, id int, hubApi *hub.Hub) *worker {
@@ -26,6 +30,9 @@ func newWorker(ctx context.Context, id int, hubApi *hub.Hub) *worker {
 		id:     id,
 		hubApi: hubApi,
 		logger: log.With().Int("worker", id).Logger(),
+		httpClient: &http.Client{
+			Timeout: 10 * time.Second,
+		},
 	}
 }
 
@@ -58,19 +65,39 @@ func (w *worker) run(wg *sync.WaitGroup, queue chan *job) {
 }
 
 func (w *worker) handleJob(j *job) error {
-	// Load chart from remote archive in memory
-	url := j.chartVersion.URLs[0]
-	if !strings.HasPrefix(url, "http") {
-		url = j.repo.URL + url
+	defer func() {
+		if r := recover(); r != nil {
+			w.logger.Error().
+				Str("repo", j.repo.Name).
+				Str("chart", j.chartVersion.Metadata.Name).
+				Str("version", j.chartVersion.Metadata.Version).
+				Bytes("stacktrace", debug.Stack()).
+				Interface("recorver", r).
+				Msg("handleJob panic")
+		}
+	}()
+
+	// Prepare chart archive url
+	u := j.chartVersion.URLs[0]
+	if _, err := url.ParseRequestURI(u); err != nil {
+		tmp, err := url.Parse(j.repo.URL)
+		if err != nil {
+			w.logger.Error().Str("url", u).Msg("invalid url")
+			return err
+		}
+		tmp.Path = path.Join(tmp.Path, u)
+		u = tmp.String()
 	}
-	resp, err := http.Get(url)
+
+	// Load chart from remote archive in memory
+	resp, err := w.httpClient.Get(u)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode >= 400 {
 		if resp.StatusCode != http.StatusNotFound {
-			w.logger.Error().Str("url", url).Int("code", resp.StatusCode).Send()
+			w.logger.Error().Str("url", u).Int("code", resp.StatusCode).Send()
 		}
 		return nil
 	}

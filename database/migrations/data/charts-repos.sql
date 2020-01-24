@@ -10,7 +10,6 @@ insert into chart_repository (name, url) values ('aws','https://aws.github.io/ek
 insert into chart_repository (name, url) values ('backube','https://backube.github.io/helm-charts/');
 insert into chart_repository (name, url) values ('banzaicloud-stable','https://kubernetes-charts.banzaicloud.com');
 insert into chart_repository (name, url) values ('billimek','https://billimek.com/billimek-charts/');
-insert into chart_repository (name, url) values ('bitnami','https://charts.bitnami.com');
 insert into chart_repository (name, url) values ('buildkite','https://buildkite.github.io/charts');
 insert into chart_repository (name, url) values ('ceph-csi','https://ceph.github.io/csi-charts');
 insert into chart_repository (name, url) values ('cetic','https://cetic.github.io/helm-charts');
@@ -134,7 +133,6 @@ insert into chart_repository (name, url) values ('uswitch','https://uswitch.gith
 insert into chart_repository (name, url) values ('vmware-tanzu','https://vmware-tanzu.github.io/helm-charts/');
 insert into chart_repository (name, url) values ('volcano','https://volcano-sh.github.io/charts/');
 insert into chart_repository (name, url) values ('wavefront','https://wavefronthq.github.io/helm/');
-insert into chart_repository (name, url) values ('wso2','https://helm.wso2.com');
 insert into chart_repository (name, url) values ('yourls','https://charts.yourls.org');
 insert into chart_repository (name, url) values ('yugabyte','https://charts.yugabyte.com');
 insert into chart_repository (name, url) values ('zammad','https://zammad.github.io');

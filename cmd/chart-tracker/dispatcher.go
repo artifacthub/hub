@@ -8,6 +8,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/tegioz/hub/internal/hub"
+	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/repo"
@@ -46,37 +47,18 @@ func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	}
 
 	// Track repositories charts
+	var wgRepos sync.WaitGroup
+	limiter := rate.NewLimiter(25, 25)
 	for _, r := range repos {
-		log.Info().Str("repo", r.Name).Msg("Loading chart repository index file")
-		indexFile, err := loadIndexFile(r.URL)
-		if err != nil {
-			log.Error().Err(err).Str("repo", r.Name).Msg("Error loading repository index file")
-			continue
+		if err := limiter.Wait(d.ctx); err != nil {
+			log.Error().Err(err).Msg("Error waiting for limiter")
+			return
 		}
-		log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
-		packagesDigest, err := d.hubApi.GetChartRepositoryPackagesDigest(d.ctx, r.ChartRepositoryID)
-		if err != nil {
-			log.Error().Err(err).Str("repo", r.Name).Msg("Error getting repository packages digest")
-			continue
-		}
-		for _, chartVersions := range indexFile.Entries {
-			for _, chartVersion := range chartVersions {
-				key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
-				if chartVersion.Digest != packagesDigest[key] {
-					d.Queue <- &job{
-						repo:         r,
-						chartVersion: chartVersion,
-					}
-				}
-				select {
-				case <-d.ctx.Done():
-					return
-				default:
-				}
-			}
-		}
+		wgRepos.Add(1)
+		go d.trackRepositoryCharts(&wgRepos, r)
 	}
 
+	wgRepos.Wait()
 	close(d.Queue)
 }
 
@@ -100,6 +82,39 @@ func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, er
 	}
 
 	return repos, nil
+}
+
+func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepository) {
+	defer wg.Done()
+
+	log.Info().Str("repo", r.Name).Msg("Loading chart repository index file")
+	indexFile, err := loadIndexFile(r.URL)
+	if err != nil {
+		log.Error().Err(err).Str("repo", r.Name).Msg("Error loading repository index file")
+		return
+	}
+	log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
+	packagesDigest, err := d.hubApi.GetChartRepositoryPackagesDigest(d.ctx, r.ChartRepositoryID)
+	if err != nil {
+		log.Error().Err(err).Str("repo", r.Name).Msg("Error getting repository packages digest")
+		return
+	}
+	for _, chartVersions := range indexFile.Entries {
+		for _, chartVersion := range chartVersions {
+			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
+			if chartVersion.Digest != packagesDigest[key] {
+				d.Queue <- &job{
+					repo:         r,
+					chartVersion: chartVersion,
+				}
+			}
+			select {
+			case <-d.ctx.Done():
+				return
+			default:
+			}
+		}
+	}
 }
 
 func loadIndexFile(repoURL string) (*repo.IndexFile, error) {
