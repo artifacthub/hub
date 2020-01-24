@@ -1,6 +1,7 @@
 import React from 'react';
 import isNull from 'lodash/isNull';
 import { TiHome } from 'react-icons/ti';
+import { FiExternalLink } from 'react-icons/fi';
 import { PackageDetail, MaintainerInfo } from '../../types';
 import InfoTitle from './InfoTitle';
 import Versions from './Versions';
@@ -40,6 +41,7 @@ const Info = (props: Props) => (
           <ExternalLink href={props.package.home_url} className="text-primary d-flex align-items-center mb-3">
             <TiHome className="text-muted mr-2" />
             <>Home url</>
+            <span className={styles.smallIcon}><FiExternalLink className="ml-1" /></span>
           </ExternalLink>
         )}
 
