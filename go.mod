@@ -7,6 +7,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/rs/zerolog v1.17.2
 	github.com/spf13/viper v1.6.1
+	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	helm.sh/helm/v3 v3.0.2
 )
 
