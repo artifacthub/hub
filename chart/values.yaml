@@ -3,12 +3,12 @@ fullnameOverride: ""
 imagePullSecrets: []
 pullPolicy: IfNotPresent
 
-db:
-  url: postgres://postgres@192.168.64.1:5432/hub
-
 log:
   level: info
   pretty: false
+
+db:
+  url: postgres://postgres@192.168.64.1:5432/hub
 
 hub:
   ingress:
@@ -31,3 +31,9 @@ hub:
       enabled: true
       username: hub
       password: changeme
+
+chartTracker:
+  image:
+    repository: tegioz/chart-tracker
+  numWorkers: 50
+  repositories: []

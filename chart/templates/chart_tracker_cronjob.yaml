@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: chart-tracker
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: chart-tracker
+            image: "{{ .Values.chartTracker.image.repository }}"
+            imagePullPolicy: {{ .Values.pullPolicy }}
+            volumeMounts:
+            - name: chart-tracker-config
+              mountPath: "/home/chart-tracker/.cfg"
+              readOnly: true
+          volumes:
+          - name: chart-tracker-config
+            secret:
+              secretName: chart-tracker-config
