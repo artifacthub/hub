@@ -4,14 +4,20 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgconn"
+	"github.com/jackc/pgx/v4"
 )
 
-type Hub struct {
-	db *pgxpool.Pool
+type DB interface {
+	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
+	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
 }
 
-func New(db *pgxpool.Pool) *Hub {
+type Hub struct {
+	db DB
+}
+
+func New(db DB) *Hub {
 	return &Hub{
 		db: db,
 	}
@@ -39,11 +45,8 @@ func (h *Hub) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	return h.dbQueryJSON(ctx, "select get_stats()")
 }
 
-func (h *Hub) SearchPackages(ctx context.Context, query *Query) ([]byte, error) {
-	queryJSON, err := json.Marshal(query)
-	if err != nil {
-		return nil, err
-	}
+func (h *Hub) SearchPackagesJSON(ctx context.Context, query *Query) ([]byte, error) {
+	queryJSON, _ := json.Marshal(query)
 	return h.dbQueryJSON(ctx, "select search_packages($1)", queryJSON)
 }
 

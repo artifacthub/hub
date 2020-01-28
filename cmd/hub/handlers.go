@@ -66,7 +66,7 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 	query := &hub.Query{
 		Text: r.FormValue("q"),
 	}
-	jsonData, err := h.hubApi.SearchPackages(r.Context(), query)
+	jsonData, err := h.hubApi.SearchPackagesJSON(r.Context(), query)
 	if err != nil {
 		log.Error().Err(err).Str("query", query.Text).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
