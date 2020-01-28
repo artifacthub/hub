@@ -7,7 +7,9 @@ create table if not exists chart_repository (
     url text not null check (url <> '') unique
 );
 
+{{ if eq .loadChartRepositories "true" }}
 {{ template "data/charts-repos.sql" }}
+{{ end }}
 
 create table if not exists package_kind (
     package_kind_id integer primary key,
@@ -73,11 +75,11 @@ create table if not exists package__maintainer (
     primary key (package_id, maintainer_id)
 );
 
-{{ template "functions/functions.sql" }}
+{{ template "functions/_create_all_functions.sql" }}
 
 ---- create above / drop below ----
 
-{{ template "functions/drop_all_functions.sql" }}
+{{ template "functions/_drop_all_functions.sql" }}
 
 drop table if exists package__maintainer;
 drop table if exists maintainer;
