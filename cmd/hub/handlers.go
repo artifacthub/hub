@@ -2,11 +2,13 @@ package main
 
 import (
 	"crypto/subtle"
+	"errors"
 	"net/http"
 	"path"
 	"runtime/debug"
 	"time"
 
+	"github.com/jackc/pgx/v4"
 	"github.com/julienschmidt/httprouter"
 	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
@@ -78,8 +80,12 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 	packageID := ps.ByName("package_id")
 	jsonData, err := h.hubApi.GetPackageJSON(r.Context(), packageID)
 	if err != nil {
-		log.Error().Err(err).Str("packageID", packageID).Msg("getPackage failed")
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, pgx.ErrNoRows) {
+			http.Error(w, "", http.StatusNotFound)
+		} else {
+			log.Error().Err(err).Str("packageID", packageID).Msg("getPackage failed")
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 	}
 	renderJSON(w, jsonData)
 }
@@ -89,11 +95,15 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 	version := ps.ByName("version")
 	jsonData, err := h.hubApi.GetPackageVersionJSON(r.Context(), packageID, version)
 	if err != nil {
-		log.Error().Err(err).
-			Str("packageID", packageID).
-			Str("version", version).
-			Msg("getPackageVersion failed")
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, pgx.ErrNoRows) {
+			http.Error(w, "", http.StatusNotFound)
+		} else {
+			log.Error().Err(err).
+				Str("packageID", packageID).
+				Str("version", version).
+				Msg("getPackageVersion failed")
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 	}
 	renderJSON(w, jsonData)
 }
