@@ -1,0 +1,11 @@
+# Build tern
+FROM golang:1.13-alpine AS tern
+RUN apk --no-cache add git
+RUN go get -u github.com/jackc/tern
+
+# Build final image
+FROM alpine:latest
+RUN apk --no-cache add git perl-app-cpanminus postgresql-client
+RUN cpanm --no-wget TAP::Parser::SourceHandler::pgTAP
+RUN addgroup -S db-tests && adduser -S db-tests -G db-tests
+COPY --from=tern /go/bin/tern /usr/local/bin

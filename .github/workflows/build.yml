@@ -1,0 +1,31 @@
+name: Build
+on: [push]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      - name: Build hub
+        working-directory: ./cmd/hub
+        run: go build -v
+      - name: Build chart-tracker
+        working-directory: ./cmd/chart-tracker
+        run: go build -v
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Install dependencies
+        working-directory: ./web
+        run: yarn install
+      - name: Build frontend
+        working-directory: ./web
+        run: yarn build
