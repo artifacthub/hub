@@ -62,7 +62,7 @@ const Info = (props: Props) => (
         ) : (
           <>
             {props.package.keywords.map((keyword: string) => (
-              <p className="h6 d-inline" key={keyword}><span className="badge badge-secondary mr-2">{keyword}</span></p>
+              <p className="h6 d-inline" key={keyword}><span className={`badge font-weight-normal mr-2 ${styles.badge}`}>{keyword}</span></p>
             ))}
           </>
         )}

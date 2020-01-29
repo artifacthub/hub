@@ -34,7 +34,7 @@ export interface PackageDetail extends Package {
   maintainers: MaintainerInfo[];
 }
 
-export interface PackagesList {
+export interface SearchResults {
   packages: Package[];
 }
 

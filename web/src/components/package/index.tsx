@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import isNull from 'lodash/isNull';
+import API from '../../api';
+import { PackageDetail } from '../../types';
 import Readme from './Readme';
 import Info from './Info';
-import useFetchPackageDetail from '../../hooks/useFetchPackageDetail';
 import NoData from '../common/NoData';
 import BackToResults from '../navigation/BackToResults';
 import Title from './Title';
@@ -12,7 +13,26 @@ import styles from './Package.module.css';
 
 const Detail = () => {
   const { packageId, packageVersion } = useParams();
-  const { detail, isLoading } = useFetchPackageDetail(packageId, packageVersion);
+  const [id, setId] = useState(packageId); /* eslint-disable-line @typescript-eslint/no-unused-vars */
+  const [version, setVersion] = useState(packageVersion); /* eslint-disable-line @typescript-eslint/no-unused-vars */
+  const [isLoading, setIsLoading] = useState(true);
+  const [detail, setDetail] = useState<PackageDetail | null>(null);
+
+  if (id !== packageId || version !== packageVersion) {
+    setId(packageId);
+    setVersion(packageVersion);
+  }
+
+  useEffect(() => {
+    async function fetchPackageDetail() {
+      try {
+        setDetail(await API.getPackage(id, version));
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPackageDetail();
+  }, [id, version]);
 
   return (
     <>

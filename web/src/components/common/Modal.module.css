@@ -1,9 +1,9 @@
 .active {
-  animation: fadeIn .5s 1 ease-in-out forwards;
+  animation: fadeIn .25s 1 ease-in-out forwards;
 }
 
 .activeBackdrop {
-  animation: fadeIn50 .5s 1 ease-in-out forwards;
+  animation: fadeIn50 .15s 1 ease-in-out forwards;
 }
 
 @keyframes fadeIn {

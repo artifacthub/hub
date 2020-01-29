@@ -1,21 +1,29 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import isUndefined from 'lodash/isUndefined';
+import { useHistory, useLocation } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import SubNavbar from './SubNavbar';
 import styles from './BackToResults.module.css';
 
 const BackToResults = () => {
-  const history = useHistory();
-  const { packageVersion } = useParams();
+  const history  = useHistory();
+  const location = useLocation();
 
-  // Back to results is not displayed when page is refreshed
-  if (history.action === 'POP' || packageVersion) return null;
+  // Back to results when search text has been sent
+  if (isUndefined(location.state) || isUndefined(location.state.searchText)) return null;
+
+  const onClick = () => {
+    history.push({
+      pathname: '/search',
+      search: `?text=${encodeURIComponent(location.state.searchText)}`,
+    });
+  }
 
   return (
     <SubNavbar>
-      <button className={`btn btn-sm btn-link pl-0 d-flex align-items-center ${styles.link}`} onClick={history.goBack}>
+      <button className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`} onClick={onClick}>
         <IoIosArrowBack className="mr-2" />
-        Back
+        Back to "<span className="font-weight-bold">{location.state.searchText}</span>" results
       </button>
     </SubNavbar>
   );
