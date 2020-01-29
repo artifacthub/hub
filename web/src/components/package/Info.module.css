@@ -7,3 +7,7 @@
 .smallIcon {
   font-size: .65rem;
 }
+
+.badge {
+  background-color: var(color-1-10);
+}

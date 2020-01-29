@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import API from '../../api';
+import { Package } from '../../types';
 import List from './List';
 import SortBy from './SortBy';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
 import MobileFilters from './MobileFilters';
 import getSearchParams from '../../utils/getSearchParams';
-import usePackageSearch from '../../hooks/usePackageSearch';
 import NoData from '../common/NoData';
 import Loading from '../common/Loading';
 import styles from './Search.module.css';
@@ -14,13 +15,30 @@ import styles from './Search.module.css';
 const Search = () => {
   const location = useLocation();
   const query = getSearchParams(location.search);
-  const searchText = query.text || '';  // TODO return to home is text is empty
+  const [searchText, setSearchText] = useState<string>(query.text || ''); /* eslint-disable-line @typescript-eslint/no-unused-vars */
   const [sortBy, setSortBy] = useState<'asc' | 'desc'>('asc');
-  const { packages, isLoading } = usePackageSearch(searchText);
+  const [isLoading, setIsLoading] = useState(true);
+  const [packages, setPackages] = useState<Package[]>([]);
+
+  if (query.text !== searchText) {
+    setSearchText(query.text || '');
+  }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     // TODO change
   };
+
+  useEffect(() => {
+    async function fetchSearchResults() {
+      try {
+        const searchResults = await API.searchPackages(searchText);
+        setPackages(searchResults.packages);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchSearchResults();
+  }, [searchText]);
 
   return (
     <>
@@ -56,7 +74,7 @@ const Search = () => {
                     </>
                   </NoData>
                 ) : (
-                  <List sortBy={sortBy} packages={packages} />
+                  <List sortBy={sortBy} packages={packages} searchText={searchText} />
                 )}
               </div>
             </main>

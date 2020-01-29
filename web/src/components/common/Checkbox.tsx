@@ -10,10 +10,9 @@ interface Props {
 
 const CheckBox = (props: Props) => {
   const history = useHistory();
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = () => {
     history.push({
       pathname: history.location.pathname,
-      search: `?tags=hola`
     });
   };
 

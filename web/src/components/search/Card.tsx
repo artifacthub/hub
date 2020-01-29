@@ -8,6 +8,7 @@ import styles from './Card.module.css';
 
 interface Props {
   package: Package;
+  searchText: string;
 }
 
 const PACKAGE_KIND = {
@@ -18,7 +19,13 @@ const PACKAGE_KIND = {
 const Card = (props: Props) => (
   <div className="col-12 pt-3 pb-3">
     <div className={`card h-100 ${styles.card}`}>
-      <Link className={`text-decoration-none ${styles.link}`} to={`/package/${props.package.package_id}`}>
+      <Link
+        className={`text-decoration-none ${styles.link}`}
+        to={{
+          pathname: `/package/${props.package.package_id}`,
+          state: { searchText: props.searchText },
+        }}
+      >
         <div className={`card-body ${styles.body}`}>
           <div className="d-flex align-items-start justify-content-between mb-3">
             <div className="d-flex align-items-center">

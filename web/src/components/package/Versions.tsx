@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import compareVersions from 'compare-versions';
 import ExpandableList from '../common/ExpandableList';
 
@@ -10,6 +10,9 @@ interface Props {
 }
 
 const Versions = (props: Props) => {
+  const location = useLocation();
+  const searchText = location.state ? location.state.searchText : undefined;
+
   const sortedVersions = props.available_versions.sort(compareVersions).reverse();
   const allVersions = sortedVersions.map((av_version: string) => (
     <div key={av_version}>
@@ -19,7 +22,10 @@ const Versions = (props: Props) => {
         </div>
       ) : (
         <Link
-          to={`/package/${props.package_id}/${av_version}`}
+          to={{
+            pathname: `/package/${props.package_id}/${av_version}`,
+            state: { searchText: searchText },
+          }}
           className="text-truncate d-block"
         >
           {av_version}

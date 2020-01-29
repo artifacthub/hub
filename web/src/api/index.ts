@@ -1,4 +1,4 @@
-import { PackagesList, PackageDetail, Stats } from '../types';
+import { SearchResults, PackageDetail, Stats } from '../types';
 import fetchApi from '../utils/fetchApi';
 
 let API_ROUTE = '/api/v1';
@@ -10,7 +10,7 @@ const API = {
   getPackage: (id?: string, version?: string): Promise<PackageDetail> => {
     return fetchApi(`${API_ROUTE}/package/${id}${version ? `/${version}` : ''}`);
   },
-  searchPackages: (q: string): Promise<PackagesList> => {
+  searchPackages: (q: string): Promise<SearchResults> => {
     return fetchApi(`${API_ROUTE}/search?q=${encodeURIComponent(q)}`);
   },
   getStats: (): Promise<Stats> => {

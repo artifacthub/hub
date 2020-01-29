@@ -6,6 +6,7 @@ import { Package } from '../../types';
 interface Props {
   sortBy: 'asc' | 'desc';
   packages: Package[];
+  searchText: string;
 }
 
 const List = (props: Props) => {
@@ -13,7 +14,13 @@ const List = (props: Props) => {
 
   return (
     <div className="row no-gutters mb-2">
-      {sortedPackages.map((packageItem: Package) => <Card key={packageItem.package_id} package={packageItem} />)}
+      {sortedPackages.map((packageItem: Package) => (
+        <Card
+          key={packageItem.package_id}
+          package={packageItem}
+          searchText={props.searchText}
+        />
+      ))}
     </div>
   );
 };
