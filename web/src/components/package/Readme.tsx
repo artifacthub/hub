@@ -27,7 +27,7 @@ interface LinkProps {
 }
 
 const Code: React.ElementType = (props: CodeProps) => (
-  <SyntaxHighlighter language={props.language} style={docco}>
+  <SyntaxHighlighter language={props.language || 'bash'} style={docco}>
     {props.value}
   </SyntaxHighlighter>
 );

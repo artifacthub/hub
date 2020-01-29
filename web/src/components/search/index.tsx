@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
 import API from '../../api';
 import { Package } from '../../types';
 import List from './List';
@@ -12,16 +14,43 @@ import NoData from '../common/NoData';
 import Loading from '../common/Loading';
 import styles from './Search.module.css';
 
-const Search = () => {
+interface Props {
+  isVisible: boolean;
+}
+
+interface Cache {
+  text: string;
+  ts: number;
+};
+
+const EXPIRATION = 5 * 60 * 1000; // 5min
+
+const Search = (props: Props) => {
   const location = useLocation();
   const query = getSearchParams(location.search);
-  const [searchText, setSearchText] = useState<string>(query.text || ''); /* eslint-disable-line @typescript-eslint/no-unused-vars */
+  const [searchText, setSearchText] = useState(query.text);
   const [sortBy, setSortBy] = useState<'asc' | 'desc'>('asc');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[]>([]);
+  const [cachedSearch, setCachedSearch] = useState<Cache | null>(null);
 
-  if (query.text !== searchText) {
-    setSearchText(query.text || '');
+  // shouldFetchData checks if cachedSearch is empty or searchText is new or current cachedSearch has expired.
+  const shouldFetchData = () => {
+    if (isNull(cachedSearch)) {
+      return true;
+    }
+    if (cachedSearch.text !== query.text) {
+      return true;
+    }
+    if (cachedSearch.ts + EXPIRATION < Date.now()) {
+      return true;
+    }
+    return false;
+  };
+
+  if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
+    setIsLoading(true);
+    setSearchText(query.text);
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -30,15 +59,23 @@ const Search = () => {
 
   useEffect(() => {
     async function fetchSearchResults() {
-      try {
-        const searchResults = await API.searchPackages(searchText);
-        setPackages(searchResults.packages);
-      } finally {
-        setIsLoading(false);
+      if (!isUndefined(searchText)) {
+        try {
+          const searchResults = await API.searchPackages(searchText);
+          setPackages(searchResults.packages);
+          setCachedSearch({
+            text: searchText,
+            ts: Date.now(),
+          });
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
     fetchSearchResults();
   }, [searchText]);
+
+  if (!props.isVisible) return null;
 
   return (
     <>
@@ -66,7 +103,7 @@ const Search = () => {
               </nav>
 
               <div className="flex-grow-1">
-                {packages.length === 0 ? (
+                {packages.length === 0 || isUndefined(searchText) ? (
                   <NoData>
                     <>
                       We're sorry!
