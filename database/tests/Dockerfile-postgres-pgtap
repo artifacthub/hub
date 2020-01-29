@@ -1,0 +1,10 @@
+# Build pgtap extension
+FROM postgres:12 AS builder
+RUN apt-get update
+RUN apt-get install -y git make postgresql-server-dev-12
+RUN git clone https://github.com/theory/pgtap
+RUN cd pgtap && make && make install
+
+# Build final image
+FROM postgres:12
+COPY --from=builder /usr/share/postgresql/12/extension/pgtap* /usr/share/postgresql/12/extension/
