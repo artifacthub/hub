@@ -14,17 +14,23 @@ import (
 	"helm.sh/helm/v3/pkg/repo"
 )
 
+// job represents a job for processing a given chart version in the provided
+// repository. Jobs are created by the dispatcher that will eventually be
+// handled by a worker.
 type job struct {
 	repo         *hub.ChartRepository
 	chartVersion *repo.ChartVersion
 }
 
+// dispatcher is in charge of generating jobs and dispatching them among the
+// available workers.
 type dispatcher struct {
 	ctx    context.Context
 	hubApi *hub.Hub
 	Queue  chan *job
 }
 
+// newDispatcher creates a new dispatcher instance.
 func newDispatcher(ctx context.Context, hubApi *hub.Hub) *dispatcher {
 	return &dispatcher{
 		ctx:    ctx,
@@ -33,6 +39,7 @@ func newDispatcher(ctx context.Context, hubApi *hub.Hub) *dispatcher {
 	}
 }
 
+// run instructs the dispatcher to start processing the repositories provided.
 func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	defer wg.Done()
 
@@ -62,6 +69,8 @@ func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	close(d.Queue)
 }
 
+// getRepositories returns the details of the repositories provided. If no
+// repositories are provided, all available in the database will be used.
 func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, error) {
 	var repos []*hub.ChartRepository
 
@@ -84,6 +93,9 @@ func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, er
 	return repos, nil
 }
 
+// trackRepositoryCharts generates jobs for each of the chart versions found in
+// the given repository, provided that that version has not been already
+// processed and its digest has not changed.
 func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepository) {
 	defer wg.Done()
 
@@ -117,6 +129,7 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 	}
 }
 
+// loadIndexFile downloads and parses the index file of the provided repository.
 func loadIndexFile(repoURL string) (*repo.IndexFile, error) {
 	repoConfig := &repo.Entry{URL: repoURL}
 	getters := getter.All(&cli.EnvSettings{})

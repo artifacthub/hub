@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// SetupLogger configures the global logger using the configuration provided.
 func SetupLogger(cfg *viper.Viper, fields map[string]interface{}) error {
 	// Add some context to global logger
 	log.Logger = log.With().Fields(fields).Logger()

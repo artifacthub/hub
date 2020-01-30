@@ -11,6 +11,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// SetupDB creates a database connection pool using the configuration provided.
 func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {
 	// Setup pool config
 	poolConfig, err := pgxpool.ParseConfig(cfg.GetString("db.url"))
