@@ -1,3 +1,8 @@
+-- register_package registers the provided package in the database. This
+-- involves registering or updating the package entity when needed, registering
+-- a snapshot for the package version and creating/updating/deleting the
+-- package maintainers as needed depending on the ones present in the latest
+-- package version.
 create or replace function register_package(p_pkg jsonb)
 returns void as $$
 declare

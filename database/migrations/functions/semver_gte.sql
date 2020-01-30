@@ -1,3 +1,5 @@
+-- semver_gte checks if the first semver provided is greater or equal than the
+-- second one.
 create or replace function semver_gte(p_v1 text, p_v2 text)
 returns boolean as $$
 declare

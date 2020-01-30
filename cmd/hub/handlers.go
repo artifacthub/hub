@@ -16,12 +16,15 @@ import (
 	"github.com/tegioz/hub/internal/hub"
 )
 
+// handlers groups all the http handlers defined for the hub, including the
+// router in charge of sending requests to the right handler.
 type handlers struct {
 	cfg    *viper.Viper
 	hubApi *hub.Hub
 	router http.Handler
 }
 
+// setupHandlers creates a new handlers instance.
 func setupHandlers(cfg *viper.Viper, hubApi *hub.Hub) *handlers {
 	h := &handlers{
 		cfg:    cfg,
@@ -31,6 +34,8 @@ func setupHandlers(cfg *viper.Viper, hubApi *hub.Hub) *handlers {
 	return h
 }
 
+// setupRouter initializes the handlers router, defining all routes used within
+// the hub, as well as some essential middleware to handle panics, logging, etc.
 func (h *handlers) setupRouter() {
 	r := httprouter.New()
 
@@ -55,6 +60,8 @@ func (h *handlers) setupRouter() {
 	}
 }
 
+// getStats is an http handler used to get some stats about packages registered
+// in the hub database.
 func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	jsonData, err := h.hubApi.GetStatsJSON(r.Context())
 	if err != nil {
@@ -64,6 +71,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 	renderJSON(w, jsonData)
 }
 
+// search is an http handler used to search for packages in the hub database.
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	query := &hub.Query{
 		Text: r.FormValue("q"),
@@ -76,6 +84,7 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 	renderJSON(w, jsonData)
 }
 
+// getPackage is an http handler used to get a package details.
 func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	packageID := ps.ByName("package_id")
 	jsonData, err := h.hubApi.GetPackageJSON(r.Context(), packageID)
@@ -90,6 +99,8 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 	renderJSON(w, jsonData)
 }
 
+// getPackageVersion is an http handler used to get the details of a package
+// specific version.
 func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	packageID := ps.ByName("package_id")
 	version := ps.ByName("version")
@@ -108,17 +119,30 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 	renderJSON(w, jsonData)
 }
 
+// serveIndex is an http handler that serves the index.html file.
 func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
 	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
 }
 
+// serveFile is an http handler that serves the file provided.
 func (h *handlers) serveFile(name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), name))
 	})
 }
 
+// panicHandler is an http handler invoked when a panic occurs during a request.
+func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
+	log.Error().
+		Str("method", r.Method).
+		Str("url", r.URL.String()).
+		Bytes("stacktrace", debug.Stack()).
+		Msgf("%v", err)
+	w.WriteHeader(http.StatusInternalServerError)
+}
+
+// basicAuth is a middleware that provides basic auth support.
 func (h *handlers) basicAuth(next http.Handler) http.Handler {
 	username := h.cfg.GetString("server.basicAuth.username")
 	password := h.cfg.GetString("server.basicAuth.password")
@@ -136,15 +160,8 @@ func (h *handlers) basicAuth(next http.Handler) http.Handler {
 	})
 }
 
-func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
-	log.Error().
-		Str("method", r.Method).
-		Str("url", r.URL.String()).
-		Bytes("stacktrace", debug.Stack()).
-		Msgf("%v", err)
-	w.WriteHeader(http.StatusInternalServerError)
-}
-
+// accessHandler is a middleware invoked for each request. At the moment it is
+// only used to log requests.
 func accessHandler() func(http.Handler) http.Handler {
 	return hlog.AccessHandler(func(r *http.Request, status, size int, duration time.Duration) {
 		log.Debug().
@@ -157,6 +174,8 @@ func accessHandler() func(http.Handler) http.Handler {
 	})
 }
 
+// renderJSON is a helper to write the json data provided to the given http
+// response writer, setting the appropriate content type.
 func renderJSON(w http.ResponseWriter, jsonData []byte) {
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(jsonData)

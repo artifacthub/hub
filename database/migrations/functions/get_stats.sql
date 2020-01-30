@@ -1,3 +1,5 @@
+-- get_stats returns the number of packages and releases registered in the
+-- database as a json object.
 create or replace function get_stats()
 returns setof json as $$
     select json_build_object(

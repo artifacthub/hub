@@ -1,3 +1,5 @@
+-- search_packages searchs packages in the database that match the criteria in
+-- the query provided.
 create or replace function search_packages(p_query jsonb)
 returns setof json as $$
 begin

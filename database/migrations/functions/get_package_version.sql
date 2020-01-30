@@ -1,3 +1,5 @@
+-- get_package_version returns the details of the package identified by the id
+-- and version provided as a json object.
 create or replace function get_package_version(p_package_id uuid, p_version text)
 returns setof json as $$
     select json_build_object(
