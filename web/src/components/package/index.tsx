@@ -51,6 +51,16 @@ const reducer = (state: Cache, action: Action) => {
         },
       };
     case 'updateLatest':
+      let versionInfo = {};
+      if (!isNull(action.payload.detail) && !isUndefined(action.payload.detail.version)) {
+        versionInfo = {
+          [action.payload.detail!.version]: {
+            ts: Date.now(),
+            detail: action.payload.detail,
+          },
+        };
+      }
+
       return {
         ...state,
         [action.payload.id]: {
@@ -59,10 +69,7 @@ const reducer = (state: Cache, action: Action) => {
             ts: Date.now(),
             detail: action.payload.detail,
           },
-          [action.payload.detail!.version]: {
-            ts: Date.now(),
-            detail: action.payload.detail,
-          },
+          ...versionInfo,
         },
       };
     default:
@@ -119,7 +126,16 @@ const Detail = (props: Props) => {
           detail = packagesCache[id!][version || 'latest'].detail;
         }
         setDetail(detail);
-
+      } catch {
+        setDetail(null);
+        dispatch({
+          type: isUndefined(version) ? 'updateLatest' : 'update',
+          payload: {
+            id: id!,
+            version: version,
+            detail: null, // If package is not on database, detail is null
+          },
+        });
       } finally {
         setIsLoading(false);
       }

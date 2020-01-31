@@ -67,7 +67,14 @@ const Search = (props: Props) => {
             text: searchText,
             ts: Date.now(),
           });
+        } catch {
+          // TODO - show error badge
+          setPackages([]);
         } finally {
+          setCachedSearch({
+            text: searchText,
+            ts: Date.now(),
+          });
           setIsLoading(false);
         }
       }
