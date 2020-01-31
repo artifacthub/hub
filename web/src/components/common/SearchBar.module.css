@@ -36,3 +36,13 @@
 .inputClean {
   padding-right: .75rem !important;
 }
+
+.loading {
+  right: -30px;
+  top: 5px;
+}
+
+.big + .loading {
+  right: -50px;
+  top: 10px;
+}

@@ -17,6 +17,7 @@ const SearchBar = (props: Props) => {
   const params = getSearchParams(location.search);
   const [value, setValue] = useState(params.text || '');
   const inputEl = useRef<HTMLInputElement>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
@@ -33,11 +34,17 @@ const SearchBar = (props: Props) => {
     }
   };
 
+  if (location.search.includes(value) && isSearching) {
+    setIsSearching(false);
+  }
+
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
       if (e.keyCode === 13 && value !== '') {
         e.preventDefault();
+        setIsSearching(true);
+
         history.push({
           pathname: '/search',
           search: `?text=${encodeURIComponent(value)}`,
@@ -53,41 +60,44 @@ const SearchBar = (props: Props) => {
   }, [history, value]);
 
   return (
-    <div className={props.formClassName}>
-      <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
-        <div
-          className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
-          onClick={forceFocus}
-        >
-          <FiSearch />
-        </div>
-
-        <input
-          ref={inputEl}
-          className={`flex-grow-1 ${styles.input}`}
-          type="text"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="none"
-          spellCheck="false"
-          placeholder="Search packages"
-          aria-label="Search"
-          value={value}
-          onChange={onChange}
-        />
-
-        {value !== '' && (
-          <button
-            type="button"
-            className={`close ${styles.inputClean}`}
-            aria-label="Close"
-            onClick={cleanSearch}
+    <>
+      <div className={`position-relative ${props.formClassName}`}>
+        <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
+          <div
+            className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
+            onClick={forceFocus}
           >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        )}
+            <FiSearch />
+          </div>
+
+          <input
+            ref={inputEl}
+            className={`flex-grow-1 ${styles.input}`}
+            type="text"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="none"
+            spellCheck="false"
+            placeholder="Search packages"
+            aria-label="Search"
+            value={value}
+            onChange={onChange}
+          />
+
+          {value !== '' && (
+            <button
+              type="button"
+              className={`close ${styles.inputClean}`}
+              aria-label="Close"
+              onClick={cleanSearch}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          )}
+        </div>
+        {isSearching && <div className={`position-absolute text-light ${styles.loading}`}><span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} /></div>}
       </div>
-    </div>
+    </>
   );
 }
 

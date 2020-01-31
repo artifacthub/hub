@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import compareVersions from 'compare-versions';
+import * as semver from 'semver';
+import { useLocation } from 'react-router-dom';
 import ExpandableList from '../common/ExpandableList';
+import Version from './Version';
 
 interface Props {
   package_id: string;
@@ -13,25 +14,23 @@ const Versions = (props: Props) => {
   const location = useLocation();
   const searchText = location.state ? location.state.searchText : undefined;
 
-  const sortedVersions = props.available_versions.sort(compareVersions).reverse();
+  const sortedVersions = props.available_versions.sort((version1: string, version2: string) => {
+    try {
+      return semver.compareBuild(version1, version2);
+    } catch {
+      // If semver is invalid, we don't sort the versions
+      return 0;
+    }
+  });
+
   const allVersions = sortedVersions.map((av_version: string) => (
-    <div key={av_version}>
-      {av_version === props.version ? (
-        <div className="d-flex align-items-center text-truncate">
-          {av_version}
-        </div>
-      ) : (
-        <Link
-          to={{
-            pathname: `/package/${props.package_id}/${av_version}`,
-            state: { searchText: searchText },
-          }}
-          className="text-truncate d-block"
-        >
-          {av_version}
-        </Link>
-      )}
-    </div>
+    <Version
+      key={av_version}
+      isActive={av_version === props.version}
+      version={av_version}
+      packageId={props.package_id}
+      searchText={searchText}
+    />
   ));
 
   return <div className="mb-3"><ExpandableList items={allVersions} /></div>;
