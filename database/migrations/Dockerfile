@@ -10,5 +10,3 @@ USER db-migrator
 WORKDIR /home/db-migrator
 COPY --from=tern /go/bin/tern .
 COPY database/migrations .
-COPY configs/tern.conf tern.conf
-CMD ["./tern", "migrate"]

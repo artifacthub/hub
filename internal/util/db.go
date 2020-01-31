@@ -2,6 +2,7 @@ package util
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/jackc/pgx/v4"
@@ -14,7 +15,14 @@ import (
 // SetupDB creates a database connection pool using the configuration provided.
 func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {
 	// Setup pool config
-	poolConfig, err := pgxpool.ParseConfig(cfg.GetString("db.url"))
+	url := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+		cfg.GetString("db.user"),
+		cfg.GetString("db.password"),
+		cfg.GetString("db.host"),
+		cfg.GetString("db.port"),
+		cfg.GetString("db.database"),
+	)
+	poolConfig, err := pgxpool.ParseConfig(url)
 	if err != nil {
 		return nil, err
 	}

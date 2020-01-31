@@ -1,3 +1,4 @@
+postgresql.enabled: true
 nameOverride: ""
 fullnameOverride: ""
 imagePullSecrets: []
@@ -8,7 +9,11 @@ log:
   pretty: false
 
 db:
-  url: postgres://postgres@192.168.64.1:5432/hub
+  host: hub-postgresql.default.svc.cluster.local
+  port: "5432"
+  database: hub
+  user: postgres
+  password: postgres
 
 hub:
   ingress:
@@ -37,3 +42,20 @@ chartTracker:
     repository: tegioz/chart-tracker
   numWorkers: 50
   repositories: []
+
+dbMigrator:
+  image:
+    repository: tegioz/db-migrator
+  loadChartRepositories: true
+
+# Values for postgresql chart dependency
+postgresql:
+  image:
+    repository: postgres
+    tag: 12
+  persistence:
+    mountPath: /data
+  postgresqlUsername: postgres
+  postgresqlPassword: postgres
+  postgresqlDatabase: hub
+  postgresqlDataDir: /data/pgdata

@@ -21,6 +21,16 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      initContainers:
+      - name: check-db-ready
+        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        env:
+          - name: PGHOST
+            value: {{ .Values.db.host }}
+          - name: PGPORT
+            value: "{{ .Values.db.port }}"
+        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
       containers:
         - name: hub
           image: "{{ .Values.hub.deploy.image.repository }}"
