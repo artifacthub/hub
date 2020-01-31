@@ -12,6 +12,7 @@ import MobileFilters from './MobileFilters';
 import getSearchParams from '../../utils/getSearchParams';
 import NoData from '../common/NoData';
 import Loading from '../common/Loading';
+import useScroll from '../../hooks/useScroll';
 import styles from './Search.module.css';
 
 interface Props {
@@ -47,6 +48,8 @@ const Search = (props: Props) => {
     }
     return false;
   };
+
+  useScroll(props.isVisible, shouldFetchData());
 
   if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
     setIsLoading(true);
