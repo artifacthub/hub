@@ -28,7 +28,7 @@ begin
             from package p
             join chart_repository r using (chart_repository_id)
             join snapshot s using (package_id)
-            where to_tsquery(p_query->>'text') @@ p.tsdoc
+            where websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
             and p.latest_version = s.version
         )
     );
