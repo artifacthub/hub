@@ -33,7 +33,7 @@ hub:
         memory: 500Mi
   server:
     basicAuth:
-      enabled: true
+      enabled: false
       username: hub
       password: changeme
 
