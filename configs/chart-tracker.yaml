@@ -2,7 +2,11 @@ log:
   level: debug
   pretty: true
 db:
-  url: postgres://postgres@localhost:5432/hub
+  db:
+  host: localhost
+  port: "5432"
+  database: hub
+  user: postgres
 tracker:
   numWorkers: 50
   repositoriesNames: []

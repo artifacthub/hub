@@ -2,7 +2,10 @@ log:
   level: debug
   pretty: true
 db:
-  url: postgres://postgres@localhost:5432/hub
+  host: localhost
+  port: "5432"
+  database: hub
+  user: postgres
 server:
   addr: localhost:8000
   shutdownTimeout: 1m
