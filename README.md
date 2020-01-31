@@ -1,15 +1,15 @@
 # Hub
 
-![Tests](https://github.com/tegioz/hub/workflows/Tests/badge.svg)
-![Build](https://github.com/tegioz/hub/workflows/Build/badge.svg)
+[![Tests](https://github.com/tegioz/hub/workflows/Tests/badge.svg)](https://github.com/tegioz/hub/actions?query=workflow%3ATests)
+[![Build](https://github.com/tegioz/hub/workflows/Build/badge.svg)](https://github.com/tegioz/hub/actions?query=workflow%3ABuild)
 
 Hub is a web-based application that enables finding, installing and publishing Kubernetes packages.
 
 <table>
     <tr>
-        <td width="33%"><img src="docs/screenshot1.png"></td>
-        <td width="33%"><img src="docs/screenshot2.png"></td>
-        <td width="33%"><img src="docs/screenshot3.png"></td>
+        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot1.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot2.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot3.png?raw=true"></td>
     </tr>
 </table>
 
