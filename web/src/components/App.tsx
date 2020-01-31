@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter as Router, match } from 'react-router-dom';
+import isNull from 'lodash/isNull';
 import Navbar from './navigation/Navbar';
 import Home from './home';
 import Search from './search';
@@ -15,27 +16,36 @@ export default function App() {
     return;
   });
 
+  let foundPage = false;
+  const isVisible = (routeMatch: match<any> | null): boolean => {
+    const isExact = !isNull(routeMatch) && routeMatch.isExact;
+    if (isExact) {
+      foundPage = true;
+    }
+    return isExact;
+  }
+
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Navbar />
 
         <div className="d-flex flex-column flex-grow-1">
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
+          <Route path="/" children={({match}) => (
+            <Home isVisible={isVisible(match)} />
+          )} />
 
-            <Route path="/search">
-              <Search />
-            </Route>
+          <Route path="/search" children={({match}) => (
+            <Search isVisible={isVisible(match)} />
+          )} />
 
-            <Route path="/package/:packageId/:packageVersion?">
-              <Package />
-            </Route>
+          <Route path="/package/:packageId/:packageVersion?" children={({match}) => (
+            <Package isVisible={isVisible(match)} />
+          )} />
 
-            <Route component={NotFound} />
-          </Switch>
+          <Route path="/not-found" children={() => {
+            return !foundPage ? <NotFound /> : null;
+          }} />
         </div>
 
         <Footer />
