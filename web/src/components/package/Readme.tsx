@@ -26,11 +26,17 @@ interface LinkProps {
   children: any;
 }
 
-const Code: React.ElementType = (props: CodeProps) => (
-  <SyntaxHighlighter language={props.language || 'bash'} style={docco}>
-    {props.value}
-  </SyntaxHighlighter>
-);
+const Code: React.ElementType = (props: CodeProps) => {
+  if (props.value) {
+    return (
+      <SyntaxHighlighter language={props.language || 'bash'} style={docco}>
+        {props.value}
+      </SyntaxHighlighter>
+    );
+  } else {
+    return null;
+  }
+}
 
 // TODO - get correct image
 const Image: React.ElementType = (props: ImageProps) => {
