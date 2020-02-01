@@ -34,7 +34,7 @@ const SearchBar = (props: Props) => {
     }
   };
 
-  if (location.search.includes(value) && isSearching) {
+  if (location.search.includes(encodeURIComponent(value)) && isSearching) {
     setIsSearching(false);
   }
 
