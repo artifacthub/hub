@@ -4,6 +4,7 @@ select plan(6);
 
 -- Declare some variables
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 
@@ -23,14 +24,23 @@ select throws_ok(
 select is(
     search_packages('{"text": "package1"}')::jsonb,
     '{
-        "packages": []
+        "packages": [],
+        "facets": [{
+            "title": "Kind",
+            "options": []
+        }, {
+            "title": "Repository",
+            "options": []
+        }]
     }'::jsonb,
-    'A json object with packages=[] is returned when search produces no results'
+    'A json object with no packages nor facets is returned when search produces no results'
 );
 
 -- Seed some packages
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
+insert into chart_repository (chart_repository_id, name, display_name, url)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
 insert into package (
     package_id,
     name,
@@ -105,7 +115,7 @@ insert into package (
     '{"kw1", "kw2"}',
     '1.0.0',
     0,
-    :'repo1ID'
+    :'repo2ID'
 );
 insert into snapshot (
     package_id,
@@ -163,9 +173,28 @@ select is(
             "description": "description",
             "display_name": "Package 2",
             "chart_repository": {
-                "name": "repo1",
-                "display_name": "Repo 1"
+                "name": "repo2",
+                "display_name": "Repo 2"
             }
+        }],
+        "facets": [{
+            "title": "Kind",
+            "options": [{
+                "id": 0,
+                "name": "Chart",
+                "total": 2
+            }]
+        }, {
+            "title": "Repository",
+            "options": [{
+                "id": "00000000-0000-0000-0000-000000000001",
+                "name": "Repo1",
+                "total": 1
+            }, {
+                "id": "00000000-0000-0000-0000-000000000002",
+                "name": "Repo2",
+                "total": 1
+            }]
         }]
     }'::jsonb,
     'Two packages expected when searching for kw1'
@@ -185,6 +214,21 @@ select is(
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
+        }],
+        "facets": [{
+            "title": "Kind",
+            "options": [{
+                "id": 0,
+                "name": "Chart",
+                "total": 1
+            }]
+        }, {
+            "title": "Repository",
+            "options": [{
+                "id": "00000000-0000-0000-0000-000000000001",
+                "name": "Repo1",
+                "total": 1
+            }]
         }]
     }'::jsonb,
     'Package 1 expected when searching for package1'
@@ -192,9 +236,16 @@ select is(
 select is(
     search_packages('{"text": "kw3"}')::jsonb,
     '{
-        "packages": []
+        "packages": [],
+        "facets": [{
+            "title": "Kind",
+            "options": []
+        }, {
+            "title": "Repository",
+            "options": []
+        }]
     }'::jsonb,
-    'No packages expected when searching for inexistent keyword'
+    'No packages nor facets expected when searching for inexistent keyword'
 );
 
 -- Finish tests and rollback transaction
