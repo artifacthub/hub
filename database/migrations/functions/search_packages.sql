@@ -2,13 +2,22 @@
 -- the query provided.
 create or replace function search_packages(p_query jsonb)
 returns setof json as $$
+declare
+    v_package_kinds int[];
+    v_chart_repositories_ids uuid[];
 begin
     if not p_query ? 'text' or p_query->>'text' = '' then
         raise 'invalid query text';
     end if;
 
+    -- Prepare filters for later use
+    select array_agg(e::int) into v_package_kinds
+    from jsonb_array_elements_text(p_query->'package_kinds') e;
+    select array_agg(e::uuid) into v_chart_repositories_ids
+    from jsonb_array_elements_text(p_query->'chart_repositories') e;
+
     return query
-    with packages_found as (
+    with packages_with_text_filter as (
         select
             p.package_id,
             p.package_kind_id,
@@ -26,7 +35,15 @@ begin
         join chart_repository r using (chart_repository_id)
         join snapshot s using (package_id)
         where websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
-        and p.latest_version = s.version
+        and s.version = p.latest_version
+    ), packages_with_all_filters as (
+        select * from packages_with_text_filter
+        where
+            case when cardinality(v_package_kinds) > 0
+            then package_kind_id = any(v_package_kinds) else true end
+        and
+            case when cardinality(v_chart_repositories_ids) > 0
+            then chart_repository_id = any(v_chart_repositories_ids) else true end
     )
     select json_build_object(
         'packages', (
@@ -45,7 +62,7 @@ begin
                     )
                 )
             )), '[]')
-            from packages_found
+            from packages_with_all_filters
         ),
         'facets', (
             select json_build_array(
@@ -60,7 +77,7 @@ begin
                             )), '[]')
                             from (
                                 select package_kind_id, package_kind_name, count(*) as total
-                                from packages_found
+                                from packages_with_text_filter
                                 group by package_kind_id, package_kind_name
                                 order by total desc
                             ) as breakdown
@@ -78,7 +95,7 @@ begin
                             )), '[]')
                             from (
                                 select chart_repository_id, chart_repository_name, count(*) as total
-                                from packages_found
+                                from packages_with_text_filter
                                 group by chart_repository_id, chart_repository_name
                                 order by total desc
                             ) as breakdown
