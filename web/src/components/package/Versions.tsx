@@ -14,16 +14,15 @@ const Versions = (props: Props) => {
   const location = useLocation();
   const searchText = location.state ? location.state.searchText : undefined;
 
-  const sortedVersions = props.available_versions.sort((version1: string, version2: string) => {
+  const getSortedVersions = () => {
     try {
-      return semver.compareBuild(version1, version2);
+      return semver.rsort(props.available_versions);
     } catch {
-      // If semver is invalid, we don't sort the versions
-      return 0;
+      return props.available_versions;
     }
-  });
+  }
 
-  const allVersions = sortedVersions.map((av_version: string) => (
+  const allVersions = getSortedVersions().map((av_version: string) => (
     <Version
       key={av_version}
       isActive={av_version === props.version}

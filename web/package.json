@@ -30,7 +30,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-syntax-highlighter": "^12.2.1",
-    "semver": "^7.1.1",
+    "semver": "^7.1.2",
     "typescript": "^3.7.4"
   },
   "scripts": {
