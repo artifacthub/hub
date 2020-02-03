@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"runtime/debug"
+	"strconv"
 	"time"
 
 	"github.com/jackc/pgx/v4"
@@ -73,12 +74,25 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 
 // search is an http handler used to search for packages in the hub database.
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var kinds []hub.PackageKind
+	for _, kindStr := range r.URL.Query()["kind"] {
+		kind, err := strconv.Atoi(kindStr)
+		if err != nil {
+			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid search")
+			http.Error(w, "", http.StatusBadRequest)
+			return
+		}
+		kinds = append(kinds, hub.PackageKind(kind))
+	}
+
 	query := &hub.Query{
-		Text: r.FormValue("q"),
+		Text:              r.URL.Query().Get("text"),
+		PackageKinds:      kinds,
+		ChartRepositories: r.URL.Query()["repo"],
 	}
 	jsonData, err := h.hubApi.SearchPackagesJSON(r.Context(), query)
 	if err != nil {
-		log.Error().Err(err).Str("query", query.Text).Msg("search failed")
+		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
 	}
 	renderJSON(w, jsonData)
