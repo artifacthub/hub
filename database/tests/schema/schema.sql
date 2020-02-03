@@ -1,6 +1,13 @@
 -- Start transaction and plan tests
 begin;
-select plan(26);
+select plan(27);
+
+-- Check default_text_search_config is correct
+select results_eq(
+    $$ select current_setting('default_text_search_config')::text $$,
+    $$ values ('pg_catalog.english'::text) $$,
+    'default_text_search_config is pg_catalog.english'
+);
 
 -- Check uuid extension exist
 select has_extension('uuid-ossp');
