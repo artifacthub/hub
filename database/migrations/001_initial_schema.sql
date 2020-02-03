@@ -1,3 +1,7 @@
+do $$ begin execute
+'alter database ' || current_database() || ' set default_text_search_config = english';
+end; $$;
+
 create extension if not exists "uuid-ossp";
 
 create table if not exists chart_repository (
@@ -97,3 +101,6 @@ drop function if exists generate_package_tsdoc(
 drop table if exists package_kind;
 drop table if exists chart_repository;
 drop extension if exists "uuid-ossp";
+do $$ begin execute
+'alter database ' || current_database() || ' set default_text_search_config = simple';
+end; $$;
