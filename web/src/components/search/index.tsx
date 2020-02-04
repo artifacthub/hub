@@ -68,6 +68,7 @@ const Search = (props: Props) => {
     if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
       setIsLoading(true);
       setSearchText(query.text);
+      setScrollPosition(0);
     }
   }, [props.isVisible, query.text, isLoading, cachedSearch, props.root, scrollPosition]);
 
