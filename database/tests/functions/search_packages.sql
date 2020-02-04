@@ -27,15 +27,9 @@ select is(
     }')::jsonb,
     '{
         "packages": [],
-        "facets": [{
-            "title": "Kind",
-            "options": []
-        }, {
-            "title": "Repository",
-            "options": []
-        }]
+        "facets": null
     }'::jsonb,
-    'Text: package1 | No packages in db yet | No packages nor facets expected'
+    'Text: package1 | No packages in db yet | No packages or facets expected'
 );
 
 -- Seed some packages
@@ -153,6 +147,7 @@ insert into snapshot (
 -- Some packages have just been seeded
 select is(
     search_packages('{
+        "facets": true,
         "text": "kw1"
     }')::jsonb,
     '{
@@ -201,10 +196,11 @@ select is(
             }]
         }]
     }'::jsonb,
-    'Text: kw1 | Two packages expected | Facets expected'
+    'Facets: true Text: kw1 | Two packages expected | Facets expected'
 );
 select is(
     search_packages('{
+        "facets": true,
         "text": "package1"
     }')::jsonb,
     '{
@@ -237,13 +233,14 @@ select is(
             }]
         }]
     }'::jsonb,
-    'Text: package1 | Package 1 expected | Facets expected'
+    'Facets: true Text: package1 | Package 1 expected | Facets expected'
 );
 select is(
     search_packages(
     '{
+        "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "chart_repositories_ids": [
             "00000000-0000-0000-0000-000000000002"
         ]
     }')::jsonb,
@@ -281,12 +278,13 @@ select is(
             }]
         }]
     }'::jsonb,
-    'Text: kw1 Repo: repo2 | Package 2 expected | Facets expected'
+    'Facets: true Text: kw1 Repo: repo2 | Package 2 expected | Facets expected'
 );
 select is(
     search_packages('{
+        "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "chart_repositories_ids": [
             "00000000-0000-0000-0000-000000000003"
         ]
     }')::jsonb,
@@ -312,36 +310,19 @@ select is(
             }]
         }]
     }'::jsonb,
-    'Text: kw1 Repo: inexistent | No packages expected | Facets expected'
+    'Facets: true Text: kw1 Repo: inexistent | No packages expected | Facets expected'
 );
 select is(
     search_packages('{
+        "facets": false,
         "text": "kw1",
         "package_kinds": [1, 2]
     }')::jsonb,
     '{
         "packages": [],
-        "facets": [{
-            "title": "Kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 2
-            }]
-        }, {
-            "title": "Repository",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 1
-            }, {
-                "id": "00000000-0000-0000-0000-000000000002",
-                "name": "Repo2",
-                "total": 1
-            }]
-        }]
+        "facets": null
     }'::jsonb,
-    'Text: kw1 Kinds: 1, 2 | No packages expected | Facets expected'
+    'Facets: false Text: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
 select is(
     search_packages('{
@@ -349,15 +330,9 @@ select is(
     }')::jsonb,
     '{
         "packages": [],
-        "facets": [{
-            "title": "Kind",
-            "options": []
-        }, {
-            "title": "Repository",
-            "options": []
-        }]
+        "facets": null
     }'::jsonb,
-    'Text: kw3 (inexistent) | No packages nor facets expected'
+    'Text: kw3 (inexistent) | No packages or facets expected'
 );
 
 -- Finish tests and rollback transaction

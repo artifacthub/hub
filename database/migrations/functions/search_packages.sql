@@ -5,6 +5,7 @@ returns setof json as $$
 declare
     v_package_kinds int[];
     v_chart_repositories_ids uuid[];
+    v_facets boolean := (p_query->>'facets')::boolean;
 begin
     if not p_query ? 'text' or p_query->>'text' = '' then
         raise 'invalid query text';
@@ -14,7 +15,7 @@ begin
     select array_agg(e::int) into v_package_kinds
     from jsonb_array_elements_text(p_query->'package_kinds') e;
     select array_agg(e::uuid) into v_chart_repositories_ids
-    from jsonb_array_elements_text(p_query->'chart_repositories') e;
+    from jsonb_array_elements_text(p_query->'chart_repositories_ids') e;
 
     return query
     with packages_with_text_filter as (
@@ -64,7 +65,7 @@ begin
             )), '[]')
             from packages_with_all_filters
         ),
-        'facets', (
+        'facets', case when v_facets then (
             select json_build_array(
                 (
                     select json_build_object(
@@ -103,7 +104,7 @@ begin
                     )
                 )
             )
-        )
+        ) else null end
     );
 end
 $$ language plpgsql;
