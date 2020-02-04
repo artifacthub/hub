@@ -178,6 +178,7 @@ select is(
         }],
         "facets": [{
             "title": "Kind",
+            "filter_key": "kind",
             "options": [{
                 "id": 0,
                 "name": "Chart",
@@ -185,6 +186,7 @@ select is(
             }]
         }, {
             "title": "Repository",
+            "filter_key": "repo",
             "options": [{
                 "id": "00000000-0000-0000-0000-000000000001",
                 "name": "Repo1",
@@ -219,6 +221,7 @@ select is(
         }],
         "facets": [{
             "title": "Kind",
+            "filter_key": "kind",
             "options": [{
                 "id": 0,
                 "name": "Chart",
@@ -226,6 +229,7 @@ select is(
             }]
         }, {
             "title": "Repository",
+            "filter_key": "repo",
             "options": [{
                 "id": "00000000-0000-0000-0000-000000000001",
                 "name": "Repo1",
@@ -260,6 +264,7 @@ select is(
         }],
         "facets": [{
             "title": "Kind",
+            "filter_key": "kind",
             "options": [{
                 "id": 0,
                 "name": "Chart",
@@ -267,6 +272,7 @@ select is(
             }]
         }, {
             "title": "Repository",
+            "filter_key": "repo",
             "options": [{
                 "id": "00000000-0000-0000-0000-000000000001",
                 "name": "Repo1",
@@ -292,6 +298,7 @@ select is(
         "packages": [],
         "facets": [{
             "title": "Kind",
+            "filter_key": "kind",
             "options": [{
                 "id": 0,
                 "name": "Chart",
@@ -299,6 +306,7 @@ select is(
             }]
         }, {
             "title": "Repository",
+            "filter_key": "repo",
             "options": [{
                 "id": "00000000-0000-0000-0000-000000000001",
                 "name": "Repo1",
