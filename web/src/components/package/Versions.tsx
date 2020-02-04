@@ -13,6 +13,7 @@ interface Props {
 const Versions = (props: Props) => {
   const location = useLocation();
   const searchText = location.state ? location.state.searchText : undefined;
+  const filtersQuery = location.state ? location.state.filtersQuery : '';
 
   const getSortedVersions = () => {
     try {
@@ -29,6 +30,7 @@ const Versions = (props: Props) => {
       version={av_version}
       packageId={props.package_id}
       searchText={searchText}
+      filtersQuery={filtersQuery}
     />
   ));
 

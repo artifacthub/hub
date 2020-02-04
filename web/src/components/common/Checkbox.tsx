@@ -1,32 +1,43 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { ChangeEvent } from 'react';
+import styles from './Checkbox.module.css';
 
 interface Props {
   name: string;
+  value: string;
   label: string;
+  legend?: string | number;
   checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CheckBox = (props: Props) => {
-  const history = useHistory();
-  const handleOnChange = () => {
-    history.push({
-      pathname: history.location.pathname,
-    });
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    props.onChange(e);
   };
 
+  const id = `${props.name}-${props.value}`;
+
   return (
-    <div className="custom-control custom-checkbox mr-sm-2 mt-2">
+    <div className="custom-control custom-checkbox mr-sm-2 mb-2">
       <input
         type="checkbox"
-        className="custom-control-input"
-        id={props.name}
+        className={`custom-control-input ${styles.input}`}
+        name={props.name}
+        value={props.value}
+        id={id}
         onChange={handleOnChange}
         checked={props.checked}
-        disabled
+        disabled={props.disabled}
       />
-      <label className="custom-control-label" htmlFor={props.name}>{props.label}</label>
+      <label className="custom-control-label w-100" htmlFor={id}>
+        <div className="d-flex align-items-center mw-100">
+          <span className="d-inline-block text-truncate">
+            {props.label}
+          </span>
+          <small className="pl-1">({props.legend})</small>
+        </div>
+      </label>
     </div>
   );
 }

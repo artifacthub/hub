@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { MdFilterList } from 'react-icons/md';
 import Filters from './Filters';
-import { SearchQuery } from '../../types';
+import { Facets, Filters as FiltersProp } from '../../types';
 import styles from './MobileFilters.module.css';
 
-interface Props extends SearchQuery {
+interface Props {
+  activeFilters: FiltersProp;
+  facets: Facets[] | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -34,7 +36,7 @@ const MobileFilters = (props: Props) => {
             </button>
           </div>
 
-          <Filters {...props} onChange={props.onChange} />
+          <Filters {...props} />
         </div>
       )}
     </div>

@@ -7,6 +7,7 @@ interface Props {
   sortBy: 'asc' | 'desc';
   packages: Package[];
   searchText: string;
+  filtersQuery: string;
   saveScrollPosition: () => void;
 }
 
@@ -20,6 +21,7 @@ const List = (props: Props) => {
           key={packageItem.package_id}
           package={packageItem}
           searchText={props.searchText}
+          filtersQuery={props.filtersQuery}
           saveScrollPosition={props.saveScrollPosition}
         />
       ))}

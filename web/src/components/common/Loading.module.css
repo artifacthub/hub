@@ -1,4 +1,14 @@
+.wrapper {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-white-50);
+  z-index: 1100;
+}
+
 .spinner {
+  margin-top: 10rem;
   width: 4rem !important;
   height: 4rem !important;
 }

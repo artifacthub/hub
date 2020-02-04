@@ -39,6 +39,12 @@ const SearchBar = (props: Props) => {
   }
 
   useEffect(() => {
+    if (params.text !== value) {
+      setValue(params.text || '');
+    }
+  }, [params.text]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
       if (e.keyCode === 13 && value !== '') {
