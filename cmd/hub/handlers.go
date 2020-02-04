@@ -74,21 +74,37 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 
 // search is an http handler used to search for packages in the hub database.
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	// Extract filters from query string
+	var facets bool
+	facetsStr := r.URL.Query().Get("facets")
+	if facetsStr != "" {
+		var err error
+		facets, err = strconv.ParseBool(facetsStr)
+		if err != nil {
+			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid facets value")
+			http.Error(w, "", http.StatusBadRequest)
+			return
+		}
+	}
+	text := r.URL.Query().Get("text")
 	var kinds []hub.PackageKind
 	for _, kindStr := range r.URL.Query()["kind"] {
 		kind, err := strconv.Atoi(kindStr)
 		if err != nil {
-			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid search")
+			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid kind value")
 			http.Error(w, "", http.StatusBadRequest)
 			return
 		}
 		kinds = append(kinds, hub.PackageKind(kind))
 	}
+	repos := r.URL.Query()["repo"]
 
+	// Build query and execute search
 	query := &hub.Query{
-		Text:              r.URL.Query().Get("text"),
-		PackageKinds:      kinds,
-		ChartRepositories: r.URL.Query()["repo"],
+		Facets:               facets,
+		Text:                 text,
+		PackageKinds:         kinds,
+		ChartRepositoriesIDs: repos,
 	}
 	jsonData, err := h.hubApi.SearchPackagesJSON(r.Context(), query)
 	if err != nil {

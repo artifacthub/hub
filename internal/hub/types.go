@@ -82,7 +82,8 @@ type Package struct {
 
 // Query represents the query used when searching for packages.
 type Query struct {
-	Text              string        `json:"text"`
-	PackageKinds      []PackageKind `json:"package_kinds,omitempty"`
-	ChartRepositories []string      `json:"chart_repositories,omitempty"`
+	Facets               bool          `json:"facets"`
+	Text                 string        `json:"text"`
+	PackageKinds         []PackageKind `json:"package_kinds,omitempty"`
+	ChartRepositoriesIDs []string      `json:"chart_repositories_ids,omitempty"`
 }
