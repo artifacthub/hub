@@ -70,6 +70,7 @@ begin
                 (
                     select json_build_object(
                         'title', 'Kind',
+                        'filter_key', 'kind',
                         'options', (
                             select coalesce(json_agg(json_build_object(
                                 'id', package_kind_id,
@@ -88,6 +89,7 @@ begin
                 (
                     select json_build_object(
                         'title', 'Repository',
+                        'filter_key', 'repo',
                         'options', (
                             select coalesce(json_agg(json_build_object(
                                 'id', chart_repository_id,

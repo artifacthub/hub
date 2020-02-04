@@ -169,14 +169,16 @@ func TestSearchPackagesJSON(t *testing.T) {
             }
 		}],
         "facets": [{
-            "title": "Kind",
+			"title": "Kind",
+			"filter_key": "kind",
             "options": [{
                 "id": 0,
                 "name": "Chart",
                 "total": 2
             }]
         }, {
-            "title": "Repository",
+			"title": "Repository",
+			"filter_key": "repo",
             "options": [{
                 "id": "00000000-0000-0000-0000-000000000001",
                 "name": "Repo1",
