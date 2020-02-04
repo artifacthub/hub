@@ -1,12 +1,12 @@
-import React from 'react';
+import { useCallback, useEffect, useState, RefObject } from 'react';
 
 export default function useClickOutside(
-  refs: React.RefObject<HTMLElement>[],
+  refs: RefObject<HTMLElement>[],
   onClickOutside: (e: MouseEvent) => void
 ): [boolean] {
-  const [isActive, setActive] = React.useState(false);
+  const [isActive, setActive] = useState(false);
 
-  const isOutside = React.useCallback(
+  const isOutside = useCallback(
     (e: MouseEvent) => {
       const test = refs.map(ref => {
         return (
@@ -19,7 +19,7 @@ export default function useClickOutside(
     [refs]
   );
 
-  const mousedown = React.useCallback(
+  const mousedown = useCallback(
     (e: MouseEvent) => {
       if (isOutside(e)) {
         setActive(true);
@@ -29,7 +29,7 @@ export default function useClickOutside(
     [isOutside, onClickOutside]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('mousedown', mousedown);
 
     return () => {
