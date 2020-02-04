@@ -9,14 +9,14 @@ interface Props {
 }
 
 const Image = (props: Props) => {
-  const [error, setError] = useState(false);
+  const [imageUrl, setImageUrl] = useState(props.src);
 
   return (
     <img
       alt={props.alt}
-      src={error || isNull(props.src) ? placeholder : `${props.src}?raw=true`}
+      src={isNull(imageUrl) ? placeholder : `${imageUrl}?raw=true`}
       className={props.className}
-      onError={() => setError(true)}
+      onError={() => setImageUrl(placeholder)}
     />
   );
 }
