@@ -7,6 +7,8 @@ select plan(3);
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
+\set image1ID '00000000-0000-0000-0000-000000000001'
+\set image2ID '00000000-0000-0000-0000-000000000002'
 
 -- No packages at this point
 select is(
@@ -29,7 +31,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    logo_url,
+    image_id,
     keywords,
     latest_version,
     created_at,
@@ -42,7 +44,7 @@ insert into package (
     'Package 1',
     'description',
     'home_url',
-    'logo_url',
+    :'image1ID',
     '{"kw1", "kw2"}',
     '1.0.0',
     current_timestamp - '1s'::interval,
@@ -71,7 +73,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    logo_url,
+    image_id,
     keywords,
     latest_version,
     created_at,
@@ -84,7 +86,7 @@ insert into package (
     'Package 2',
     'description',
     'home_url',
-    'logo_url',
+    :'image2ID',
     '{"kw1", "kw2"}',
     '1.0.0',
     current_timestamp - '2s'::interval,
@@ -117,7 +119,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",
@@ -128,7 +130,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo2",
@@ -140,7 +142,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",
@@ -151,7 +153,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo2",
@@ -170,7 +172,7 @@ select register_package('
     "display_name": "Package 2 v2",
     "description": "description v2",
     "home_url": "home_url",
-    "logo_url": "logo_url",
+    "image_id": "00000000-0000-0000-0000-000000000002",
     "keywords": ["kw1", "kw2"],
     "readme": "readme-version-2.0.0",
     "version": "2.0.0",
@@ -197,7 +199,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",
@@ -208,7 +210,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
                 "name": "repo2",
@@ -220,7 +222,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
                 "name": "repo2",
@@ -231,7 +233,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",

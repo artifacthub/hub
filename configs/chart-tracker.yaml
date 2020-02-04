@@ -10,3 +10,4 @@ db:
 tracker:
   numWorkers: 50
   repositoriesNames: []
+  imageStore: pg

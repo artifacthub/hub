@@ -10,6 +10,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 	"github.com/tegioz/hub/internal/hub"
+	"github.com/tegioz/hub/internal/img/pg"
 	"github.com/tegioz/hub/internal/util"
 )
 
@@ -24,12 +25,13 @@ func main() {
 		log.Fatal().Err(err).Msg("Logger setup failed")
 	}
 
-	// Setup hub api instance
+	// Setup hub api and image store instances
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
 	hubApi := hub.New(db)
+	imageStore := pg.NewImageStore(db)
 
 	// Setup and launch server
 	addr := cfg.GetString("server.addr")
@@ -38,7 +40,7 @@ func main() {
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
 		IdleTimeout:  1 * time.Minute,
-		Handler:      setupHandlers(cfg, hubApi).router,
+		Handler:      setupHandlers(cfg, hubApi, imageStore).router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {

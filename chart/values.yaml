@@ -42,6 +42,7 @@ chartTracker:
     repository: tegioz/chart-tracker
   numWorkers: 50
   repositories: []
+  imageStore: pg
 
 dbMigrator:
   image:

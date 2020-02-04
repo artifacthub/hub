@@ -6,6 +6,8 @@ select plan(2);
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
+\set image1ID '00000000-0000-0000-0000-000000000001'
+\set image2ID '00000000-0000-0000-0000-000000000002'
 
 -- No packages at this point
 select is(
@@ -26,7 +28,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    logo_url,
+    image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -37,7 +39,7 @@ insert into package (
     'Package 1',
     'description',
     'home_url',
-    'logo_url',
+    :'image1ID',
     '{"kw1", "kw2"}',
     '1.0.0',
     0,
@@ -79,7 +81,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    logo_url,
+    image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -90,7 +92,7 @@ insert into package (
     'Package 2',
     'description',
     'home_url',
-    'logo_url',
+    :'image2ID',
     '{"kw1", "kw2"}',
     '1.0.0',
     0,

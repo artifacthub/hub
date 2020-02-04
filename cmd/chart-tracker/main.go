@@ -36,12 +36,16 @@ func main() {
 		log.Info().Msg("Chart tracker shutting down..")
 	}()
 
-	// Setup database and hub api
+	// Setup database, hub api and image store
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
 	hubApi := hub.New(db)
+	imageStore, err := util.SetupImageStore(cfg, db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("ImageStore setup failed")
+	}
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
@@ -49,7 +53,7 @@ func main() {
 	wg.Add(1)
 	go dispatcher.run(&wg, cfg.GetStringSlice("tracker.repositoriesNames"))
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := newWorker(ctx, i, hubApi)
+		w := newWorker(ctx, i, hubApi, imageStore)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}

@@ -146,7 +146,7 @@ func TestSearchPackagesJSON(t *testing.T) {
         "packages": [{
             "kind": 0,
             "name": "package1",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "package_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "description": "description",
@@ -158,7 +158,7 @@ func TestSearchPackagesJSON(t *testing.T) {
         }, {
             "kind": 0,
             "name": "package2",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "package_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "description": "description",
@@ -207,7 +207,7 @@ func TestRegisterPackage(t *testing.T) {
 		Name:        "package1",
 		Description: "description",
 		HomeURL:     "home_url",
-		LogoURL:     "logo_url",
+		ImageID:     "image_id",
 		Keywords:    []string{"kw1", "kw2"},
 		Readme:      "readme-version-1.0.0",
 		Links: []*Link{
@@ -253,7 +253,7 @@ func TestGetPackageJSON(t *testing.T) {
         "display_name": "Package 1",
         "description": "description",
         "home_url": "home_url",
-        "logo_url": "logo_url",
+        "image_id": "image_id",
         "keywords": ["kw1", "kw2"],
         "readme": "readme-version-1.0.0",
         "links": {
@@ -300,7 +300,7 @@ func TestGetPackageVersionJSON(t *testing.T) {
         "display_name": "Package 1",
         "description": "description",
         "home_url": "home_url",
-        "logo_url": "logo_url",
+        "image_id": "image_id",
         "keywords": ["kw1", "kw2"],
         "readme": "readme-version-1.0.0",
         "links": {
@@ -346,7 +346,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",
@@ -357,7 +357,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "app_version": "13.0.0",
             "chart_repository": {
                 "name": "repo2",
@@ -369,7 +369,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "app_version": "13.0.0",
             "chart_repository": {
                 "name": "repo2",
@@ -380,7 +380,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "logo_url": "logo_url",
+            "image_id": "image_id",
             "app_version": "12.1.0",
             "chart_repository": {
                 "name": "repo1",

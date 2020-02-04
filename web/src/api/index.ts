@@ -1,11 +1,9 @@
 import { SearchResults, PackageDetail, Stats, Filters, PackagesUpdatesInfo } from '../types';
 import fetchApi from '../utils/fetchApi';
 import prepareFiltersQuery from '../utils/prepareFiltersQuery';
+import getEndpointPrefix from '../utils/getEndpointPrefix';
 
-let API_ROUTE = '/api/v1';
-if (process.env.NODE_ENV === 'development') {
-  API_ROUTE = `${process.env.REACT_APP_API_ENDPOINT}${API_ROUTE}`;
-}
+const API_ROUTE = `${getEndpointPrefix()}/api/v1`;
 
 const API = {
   getPackage: (id?: string, version?: string): Promise<PackageDetail> => {

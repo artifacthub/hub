@@ -41,7 +41,7 @@ create table if not exists package (
     display_name text check (display_name <> ''),
     description text check (description <> ''),
     home_url text check (home_url <> ''),
-    logo_url text check (logo_url <> ''),
+    image_id uuid,
     keywords text[],
     latest_version text not null check (latest_version <> ''),
     created_at timestamptz default current_timestamp not null,
@@ -83,12 +83,26 @@ create table if not exists package__maintainer (
     primary key (package_id, maintainer_id)
 );
 
+create table if not exists image (
+    image_id uuid primary key default uuid_generate_v4(),
+    original_hash bytea not null check (original_hash <> '') unique
+);
+
+create table if not exists image_version (
+    image_id uuid not null references image on delete cascade,
+    version text not null check (version <> ''),
+    data bytea not null,
+    primary key (image_id, version)
+);
+
 {{ template "functions/_create_all_functions.sql" }}
 
 ---- create above / drop below ----
 
 {{ template "functions/_drop_all_functions.sql" }}
 
+drop table if exists image_version;
+drop table if exists image;
 drop table if exists package__maintainer;
 drop table if exists maintainer;
 drop table if exists snapshot;

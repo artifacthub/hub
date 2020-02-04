@@ -3,6 +3,8 @@ module github.com/tegioz/hub
 go 1.13
 
 require (
+	github.com/disintegration/imaging v1.6.2
+	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/jackc/pgconn v1.2.1
 	github.com/jackc/pgproto3 v1.1.0
 	github.com/jackc/pgx/v4 v4.2.1
