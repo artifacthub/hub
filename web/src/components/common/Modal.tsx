@@ -37,7 +37,7 @@ const Modal = (props: Props) => {
         )}
         role="dialog"
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered" ref={ref}>
+        <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" ref={ref}>
           <div className="modal-content">
             <div className={`modal-header ${styles.header}`}>
               {isString(props.header) ? (

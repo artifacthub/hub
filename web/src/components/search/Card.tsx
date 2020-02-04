@@ -9,6 +9,7 @@ import styles from './Card.module.css';
 interface Props {
   package: Package;
   searchText: string;
+  saveScrollPosition: () => void;
 }
 
 const PACKAGE_KIND = {
@@ -21,6 +22,7 @@ const Card = (props: Props) => (
     <div className={`card h-100 ${styles.card}`}>
       <Link
         className={`text-decoration-none ${styles.link}`}
+        onClick={props.saveScrollPosition}
         to={{
           pathname: `/package/${props.package.package_id}`,
           state: { searchText: props.searchText },

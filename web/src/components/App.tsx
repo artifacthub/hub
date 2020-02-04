@@ -10,7 +10,11 @@ import Footer from './navigation/Footer';
 import './App.css';
 import '../styles/default.scss';
 
-export default function App() {
+interface Props {
+  root: HTMLElement | null;
+}
+
+export default function App(props: Props) {
   const [theme, setTheme] = useState('theme2'); /* eslint-disable-line @typescript-eslint/no-unused-vars */
   import(`../styles/${theme}.scss`).then(() => {
     return;
@@ -21,6 +25,9 @@ export default function App() {
     const isExact = !isNull(routeMatch) && routeMatch.isExact;
     if (isExact) {
       foundPage = true;
+      if (!isNull(props.root)) {
+        props.root.scrollTo(0, 0); // Reset scroll position when a new page is rendered
+      }
     }
     return isExact;
   }
@@ -36,7 +43,7 @@ export default function App() {
           )} />
 
           <Route path="/search" children={({match}) => (
-            <Search isVisible={isVisible(match)} />
+            <Search isVisible={isVisible(match)} root={props.root} />
           )} />
 
           <Route path="/package/:packageId/:packageVersion?" children={({match}) => (

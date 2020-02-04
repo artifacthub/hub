@@ -12,11 +12,11 @@ import MobileFilters from './MobileFilters';
 import getSearchParams from '../../utils/getSearchParams';
 import NoData from '../common/NoData';
 import Loading from '../common/Loading';
-import useScroll from '../../hooks/useScroll';
 import styles from './Search.module.css';
 
 interface Props {
   isVisible: boolean;
+  root: HTMLElement | null;
 }
 
 interface Cache {
@@ -34,27 +34,42 @@ const Search = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[]>([]);
   const [cachedSearch, setCachedSearch] = useState<Cache | null>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
-  // shouldFetchData checks if cachedSearch is empty or searchText is new or current cachedSearch has expired.
-  const shouldFetchData = () => {
-    if (isNull(cachedSearch)) {
-      return true;
+  const saveScrollPosition = () => {
+    if (!isNull(props.root)) {
+      setScrollPosition(props.root.scrollTop);
     }
-    if (cachedSearch.text !== query.text) {
-      return true;
-    }
-    if (cachedSearch.ts + EXPIRATION < Date.now()) {
-      return true;
-    }
-    return false;
-  };
-
-  useScroll(props.isVisible, shouldFetchData());
-
-  if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
-    setIsLoading(true);
-    setSearchText(query.text);
   }
+
+  useEffect(() => {
+    const shouldUpdateScrollPosition = () => {
+      if (!isNull(props.root) && props.isVisible && window.scrollY !== scrollPosition) {
+        props.root.scrollTo(0, scrollPosition);
+      }
+    };
+
+    // shouldFetchData checks if cachedSearch is empty or searchText is new or current cachedSearch has expired.
+    const shouldFetchData = () => {
+      if (isNull(cachedSearch)) {
+        return true;
+      }
+      if (cachedSearch.text !== query.text) {
+        return true;
+      }
+      if (cachedSearch.ts + EXPIRATION < Date.now()) {
+        return true;
+      }
+
+      shouldUpdateScrollPosition();
+      return false;
+    };
+
+    if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
+      setIsLoading(true);
+      setSearchText(query.text);
+    }
+  }, [props.isVisible, query.text, isLoading, cachedSearch, props.root, scrollPosition]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     // TODO change
@@ -121,7 +136,7 @@ const Search = (props: Props) => {
                     </>
                   </NoData>
                 ) : (
-                  <List sortBy={sortBy} packages={packages} searchText={searchText} />
+                  <List sortBy={sortBy} packages={packages} searchText={searchText} saveScrollPosition={saveScrollPosition} />
                 )}
               </div>
             </main>
