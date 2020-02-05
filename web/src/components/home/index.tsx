@@ -2,12 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import isNull from 'lodash/isNull';
 import API from '../../api';
-import { Stats } from '../../types';
+import { Stats, PackagesUpdatesInfo } from '../../types';
 import SearchBar from '../common/SearchBar';
 import ExternalLink from '../common/ExternalLink';
 import InfoSection from './InfoSection';
 import Logo from './Logo';
-import Content from './Content';
+import Updates from './Updates';
 import styles from './Home.module.css';
 
 interface Props {
@@ -18,25 +18,36 @@ interface Cache {
   ts: number;
 }
 
-const EXPIRATION = 30 * 60 * 1000; // 30min
+const EXPIRATION_STATS = 30 * 60 * 1000; // 30min
+const EXPIRATION_UPDATES = 15 * 60 * 1000; //15 min
 
 const Home = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesInfo | null>(null);
   const [cachedStats, setCachedStats] = useState<Cache | null>(null);
+  const [cachedPackagesUpdates, setCachedPackagesUpdates] = useState<Cache | null>(null);
 
-  // shouldFetchData checks if cachedStats is empty or current cachedStats has expired.
-  const shouldFetchData = useCallback(
+  // shouldFetchStatsData checks if cachedStats is empty or current cachedStats has expired.
+  const shouldFetchStatsData = useCallback(
     () => {
-      return props.isVisible && (isNull(cachedStats) || cachedStats.ts + EXPIRATION < Date.now());
+      return props.isVisible && (isNull(cachedStats) || cachedStats.ts + EXPIRATION_STATS < Date.now());
     },
     [cachedStats, props],
+  );
+
+  // shouldFetchPackagesUpdatesData checks if cachedPackagesUpdates is empty or current cachedPackagesUpdates has expired.
+  const shouldFetchPackagesUpdatesData = useCallback(
+    () => {
+      return props.isVisible && (isNull(cachedPackagesUpdates) || cachedPackagesUpdates.ts + EXPIRATION_UPDATES < Date.now());
+    },
+    [cachedPackagesUpdates, props],
   );
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        if (shouldFetchData()) {
+        if (shouldFetchStatsData()) {
           setStats(await API.getStats());
           setCachedStats({
             ts: Date.now(),
@@ -47,7 +58,23 @@ const Home = (props: Props) => {
       }
     };
     fetchStats();
-  }, [props.isVisible, shouldFetchData]);
+  }, [props.isVisible, shouldFetchStatsData]);
+
+  useEffect(() => {
+    async function fetchPackagesUpdates() {
+      try {
+        if (shouldFetchPackagesUpdatesData()) {
+          setPackagesUpdates(await API.getPackagesUpdates());
+          setCachedPackagesUpdates({
+            ts: Date.now(),
+          });
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPackagesUpdates();
+  }, [props.isVisible, shouldFetchPackagesUpdatesData]);
 
   if (!props.isVisible) return null;
 
@@ -73,7 +100,7 @@ const Home = (props: Props) => {
           <InfoSection isLoading={isLoading} stats={stats} type="releases" />
         </div>
 
-        <div className="mt-5 text-center">
+        <div className="mt-5 mb-2 text-center">
           <ExternalLink className="btn btn-secondary" href="https://github.com/tegioz/hub">
             <div className="d-flex align-items-center">
               <FaGithub className="mr-2" />
@@ -82,7 +109,11 @@ const Home = (props: Props) => {
           </ExternalLink>
         </div>
       </div>
-      <Content />
+
+      {!isNull(packagesUpdates) && (
+        <Updates packages={packagesUpdates} />
+      )}
+
       <Logo />
     </>
   );

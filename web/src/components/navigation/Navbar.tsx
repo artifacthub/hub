@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { FiHexagon } from 'react-icons/fi';
 import classnames from 'classnames';
 import SearchBar from '../common/SearchBar';
-import Login from './Login';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
@@ -34,14 +33,21 @@ const Navbar = () => {
                   styles.button,
                 )}
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                onClick={() => console.log('TO DO')}
               >
                 Sign up
               </button>
             </li>
 
             <li className="nav-item ml-4 position-relative">
-              <Login />
+              <button
+                type="button"
+                className={classnames(
+                  'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                  styles.button,
+                )}
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"              >
+                Login
+              </button>
             </li>
           </ul>
         </div>
