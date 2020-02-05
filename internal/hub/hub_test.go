@@ -336,6 +336,55 @@ func TestGetPackageVersionJSON(t *testing.T) {
 	assert.Equal(t, db.data, data)
 }
 
+func TestGetPackagesUpdatesJSON(t *testing.T) {
+	// Setup mock db and hub instance
+	db := &DBMock{}
+	db.setData([]byte(`
+	{
+        "latest_packages_added": [{
+            "kind": 0,
+            "name": "package1",
+            "logo_url": "logo_url",
+            "app_version": "12.1.0",
+            "chart_repository": {
+                "name": "repo1"
+            }
+        }, {
+            "kind": 0,
+            "name": "package2",
+            "logo_url": "logo_url",
+            "app_version": "12.1.0",
+            "chart_repository": {
+                "name": "repo2"
+            }
+        }],
+        "packages_recently_updated": [{
+            "kind": 0,
+            "name": "package1",
+            "logo_url": "logo_url",
+            "app_version": "12.1.0",
+            "chart_repository": {
+                "name": "repo1"
+            }
+        }, {
+            "kind": 0,
+            "name": "package2",
+            "logo_url": "logo_url",
+            "app_version": "12.1.0",
+            "chart_repository": {
+                "name": "repo2"
+            }
+        }]
+    }
+	`))
+	h := New(db)
+
+	// Check we get the expected packages updates json and error
+	data, err := h.GetPackagesUpdatesJSON(context.Background())
+	assert.Equal(t, db.err, err)
+	assert.Equal(t, db.data, data)
+}
+
 type DBMock struct {
 	data []byte
 	err  error

@@ -70,6 +70,13 @@ func (h *Hub) GetPackageVersionJSON(ctx context.Context, packageID, version stri
 	return h.dbQueryJSON(ctx, "select get_package_version($1, $2)", packageID, version)
 }
 
+// GetPackagesUpdatesJSON returns a json object with the latest packages added
+// as well as those which have been updated more recently. The json object is
+// built by the database.
+func (h *Hub) GetPackagesUpdatesJSON(ctx context.Context) ([]byte, error) {
+	return h.dbQueryJSON(ctx, "select get_packages_updates()")
+}
+
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (h *Hub) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {

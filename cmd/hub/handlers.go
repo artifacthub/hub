@@ -45,6 +45,7 @@ func (h *handlers) setupRouter() {
 
 	// API
 	r.GET("/api/v1/stats", h.getStats)
+	r.GET("/api/v1/updates", h.getPackagesUpdates)
 	r.GET("/api/v1/search", h.search)
 	r.GET("/api/v1/package/:package_id", h.getPackage)
 	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
@@ -67,6 +68,17 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 	jsonData, err := h.hubApi.GetStatsJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+	renderJSON(w, jsonData)
+}
+
+// getPackagesUpdates is an http handler used to get the last packages updates
+// in the hub database.
+func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	jsonData, err := h.hubApi.GetPackagesUpdatesJSON(r.Context())
+	if err != nil {
+		log.Error().Err(err).Msg("getPackagesUpdates failed")
 		http.Error(w, "", http.StatusInternalServerError)
 	}
 	renderJSON(w, jsonData)
