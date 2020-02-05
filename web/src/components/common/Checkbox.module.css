@@ -1,0 +1,4 @@
+.input,
+.input + label{
+  cursor: pointer;
+}

@@ -103,6 +103,7 @@ const Detail = (props: Props) => {
   );
 
   if (!isUndefined(packageId) && props.isVisible && !isLoading && (id !== packageId || version !== packageVersion || shouldFetchData())) {
+    setDetail(null); // We avoid to display info of the previous visited package
     setIsLoading(true);
     setId(packageId);
     setVersion(packageVersion);
@@ -151,32 +152,32 @@ const Detail = (props: Props) => {
     <>
       <BackToResults />
 
-      {!isNull(detail) && !isLoading && <Title {...detail} />}
+      <div className="position-relative flex-grow-1">
+        {isLoading && <Loading />}
 
-      <div className="container">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            {isNull(detail) ? (
-              <NoData>No data available for this package</NoData>
-            ) : (
-              <div className="row">
+        {!isNull(detail) && <Title {...detail} />}
+
+        <div className="container">
+          {isNull(detail) && !isLoading ? (
+            <NoData>No data available for this package</NoData>
+          ) : (
+            <div className="row">
+              {!isNull(detail) && (
                 <div className={styles.readme}>
-                  {isNull(detail!.readme) ? (
+                  {isNull(detail.readme) ? (
                     <NoData>No README file available for this package</NoData>
                   ) : (
                     <Readme markdownContent={detail.readme} />
                   )}
                 </div>
+              )}
 
-                <div className="col col-auto pl-5 pb-4">
-                  <Info package={detail} />
-                </div>
+              <div className="col col-auto pl-5 pb-4">
+                {!isNull(detail) && <Info package={detail} />}
               </div>
-            )}
-          </>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

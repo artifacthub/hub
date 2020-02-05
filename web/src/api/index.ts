@@ -1,5 +1,6 @@
-import { SearchResults, PackageDetail, Stats } from '../types';
+import { SearchResults, PackageDetail, Stats, Filters } from '../types';
 import fetchApi from '../utils/fetchApi';
+import prepareFiltersQuery from '../utils/prepareFiltersQuery';
 
 let API_ROUTE = '/api/v1';
 if (process.env.NODE_ENV === 'development') {
@@ -10,8 +11,8 @@ const API = {
   getPackage: (id?: string, version?: string): Promise<PackageDetail> => {
     return fetchApi(`${API_ROUTE}/package/${id}${version ? `/${version}` : ''}`);
   },
-  searchPackages: (text: string): Promise<SearchResults> => {
-    return fetchApi(`${API_ROUTE}/search?text=${encodeURIComponent(text)}`);
+  searchPackages: (text: string, filters?: Filters): Promise<SearchResults> => {
+    return fetchApi(`${API_ROUTE}/search?facets=true&text=${encodeURIComponent(text)}${prepareFiltersQuery(filters)}`);
   },
   getStats: (): Promise<Stats> => {
     return fetchApi(`${API_ROUTE}/stats`);

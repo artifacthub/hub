@@ -1,23 +1,29 @@
-import { SearchQuery } from '../types';
+import { SearchQuery, Filters } from '../types';
 
 export default (query: string): SearchQuery => {
   const defaultValues = {
     text: undefined,
-    activePackageKinds: ['all'],
-    activeKeywords: [],
-    activeRepositories: [],
+    filters: {},
   };
 
   if (window.URLSearchParams) {
     const params = new URLSearchParams(query);
+    let filters: Filters = {};
+
+    params.forEach((value, key) => {
+      if (key !== 'text') {
+        const values = filters[key] || [];
+        values.push(value);
+        filters[key] = values;
+      }
+    });
+
     return {
       text: params.has('text') ? params.get('text')! : undefined,
-      activePackageKinds: params.has('kinds') ? params.get('kinds')!.split(',') : [], // TODO
-      activeKeywords: params.has('keywords') ? params.get('keywords')!.split(',') : [], // TODO
-      activeRepositories: params.has('repositories') ? params.get('repositories')!.split(',') : [], // TODO
+      filters: { ...filters },
     };
   } else {
-    //  TODO
+    // TODO
     return defaultValues;
   }
 }

@@ -15,7 +15,7 @@ const BackToResults = () => {
   const onClick = () => {
     history.push({
       pathname: '/search',
-      search: `?text=${encodeURIComponent(location.state.searchText)}`,
+      search: `?text=${encodeURIComponent(location.state.searchText)}${location.state.filtersQuery}`,
     });
   }
 

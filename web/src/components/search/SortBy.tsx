@@ -4,6 +4,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './SortBy.module.css';
 
 interface Props {
+  disabled: boolean;
   value: string;
   setSortBy: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
 }
@@ -31,7 +32,12 @@ const SortBy = (props: Props) => {
 
   return (
     <div className="dropdown">
-      <button className={`btn btn-sm pr-0 text-uppercase dropdown-toggle ${styles.button}`} type="button" onClick={() => setOpenStatus(!openStatus)}>
+      <button
+        className={`btn btn-sm pr-0 text-uppercase dropdown-toggle ${styles.button}`}
+        type="button"
+        onClick={() => setOpenStatus(!openStatus)}
+        disabled={props.disabled}
+      >
         Sort by
       </button>
 

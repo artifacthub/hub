@@ -6,6 +6,7 @@ interface Props {
   version: string;
   packageId: string;
   searchText?: string;
+  filtersQuery?: string;
 }
 
 const Version = (props: Props) => {
@@ -16,7 +17,7 @@ const Version = (props: Props) => {
     setIsLoading(true);
     history.push({
       pathname: `/package/${props.packageId}/${props.version}`,
-      state: { searchText: props.searchText },
+      state: { searchText: props.searchText, filtersQuery: props.filtersQuery },
     });
   }
 

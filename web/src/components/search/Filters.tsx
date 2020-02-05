@@ -1,27 +1,32 @@
 import React from 'react';
-import { SearchQuery } from '../../types';
-import Kinds from './Kinds';
-import Repositories from './Repositories';
+import isNull from 'lodash/isNull';
+import { Facets, Filters as FiltersProp } from '../../types';
+import Facet from './Facet';
 import styles from './Filters.module.css';
 
-interface Props extends SearchQuery {
+interface Props {
+  activeFilters: FiltersProp;
+  facets: Facets[] | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Filters = (props: Props) => (
-  <div className={`pt-2 mt-3 ${styles.filters}`}>
-    <h6 className="text-uppercase pb-2 mb-4 border-bottom">Filters</h6>
+const Filters = (props: Props) => {
+  return (
+    <div className={`pt-2 mt-3 ${styles.filters}`}>
+      <h6 className="text-uppercase pb-2 mb-4 border-bottom">Filters</h6>
 
-    <Kinds activePackageKinds={props.activePackageKinds} onChange={props.onChange} />
-
-    <Repositories activeRepositories={props.activeRepositories} onChange={props.onChange} />
-
-    <div className="mt-5">
-      <div className="alert alert-light text-center">
-        Filters are not available yet
-      </div>
+      {!isNull(props.facets) && props.facets.map((facets: Facets) => {
+        return (
+          <Facet
+            key={facets.filter_key}
+            {...facets}
+            onChange={props.onChange}
+            active={props.activeFilters.hasOwnProperty(facets.filter_key) ? props.activeFilters[facets.filter_key] : []}
+          />
+        );
+      })}
     </div>
-  </div>
-);
+  );
+}
 
 export default Filters;

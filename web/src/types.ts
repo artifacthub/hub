@@ -36,13 +36,16 @@ export interface PackageDetail extends Package {
 
 export interface SearchResults {
   packages: Package[];
+  facets: Facets[];
+}
+
+export interface Filters {
+  [key: string]: string[];
 }
 
 export interface SearchQuery {
   text?: string;
-  activeKeywords: string[];
-  activePackageKinds: string[];
-  activeRepositories: string[];
+  filters: Filters;
 }
 
 export interface SearchParams extends SearchQuery {
@@ -53,4 +56,16 @@ export interface SearchParams extends SearchQuery {
 export interface Stats {
   packages: number;
   releases: number;
+}
+
+export interface Facets {
+  filter_key: string;
+  title: string;
+  options: FacetOption[];
+};
+
+export interface FacetOption {
+  id: string;
+  name: string;
+  total: number;
 }
