@@ -1,4 +1,4 @@
-import { SearchResults, PackageDetail, Stats, Filters } from '../types';
+import { SearchResults, PackageDetail, Stats, Filters, PackagesUpdatesInfo } from '../types';
 import fetchApi from '../utils/fetchApi';
 import prepareFiltersQuery from '../utils/prepareFiltersQuery';
 
@@ -16,6 +16,9 @@ const API = {
   },
   getStats: (): Promise<Stats> => {
     return fetchApi(`${API_ROUTE}/stats`);
+  },
+  getPackagesUpdates: (): Promise<PackagesUpdatesInfo> => {
+    return fetchApi(`${API_ROUTE}/updates`);
   },
 };
 

@@ -69,3 +69,8 @@ export interface FacetOption {
   name: string;
   total: number;
 }
+
+export interface PackagesUpdatesInfo {
+  latest_packages_added: Package[];
+  packages_recently_updated: Package[];
+}
