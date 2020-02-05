@@ -44,6 +44,8 @@ create table if not exists package (
     logo_url text check (logo_url <> ''),
     keywords text[],
     latest_version text not null check (latest_version <> ''),
+    created_at timestamptz default current_timestamp not null,
+    updated_at timestamptz default current_timestamp not null,
     tsdoc tsvector generated always as (
         generate_package_tsdoc(name, display_name, description, keywords)
     ) stored,
@@ -56,6 +58,8 @@ create table if not exists package (
 create index package_tsdoc_idx on package using gin (tsdoc);
 create index package_package_kind_id_idx on package (package_kind_id);
 create index package_chart_repository_id_idx on package (chart_repository_id);
+create index package_created_at_idx on package (created_at);
+create index package_updated_at_idx on package (updated_at);
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,

@@ -41,7 +41,8 @@ begin
         description = excluded.description,
         home_url = excluded.home_url,
         keywords = excluded.keywords,
-        latest_version = excluded.latest_version
+        latest_version = excluded.latest_version,
+        updated_at = current_timestamp
     where semver_gte(p_pkg->>'version', package.latest_version) = true
     returning package_id into v_package_id;
 

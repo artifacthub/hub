@@ -1,3 +1,4 @@
+drop function if exists get_packages_updates();
 drop function if exists get_package(p_package_id uuid);
 drop function if exists get_package_version(p_package_id uuid, version text);
 drop function if exists search_packages(query jsonb);

@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(27);
+select plan(28);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -44,6 +44,8 @@ select columns_are('package', array[
     'logo_url',
     'keywords',
     'latest_version',
+    'created_at',
+    'updated_at',
     'tsdoc',
     'package_kind_id',
     'chart_repository_id'
@@ -83,7 +85,9 @@ select indexes_are('package', array[
     'package_chart_repository_id_name_key',
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
-    'package_tsdoc_idx'
+    'package_tsdoc_idx',
+    'package_created_at_idx',
+    'package_updated_at_idx'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'
@@ -106,6 +110,7 @@ select has_function('get_stats');
 select has_function('search_packages');
 select has_function('get_package_version');
 select has_function('get_package');
+select has_function('get_packages_updates');
 
 -- Check package kinds exist
 SELECT results_eq(

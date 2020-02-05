@@ -7,3 +7,4 @@
 {{ template "functions/search_packages.sql" }}
 {{ template "functions/get_package_version.sql" }}
 {{ template "functions/get_package.sql" }}
+{{ template "functions/get_packages_updates.sql" }}
