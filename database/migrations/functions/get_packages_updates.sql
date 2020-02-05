@@ -5,23 +5,29 @@ returns setof json as $$
     select json_build_object(
         'latest_packages_added', (
             select coalesce(json_agg(json_build_object(
+                'package_id', package_id,
                 'kind', package_kind_id,
                 'name', name,
+                'display_name', display_name,
                 'logo_url', logo_url,
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
-                        'name', chart_repository_name
+                        'name', chart_repository_name,
+                        'display_name', chart_repository_display_name
                     )
                 )
             )), '[]')
             from (
                 select
+                    p.package_id,
                     p.package_kind_id,
                     p.name,
+                    p.display_name,
                     p.logo_url,
                     s.app_version,
-                    r.name as chart_repository_name
+                    r.name as chart_repository_name,
+                    r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
                 join chart_repository r using (chart_repository_id)
@@ -31,23 +37,29 @@ returns setof json as $$
         ),
         'packages_recently_updated', (
             select coalesce(json_agg(json_build_object(
+                'package_id', package_id,
                 'kind', package_kind_id,
                 'name', name,
+                'display_name', display_name,
                 'logo_url', logo_url,
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
-                        'name', chart_repository_name
+                        'name', chart_repository_name,
+                        'display_name', chart_repository_display_name
                     )
                 )
             )), '[]')
             from (
                 select
+                    p.package_id,
                     p.package_kind_id,
                     p.name,
+                    p.display_name,
                     p.logo_url,
                     s.app_version,
-                    r.name as chart_repository_name
+                    r.name as chart_repository_name,
+                    r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
                 join chart_repository r using (chart_repository_id)

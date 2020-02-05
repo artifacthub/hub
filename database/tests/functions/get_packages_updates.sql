@@ -113,37 +113,49 @@ select is(
     get_packages_updates()::jsonb,
     '{
         "latest_packages_added": [{
+            "package_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
             "name": "package1",
+            "display_name": "Package 1",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo1"
+                "name": "repo1",
+                "display_name": "Repo 1"
             }
         }, {
+            "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "display_name": "Package 2",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo2"
+                "name": "repo2",
+                "display_name": "Repo 2"
             }
         }],
         "packages_recently_updated": [{
+            "package_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
             "name": "package1",
+            "display_name": "Package 1",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo1"
+                "name": "repo1",
+                "display_name": "Repo 1"
             }
         }, {
+            "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "display_name": "Package 2",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo2"
+                "name": "repo2",
+                "display_name": "Repo 2"
             }
         }]
     }'::jsonb,
@@ -181,37 +193,49 @@ select is(
     get_packages_updates()::jsonb,
     '{
         "latest_packages_added": [{
+            "package_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
             "name": "package1",
+            "display_name": "Package 1",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo1"
+                "name": "repo1",
+                "display_name": "Repo 1"
             }
         }, {
+            "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "display_name": "Package 2 v2",
             "logo_url": "logo_url",
             "app_version": "13.0.0",
             "chart_repository": {
-                "name": "repo2"
+                "name": "repo2",
+                "display_name": "Repo 2"
             }
         }],
         "packages_recently_updated": [{
+            "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "display_name": "Package 2 v2",
             "logo_url": "logo_url",
             "app_version": "13.0.0",
             "chart_repository": {
-                "name": "repo2"
+                "name": "repo2",
+                "display_name": "Repo 2"
             }
         }, {
+            "package_id": "00000000-0000-0000-0000-000000000001",
             "kind": 0,
             "name": "package1",
+            "display_name": "Package 1",
             "logo_url": "logo_url",
             "app_version": "12.1.0",
             "chart_repository": {
-                "name": "repo1"
+                "name": "repo1",
+                "display_name": "Repo 1"
             }
         }]
     }'::jsonb,
