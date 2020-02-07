@@ -1,45 +1,38 @@
 import React from 'react';
+import { FiDownload } from 'react-icons/fi';
 import { PackageDetail, PackageKind } from '../../types';
 import Modal from '../common/Modal';
-import Image from '../common/Image';
-import styles from './Install.module.css';
 import ChartInstall from './ChartInstall';
+import ModalHeader from './ModalHeader';
+import styles from './Install.module.css';
 
 interface Props {
   package: PackageDetail;
+  buttonIcon?: boolean;
+  buttonType?: string;
 }
 
-const Install = (props: Props) => {
-  const header = (
+const Install = (props: Props) => (
+  <Modal
+    buttonType={props.buttonType}
+    buttonTitle="Install"
+    buttonIcon={props.buttonIcon ? <FiDownload className="mr-2" /> : undefined}
+    header={<ModalHeader package={props.package} />}
+    className={styles.wrapper}
+  >
     <>
-      <div className="d-flex align-items-center">
-        <div className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}>
-          <Image className={styles.image} alt={props.package.name} src={props.package.logo_url} />
-        </div>
-
-        <div className="ml-3">
-          <h5 className="mb-0">{props.package.display_name || props.package.name}</h5>
-        </div>
-      </div>
+      {(() => {
+        switch (props.package.kind) {
+          case PackageKind.Chart:
+            return (
+              <ChartInstall name={props.package.name} version={props.package.version} repository={props.package.chart_repository} />
+            );
+          default:
+            return null;
+        }
+      })()}
     </>
-  );
-
-  return (
-    <Modal buttonTitle="Install" header={header} className={styles.wrapper}>
-      <>
-        {(() => {
-          switch (props.package.kind) {
-            case PackageKind.Chart:
-              return (
-                <ChartInstall name={props.package.name} version={props.package.version} repository={props.package.chart_repository} />
-              );
-            default:
-              return null;
-          }
-        })()}
-      </>
-    </Modal>
-  );
-};
+  </Modal>
+);
 
 export default Install;

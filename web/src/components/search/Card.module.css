@@ -20,10 +20,11 @@
 
 .icon {
   height: auto;
-  width: 12px;
+  width: 18px;
 }
 
 .imageWrapper {
+  min-width: 60px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -51,6 +52,7 @@
 
 .subtitle {
   font-size: .85rem;
+  line-height: 1.2;
 }
 
 .subtitle span {
@@ -68,9 +70,33 @@
   -webkit-box-orient: vertical;
 }
 
+.truncateWrapper {
+  min-width: 0;
+}
+
 @media only screen and (max-width: 768px) {
-  .image {
+  .imageWrapper {
+    min-width: 40px;
     width: 40px;
     height: 40px;
+  }
+
+  .image {
+    max-width: calc(100% - 4px);
+    max-height: calc(100% - 4px);
+  }
+
+  .body {
+    padding: 1rem !important;
+  }
+
+  .subtitle {
+    flex-direction: column !important;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .subtitle {
+    font-size: .95rem;
   }
 }

@@ -27,7 +27,7 @@ const Version = (props: Props) => {
   }
 
   return (
-    <div>
+    <div className="py-1 py-sm-0">
       {props.isActive ? (
         <div className="d-flex align-items-center text-truncate">
           {props.version}

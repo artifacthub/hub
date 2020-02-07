@@ -5,8 +5,8 @@ interface Props {
 }
 
 const NoData = (props: Props) => (
-  <div className="alert alert-primary ml-auto mr-auto mt-5 w-75 text-center p-5 border">
-    <div className="h3">{props.children}</div>
+  <div className="alert alert-primary ml-auto mr-auto my-5 w-75 text-center p-4 p-sm-5 border">
+    <div className="h4">{props.children}</div>
   </div>
 );
 

@@ -21,7 +21,6 @@ import prepareFiltersQuery from '../../utils/prepareFiltersQuery';
 
 interface Props {
   isVisible: boolean;
-  root: HTMLElement | null;
 }
 
 interface Cache {
@@ -94,9 +93,7 @@ const Search = (props: Props) => {
   const [emptyFacets, setEmptyFacets] = useState(true);
 
   const saveScrollPosition = () => {
-    if (!isNull(props.root)) {
-      setScrollPosition(props.root.scrollTop);
-    }
+    setScrollPosition(window.scrollY);
   }
 
   useEffect(() => {
@@ -107,8 +104,8 @@ const Search = (props: Props) => {
 
   useEffect(() => {
     const shouldUpdateScrollPosition = () => {
-      if (!isNull(props.root) && props.isVisible && window.scrollY !== scrollPosition) {
-        props.root.scrollTo(0, scrollPosition);
+      if (props.isVisible && window.scrollY !== scrollPosition) {
+        window.scrollTo(0, scrollPosition);
       }
     };
 
@@ -142,7 +139,7 @@ const Search = (props: Props) => {
       setSearch({text: query.text, filters: activeFilters});
       setScrollPosition(0);
     }
-  }, [props.isVisible, query.text, isLoading, activeFilters, cachedSearch, props.root, scrollPosition]);
+  }, [props.isVisible, query.text, isLoading, activeFilters, cachedSearch, scrollPosition]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -203,14 +200,21 @@ const Search = (props: Props) => {
   return (
     <>
       <SubNavbar>
-        <div>
+        <div className="d-flex align-items-center">
           {!isNull(packages) && (
             <>
               {!emptyFacets && (
-                <MobileFilters {...query} facets={facets} activeFilters={search.filters} onChange={onChange} />
+                <MobileFilters
+                  {...query}
+                  facets={facets}
+                  activeFilters={search.filters}
+                  onChange={onChange}
+                  packagesNumber={isNull(packages) ? 0 : packages.length}
+                  isLoading={isLoading}
+                />
               )}
               {!isLoading && (
-                <>{packages.length} results for "<span className="font-weight-bold">{search.text}</span>"</>
+                <>{packages.length} results <span className="d-none d-sm-inline pl-2">for "<span className="font-weight-bold">{search.text}</span>"</span></>
               )}
             </>
           )}
@@ -229,12 +233,18 @@ const Search = (props: Props) => {
             <nav className={`d-none d-md-block ${styles.sidebar}`}>
               {/* TODO - sticky-top not working with long list of filters, we need to check different solutions */}
               <div className="mr-5">
-                <Filters {...query} facets={facets} activeFilters={search.filters} onChange={onChange} />
+                <Filters
+                  {...query}
+                  facets={facets}
+                  activeFilters={search.filters}
+                  onChange={onChange}
+                  visibleTitle
+                />
               </div>
             </nav>
           )}
 
-          <div className="flex-grow-1">
+          <div className="flex-grow-1 mw-100">
             {!isNull(packages) && (
               <>
                 {packages.length === 0 || isUndefined(search.text) ? (

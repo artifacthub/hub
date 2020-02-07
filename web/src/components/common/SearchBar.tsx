@@ -34,6 +34,12 @@ const SearchBar = (props: Props) => {
     }
   };
 
+  const forceBlur = (): void => {
+    if (!isNull(inputEl) && !isNull(inputEl.current)) {
+      inputEl.current.blur();
+    }
+  };
+
   if (location.search.includes(encodeURIComponent(value)) && isSearching) {
     setIsSearching(false);
   }
@@ -50,6 +56,7 @@ const SearchBar = (props: Props) => {
       if (e.keyCode === 13 && value !== '') {
         e.preventDefault();
         setIsSearching(true);
+        forceBlur();
 
         history.push({
           pathname: '/search',
@@ -78,7 +85,7 @@ const SearchBar = (props: Props) => {
 
           <input
             ref={inputEl}
-            className={`flex-grow-1 ${styles.input}`}
+            className={`flex-grow-1 pl-sm-0 pl-3 ${styles.input}`}
             type="text"
             autoComplete="off"
             autoCorrect="off"
