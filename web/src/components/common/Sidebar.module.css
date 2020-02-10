@@ -1,0 +1,42 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  width: 70%;
+  bottom: 0;
+  transition: all .15s linear;
+  -webkit-transition: all .15s linear;
+  z-index: 1050;
+  background-color: var(--body-bg);
+}
+
+.left {
+  left: 0;
+  -webkit-transform: translateX(-105%);
+  transform: translateX(-105%);
+  box-shadow: 5px 0px 5px 0px var(--color-black-25);
+}
+
+.right {
+  right: 0;
+  -webkit-transform: translateX(105%);
+  transform: translateX(105%);
+  box-shadow: -5px 0px 5px 0px var(--color-black-25);
+}
+
+.active {
+  -webkit-transform: none;
+  transform: none;
+}
+
+.activeBackdrop {
+  animation: fadeIn50 .15s 1 ease-in-out forwards;
+}
+
+.contentWrapper {
+  min-height: 0;
+}
+
+@keyframes fadeIn50 {
+  from { opacity: 0; }
+    to { opacity: .5; }
+}

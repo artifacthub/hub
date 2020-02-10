@@ -37,8 +37,8 @@ $body-color: #38383f;
 
   --logo-font: 'Original Surfer', cursive;
 
-  --color-font: $body-color;
-  --body-bg: $body-bg;
+  --color-font: #38383f;
+  --body-bg: #f4f4f4;
 }
 
 @import '~bootstrap/scss/bootstrap.scss';

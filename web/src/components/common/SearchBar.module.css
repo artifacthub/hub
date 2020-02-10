@@ -62,9 +62,3 @@
     top: 5px;
   }
 }
-
-@media (hover: hover) {
-  .searchBar:not(.big):hover {
-    box-shadow: 0 0 0 0.3rem var(--color-black-25);
-  }
-}
