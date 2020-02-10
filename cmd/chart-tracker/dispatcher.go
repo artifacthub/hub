@@ -62,7 +62,9 @@ func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 			return
 		}
 		wgRepos.Add(1)
-		go d.trackRepositoryCharts(&wgRepos, r)
+		go func(r *hub.ChartRepository) {
+			d.trackRepositoryCharts(&wgRepos, r)
+		}(r)
 	}
 
 	wgRepos.Wait()
