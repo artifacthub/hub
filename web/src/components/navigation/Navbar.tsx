@@ -20,7 +20,7 @@ const Navbar = () => {
           HUB
         </Link>
 
-        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto w-100 flex-grow-1 ${styles.search}`} />}
+        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto flex-grow-1 ${styles.search}`} />}
 
         <div className="collapse navbar-collapse" id="navbarNav">
           {/* TODO - login */}

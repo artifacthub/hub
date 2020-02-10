@@ -1,6 +1,5 @@
 .card {
   width: 380px;
-  height: 93px;
   background-color: var(--white) !important;
   box-shadow: 0px 0px 5px 0px var(--light);
 }
@@ -12,10 +11,6 @@
 
 .body {
   padding: 1rem !important;
-}
-
-.legend {
-  font-size: .5rem;
 }
 
 .imageWrapper {

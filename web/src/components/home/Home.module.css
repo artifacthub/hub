@@ -20,3 +20,15 @@
 .counterWrapper {
   width: 100px;
 }
+
+@media only screen and (max-width: 768px) {
+  .mainTitle {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .mainTitle {
+    font-size: 2rem !important;
+  }
+}

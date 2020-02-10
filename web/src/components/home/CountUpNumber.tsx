@@ -12,7 +12,7 @@ const CountUpNumber = (props: Props) => {
   });
 
   return (
-    <h3>{countUp}</h3>
+    <div className="h3">{countUp}</div>
   );
 }
 

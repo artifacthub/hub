@@ -6,6 +6,7 @@ import Title from './Title';
 import Checkbox from '../common/Checkbox';
 import ExpandableList from '../common/ExpandableList';
 import isUndefined from 'lodash/isUndefined';
+import styles from './Facet.module.css';
 
 interface Props {
   filter_key: string;
@@ -78,7 +79,7 @@ const Facet = (props: Props) => {
   if (allOptions.length === 0) return null;
 
   return (
-    <div className="mt-4 pt-2">
+    <div className={`mt-4 pt-2 ${styles.facet}`}>
       <Title text={props.title} />
 
       <div className="mt-3">

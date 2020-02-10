@@ -103,10 +103,13 @@ const Detail = (props: Props) => {
   );
 
   if (!isUndefined(packageId) && props.isVisible && !isLoading && (id !== packageId || version !== packageVersion || shouldFetchData())) {
-    setDetail(null); // We avoid to display info of the previous visited package
     setIsLoading(true);
     setId(packageId);
     setVersion(packageVersion);
+  }
+
+  if (!isNull(detail) && !props.isVisible) {
+    setDetail(null); // We avoid to display info of the previous visited package
   }
 
   useEffect(() => {
@@ -172,7 +175,7 @@ const Detail = (props: Props) => {
                 </div>
               )}
 
-              <div className="col col-auto pl-5 pb-4">
+              <div className="col col-auto pl-5 pb-4 d-none d-md-block">
                 {!isNull(detail) && <Info package={detail} />}
               </div>
             </div>

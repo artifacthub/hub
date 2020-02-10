@@ -13,6 +13,8 @@
 .btnFilters {
   transition: all .3s ease-in-out;
   background-color: var(--color-black-5) !important;
+  height: 32px;
+  width: 32px;
 }
 
 .btnFilters:hover {

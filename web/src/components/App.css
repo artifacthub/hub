@@ -5,14 +5,6 @@ html, body, #root {
   padding: 0;
 }
 
-body {
-  overflow: hidden;
-}
-
-#root {
-  overflow-x: auto;
-}
-
 button:focus {
   outline: none !important;
 }

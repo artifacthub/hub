@@ -15,11 +15,11 @@ interface Props {
 const InfoSection = (props: Props) => (
   <div className={`text-center ${styles.counterWrapper}`}>
     {props.isLoading ? (
-      <h3><div className="spinner-grow text-primary" /></h3>
+      <div className="h3"><div className="spinner-grow text-primary" /></div>
     ) : (
       <>
         {isNull(props.stats) ? (
-          <h3>-</h3>
+          <div className="h3">-</div>
         ) : (
           <CountUpNumber number={props.stats[props.type]} />
         )}

@@ -81,11 +81,11 @@ const Home = (props: Props) => {
   return (
     <>
       <div className={`jumbotron text-center ${styles.jumbotron}`}>
-        <h1 className="display-4 text-center font-weight-light">
+        <div className={`display-4 text-center font-weight-light ${styles.mainTitle}`}>
           Find, install and publish
           <br />
           Kubernetes packages
-        </h1>
+        </div>
 
         <div className="mt-5 text-center">
           <SearchBar

@@ -6,10 +6,6 @@
   box-shadow: 0 0 0 0.3rem var(--color-black-15);
 }
 
-.searchBar:not(.big):hover {
-  box-shadow: 0 0 0 0.3rem var(--color-black-25);
-}
-
 .big {
   height: 50px;
   border-radius: 25px;
@@ -45,4 +41,30 @@
 .big + .loading {
   right: -50px;
   top: 10px;
+}
+
+@media only screen and (max-width: 576px) {
+  .searchBar {
+    height: 30px;
+    border-radius: 15px;
+  }
+
+  .loading {
+    top: 2px;
+  }
+
+  .big {
+    height: 40px;
+    border-radius: 20px;
+  }
+
+  .big + .loading {
+    top: 5px;
+  }
+}
+
+@media (hover: hover) {
+  .searchBar:not(.big):hover {
+    box-shadow: 0 0 0 0.3rem var(--color-black-25);
+  }
 }

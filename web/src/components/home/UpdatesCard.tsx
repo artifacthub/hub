@@ -27,7 +27,7 @@ const UpdatesCard = (props: Props) => (
 
             <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>
               <div className={`card-title font-weight-bolder ${styles.title}`}>
-                <h6 className="text-truncate">{props.packageItem.display_name || props.packageItem.name}</h6>
+                <div className="h6 text-truncate">{props.packageItem.display_name || props.packageItem.name}</div>
               </div>
 
               <div className={`card-subtitle align-items-center ${styles.subtitle}`}>

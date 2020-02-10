@@ -25,3 +25,10 @@
 .header {
   background-color: var(--color-1-10);
 }
+
+@media only screen and (max-width: 576px) {
+  .content {
+    height: 100%;
+    width: 100%;
+  }
+}
