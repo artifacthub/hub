@@ -17,6 +17,8 @@
   width: 32px;
 }
 
-.btnFilters:hover {
-  background-color: var(--color-black-15) !important;
+@media (hover: hover) {
+  .btnFilters:hover {
+    background-color: var(--color-black-15) !important;
+  }
 }

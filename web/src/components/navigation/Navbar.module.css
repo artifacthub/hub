@@ -37,13 +37,15 @@
   box-shadow: 0;
 }
 
-.button:hover::before {
-  content: "";
-  position: absolute;
-  top: -18px;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background-color: var(--white);
-  opacity: .5;
+@media (hover: hover) {
+  .button:hover::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--white);
+    opacity: .5;
+  }
 }

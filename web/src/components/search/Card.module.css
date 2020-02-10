@@ -5,9 +5,11 @@
   box-shadow: 0px 0px 5px 0px var(--light);
 }
 
-.card:hover {
-  border-color: var(--color-1-700);
-  box-shadow: 0px 0px 5px 0px var(--color-1-900);
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--color-1-700);
+    box-shadow: 0px 0px 5px 0px var(--color-1-900);
+  }
 }
 
 .body {

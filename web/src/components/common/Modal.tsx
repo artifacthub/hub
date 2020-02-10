@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isString from 'lodash/isString';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './Modal.module.css';
 import isUndefined from 'lodash/isUndefined';
+import useBodyScroll from '../../hooks/useBodyScroll';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -19,14 +20,7 @@ const Modal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const ref = useRef(null);
   useOutsideClick([ref], () => setOpenStatus(false));
-
-  useEffect(() => {
-    if (openStatus) {
-      document.body.classList.add('modal-open');
-    } else {
-      document.body.classList.remove('modal-open');
-    }
-  }, [openStatus]);
+  useBodyScroll(openStatus);
 
   return (
     <div className={props.className}>

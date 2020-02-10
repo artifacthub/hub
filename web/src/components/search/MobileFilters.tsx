@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaFilter } from 'react-icons/fa';
 import Filters from './Filters';
-import Modal from '../common/Modal';
+import Sidebar from '../common/Sidebar';
 import { Facets, Filters as FiltersProp } from '../../types';
 import styles from './MobileFilters.module.css';
 
@@ -28,18 +28,18 @@ const MobileFilters = (props: Props) => {
   }
 
   return (
-    <Modal
+    <Sidebar
       className="d-inline-block d-md-none mr-2"
       buttonType={`btn-sm rounded-circle ${styles.btnFilters}`}
       buttonIcon={<FaFilter />}
-      header={<div className="h6 text-uppercase mb-0">Filters</div>}
       closeButton={getCloseButtonInfo()}
+      header={<div className="h6 text-uppercase mb-0">Filters</div>}
     >
       <Filters
         {...props}
         visibleTitle={false}
       />
-    </Modal>
+    </Sidebar>
   );
 }
 
