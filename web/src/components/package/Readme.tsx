@@ -26,6 +26,10 @@ interface LinkProps {
   children: any;
 }
 
+interface TableProps {
+  children: JSX.Element | JSX.Element[];
+}
+
 const Code: React.ElementType = (props: CodeProps) => {
   if (props.value) {
     return (
@@ -52,6 +56,16 @@ const Link: React.ElementType = (props: LinkProps) => {
   : <>{props.children}</>;
 };
 
+const Table: React.ElementType = (props: TableProps) => {
+  return (
+    <div className="w-100 overflow-auto">
+      <table>
+        {props.children}
+      </table>
+    </div>
+  );
+};
+
 const Info = (props: Props) => (
   <ReactMarkdown
     className={`mt-3 mb-5 ${styles.md}`}
@@ -62,6 +76,7 @@ const Info = (props: Props) => (
       code: Code,
       image: Image,
       link: Link,
+      table: Table,
     }}
   />
 );
