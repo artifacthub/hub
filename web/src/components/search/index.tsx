@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react';
+import React, { useState, useEffect, useReducer, useCallback, Dispatch, SetStateAction } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
@@ -21,6 +21,8 @@ import prepareFiltersQuery from '../../utils/prepareFiltersQuery';
 
 interface Props {
   isVisible: boolean;
+  isSearching: boolean;
+  setIsSearching: Dispatch<SetStateAction<boolean>>;
 }
 
 interface Cache {
@@ -83,7 +85,6 @@ const Search = (props: Props) => {
   const history = useHistory();
   const query = getSearchParams(location.search);
   const [sortBy, setSortBy] = useState<'asc' | 'desc'>('asc');
-  const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | null>(null);
   const [facets, setFacets] = useState<Facets[] | null>(null);
   const [cachedSearch, setCachedSearch] = useState<Cache | null>(null);
@@ -91,6 +92,7 @@ const Search = (props: Props) => {
   const [activeFilters, dispatch] = useReducer(reducer, query.filters);
   const [search, setSearch] = useState({text: query.text, filters: activeFilters});
   const [emptyFacets, setEmptyFacets] = useState(true);
+  const { isSearching, setIsSearching, isVisible } = props;
 
   const saveScrollPosition = () => {
     setScrollPosition(window.scrollY);
@@ -104,7 +106,7 @@ const Search = (props: Props) => {
 
   useEffect(() => {
     const shouldUpdateScrollPosition = () => {
-      if (props.isVisible && window.scrollY !== scrollPosition) {
+      if (isVisible && window.scrollY !== scrollPosition) {
         window.scrollTo(0, scrollPosition);
       }
     };
@@ -134,12 +136,12 @@ const Search = (props: Props) => {
       return false;
     };
 
-    if (props.isVisible && !isUndefined(query.text) && !isLoading && shouldFetchData()) {
-      setIsLoading(true);
+    if (isVisible && !isUndefined(query.text) && !isSearching && shouldFetchData()) {
+      setIsSearching(true);
       setSearch({text: query.text, filters: activeFilters});
       setScrollPosition(0);
     }
-  }, [props.isVisible, query.text, isLoading, activeFilters, cachedSearch, scrollPosition]);
+  }, [isVisible, query.text, isSearching, setIsSearching, activeFilters, cachedSearch, scrollPosition]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -167,7 +169,7 @@ const Search = (props: Props) => {
 
   useEffect(() => {
     async function fetchSearchResults() {
-      if (!isUndefined(search.text) && isLoading) {
+      if (!isUndefined(search.text) && isSearching) {
         try {
           const searchResults = await API.searchPackages(search.text, search.filters);
           setPackages(searchResults.packages);
@@ -188,14 +190,14 @@ const Search = (props: Props) => {
             ts: Date.now(),
             filters: search.filters,
           });
-          setIsLoading(false);
+          setIsSearching(false);
         }
       }
     };
     fetchSearchResults();
-  }, [search, isLoading, updateLocation]);
+  }, [search, isSearching, setIsSearching, updateLocation]);
 
-  if (!props.isVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <>
@@ -210,10 +212,10 @@ const Search = (props: Props) => {
                   activeFilters={search.filters}
                   onChange={onChange}
                   packagesNumber={isNull(packages) ? 0 : packages.length}
-                  isLoading={isLoading}
+                  isLoading={isSearching}
                 />
               )}
-              {!isLoading && (
+              {!isSearching && (
                 <>{packages.length} results <span className="d-none d-sm-inline pl-2">for "<span className="font-weight-bold">{search.text}</span>"</span></>
               )}
             </>
@@ -221,12 +223,12 @@ const Search = (props: Props) => {
         </div>
 
         <div>
-          <SortBy setSortBy={setSortBy} value={sortBy} disabled={isLoading} />
+          <SortBy setSortBy={setSortBy} value={sortBy} disabled={isSearching} />
         </div>
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isLoading || isNull(packages)) && <Loading />}
+        {(isSearching || isNull(packages)) && <Loading />}
 
         <main role="main" className="container d-flex flex-row justify-content-between">
           {!emptyFacets && (

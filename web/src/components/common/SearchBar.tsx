@@ -9,6 +9,7 @@ interface Props {
   formClassName?: string;
   text?: string;
   size: 'big' | 'normal';
+  isSearching: boolean;
 }
 
 const SearchBar = (props: Props) => {
@@ -17,7 +18,6 @@ const SearchBar = (props: Props) => {
   const params = getSearchParams(location.search);
   const [value, setValue] = useState(params.text || '');
   const inputEl = useRef<HTMLInputElement>(null);
-  const [isSearching, setIsSearching] = useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
@@ -40,10 +40,6 @@ const SearchBar = (props: Props) => {
     }
   };
 
-  if (location.search.includes(encodeURIComponent(value)) && isSearching) {
-    setIsSearching(false);
-  }
-
   useEffect(() => {
     if (params.text !== value) {
       setValue(params.text || '');
@@ -55,7 +51,6 @@ const SearchBar = (props: Props) => {
       // When return key is pressed
       if (e.keyCode === 13 && value !== '') {
         e.preventDefault();
-        setIsSearching(true);
         forceBlur();
 
         history.push({
@@ -95,6 +90,7 @@ const SearchBar = (props: Props) => {
             aria-label="Search"
             value={value}
             onChange={onChange}
+            disabled={props.isSearching}
           />
 
           {value !== '' && (
@@ -108,7 +104,7 @@ const SearchBar = (props: Props) => {
             </button>
           )}
         </div>
-        {isSearching && <div className={`position-absolute text-light ${styles.loading}`}><span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} /></div>}
+        {props.isSearching && <div className={`position-absolute text-light ${styles.loading}`}><span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} /></div>}
       </div>
     </>
   );
