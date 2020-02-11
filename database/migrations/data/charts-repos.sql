@@ -20,7 +20,6 @@ insert into chart_repository (name, url) values ('chubaofs','https://chubaofs.gi
 insert into chart_repository (name, url) values ('citrix','https://citrix.github.io/citrix-helm-charts/');
 insert into chart_repository (name, url) values ('cloudbees','https://charts.cloudbees.com/public/cloudbees');
 insert into chart_repository (name, url) values ('cloudwatch-agent','https://s2504s.github.io/charts/');
-insert into chart_repository (name, url) values ('code-chris','https://code-chris.github.io/helm-charts/charts');
 insert into chart_repository (name, url) values ('codecentric','https://codecentric.github.io/helm-charts');
 insert into chart_repository (name, url) values ('concourse','https://concourse-charts.storage.googleapis.com/');
 insert into chart_repository (name, url) values ('couchdb','https://apache.github.io/couchdb-helm/');
