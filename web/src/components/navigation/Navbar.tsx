@@ -5,7 +5,11 @@ import classnames from 'classnames';
 import SearchBar from '../common/SearchBar';
 import styles from './Navbar.module.css';
 
-const Navbar = () => {
+interface Props {
+  isSearching: boolean;
+}
+
+const Navbar = (props: Props) => {
   const location = useLocation();
 
   return (
@@ -20,7 +24,7 @@ const Navbar = () => {
           HUB
         </Link>
 
-        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto flex-grow-1 ${styles.search}`} />}
+        {location.pathname !== '/' && <SearchBar size="normal" formClassName={`mr-auto flex-grow-1 pr-4 ${styles.search}`} isSearching={props.isSearching} />}
 
         <div className="collapse navbar-collapse" id="navbarNav">
           {/* TODO - login */}

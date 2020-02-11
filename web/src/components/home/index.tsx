@@ -12,6 +12,7 @@ import styles from './Home.module.css';
 
 interface Props {
   isVisible: boolean;
+  isSearching: boolean;
 }
 
 interface Cache {
@@ -91,6 +92,7 @@ const Home = (props: Props) => {
           <SearchBar
             formClassName={`m-auto w-50 ${styles.search}`}
             size="big"
+            isSearching={props.isSearching}
           />
         </div>
 

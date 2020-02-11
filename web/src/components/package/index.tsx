@@ -158,7 +158,7 @@ const Detail = (props: Props) => {
       <div className="position-relative flex-grow-1">
         {isLoading && <Loading />}
 
-        {!isNull(detail) && <Title {...detail} />}
+        {!isNull(detail) && <Title package={detail} />}
 
         <div className="container">
           {isNull(detail) && !isLoading ? (

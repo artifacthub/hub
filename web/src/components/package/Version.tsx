@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 interface Props {
@@ -21,10 +21,12 @@ const Version = (props: Props) => {
     });
   }
 
-  // Loading is hidden when version has been loaded
-  if (props.isActive && isLoading) {
-    setIsLoading(false);
-  }
+  useEffect(() => {
+    // Spinning is not rendered when version has been loaded
+    if (props.isActive && isLoading) {
+      setIsLoading(false);
+    }
+  }, [props.isActive, isLoading]);
 
   return (
     <div className="py-1 py-sm-0">

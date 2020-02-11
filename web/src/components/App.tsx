@@ -26,18 +26,20 @@ export default function App() {
     return isExact;
   }
 
+  const [isSearching, setIsSearching] = useState(false);
+
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100 position-relative">
-        <Navbar />
+        <Navbar isSearching={isSearching} />
 
         <div className="d-flex flex-column flex-grow-1">
           <Route path="/" children={({match}) => (
-            <Home isVisible={isVisible(match)} />
+            <Home isVisible={isVisible(match)} isSearching={isSearching} />
           )} />
 
           <Route path="/search" children={({match}) => (
-            <Search isVisible={isVisible(match)} />
+            <Search isVisible={isVisible(match)} isSearching={isSearching} setIsSearching={setIsSearching} />
           )} />
 
           <Route path="/package/:packageId/:packageVersion?" children={({match}) => (

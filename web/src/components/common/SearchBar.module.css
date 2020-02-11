@@ -34,7 +34,7 @@
 }
 
 .loading {
-  right: -30px;
+  right: -5px;
   top: 5px;
 }
 
@@ -59,6 +59,7 @@
   }
 
   .big + .loading {
+    right: -45px;
     top: 5px;
   }
 }
