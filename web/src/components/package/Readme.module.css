@@ -47,12 +47,6 @@
   border-radius: 3px;
 }
 
-.md table {
-  display: block;
-  word-wrap: break-word;
-  word-break: break-all;
-}
-
 .md table th, .md table tr, .md table td {
   border: 1px solid var(--border-md);
   padding: 6px 13px;
