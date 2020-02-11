@@ -102,9 +102,13 @@ func (w *worker) handleJob(j *job) error {
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode >= 400 {
-		if resp.StatusCode != http.StatusNotFound {
-			w.logger.Error().Str("url", u).Int("code", resp.StatusCode).Send()
-		}
+		w.logger.Warn().
+			Str("repo", j.repo.Name).
+			Str("chart", j.chartVersion.Metadata.Name).
+			Str("version", j.chartVersion.Metadata.Version).
+			Str("url", u).
+			Int("code", resp.StatusCode).
+			Send()
 		return nil
 	}
 	chart, err := loader.LoadArchive(resp.Body)

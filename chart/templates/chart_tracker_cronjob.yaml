@@ -4,6 +4,8 @@ metadata:
   name: chart-tracker
 spec:
   schedule: "*/30 * * * *"
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
       template:

@@ -100,7 +100,7 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 	defer wg.Done()
 
 	log.Info().Str("repo", r.Name).Msg("Loading chart repository index file")
-	indexFile, err := loadIndexFile(r.URL)
+	indexFile, err := loadIndexFile(r)
 	if err != nil {
 		log.Error().Err(err).Str("repo", r.Name).Msg("Error loading repository index file")
 		return
@@ -130,8 +130,11 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 }
 
 // loadIndexFile downloads and parses the index file of the provided repository.
-func loadIndexFile(repoURL string) (*repo.IndexFile, error) {
-	repoConfig := &repo.Entry{URL: repoURL}
+func loadIndexFile(r *hub.ChartRepository) (*repo.IndexFile, error) {
+	repoConfig := &repo.Entry{
+		Name: r.Name,
+		URL:  r.URL,
+	}
 	getters := getter.All(&cli.EnvSettings{})
 	chartRepository, err := repo.NewChartRepository(repoConfig, getters)
 	if err != nil {
