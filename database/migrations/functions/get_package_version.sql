@@ -32,6 +32,7 @@ returns setof json as $$
         ),
         'chart_repository', (
             select json_build_object(
+                'chart_repository_id', r.chart_repository_id,
                 'name', r.name,
                 'display_name', r.display_name,
                 'url', r.url

@@ -58,6 +58,7 @@ begin
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
+                        'chart_repository_id', chart_repository_id,
                         'name', chart_repository_name,
                         'display_name', chart_repository_display_name
                     )
