@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(9);
+select plan(13);
 
 -- Declare some variables
 \set repo1ID '00000000-0000-0000-0000-000000000001'
@@ -14,12 +14,31 @@ select plan(9);
 select throws_ok(
     $$ select search_packages('{}')::jsonb $$,
     'invalid query text',
-    'Query text must be provided'
+    'Query text must be provided when not filtering by repo'
 );
 select throws_ok(
     $$ select search_packages('{"text": ""}')::jsonb $$,
     'invalid query text',
-    'Query text cannot be empty'
+    'Query text cannot be empty when not filtering by repo'
+);
+
+-- When filtering by repo is ok to omit or use an empty text
+select lives_ok(
+    $$ select search_packages('{
+        "chart_repositories_ids": [
+            "00000000-0000-0000-0000-000000000001"
+        ]
+    }')::jsonb $$,
+    'Query text can be omitted when filtering by repo'
+);
+select lives_ok(
+    $$ select search_packages('{
+        "text": "",
+        "chart_repositories_ids": [
+            "00000000-0000-0000-0000-000000000001"
+        ]
+    }')::jsonb $$,
+    'Query text can be empty when filtering by repo'
 );
 
 -- No packages at this point
@@ -243,6 +262,57 @@ select is(
         }]
     }'::jsonb,
     'Facets: true Text: package1 | Package 1 expected | Facets expected'
+);
+select is(
+    search_packages('{
+        "chart_repositories_ids": [
+            "00000000-0000-0000-0000-000000000001"
+        ]
+    }')::jsonb,
+    '{
+        "packages": [{
+            "kind": 0,
+            "name": "package1",
+            "image_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000001",
+            "app_version": "12.1.0",
+            "description": "description",
+            "display_name": "Package 1",
+            "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "name": "repo1",
+                "display_name": "Repo 1"
+            }
+        }],
+        "facets": null
+    }'::jsonb,
+    'Text: missing Repo: repo1 | Package 1 expected | Facets not expected'
+);
+select is(
+    search_packages('{
+        "text": "",
+        "chart_repositories_ids": [
+            "00000000-0000-0000-0000-000000000001"
+        ]
+    }')::jsonb,
+    '{
+        "packages": [{
+            "kind": 0,
+            "name": "package1",
+            "image_id": "00000000-0000-0000-0000-000000000001",
+            "package_id": "00000000-0000-0000-0000-000000000001",
+            "app_version": "12.1.0",
+            "description": "description",
+            "display_name": "Package 1",
+            "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "name": "repo1",
+                "display_name": "Repo 1"
+            }
+        }],
+        "facets": null
+    }'::jsonb,
+    'Text: empty Repo: repo1 | Package 1 expected | Facets not expected'
 );
 select is(
     search_packages(
