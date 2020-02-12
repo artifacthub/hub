@@ -7,29 +7,39 @@ import (
 	"path"
 	"runtime/debug"
 	"strconv"
+	"strings"
+	"sync"
 	"time"
 
+	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
 	"github.com/julienschmidt/httprouter"
 	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"github.com/tegioz/hub/internal/hub"
+	"github.com/tegioz/hub/internal/img/pg"
 )
 
 // handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type handlers struct {
-	cfg    *viper.Viper
-	hubApi *hub.Hub
-	router http.Handler
+	cfg        *viper.Viper
+	hubApi     *hub.Hub
+	imageStore *pg.ImageStore
+	router     http.Handler
+
+	mu          sync.RWMutex
+	imagesCache map[string][]byte
 }
 
 // setupHandlers creates a new handlers instance.
-func setupHandlers(cfg *viper.Viper, hubApi *hub.Hub) *handlers {
+func setupHandlers(cfg *viper.Viper, hubApi *hub.Hub, imageStore *pg.ImageStore) *handlers {
 	h := &handlers{
-		cfg:    cfg,
-		hubApi: hubApi,
+		cfg:         cfg,
+		hubApi:      hubApi,
+		imageStore:  imageStore,
+		imagesCache: make(map[string][]byte),
 	}
 	h.setupRouter()
 	return h
@@ -47,8 +57,11 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/stats", h.getStats)
 	r.GET("/api/v1/updates", h.getPackagesUpdates)
 	r.GET("/api/v1/search", h.search)
-	r.GET("/api/v1/package/:package_id", h.getPackage)
-	r.GET("/api/v1/package/:package_id/:version", h.getPackageVersion)
+	r.GET("/api/v1/package/:packageID", h.getPackage)
+	r.GET("/api/v1/package/:packageID/:version", h.getPackageVersion)
+
+	// Images
+	r.GET("/image/:image", h.images)
 
 	// Static files
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
@@ -69,6 +82,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
 		http.Error(w, "", http.StatusInternalServerError)
+		return
 	}
 	renderJSON(w, jsonData)
 }
@@ -80,6 +94,7 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 	if err != nil {
 		log.Error().Err(err).Msg("getPackagesUpdates failed")
 		http.Error(w, "", http.StatusInternalServerError)
+		return
 	}
 	renderJSON(w, jsonData)
 }
@@ -122,21 +137,23 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
+		return
 	}
 	renderJSON(w, jsonData)
 }
 
 // getPackage is an http handler used to get a package details.
 func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	packageID := ps.ByName("package_id")
+	packageID := ps.ByName("packageID")
 	jsonData, err := h.hubApi.GetPackageJSON(r.Context(), packageID)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			http.Error(w, "", http.StatusNotFound)
+			http.NotFound(w, r)
 		} else {
 			log.Error().Err(err).Str("packageID", packageID).Msg("getPackage failed")
 			http.Error(w, "", http.StatusInternalServerError)
 		}
+		return
 	}
 	renderJSON(w, jsonData)
 }
@@ -144,12 +161,12 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 // getPackageVersion is an http handler used to get the details of a package
 // specific version.
 func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	packageID := ps.ByName("package_id")
+	packageID := ps.ByName("packageID")
 	version := ps.ByName("version")
 	jsonData, err := h.hubApi.GetPackageVersionJSON(r.Context(), packageID, version)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			http.Error(w, "", http.StatusNotFound)
+			http.NotFound(w, r)
 		} else {
 			log.Error().Err(err).
 				Str("packageID", packageID).
@@ -157,8 +174,56 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 				Msg("getPackageVersion failed")
 			http.Error(w, "", http.StatusInternalServerError)
 		}
+		return
 	}
 	renderJSON(w, jsonData)
+}
+
+// images in an http handler that serves images stored in the database.
+func (h *handlers) images(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	// Extract image id and version
+	image := ps.ByName("image")
+	parts := strings.Split(image, "@")
+	var imageID, version string
+	if len(parts) == 2 {
+		imageID = parts[0]
+		version = parts[1]
+	} else {
+		imageID = image
+	}
+
+	// Check if image version data is cached
+	h.mu.RLock()
+	data, ok := h.imagesCache[image]
+	h.mu.RUnlock()
+	if !ok {
+		// Get image data from database
+		var err error
+		data, err = h.imageStore.GetImage(r.Context(), imageID, version)
+		if err != nil {
+			if errors.Is(err, pgx.ErrNoRows) {
+				http.NotFound(w, r)
+			} else {
+				log.Error().Err(err).Str("imageID", imageID).Send()
+				http.Error(w, "", http.StatusInternalServerError)
+			}
+			return
+		}
+
+		// Save image data in cache
+		h.mu.Lock()
+		h.imagesCache[image] = data
+		h.mu.Unlock()
+	}
+
+	// Set headers and write image data to response writer
+	w.Header().Set("Cache-Control", "max-age=31536000")
+	if svg.Is(data) {
+		w.Header().Set("Content-Type", "image/svg+xml")
+	} else {
+		w.Header().Set("Content-Type", http.DetectContentType(data))
+	}
+	_, _ = w.Write(data)
 }
 
 // serveIndex is an http handler that serves the index.html file.

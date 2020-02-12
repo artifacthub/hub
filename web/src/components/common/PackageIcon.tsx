@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from './Image';
 import chartIcon from '../../images/helm.svg';
 import operatorIcon from '../../images/operator.svg';
 import { PackageKind } from '../../types';
@@ -15,7 +14,7 @@ const ICONS = {
 };
 
 const PackageIcon = (props: Props) => (
-  <Image
+  <img
     alt="Icon"
     src={ICONS[props.kind]}
     className={props.className}

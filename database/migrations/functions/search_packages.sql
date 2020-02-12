@@ -26,7 +26,7 @@ begin
             p.name,
             p.display_name,
             p.description,
-            p.logo_url,
+            p.image_id,
             s.app_version,
             r.chart_repository_id as chart_repository_id,
             r.name as chart_repository_name,
@@ -54,7 +54,7 @@ begin
                 'name', name,
                 'display_name', display_name,
                 'description', description,
-                'logo_url', logo_url,
+                'image_id', image_id,
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(

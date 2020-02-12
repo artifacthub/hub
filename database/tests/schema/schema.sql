@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(28);
+select plan(33);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -15,6 +15,8 @@ select has_extension('uuid-ossp');
 -- Check expected tables exist
 select tables_are(array[
     'chart_repository',
+    'image',
+    'image_version',
     'maintainer',
     'package',
     'package__maintainer',
@@ -30,6 +32,21 @@ select columns_are('chart_repository', array[
     'display_name',
     'url'
 ]);
+select columns_are('chart_repository', array[
+    'chart_repository_id',
+    'name',
+    'display_name',
+    'url'
+]);
+select columns_are('image', array[
+    'image_id',
+    'original_hash'
+]);
+select columns_are('image_version', array[
+    'image_id',
+    'version',
+    'data'
+]);
 select columns_are('maintainer', array[
     'maintainer_id',
     'name',
@@ -41,7 +58,7 @@ select columns_are('package', array[
     'display_name',
     'description',
     'home_url',
-    'logo_url',
+    'image_id',
     'keywords',
     'latest_version',
     'created_at',
@@ -111,9 +128,11 @@ select has_function('search_packages');
 select has_function('get_package_version');
 select has_function('get_package');
 select has_function('get_packages_updates');
+select has_function('register_image');
+select has_function('get_image');
 
 -- Check package kinds exist
-SELECT results_eq(
+select results_eq(
     'select * from package_kind',
     $$ values (0, 'chart') $$,
     'Package kinds should exist'

@@ -2,6 +2,10 @@ package main
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"image"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
@@ -12,6 +16,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/tegioz/hub/internal/hub"
+	"github.com/tegioz/hub/internal/img"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 )
@@ -21,17 +26,19 @@ type worker struct {
 	ctx        context.Context
 	id         int
 	hubApi     *hub.Hub
+	imageStore img.Store
 	logger     zerolog.Logger
 	httpClient *http.Client
 }
 
 // newWorker creates a new worker instance.
-func newWorker(ctx context.Context, id int, hubApi *hub.Hub) *worker {
+func newWorker(ctx context.Context, id int, hubApi *hub.Hub, imageStore img.Store) *worker {
 	return &worker{
-		ctx:    ctx,
-		id:     id,
-		hubApi: hubApi,
-		logger: log.With().Int("worker", id).Logger(),
+		ctx:        ctx,
+		id:         id,
+		hubApi:     hubApi,
+		imageStore: imageStore,
+		logger:     log.With().Int("worker", id).Logger(),
 		httpClient: &http.Client{
 			Timeout: 10 * time.Second,
 		},
@@ -96,34 +103,41 @@ func (w *worker) handleJob(j *job) error {
 	}
 
 	// Load chart from remote archive in memory
-	resp, err := w.httpClient.Get(u)
+	chart, err := w.loadChart(u)
 	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode >= 400 {
 		w.logger.Warn().
 			Str("repo", j.repo.Name).
 			Str("chart", j.chartVersion.Metadata.Name).
 			Str("version", j.chartVersion.Metadata.Version).
 			Str("url", u).
-			Int("code", resp.StatusCode).
-			Send()
+			Msg("Chart load failed")
 		return nil
 	}
-	chart, err := loader.LoadArchive(resp.Body)
-	if err != nil {
-		return err
+	md := chart.Metadata
+
+	// Store chart logo when available if requested
+	var imageID string
+	if j.downloadLogo {
+		if md.Icon != "" {
+			data, err := w.downloadImage(md.Icon)
+			if err != nil {
+				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("Image download failed")
+			} else {
+				imageID, err = w.imageStore.SaveImage(w.ctx, data)
+				if err != nil && !errors.Is(err, image.ErrFormat) {
+					w.logger.Warn().Err(err).Str("url", md.Icon).Msg("Save image failed")
+				}
+			}
+		}
 	}
 
 	// Prepare hub package to be registered
-	md := chart.Metadata
 	p := &hub.Package{
 		Kind:            hub.Chart,
 		Name:            md.Name,
 		Description:     md.Description,
 		HomeURL:         md.Home,
-		LogoURL:         md.Icon,
+		ImageID:         imageID,
 		Keywords:        md.Keywords,
 		Version:         md.Version,
 		AppVersion:      md.AppVersion,
@@ -149,6 +163,36 @@ func (w *worker) handleJob(j *job) error {
 
 	// Register package
 	return w.hubApi.RegisterPackage(w.ctx, p)
+}
+
+// loadChart loads a chart from a remote archive located at the url provided.
+func (w *worker) loadChart(u string) (*chart.Chart, error) {
+	resp, err := w.httpClient.Get(u)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusOK {
+		chart, err := loader.LoadArchive(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+		return chart, nil
+	}
+	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+}
+
+// downloadImage downloads the image located at the url provided.
+func (w *worker) downloadImage(u string) ([]byte, error) {
+	resp, err := w.httpClient.Get(u)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusOK {
+		return ioutil.ReadAll(resp.Body)
+	}
+	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
 }
 
 // getFile returns the file requested from the provided chart.

@@ -10,7 +10,7 @@ interface Props {
 const ModalHeader = (props: Props) => (
   <div className="d-flex align-items-center">
     <div className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}>
-      <Image className={styles.image} alt={props.package.name} src={props.package.logo_url} />
+      <Image className={styles.image} alt={props.package.display_name || props.package.name} imageId={props.package.image_id} />
     </div>
 
     <div className="ml-3">

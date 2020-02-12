@@ -7,6 +7,7 @@ select plan(2);
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set maintainer1ID '00000000-0000-0000-0000-000000000001'
 \set maintainer2ID '00000000-0000-0000-0000-000000000002'
+\set image1ID '00000000-0000-0000-0000-000000000001'
 
 -- No packages at this point
 select is_empty(
@@ -27,7 +28,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    logo_url,
+    image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -38,7 +39,7 @@ insert into package (
     'Package 1',
     'description',
     'home_url',
-    'logo_url',
+    :'image1ID',
     '{"kw1", "kw2"}',
     '1.0.0',
     0,
@@ -89,7 +90,7 @@ select is(
         "display_name": "Package 1",
         "description": "description",
         "home_url": "home_url",
-        "logo_url": "logo_url",
+        "image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
         "readme": "readme-version-1.0.0",
         "links": {

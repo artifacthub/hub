@@ -8,3 +8,5 @@
 {{ template "functions/get_package_version.sql" }}
 {{ template "functions/get_package.sql" }}
 {{ template "functions/get_packages_updates.sql" }}
+{{ template "functions/register_image.sql" }}
+{{ template "functions/get_image.sql" }}

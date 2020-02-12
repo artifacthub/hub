@@ -20,6 +20,7 @@ import (
 type job struct {
 	repo         *hub.ChartRepository
 	chartVersion *repo.ChartVersion
+	downloadLogo bool
 }
 
 // dispatcher is in charge of generating jobs and dispatching them among the
@@ -112,12 +113,17 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 		return
 	}
 	for _, chartVersions := range indexFile.Entries {
-		for _, chartVersion := range chartVersions {
+		for i, chartVersion := range chartVersions {
+			var downloadLogo bool
+			if i == 0 {
+				downloadLogo = true
+			}
 			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
 			if chartVersion.Digest != packagesDigest[key] {
 				d.Queue <- &job{
 					repo:         r,
 					chartVersion: chartVersion,
+					downloadLogo: downloadLogo,
 				}
 			}
 			select {

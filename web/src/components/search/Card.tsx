@@ -27,7 +27,7 @@ const Card = (props: Props) => (
           <div className="d-flex align-items-start justify-content-between mb-3">
             <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
               <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
-                <Image src={props.package.logo_url} alt={`Logo ${props.package.display_name}`} className={styles.image} />
+                <Image imageId={props.package.image_id} alt={`Logo ${props.package.display_name || props.package.name}`} className={styles.image} />
               </div>
 
               <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>
