@@ -7,15 +7,18 @@ declare
     v_chart_repositories_ids uuid[];
     v_facets boolean := (p_query->>'facets')::boolean;
 begin
-    if not p_query ? 'text' or p_query->>'text' = '' then
-        raise 'invalid query text';
-    end if;
-
     -- Prepare filters for later use
     select array_agg(e::int) into v_package_kinds
     from jsonb_array_elements_text(p_query->'package_kinds') e;
     select array_agg(e::uuid) into v_chart_repositories_ids
     from jsonb_array_elements_text(p_query->'chart_repositories_ids') e;
+
+    -- Query text must be provided when not filtering by repo
+    if (v_chart_repositories_ids is null or cardinality(v_chart_repositories_ids) = 0) and
+       (not p_query ? 'text' or p_query->>'text' = '')
+    then
+        raise 'invalid query text';
+    end if;
 
     return query
     with packages_with_text_filter as (
@@ -35,8 +38,11 @@ begin
         join package_kind pk using (package_kind_id)
         join chart_repository r using (chart_repository_id)
         join snapshot s using (package_id)
-        where websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
-        and s.version = p.latest_version
+        where s.version = p.latest_version
+        and
+            case when p_query ? 'text' and p_query->>'text' <> '' then
+                websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
+            else true end
     ), packages_with_all_filters as (
         select * from packages_with_text_filter
         where

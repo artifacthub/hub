@@ -11,6 +11,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/google/uuid"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
 	"github.com/julienschmidt/httprouter"
@@ -101,7 +102,7 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 
 // search is an http handler used to search for packages in the hub database.
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Extract filters from query string
+	// Extract and validate filters from query string
 	var facets bool
 	facetsStr := r.URL.Query().Get("facets")
 	if facetsStr != "" {
@@ -125,6 +126,13 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		kinds = append(kinds, hub.PackageKind(kind))
 	}
 	repos := r.URL.Query()["repo"]
+	for _, repo := range repos {
+		if _, err := uuid.Parse(repo); err != nil {
+			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid repo value")
+			http.Error(w, "", http.StatusBadRequest)
+			return
+		}
+	}
 
 	// Build query and execute search
 	query := &hub.Query{
