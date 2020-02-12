@@ -122,6 +122,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -133,6 +134,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -145,6 +147,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -156,6 +159,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -202,6 +206,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -213,6 +218,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -225,6 +231,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -236,6 +243,7 @@ select is(
             "image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
+                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }

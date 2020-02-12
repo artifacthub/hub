@@ -152,6 +152,7 @@ func TestSearchPackagesJSON(t *testing.T) {
             "description": "description",
             "display_name": "Package 1",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -164,6 +165,7 @@ func TestSearchPackagesJSON(t *testing.T) {
             "description": "description",
             "display_name": "Package 2",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -275,6 +277,7 @@ func TestGetPackageJSON(t *testing.T) {
             }
         ],
         "chart_repository": {
+			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
             "name": "repo1",
             "display_name": "Repo 1",
             "url": "https://repo1.com"
@@ -322,6 +325,7 @@ func TestGetPackageVersionJSON(t *testing.T) {
             }
         ],
         "chart_repository": {
+			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
             "name": "repo1",
             "display_name": "Repo 1",
             "url": "https://repo1.com"
@@ -349,6 +353,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "image_id": "image_id",
             "app_version": "12.1.0",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }
@@ -360,6 +365,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "image_id": "image_id",
             "app_version": "13.0.0",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -372,6 +378,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "image_id": "image_id",
             "app_version": "13.0.0",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
                 "display_name": "Repo 2"
             }
@@ -383,6 +390,7 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
             "image_id": "image_id",
             "app_version": "12.1.0",
             "chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
                 "name": "repo1",
                 "display_name": "Repo 1"
             }

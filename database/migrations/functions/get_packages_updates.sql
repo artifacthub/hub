@@ -13,6 +13,7 @@ returns setof json as $$
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
+                        'chart_repository_id', chart_repository_id,
                         'name', chart_repository_name,
                         'display_name', chart_repository_display_name
                     )
@@ -26,6 +27,7 @@ returns setof json as $$
                     p.display_name,
                     p.image_id,
                     s.app_version,
+                    r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
@@ -45,6 +47,7 @@ returns setof json as $$
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
+                        'chart_repository_id', chart_repository_id,
                         'name', chart_repository_name,
                         'display_name', chart_repository_display_name
                     )
@@ -58,6 +61,7 @@ returns setof json as $$
                     p.display_name,
                     p.image_id,
                     s.app_version,
+                    r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
