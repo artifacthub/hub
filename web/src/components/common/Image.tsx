@@ -13,8 +13,6 @@ const Image = (props: Props) => {
   const [error, setError] = useState(false);
   const src = isNull(props.imageId) ? '' : `${getEndpointPrefix()}/image/${props.imageId}`;
 
-  console.log(props);
-
   return (
     <>
       {error || isNull(props.imageId) ? (
