@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(13);
+select plan(19);
 
 -- Declare some variables
 \set repo1ID '00000000-0000-0000-0000-000000000001'
@@ -47,8 +47,15 @@ select is(
         "text": "package1"
     }')::jsonb,
     '{
-        "packages": [],
-        "facets": null
+        "data": {
+            "packages": [],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
     }'::jsonb,
     'Text: package1 | No packages in db yet | No packages or facets expected'
 );
@@ -172,56 +179,63 @@ select is(
         "text": "kw1"
     }')::jsonb,
     '{
-        "packages": [{
-            "kind": 0,
-            "name": "package1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 1",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }, {
-            "kind": 0,
-            "name": "package2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
-            "package_id": "00000000-0000-0000-0000-000000000002",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 2",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
-                "name": "repo2",
-                "display_name": "Repo 2"
-            }
-        }],
-        "facets": [{
-            "title": "Kind",
-            "filter_key": "kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 2
-            }]
-        }, {
-            "title": "Repository",
-            "filter_key": "repo",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 1
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
             }, {
-                "id": "00000000-0000-0000-0000-000000000002",
-                "name": "Repo2",
-                "total": 1
+                "kind": 0,
+                "name": "package2",
+                "image_id": "00000000-0000-0000-0000-000000000002",
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 2",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "repo2",
+                    "display_name": "Repo 2"
+                }
+            }],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Repo2",
+                    "total": 1
+                }]
             }]
-        }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 2
+        }
     }'::jsonb,
-    'Facets: true Text: kw1 | Two packages expected | Facets expected'
+    'Facets: true Text: kw1 | Two packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -229,40 +243,66 @@ select is(
         "text": "package1"
     }')::jsonb,
     '{
-        "packages": [{
-            "kind": 0,
-            "name": "package1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 1",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }],
-        "facets": [{
-            "title": "Kind",
-            "filter_key": "kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 1
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 1
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Repo1",
+                    "total": 1
+                }]
             }]
-        }, {
-            "title": "Repository",
-            "filter_key": "repo",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 1
-            }]
-        }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
     }'::jsonb,
-    'Facets: true Text: package1 | Package 1 expected | Facets expected'
+    'Facets: true Text: package1 | Package 1 expected - Facets expected'
 );
+select is(
+    search_packages('{
+        "text": "kw3"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
+    }'::jsonb,
+    'Text: kw3 (inexistent) | No packages or facets expected'
+);
+
+-- Tests with kind and repositories filters
 select is(
     search_packages('{
         "chart_repositories_ids": [
@@ -270,23 +310,30 @@ select is(
         ]
     }')::jsonb,
     '{
-        "packages": [{
-            "kind": 0,
-            "name": "package1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 1",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }],
-        "facets": null
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
     }'::jsonb,
-    'Text: missing Repo: repo1 | Package 1 expected | Facets not expected'
+    'Text: missing Repo: repo1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages('{
@@ -296,23 +343,30 @@ select is(
         ]
     }')::jsonb,
     '{
-        "packages": [{
-            "kind": 0,
-            "name": "package1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 1",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }],
-        "facets": null
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
     }'::jsonb,
-    'Text: empty Repo: repo1 | Package 1 expected | Facets not expected'
+    'Text: empty Repo: repo1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages(
@@ -324,43 +378,50 @@ select is(
         ]
     }')::jsonb,
     '{
-        "packages": [{
-            "kind": 0,
-            "name": "package2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
-            "package_id": "00000000-0000-0000-0000-000000000002",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 2",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000002",
-                "name": "repo2",
-                "display_name": "Repo 2"
-            }
-        }],
-        "facets": [{
-            "title": "Kind",
-            "filter_key": "kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 2
-            }]
-        }, {
-            "title": "Repository",
-            "filter_key": "repo",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 1
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package2",
+                "image_id": "00000000-0000-0000-0000-000000000002",
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 2",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "repo2",
+                    "display_name": "Repo 2"
+                }
+            }],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
             }, {
-                "id": "00000000-0000-0000-0000-000000000002",
-                "name": "Repo2",
-                "total": 1
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Repo2",
+                    "total": 1
+                }]
             }]
-        }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 | Package 2 expected | Facets expected'
+    'Facets: true Text: kw1 Repo: repo2 | Package 2 expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -371,30 +432,37 @@ select is(
         ]
     }')::jsonb,
     '{
-        "packages": [],
-        "facets": [{
-            "title": "Kind",
-            "filter_key": "kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 2
-            }]
-        }, {
-            "title": "Repository",
-            "filter_key": "repo",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 1
+        "data": {
+            "packages": [],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
             }, {
-                "id": "00000000-0000-0000-0000-000000000002",
-                "name": "Repo2",
-                "total": 1
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Repo2",
+                    "total": 1
+                }]
             }]
-        }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: inexistent | No packages expected | Facets expected'
+    'Facets: true Text: kw1 Repo: inexistent | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -403,20 +471,206 @@ select is(
         "package_kinds": [1, 2]
     }')::jsonb,
     '{
-        "packages": [],
-        "facets": null
+        "data": {
+            "packages": [],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
     }'::jsonb,
     'Facets: false Text: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
+
+-- Tests with limit and offset
 select is(
     search_packages('{
-        "text": "kw3"
+        "limit": 2,
+        "offset": 0,
+        "text": "kw1"
     }')::jsonb,
     '{
-        "packages": [],
-        "facets": null
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }, {
+                "kind": 0,
+                "name": "package2",
+                "image_id": "00000000-0000-0000-0000-000000000002",
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 2",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "repo2",
+                    "display_name": "Repo 2"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": 2,
+            "offset": 0,
+            "total": 2
+        }
     }'::jsonb,
-    'Text: kw3 (inexistent) | No packages or facets expected'
+    'Limit: 2 Offset: 0 Text: kw1 | Packages 1 and 2 expected'
+);
+select is(
+    search_packages('{
+        "limit": 1,
+        "offset": 0,
+        "text": "kw1"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": 1,
+            "offset": 0,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 1 Offset: 0 Text: kw1 | Package 1 expected'
+);
+select is(
+    search_packages('{
+        "limit": 1,
+        "offset": 2,
+        "text": "kw1"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": null
+        },
+        "metadata": {
+            "limit": 1,
+            "offset": 2,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 1 Offset: 2 Text: kw1 | No packages expected'
+);
+select is(
+    search_packages('{
+        "limit": 1,
+        "offset": 1,
+        "text": "kw1"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package2",
+                "image_id": "00000000-0000-0000-0000-000000000002",
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 2",
+                "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                    "name": "repo2",
+                    "display_name": "Repo 2"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": 1,
+            "offset": 1,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 1 Offset: 1 Text: kw1 | Package 2 expected'
+);
+select is(
+    search_packages('{
+        "limit": 0,
+        "offset": 0,
+        "text": "kw1"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": null
+        },
+        "metadata": {
+            "limit": 0,
+            "offset": 0,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 0 Offset: 0 Text: kw1 | No packages expected'
+);
+select is(
+    search_packages('{
+        "limit": 1,
+        "offset": 2,
+        "facets": true,
+        "text": "kw1"
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "00000000-0000-0000-0000-000000000001",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "00000000-0000-0000-0000-000000000002",
+                    "name": "Repo2",
+                    "total": 1
+                }]
+            }]
+        },
+        "metadata": {
+            "limit": 1,
+            "offset": 2,
+            "total": 2
+        }
+    }'::jsonb,
+    'Limit: 1 Offset: 2 Text: kw1 | No packages expected - Facets expected'
 );
 
 -- Finish tests and rollback transaction
