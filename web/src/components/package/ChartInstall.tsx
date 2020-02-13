@@ -38,6 +38,7 @@ const ChartInstall = (props: Props) => {
           <li className="nav-item" key={tab.name}>
             <button className={classnames(
                 'btn btn-link nav-item',
+                styles.btn,
                 {[`active btn-primary ${styles.active}`]: tab.name === activeTab},
               )}
               onClick={() => setActiveTab(tab.name)}
