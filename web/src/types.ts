@@ -35,8 +35,10 @@ export interface PackageDetail extends Package {
 }
 
 export interface SearchResults {
-  packages: Package[];
-  facets: Facets[];
+  data: {
+    packages: Package[];
+    facets: Facets[];
+  };
 }
 
 export interface Filters {
@@ -46,11 +48,6 @@ export interface Filters {
 export interface SearchQuery {
   text?: string;
   filters: Filters;
-}
-
-export interface SearchParams extends SearchQuery {
-  keywords: string[];
-  packageKinds: string[];
 }
 
 export interface Stats {

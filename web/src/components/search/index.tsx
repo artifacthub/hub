@@ -90,7 +90,10 @@ const Search = (props: Props) => {
   const [cachedSearch, setCachedSearch] = useState<Cache | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [activeFilters, dispatch] = useReducer(reducer, query.filters);
-  const [search, setSearch] = useState({text: query.text, filters: activeFilters});
+  const [search, setSearch] = useState({
+    text: query.text,
+    filters: activeFilters,
+  });
   const [emptyFacets, setEmptyFacets] = useState(true);
   const { isSearching, setIsSearching, isVisible } = props;
 
@@ -172,8 +175,8 @@ const Search = (props: Props) => {
       if (!isUndefined(search.text) && isSearching) {
         try {
           const searchResults = await API.searchPackages(search.text, search.filters);
-          setPackages(searchResults.packages);
-          setFacets(searchResults.facets);
+          setPackages(searchResults.data.packages);
+          setFacets(searchResults.data.facets);
           setCachedSearch({
             text: search.text,
             ts: Date.now(),
