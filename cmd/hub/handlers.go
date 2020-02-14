@@ -24,6 +24,10 @@ import (
 	"github.com/tegioz/hub/internal/img/pg"
 )
 
+const (
+	defaultCacheMaxAge = 15 * time.Minute
+)
+
 // handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type handlers struct {
@@ -87,7 +91,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData)
+	renderJSON(w, jsonData, defaultCacheMaxAge)
 }
 
 // getPackagesUpdates is an http handler used to get the last packages updates
@@ -99,7 +103,7 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData)
+	renderJSON(w, jsonData, defaultCacheMaxAge)
 }
 
 // search is an http handler used to search for packages in the hub database.
@@ -116,7 +120,7 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData)
+	renderJSON(w, jsonData, defaultCacheMaxAge)
 }
 
 // buildQuery builds a packages search query from a map of query string values,
@@ -196,7 +200,7 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 		}
 		return
 	}
-	renderJSON(w, jsonData)
+	renderJSON(w, jsonData, defaultCacheMaxAge)
 }
 
 // getPackageVersion is an http handler used to get the details of a package
@@ -217,7 +221,7 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 		}
 		return
 	}
-	renderJSON(w, jsonData)
+	renderJSON(w, jsonData, defaultCacheMaxAge)
 }
 
 // images in an http handler that serves images stored in the database.
@@ -258,7 +262,7 @@ func (h *handlers) images(w http.ResponseWriter, r *http.Request, ps httprouter.
 	}
 
 	// Set headers and write image data to response writer
-	w.Header().Set("Cache-Control", "max-age=31536000")
+	w.Header().Set("Cache-Control", "public, max-age=31536000")
 	if svg.Is(data) {
 		w.Header().Set("Content-Type", "image/svg+xml")
 	} else {
@@ -323,8 +327,9 @@ func accessHandler() func(http.Handler) http.Handler {
 }
 
 // renderJSON is a helper to write the json data provided to the given http
-// response writer, setting the appropriate content type.
-func renderJSON(w http.ResponseWriter, jsonData []byte) {
+// response writer, setting the appropriate content type and cache
+func renderJSON(w http.ResponseWriter, jsonData []byte, cacheMaxAge time.Duration) {
+	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(cacheMaxAge.Seconds())))
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(jsonData)
 }
