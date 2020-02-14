@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Route, BrowserRouter as Router, match } from 'react-router-dom';
-import isNull from 'lodash/isNull';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './navigation/Navbar';
 import Home from './home';
 import Search from './search';
@@ -16,17 +15,8 @@ export default function App() {
     return;
   });
 
-  let foundPage = false;
-  const isVisible = (routeMatch: match<any> | null): boolean => {
-    const isExact = !isNull(routeMatch) && routeMatch.isExact;
-    if (isExact) {
-      foundPage = true;
-      window.scrollTo(0, 0); // Reset scroll position when a new page is rendered
-    }
-    return isExact;
-  }
-
   const [isSearching, setIsSearching] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   return (
     <Router>
@@ -34,21 +24,26 @@ export default function App() {
         <Navbar isSearching={isSearching} />
 
         <div className="d-flex flex-column flex-grow-1">
-          <Route path="/" children={({match}) => (
-            <Home isVisible={isVisible(match)} isSearching={isSearching} />
-          )} />
+          <Switch>
+            <Route path="/" exact>
+              <Home isSearching={isSearching} />
+            </Route>
 
-          <Route path="/search" children={({match}) => (
-            <Search isVisible={isVisible(match)} isSearching={isSearching} setIsSearching={setIsSearching} />
-          )} />
+            <Route path="/search" exact>
+              <Search
+                isSearching={isSearching}
+                setIsSearching={setIsSearching}
+                scrollPosition={scrollPosition}
+                setScrollPosition={setScrollPosition}
+              />
+            </Route>
 
-          <Route path="/package/:packageId/:packageVersion?" children={({match}) => (
-            <Package isVisible={isVisible(match)} />
-          )} />
+            <Route path="/package/:packageId/:packageVersion?" exact>
+              <Package />
+            </Route>
 
-          <Route path="/not-found" children={() => {
-            return !foundPage ? <NotFound /> : null;
-          }} />
+            <Route component={NotFound} />
+          </Switch>
         </div>
 
         <Footer />

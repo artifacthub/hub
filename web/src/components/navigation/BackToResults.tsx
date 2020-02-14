@@ -16,6 +16,7 @@ const BackToResults = () => {
     history.push({
       pathname: '/search',
       search: `?text=${encodeURIComponent(location.state.searchText)}${location.state.filtersQuery}`,
+      state: { fromDetail: true },
     });
   }
 
