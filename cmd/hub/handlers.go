@@ -123,15 +123,23 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 // validating them as they are extracted.
 func buildQuery(qs url.Values) (*hub.Query, error) {
 	// Limit
-	limit, err := strconv.Atoi(qs.Get("limit"))
-	if err != nil {
-		return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
+	var limit int
+	if qs.Get("limit") != "" {
+		var err error
+		limit, err = strconv.Atoi(qs.Get("limit"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
+		}
 	}
 
 	// Offset
-	offset, err := strconv.Atoi(qs.Get("offset"))
-	if err != nil {
-		return nil, fmt.Errorf("invalid offset: %s", qs.Get("offset"))
+	var offset int
+	if qs.Get("offset") != "" {
+		var err error
+		offset, err = strconv.Atoi(qs.Get("offset"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid offset: %s", qs.Get("offset"))
+		}
 	}
 
 	// Facets
