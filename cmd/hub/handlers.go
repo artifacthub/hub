@@ -3,7 +3,9 @@ package main
 import (
 	"crypto/subtle"
 	"errors"
+	"fmt"
 	"net/http"
+	"net/url"
 	"path"
 	"runtime/debug"
 	"strconv"
@@ -102,44 +104,11 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 
 // search is an http handler used to search for packages in the hub database.
 func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Extract and validate filters from query string
-	var facets bool
-	facetsStr := r.URL.Query().Get("facets")
-	if facetsStr != "" {
-		var err error
-		facets, err = strconv.ParseBool(facetsStr)
-		if err != nil {
-			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid facets value")
-			http.Error(w, "", http.StatusBadRequest)
-			return
-		}
-	}
-	text := r.URL.Query().Get("text")
-	var kinds []hub.PackageKind
-	for _, kindStr := range r.URL.Query()["kind"] {
-		kind, err := strconv.Atoi(kindStr)
-		if err != nil {
-			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid kind value")
-			http.Error(w, "", http.StatusBadRequest)
-			return
-		}
-		kinds = append(kinds, hub.PackageKind(kind))
-	}
-	repos := r.URL.Query()["repo"]
-	for _, repo := range repos {
-		if _, err := uuid.Parse(repo); err != nil {
-			log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid repo value")
-			http.Error(w, "", http.StatusBadRequest)
-			return
-		}
-	}
-
-	// Build query and execute search
-	query := &hub.Query{
-		Facets:               facets,
-		Text:                 text,
-		PackageKinds:         kinds,
-		ChartRepositoriesIDs: repos,
+	query, err := buildQuery(r.URL.Query())
+	if err != nil {
+		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid query")
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 	jsonData, err := h.hubApi.SearchPackagesJSON(r.Context(), query)
 	if err != nil {
@@ -148,6 +117,62 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		return
 	}
 	renderJSON(w, jsonData)
+}
+
+// buildQuery builds a packages search query from a map of query string values,
+// validating them as they are extracted.
+func buildQuery(qs url.Values) (*hub.Query, error) {
+	// Limit
+	limit, err := strconv.Atoi(qs.Get("limit"))
+	if err != nil {
+		return nil, fmt.Errorf("invalid limit: %s", qs.Get("limit"))
+	}
+
+	// Offset
+	offset, err := strconv.Atoi(qs.Get("offset"))
+	if err != nil {
+		return nil, fmt.Errorf("invalid offset: %s", qs.Get("offset"))
+	}
+
+	// Facets
+	var facets bool
+	if qs.Get("facets") != "" {
+		var err error
+		facets, err = strconv.ParseBool(qs.Get("facets"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid facets: %s", qs.Get("facets"))
+		}
+	}
+
+	// Text
+	text := qs.Get("text")
+
+	// Kinds
+	var kinds []hub.PackageKind
+	for _, kindStr := range qs["kind"] {
+		kind, err := strconv.Atoi(kindStr)
+		if err != nil {
+			return nil, fmt.Errorf("invalid kind: %s", kindStr)
+		}
+		kinds = append(kinds, hub.PackageKind(kind))
+	}
+
+	// Repos
+	repos := qs["repo"]
+	for _, repo := range repos {
+		if _, err := uuid.Parse(repo); err != nil {
+			return nil, fmt.Errorf("invalid repo: %s", repo)
+		}
+	}
+
+	return &hub.Query{
+		Limit:                limit,
+		Offset:               offset,
+		Facets:               facets,
+		Text:                 text,
+		PackageKinds:         kinds,
+		ChartRepositoriesIDs: repos,
+	}, nil
 }
 
 // getPackage is an http handler used to get a package details.

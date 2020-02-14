@@ -143,50 +143,57 @@ func TestSearchPackagesJSON(t *testing.T) {
 	db := &DBMock{}
 	db.setData([]byte(`
 	{
-        "packages": [{
-            "kind": 0,
-            "name": "package1",
-            "image_id": "image_id",
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 1",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }, {
-            "kind": 0,
-            "name": "package2",
-            "image_id": "image_id",
-            "package_id": "00000000-0000-0000-0000-000000000002",
-            "app_version": "12.1.0",
-            "description": "description",
-            "display_name": "Package 2",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-		}],
-        "facets": [{
-			"title": "Kind",
-			"filter_key": "kind",
-            "options": [{
-                "id": 0,
-                "name": "Chart",
-                "total": 2
-            }]
-        }, {
-			"title": "Repository",
-			"filter_key": "repo",
-            "options": [{
-                "id": "00000000-0000-0000-0000-000000000001",
-                "name": "Repo1",
-                "total": 2
-            }]
-        }]
+		"data": {
+			"packages": [{
+				"kind": 0,
+				"name": "package1",
+				"image_id": "image_id",
+				"package_id": "00000000-0000-0000-0000-000000000001",
+				"app_version": "12.1.0",
+				"description": "description",
+				"display_name": "Package 1",
+				"chart_repository": {
+					"chart_repository_id": "00000000-0000-0000-0000-000000000001",
+					"name": "repo1",
+					"display_name": "Repo 1"
+				}
+			}, {
+				"kind": 0,
+				"name": "package2",
+				"image_id": "image_id",
+				"package_id": "00000000-0000-0000-0000-000000000002",
+				"app_version": "12.1.0",
+				"description": "description",
+				"display_name": "Package 2",
+				"chart_repository": {
+					"chart_repository_id": "00000000-0000-0000-0000-000000000001",
+					"name": "repo1",
+					"display_name": "Repo 1"
+				}
+			}],
+			"facets": [{
+				"title": "Kind",
+				"filter_key": "kind",
+				"options": [{
+					"id": 0,
+					"name": "Chart",
+					"total": 2
+				}]
+			}, {
+				"title": "Repository",
+				"filter_key": "repo",
+				"options": [{
+					"id": "00000000-0000-0000-0000-000000000001",
+					"name": "Repo1",
+					"total": 2
+				}]
+			}]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 2
+        }
     }
 	`))
 	h := New(db)

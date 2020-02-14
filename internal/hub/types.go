@@ -82,6 +82,8 @@ type Package struct {
 
 // Query represents the query used when searching for packages.
 type Query struct {
+	Limit                int           `json:"limit,omitempty"`
+	Offset               int           `json:"offset,omitempty"`
 	Facets               bool          `json:"facets"`
 	Text                 string        `json:"text"`
 	PackageKinds         []PackageKind `json:"package_kinds,omitempty"`

@@ -21,7 +21,7 @@ begin
     end if;
 
     return query
-    with packages_with_text_filter as (
+    with packages_applying_text_filter as (
         select
             p.package_id,
             p.package_kind_id,
@@ -43,8 +43,8 @@ begin
             case when p_query ? 'text' and p_query->>'text' <> '' then
                 websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
             else true end
-    ), packages_with_all_filters as (
-        select * from packages_with_text_filter
+    ), packages_applying_all_filters as (
+        select * from packages_applying_text_filter
         where
             case when cardinality(v_package_kinds) > 0
             then package_kind_id = any(v_package_kinds) else true end
@@ -53,67 +53,89 @@ begin
             then chart_repository_id = any(v_chart_repositories_ids) else true end
     )
     select json_build_object(
-        'packages', (
-            select coalesce(json_agg(json_build_object(
-                'package_id', package_id,
-                'kind', package_kind_id,
-                'name', name,
-                'display_name', display_name,
-                'description', description,
-                'image_id', image_id,
-                'app_version', app_version,
-                'chart_repository', (
-                    select json_build_object(
-                        'chart_repository_id', chart_repository_id,
-                        'name', chart_repository_name,
-                        'display_name', chart_repository_display_name
-                    )
-                )
-            )), '[]')
-            from packages_with_all_filters
-        ),
-        'facets', case when v_facets then (
-            select json_build_array(
-                (
-                    select json_build_object(
-                        'title', 'Kind',
-                        'filter_key', 'kind',
-                        'options', (
-                            select coalesce(json_agg(json_build_object(
-                                'id', package_kind_id,
-                                'name', initcap(package_kind_name),
-                                'total', total
-                            )), '[]')
-                            from (
-                                select package_kind_id, package_kind_name, count(*) as total
-                                from packages_with_text_filter
-                                group by package_kind_id, package_kind_name
-                                order by total desc
-                            ) as breakdown
+        'data', (
+            select json_build_object(
+                'packages', (
+                    select coalesce(json_agg(json_build_object(
+                        'package_id', package_id,
+                        'kind', package_kind_id,
+                        'name', name,
+                        'display_name', display_name,
+                        'description', description,
+                        'image_id', image_id,
+                        'app_version', app_version,
+                        'chart_repository', (
+                            select json_build_object(
+                                'chart_repository_id', chart_repository_id,
+                                'name', chart_repository_name,
+                                'display_name', chart_repository_display_name
+                            )
                         )
-                    )
+                    )), '[]')
+                    from (
+                        select * from packages_applying_all_filters
+                        order by name asc
+                        limit (p_query->>'limit')::int
+                        offset (p_query->>'offset')::int
+                    ) packages_applying_all_filters_paginated
                 ),
-                (
-                    select json_build_object(
-                        'title', 'Repository',
-                        'filter_key', 'repo',
-                        'options', (
-                            select coalesce(json_agg(json_build_object(
-                                'id', chart_repository_id,
-                                'name', initcap(chart_repository_name),
-                                'total', total
-                            )), '[]')
-                            from (
-                                select chart_repository_id, chart_repository_name, count(*) as total
-                                from packages_with_text_filter
-                                group by chart_repository_id, chart_repository_name
-                                order by total desc
-                            ) as breakdown
+                'facets', case when v_facets then (
+                    select json_build_array(
+                        (
+                            select json_build_object(
+                                'title', 'Kind',
+                                'filter_key', 'kind',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', package_kind_id,
+                                        'name', initcap(package_kind_name),
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select
+                                            package_kind_id,
+                                            package_kind_name,
+                                            count(*) as total
+                                        from packages_applying_text_filter
+                                        group by package_kind_id, package_kind_name
+                                        order by total desc
+                                    ) as breakdown
+                                )
+                            )
+                        ),
+                        (
+                            select json_build_object(
+                                'title', 'Repository',
+                                'filter_key', 'repo',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', chart_repository_id,
+                                        'name', initcap(chart_repository_name),
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select
+                                            chart_repository_id,
+                                            chart_repository_name,
+                                            count(*) as total
+                                        from packages_applying_text_filter
+                                        group by chart_repository_id, chart_repository_name
+                                        order by total desc
+                                    ) as breakdown
+                                )
+                            )
                         )
                     )
-                )
+                ) else null end
             )
-        ) else null end
+        ),
+        'metadata', (
+            select json_build_object(
+                'limit', (p_query->>'limit')::int,
+                'offset', (p_query->>'offset')::int,
+                'total', (select count(*) from packages_applying_all_filters)
+            )
+        )
     );
 end
 $$ language plpgsql;
