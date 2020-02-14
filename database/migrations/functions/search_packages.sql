@@ -13,13 +13,6 @@ begin
     select array_agg(e::uuid) into v_chart_repositories_ids
     from jsonb_array_elements_text(p_query->'chart_repositories_ids') e;
 
-    -- Query text must be provided when not filtering by repo
-    if (v_chart_repositories_ids is null or cardinality(v_chart_repositories_ids) = 0) and
-       (not p_query ? 'text' or p_query->>'text' = '')
-    then
-        raise 'invalid query text';
-    end if;
-
     return query
     with packages_applying_text_filter as (
         select
