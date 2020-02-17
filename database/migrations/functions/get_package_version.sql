@@ -9,7 +9,7 @@ returns setof json as $$
         'display_name', p.display_name,
         'description', p.description,
         'home_url', p.home_url,
-        'image_id', p.image_id,
+        'logo_image_id', p.logo_image_id,
         'keywords', p.keywords,
         'readme', s.readme,
         'links', s.links,

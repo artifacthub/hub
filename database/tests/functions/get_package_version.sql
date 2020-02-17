@@ -28,7 +28,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    image_id,
+    logo_image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -90,7 +90,7 @@ select is(
         "display_name": "Package 1",
         "description": "description",
         "home_url": "home_url",
-        "image_id": "00000000-0000-0000-0000-000000000001",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
         "readme": "readme-version-1.0.0",
         "links": {
@@ -129,7 +129,7 @@ select is(
         "display_name": "Package 1",
         "description": "description",
         "home_url": "home_url",
-        "image_id": "00000000-0000-0000-0000-000000000001",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
         "readme": "readme-version-0.0.9",
         "links": {

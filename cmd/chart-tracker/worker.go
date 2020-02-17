@@ -116,14 +116,15 @@ func (w *worker) handleJob(j *job) error {
 	md := chart.Metadata
 
 	// Store chart logo when available if requested
-	var imageID string
+	var logoURL, logoImageID string
 	if j.downloadLogo {
 		if md.Icon != "" {
+			logoURL = md.Icon
 			data, err := w.downloadImage(md.Icon)
 			if err != nil {
 				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("Image download failed")
 			} else {
-				imageID, err = w.imageStore.SaveImage(w.ctx, data)
+				logoImageID, err = w.imageStore.SaveImage(w.ctx, data)
 				if err != nil && !errors.Is(err, image.ErrFormat) {
 					w.logger.Warn().Err(err).Str("url", md.Icon).Msg("Save image failed")
 				}
@@ -137,7 +138,8 @@ func (w *worker) handleJob(j *job) error {
 		Name:            md.Name,
 		Description:     md.Description,
 		HomeURL:         md.Home,
-		ImageID:         imageID,
+		LogoURL:         logoURL,
+		LogoImageID:     logoImageID,
 		Keywords:        md.Keywords,
 		Version:         md.Version,
 		AppVersion:      md.AppVersion,

@@ -40,7 +40,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    image_id,
+    logo_image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -93,7 +93,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    image_id,
+    logo_image_id,
     keywords,
     latest_version,
     package_kind_id,
@@ -149,7 +149,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -162,7 +162,7 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
-                "image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -193,7 +193,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -206,7 +206,7 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
-                "image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -257,7 +257,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -324,7 +324,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -357,7 +357,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -392,7 +392,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package2",
-                "image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -506,7 +506,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -519,7 +519,7 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
-                "image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -551,7 +551,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
-                "image_id": "00000000-0000-0000-0000-000000000001",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "app_version": "12.1.0",
                 "description": "description",
@@ -602,7 +602,7 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package2",
-                "image_id": "00000000-0000-0000-0000-000000000002",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
                 "app_version": "12.1.0",
                 "description": "description",

@@ -20,7 +20,7 @@ export interface Package {
   name: string;
   display_name: string | null;
   description: string;
-  image_id: string | null;
+  logo_image_id: string | null;
   app_version: string;
   chart_repository: ChartRepository;
 }

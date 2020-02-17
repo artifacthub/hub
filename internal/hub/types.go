@@ -67,7 +67,8 @@ type Package struct {
 	DisplayName       string            `json:"display_name"`
 	Description       string            `json:"description"`
 	HomeURL           string            `json:"home_url"`
-	ImageID           string            `json:"image_id"`
+	LogoURL           string            `json:"logo_url"`
+	LogoImageID       string            `json:"logo_image_id"`
 	Keywords          []string          `json:"keywords"`
 	Readme            string            `json:"readme"`
 	Links             []*Link           `json:"links"`
