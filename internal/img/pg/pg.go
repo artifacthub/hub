@@ -34,7 +34,7 @@ func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error)
 	sum := sha256.Sum256(data)
 	originalHash := sum[:]
 
-	// If image is already registered we just return its url
+	// If image is already registered we just return its id
 	imageID, err := s.getImageID(ctx, originalHash)
 	if err != nil {
 		return "", err
