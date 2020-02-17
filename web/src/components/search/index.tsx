@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useReducer, useCallback, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect, useReducer, Dispatch, SetStateAction } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import filter from 'lodash/filter';
 import every from 'lodash/every';
 import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
 import API from '../../api';
 import { Package, Facets, Filters as FiltersProp } from '../../types';
 import List from './List';
@@ -20,16 +19,11 @@ import styles from './Search.module.css';
 import prepareFiltersQuery from '../../utils/prepareFiltersQuery';
 
 interface Props {
-  isVisible: boolean;
   isSearching: boolean;
   setIsSearching: Dispatch<SetStateAction<boolean>>;
+  scrollPosition: number;
+  setScrollPosition: Dispatch<SetStateAction<number>>;
 }
-
-interface Cache {
-  text: string;
-  filters: FiltersProp;
-  ts: number;
-};
 
 interface Action {
   type: string;
@@ -78,8 +72,6 @@ const reducer = (state: FiltersProp, action: Action) => {
   }
 }
 
-const EXPIRATION = 5 * 60 * 1000; // 5min
-
 const Search = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
@@ -87,18 +79,16 @@ const Search = (props: Props) => {
   const [sortBy, setSortBy] = useState<'asc' | 'desc'>('asc');
   const [packages, setPackages] = useState<Package[] | null>(null);
   const [facets, setFacets] = useState<Facets[] | null>(null);
-  const [cachedSearch, setCachedSearch] = useState<Cache | null>(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [activeFilters, dispatch] = useReducer(reducer, query.filters);
   const [search, setSearch] = useState({
     text: query.text,
     filters: activeFilters,
   });
   const [emptyFacets, setEmptyFacets] = useState(true);
-  const { isSearching, setIsSearching, isVisible } = props;
+  const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
 
   const saveScrollPosition = () => {
-    setScrollPosition(window.scrollY);
+    props.setScrollPosition(window.scrollY);
   }
 
   useEffect(() => {
@@ -108,43 +98,11 @@ const Search = (props: Props) => {
   }, [facets]);
 
   useEffect(() => {
-    const shouldUpdateScrollPosition = () => {
-      if (isVisible && window.scrollY !== scrollPosition) {
-        window.scrollTo(0, scrollPosition);
-      }
-    };
-
-    // shouldFetchData checks if cachedSearch is empty or searchText is new or current cachedSearch has expired.
-    const shouldFetchData = () => {
-      if (isNull(cachedSearch)) {
-        return true;
-      }
-      if (cachedSearch.text !== query.text) {
-        if (isEmpty(activeFilters)) {
-          return true;
-        } else {
-          // Active filters are reset when user searchs by a new text
-          dispatch({ type: 'reset' });
-          return false;
-        }
-      }
-      if (!isEqual(cachedSearch.filters, activeFilters)) {
-        return true;
-      }
-      if (cachedSearch.ts + EXPIRATION < Date.now()) {
-        return true;
-      }
-
-      shouldUpdateScrollPosition();
-      return false;
-    };
-
-    if (isVisible && !isUndefined(query.text) && !isSearching && shouldFetchData()) {
-      setIsSearching(true);
+    if (!isUndefined(query.text) && !isSearching && (!isEqual(search.filters, activeFilters) || search.text !== query.text || isNull(packages))) {
       setSearch({text: query.text, filters: activeFilters});
-      setScrollPosition(0);
+      setIsSearching(true);
     }
-  }, [isVisible, query.text, isSearching, setIsSearching, activeFilters, cachedSearch, scrollPosition]);
+  }, [query.text, isSearching, props.setScrollPosition, setIsSearching, activeFilters, search, packages]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -160,47 +118,42 @@ const Search = (props: Props) => {
     }
   };
 
-  const updateLocation = useCallback(
-    () => {
+  useEffect(() => {
+    const updateLocation = () => {
       history.replace({
         pathname: '/search',
         search: `?text=${encodeURIComponent(search.text!)}${prepareFiltersQuery(search.filters)}`,
       });
-    },
-    [history, search],
-  );
+    };
 
-  useEffect(() => {
-    async function fetchSearchResults() {
-      if (!isUndefined(search.text) && isSearching) {
-        try {
-          const searchResults = await API.searchPackages(search.text, search.filters);
-          setPackages(searchResults.data.packages);
-          setFacets(searchResults.data.facets);
-          setCachedSearch({
-            text: search.text,
-            ts: Date.now(),
-            filters: search.filters,
-          });
-          updateLocation();
-
-        } catch {
-          // TODO - show error badge
-          setPackages([]);
-        } finally {
-          setCachedSearch({
-            text: search.text,
-            ts: Date.now(),
-            filters: search.filters,
-          });
-          setIsSearching(false);
-        }
+    const shouldUpdateScrollPosition = () => {
+      const fromDetail = location.state ? location.state.fromDetail : undefined;
+      if (fromDetail) {
+        window.scrollTo(0, scrollPosition);
+      } else {
+        setScrollPosition(0);
       }
     };
-    fetchSearchResults();
-  }, [search, isSearching, setIsSearching, updateLocation]);
 
-  if (!isVisible) return null;
+    async function fetchSearchResults() {
+      try {
+        const searchResults = await API.searchPackages(search.text!, search.filters);
+        setPackages(searchResults.data.packages);
+        setFacets(searchResults.data.facets);
+      } catch {
+        // TODO - show error badge
+        setPackages([]);
+      } finally {
+        setIsSearching(false);
+        updateLocation();
+        shouldUpdateScrollPosition();
+      }
+    };
+
+    if (isSearching) {
+      fetchSearchResults();
+    }
+  }, [isSearching, setIsSearching, search, location, history, scrollPosition, setScrollPosition]);
 
   return (
     <>

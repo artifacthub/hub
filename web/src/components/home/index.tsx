@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import isNull from 'lodash/isNull';
 import API from '../../api';
@@ -11,73 +11,35 @@ import Updates from './Updates';
 import styles from './Home.module.css';
 
 interface Props {
-  isVisible: boolean;
   isSearching: boolean;
 }
-
-interface Cache {
-  ts: number;
-}
-
-const EXPIRATION_STATS = 30 * 60 * 1000; // 30min
-const EXPIRATION_UPDATES = 15 * 60 * 1000; //15 min
 
 const Home = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState<Stats | null>(null);
   const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesInfo | null>(null);
-  const [cachedStats, setCachedStats] = useState<Cache | null>(null);
-  const [cachedPackagesUpdates, setCachedPackagesUpdates] = useState<Cache | null>(null);
-
-  // shouldFetchStatsData checks if cachedStats is empty or current cachedStats has expired.
-  const shouldFetchStatsData = useCallback(
-    () => {
-      return props.isVisible && (isNull(cachedStats) || cachedStats.ts + EXPIRATION_STATS < Date.now());
-    },
-    [cachedStats, props],
-  );
-
-  // shouldFetchPackagesUpdatesData checks if cachedPackagesUpdates is empty or current cachedPackagesUpdates has expired.
-  const shouldFetchPackagesUpdatesData = useCallback(
-    () => {
-      return props.isVisible && (isNull(cachedPackagesUpdates) || cachedPackagesUpdates.ts + EXPIRATION_UPDATES < Date.now());
-    },
-    [cachedPackagesUpdates, props],
-  );
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        if (shouldFetchStatsData()) {
-          setStats(await API.getStats());
-          setCachedStats({
-            ts: Date.now(),
-          });
-        }
+        setStats(await API.getStats());
       } finally {
         setIsLoading(false);
       }
     };
     fetchStats();
-  }, [props.isVisible, shouldFetchStatsData]);
+  }, []);
 
   useEffect(() => {
     async function fetchPackagesUpdates() {
       try {
-        if (shouldFetchPackagesUpdatesData()) {
-          setPackagesUpdates(await API.getPackagesUpdates());
-          setCachedPackagesUpdates({
-            ts: Date.now(),
-          });
-        }
+        setPackagesUpdates(await API.getPackagesUpdates());
       } finally {
         setIsLoading(false);
       }
     };
     fetchPackagesUpdates();
-  }, [props.isVisible, shouldFetchPackagesUpdatesData]);
-
-  if (!props.isVisible) return null;
+  }, []);
 
   return (
     <>
