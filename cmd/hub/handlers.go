@@ -25,7 +25,8 @@ import (
 )
 
 const (
-	defaultCacheMaxAge = 15 * time.Minute
+	staticCacheMaxAge     = 365 * 24 * time.Hour
+	defaultAPICacheMaxAge = 15 * time.Minute
 )
 
 // handlers groups all the http handlers defined for the hub, including the
@@ -72,7 +73,12 @@ func (h *handlers) setupRouter() {
 
 	// Static files
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
-	r.ServeFiles("/static/*filepath", http.Dir(staticFilesPath))
+	staticFilesServer := http.FileServer(http.Dir(staticFilesPath))
+	r.GET("/static/*filepath", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(staticCacheMaxAge.Seconds())))
+		req.URL.Path = ps.ByName("filepath")
+		staticFilesServer.ServeHTTP(w, req)
+	})
 	r.NotFound = http.HandlerFunc(h.serveIndex)
 
 	// Apply middleware
@@ -91,7 +97,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData, defaultCacheMaxAge)
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // getPackagesUpdates is an http handler used to get the last packages updates
@@ -103,7 +109,7 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData, defaultCacheMaxAge)
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // search is an http handler used to search for packages in the hub database.
@@ -120,7 +126,7 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData, defaultCacheMaxAge)
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // buildQuery builds a packages search query from a map of query string values,
@@ -200,7 +206,7 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 		}
 		return
 	}
-	renderJSON(w, jsonData, defaultCacheMaxAge)
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // getPackageVersion is an http handler used to get the details of a package
@@ -221,7 +227,7 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 		}
 		return
 	}
-	renderJSON(w, jsonData, defaultCacheMaxAge)
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // images in an http handler that serves images stored in the database.
