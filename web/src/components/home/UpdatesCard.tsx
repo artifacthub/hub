@@ -22,7 +22,7 @@ const UpdatesCard = (props: Props) => (
         <div className="d-flex align-items-start justify-content-between flex-grow-1">
           <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
             <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
-              <Image imageId={props.packageItem.image_id} alt={`Logo ${props.packageItem.display_name || props.packageItem.name}`} className={styles.image} />
+              <Image imageId={props.packageItem.logo_image_id} alt={`Logo ${props.packageItem.display_name || props.packageItem.name}`} className={styles.image} />
             </div>
 
             <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>

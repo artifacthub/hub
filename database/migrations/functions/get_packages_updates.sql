@@ -9,7 +9,7 @@ returns setof json as $$
                 'kind', package_kind_id,
                 'name', name,
                 'display_name', display_name,
-                'image_id', image_id,
+                'logo_image_id', logo_image_id,
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
@@ -25,7 +25,7 @@ returns setof json as $$
                     p.package_kind_id,
                     p.name,
                     p.display_name,
-                    p.image_id,
+                    p.logo_image_id,
                     s.app_version,
                     r.chart_repository_id,
                     r.name as chart_repository_name,
@@ -43,7 +43,7 @@ returns setof json as $$
                 'kind', package_kind_id,
                 'name', name,
                 'display_name', display_name,
-                'image_id', image_id,
+                'logo_image_id', logo_image_id,
                 'app_version', app_version,
                 'chart_repository', (
                     select json_build_object(
@@ -59,7 +59,7 @@ returns setof json as $$
                     p.package_kind_id,
                     p.name,
                     p.display_name,
-                    p.image_id,
+                    p.logo_image_id,
                     s.app_version,
                     r.chart_repository_id,
                     r.name as chart_repository_name,

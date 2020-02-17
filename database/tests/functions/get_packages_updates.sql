@@ -31,7 +31,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    image_id,
+    logo_image_id,
     keywords,
     latest_version,
     created_at,
@@ -73,7 +73,7 @@ insert into package (
     display_name,
     description,
     home_url,
-    image_id,
+    logo_image_id,
     keywords,
     latest_version,
     created_at,
@@ -119,7 +119,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
+            "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000001",
@@ -131,7 +131,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
+            "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -144,7 +144,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
+            "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000001",
@@ -156,7 +156,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
+            "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -176,7 +176,7 @@ select register_package('
     "display_name": "Package 2 v2",
     "description": "description v2",
     "home_url": "home_url",
-    "image_id": "00000000-0000-0000-0000-000000000002",
+    "logo_image_id": "00000000-0000-0000-0000-000000000002",
     "keywords": ["kw1", "kw2"],
     "readme": "readme-version-2.0.0",
     "version": "2.0.0",
@@ -203,7 +203,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
+            "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000001",
@@ -215,7 +215,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
+            "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -228,7 +228,7 @@ select is(
             "kind": 0,
             "name": "package2",
             "display_name": "Package 2 v2",
-            "image_id": "00000000-0000-0000-0000-000000000002",
+            "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "app_version": "13.0.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -240,7 +240,7 @@ select is(
             "kind": 0,
             "name": "package1",
             "display_name": "Package 1",
-            "image_id": "00000000-0000-0000-0000-000000000001",
+            "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000001",

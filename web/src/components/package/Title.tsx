@@ -14,7 +14,7 @@ const Title = (props: Props) => (
     <div className="container">
       <div className="d-flex align-items-center mb-3">
         <div className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}>
-          <Image className={styles.image} alt={props.package.display_name || props.package.name} imageId={props.package.image_id} />
+          <Image className={styles.image} alt={props.package.display_name || props.package.name} imageId={props.package.logo_image_id} />
         </div>
 
         <div className="ml-3">
