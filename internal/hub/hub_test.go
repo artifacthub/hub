@@ -5,15 +5,14 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgproto3"
-	"github.com/jackc/pgx/v4"
+	"github.com/cncf/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNew(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
+	db := &tests.DBMock{}
 	h := New(db)
 
 	// Check the hub instance was created as expected
@@ -23,8 +22,8 @@ func TestNew(t *testing.T) {
 
 func TestGetChartRepositoryByName(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -36,21 +35,21 @@ func TestGetChartRepositoryByName(t *testing.T) {
 
 	// Check we get the expected chart repository
 	r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r.ChartRepositoryID)
 	assert.Equal(t, "repo1", r.Name)
 	assert.Equal(t, "Repo 1", r.DisplayName)
 	assert.Equal(t, "https://repo1.com", r.URL)
 
-	// Introduce a fake error and check we get it when requesting the repository
-	db.setError(errors.New("fake error"))
+	// Introduce a fake db error and check we get it when requesting the repository
+	db.SetError("", errors.New("fake error"))
 	r, err = h.GetChartRepositoryByName(context.Background(), "repo1")
-	assert.Equal(t, db.err, err)
+	assert.Equal(t, db.Error(""), err)
 	assert.Nil(t, r)
 
 	// Update mock repository data to an invalid json and check we get an error
-	db.setData([]byte("invalid json"))
-	db.setError(nil)
+	db.SetData("", []byte("invalid json"))
+	db.SetError("", nil)
 	r, err = h.GetChartRepositoryByName(context.Background(), "repo1")
 	assert.Error(t, err)
 	assert.Nil(t, r)
@@ -58,8 +57,8 @@ func TestGetChartRepositoryByName(t *testing.T) {
 
 func TestGetChartRepositories(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	[{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -81,7 +80,7 @@ func TestGetChartRepositories(t *testing.T) {
 
 	// Check we get the expected chart repositories
 	r, err := h.GetChartRepositories(context.Background())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Len(t, r, 3)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].ChartRepositoryID)
 	assert.Equal(t, "repo1", r[0].Name)
@@ -99,8 +98,8 @@ func TestGetChartRepositories(t *testing.T) {
 
 func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
         "package1@1.0.0": "digest-package1-1.0.0",
         "package1@0.0.9": "digest-package1-0.0.9",
@@ -112,7 +111,7 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 
 	// Check we get the expected chart repository packages digest
 	pd, err := h.GetChartRepositoryPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Len(t, pd, 4)
 	assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
 	assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
@@ -122,26 +121,26 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 
 func TestGetStatsJSON(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`{"packages": 10, "releases": 100}`))
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`{"packages": 10, "releases": 100}`))
 	h := New(db)
 
 	// Check we get the expected stats json and error
 	data, err := h.GetStatsJSON(context.Background())
-	assert.Equal(t, db.err, err)
-	assert.Equal(t, db.data, data)
+	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, db.Data(""), data)
 
-	// Introduce a fake error and check we get it when requesting the stats
-	db.setError(errors.New("fake error"))
+	// Introduce a fake db error and check we get it when requesting the stats
+	db.SetError("", errors.New("fake error"))
 	data, err = h.GetStatsJSON(context.Background())
-	assert.Equal(t, db.err, err)
+	assert.Equal(t, db.Error(""), err)
 	assert.Nil(t, data)
 }
 
 func TestSearchPackagesJSON(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
 		"data": {
 			"packages": [{
@@ -201,13 +200,13 @@ func TestSearchPackagesJSON(t *testing.T) {
 	// Check we get the expected search results json and error
 	query := &Query{Text: "kw1"}
 	data, err := h.SearchPackagesJSON(context.Background(), query)
-	assert.Equal(t, db.err, err)
-	assert.Equal(t, db.data, data)
+	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, db.Data(""), data)
 }
 
 func TestRegisterPackage(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
+	db := &tests.DBMock{}
 	h := New(db)
 
 	// Register package and check we get the expected error
@@ -243,18 +242,18 @@ func TestRegisterPackage(t *testing.T) {
 		},
 	}
 	err := h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, db.err, err)
+	assert.Equal(t, db.Error(""), err)
 
-	// Introduce a fake error and check we get it when requesting the repository
-	db.setError(errors.New("fake error"))
+	// Introduce a fake db error and check we get it when requesting the repository
+	db.SetError("", errors.New("fake error"))
 	err = h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, db.err, err)
+	assert.Equal(t, db.Error(""), err)
 }
 
 func TestGetPackageJSON(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
         "package_id": "00000000-0000-0000-0000-000000000001",
         "kind": 0,
@@ -295,14 +294,14 @@ func TestGetPackageJSON(t *testing.T) {
 
 	// Check we get the expected package json and error
 	data, err := h.GetPackageJSON(context.Background(), "00000000-0000-0000-0000-000000000001")
-	assert.Equal(t, db.err, err)
-	assert.Equal(t, db.data, data)
+	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, db.Data(""), data)
 }
 
 func TestGetPackageVersionJSON(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
         "package_id": "00000000-0000-0000-0000-000000000001",
         "kind": 0,
@@ -343,14 +342,14 @@ func TestGetPackageVersionJSON(t *testing.T) {
 
 	// Check we get the expected package json and error
 	data, err := h.GetPackageVersionJSON(context.Background(), "00000000-0000-0000-0000-000000000001", "1.0.0")
-	assert.Equal(t, db.err, err)
-	assert.Equal(t, db.data, data)
+	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, db.Data(""), data)
 }
 
 func TestGetPackagesUpdatesJSON(t *testing.T) {
 	// Setup mock db and hub instance
-	db := &DBMock{}
-	db.setData([]byte(`
+	db := &tests.DBMock{}
+	db.SetData("", []byte(`
 	{
         "latest_packages_added": [{
             "package_id": "00000000-0000-0000-0000-000000000001",
@@ -408,50 +407,6 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
 
 	// Check we get the expected packages updates json and error
 	data, err := h.GetPackagesUpdatesJSON(context.Background())
-	assert.Equal(t, db.err, err)
-	assert.Equal(t, db.data, data)
-}
-
-type DBMock struct {
-	data []byte
-	err  error
-}
-
-func (m *DBMock) setData(data []byte) {
-	m.data = data
-}
-
-func (m *DBMock) setError(err error) {
-	m.err = err
-}
-
-func (m *DBMock) QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row {
-	return &RowMock{
-		data: m.data,
-		err:  m.err,
-	}
-}
-
-func (m *DBMock) Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error) {
-	return nil, m.err
-}
-
-type RowMock struct {
-	data []byte
-	err  error
-}
-
-// Implement pgx.Row interface
-func (m *RowMock) Close()                                         {}
-func (m *RowMock) Err() error                                     { return nil }
-func (m *RowMock) CommandTag() pgconn.CommandTag                  { return nil }
-func (m *RowMock) FieldDescriptions() []pgproto3.FieldDescription { return nil }
-func (m *RowMock) Next() bool                                     { return false }
-func (m *RowMock) Values() ([]interface{}, error)                 { return nil, nil }
-func (m *RowMock) RawValues() [][]byte                            { return nil }
-
-func (m *RowMock) Scan(dest ...interface{}) error {
-	d := dest[0].(*[]byte)
-	*d = m.data
-	return m.err
+	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, db.Data(""), data)
 }
