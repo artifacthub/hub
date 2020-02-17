@@ -5,9 +5,9 @@ import (
 	"crypto/sha256"
 	"errors"
 
+	"github.com/cncf/hub/internal/img"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
-	"github.com/tegioz/hub/internal/img"
 )
 
 // DB defines the methods the database handler must provide.

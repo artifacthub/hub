@@ -1,6 +1,6 @@
 # Build backend
 FROM golang:1.13-alpine AS backend-builder
-WORKDIR /go/src/github.com/tegioz/hub
+WORKDIR /go/src/github.com/cncf/hub
 COPY go.* ./
 COPY cmd/hub cmd/hub
 COPY internal internal

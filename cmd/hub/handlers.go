@@ -13,6 +13,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/cncf/hub/internal/hub"
+	"github.com/cncf/hub/internal/img/pg"
 	"github.com/google/uuid"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
@@ -20,8 +22,6 @@ import (
 	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"github.com/tegioz/hub/internal/hub"
-	"github.com/tegioz/hub/internal/img/pg"
 )
 
 const (

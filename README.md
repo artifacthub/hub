@@ -1,15 +1,15 @@
 # Hub
 
-[![Tests](https://github.com/tegioz/hub/workflows/Tests/badge.svg)](https://github.com/tegioz/hub/actions?query=workflow%3ATests)
-[![Build](https://github.com/tegioz/hub/workflows/Build/badge.svg)](https://github.com/tegioz/hub/actions?query=workflow%3ABuild)
+[![Tests](https://github.com/cncf/hub/workflows/Tests/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ATests)
+[![Build](https://github.com/cncf/hub/workflows/Build/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ABuild)
 
 Hub is a web-based application that enables finding, installing and publishing Kubernetes packages.
 
 <table>
     <tr>
-        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot1.png?raw=true"></td>
-        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot2.png?raw=true"></td>
-        <td width="33%"><img src="https://github.com/tegioz/hub/blob/master/docs/screenshot3.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot1.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot2.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot3.png?raw=true"></td>
     </tr>
 </table>
 
@@ -30,7 +30,7 @@ Before proceeding, please make sure your system meets the following requirements
 At the moment, the Hub Docker images haven't been published yet to any Docker registry, so you need to build them locally to make them available to your local cluster.
 
 ```console
-$ git clone https://github.com/tegioz/hub && cd hub
+$ git clone https://github.com/cncf/hub && cd hub
 $ eval $(minikube docker-env)
 $ scripts/docker-build.sh
 ```

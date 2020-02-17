@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/cncf/hub/internal/hub"
 	"github.com/rs/zerolog/log"
-	"github.com/tegioz/hub/internal/hub"
 	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/getter"

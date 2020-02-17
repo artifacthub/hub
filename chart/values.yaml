@@ -26,7 +26,7 @@ hub:
   deploy:
     replicaCount: 1
     image:
-      repository: tegioz/hub
+      repository: cncf/hub
     resources:
       requests:
         cpu: 500m
@@ -39,14 +39,14 @@ hub:
 
 chartTracker:
   image:
-    repository: tegioz/chart-tracker
+    repository: cncf/chart-tracker
   numWorkers: 50
   repositories: []
   imageStore: pg
 
 dbMigrator:
   image:
-    repository: tegioz/db-migrator
+    repository: cncf/db-migrator
   loadChartRepositories: true
 
 # Values for postgresql chart dependency
