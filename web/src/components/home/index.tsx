@@ -65,7 +65,7 @@ const Home = (props: Props) => {
         </div>
 
         <div className="mt-5 mb-2 text-center">
-          <ExternalLink className="btn btn-secondary" href="https://github.com/tegioz/hub">
+          <ExternalLink className="btn btn-secondary" href="https://github.com/cncf/hub">
             <div className="d-flex align-items-center">
               <FaGithub className="mr-2" />
               GitHub

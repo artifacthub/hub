@@ -1,4 +1,4 @@
-module github.com/tegioz/hub
+module github.com/cncf/hub
 
 go 1.13
 

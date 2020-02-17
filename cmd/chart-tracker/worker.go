@@ -13,10 +13,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/cncf/hub/internal/hub"
+	"github.com/cncf/hub/internal/img"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/tegioz/hub/internal/hub"
-	"github.com/tegioz/hub/internal/img"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 )

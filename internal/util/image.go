@@ -3,9 +3,9 @@ package util
 import (
 	"errors"
 
+	"github.com/cncf/hub/internal/img"
+	"github.com/cncf/hub/internal/img/pg"
 	"github.com/spf13/viper"
-	"github.com/tegioz/hub/internal/img"
-	"github.com/tegioz/hub/internal/img/pg"
 )
 
 // SetupImageStore creates a new image store based on the configuration provided.
