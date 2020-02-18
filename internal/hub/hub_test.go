@@ -10,6 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var testFakeError = errors.New("test fake error")
+
 func TestNew(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
@@ -42,9 +44,9 @@ func TestGetChartRepositoryByName(t *testing.T) {
 	assert.Equal(t, "https://repo1.com", r.URL)
 
 	// Introduce a fake db error and check we get it when requesting the repository
-	db.SetError("", errors.New("fake error"))
+	db.SetError("", testFakeError)
 	r, err = h.GetChartRepositoryByName(context.Background(), "repo1")
-	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, testFakeError, err)
 	assert.Nil(t, r)
 
 	// Update mock repository data to an invalid json and check we get an error
@@ -122,86 +124,32 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 func TestGetStatsJSON(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`{"packages": 10, "releases": 100}`))
+	db.SetData("", []byte("statsDataJSON"))
 	h := New(db)
 
 	// Check we get the expected stats json and error
 	data, err := h.GetStatsJSON(context.Background())
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("statsDataJSON"), data)
 
 	// Introduce a fake db error and check we get it when requesting the stats
-	db.SetError("", errors.New("fake error"))
+	db.SetError("", testFakeError)
 	data, err = h.GetStatsJSON(context.Background())
-	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, testFakeError, err)
 	assert.Nil(t, data)
 }
 
 func TestSearchPackagesJSON(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
-	{
-		"data": {
-			"packages": [{
-				"kind": 0,
-				"name": "package1",
-				"logo_image_id": "image_id",
-				"package_id": "00000000-0000-0000-0000-000000000001",
-				"app_version": "12.1.0",
-				"description": "description",
-				"display_name": "Package 1",
-				"chart_repository": {
-					"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-					"name": "repo1",
-					"display_name": "Repo 1"
-				}
-			}, {
-				"kind": 0,
-				"name": "package2",
-				"logo_image_id": "image_id",
-				"package_id": "00000000-0000-0000-0000-000000000002",
-				"app_version": "12.1.0",
-				"description": "description",
-				"display_name": "Package 2",
-				"chart_repository": {
-					"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-					"name": "repo1",
-					"display_name": "Repo 1"
-				}
-			}],
-			"facets": [{
-				"title": "Kind",
-				"filter_key": "kind",
-				"options": [{
-					"id": 0,
-					"name": "Chart",
-					"total": 2
-				}]
-			}, {
-				"title": "Repository",
-				"filter_key": "repo",
-				"options": [{
-					"id": "00000000-0000-0000-0000-000000000001",
-					"name": "Repo1",
-					"total": 2
-				}]
-			}]
-        },
-        "metadata": {
-            "limit": null,
-            "offset": null,
-            "total": 2
-        }
-    }
-	`))
+	db.SetData("", []byte("searchResultsDataJSON"))
 	h := New(db)
 
 	// Check we get the expected search results json and error
 	query := &Query{Text: "kw1"}
 	data, err := h.SearchPackagesJSON(context.Background(), query)
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("searchResultsDataJSON"), data)
 }
 
 func TestRegisterPackage(t *testing.T) {
@@ -242,171 +190,46 @@ func TestRegisterPackage(t *testing.T) {
 		},
 	}
 	err := h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, nil, err)
 
 	// Introduce a fake db error and check we get it when requesting the repository
-	db.SetError("", errors.New("fake error"))
+	db.SetError("", testFakeError)
 	err = h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, testFakeError, err)
 }
 
 func TestGetPackageJSON(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
-	{
-        "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
-        "name": "package1",
-        "display_name": "Package 1",
-        "description": "description",
-        "home_url": "home_url",
-        "logo_image_id": "image_id",
-        "keywords": ["kw1", "kw2"],
-        "readme": "readme-version-1.0.0",
-        "links": {
-            "link1": "https://link1",
-            "link2": "https://link2"
-        },
-        "version": "1.0.0",
-        "available_versions": ["0.0.9", "1.0.0"],
-        "app_version": "12.1.0",
-        "digest": "digest-package1-1.0.0",
-        "maintainers": [
-            {
-                "name": "name1",
-                "email": "email1"
-            },
-            {
-                "name": "name2",
-                "email": "email2"
-            }
-        ],
-        "chart_repository": {
-			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com"
-        }
-    }
-	`))
+	db.SetData("", []byte("packageDataJSON"))
 	h := New(db)
 
 	// Check we get the expected package json and error
 	data, err := h.GetPackageJSON(context.Background(), "00000000-0000-0000-0000-000000000001")
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("packageDataJSON"), data)
 }
 
 func TestGetPackageVersionJSON(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
-	{
-        "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
-        "name": "package1",
-        "display_name": "Package 1",
-        "description": "description",
-        "home_url": "home_url",
-        "logo_image_id": "image_id",
-        "keywords": ["kw1", "kw2"],
-        "readme": "readme-version-1.0.0",
-        "links": {
-            "link1": "https://link1",
-            "link2": "https://link2"
-        },
-        "version": "1.0.0",
-        "available_versions": ["0.0.9", "1.0.0"],
-        "app_version": "12.1.0",
-        "digest": "digest-package1-1.0.0",
-        "maintainers": [
-            {
-                "name": "name1",
-                "email": "email1"
-            },
-            {
-                "name": "name2",
-                "email": "email2"
-            }
-        ],
-        "chart_repository": {
-			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-            "name": "repo1",
-            "display_name": "Repo 1",
-            "url": "https://repo1.com"
-        }
-    }
-	`))
+	db.SetData("", []byte("packageVersionDataJSON"))
 	h := New(db)
 
 	// Check we get the expected package json and error
 	data, err := h.GetPackageVersionJSON(context.Background(), "00000000-0000-0000-0000-000000000001", "1.0.0")
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("packageVersionDataJSON"), data)
 }
 
 func TestGetPackagesUpdatesJSON(t *testing.T) {
 	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
-	{
-        "latest_packages_added": [{
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
-            "name": "package1",
-            "display_name": "Package 1",
-            "logo_image_id": "image_id",
-            "app_version": "12.1.0",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }, {
-            "package_id": "00000000-0000-0000-0000-000000000002",
-            "kind": 0,
-            "name": "package2",
-            "display_name": "Package 2 v2",
-            "logo_image_id": "image_id",
-            "app_version": "13.0.0",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000002",
-                "name": "repo2",
-                "display_name": "Repo 2"
-            }
-        }],
-        "packages_recently_updated": [{
-            "package_id": "00000000-0000-0000-0000-000000000002",
-            "kind": 0,
-            "name": "package2",
-            "display_name": "Package 2 v2",
-            "logo_image_id": "image_id",
-            "app_version": "13.0.0",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000002",
-                "name": "repo2",
-                "display_name": "Repo 2"
-            }
-        }, {
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
-            "name": "package1",
-            "display_name": "Package 1",
-            "logo_image_id": "image_id",
-            "app_version": "12.1.0",
-            "chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
-        }]
-    }
-	`))
+	db.SetData("", []byte("packagesUpdatesDataJSON"))
 	h := New(db)
 
 	// Check we get the expected packages updates json and error
 	data, err := h.GetPackagesUpdatesJSON(context.Background())
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
 }
