@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import isNull from 'lodash/isNull';
-import getSearchParams from '../../utils/getSearchParams';
 import { FiSearch } from 'react-icons/fi';
 import styles from './SearchBar.module.css';
 
@@ -15,8 +14,7 @@ interface Props {
 const SearchBar = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
-  const params = getSearchParams(location.search);
-  const [value, setValue] = useState(params.text || '');
+  const [value, setValue] = useState('');
   const inputEl = useRef<HTMLInputElement>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -41,10 +39,8 @@ const SearchBar = (props: Props) => {
   };
 
   useEffect(() => {
-    if (params.text !== value) {
-      setValue(params.text || '');
-    }
-  }, [params.text]); /* eslint-disable-line react-hooks/exhaustive-deps */
+    setValue('');
+  }, [location.pathname]);
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
@@ -55,7 +51,7 @@ const SearchBar = (props: Props) => {
 
         history.push({
           pathname: '/search',
-          search: `?text=${encodeURIComponent(value)}`,
+          search: `?text=${encodeURIComponent(value)}&page=1`,
         });
       }
     }

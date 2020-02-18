@@ -6,6 +6,7 @@ import Search from './search';
 import Package from './package';
 import NotFound from './notFound';
 import Footer from './navigation/Footer';
+import ScrollToTop from './common/ScrollToTop';
 import './App.css';
 import '../styles/default.scss';
 
@@ -20,6 +21,8 @@ export default function App() {
 
   return (
     <Router>
+      <ScrollToTop />
+
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Navbar isSearching={isSearching} />
 

@@ -10,6 +10,7 @@ import NoData from '../common/NoData';
 import BackToResults from '../navigation/BackToResults';
 import Title from './Title';
 import Loading from '../common/Loading';
+import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import styles from './Package.module.css';
 
 const Detail = () => {
@@ -18,6 +19,8 @@ const Detail = () => {
   const [version, setVersion] = useState(packageVersion);
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState<PackageDetail | null>(null);
+
+  useScrollRestorationFix();
 
   if (!isUndefined(packageId) && !isLoading && (id !== packageId || version !== packageVersion)) {
     setId(packageId);

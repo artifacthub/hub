@@ -1,9 +1,13 @@
-import { SearchQuery, Filters } from '../types';
+import { SearchParams, Filters } from '../types';
+import isNull from 'lodash/isNull';
 
-export default (query: string): SearchQuery => {
+const SPECIAL_KEYS = ['text', 'page'];
+
+export default (query: string): SearchParams => {
   const defaultValues = {
     text: undefined,
     filters: {},
+    pageNumber: 1,
   };
 
   if (window.URLSearchParams) {
@@ -11,7 +15,7 @@ export default (query: string): SearchQuery => {
     let filters: Filters = {};
 
     params.forEach((value, key) => {
-      if (key !== 'text') {
+      if (!SPECIAL_KEYS.includes(key)) {
         const values = filters[key] || [];
         values.push(value);
         filters[key] = values;
@@ -21,6 +25,7 @@ export default (query: string): SearchQuery => {
     return {
       text: params.has('text') ? params.get('text')! : undefined,
       filters: { ...filters },
+      pageNumber: params.has('page') && !isNull(params.get('page')) ? parseInt(params.get('page')!) : 1,
     };
   } else {
     // TODO

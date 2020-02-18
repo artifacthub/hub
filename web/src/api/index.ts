@@ -1,7 +1,7 @@
-import { SearchResults, PackageDetail, Stats, Filters, PackagesUpdatesInfo } from '../types';
+import { SearchResults, PackageDetail, Stats, SearchQuery, PackagesUpdatesInfo } from '../types';
 import fetchApi from '../utils/fetchApi';
-import prepareFiltersQuery from '../utils/prepareFiltersQuery';
 import getEndpointPrefix from '../utils/getEndpointPrefix';
+import prepareFiltersQuery from '../utils/prepareFiltersQuery';
 
 const API_ROUTE = `${getEndpointPrefix()}/api/v1`;
 
@@ -9,8 +9,8 @@ const API = {
   getPackage: (id?: string, version?: string): Promise<PackageDetail> => {
     return fetchApi(`${API_ROUTE}/package/${id}${version ? `/${version}` : ''}`);
   },
-  searchPackages: (text: string, filters?: Filters): Promise<SearchResults> => {
-    return fetchApi(`${API_ROUTE}/search?facets=true&text=${encodeURIComponent(text)}${prepareFiltersQuery(filters)}`);
+  searchPackages: (params: SearchQuery): Promise<SearchResults> => {
+    return fetchApi(`${API_ROUTE}/search?facets=true&text=${encodeURIComponent(params.text!)}&limit=${params.limit}&offset=${params.offset}${prepareFiltersQuery(params.filters)}`);
   },
   getStats: (): Promise<Stats> => {
     return fetchApi(`${API_ROUTE}/stats`);

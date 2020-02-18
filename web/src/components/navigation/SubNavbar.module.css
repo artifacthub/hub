@@ -1,3 +1,5 @@
 .navbar {
+  height: 48px;
   background-color: var(--color-2-500);
+  font-size: 0.875rem;
 }
