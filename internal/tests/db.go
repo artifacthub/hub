@@ -15,14 +15,6 @@ type DBMock struct {
 	err  map[string]error
 }
 
-func (m *DBMock) Data(query string) []byte {
-	return m.data[query]
-}
-
-func (m *DBMock) Error(query string) error {
-	return m.err[query]
-}
-
 func (m *DBMock) SetData(query string, data []byte) {
 	if m.data == nil {
 		m.data = make(map[string][]byte)

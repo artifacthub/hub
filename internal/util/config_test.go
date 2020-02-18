@@ -16,8 +16,7 @@ func TestSetupConfig(t *testing.T) {
 	require.Nil(t, cfg)
 
 	// Create config file for test cmd in $HOME/.cfg
-	home := os.Getenv("HOME")
-	dir := filepath.Join(home, ".cfg")
+	dir := filepath.Join(os.Getenv("HOME"), ".cfg")
 	name := filepath.Join(dir, "test.yaml")
 	err = os.MkdirAll(dir, 0755)
 	require.NoError(t, err)

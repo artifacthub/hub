@@ -69,7 +69,7 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/package/:packageID/:version", h.getPackageVersion)
 
 	// Images
-	r.GET("/image/:image", h.images)
+	r.GET("/image/:image", h.image)
 
 	// Static files
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
@@ -86,6 +86,12 @@ func (h *handlers) setupRouter() {
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		h.router = h.basicAuth(h.router)
 	}
+}
+
+// serveIndex is an http handler that serves the index.html file.
+func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
+	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
 }
 
 // getStats is an http handler used to get some stats about packages registered
@@ -230,8 +236,8 @@ func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps 
 	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
-// images in an http handler that serves images stored in the database.
-func (h *handlers) images(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+// image in an http handler that serves images stored in the database.
+func (h *handlers) image(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	// Extract image id and version
 	image := ps.ByName("image")
 	parts := strings.Split(image, "@")
@@ -277,29 +283,6 @@ func (h *handlers) images(w http.ResponseWriter, r *http.Request, ps httprouter.
 	_, _ = w.Write(data)
 }
 
-// serveIndex is an http handler that serves the index.html file.
-func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
-	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
-}
-
-// serveFile is an http handler that serves the file provided.
-func (h *handlers) serveFile(name string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), name))
-	})
-}
-
-// panicHandler is an http handler invoked when a panic occurs during a request.
-func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
-	log.Error().
-		Str("method", r.Method).
-		Str("url", r.URL.String()).
-		Bytes("stacktrace", debug.Stack()).
-		Msgf("%v", err)
-	w.WriteHeader(http.StatusInternalServerError)
-}
-
 // basicAuth is a middleware that provides basic auth support.
 func (h *handlers) basicAuth(next http.Handler) http.Handler {
 	username := h.cfg.GetString("server.basicAuth.username")
@@ -316,6 +299,16 @@ func (h *handlers) basicAuth(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+// panicHandler is an http handler invoked when a panic occurs during a request.
+func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
+	log.Error().
+		Str("method", r.Method).
+		Str("url", r.URL.String()).
+		Bytes("stacktrace", debug.Stack()).
+		Msgf("%v", err)
+	w.WriteHeader(http.StatusInternalServerError)
 }
 
 // accessHandler is a middleware invoked for each request. At the moment it is

@@ -12,6 +12,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var testFakeError = errors.New("test fake error")
+
 func TestNewImageStore(t *testing.T) {
 	// Setup mock db and image store instance
 	db := &tests.DBMock{}
@@ -53,7 +55,7 @@ func TestSaveImage(t *testing.T) {
 	)
 	db.SetError(
 		"select register_image($1, $2, $3)",
-		errors.New("image already exists"), // register_image shouldn't even be called
+		testFakeError, // register_image shouldn't even be called
 	)
 	imageID, err = s.SaveImage(context.Background(), imageData)
 	require.NoError(t, err)
@@ -66,10 +68,10 @@ func TestSaveImage(t *testing.T) {
 	)
 	db.SetError(
 		"select register_image($1, $2, $3)",
-		errors.New("fake error"),
+		testFakeError,
 	)
 	imageID, err = s.SaveImage(context.Background(), imageData)
-	assert.Equal(t, db.Error("select register_image($1, $2, $3)"), err)
+	assert.Equal(t, testFakeError, err)
 	assert.Empty(t, imageID)
 }
 
@@ -81,12 +83,12 @@ func TestGetImage(t *testing.T) {
 
 	// Check we get the expected image data
 	data, err := s.GetImage(context.Background(), "imageID", "2x")
-	assert.Equal(t, db.Error(""), err)
-	assert.Equal(t, db.Data(""), data)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, []byte("image2xData"), data)
 
 	// Introduce a fake db error and check we get it when requesting the stats
-	db.SetError("", errors.New("fake error"))
+	db.SetError("", testFakeError)
 	data, err = s.GetImage(context.Background(), "imageID", "2x")
-	assert.Equal(t, db.Error(""), err)
+	assert.Equal(t, testFakeError, err)
 	assert.Nil(t, data)
 }
