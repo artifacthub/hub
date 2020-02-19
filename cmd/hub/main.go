@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubApi := hub.New(db)
+	hubAPI := hub.New(db)
 	imageStore := pg.NewImageStore(db)
 
 	// Setup and launch server
@@ -40,7 +40,7 @@ func main() {
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
 		IdleTimeout:  1 * time.Minute,
-		Handler:      setupHandlers(cfg, hubApi, imageStore).router,
+		Handler:      setupHandlers(cfg, hubAPI, imageStore).router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {

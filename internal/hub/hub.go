@@ -34,9 +34,12 @@ func (h *Hub) GetChartRepositories(ctx context.Context) ([]*ChartRepository, err
 
 // GetChartRepositoryPackagesDigest returns the digests for all packages in the
 // repository identified by the id provided.
-func (h *Hub) GetChartRepositoryPackagesDigest(ctx context.Context, chart_repository_id string) (map[string]string, error) {
+func (h *Hub) GetChartRepositoryPackagesDigest(
+	ctx context.Context,
+	chartRepositoryID string,
+) (map[string]string, error) {
 	pd := make(map[string]string)
-	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1)", chart_repository_id)
+	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1)", chartRepositoryID)
 	return pd, err
 }
 

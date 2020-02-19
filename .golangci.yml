@@ -1,0 +1,37 @@
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - deadcode
+    - errcheck
+    - funlen
+    - goconst
+    - gocyclo
+    - goimports
+    - golint
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - interfacer
+    - lll
+    - misspell
+    - nakedret
+    - prealloc
+    - scopelint
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unconvert
+    - unused
+    - varcheck
+  fast: false
+
+linters-settings:
+  funlen:
+    lines: 100
+  golint:
+    min-confidence: 0
+
+service:
+  golangci-lint-version: 1.23.x

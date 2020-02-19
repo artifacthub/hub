@@ -41,7 +41,7 @@ func GenerateImageVersions(data []byte) ([]*ImageVersion, error) {
 	}
 
 	// Generate image versions
-	var imgVersions []*ImageVersion
+	imgVersions := make([]*ImageVersion, 0, len(spec))
 	for _, e := range spec {
 		imgVersion := imaging.Fit(img, e.width, e.height, imaging.Lanczos)
 		var buf bytes.Buffer
