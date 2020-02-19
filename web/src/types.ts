@@ -39,15 +39,29 @@ export interface SearchResults {
     packages: Package[];
     facets: Facets[];
   };
+  metadata: {
+    limit: number;
+    offset: number;
+    total: number;
+  };
 }
 
 export interface Filters {
   [key: string]: string[];
 }
 
+export interface SearchParams {
+  text?: string;
+  filters: Filters;
+  pageNumber: number;
+}
+
 export interface SearchQuery {
   text?: string;
   filters: Filters;
+  limit: number;
+  offset: number;
+  total?: number;
 }
 
 export interface Stats {

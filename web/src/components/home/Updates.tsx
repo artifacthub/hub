@@ -10,7 +10,7 @@ const Updates = (props: Props) => (
   <div className="container mb-5 mt-2">
     <div className="d-flex flex-wrap justify-content-center">
       {props.packages.latest_packages_added.length > 0 && (
-        <div className="m-sm-4 m-0 mw-100">
+        <div className="m-sm-4 m-0 mb-4 mw-100">
           <div className="h5 text-center text-muted mb-4">Latest packages added</div>
 
           {props.packages.latest_packages_added.map((packageItem: Package) => {

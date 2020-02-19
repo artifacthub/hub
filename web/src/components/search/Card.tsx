@@ -8,6 +8,7 @@ import styles from './Card.module.css';
 interface Props {
   package: Package;
   searchText: string;
+  pageNumber: string;
   filtersQuery: string;
   saveScrollPosition: () => void;
 }
@@ -20,7 +21,7 @@ const Card = (props: Props) => (
         onClick={props.saveScrollPosition}
         to={{
           pathname: `/package/${props.package.package_id}`,
-          state: { searchText: props.searchText, filtersQuery: props.filtersQuery },
+          state: { searchText: props.searchText, filtersQuery: props.filtersQuery, pageNumber: props.pageNumber },
         }}
       >
         <div className={`card-body ${styles.body}`}>

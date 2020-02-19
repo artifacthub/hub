@@ -8,6 +8,7 @@
 .imageWrapper {
   width: 80px;
   height: 80px;
+  min-width: 80px;
   border-radius: 50%;
   background-color: var(--white);
   border: 2px solid var(--color-1-20);
@@ -21,6 +22,7 @@
 
 @media only screen and (max-width: 768px) {
   .imageWrapper {
+    min-width: 50px;
     width: 50px;
     height: 50px;
   }
