@@ -46,7 +46,7 @@ func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error)
 	// If image format is svg register it as is in database, as this format
 	// doesn't require to store additional size specific versions
 	if svg.Is(data) {
-		return s.registerImage(ctx, originalHash, data, "svg")
+		return s.registerImage(ctx, originalHash, "svg", data)
 	}
 
 	// Generate image versions of different sizes and store them
@@ -55,7 +55,7 @@ func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error)
 		return "", err
 	}
 	for _, v := range imageVersions {
-		imageID, err = s.registerImage(ctx, originalHash, v.Data, v.Version)
+		imageID, err = s.registerImage(ctx, originalHash, v.Version, v.Data)
 		if err != nil {
 			return "", err
 		}
@@ -80,7 +80,7 @@ func (s *ImageStore) getImageID(ctx context.Context, hash []byte) (string, error
 }
 
 // registerImage stores the image provided in the database.
-func (s *ImageStore) registerImage(ctx context.Context, hash []byte, data []byte, version string) (string, error) {
+func (s *ImageStore) registerImage(ctx context.Context, hash []byte, version string, data []byte) (string, error) {
 	var imageID string
 	query := "select register_image($1, $2, $3)"
 	err := s.db.QueryRow(ctx, query, hash, version, data).Scan(&imageID)

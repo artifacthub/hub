@@ -7,60 +7,80 @@ import (
 
 	"github.com/cncf/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
 var testFakeError = errors.New("test fake error")
 
 func TestNew(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
 	h := New(db)
 
-	// Check the hub instance was created as expected
 	assert.IsType(t, &Hub{}, h)
 	assert.Equal(t, db, h.db)
 }
 
 func TestGetChartRepositoryByName(t *testing.T) {
-	// Setup mock db and hub instance
-	db := &tests.DBMock{}
-	db.SetData("", []byte(`
-	{
-        "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-        "name": "repo1",
-        "display_name": "Repo 1",
-        "url": "https://repo1.com"
-    }
-	`))
-	h := New(db)
+	t.Run("get existing repository by name", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select get_chart_repository_by_name($1)", "repo1",
+		).Return([]byte(`
+		{
+			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
+			"name": "repo1",
+			"display_name": "Repo 1",
+			"url": "https://repo1.com"
+		}
+		`), nil)
+		h := New(db)
 
-	// Check we get the expected chart repository
-	r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
-	require.NoError(t, err)
-	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r.ChartRepositoryID)
-	assert.Equal(t, "repo1", r.Name)
-	assert.Equal(t, "Repo 1", r.DisplayName)
-	assert.Equal(t, "https://repo1.com", r.URL)
+		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
+		require.NoError(t, err)
+		assert.Equal(t, "00000000-0000-0000-0000-000000000001", r.ChartRepositoryID)
+		assert.Equal(t, "repo1", r.Name)
+		assert.Equal(t, "Repo 1", r.DisplayName)
+		assert.Equal(t, "https://repo1.com", r.URL)
+		db.AssertExpectations(t)
+	})
 
-	// Introduce a fake db error and check we get it when requesting the repository
-	db.SetError("", testFakeError)
-	r, err = h.GetChartRepositoryByName(context.Background(), "repo1")
-	assert.Equal(t, testFakeError, err)
-	assert.Nil(t, r)
+	t.Run("database error calling get_chart_repository_by_name", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select get_chart_repository_by_name($1)", "repo1",
+		).Return(nil, testFakeError)
+		h := New(db)
 
-	// Update mock repository data to an invalid json and check we get an error
-	db.SetData("", []byte("invalid json"))
-	db.SetError("", nil)
-	r, err = h.GetChartRepositoryByName(context.Background(), "repo1")
-	assert.Error(t, err)
-	assert.Nil(t, r)
+		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
+		assert.Equal(t, testFakeError, err)
+		assert.Nil(t, r)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid json data returned from database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select get_chart_repository_by_name($1)", "repo1",
+		).Return([]byte("invalid json"), nil)
+		h := New(db)
+
+		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
+		assert.Error(t, err)
+		assert.Nil(t, r)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetChartRepositories(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
+	db.On(
+		"QueryRow",
+		"select get_chart_repositories()",
+	).Return([]byte(`
 	[{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -77,10 +97,9 @@ func TestGetChartRepositories(t *testing.T) {
         "display_name": "Repo 3",
         "url": "https://repo3.com"
     }]
-	`))
+	`), nil)
 	h := New(db)
 
-	// Check we get the expected chart repositories
 	r, err := h.GetChartRepositories(context.Background())
 	require.NoError(t, err)
 	assert.Len(t, r, 3)
@@ -96,22 +115,24 @@ func TestGetChartRepositories(t *testing.T) {
 	assert.Equal(t, "repo3", r[2].Name)
 	assert.Equal(t, "Repo 3", r[2].DisplayName)
 	assert.Equal(t, "https://repo3.com", r[2].URL)
+	db.AssertExpectations(t)
 }
 
 func TestGetChartRepositoryPackagesDigest(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte(`
+	db.On(
+		"QueryRow",
+		"select get_chart_repository_packages_digest($1)", mock.Anything,
+	).Return([]byte(`
 	{
         "package1@1.0.0": "digest-package1-1.0.0",
         "package1@0.0.9": "digest-package1-0.0.9",
         "package2@1.0.0": "digest-package2-1.0.0",
         "package2@0.0.9": "digest-package2-0.0.9"
     }
-	`))
+	`), nil)
 	h := New(db)
 
-	// Check we get the expected chart repository packages digest
 	pd, err := h.GetChartRepositoryPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
 	require.NoError(t, err)
 	assert.Len(t, pd, 4)
@@ -119,45 +140,55 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 	assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
 	assert.Equal(t, "digest-package2-1.0.0", pd["package2@1.0.0"])
 	assert.Equal(t, "digest-package2-0.0.9", pd["package2@0.0.9"])
+	db.AssertExpectations(t)
 }
 
 func TestGetStatsJSON(t *testing.T) {
-	// Setup mock db and hub instance
-	db := &tests.DBMock{}
-	db.SetData("", []byte("statsDataJSON"))
-	h := New(db)
+	t.Run("chart repositories data returned successfully", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select get_stats()",
+		).Return([]byte("statsDataJSON"), nil)
+		h := New(db)
 
-	// Check we get the expected stats json and error
-	data, err := h.GetStatsJSON(context.Background())
-	assert.Equal(t, nil, err)
-	assert.Equal(t, []byte("statsDataJSON"), data)
+		data, err := h.GetStatsJSON(context.Background())
+		assert.Equal(t, nil, err)
+		assert.Equal(t, []byte("statsDataJSON"), data)
+		db.AssertExpectations(t)
+	})
 
-	// Introduce a fake db error and check we get it when requesting the stats
-	db.SetError("", testFakeError)
-	data, err = h.GetStatsJSON(context.Background())
-	assert.Equal(t, testFakeError, err)
-	assert.Nil(t, data)
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select get_stats()",
+		).Return(nil, testFakeError)
+		h := New(db)
+
+		data, err := h.GetStatsJSON(context.Background())
+		assert.Equal(t, testFakeError, err)
+		assert.Nil(t, data)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestSearchPackagesJSON(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte("searchResultsDataJSON"))
+	db.On(
+		"QueryRow",
+		"select search_packages($1)", mock.Anything,
+	).Return([]byte("searchResultsDataJSON"), nil)
 	h := New(db)
 
-	// Check we get the expected search results json and error
 	query := &Query{Text: "kw1"}
 	data, err := h.SearchPackagesJSON(context.Background(), query)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("searchResultsDataJSON"), data)
+	db.AssertExpectations(t)
 }
 
 func TestRegisterPackage(t *testing.T) {
-	// Setup mock db and hub instance
-	db := &tests.DBMock{}
-	h := New(db)
-
-	// Register package and check we get the expected error
 	p := &Package{
 		Kind:        Chart,
 		Name:        "package1",
@@ -189,47 +220,72 @@ func TestRegisterPackage(t *testing.T) {
 			ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
 		},
 	}
-	err := h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, nil, err)
 
-	// Introduce a fake db error and check we get it when requesting the repository
-	db.SetError("", testFakeError)
-	err = h.RegisterPackage(context.Background(), p)
-	assert.Equal(t, testFakeError, err)
+	t.Run("successful package registration", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"Exec",
+			"select register_package($1)", mock.Anything,
+		).Return(nil)
+		h := New(db)
+
+		err := h.RegisterPackage(context.Background(), p)
+		assert.Equal(t, nil, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"Exec",
+			"select register_package($1)", mock.Anything,
+		).Return(testFakeError)
+		h := New(db)
+
+		err := h.RegisterPackage(context.Background(), p)
+		assert.Equal(t, testFakeError, err)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetPackageJSON(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte("packageDataJSON"))
+	db.On(
+		"QueryRow",
+		"select get_package($1)", mock.Anything,
+	).Return([]byte("packageDataJSON"), nil)
 	h := New(db)
 
-	// Check we get the expected package json and error
 	data, err := h.GetPackageJSON(context.Background(), "00000000-0000-0000-0000-000000000001")
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("packageDataJSON"), data)
+	db.AssertExpectations(t)
 }
 
 func TestGetPackageVersionJSON(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte("packageVersionDataJSON"))
+	db.On(
+		"QueryRow",
+		"select get_package_version($1, $2)", mock.Anything, mock.Anything,
+	).Return([]byte("packageVersionDataJSON"), nil)
 	h := New(db)
 
-	// Check we get the expected package json and error
 	data, err := h.GetPackageVersionJSON(context.Background(), "00000000-0000-0000-0000-000000000001", "1.0.0")
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("packageVersionDataJSON"), data)
+	db.AssertExpectations(t)
 }
 
 func TestGetPackagesUpdatesJSON(t *testing.T) {
-	// Setup mock db and hub instance
 	db := &tests.DBMock{}
-	db.SetData("", []byte("packagesUpdatesDataJSON"))
+	db.On(
+		"QueryRow",
+		"select get_packages_updates()",
+	).Return([]byte("packagesUpdatesDataJSON"), nil)
 	h := New(db)
 
-	// Check we get the expected packages updates json and error
 	data, err := h.GetPackagesUpdatesJSON(context.Background())
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
+	db.AssertExpectations(t)
 }
