@@ -25,18 +25,18 @@ import (
 type worker struct {
 	ctx        context.Context
 	id         int
-	hubApi     *hub.Hub
+	hubAPI     *hub.Hub
 	imageStore img.Store
 	logger     zerolog.Logger
 	httpClient *http.Client
 }
 
 // newWorker creates a new worker instance.
-func newWorker(ctx context.Context, id int, hubApi *hub.Hub, imageStore img.Store) *worker {
+func newWorker(ctx context.Context, id int, hubAPI *hub.Hub, imageStore img.Store) *worker {
 	return &worker{
 		ctx:        ctx,
 		id:         id,
-		hubApi:     hubApi,
+		hubAPI:     hubAPI,
 		imageStore: imageStore,
 		logger:     log.With().Int("worker", id).Logger(),
 		httpClient: &http.Client{
@@ -164,7 +164,7 @@ func (w *worker) handleJob(j *job) error {
 	}
 
 	// Register package
-	return w.hubApi.RegisterPackage(w.ctx, p)
+	return w.hubAPI.RegisterPackage(w.ctx, p)
 }
 
 // loadChart loads a chart from a remote archive located at the url provided.

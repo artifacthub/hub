@@ -27,15 +27,15 @@ type job struct {
 // available workers.
 type dispatcher struct {
 	ctx    context.Context
-	hubApi *hub.Hub
+	hubAPI *hub.Hub
 	Queue  chan *job
 }
 
 // newDispatcher creates a new dispatcher instance.
-func newDispatcher(ctx context.Context, hubApi *hub.Hub) *dispatcher {
+func newDispatcher(ctx context.Context, hubAPI *hub.Hub) *dispatcher {
 	return &dispatcher{
 		ctx:    ctx,
-		hubApi: hubApi,
+		hubAPI: hubAPI,
 		Queue:  make(chan *job),
 	}
 }
@@ -77,7 +77,7 @@ func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, er
 
 	if len(names) > 0 {
 		for _, name := range names {
-			repo, err := d.hubApi.GetChartRepositoryByName(d.ctx, name)
+			repo, err := d.hubAPI.GetChartRepositoryByName(d.ctx, name)
 			if err != nil {
 				return nil, err
 			}
@@ -85,7 +85,7 @@ func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, er
 		}
 	} else {
 		var err error
-		repos, err = d.hubApi.GetChartRepositories(d.ctx)
+		repos, err = d.hubAPI.GetChartRepositories(d.ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -107,7 +107,7 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 		return
 	}
 	log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
-	packagesDigest, err := d.hubApi.GetChartRepositoryPackagesDigest(d.ctx, r.ChartRepositoryID)
+	packagesDigest, err := d.hubAPI.GetChartRepositoryPackagesDigest(d.ctx, r.ChartRepositoryID)
 	if err != nil {
 		log.Error().Err(err).Str("repo", r.Name).Msg("Error getting repository packages digest")
 		return

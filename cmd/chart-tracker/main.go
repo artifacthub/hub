@@ -41,7 +41,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubApi := hub.New(db)
+	hubAPI := hub.New(db)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
@@ -49,11 +49,11 @@ func main() {
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	dispatcher := newDispatcher(ctx, hubApi)
+	dispatcher := newDispatcher(ctx, hubAPI)
 	wg.Add(1)
 	go dispatcher.run(&wg, cfg.GetStringSlice("tracker.repositoriesNames"))
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := newWorker(ctx, i, hubApi, imageStore)
+		w := newWorker(ctx, i, hubAPI, imageStore)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}

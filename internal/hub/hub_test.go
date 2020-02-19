@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var testFakeError = errors.New("test fake error")
+var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestNew(t *testing.T) {
 	db := &tests.DBMock{}
@@ -51,11 +51,11 @@ func TestGetChartRepositoryByName(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select get_chart_repository_by_name($1)", "repo1",
-		).Return(nil, testFakeError)
+		).Return(nil, errFakeDatabaseFailure)
 		h := New(db)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
 	})
@@ -163,11 +163,11 @@ func TestGetStatsJSON(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select get_stats()",
-		).Return(nil, testFakeError)
+		).Return(nil, errFakeDatabaseFailure)
 		h := New(db)
 
 		data, err := h.GetStatsJSON(context.Background())
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})
@@ -239,11 +239,11 @@ func TestRegisterPackage(t *testing.T) {
 		db.On(
 			"Exec",
 			"select register_package($1)", mock.Anything,
-		).Return(testFakeError)
+		).Return(errFakeDatabaseFailure)
 		h := New(db)
 
 		err := h.RegisterPackage(context.Background(), p)
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }

@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var testFakeError = errors.New("test fake error")
+var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestNewImageStore(t *testing.T) {
 	db := &tests.DBMock{}
@@ -91,11 +91,11 @@ func TestSaveImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select image_id from image where original_hash = $1", pngImgHash,
-		).Return(nil, testFakeError)
+		).Return(nil, errFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		imageID, err := s.SaveImage(context.Background(), pngImgData)
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Empty(t, imageID)
 		db.AssertExpectations(t)
 	})
@@ -109,11 +109,11 @@ func TestSaveImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select register_image($1, $2, $3)", pngImgHash, "1x", mock.Anything,
-		).Return(nil, testFakeError)
+		).Return(nil, errFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		imageID, err := s.SaveImage(context.Background(), pngImgData)
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Empty(t, imageID)
 		db.AssertExpectations(t)
 	})
@@ -139,11 +139,11 @@ func TestGetImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			mock.Anything, "imageID", "2x",
-		).Return(nil, testFakeError)
+		).Return(nil, errFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		data, err := s.GetImage(context.Background(), "imageID", "2x")
-		assert.Equal(t, testFakeError, err)
+		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})

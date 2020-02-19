@@ -33,7 +33,7 @@ const (
 // router in charge of sending requests to the right handler.
 type handlers struct {
 	cfg        *viper.Viper
-	hubApi     *hub.Hub
+	hubAPI     *hub.Hub
 	imageStore *pg.ImageStore
 	router     http.Handler
 
@@ -42,10 +42,10 @@ type handlers struct {
 }
 
 // setupHandlers creates a new handlers instance.
-func setupHandlers(cfg *viper.Viper, hubApi *hub.Hub, imageStore *pg.ImageStore) *handlers {
+func setupHandlers(cfg *viper.Viper, hubAPI *hub.Hub, imageStore *pg.ImageStore) *handlers {
 	h := &handlers{
 		cfg:         cfg,
-		hubApi:      hubApi,
+		hubAPI:      hubAPI,
 		imageStore:  imageStore,
 		imagesCache: make(map[string][]byte),
 	}
@@ -97,7 +97,7 @@ func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
 // getStats is an http handler used to get some stats about packages registered
 // in the hub database.
 func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	jsonData, err := h.hubApi.GetStatsJSON(r.Context())
+	jsonData, err := h.hubAPI.GetStatsJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -109,7 +109,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 // getPackagesUpdates is an http handler used to get the last packages updates
 // in the hub database.
 func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	jsonData, err := h.hubApi.GetPackagesUpdatesJSON(r.Context())
+	jsonData, err := h.hubAPI.GetPackagesUpdatesJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getPackagesUpdates failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -126,7 +126,7 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.P
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	jsonData, err := h.hubApi.SearchPackagesJSON(r.Context(), query)
+	jsonData, err := h.hubAPI.SearchPackagesJSON(r.Context(), query)
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -172,7 +172,7 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 	text := qs.Get("text")
 
 	// Kinds
-	var kinds []hub.PackageKind
+	kinds := make([]hub.PackageKind, 0, len(qs["kind"]))
 	for _, kindStr := range qs["kind"] {
 		kind, err := strconv.Atoi(kindStr)
 		if err != nil {
@@ -202,7 +202,7 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 // getPackage is an http handler used to get a package details.
 func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	packageID := ps.ByName("packageID")
-	jsonData, err := h.hubApi.GetPackageJSON(r.Context(), packageID)
+	jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), packageID)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			http.NotFound(w, r)
@@ -220,7 +220,7 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprou
 func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	packageID := ps.ByName("packageID")
 	version := ps.ByName("version")
-	jsonData, err := h.hubApi.GetPackageVersionJSON(r.Context(), packageID, version)
+	jsonData, err := h.hubAPI.GetPackageVersionJSON(r.Context(), packageID, version)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			http.NotFound(w, r)
@@ -285,13 +285,23 @@ func (h *handlers) image(w http.ResponseWriter, r *http.Request, ps httprouter.P
 
 // basicAuth is a middleware that provides basic auth support.
 func (h *handlers) basicAuth(next http.Handler) http.Handler {
-	username := h.cfg.GetString("server.basicAuth.username")
-	password := h.cfg.GetString("server.basicAuth.password")
+	validUser := []byte(h.cfg.GetString("server.basicAuth.username"))
+	validPass := []byte(h.cfg.GetString("server.basicAuth.password"))
 	realm := "Hub"
+
+	areCredentialsValid := func(user, pass []byte) bool {
+		if subtle.ConstantTimeCompare(user, validUser) != 1 {
+			return false
+		}
+		if subtle.ConstantTimeCompare(pass, validPass) != 1 {
+			return false
+		}
+		return true
+	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user, pass, ok := r.BasicAuth()
-		if !ok || subtle.ConstantTimeCompare([]byte(user), []byte(username)) != 1 || subtle.ConstantTimeCompare([]byte(pass), []byte(password)) != 1 {
+		if !ok || !areCredentialsValid([]byte(user), []byte(pass)) {
 			w.Header().Set("WWW-Authenticate", "Basic realm="+realm+`"`)
 			w.WriteHeader(401)
 			_, _ = w.Write([]byte("Unauthorized\n"))
