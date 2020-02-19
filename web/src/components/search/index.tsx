@@ -35,6 +35,7 @@ interface Action {
     filterId: string;
     id: string;
   };
+  filters?: FiltersProp;
 }
 
 const updateFiltersList = (list: string[] | undefined, id: string, action: 'add' | 'remove'): string[] => {
@@ -68,7 +69,9 @@ const reducer = (state: FiltersProp, action: Action) => {
         [action.payload!.filterId]: updateFiltersList(state[action.payload!.filterId], action.payload!.id, 'remove'),
       };
     case 'reset': {
-      return {};
+      return {
+        ...action.filters,
+      };
     }
 
     default:
@@ -82,6 +85,7 @@ const Search = (props: Props) => {
   const location = useLocation();
   const history = useHistory();
   const query = getSearchParams(location.search);
+  const [text, setText] = useState<string | undefined>(query.text);
   const [limit, setLimit] = useLocalStorage('limit', DEFAULT_LIMIT.toString());
   const [offset, setOffset] = useState((query.pageNumber - 1) * limit);
   const [total, setTotal] = useState(0);
@@ -90,7 +94,7 @@ const Search = (props: Props) => {
   const [pageNumber, setPageNumber] = useState(query.pageNumber);
   const [activeFilters, dispatch] = useReducer(reducer, query.filters);
   const [searchQuery, setSearchQuery] = useState({
-    text: query.text,
+    text: text,
     filters: activeFilters,
     limit: limit,
     offset: offset,
@@ -107,6 +111,12 @@ const Search = (props: Props) => {
   };
 
   useEffect(() => {
+    if (query.text !== text) {
+      setText(query.text);
+    }
+  }, [query.text, text]);
+
+  useEffect(() => {
     if (!isNull(facets)) {
       setEmptyFacets(every(facets, (f: Facets) => { return f.options.length === 0 }));
     }
@@ -119,7 +129,13 @@ const Search = (props: Props) => {
   }, [query.pageNumber, pageNumber]);
 
   useEffect(() => {
-    const shouldUpdateQuery = () => {
+    if (!isUndefined(location.state) && location.state.fromSearchCard && !isEqual(query.filters, searchQuery.filters)) {
+      dispatch({ type: 'reset', filters: query.filters });
+    }
+  }, [location.state, searchQuery.filters, query.filters]);
+
+  useEffect(() => {
+    const shouldFetchData = () => {
       if (isNull(packages)) {
         return true;
       }
@@ -128,6 +144,7 @@ const Search = (props: Props) => {
         return true;
       }
       if (!isEqual(searchQuery.filters, activeFilters)) {
+        window.scrollTo(0, 0);
         if (searchQuery.pageNumber === 1) {
           return true;
         } else {
@@ -136,11 +153,11 @@ const Search = (props: Props) => {
         }
       }
       if (
-        searchQuery.text !== query.text ||
-        (searchQuery.text === query.text && isEmpty(query.filters) && !isEmpty(searchQuery.filters))
+        searchQuery.text !== text ||
+        (searchQuery.text === text && isEmpty(query.filters) && !isEmpty(searchQuery.filters))
       ) {
         if (!isEmpty(activeFilters)) {
-          dispatch({ type: 'reset' });
+          dispatch({ type: 'reset', filters: {} });
           return false;
         }
         if (searchQuery.pageNumber !== 1) {
@@ -161,18 +178,18 @@ const Search = (props: Props) => {
       return false;
     }
 
-    if (!isUndefined(query.text) && !isSearching && shouldUpdateQuery()) {
+    if (!isSearching && shouldFetchData()) {
       setIsSearching(true);
       setSearchQuery({
         ...searchQuery,
-        text: query.text,
+        text: text,
         filters: activeFilters,
         offset: (pageNumber - 1) * limit,
         limit: limit,
         pageNumber: pageNumber,
       });
     }
-  }, [query.text, query.filters, isSearching, setIsSearching, activeFilters, searchQuery, packages, limit, pageNumber]);
+  }, [text, query.filters, isSearching, setIsSearching, activeFilters, searchQuery, packages, limit, pageNumber]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -191,7 +208,9 @@ const Search = (props: Props) => {
   useEffect(() => {
     const updateLocation = () => {
       const params = new URLSearchParams();
-      params.set('text', searchQuery.text!);
+      if (!isUndefined(searchQuery.text)) {
+        params.set('text', searchQuery.text);
+      }
       params.set('page', (searchQuery.pageNumber!).toString());
 
       history.replace({
@@ -245,7 +264,7 @@ const Search = (props: Props) => {
   return (
     <>
       <SubNavbar>
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center text-truncate">
           {!isNull(packages) && (
             <>
               {!emptyFacets && (
@@ -259,18 +278,22 @@ const Search = (props: Props) => {
                 />
               )}
               {!isSearching && (
-                <>
+                <div className="text-truncate">
                   {total > 0 && (
-                    <span className="pr-1">{offset || '1'} - {total < limit * pageNumber ? total : limit * pageNumber} of</span>
+                    <span className="pr-1">{offset + 1} - {total < limit * pageNumber ? total : limit * pageNumber} of</span>
                   )}
-                  {total} results <span className="d-none d-sm-inline pl-1">for "<span className="font-weight-bold">{searchQuery.text}</span>"</span>
-                </>
+                  {total}
+                  <span className="d-none d-sm-inline pl-1">results</span>
+                  {!isUndefined(searchQuery.text) && (
+                    <span className="pl-1">for "<span className="font-weight-bold">{searchQuery.text}</span>"</span>
+                  )}
+                </div>
               )}
             </>
           )}
         </div>
 
-        <div>
+        <div className="ml-3">
           <PaginationLimit limit={limit} setLimit={setLimit} />
         </div>
       </SubNavbar>
@@ -296,7 +319,7 @@ const Search = (props: Props) => {
           <div className="flex-grow-1 mw-100">
             {!isNull(packages) && (
               <>
-                {packages.length === 0 || isUndefined(searchQuery.text) ? (
+                {packages.length === 0 ? (
                   <NoData>
                     <>
                       We're sorry!
