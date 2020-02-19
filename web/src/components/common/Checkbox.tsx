@@ -7,7 +7,7 @@ interface Props {
   label: string;
   legend?: string | number;
   checked: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -5,8 +5,9 @@ export enum PackageKind {
 
 export interface ChartRepository {
   name: string;
-  display_name: string;
+  display_name: string | null;
   url: string;
+  chart_repository_id?: string;
 }
 
 export interface MaintainerInfo {

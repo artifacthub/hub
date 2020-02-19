@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PackageKind, PackageDetail } from '../../types';
 import Image from '../common/Image';
 import Install from './Install';
@@ -24,9 +25,17 @@ const Title = (props: Props) => (
             switch (props.package.kind) {
               case PackageKind.Chart:
                 return (
-                  <div className="text-muted text-uppercase">
-                    <small>{props.package.chart_repository.display_name || props.package.chart_repository.name}</small>
-                  </div>
+                  <Link
+                    className={`text-muted text-uppercase`}
+                    to={{
+                      pathname: '/search',
+                      search: `?repo=${props.package.chart_repository.chart_repository_id}`,
+                    }}
+                  >
+                    <u><small>
+                      {props.package.chart_repository.display_name || props.package.chart_repository.name}
+                    </small></u>
+                  </Link>
                 );
               default:
                 return null;

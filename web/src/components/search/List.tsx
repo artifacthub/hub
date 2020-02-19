@@ -4,7 +4,7 @@ import { Package } from '../../types';
 
 interface Props {
   packages: Package[];
-  searchText: string;
+  searchText?: string;
   pageNumber: string;
   filtersQuery: string;
   saveScrollPosition: () => void;

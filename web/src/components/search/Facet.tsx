@@ -24,7 +24,7 @@ const Facet = (props: Props) => {
 
   const isChecked = useCallback(
     (facetOptionId: string) => {
-      return props.active.includes(facetOptionId);
+      return props.active.includes(facetOptionId.toString());
     },
     [props.active],
   );
@@ -70,8 +70,7 @@ const Facet = (props: Props) => {
       value={option.id}
       legend={option.total}
       label={option.name}
-      checked={props.options.length === 1 ? true : isChecked(option.id)}
-      disabled={props.options.length === 1}
+      checked={isChecked(option.id)}
       onChange={props.onChange}
     />
   ));

@@ -43,6 +43,12 @@ const SearchBar = (props: Props) => {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (!location.search.includes('text=')) {
+      setValue('');
+    }
+  }, [location.search]);
+
+  useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
       if (e.keyCode === 13 && value !== '') {
