@@ -6,54 +6,28 @@ import (
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgproto3"
 	"github.com/jackc/pgx/v4"
+	"github.com/stretchr/testify/mock"
 )
 
-const Default = ""
-
 type DBMock struct {
-	data map[string][]byte
-	err  map[string]error
+	mock.Mock
 }
 
-func (m *DBMock) SetData(query string, data []byte) {
-	if m.data == nil {
-		m.data = make(map[string][]byte)
-	}
-	m.data[query] = data
-}
-
-func (m *DBMock) SetError(query string, err error) {
-	if m.err == nil {
-		m.err = make(map[string]error)
-	}
-	m.err[query] = err
-}
-
-func (m *DBMock) QueryRow(ctx context.Context, query string, args ...interface{}) pgx.Row {
-	data := m.data[query]
-	if data == nil {
-		data = m.data[""]
-	}
-	err := m.err[query]
-	if err == nil {
-		err = m.err[""]
-	}
+func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
+	args := m.Called(append([]interface{}{query}, params...)...)
 	return &RowMock{
-		data: data,
-		err:  err,
+		data: args.Get(0),
+		err:  args.Error(1),
 	}
 }
 
-func (m *DBMock) Exec(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-	err := m.err[query]
-	if err == nil {
-		err = m.err[""]
-	}
-	return nil, err
+func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
+	args := m.Called(append([]interface{}{query}, params...)...)
+	return nil, args.Error(0)
 }
 
 type RowMock struct {
-	data []byte
+	data interface{}
 	err  error
 }
 
@@ -67,11 +41,13 @@ func (m *RowMock) Values() ([]interface{}, error)                 { return nil, 
 func (m *RowMock) RawValues() [][]byte                            { return nil }
 
 func (m *RowMock) Scan(dest ...interface{}) error {
-	switch v := dest[0].(type) {
-	case *[]byte:
-		*v = m.data
-	case *string:
-		*v = string(m.data)
+	if m.data != nil {
+		switch v := dest[0].(type) {
+		case *[]byte:
+			*v = m.data.([]byte)
+		case *string:
+			*v = m.data.(string)
+		}
 	}
 	return m.err
 }

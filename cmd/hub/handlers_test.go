@@ -19,6 +19,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
@@ -30,10 +31,8 @@ func TestMain(m *testing.M) {
 }
 
 func TestServeIndex(t *testing.T) {
-	// Setup test handlers
 	th := setupTestHandlers()
 
-	// Test index file is successfully served with the expected headers
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", "/", nil)
 	th.h.serveIndex(w, r)
@@ -45,224 +44,320 @@ func TestServeIndex(t *testing.T) {
 }
 
 func TestServeStaticFile(t *testing.T) {
-	// Setup test handlers and server
 	th := setupTestHandlers()
 	s := httptest.NewServer(th.h.router)
 	defer s.Close()
 
-	// Test non existing static file
-	resp, err := http.Get(s.URL + "/static/test.js")
-	require.NoError(t, err)
-	defer resp.Body.Close()
-	assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+	t.Run("non existing static file", func(t *testing.T) {
+		resp, err := http.Get(s.URL + "/static/test.js")
+		require.NoError(t, err)
+		defer resp.Body.Close()
+		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
 
-	// Test existing static file is successfully served with the expected headers
-	resp, err = http.Get(s.URL + "/static/test.css")
-	require.NoError(t, err)
-	defer resp.Body.Close()
-	h := resp.Header
-	data, _ := ioutil.ReadAll(resp.Body)
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, buildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("testCssData\n"), data)
+	t.Run("existing static file", func(t *testing.T) {
+		resp, err := http.Get(s.URL + "/static/test.css")
+		require.NoError(t, err)
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, buildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("testCssData\n"), data)
+	})
 }
 
 func TestGetStats(t *testing.T) {
-	// Setup test handlers and router
-	th := setupTestHandlers()
-	th.db.SetData("", []byte("statsDataJSON"))
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_stats()",
+		).Return([]byte("statsDataJSON"), nil)
 
-	// Test valid request
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.getStats(w, r, nil)
-	h := w.Result().Header
-	data, _ := ioutil.ReadAll(w.Result().Body)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-	assert.Equal(t, "application/json", h.Get("Content-Type"))
-	assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("statsDataJSON"), data)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getStats(w, r, nil)
+		h := w.Result().Header
+		data, _ := ioutil.ReadAll(w.Result().Body)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("statsDataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.getStats(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_stats()",
+		).Return(nil, testFakeError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getStats(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 }
 
 func TestGetPackagesUpdates(t *testing.T) {
-	// Setup test handlers and router
-	th := setupTestHandlers()
-	th.db.SetData("", []byte("packagesUpdatesDataJSON"))
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_packages_updates()",
+		).Return([]byte("packagesUpdatesDataJSON"), nil)
 
-	// Test valid request
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.getPackagesUpdates(w, r, nil)
-	h := w.Result().Header
-	data, _ := ioutil.ReadAll(w.Result().Body)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-	assert.Equal(t, "application/json", h.Get("Content-Type"))
-	assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackagesUpdates(w, r, nil)
+		h := w.Result().Header
+		data, _ := ioutil.ReadAll(w.Result().Body)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.getPackagesUpdates(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_packages_updates()",
+		).Return(nil, testFakeError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackagesUpdates(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 }
 
 func TestSearch(t *testing.T) {
-	// Setup test handlers and router
-	th := setupTestHandlers()
-	th.db.SetData("", []byte("searchResultsDataJSON"))
+	t.Run("invalid requests", func(t *testing.T) {
+		th := setupTestHandlers()
 
-	// Test some invalid requests
-	badRequests := []struct {
-		desc   string
-		params string
-	}{
-		{"invalid limit", "limit=z"},
-		{"invalid offset", "offset=z"},
-		{"invalid facets", "facets=z"},
-		{"invalid kind", "kind=z"},
-		{"invalid kind (one of them)", "kind=0&kind=z"},
-		{"invalid repo", "repo=repo1"},
-	}
-	for _, tc := range badRequests {
-		t.Run("bad request: "+tc.desc, func(t *testing.T) {
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
-			th.h.search(w, r, nil)
-			assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
-		})
-	}
+		badRequests := []struct {
+			desc   string
+			params string
+		}{
+			{"invalid limit", "limit=z"},
+			{"invalid offset", "offset=z"},
+			{"invalid facets", "facets=z"},
+			{"invalid kind", "kind=z"},
+			{"invalid kind (one of them)", "kind=0&kind=z"},
+			{"invalid repo", "repo=repo1"},
+		}
+		for _, tc := range badRequests {
+			t.Run("bad request: "+tc.desc, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
+				th.h.search(w, r, nil)
+				assert.Equal(t, http.StatusBadRequest, w.Result().StatusCode)
+			})
+		}
+		th.db.AssertExpectations(t)
+	})
 
-	// Test valid request
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.search(w, r, nil)
-	h := w.Result().Header
-	data, _ := ioutil.ReadAll(w.Result().Body)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-	assert.Equal(t, "application/json", h.Get("Content-Type"))
-	assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("searchResultsDataJSON"), data)
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select search_packages($1)", mock.Anything,
+		).Return([]byte("searchResultsDataJSON"), nil)
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.search(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.search(w, r, nil)
+		h := w.Result().Header
+		data, _ := ioutil.ReadAll(w.Result().Body)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("searchResultsDataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select search_packages($1)", mock.Anything,
+		).Return(nil, testFakeError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.search(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 }
 
 func TestGetPackage(t *testing.T) {
-	// Setup test handlers and router
-	th := setupTestHandlers()
-	th.db.SetData("", []byte("packageDataJSON"))
+	t.Run("non existing package", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package($1)", mock.Anything,
+		).Return(nil, pgx.ErrNoRows)
 
-	// Test request for non existing package
-	th.db.SetError("", pgx.ErrNoRows)
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.getPackage(w, r, nil)
-	assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackage(w, r, nil)
+		assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 
-	// Test request for existing package
-	th.db.SetError("", nil)
-	w = httptest.NewRecorder()
-	r, _ = http.NewRequest("GET", "/", nil)
-	th.h.getPackage(w, r, nil)
-	h := w.Result().Header
-	data, _ := ioutil.ReadAll(w.Result().Body)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-	assert.Equal(t, "application/json", h.Get("Content-Type"))
-	assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("packageDataJSON"), data)
+	t.Run("existing package", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package($1)", mock.Anything,
+		).Return([]byte("packageDataJSON"), nil)
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.getPackage(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackage(w, r, nil)
+		h := w.Result().Header
+		data, _ := ioutil.ReadAll(w.Result().Body)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("packageDataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package($1)", mock.Anything,
+		).Return(nil, testFakeError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackage(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 }
 
 func TestGetPackageVersion(t *testing.T) {
-	th := setupTestHandlers()
-	th.db.SetData("", []byte("packageVersionDataJSON"))
+	t.Run("non existing package and version", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
+		).Return(nil, pgx.ErrNoRows)
 
-	// Test request for non existing package and version
-	th.db.SetError("", pgx.ErrNoRows)
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.getPackageVersion(w, r, nil)
-	assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackageVersion(w, r, nil)
+		assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 
-	// Test request for existing package and version
-	th.db.SetError("", nil)
-	w = httptest.NewRecorder()
-	r, _ = http.NewRequest("GET", "/", nil)
-	th.h.getPackageVersion(w, r, nil)
-	h := w.Result().Header
-	data, _ := ioutil.ReadAll(w.Result().Body)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-	assert.Equal(t, "application/json", h.Get("Content-Type"))
-	assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("packageVersionDataJSON"), data)
+	t.Run("existing package and version", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
+		).Return([]byte("packageVersionDataJSON"), nil)
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.getPackageVersion(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackageVersion(w, r, nil)
+		h := w.Result().Header
+		data, _ := ioutil.ReadAll(w.Result().Body)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("packageVersionDataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
+		).Return(nil, testFakeError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.getPackageVersion(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 }
 
 func TestImage(t *testing.T) {
-	th := setupTestHandlers()
+	t.Run("non existing image", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_image($1, $2)", mock.Anything, mock.Anything,
+		).Return(nil, pgx.ErrNoRows)
 
-	// Test requesting non existing image
-	th.db.SetError("", pgx.ErrNoRows)
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.image(w, r, nil)
-	assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.image(w, r, nil)
+		assert.Equal(t, http.StatusNotFound, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 
-	// Test introducing fake database error
-	th.db.SetError("", testFakeError)
-	w = httptest.NewRecorder()
-	th.h.image(w, r, nil)
-	assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On(
+			"QueryRow",
+			"select get_image($1, $2)", mock.Anything, mock.Anything,
+		).Return(nil, testFakeError)
 
-	// Test requesting two existing images (png and svg)
-	th.db.SetError("", nil)
-	testCases := []struct {
-		imgPath             string
-		expectedContentType string
-	}{
-		{"testdata/image.png", "image/png"},
-		{"testdata/image.svg", "image/svg+xml"},
-	}
-	for i, tc := range testCases {
-		t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
-			imgData, err := ioutil.ReadFile(tc.imgPath)
-			require.NoError(t, err)
-			th.db.SetData("", imgData)
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.image(w, r, nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Result().StatusCode)
+		th.db.AssertExpectations(t)
+	})
 
-			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("GET", "/", nil)
-			ps := httprouter.Params{
-				httprouter.Param{Key: "image", Value: strconv.Itoa(i)},
-			}
-			th.h.image(w, r, ps)
-			h := w.Result().Header
-			data, _ := ioutil.ReadAll(w.Result().Body)
-			assert.Equal(t, http.StatusOK, w.Result().StatusCode)
-			assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
-			assert.Equal(t, "public, max-age=31536000", h.Get("Cache-Control"))
-			assert.Equal(t, imgData, data)
-		})
-	}
+	t.Run("existing images (png and svg)", func(t *testing.T) {
+		testCases := []struct {
+			imgPath             string
+			expectedContentType string
+		}{
+			{"testdata/image.png", "image/png"},
+			{"testdata/image.svg", "image/svg+xml"},
+		}
+		for i, tc := range testCases {
+			t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
+				imgData, err := ioutil.ReadFile(tc.imgPath)
+				require.NoError(t, err)
+				th := setupTestHandlers()
+				th.db.On(
+					"QueryRow",
+					"select get_image($1, $2)", mock.Anything, mock.Anything,
+				).Return(imgData, nil)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				ps := httprouter.Params{
+					httprouter.Param{Key: "image", Value: strconv.Itoa(i)},
+				}
+				th.h.image(w, r, ps)
+				h := w.Result().Header
+				data, _ := ioutil.ReadAll(w.Result().Body)
+				assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+				assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
+				assert.Equal(t, "public, max-age=31536000", h.Get("Cache-Control"))
+				assert.Equal(t, imgData, data)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
 }
 
 func TestBasicAuth(t *testing.T) {
@@ -271,17 +366,20 @@ func TestBasicAuth(t *testing.T) {
 	th.cfg.Set("server.basicAuth.username", "test")
 	th.cfg.Set("server.basicAuth.password", "test")
 
-	// Test getting index file without providing basic auth credentials
-	w := httptest.NewRecorder()
-	r, _ := http.NewRequest("GET", "/", nil)
-	th.h.basicAuth(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
-	assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	t.Run("without basic auth credentials", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.basicAuth(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		assert.Equal(t, http.StatusUnauthorized, w.Result().StatusCode)
+	})
 
-	// Test getting index providing basic auth credentials
-	w = httptest.NewRecorder()
-	r.SetBasicAuth("test", "test")
-	th.h.basicAuth(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
-	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+	t.Run("with basic auth credentials", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r.SetBasicAuth("test", "test")
+		th.h.basicAuth(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		assert.Equal(t, http.StatusOK, w.Result().StatusCode)
+	})
 }
 
 type testHandlers struct {

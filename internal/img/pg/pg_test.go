@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+	"crypto/sha256"
 	"errors"
 	"io/ioutil"
 	"testing"
@@ -9,86 +10,141 @@ import (
 	"github.com/cncf/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
 var testFakeError = errors.New("test fake error")
 
 func TestNewImageStore(t *testing.T) {
-	// Setup mock db and image store instance
 	db := &tests.DBMock{}
 	s := NewImageStore(db)
 
-	// Check the image store instance was created as expected
 	assert.IsType(t, &ImageStore{}, s)
 	assert.Equal(t, db, s.db)
 }
 
 func TestSaveImage(t *testing.T) {
-	// Setup mock db and image store instance
-	db := &tests.DBMock{}
-	s := NewImageStore(db)
-
-	// Check we get the expected image id once the image is saved
-	db.SetError(
-		"select image_id from image where original_hash = $1",
-		pgx.ErrNoRows,
-	)
-	db.SetData(
-		"select register_image($1, $2, $3)",
-		[]byte("imageID"),
-	)
-	imageData, err := ioutil.ReadFile("testdata/image.png")
+	pngImgData, err := ioutil.ReadFile("testdata/image.png")
 	require.NoError(t, err)
-	imageID, err := s.SaveImage(context.Background(), imageData)
+	sumPngImg := sha256.Sum256(pngImgData)
+	pngImgHash := sumPngImg[:]
+	svgImgData, err := ioutil.ReadFile("testdata/image.svg")
 	require.NoError(t, err)
-	assert.Equal(t, "imageID", imageID)
+	sumSvgImg := sha256.Sum256(svgImgData)
+	svgImgHash := sumSvgImg[:]
 
-	// Check if we try to register an existing image we get its id
-	db.SetData(
-		"select image_id from image where original_hash = $1",
-		[]byte("existingImageID"),
-	)
-	db.SetError(
-		"select image_id from image where original_hash = $1",
-		nil,
-	)
-	db.SetError(
-		"select register_image($1, $2, $3)",
-		testFakeError, // register_image shouldn't even be called
-	)
-	imageID, err = s.SaveImage(context.Background(), imageData)
-	require.NoError(t, err)
-	assert.Equal(t, "existingImageID", imageID)
+	t.Run("successful png image registration", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select image_id from image where original_hash = $1", pngImgHash,
+		).Return(nil, pgx.ErrNoRows)
+		for _, version := range []string{"1x", "2x", "3x", "4x"} {
+			db.On(
+				"QueryRow",
+				"select register_image($1, $2, $3)", pngImgHash, version, mock.Anything,
+			).Return("pngImgID", nil)
+		}
+		s := NewImageStore(db)
 
-	// Introduce a fake db error registering an image
-	db.SetError(
-		"select image_id from image where original_hash = $1",
-		pgx.ErrNoRows,
-	)
-	db.SetError(
-		"select register_image($1, $2, $3)",
-		testFakeError,
-	)
-	imageID, err = s.SaveImage(context.Background(), imageData)
-	assert.Equal(t, testFakeError, err)
-	assert.Empty(t, imageID)
+		imageID, err := s.SaveImage(context.Background(), pngImgData)
+		require.NoError(t, err)
+		assert.Equal(t, "pngImgID", imageID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("successful svg image registration", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select image_id from image where original_hash = $1", svgImgHash,
+		).Return(nil, pgx.ErrNoRows)
+		db.On(
+			"QueryRow",
+			"select register_image($1, $2, $3)", svgImgHash, "svg", mock.Anything,
+		).Return("svgImgID", nil)
+		s := NewImageStore(db)
+
+		imageID, err := s.SaveImage(context.Background(), svgImgData)
+		require.NoError(t, err)
+		assert.Equal(t, "svgImgID", imageID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("try to register existing png image", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select image_id from image where original_hash = $1", pngImgHash,
+		).Return("existingImageID", nil)
+		s := NewImageStore(db)
+
+		imageID, err := s.SaveImage(context.Background(), pngImgData)
+		require.NoError(t, err)
+		assert.Equal(t, "existingImageID", imageID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error calling get_image_id", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select image_id from image where original_hash = $1", pngImgHash,
+		).Return(nil, testFakeError)
+		s := NewImageStore(db)
+
+		imageID, err := s.SaveImage(context.Background(), pngImgData)
+		assert.Equal(t, testFakeError, err)
+		assert.Empty(t, imageID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error calling register_image", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select image_id from image where original_hash = $1", pngImgHash,
+		).Return(nil, pgx.ErrNoRows)
+		db.On(
+			"QueryRow",
+			"select register_image($1, $2, $3)", pngImgHash, "1x", mock.Anything,
+		).Return(nil, testFakeError)
+		s := NewImageStore(db)
+
+		imageID, err := s.SaveImage(context.Background(), pngImgData)
+		assert.Equal(t, testFakeError, err)
+		assert.Empty(t, imageID)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetImage(t *testing.T) {
-	// Setup mock db and image store instance
-	db := &tests.DBMock{}
-	db.SetData("", []byte("image2xData"))
-	s := NewImageStore(db)
+	t.Run("existing image", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			mock.Anything, "imageID", "2x",
+		).Return([]byte("image2xData"), nil)
+		s := NewImageStore(db)
 
-	// Check we get the expected image data
-	data, err := s.GetImage(context.Background(), "imageID", "2x")
-	assert.Equal(t, nil, err)
-	assert.Equal(t, []byte("image2xData"), data)
+		data, err := s.GetImage(context.Background(), "imageID", "2x")
+		assert.Equal(t, nil, err)
+		assert.Equal(t, []byte("image2xData"), data)
+		db.AssertExpectations(t)
+	})
 
-	// Introduce a fake db error and check we get it when requesting the stats
-	db.SetError("", testFakeError)
-	data, err = s.GetImage(context.Background(), "imageID", "2x")
-	assert.Equal(t, testFakeError, err)
-	assert.Nil(t, data)
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			mock.Anything, "imageID", "2x",
+		).Return(nil, testFakeError)
+		s := NewImageStore(db)
+
+		data, err := s.GetImage(context.Background(), "imageID", "2x")
+		assert.Equal(t, testFakeError, err)
+		assert.Nil(t, data)
+		db.AssertExpectations(t)
+	})
 }
