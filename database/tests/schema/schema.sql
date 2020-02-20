@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(33);
+select plan(35);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -18,11 +18,14 @@ select tables_are(array[
     'image',
     'image_version',
     'maintainer',
+    'organization',
     'package',
     'package__maintainer',
     'package_kind',
     'schema_version',
-    'snapshot'
+    'snapshot',
+    'user',
+    'user__organization'
 ]);
 
 -- Check tables have expected columns
@@ -30,13 +33,9 @@ select columns_are('chart_repository', array[
     'chart_repository_id',
     'name',
     'display_name',
-    'url'
-]);
-select columns_are('chart_repository', array[
-    'chart_repository_id',
-    'name',
-    'display_name',
-    'url'
+    'url',
+    'user_id',
+    'organization_id'
 ]);
 select columns_are('image', array[
     'image_id',
@@ -51,6 +50,15 @@ select columns_are('maintainer', array[
     'maintainer_id',
     'name',
     'email'
+]);
+select columns_are('organization', array[
+    'organization_id',
+    'name',
+    'description',
+    'home_url',
+    'logo_url',
+    'logo_image_id',
+    'created_at'
 ]);
 select columns_are('package', array[
     'package_id',
@@ -86,6 +94,19 @@ select columns_are('snapshot', array[
     'digest',
     'readme',
     'links'
+]);
+select columns_are('user', array[
+    'user_id',
+    'alias',
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'created_at'
+]);
+select columns_are('user__organization', array[
+    'user_id',
+    'organization_id'
 ]);
 
 -- Check tables have expected indexes

@@ -4,16 +4,41 @@ end; $$;
 
 create extension if not exists "uuid-ossp";
 
+create table if not exists organization (
+    organization_id uuid primary key default uuid_generate_v4(),
+    name text not null check (name <> '') unique,
+    description text check (description <> '') unique,
+    home_url text check (home_url <> ''),
+    logo_url text check (logo_url <> ''),
+    logo_image_id uuid,
+    created_at timestamptz default current_timestamp not null
+);
+
+create table if not exists "user" (
+    user_id uuid primary key default uuid_generate_v4(),
+    alias text not null check (alias <> '') unique,
+    first_name text check (first_name <> ''),
+    last_name text check (last_name <> ''),
+    email text not null check (email <> '') unique,
+    password text check (password <> ''),
+    created_at timestamptz default current_timestamp not null
+);
+
+create table if not exists user__organization (
+    user_id uuid not null references "user" on delete cascade,
+    organization_id uuid not null references organization on delete cascade,
+    primary key (user_id, organization_id)
+);
+
 create table if not exists chart_repository (
     chart_repository_id uuid primary key default uuid_generate_v4(),
     name text not null check (name <> '') unique,
     display_name text,
-    url text not null check (url <> '') unique
+    url text not null check (url <> '') unique,
+    user_id uuid references "user" on delete restrict,
+    organization_id uuid references organization on delete restrict,
+    check (user_id is null or organization_id is null)
 );
-
-{{ if eq .loadChartRepositories "true" }}
-{{ template "data/charts-repos.sql" }}
-{{ end }}
 
 create table if not exists package_kind (
     package_kind_id integer primary key,
@@ -97,6 +122,10 @@ create table if not exists image_version (
 );
 
 {{ template "functions/_create_all_functions.sql" }}
+
+{{ if eq .loadSampleData "true" }}
+{{ template "data/sample.sql" }}
+{{ end }}
 
 ---- create above / drop below ----
 
