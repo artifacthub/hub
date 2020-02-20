@@ -1,0 +1,4 @@
+.wrapper {
+  background-color: var(--body-bg);
+  min-height: 500px;
+}

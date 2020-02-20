@@ -1,0 +1,17 @@
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+}
+
+.btnMobileFilters {
+  transition: all .3s ease-in-out;
+  background-color: var(--color-black-5) !important;
+  height: 32px;
+  width: 32px;
+}
+
+@media (hover: hover) {
+  .btnMobileFilters:hover {
+    background-color: var(--color-black-15) !important;
+  }
+}
