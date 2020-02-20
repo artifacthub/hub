@@ -47,7 +47,7 @@ chartTracker:
 dbMigrator:
   image:
     repository: cncf/db-migrator
-  loadChartRepositories: true
+  loadSampleData: true
 
 # Values for postgresql chart dependency
 postgresql:

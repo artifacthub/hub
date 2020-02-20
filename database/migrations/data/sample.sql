@@ -1,3 +1,26 @@
+-- Register some organizations
+insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000001', 'Helm');
+insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000002', 'Banzaicloud');
+insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000003', 'Choerodon');
+insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000004', 'IBM');
+insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000005', 'Linkerd');
+
+-- Register 2 sample users and add them to the Helm organization
+insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000001', 'cynthiasg', 'cynthiasg@icloud.com');
+insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000002', 'tegioz', 'tegioz@icloud.com');
+insert into user__organization values('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001');
+insert into user__organization values('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001');
+
+-- Register repositories belonging to one organization
+insert into chart_repository (name, url, organization_id) values ('stable','https://kubernetes-charts.storage.googleapis.com', '00000000-0000-0000-0000-000000000001');
+insert into chart_repository (name, url, organization_id) values ('incubator','https://kubernetes-charts-incubator.storage.googleapis.com', '00000000-0000-0000-0000-000000000001');
+insert into chart_repository (name, url, organization_id) values ('banzaicloud-stable','https://kubernetes-charts.banzaicloud.com', '00000000-0000-0000-0000-000000000002');
+insert into chart_repository (name, url, organization_id) values ('choerodon','https://openchart.choerodon.com.cn/choerodon/c7n', '00000000-0000-0000-0000-000000000003');
+insert into chart_repository (name, url, organization_id) values ('ibm-charts','https://raw.githubusercontent.com/IBM/charts/master/repo/stable/', '00000000-0000-0000-0000-000000000004');
+insert into chart_repository (name, url, organization_id) values ('linkerd2','https://helm.linkerd.io/stable', '00000000-0000-0000-0000-000000000005');
+insert into chart_repository (name, url, organization_id) values ('linkerd2-edge','https://helm.linkerd.io/edge', '00000000-0000-0000-0000-000000000005');
+
+-- Register some more repositories not belonging to any organization or user
 insert into chart_repository (name, url) values ('adwerx','https://adwerx.github.io/charts/');
 insert into chart_repository (name, url) values ('aerospike','https://aerospike.github.io/aerospike-kubernetes-enterprise');
 insert into chart_repository (name, url) values ('agones','https://agones.dev/chart/stable');
@@ -8,14 +31,12 @@ insert into chart_repository (name, url) values ('architectminds','https://archi
 insert into chart_repository (name, url) values ('argo','https://argoproj.github.io/argo-helm');
 insert into chart_repository (name, url) values ('aws','https://aws.github.io/eks-charts');
 insert into chart_repository (name, url) values ('backube','https://backube.github.io/helm-charts/');
-insert into chart_repository (name, url) values ('banzaicloud-stable','https://kubernetes-charts.banzaicloud.com');
 insert into chart_repository (name, url) values ('billimek','https://billimek.com/billimek-charts/');
 insert into chart_repository (name, url) values ('buildkite','https://buildkite.github.io/charts');
 insert into chart_repository (name, url) values ('ceph-csi','https://ceph.github.io/csi-charts');
 insert into chart_repository (name, url) values ('cetic','https://cetic.github.io/helm-charts');
 insert into chart_repository (name, url) values ('cgroschupp','https://cgroschupp.github.io/helm-charts/');
 insert into chart_repository (name, url) values ('chartsm','https://api.chartsm.com');
-insert into chart_repository (name, url) values ('choerodon','https://openchart.choerodon.com.cn/choerodon/c7n');
 insert into chart_repository (name, url) values ('chubaofs','https://chubaofs.github.io/chubaofs-charts');
 insert into chart_repository (name, url) values ('citrix','https://citrix.github.io/citrix-helm-charts/');
 insert into chart_repository (name, url) values ('cloudbees','https://charts.cloudbees.com/public/cloudbees');
@@ -59,8 +80,6 @@ insert into chart_repository (name, url) values ('honeydipper','https://raw.gith
 insert into chart_repository (name, url) values ('hpe-storage','https://hpe-storage.github.io/co-deployments/');
 insert into chart_repository (name, url) values ('http-folder','https://aureliengasser.github.io/charts');
 insert into chart_repository (name, url) values ('hue','https://helm.gethue.com');
-insert into chart_repository (name, url) values ('ibm-charts','https://raw.githubusercontent.com/IBM/charts/master/repo/stable/');
-insert into chart_repository (name, url) values ('incubator','https://kubernetes-charts-incubator.storage.googleapis.com');
 insert into chart_repository (name, url) values ('inlets','https://inlets.github.io/inlets-operator/');
 insert into chart_repository (name, url) values ('inspur','https://inspur-iop.github.io/charts/');
 insert into chart_repository (name, url) values ('jaegertracing','https://jaegertracing.github.io/helm-charts');
@@ -79,8 +98,6 @@ insert into chart_repository (name, url) values ('kremers','https://kremers.gith
 insert into chart_repository (name, url) values ('kubedex','https://kubedex.github.io/charts');
 insert into chart_repository (name, url) values ('kubeinvaders','https://lucky-sideburn.github.io/helm-charts/');
 insert into chart_repository (name, url) values ('lifen','https://honestica.github.io/lifen-charts/');
-insert into chart_repository (name, url) values ('linkerd2','https://helm.linkerd.io/stable');
-insert into chart_repository (name, url) values ('linkerd2-edge','https://helm.linkerd.io/edge');
 insert into chart_repository (name, url) values ('liwenhe','https://liwenhe1993.github.io/charts/');
 insert into chart_repository (name, url) values ('lohmag','https://lohmag.github.io/helm-charts/');
 insert into chart_repository (name, url) values ('loki','https://grafana.github.io/loki/charts');
@@ -122,7 +139,6 @@ insert into chart_repository (name, url) values ('solace','https://solaceproduct
 insert into chart_repository (name, url) values ('soluto','https://charts.soluto.io');
 insert into chart_repository (name, url) values ('squidex','https://squidex.github.io/squidex-docker/');
 insert into chart_repository (name, url) values ('sstarcher','https://shanestarcher.com/helm-charts/');
-insert into chart_repository (name, url) values ('stable','https://kubernetes-charts.storage.googleapis.com');
 insert into chart_repository (name, url) values ('substra','https://substrafoundation.github.io/charts/');
 insert into chart_repository (name, url) values ('sumologic','https://sumologic.github.io/sumologic-kubernetes-collection');
 insert into chart_repository (name, url) values ('t3n','https://storage.googleapis.com/t3n-helm-charts');
