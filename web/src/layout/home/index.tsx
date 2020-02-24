@@ -72,7 +72,7 @@ const HomeView = (props: Props) => {
         <img className={`${styles.logo} m-3`} src={logo} alt="Logo CNCF" />
 
         <div className="h5 px-3 pt-4">
-          Hub is a <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">Cloud Native Computing Foundation</ExternalLink> sandbox project.
+          CNCF Hub aspires to be a <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">Cloud Native Computing Foundation</ExternalLink> sandbox project.
         </div>
       </div>
     </div>
