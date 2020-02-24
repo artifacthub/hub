@@ -1,0 +1,55 @@
+.navbar {
+  background-color: var(--color-1-500);
+  padding: 1rem !important;
+  z-index: 1;
+}
+
+.navbar:not(.homeNavbar) {
+  box-shadow: 0 8px 6px -6px var(--color-black-15);
+}
+
+.homeNavbar {
+  background-color: transparent;
+  position: absolute !important;
+  width: 100%;
+}
+
+.brand {
+  font-family: var(--logo-font);
+}
+
+.brand:focus {
+  outline: none;
+}
+
+.search {
+  max-width: 300px;
+}
+
+.button {
+  letter-spacing: 2px;
+  color: var(--white) !important;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+}
+
+.button:focus {
+  box-shadow: 0;
+}
+
+.badge {
+  font-size: 0.5rem !important;
+}
+
+@media (hover: hover) {
+  .button:hover::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--white);
+    opacity: .5;
+  }
+}

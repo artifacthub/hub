@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import isMobileSafari from '../utils/isMobileSafari';
+
+const isMobileSafari = (): boolean => {
+  return (
+    /iPad|iPhone|iPod/.test(window.navigator.platform) &&
+    /^((?!CriOS).)*Safari/.test(window.navigator.userAgent)
+  );
+}
 
 export default function useScrollRestorationFix() {
   useEffect(() => {

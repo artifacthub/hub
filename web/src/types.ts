@@ -5,34 +5,31 @@ export enum PackageKind {
 
 export interface ChartRepository {
   name: string;
-  display_name: string | null;
+  displayName: string | null;
   url: string;
-  chart_repository_id?: string;
+  chartRepositoryId?: string;
 }
 
-export interface MaintainerInfo {
+export interface Maintainer {
   name?: string;
   email: string;
 }
 
 export interface Package {
-  package_id: string;
+  packageId: string;
   kind: PackageKind;
   name: string;
-  display_name: string | null;
+  displayName: string | null;
   description: string;
-  logo_image_id: string | null;
-  app_version: string;
-  chart_repository: ChartRepository;
-}
-
-export interface PackageDetail extends Package {
-  readme: string | null;
-  available_versions: string[];
-  version: string;
-  home_url: string | null;
-  keywords: string[];
-  maintainers: MaintainerInfo[];
+  logoImageId: string | null;
+  appVersion: string;
+  chartRepository: ChartRepository;
+  readme?: string | null;
+  availableVersions?: string[];
+  version?: string;
+  homeUrl?: string | null;
+  keywords?: string[];
+  maintainers?: Maintainer[];
 }
 
 export interface SearchResults {
@@ -48,18 +45,18 @@ export interface SearchResults {
 }
 
 export interface Filters {
-  [key: string]: string[];
-}
-
-export interface SearchParams {
   text?: string;
-  filters: Filters;
+  f: {
+    [key: string]: string[];
+  };
   pageNumber: number;
 }
 
 export interface SearchQuery {
   text?: string;
-  filters: Filters;
+  filters: {
+    [key: string]: string[];
+  };
   limit: number;
   offset: number;
   total?: number;
@@ -71,7 +68,7 @@ export interface Stats {
 }
 
 export interface Facets {
-  filter_key: string;
+  filterKey: string;
   title: string;
   options: FacetOption[];
 };
@@ -82,7 +79,7 @@ export interface FacetOption {
   total: number;
 }
 
-export interface PackagesUpdatesInfo {
-  latest_packages_added: Package[];
-  packages_recently_updated: Package[];
+export interface PackagesUpdates {
+  latestPackagesAdded: Package[];
+  packagesRecentlyUpdated: Package[];
 }
