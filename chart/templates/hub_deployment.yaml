@@ -33,7 +33,7 @@ spec:
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
       containers:
         - name: hub
-          image: "{{ .Values.hub.deploy.image.repository }}"
+          image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           volumeMounts:
           - name: hub-config

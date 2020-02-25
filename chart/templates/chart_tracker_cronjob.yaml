@@ -19,6 +19,8 @@ spec:
           - name: check-db-ready
             image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
+            resources:
+              {{- toYaml .Values.chartTracker.cronjob.resources | nindent 14 }}
             env:
               - name: PGHOST
                 value: {{ .Values.db.host }}
@@ -27,7 +29,7 @@ spec:
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
           containers:
           - name: chart-tracker
-            image: "{{ .Values.chartTracker.image.repository }}"
+            image: {{ .Values.chartTracker.cronjob.image.repository }}:{{ .Values.imageTag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
             volumeMounts:
             - name: chart-tracker-config

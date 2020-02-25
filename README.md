@@ -1,7 +1,6 @@
 # Hub
 
-[![Tests](https://github.com/cncf/hub/workflows/Tests/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ATests)
-[![Build](https://github.com/cncf/hub/workflows/Build/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ABuild)
+[![CI](https://github.com/cncf/hub/workflows/CI/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ACI)
 
 Hub is a web-based application that enables finding, installing and publishing Kubernetes packages.
 

@@ -1,0 +1,186 @@
+name: CI
+on: [push]
+
+jobs:
+  linter-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      - name: Install golangci-lint
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.23.6
+      - name: Run golangci-lint
+        run: ./bin/golangci-lint --timeout 2m run ./...
+
+  tests-database:
+    runs-on: ubuntu-latest
+    container:
+      image: tegioz/db-tests
+    services:
+      postgres:
+        image: tegioz/postgres-pgtap
+        env:
+          POSTGRES_USER: tests
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: tests
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Apply database migrations
+        working-directory: ./database/migrations
+        run: tern migrate -c ../../.github/workflows/tern.conf --port ${{ job.services.postgres.ports[5432] }}
+      - name: Install pgtap database extension
+        run: psql -h postgres -p ${{ job.services.postgres.ports[5432] }} -U tests tests -c 'create extension pgtap;'
+      - name: Run database tests
+        working-directory: ./database/tests
+        run: pg_prove --host postgres --dbname tests --username tests --verbose **/*.sql
+
+  tests-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      - name: Run backend tests
+        run: go test -cover -race -v -mod=readonly ./...
+
+  tests-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Install dependencies
+        working-directory: ./web
+        run: yarn install
+      - name: Run frontend tests
+        working-directory: ./web
+        run: yarn test --watchAll=false --passWithNoTests
+
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      - name: Build hub
+        working-directory: ./cmd/hub
+        run: go build -v
+      - name: Build chart-tracker
+        working-directory: ./cmd/chart-tracker
+        run: go build -v
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Install dependencies
+        working-directory: ./web
+        run: yarn install
+      - name: Build frontend
+        working-directory: ./web
+        run: yarn build
+
+  build-docker-images:
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - linter-backend
+      - tests-database
+      - tests-backend
+      - tests-frontend
+      - build-backend
+      - build-frontend
+    env:
+      AWS_DEFAULT_REGION: us-east-2
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Setup AWS ECR credentials
+        run: $( aws ecr get-login --no-include-email )
+      - name: Build hub image
+        run: |
+          docker build \
+            -f cmd/hub/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hub:$GITHUB_SHA .
+      - name: Push hub image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hub:$GITHUB_SHA
+      - name: Build db-migrator image
+        run: |
+          docker build \
+            -f database/migrations/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA .
+      - name: Push db-migrator image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA
+      - name: Build chart-tracker image
+        run: |
+          docker build \
+            -f cmd/chart-tracker/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/chart-tracker:$GITHUB_SHA .
+      - name: Push chart-tracker image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/chart-tracker:$GITHUB_SHA
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/master'
+    needs: build-docker-images
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-2
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      KUBECONFIG_DATA: ${{secrets.KUBECONFIG_DATA}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Install Helm 3
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - name: Setup Kubernetes config
+        run: |
+          mkdir $HOME/.kube
+          echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
+      - name: Upgrade deployment
+        working-directory: ./chart
+        run: |
+          helm dep update
+          helm upgrade --namespace staging --reuse-values --set imageTag=$GITHUB_SHA hub .
+
+  deploy-production:
+    if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-2
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      KUBECONFIG_DATA: ${{secrets.KUBECONFIG_DATA}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Install Helm 3
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - name: Setup Kubernetes config
+        run: |
+          mkdir $HOME/.kube
+          echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
+      - name: Upgrade deployment
+        working-directory: ./chart
+        run: |
+          helm dep update
+          helm upgrade --namespace production --reuse-values --set imageTag=$GITHUB_SHA hub .

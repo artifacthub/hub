@@ -18,4 +18,8 @@ spec:
   backend:
     serviceName: hub
     servicePort: {{ .Values.hub.service.port }}
+  {{- with .Values.hub.ingress.rules }}
+  rules:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}

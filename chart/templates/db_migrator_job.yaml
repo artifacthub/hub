@@ -2,6 +2,10 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-migrator
+  annotations:
+    "helm.sh/hook": post-install,pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     spec:
@@ -22,7 +26,7 @@ spec:
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
       containers:
       - name: db-migrator
-        image: {{ .Values.dbMigrator.image.repository }}
+        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.pullPolicy }}
         volumeMounts:
         - name: db-migrator-config
