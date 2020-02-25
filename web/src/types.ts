@@ -23,7 +23,7 @@ export interface Package {
   description: string;
   logoImageId: string | null;
   appVersion: string;
-  chartRepository: ChartRepository;
+  chartRepository: ChartRepository | null;
   readme?: string | null;
   availableVersions?: string[];
   version?: string;
@@ -74,12 +74,12 @@ export interface Facets {
 };
 
 export interface FacetOption {
-  id: string;
+  id: string | number;
   name: string;
   total: number;
 }
 
-export interface PackagesUpdates {
+export interface PackagesUpdatesList {
   latestPackagesAdded: Package[];
   packagesRecentlyUpdated: Package[];
 }

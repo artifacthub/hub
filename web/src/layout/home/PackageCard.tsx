@@ -4,6 +4,7 @@ import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
 import { Package, PackageKind } from '../../types';
 import styles from './PackageCard.module.css';
+import prepareQueryString from '../../utils/prepareQueryString';
 
 interface Props {
   package: Package;
@@ -50,14 +51,18 @@ const PackageCard = (props: Props) => {
                                 className={`p-0 border-0 ${styles.link}`}
                                 onClick={(e) => {
                                   e.preventDefault();
-
                                   history.push({
                                     pathname: '/search',
-                                    search: `?page=1&repo=${props.package.chartRepository.chartRepositoryId}`,
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        'repo': [props.package.chartRepository!.chartRepositoryId!],
+                                      },
+                                    }),
                                   });
                                 }}
                               >
-                                <u>{props.package.chartRepository.displayName || props.package.chartRepository.name}</u>
+                                <u>{props.package.chartRepository!.displayName || props.package.chartRepository!.name}</u>
                               </button>
                             </div>
 

@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import isNull from 'lodash/isNull';
 import { FiSearch } from 'react-icons/fi';
+import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchBar.module.css';
 
 interface Props {
@@ -51,7 +52,11 @@ const SearchBar = (props: Props) => {
 
         history.push({
           pathname: '/search',
-          search: `?page=1&text=${value}`,
+          search: prepareQueryString({
+            pageNumber: 1,
+            text: value,
+            filters: {},
+          }),
         });
       }
     }
@@ -90,6 +95,7 @@ const SearchBar = (props: Props) => {
           />
 
           <button
+            data-testid="cleanBtn"
             type="button"
             className={classnames(
               'close',
@@ -105,7 +111,7 @@ const SearchBar = (props: Props) => {
 
         {props.isSearching && (
           <div className={`position-absolute text-light ${styles.loading}`}>
-            <span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} />
+            <span data-testid="searchBarSpinning" className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} />
           </div>
         )}
       </div>

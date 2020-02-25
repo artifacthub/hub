@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import API from '../../api';
-import { PackagesUpdates as PackagesUpdatesProp, Package } from '../../types';
+import { API } from '../../api';
+import { PackagesUpdatesList, Package } from '../../types';
 import PackageCard from './PackageCard';
 import isNull from 'lodash/isNull';
 import Loading from '../common/Loading';
 import styles from './PackagesUpdates.module.css';
 
 const PackagesUpdates = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesProp | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesList | null>(null);
 
   useEffect(() => {
+    setIsLoading(true);
     async function fetchPackagesUpdates() {
       try {
         setPackagesUpdates(await API.getPackagesUpdates());
@@ -26,7 +27,7 @@ const PackagesUpdates = () => {
     fetchPackagesUpdates();
   }, []);
 
-  if (!isNull(packagesUpdates) && (packagesUpdates.latestPackagesAdded.length === 0 && packagesUpdates.packagesRecentlyUpdated.length === 0)) {
+  if (!isLoading && !isNull(packagesUpdates) && (packagesUpdates.latestPackagesAdded.length === 0 && packagesUpdates.packagesRecentlyUpdated.length === 0)) {
     return null;
   }
 
@@ -37,7 +38,7 @@ const PackagesUpdates = () => {
           {!isNull(packagesUpdates) && !isLoading ? (
             <>
               {packagesUpdates.latestPackagesAdded.length > 0 && (
-                <div className="m-sm-4 m-0 mb-4 mw-100">
+                <div data-testid="latestPackagesList" className="m-sm-4 m-0 mb-4 mw-100">
                   <div className="h5 text-center text-muted mb-4">Latest packages added</div>
 
                   {packagesUpdates.latestPackagesAdded.map((item: Package) => {
@@ -52,7 +53,7 @@ const PackagesUpdates = () => {
               )}
 
               {packagesUpdates.packagesRecentlyUpdated.length > 0 && (
-                <div className="m-sm-4 m-0 mw-100">
+                <div data-testid="recentlyUpdatedPackagesList" className="m-sm-4 m-0 mw-100">
                   <div className="h5 text-center text-muted mb-4">Packages recently updated</div>
 
                   {packagesUpdates.packagesRecentlyUpdated.map((item: Package) => {

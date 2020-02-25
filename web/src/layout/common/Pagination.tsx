@@ -40,7 +40,11 @@ const Pagination = (props: Props) => {
   const getButton = (pageNumber: number, content?: JSX.Element | string): JSX.Element => (
     <button
       className="page-link"
-      onClick={() => props.onChange(pageNumber)}
+      onClick={() => {
+        if (props.active !== pageNumber) {
+          props.onChange(pageNumber);
+        }
+      }}
     >
       {content || pageNumber}
     </button>
@@ -49,7 +53,7 @@ const Pagination = (props: Props) => {
   const visiblePages = getPaginationOptions(props.active, totalPages);
 
   return (
-    <nav>
+    <nav role="navigation" aria-label="pagination">
       <ul className="pagination justify-content-center mt-5 mb-5">
         <li className={classnames(
           'page-item',

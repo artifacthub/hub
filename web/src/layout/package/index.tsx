@@ -4,7 +4,7 @@ import { FiPlus, FiDownload } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import API from '../../api';
+import { API } from '../../api';
 import { PackageKind, Package, SearchFiltersURL } from '../../types';
 import SubNavbar from '../navigation/SubNavbar';
 import Image from '../common/Image';
@@ -29,7 +29,7 @@ const PackageView = (props: Props) => {
   const history = useHistory();
   const [id, setId] = useState(props.packageId);
   const [version, setVersion] = useState(props.packageVersion);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [detail, setDetail] = useState<Package | null>(null);
   const { text, pageNumber, filters } = props.searchUrlReferer || {};
 
@@ -43,6 +43,7 @@ const PackageView = (props: Props) => {
   }, [props.packageId, props.packageVersion, isLoading])
 
   useEffect(() => {
+    setIsLoading(true);
     async function fetchPackageDetail() {
       try {
         setDetail(await API.getPackage(id, version));
@@ -72,7 +73,7 @@ const PackageView = (props: Props) => {
                 <ChartInstall
                   name={detail!.name}
                   version={detail!.version}
-                  repository={detail!.chartRepository}
+                  repository={detail!.chartRepository!}
                 />
               );
             default:
@@ -88,6 +89,7 @@ const PackageView = (props: Props) => {
       {!isUndefined(text) && !isNull(props.searchUrlReferer) && (
         <SubNavbar>
           <button
+            data-testid="goBack"
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
@@ -130,14 +132,20 @@ const PackageView = (props: Props) => {
                       case PackageKind.Chart:
                         return (
                           <Link
+                            data-testid="link"
                             className={`text-muted text-uppercase`}
                             to={{
                               pathname: '/search',
-                              search: `?repo=${detail.chartRepository.chartRepositoryId}`,
+                              search: prepareQueryString({
+                                pageNumber: 1,
+                                filters: {
+                                  repo: [detail.chartRepository!.chartRepositoryId!],
+                                },
+                              }),
                             }}
                           >
                             <u><small>
-                              {detail.chartRepository.displayName || detail.chartRepository.name}
+                              {detail.chartRepository!.displayName || detail.chartRepository!.name}
                             </small></u>
                           </Link>
                         );

@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdates, SearchResults } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 
 interface Result {
@@ -33,7 +33,7 @@ const apiFetch = (url: string): any => {
 
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
-const API = {
+export const API = {
   getPackage: (id?: string, version?: string): Promise<Package> => {
     return apiFetch(`${API_BASE_URL}/package/${id}${!isUndefined(version) ? `/${version}` : ''}`);
   },
@@ -60,9 +60,7 @@ const API = {
     return apiFetch(`${API_BASE_URL}/stats`);
   },
 
-  getPackagesUpdates: (): Promise<PackagesUpdates> => {
+  getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
     return apiFetch(`${API_BASE_URL}/updates`);
   },
 };
-
-export default API;

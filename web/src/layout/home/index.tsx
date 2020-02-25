@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import isNull from 'lodash/isNull';
-import API from '../../api';
+import { API } from '../../api';
 import { Stats } from '../../types';
 import SearchBar from '../common/SearchBar';
 import Counter from './Counter';
@@ -15,10 +15,11 @@ interface Props {
 }
 
 const HomeView = (props: Props) => {
-  const [isLoadingStats, setIsLoadingStats] = useState(true);
+  const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
+    setIsLoadingStats(true);
     async function fetchStats() {
       try {
         setStats(await API.getStats());
@@ -32,7 +33,7 @@ const HomeView = (props: Props) => {
   return (
     <div className={`d-flex flex-column flex-grow-1 ${styles.home}`}>
       <div className={`jumbotron mb-0 text-center ${styles.jumbotron}`}>
-        <div className={`display-4 text-center font-weight-light ${styles.mainTitle}`}>
+        <div role="heading" className={`display-4 text-center font-weight-light ${styles.mainTitle}`}>
           Find, install and publish
           <br />
           Kubernetes packages
@@ -64,7 +65,7 @@ const HomeView = (props: Props) => {
 
       <PackagesUpdates />
 
-      <div className="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1">
+      <div data-testid="CNCFInfo" className="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1">
         <div>
           <img className={`${styles.logo} m-3`} src={logo} alt="Logo CNCF" />
           <div className="h5 px-3 pt-4">

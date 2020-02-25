@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
+import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './PackageCard.module.css';
 
 interface Props {
@@ -14,9 +15,10 @@ interface Props {
 const PackageCard = (props: Props) => {
   const history = useHistory();
   return (
-    <div className="col-12 py-sm-3 py-2">
+    <div className="col-12 py-sm-3 py-2" role="listitem">
       <div className={`card h-100 ${styles.card}`}>
         <Link
+          data-testid="link"
           className={`text-decoration-none ${styles.link}`}
           onClick={props.saveScrollPosition}
           to={{
@@ -51,17 +53,23 @@ const PackageCard = (props: Props) => {
                               <div className="mr-2 text-truncate">
                                 <span className="text-muted text-uppercase mr-1">Repository: </span>
                                 <button
+                                  data-testid="repoLink"
                                   className={`p-0 border-0 ${styles.link}`}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     history.push({
                                       pathname: '/search',
-                                      search: `?page=1&repo=${props.package.chartRepository.chartRepositoryId}`,
+                                      search: prepareQueryString({
+                                        pageNumber: 1,
+                                        filters: {
+                                          'repo': [props.package.chartRepository!.chartRepositoryId!],
+                                        },
+                                      }),
                                       state: { fromSearchCard: true },
                                     });
                                   }}
                                 >
-                                  <u>{props.package.chartRepository.displayName || props.package.chartRepository.name}</u>
+                                  <u>{props.package.chartRepository!.displayName || props.package.chartRepository!.name}</u>
                                 </button>
                               </div>
 
