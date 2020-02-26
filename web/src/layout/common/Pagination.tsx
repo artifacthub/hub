@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
 import isNumber from 'lodash/isNumber';
 import styles from './Pagination.module.css';
 
@@ -9,8 +8,7 @@ interface Props {
   total: number;
   offset: number;
   active: number;
-  search: string;
-  pathname: string;
+  onChange: (pageNumber: number) => void;
 }
 
 const getPaginationOptions = (currentPage: number, pageCount: number): (string | number)[] => {
@@ -39,21 +37,14 @@ const Pagination = (props: Props) => {
 
   if (totalPages <= 1) return null;
 
-  const getLink = (pageNumber: number, content?: JSX.Element | string): JSX.Element => {
-    const searchParams = new URLSearchParams(props.search);
-    searchParams.set('page', pageNumber.toString());
-    return (
-      <Link
-        className="page-link"
-        to={{
-          pathname: props.pathname,
-          search: searchParams.toString(),
-        }}
-      >
-        {content || pageNumber}
-      </Link>
-    );
-  };
+  const getButton = (pageNumber: number, content?: JSX.Element | string): JSX.Element => (
+    <button
+      className="page-link"
+      onClick={() => props.onChange(pageNumber)}
+    >
+      {content || pageNumber}
+    </button>
+  );
 
   const visiblePages = getPaginationOptions(props.active, totalPages);
 
@@ -64,7 +55,7 @@ const Pagination = (props: Props) => {
           'page-item',
           {'disabled': props.active === 1},
         )}>
-          {getLink(props.active - 1, (
+          {getButton(props.active - 1, (
             <>
               <span className="d-none d-sm-block">Previous</span>
               <span className="d-block d-sm-none">Prev</span>
@@ -79,7 +70,7 @@ const Pagination = (props: Props) => {
                 'page-item',
                 {[`active ${styles.active}`]: props.active === value},
               )}>
-                {getLink(value)}
+                {getButton(value)}
               </li>
             );
           } else {
@@ -95,7 +86,7 @@ const Pagination = (props: Props) => {
           'page-item',
           {'disabled': props.active === totalPages},
         )}>
-          {getLink(props.active + 1, 'Next')}
+          {getButton(props.active + 1, 'Next')}
         </li>
       </ul>
     </nav>

@@ -32,21 +32,9 @@ export interface Package {
   maintainers?: Maintainer[];
 }
 
-export interface SearchResults {
-  data: {
-    packages: Package[];
-    facets: Facets[];
-  };
-  metadata: {
-    limit: number;
-    offset: number;
-    total: number;
-  };
-}
-
-export interface Filters {
+export interface SearchFiltersURL {
   text?: string;
-  f: {
+  filters: {
     [key: string]: string[];
   };
   pageNumber: number;
@@ -60,6 +48,18 @@ export interface SearchQuery {
   limit: number;
   offset: number;
   total?: number;
+}
+
+export interface SearchResults {
+  data: {
+    packages: Package[] | null;
+    facets: Facets[] | null;
+  };
+  metadata: {
+    limit: number;
+    offset: number;
+    total: number;
+  };
 }
 
 export interface Stats {

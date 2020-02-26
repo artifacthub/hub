@@ -4,7 +4,7 @@ import isNull from 'lodash/isNull';
 import { TiHome } from 'react-icons/ti';
 import { GiEnvelope } from 'react-icons/gi';
 import { FiExternalLink } from 'react-icons/fi';
-import { Package, Maintainer } from '../../types';
+import { Package, Maintainer, SearchFiltersURL } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import Version from './Version';
 import ExternalLink from '../common/ExternalLink';
@@ -14,10 +14,7 @@ import isUndefined from 'lodash/isUndefined';
 
 interface Props {
   package: Package;
-  searchUrlReferer: {
-    searchText?: string;
-    query: string;
-  } | null;
+  searchUrlReferer: SearchFiltersURL | null;
 }
 
 const Details = (props: Props) => {

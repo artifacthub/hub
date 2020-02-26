@@ -56,15 +56,13 @@ const Link: React.ElementType = (props: LinkProps) => {
   : <>{props.children}</>;
 };
 
-const Table: React.ElementType = (props: TableProps) => {
-  return (
-    <div className="w-100 overflow-auto">
-      <table>
-        {props.children}
-      </table>
-    </div>
-  );
-};
+const Table: React.ElementType = (props: TableProps) => (
+  <div className="w-100 overflow-auto">
+    <table>
+      {props.children}
+    </table>
+  </div>
+);
 
 const Info = (props: Props) => (
   <ReactMarkdown

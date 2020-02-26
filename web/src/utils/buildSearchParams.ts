@@ -1,5 +1,5 @@
-import { Filters } from '../../../types';
 import isNull from 'lodash/isNull';
+import { SearchFiltersURL } from '../types';
 
 const SPECIAL_KEYS = ['text', 'page'];
 
@@ -7,21 +7,21 @@ interface F {
   [key: string]: string[];
 }
 
-export default (query: string): Filters => {
+export default (query: string): SearchFiltersURL => {
   const p = new URLSearchParams(query);
-  let f: F = {};
+  let filters: F = {};
 
   p.forEach((value, key) => {
     if (!SPECIAL_KEYS.includes(key)) {
-      const values = f[key] || [];
+      const values = filters[key] || [];
       values.push(value);
-      f[key] = values;
+      filters[key] = values;
     }
   });
 
   return {
     text: p.has('text') ? p.get('text')! : undefined,
-    f: { ...f },
+    filters: { ...filters },
     pageNumber: p.has('page') && !isNull(p.get('page')) ? parseInt(p.get('page')!) : 1,
   };
 }

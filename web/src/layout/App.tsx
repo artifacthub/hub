@@ -1,62 +1,69 @@
 import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { FiHexagon } from 'react-icons/fi';
-import isUndefined from 'lodash/isUndefined';
 import Navbar from './navigation/Navbar';
 import HomeView from './home';
 import SearchView from './search';
 import PackageView from './package';
 import NotFound from './notFound';
+import buildSearchParams from '../utils/buildSearchParams';
 import styles from './App.module.css';
 import './App.css';
 import '../themes/default.scss';
+import '../themes/theme2.scss';
 
 export default function App() {
-  const [theme, setTheme] = useState('theme2'); /* eslint-disable-line @typescript-eslint/no-unused-vars */
-  import(`../themes/${theme}.scss`).then(() => {
-    return;
-  });
-
   const [isSearching, setIsSearching] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100 position-relative">
-        <Navbar isSearching={isSearching} />
+        <Switch>
+          <Route path="/" exact render={() => (
+            <>
+              <Navbar isSearching={isSearching} fromHome />
+              <div className="d-flex flex-column flex-grow-1">
+                <HomeView
+                  isSearching={isSearching}
+                />
+              </div>
+            </>
+          )} />
 
-        <div className="d-flex flex-column flex-grow-1">
-          <Switch>
-            <Route path="/" exact render={({location}) => (
-              <HomeView
-                isSearching={isSearching}
-                pathname={location.pathname}
-                search={location.search}
-              />
-            )} />
+          <Route path="/search" exact render={({location}) => {
+            const searchParams = buildSearchParams(location.search);
+            return (
+              <>
+                <Navbar isSearching={isSearching} searchText={searchParams.text} />
+                <div className="d-flex flex-column flex-grow-1">
+                  <SearchView
+                    {...searchParams}
+                    isSearching={isSearching}
+                    setIsSearching={setIsSearching}
+                    scrollPosition={scrollPosition}
+                    setScrollPosition={setScrollPosition}
+                    fromDetail={location.state ? location.state.fromDetail : false}
+                  />
+                </div>
+              </>
+            );
+          }} />
 
-            <Route path="/search" exact render={({location}) => (
-              <SearchView
-                isSearching={isSearching}
-                setIsSearching={setIsSearching}
-                scrollPosition={scrollPosition}
-                setScrollPosition={setScrollPosition}
-                pathname={location.pathname}
-                search={location.search}
-                fromDetail={!isUndefined(location.state) ? location.state.fromDetail : false}
-              />
-            )} />
+          <Route path="/package/:packageId/:packageVersion?" exact render={({location, match}) => (
+            <>
+              <Navbar isSearching={isSearching} />
+              <div className="d-flex flex-column flex-grow-1">
+                <PackageView
+                  searchUrlReferer={location.state || null}
+                  {...match.params}
+                />
+              </div>
+            </>
+          )} />
 
-            <Route path="/package/:packageId/:packageVersion?" exact render={({location, match}) => (
-              <PackageView
-                searchUrlReferer={location.state}
-                {...match.params}
-              />
-            )} />
-
-            <Route component={NotFound} />
-          </Switch>
-        </div>
+          <Route component={NotFound} />
+        </Switch>
 
         <footer className={styles.footer}>
           <div className="container">

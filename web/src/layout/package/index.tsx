@@ -5,7 +5,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import API from '../../api';
-import { PackageKind, Package } from '../../types';
+import { PackageKind, Package, SearchFiltersURL } from '../../types';
 import SubNavbar from '../navigation/SubNavbar';
 import Image from '../common/Image';
 import Readme from './Readme';
@@ -17,12 +17,10 @@ import ModalHeader from './ModalHeader';
 import Loading from '../common/Loading';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import styles from './PackageView.module.css';
+import prepareQueryString from '../../utils/prepareQueryString';
 
 interface Props {
-  searchUrlReferer: {
-    searchText?: string;
-    query: string;
-  } | null;
+  searchUrlReferer: SearchFiltersURL | null;
   packageId: string;
   packageVersion?: string;
 }
@@ -33,7 +31,7 @@ const PackageView = (props: Props) => {
   const [version, setVersion] = useState(props.packageVersion);
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail] = useState<Package | null>(null);
-  const { searchText, query } = props.searchUrlReferer || {};
+  const { text, pageNumber, filters } = props.searchUrlReferer || {};
 
   useScrollRestorationFix();
 
@@ -87,20 +85,24 @@ const PackageView = (props: Props) => {
 
   return (
     <>
-      {!isUndefined(searchText) && (
+      {!isUndefined(text) && !isNull(props.searchUrlReferer) && (
         <SubNavbar>
           <button
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
                 pathname: '/search',
-                search: query || '',
+                search: prepareQueryString({
+                  pageNumber: pageNumber || 1,
+                  text: text,
+                  filters: filters || {},
+                }),
                 state: { fromDetail: true },
               });
             }}
           >
             <IoIosArrowBack className="mr-2" />
-            Back to "<span className="font-weight-bold">{searchText}</span>" results
+            Back to "<span className="font-weight-bold">{text}</span>" results
           </button>
         </SubNavbar>
       )}

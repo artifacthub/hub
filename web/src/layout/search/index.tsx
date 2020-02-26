@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import every from 'lodash/every';
 import API from '../../api';
-import { Package, Facets } from '../../types';
+import { Package, Facets, SearchResults } from '../../types';
 import Sidebar from '../common/Sidebar';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
@@ -15,8 +15,7 @@ import PaginationLimit from './PaginationLimit';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import PackageCard from './PackageCard';
-import prepareQueryString from './utils/prepareQueryString';
-import buildSearchParams from './utils/buildSearchParams';
+import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchView.module.css';
 import { useHistory } from 'react-router-dom';
 
@@ -25,21 +24,12 @@ interface Props {
   setIsSearching: Dispatch<SetStateAction<boolean>>;
   scrollPosition: number;
   setScrollPosition: Dispatch<SetStateAction<number>>;
-  pathname: string;
-  search: string;
-  fromDetail: boolean;
-}
-
-interface Info {
   text?: string;
-  facets: Facets[] | null;
-  activeFilters: {
+  pageNumber: number;
+  filters: {
     [key: string]: string[];
   };
-  packages: Package[] | null;
-  offset: number;
-  total: number;
-  pageNumber: number;
+  fromDetail: boolean;
 }
 
 const DEFAULT_LIMIT = 15;
@@ -47,22 +37,24 @@ const DEFAULT_LIMIT = 15;
 const SearchView = (props: Props) => {
   const history = useHistory();
   const [limit, setLimit] = useLocalStorage('limit', DEFAULT_LIMIT.toString());
-  const [info, setInfo] = useState<Info>({
-    text: '',
-    facets: null,
-    activeFilters: {},
-    packages: null,
-    offset: 0,
-    total: 0,
-    pageNumber: 1,
+  const [searchResults, setSearchResults] = useState<SearchResults>({
+    data: {
+      facets: null,
+      packages: null,
+    },
+    metadata: {
+      offset: 0,
+      total: 0,
+      limit: limit,
+    },
   });
   const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
 
   const isEmptyFacets = (): boolean => {
-    if (isNull(info.facets)) {
+    if (isNull(searchResults.data.facets)) {
       return true;
     } else {
-      return every(info.facets, (f: Facets) => { return f.options.length === 0 });
+      return every(searchResults.data.facets, (f: Facets) => { return f.options.length === 0 });
     }
   }
 
@@ -74,7 +66,7 @@ const SearchView = (props: Props) => {
 
   const onFiltersChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
-    let newFilters = isUndefined(info.activeFilters[name]) ? [] : info.activeFilters[name].slice();
+    let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
     if (checked) {
       newFilters.push(value);
     } else {
@@ -82,70 +74,76 @@ const SearchView = (props: Props) => {
     }
 
     history.push({
-      pathname: props.pathname,
+      pathname: '/search',
       search: prepareQueryString({
         pageNumber: 1,
-        text: info.text,
-        f: {
-          ...info.activeFilters,
+        text: props.text,
+        filters: {
+          ...props.filters,
           [name]: newFilters,
         },
       }),
     });
   };
 
-  const onPaginationLimitChange = (newLimit: number) => {
-    history.replace({
-      pathname: props.pathname,
+  const onPageChange = (pageNumber: number): void => {
+    history.push({
+      pathname: '/search',
       search: prepareQueryString({
-        pageNumber: 1,
-        text: info.text,
-        f: info.activeFilters,
+        pageNumber: pageNumber,
+        text: props.text,
+        filters: props.filters,
       }),
     });
+  };
+
+  const onPaginationLimitChange = (newLimit: number): void => {
+    history.replace({
+      pathname: '/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        text: props.text,
+        filters: props.filters,
+      }),
+    });
+    setScrollPosition(0);
+    window.scrollTo(0, 0);
     setLimit(newLimit);
   };
 
   useEffect(() => {
     async function fetchSearchResults() {
       setIsSearching(true);
-      const p = buildSearchParams(props.search);
       const query = {
-        text: p.text,
-        filters: p.f,
-        offset: (p.pageNumber - 1) * parseInt(limit),
+        text: props.text,
+        filters: props.filters,
+        offset: (props.pageNumber - 1) * parseInt(limit),
         limit: parseInt(limit),
       };
 
       try {
         const searchResults = await API.searchPackages(query);
-        setInfo({
-          text: p.text,
-          facets: searchResults.data.facets,
-          packages: searchResults.data.packages,
-          activeFilters: p.f,
-          total: searchResults.metadata.total,
-          offset: searchResults.metadata.offset,
-          pageNumber: p.pageNumber,
-        });
+        setSearchResults({...searchResults});
 
         // Preload next page if required
-        if (searchResults.metadata.total > (searchResults.metadata.limit + searchResults.metadata.offset)) {
+        if (total > (limit + offset)) {
           API.searchPackages({
             ...query,
-            offset: p.pageNumber * limit,
+            offset: props.pageNumber * limit,
           });
         }
       } catch {
         // TODO - show error badge
-        setInfo({
-          text: p.text,
-          facets: [],
-          packages: [],
-          activeFilters: p.f,
-          total: 0,
-          offset: 0,
-          pageNumber: 1,
+        setSearchResults({
+          data: {
+            facets: [],
+            packages: [],
+          },
+          metadata: {
+            total: 0,
+            offset: 0,
+            limit: 0,
+          },
         });
       } finally {
         setIsSearching(false);
@@ -165,13 +163,17 @@ const SearchView = (props: Props) => {
       }
     };
     fetchSearchResults();
-  }, [props.search, limit]); /* eslint-disable-line react-hooks/exhaustive-deps */
+    // https://twitter.com/dan_abramov/status/1104414272753487872
+  }, [props.text, props.pageNumber, JSON.stringify(props.filters), limit]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const { packages, facets } = searchResults.data;
+  const { total, offset } = searchResults.metadata;
 
   return (
     <>
       <SubNavbar>
         <div className="d-flex align-items-center text-truncate">
-          {!isNull(info.packages) && (
+          {!isNull(packages) && (
             <>
               {/* Mobile filters */}
               {!isEmptyFacets() && (
@@ -187,15 +189,15 @@ const SearchView = (props: Props) => {
                           <span className="ml-2">Loading...</span>
                         </>
                       ) : (
-                        <>See {info.total} results</>
+                        <>See {total} results</>
                       )}
                     </>
                   )}
                   header={<div className="h6 text-uppercase mb-0">Filters</div>}
                 >
                   <Filters
-                    facets={info.facets}
-                    activeFilters={info.activeFilters}
+                    facets={facets}
+                    activeFilters={props.filters}
                     onChange={onFiltersChange}
                     visibleTitle={false}
                   />
@@ -204,13 +206,13 @@ const SearchView = (props: Props) => {
 
               {!isSearching && (
                 <div className="text-truncate">
-                  {info.total > 0 && (
-                    <span className="pr-1">{info.offset + 1} - {info.total < limit * info.pageNumber ? info.total : limit * info.pageNumber} of</span>
+                  {total > 0 && (
+                    <span className="pr-1">{offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of</span>
                   )}
-                  {info.total}
+                  {total}
                   <span className="d-none d-sm-inline pl-1">results</span>
-                  {!isUndefined(info.text) && (
-                    <span className="pl-1">for "<span className="font-weight-bold">{info.text}</span>"</span>
+                  {!isUndefined(props.text) && (
+                    <span className="pl-1">for "<span className="font-weight-bold">{props.text}</span>"</span>
                   )}
                 </div>
               )}
@@ -222,20 +224,21 @@ const SearchView = (props: Props) => {
           <PaginationLimit
             limit={limit}
             updateLimit={onPaginationLimitChange}
+            disabled={isNull(searchResults.data.packages) || searchResults.data.packages.length === 0}
           />
         </div>
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(info.packages)) && <Loading />}
+        {(isSearching || isNull(packages)) && <Loading />}
 
         <main role="main" className="container d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
             <nav className={`d-none d-md-block ${styles.sidebar}`}>
               <div className="mr-5">
                 <Filters
-                  facets={info.facets}
-                  activeFilters={info.activeFilters}
+                  facets={facets}
+                  activeFilters={props.filters}
                   onChange={onFiltersChange}
                   visibleTitle
                 />
@@ -244,17 +247,17 @@ const SearchView = (props: Props) => {
           )}
 
           <div className="flex-grow-1 mw-100">
-            {!isNull(info.packages) && (
+            {!isNull(packages) && (
               <>
-                {info.packages.length === 0 ? (
+                {packages.length === 0 ? (
                   <NoData>
                     <>
                       We're sorry!
                       <p className="h6 mb-0 mt-3">
                         We can't seem to find any packages that match your search
-                        {!isUndefined(info.text) && (
+                        {!isUndefined(props.text) && (
                           <span className="pl-1">
-                            for "<span className="font-weight-bold">{info.text}</span>"
+                            for "<span className="font-weight-bold">{props.text}</span>"
                           </span>
                         )}
                       </p>
@@ -263,13 +266,14 @@ const SearchView = (props: Props) => {
                 ) : (
                   <>
                     <div className="row no-gutters mb-2">
-                      {info.packages.map((item: Package) => (
+                      {packages.map((item: Package) => (
                         <PackageCard
                           key={item.packageId}
                           package={item}
                           searchUrlReferer={{
-                            searchText: info.text,
-                            query: props.search,
+                            text: props.text,
+                            pageNumber: props.pageNumber,
+                            filters: props.filters,
                           }}
                           saveScrollPosition={saveScrollPosition}
                         />
@@ -278,11 +282,10 @@ const SearchView = (props: Props) => {
 
                     <Pagination
                       limit={limit}
-                      offset={info.offset}
-                      total={info.total}
-                      active={info.pageNumber}
-                      search={props.search}
-                      pathname={props.pathname}
+                      offset={offset}
+                      total={total}
+                      active={props.pageNumber}
+                      onChange={onPageChange}
                     />
                   </>
                 )}
