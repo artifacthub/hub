@@ -5,8 +5,8 @@ select plan(35);
 -- Check default_text_search_config is correct
 select results_eq(
     $$ select current_setting('default_text_search_config')::text $$,
-    $$ values ('pg_catalog.english'::text) $$,
-    'default_text_search_config is pg_catalog.english'
+    $$ values ('pg_catalog.simple'::text) $$,
+    'default_text_search_config is pg_catalog.simple'
 );
 
 -- Check uuid extension exist
