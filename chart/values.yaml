@@ -1,7 +1,7 @@
-postgresql.enabled: true
 nameOverride: ""
 fullnameOverride: ""
 imagePullSecrets: []
+imageTag: latest
 pullPolicy: IfNotPresent
 
 log:
@@ -29,7 +29,7 @@ hub:
       repository: cncf/hub
     resources:
       requests:
-        cpu: 500m
+        cpu: 100m
         memory: 500Mi
   server:
     basicAuth:
@@ -38,19 +38,26 @@ hub:
       password: changeme
 
 chartTracker:
-  image:
-    repository: cncf/chart-tracker
+  cronjob:
+    image:
+      repository: cncf/chart-tracker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
   numWorkers: 50
   repositories: []
   imageStore: pg
 
 dbMigrator:
-  image:
-    repository: cncf/db-migrator
+  job:
+    image:
+      repository: cncf/db-migrator
   loadSampleData: true
 
 # Values for postgresql chart dependency
 postgresql:
+  enabled: true
   image:
     repository: postgres
     tag: 12
