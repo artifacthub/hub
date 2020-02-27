@@ -3,6 +3,7 @@ on: [push]
 
 jobs:
   linter-backend:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,6 +18,7 @@ jobs:
         run: ./bin/golangci-lint --timeout 2m run ./...
 
   tests-database:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     container:
       image: tegioz/db-tests
@@ -43,6 +45,7 @@ jobs:
         run: pg_prove --host postgres --dbname tests --username tests --verbose **/*.sql
 
   tests-backend:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -55,6 +58,7 @@ jobs:
         run: go test -cover -race -v -mod=readonly ./...
 
   tests-frontend:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -67,6 +71,7 @@ jobs:
         run: yarn test --watchAll=false --passWithNoTests
 
   build-backend:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -83,6 +88,7 @@ jobs:
         run: go build -v
 
   build-frontend:
+    if: github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -172,6 +178,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Check commit exists in master branch
+        run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/master
+          git branch -a --contains $GITHUB_SHA | grep -w master
       - name: Install Helm 3
         run: |
           curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
