@@ -61,20 +61,16 @@ const ChartInstall = (props: Props) => {
 
               return (
                 <div className="tab-pane fade show active">
-                  {!props.repository.name.includes('stable') && (
-                    <>
-                      <div className="d-flex justify-content-between mt-2 mb-2">
-                        <SmallTitle text="Add repository" />
-                        <div>
-                          <ButtonCopyToClipboard text={block1} />
-                        </div>
-                      </div>
+                  <div className="d-flex justify-content-between mt-2 mb-2">
+                    <SmallTitle text="Add repository" />
+                    <div>
+                      <ButtonCopyToClipboard text={block1} />
+                    </div>
+                  </div>
 
-                      <SyntaxHighlighter language="bash" style={docco}>
-                        {block1}
-                      </SyntaxHighlighter>
-                    </>
-                  )}
+                  <SyntaxHighlighter language="bash" style={docco}>
+                    {block1}
+                  </SyntaxHighlighter>
 
                   <div className="d-flex justify-content-between mt-2 mb-2">
                     <SmallTitle text="Install chart" />
