@@ -56,8 +56,8 @@ const ChartInstall = (props: Props) => {
         {(() => {
           switch (activeTab) {
             case 'cli':
-              const block1 = `helm repo add ${props.name} ${props.repository.url}`;
-              const block2 = `helm install ${props.repository.name} --version ${props.version}`;
+              const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
+              const block2 = `helm install ${props.repository.name}/${props.name} --version ${props.version}`;
 
               return (
                 <div className="tab-pane fade show active">
