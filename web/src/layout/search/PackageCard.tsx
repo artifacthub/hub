@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Package, PackageKind } from '../../types';
+import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
 import styles from './PackageCard.module.css';
@@ -8,10 +8,7 @@ import styles from './PackageCard.module.css';
 interface Props {
   package: Package;
   saveScrollPosition: () => void;
-  searchUrlReferer: {
-    searchText?: string;
-    query: string;
-  } | null;
+  searchUrlReferer: SearchFiltersURL | null;
 }
 
 const PackageCard = (props: Props) => {

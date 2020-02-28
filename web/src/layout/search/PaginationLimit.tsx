@@ -4,6 +4,7 @@ import styles from './PaginationLimit.module.css';
 interface Props {
   limit: number;
   updateLimit: (value: number) => void;
+  disabled: boolean;
 }
 
 const LIMIT_VALUES: number[] = [15, 25, 50];
@@ -20,6 +21,7 @@ const PaginationLimit = (props: Props) => {
         className={`custom-select custom-select-sm ${styles.select}`}
         value={props.limit}
         onChange={handleChange}
+        disabled={props.disabled}
       >
         {LIMIT_VALUES.map((value: number) => (
           <option

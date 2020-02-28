@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import isNull from 'lodash/isNull';
 import { FiSearch } from 'react-icons/fi';
@@ -9,13 +10,11 @@ interface Props {
   text?: string;
   size: 'big' | 'normal';
   isSearching: boolean;
-  pathname: string;
-  search: string;
 }
 
 const SearchBar = (props: Props) => {
   const history = useHistory();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(props.text || '');
   const inputEl = useRef<HTMLInputElement>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -40,14 +39,8 @@ const SearchBar = (props: Props) => {
   };
 
   useEffect(() => {
-    setValue('');
-  }, [props.pathname]);
-
-  useEffect(() => {
-    if (!props.search.includes('text=')) {
-      setValue('');
-    }
-  }, [props.search]);
+    setValue(props.text || '');
+  }, [props.text]);
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
@@ -96,18 +89,25 @@ const SearchBar = (props: Props) => {
             disabled={props.isSearching}
           />
 
-          {value !== '' && (
-            <button
-              type="button"
-              className={`close ${styles.inputClean}`}
-              aria-label="Close"
-              onClick={cleanSearch}
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className={classnames(
+              'close',
+              styles.inputClean,
+              {'invisible': value === ''}
+            )}
+            aria-label="Close"
+            onClick={cleanSearch}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        {props.isSearching && <div className={`position-absolute text-light ${styles.loading}`}><span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} /></div>}
+
+        {props.isSearching && (
+          <div className={`position-absolute text-light ${styles.loading}`}>
+            <span className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} />
+          </div>
+        )}
       </div>
     </>
   );

@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { SearchResults, Package, Stats, SearchQuery, PackagesUpdates } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdates, SearchResults } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 
 interface Result {

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { SearchFiltersURL } from '../../types';
 
 interface Props {
   isActive: boolean;
   version: string;
   packageId: string;
-  searchUrlReferer: {
-    searchText?: string;
-    query: string;
-  } | null;
+  searchUrlReferer: SearchFiltersURL | null;
 }
 
 const Version = (props: Props) => {

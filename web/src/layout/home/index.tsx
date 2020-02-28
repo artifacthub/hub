@@ -12,8 +12,6 @@ import styles from './HomeView.module.css';
 
 interface Props {
   isSearching: boolean;
-  pathname: string;
-  search: string;
 }
 
 const HomeView = (props: Props) => {
@@ -45,8 +43,6 @@ const HomeView = (props: Props) => {
             formClassName={`m-auto w-50 ${styles.search}`}
             size="big"
             isSearching={props.isSearching}
-            pathname={props.pathname}
-            search={props.search}
           />
         </div>
 
@@ -68,11 +64,12 @@ const HomeView = (props: Props) => {
 
       <PackagesUpdates />
 
-      <div className="mt-auto text-center pb-5 pt-5 mt-3">
-        <img className={`${styles.logo} m-3`} src={logo} alt="Logo CNCF" />
-
-        <div className="h5 px-3 pt-4">
-          CNCF Hub aspires to be a <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">Cloud Native Computing Foundation</ExternalLink> sandbox project.
+      <div className="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1">
+        <div>
+          <img className={`${styles.logo} m-3`} src={logo} alt="Logo CNCF" />
+          <div className="h5 px-3 pt-4">
+            CNCF Hub aspires to be a <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">Cloud Native Computing Foundation</ExternalLink> sandbox project.
+          </div>
         </div>
       </div>
     </div>
