@@ -1,0 +1,21 @@
+{
+  "packageId": "id",
+  "kind": 0,
+  "name": "chartmuseum",
+  "displayName": null,
+  "description": null,
+  "homeUrl": null,
+  "logoImageId": null,
+  "appVersion": null,
+  "maintainers": [
+    {
+        "name": "test1",
+        "email": "test1@gmail.com"
+    },
+    {
+      "name": "test2",
+      "email": "test2@gmail.com"
+    }
+  ],
+  "chartRepository": null
+}

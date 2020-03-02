@@ -9,5 +9,5 @@
 }
 
 .badge {
-  background-color: var(--color-black-15);
+  background-color: var(--color-black-15) !important;
 }

@@ -36,6 +36,7 @@ const Version = (props: Props) => {
         </div>
       ) : (
         <button
+          data-testid="version"
           onClick={() => openPackagePage()}
           className="btn btn-link pl-0 pt-0 pb-0 text-truncate d-block"
         >
