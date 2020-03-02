@@ -1,6 +1,8 @@
 import React from 'react';
 import * as semver from 'semver';
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import { useHistory } from 'react-router-dom';
 import { TiHome } from 'react-icons/ti';
 import { GiEnvelope } from 'react-icons/gi';
 import { FiExternalLink } from 'react-icons/fi';
@@ -9,8 +11,8 @@ import ExpandableList from '../common/ExpandableList';
 import Version from './Version';
 import ExternalLink from '../common/ExternalLink';
 import SmallTitle from '../common/SmallTitle';
+import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './Details.module.css';
-import isUndefined from 'lodash/isUndefined';
 
 interface Props {
   package: Package;
@@ -18,6 +20,7 @@ interface Props {
 }
 
 const Details = (props: Props) => {
+  const history = useHistory();
   const { availableVersions } = props.package;
   const getSortedVersions = () => {
     if (!isUndefined(availableVersions)) {
@@ -45,22 +48,22 @@ const Details = (props: Props) => {
   return (
     <>
       <SmallTitle text="Application version" />
-      <p className="text-truncate">{props.package.appVersion || '-'}</p>
+      <p data-testid="appVersion" className="text-truncate">{props.package.appVersion || '-'}</p>
 
       <SmallTitle text="Chart Versions" />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
-        <p>-</p>
+        <p data-testid="chartVersions">-</p>
       ) : (
-        <div className="mb-3">
+        <div className="mb-3" data-testid="chartVersions">
           <ExpandableList items={allVersions} />
         </div>
       )}
 
       <SmallTitle text="Links" />
       {isUndefined(props.package.homeUrl) || isNull(props.package.homeUrl) ? (
-        <p>-</p>
+        <p data-testid="homeUrl">-</p>
       ) : (
-        <ExternalLink href={props.package.homeUrl} className="text-primary d-flex align-items-center mb-3">
+        <ExternalLink data-testid="homeUrl" href={props.package.homeUrl} className="text-primary d-flex align-items-center mb-3">
           <>
             <TiHome className="text-muted mr-2" />
             Home url
@@ -71,9 +74,9 @@ const Details = (props: Props) => {
 
       <SmallTitle text="Maintainers" />
       {isUndefined(props.package.maintainers) || isNull(props.package.maintainers) || props.package.maintainers.length === 0 ? (
-        <p>-</p>
+        <p data-testid="maintainers">-</p>
       ) : (
-        <div className="mb-3">
+        <div data-testid="maintainers" className="mb-3">
           {props.package.maintainers.map((maintainer: Maintainer) => (
             <div className="mb-1" key={maintainer.email}>
               <ExternalLink href={`mailto:${maintainer.email}`} className="text-primary py-1 py-sm-0">
@@ -88,14 +91,29 @@ const Details = (props: Props) => {
       )}
 
       <SmallTitle text="Keywords" />
-      {isUndefined(props.package.keywords) || props.package.keywords.length === 0 ? (
-        <p>-</p>
+      {isUndefined(props.package.keywords) || isNull(props.package.keywords) || props.package.keywords.length === 0 ? (
+        <p data-testid="keywords">-</p>
       ) : (
-        <>
+        <span data-testid="keywords">
           {props.package.keywords.map((keyword: string) => (
-            <p className="h6 d-inline" key={keyword}><span className={`badge font-weight-normal mr-2 ${styles.badge}`}>{keyword}</span></p>
+            <button
+              className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 ${styles.badge}`}
+              key={keyword}
+              onClick={() => {
+                history.push({
+                  pathname: '/search',
+                  search: prepareQueryString({
+                    text: keyword,
+                    pageNumber: 1,
+                    filters: {},
+                  }),
+                });
+              }}
+            >
+              {keyword}
+            </button>
           ))}
-        </>
+        </span>
       )}
     </>
   );
