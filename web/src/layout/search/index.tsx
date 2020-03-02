@@ -3,7 +3,7 @@ import { FaFilter } from 'react-icons/fa';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import every from 'lodash/every';
-import API from '../../api';
+import { API } from '../../api';
 import { Package, Facets, SearchResults } from '../../types';
 import Sidebar from '../common/Sidebar';
 import SubNavbar from '../navigation/SubNavbar';
@@ -61,8 +61,13 @@ const SearchView = (props: Props) => {
   useScrollRestorationFix();
 
   const saveScrollPosition = () => {
+    console.log('call');
     setScrollPosition(window.scrollY);
   };
+
+  const updateWindowScrollPosition = (newPosition: number) => {
+    window.scrollTo(0, newPosition);
+  }
 
   const onFiltersChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -107,7 +112,7 @@ const SearchView = (props: Props) => {
       }),
     });
     setScrollPosition(0);
-    window.scrollTo(0, 0);
+    updateWindowScrollPosition(0);
     setLimit(newLimit);
   };
 
@@ -151,14 +156,14 @@ const SearchView = (props: Props) => {
         if (history.action === 'PUSH') {
           // When search page is open from detail page
           if (props.fromDetail) {
-            window.scrollTo(0, scrollPosition);
-          // When search has changed
+            updateWindowScrollPosition(scrollPosition);
+            // When search has changed
           } else {
-            window.scrollTo(0, 0);
+            updateWindowScrollPosition(0);
           }
-        // On pop action and when scroll position has been previously saved
+          // On pop action and when scroll position has been previously saved
         } else if (scrollPosition !== 0) {
-          window.scrollTo(0, scrollPosition);
+          updateWindowScrollPosition(scrollPosition);
         }
       }
     };
@@ -205,12 +210,12 @@ const SearchView = (props: Props) => {
               )}
 
               {!isSearching && (
-                <div className="text-truncate">
+                <div data-testid="resultsText" className="text-truncate">
                   {total > 0 && (
-                    <span className="pr-1">{offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of</span>
+                    <span className="pr-1">{offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of </span>
                   )}
                   {total}
-                  <span className="d-none d-sm-inline pl-1">results</span>
+                  <span className="d-none d-sm-inline pl-1"> results </span>
                   {!isUndefined(props.text) && (
                     <span className="pl-1">for "<span className="font-weight-bold">{props.text}</span>"</span>
                   )}
@@ -254,7 +259,7 @@ const SearchView = (props: Props) => {
                     <>
                       We're sorry!
                       <p className="h6 mb-0 mt-3">
-                        We can't seem to find any packages that match your search
+                        <span> We can't seem to find any packages that match your search </span>
                         {!isUndefined(props.text) && (
                           <span className="pl-1">
                             for "<span className="font-weight-bold">{props.text}</span>"

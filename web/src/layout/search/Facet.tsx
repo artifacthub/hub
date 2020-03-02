@@ -32,7 +32,7 @@ const Facet = (props: Props) => {
   useEffect(() => {
     if (props.filterKey === 'repo') {
       const activeOptions = filter(props.options, (o: FacetOption) => {
-        return isChecked(o.id) && !SPECIAL_REPOS.includes(o.name);
+        return isChecked(o.id.toString()) && !SPECIAL_REPOS.includes(o.name);
       });
       setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, activeOptions.length + SPECIAL_REPOS.length));
     }
@@ -56,7 +56,7 @@ const Facet = (props: Props) => {
           }
         });
 
-        return sortBy(options, [(o: FacetOption) => !isChecked(o.id)]);
+        return sortBy(options, [(o: FacetOption) => !isChecked(o.id.toString())]);
 
       default:
         return props.options;
@@ -67,10 +67,10 @@ const Facet = (props: Props) => {
     <Checkbox
       key={`fo_${option.id}`}
       name={props.filterKey}
-      value={option.id}
+      value={option.id.toString()}
       legend={option.total}
       label={option.name}
-      checked={isChecked(option.id)}
+      checked={isChecked(option.id.toString())}
       onChange={props.onChange}
     />
   ));
@@ -78,7 +78,7 @@ const Facet = (props: Props) => {
   if (allOptions.length === 0) return null;
 
   return (
-    <div className={`mt-4 pt-2 ${styles.facet}`}>
+    <div role="menuitem" className={`mt-4 pt-2 ${styles.facet}`}>
       <SmallTitle text={props.title} />
 
       <div className="mt-3">

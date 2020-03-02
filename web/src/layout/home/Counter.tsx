@@ -11,7 +11,7 @@ interface Props {
 const Counter = (props: Props) => (
   <div className={`text-center ${styles.counterWrapper}`}>
     {props.isLoading ? (
-      <div className="h3"><div className="spinner-grow text-primary" /></div>
+      <div className="h3"><div role="status" className="spinner-grow text-primary" /></div>
     ) : (
       <div className="h3">
         {isNull(props.value) || props.value === 0 ? '-' : props.value }

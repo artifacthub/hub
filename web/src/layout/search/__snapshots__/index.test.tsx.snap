@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search index creates snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar navbar-expand-sm navbar"
+  >
+    <div
+      class="container d-flex justify-content-between flex-nowrap"
+    >
+      <div
+        class="d-flex align-items-center text-truncate"
+      />
+      <div
+        class="ml-3"
+      >
+        <div
+          class="form-inline flex-nowrap align-items-center"
+        >
+          <label
+            class="mr-2 mb-0"
+          >
+            Show:
+          </label>
+          <select
+            aria-label="pagination-limit"
+            class="custom-select custom-select-sm select"
+            disabled=""
+          >
+            <option
+              value="15"
+            >
+              15
+            </option>
+            <option
+              value="25"
+            >
+              25
+            </option>
+            <option
+              value="50"
+            >
+              50
+            </option>
+            ;
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="d-flex position-relative pt-3 pb-3 flex-grow-1"
+  >
+    <div
+      class="position-absolute text-center p-5 wrapper undefined"
+    >
+      <div
+        class="spinner-border text-primary spinner"
+        role="status"
+      >
+        <span
+          class="sr-only"
+        >
+          Loading...
+        </span>
+      </div>
+    </div>
+    <main
+      class="container d-flex flex-row justify-content-between"
+      role="main"
+    >
+      <div
+        class="flex-grow-1 mw-100"
+      />
+    </main>
+  </div>
+</DocumentFragment>
+`;

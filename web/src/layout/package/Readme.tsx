@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import styles from './Readme.module.css';
 
 interface Props {
@@ -65,18 +65,20 @@ const Table: React.ElementType = (props: TableProps) => (
 );
 
 const Info = (props: Props) => (
-  <ReactMarkdown
-    className={`mt-3 mb-5 ${styles.md}`}
-    source={props.markdownContent}
-    linkTarget="_blank"
-    escapeHtml={false}
-    renderers={{
-      code: Code,
-      image: Image,
-      link: Link,
-      table: Table,
-    }}
-  />
+  <span data-testid="readme">
+    <ReactMarkdown
+      className={`mt-3 mb-5 ${styles.md}`}
+      source={props.markdownContent}
+      linkTarget="_blank"
+      escapeHtml={false}
+      renderers={{
+        code: Code,
+        image: Image,
+        link: Link,
+        table: Table,
+      }}
+    />
+  </span>
 );
 
 export default Info;

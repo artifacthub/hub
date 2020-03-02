@@ -26,7 +26,7 @@ const Sidebar = (props: Props) => {
   useBodyScroll(openStatus);
 
   return (
-    <div className={props.className}>
+    <div role="complementary" className={props.className}>
       <button
         type="button"
         className={classnames(

@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Package index creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative wrapper"
+  >
+    <div
+      class="container mb-5 mt-4"
+    >
+      <div
+        class="d-flex flex-wrap justify-content-center"
+      >
+        <div
+          class="position-absolute text-center p-5 wrapper undefined"
+        >
+          <div
+            class="spinner-border text-primary spinner"
+            role="status"
+          >
+            <span
+              class="sr-only"
+            >
+              Loading...
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

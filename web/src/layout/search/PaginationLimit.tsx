@@ -19,6 +19,7 @@ const PaginationLimit = (props: Props) => {
       <label className="mr-2 mb-0">Show:</label>
       <select
         className={`custom-select custom-select-sm ${styles.select}`}
+        aria-label="pagination-limit"
         value={props.limit}
         onChange={handleChange}
         disabled={props.disabled}

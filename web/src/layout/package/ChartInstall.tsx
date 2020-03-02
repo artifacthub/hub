@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { ChartRepository } from '../../types';
 import NoData from '../common/NoData';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
