@@ -50,7 +50,7 @@ export default function App() {
             );
           }} />
 
-          <Route path="/package/:packageId/:packageVersion?" exact render={({location, match}) => (
+          <Route path="/package/chart/:repoName/:packageName/:version?" exact render={({location, match}) => (
             <>
               <Navbar isSearching={isSearching} />
               <div className="d-flex flex-column flex-grow-1">

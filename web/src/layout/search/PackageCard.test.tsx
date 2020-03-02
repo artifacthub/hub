@@ -4,6 +4,7 @@ import PackageCard from './PackageCard';
 import { BrowserRouter as Router } from 'react-router-dom';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import { Package } from '../../types';
+import buildPackageURL from '../../utils/buildPackageURL';
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/packageCard/${fixtureId}.json`) as Package;
@@ -154,7 +155,7 @@ describe('PackageCard', () => {
       expect(link).toBeInTheDocument();
       fireEvent.click(link!);
       expect(mockSaveScrollPosition).toHaveBeenCalledTimes(1);
-      expect(location.pathname).toBe(`/package/${mockPackage.packageId}`);
+      expect(location.pathname).toBe(buildPackageURL(mockPackage));
     });
   });
 });

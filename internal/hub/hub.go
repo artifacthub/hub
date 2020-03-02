@@ -61,16 +61,11 @@ func (h *Hub) RegisterPackage(ctx context.Context, pkg *Package) error {
 	return h.dbExec(ctx, "select register_package($1)", pkg)
 }
 
-// GetPackageJSON returns the package identified by the id provided as a json
-// object. The json object is built by the database.
-func (h *Hub) GetPackageJSON(ctx context.Context, packageID string) ([]byte, error) {
-	return h.dbQueryJSON(ctx, "select get_package($1)", packageID)
-}
-
-// GetPackageVersionJSON returns the package identified by the id and version
-// provided as a json object. The json object is built by the database.
-func (h *Hub) GetPackageVersionJSON(ctx context.Context, packageID, version string) ([]byte, error) {
-	return h.dbQueryJSON(ctx, "select get_package_version($1, $2)", packageID, version)
+// GetPackageJSON returns the package identified by the input provided as a
+// json object. The json object is built by the database.
+func (h *Hub) GetPackageJSON(ctx context.Context, input *GetPackageInput) ([]byte, error) {
+	inputJSON, _ := json.Marshal(input)
+	return h.dbQueryJSON(ctx, "select get_package($1::jsonb)", inputJSON)
 }
 
 // GetPackagesUpdatesJSON returns a json object with the latest packages added

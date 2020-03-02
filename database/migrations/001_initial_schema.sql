@@ -121,7 +121,17 @@ create table if not exists image_version (
     primary key (image_id, version)
 );
 
-{{ template "functions/_create_all_functions.sql" }}
+{{ template "functions/semver_gte.sql" }}
+{{ template "functions/get_chart_repositories.sql" }}
+{{ template "functions/get_chart_repository_by_name.sql" }}
+{{ template "functions/get_chart_repository_packages_digest.sql" }}
+{{ template "functions/register_package.sql" }}
+{{ template "functions/get_stats.sql" }}
+{{ template "functions/search_packages.sql" }}
+{{ template "functions/get_package.sql" }}
+{{ template "functions/get_packages_updates.sql" }}
+{{ template "functions/register_image.sql" }}
+{{ template "functions/get_image.sql" }}
 
 {{ if eq .loadSampleData "true" }}
 {{ template "data/sample.sql" }}
@@ -129,8 +139,17 @@ create table if not exists image_version (
 
 ---- create above / drop below ----
 
-{{ template "functions/_drop_all_functions.sql" }}
-
+drop function if exists get_image(p_image_id uuid, p_version text);
+drop function if exists register_image(p_original_hash bytea, p_version text, p_data bytea);
+drop function if exists get_packages_updates();
+drop function if exists get_package(p_input json);
+drop function if exists search_packages(p_query jsonb);
+drop function if exists get_stats();
+drop function if exists register_package(p_pkg jsonb);
+drop function if exists get_chart_repository_packages_digest(p_chart_repository_id uuid);
+drop function if exists get_chart_repository_by_name(p_name text);
+drop function if exists get_chart_repositories();
+drop function if exists semver_gte(p_v1 text, p_v2 text);
 drop table if exists image_version;
 drop table if exists image;
 drop table if exists package__maintainer;

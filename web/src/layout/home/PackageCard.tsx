@@ -5,6 +5,7 @@ import PackageIcon from '../common/PackageIcon';
 import { Package, PackageKind } from '../../types';
 import styles from './PackageCard.module.css';
 import prepareQueryString from '../../utils/prepareQueryString';
+import buildPackageURL from '../../utils/buildPackageURL';
 
 interface Props {
   package: Package;
@@ -18,7 +19,7 @@ const PackageCard = (props: Props) => {
       <Link
         className={`text-decoration-none ${styles.link}`}
         to={{
-          pathname: `/package/${props.package.packageId}`,
+          pathname: buildPackageURL(props.package),
         }}
       >
         <div className={`card-body ${styles.body}`}>

@@ -34,8 +34,12 @@ const apiFetch = (url: string): any => {
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
 export const API = {
-  getPackage: (id?: string, version?: string): Promise<Package> => {
-    return apiFetch(`${API_BASE_URL}/package/${id}${!isUndefined(version) ? `/${version}` : ''}`);
+  getPackage: (repoName: string, packageName: string, version?: string): Promise<Package> => {
+    let url = `${API_BASE_URL}/package/chart/${repoName}/${packageName}`;
+    if (!isUndefined(version)) {
+      url += `/${version}`;
+    }
+    return apiFetch(url);
   },
 
   searchPackages: (query: SearchQuery): Promise<SearchResults> => {

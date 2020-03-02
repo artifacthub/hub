@@ -65,8 +65,8 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/stats", h.getStats)
 	r.GET("/api/v1/updates", h.getPackagesUpdates)
 	r.GET("/api/v1/search", h.search)
-	r.GET("/api/v1/package/:packageID", h.getPackage)
-	r.GET("/api/v1/package/:packageID/:version", h.getPackageVersion)
+	r.GET("/api/v1/package/chart/:repoName/:packageName", h.getPackage(hub.Chart))
+	r.GET("/api/v1/package/chart/:repoName/:packageName/:version", h.getPackage(hub.Chart))
 
 	// Images
 	r.GET("/image/:image", h.image)
@@ -200,40 +200,26 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 }
 
 // getPackage is an http handler used to get a package details.
-func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	packageID := ps.ByName("packageID")
-	jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), packageID)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			http.NotFound(w, r)
-		} else {
-			log.Error().Err(err).Str("packageID", packageID).Msg("getPackage failed")
-			http.Error(w, "", http.StatusInternalServerError)
+func (h *handlers) getPackage(kind hub.PackageKind) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		input := &hub.GetPackageInput{
+			Kind:                kind,
+			ChartRepositoryName: ps.ByName("repoName"),
+			PackageName:         ps.ByName("packageName"),
+			Version:             ps.ByName("version"),
 		}
-		return
-	}
-	renderJSON(w, jsonData, defaultAPICacheMaxAge)
-}
-
-// getPackageVersion is an http handler used to get the details of a package
-// specific version.
-func (h *handlers) getPackageVersion(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	packageID := ps.ByName("packageID")
-	version := ps.ByName("version")
-	jsonData, err := h.hubAPI.GetPackageVersionJSON(r.Context(), packageID, version)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			http.NotFound(w, r)
-		} else {
-			log.Error().Err(err).
-				Str("packageID", packageID).
-				Str("version", version).
-				Msg("getPackageVersion failed")
-			http.Error(w, "", http.StatusInternalServerError)
+		jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), input)
+		if err != nil {
+			if errors.Is(err, pgx.ErrNoRows) {
+				http.NotFound(w, r)
+			} else {
+				log.Error().Err(err).Interface("input", input).Msg("getPackage failed")
+				http.Error(w, "", http.StatusInternalServerError)
+			}
+			return
 		}
-		return
+		renderJSON(w, jsonData, defaultAPICacheMaxAge)
 	}
-	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // image in an http handler that serves images stored in the database.

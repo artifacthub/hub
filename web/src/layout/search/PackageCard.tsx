@@ -5,6 +5,7 @@ import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './PackageCard.module.css';
+import buildPackageURL from '../../utils/buildPackageURL';
 
 interface Props {
   package: Package;
@@ -22,7 +23,7 @@ const PackageCard = (props: Props) => {
           className={`text-decoration-none ${styles.link}`}
           onClick={props.saveScrollPosition}
           to={{
-            pathname: `/package/${props.package.packageId}`,
+            pathname: buildPackageURL(props.package),
             state: props.searchUrlReferer,
           }}
         >

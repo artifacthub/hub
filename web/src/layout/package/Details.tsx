@@ -40,7 +40,10 @@ const Details = (props: Props) => {
       key={av_version}
       isActive={av_version === props.package.version}
       version={av_version}
-      packageId={props.package.packageId}
+      packageItem={{
+        ...props.package,
+        version: av_version,
+      }}
       searchUrlReferer={props.searchUrlReferer}
     />
   ));
