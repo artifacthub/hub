@@ -4,6 +4,20 @@
   color: var(--white);
 }
 
+.invisibleFooter {
+  background-color: var(--body-bg);
+}
+
+.invisibleFooter::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-white-50);
+}
+
 .brand {
   font-family: var(--logo-font);
   font-size: 2rem;
