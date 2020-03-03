@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import classnames from 'classnames';
 import { FiHexagon } from 'react-icons/fi';
 import Navbar from './navigation/Navbar';
 import HomeView from './home';
@@ -14,6 +15,7 @@ import '../themes/theme2.scss';
 
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
+  const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   return (
@@ -55,6 +57,8 @@ export default function App() {
               <Navbar isSearching={isSearching} />
               <div className="d-flex flex-column flex-grow-1">
                 <PackageView
+                  isLoadingPackage={isLoadingPackage}
+                  setIsLoadingPackage={setIsLoadingPackage}
                   searchUrlReferer={location.state || null}
                   {...match.params}
                 />
@@ -62,11 +66,23 @@ export default function App() {
             </>
           )} />
 
-          <Route component={NotFound} />
+          <Route render={() => (
+            <>
+              <Navbar isSearching={isSearching} />
+              <NotFound />
+            </>
+          )} />
         </Switch>
 
-        <footer className={styles.footer}>
-          <div className="container">
+        <footer className={classnames(
+          'position-relative',
+          styles.footer,
+          {[styles.invisibleFooter]: isSearching || isLoadingPackage},
+        )}>
+          <div className={classnames(
+            'container',
+            {'invisible': isSearching || isLoadingPackage},
+          )}>
             <div className="d-flex flex-column align-items-center">
               <div className={`mb-3 d-flex align-items-center ${styles.brand}`}>
                 <FiHexagon className="mr-2" />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPlus, FiDownload } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -20,6 +20,8 @@ import styles from './PackageView.module.css';
 import prepareQueryString from '../../utils/prepareQueryString';
 
 interface Props {
+  isLoadingPackage: boolean;
+  setIsLoadingPackage: Dispatch<SetStateAction<boolean>>;
   searchUrlReferer: SearchFiltersURL | null;
   repoName: string;
   packageName: string;
@@ -31,34 +33,40 @@ const PackageView = (props: Props) => {
   const [repoName, setRepoName] = useState(props.repoName);
   const [packageName, setPackageName] = useState(props.packageName);
   const [version, setVersion] = useState(props.version);
-  const [isLoading, setIsLoading] = useState(false);
   const [detail, setDetail] = useState<Package | null>(null);
   const { text, pageNumber, filters } = props.searchUrlReferer || {};
+  const { isLoadingPackage, setIsLoadingPackage } = props;
 
   useScrollRestorationFix();
 
   useEffect(() => {
-    if (!isUndefined(props.repoName) && !isLoading) {
+    if (!isUndefined(props.repoName) && !isLoadingPackage) {
       setRepoName(props.repoName);
       setPackageName(props.packageName);
       setVersion(props.version);
     }
-  }, [props.repoName, props.packageName, props.version, isLoading]);
+  }, [props, isLoadingPackage]);
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoadingPackage(true);
     async function fetchPackageDetail() {
       try {
         setDetail(await API.getPackage(repoName, packageName, version));
       } catch {
         setDetail(null);
       } finally {
-        setIsLoading(false);
+        setIsLoadingPackage(false);
       }
     };
     fetchPackageDetail();
     window.scrollTo(0, 0); // Scroll to top when a new version is loaded
-  }, [repoName, packageName, version]);
+  }, [repoName, packageName, version, setIsLoadingPackage]);
+
+  useEffect(() => {
+    return () => {
+      setIsLoadingPackage(false);
+    };
+  }, [setIsLoadingPackage]);
 
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element => (
     <Modal
@@ -112,8 +120,8 @@ const PackageView = (props: Props) => {
         </SubNavbar>
       )}
 
-      <div className="position-relative flex-grow-1">
-        {isLoading && <Loading />}
+      <div data-testid="mainPackage" className="position-relative flex-grow-1">
+        {isLoadingPackage && <Loading />}
 
         {!isNull(detail) && (
           <div className={`jumbotron ${styles.jumbotron}`}>
@@ -186,7 +194,7 @@ const PackageView = (props: Props) => {
         )}
 
         <div className="container">
-          {isNull(detail) && !isLoading ? (
+          {isNull(detail) && !isLoadingPackage ? (
             <NoData>No data available for this package</NoData>
           ) : (
             <div className="row">

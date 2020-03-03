@@ -52,6 +52,10 @@
   white-space: pre;
 }
 
+.md p code {
+  white-space: normal;
+}
+
 .md table th, .md table tr, .md table td {
   border: 1px solid var(--border-md);
   padding: 6px 13px;
@@ -59,4 +63,8 @@
 
 .md table tr:nth-child(2n) {
   background-color: var(--color-1-10) !important;
+}
+
+.md a {
+  word-break: break-all;
 }

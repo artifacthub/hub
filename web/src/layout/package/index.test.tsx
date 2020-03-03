@@ -12,6 +12,7 @@ const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;
 };
 
+const mockIsLoading = jest.fn();
 const mockHistoryPush = jest.fn();
 const mockHistoryReplace = jest.fn();
 
@@ -25,6 +26,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
+  isLoadingPackage: false,
+  setIsLoadingPackage: mockIsLoading,
   repoName: 'repoName',
   packageName: 'packageName',
   searchUrlReferer: null,
@@ -62,13 +65,13 @@ describe('Package index', () => {
       await wait();
     });
 
-    it('removes loading spinner after getting package', async () => {
+    it('displays loading spinner', async () => {
       const mockPackage = getMockPackage('3');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
       const props = {
         ...defaultProps,
-        isSearching: true,
+        isLoadingPackage: true,
       };
       render(
         <Router>
@@ -76,7 +79,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() =>
+      const spinner = await waitForElement(() =>
         screen.getByRole('status'),
       );
 
@@ -175,14 +178,14 @@ describe('Package index', () => {
         </Router>
       );
 
-      const [noData, readme] = await waitForElement(() => [
-        screen.getByTestId('noData'),
-        screen.queryByTestId('readme'),
-      ]);
+      await waitForElement(() =>
+        screen.getByTestId('mainPackage'),
+      );
 
+      const noData = screen.getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData.textContent).toBe('No README file available for this package');
-      expect(readme).toBeNull();
+      expect(screen.queryByTestId('readme')).toBeNull();
 
       await wait();
     });
