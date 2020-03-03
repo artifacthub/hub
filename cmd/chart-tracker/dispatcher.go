@@ -43,6 +43,7 @@ func newDispatcher(ctx context.Context, hubAPI *hub.Hub) *dispatcher {
 // run instructs the dispatcher to start processing the repositories provided.
 func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	defer wg.Done()
+	defer close(d.Queue)
 
 	// Get repositories to scan for charts to track
 	repos, err := d.getRepositories(reposNames)
@@ -67,7 +68,6 @@ func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	}
 
 	wgRepos.Wait()
-	close(d.Queue)
 }
 
 // getRepositories returns the details of the repositories provided. If no
