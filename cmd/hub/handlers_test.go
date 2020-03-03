@@ -229,12 +229,12 @@ func TestGetPackage(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select get_package($1)", mock.Anything,
+			"select get_package($1::jsonb)", mock.Anything,
 		).Return(nil, pgx.ErrNoRows)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r, nil)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -246,12 +246,12 @@ func TestGetPackage(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select get_package($1)", mock.Anything,
+			"select get_package($1::jsonb)", mock.Anything,
 		).Return([]byte("packageDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r, nil)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -268,70 +268,12 @@ func TestGetPackage(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select get_package($1)", mock.Anything,
+			"select get_package($1::jsonb)", mock.Anything,
 		).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(w, r, nil)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		th.db.AssertExpectations(t)
-	})
-}
-
-func TestGetPackageVersion(t *testing.T) {
-	t.Run("non existing package and version", func(t *testing.T) {
-		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
-		).Return(nil, pgx.ErrNoRows)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackageVersion(w, r, nil)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		th.db.AssertExpectations(t)
-	})
-
-	t.Run("existing package and version", func(t *testing.T) {
-		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
-		).Return([]byte("packageVersionDataJSON"), nil)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackageVersion(w, r, nil)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("packageVersionDataJSON"), data)
-		th.db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package_version($1, $2)", mock.Anything, mock.Anything,
-		).Return(nil, errFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackageVersion(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r, nil)
 		resp := w.Result()
 		defer resp.Body.Close()
 

@@ -90,3 +90,11 @@ type Query struct {
 	PackageKinds         []PackageKind `json:"package_kinds,omitempty"`
 	ChartRepositoriesIDs []string      `json:"chart_repositories_ids,omitempty"`
 }
+
+// GetPackageInput represents the input used to get a specific package.
+type GetPackageInput struct {
+	Kind                PackageKind `json:"kind"`
+	ChartRepositoryName string      `json:"chart_repository_name"`
+	PackageName         string      `json:"package_name"`
+	Version             string      `json:"version"`
+}

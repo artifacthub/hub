@@ -252,27 +252,13 @@ func TestGetPackageJSON(t *testing.T) {
 	db := &tests.DBMock{}
 	db.On(
 		"QueryRow",
-		"select get_package($1)", mock.Anything,
+		"select get_package($1::jsonb)", mock.Anything,
 	).Return([]byte("packageDataJSON"), nil)
 	h := New(db)
 
-	data, err := h.GetPackageJSON(context.Background(), "00000000-0000-0000-0000-000000000001")
+	data, err := h.GetPackageJSON(context.Background(), &GetPackageInput{})
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("packageDataJSON"), data)
-	db.AssertExpectations(t)
-}
-
-func TestGetPackageVersionJSON(t *testing.T) {
-	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select get_package_version($1, $2)", mock.Anything, mock.Anything,
-	).Return([]byte("packageVersionDataJSON"), nil)
-	h := New(db)
-
-	data, err := h.GetPackageVersionJSON(context.Background(), "00000000-0000-0000-0000-000000000001", "1.0.0")
-	assert.Equal(t, nil, err)
-	assert.Equal(t, []byte("packageVersionDataJSON"), data)
 	db.AssertExpectations(t)
 }
 

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SearchFiltersURL } from '../../types';
+import { SearchFiltersURL, Package } from '../../types';
+import buildPackageURL from '../../utils/buildPackageURL';
 
 interface Props {
   isActive: boolean;
   version: string;
-  packageId: string;
+  packageItem: Package;
   searchUrlReferer: SearchFiltersURL | null;
 }
 
@@ -15,8 +16,9 @@ const Version = (props: Props) => {
 
   const openPackagePage = () => {
     setIsLoading(true);
+
     history.push({
-      pathname: `/package/${props.packageId}/${props.version}`,
+      pathname: buildPackageURL(props.packageItem),
       state: props.searchUrlReferer,
     });
   }

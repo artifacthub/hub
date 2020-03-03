@@ -21,14 +21,16 @@ import prepareQueryString from '../../utils/prepareQueryString';
 
 interface Props {
   searchUrlReferer: SearchFiltersURL | null;
-  packageId: string;
-  packageVersion?: string;
+  repoName: string;
+  packageName: string;
+  version?: string;
 }
 
 const PackageView = (props: Props) => {
   const history = useHistory();
-  const [id, setId] = useState(props.packageId);
-  const [version, setVersion] = useState(props.packageVersion);
+  const [repoName, setRepoName] = useState(props.repoName);
+  const [packageName, setPackageName] = useState(props.packageName);
+  const [version, setVersion] = useState(props.version);
   const [isLoading, setIsLoading] = useState(false);
   const [detail, setDetail] = useState<Package | null>(null);
   const { text, pageNumber, filters } = props.searchUrlReferer || {};
@@ -36,17 +38,18 @@ const PackageView = (props: Props) => {
   useScrollRestorationFix();
 
   useEffect(() => {
-    if (!isUndefined(props.packageId) && !isLoading) {
-      setId(props.packageId);
-      setVersion(props.packageVersion);
+    if (!isUndefined(props.repoName) && !isLoading) {
+      setRepoName(props.repoName);
+      setPackageName(props.packageName);
+      setVersion(props.version);
     }
-  }, [props.packageId, props.packageVersion, isLoading])
+  }, [props.repoName, props.packageName, props.version, isLoading]);
 
   useEffect(() => {
     setIsLoading(true);
     async function fetchPackageDetail() {
       try {
-        setDetail(await API.getPackage(id, version));
+        setDetail(await API.getPackage(repoName, packageName, version));
       } catch {
         setDetail(null);
       } finally {
@@ -55,7 +58,7 @@ const PackageView = (props: Props) => {
     };
     fetchPackageDetail();
     window.scrollTo(0, 0); // Scroll to top when a new version is loaded
-  }, [id, version]);
+  }, [repoName, packageName, version]);
 
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element => (
     <Modal
