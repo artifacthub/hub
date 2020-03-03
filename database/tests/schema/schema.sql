@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(34);
+select plan(35);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -22,10 +22,11 @@ select tables_are(array[
     'package',
     'package__maintainer',
     'package_kind',
-    'schema_version',
     'snapshot',
     'user',
-    'user__organization'
+    'user__organization',
+    'version_functions',
+    'version_schema'
 ]);
 
 -- Check tables have expected columns
@@ -84,9 +85,6 @@ select columns_are('package_kind', array[
     'package_kind_id',
     'name'
 ]);
-select columns_are('schema_version', array[
-    'version'
-]);
 select columns_are('snapshot', array[
     'package_id',
     'version',
@@ -107,6 +105,12 @@ select columns_are('user', array[
 select columns_are('user__organization', array[
     'user_id',
     'organization_id'
+]);
+select columns_are('version_functions', array[
+    'version'
+]);
+select columns_are('version_schema', array[
+    'version'
 ]);
 
 -- Check tables have expected indexes
