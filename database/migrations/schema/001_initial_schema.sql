@@ -47,7 +47,7 @@ create table if not exists package_kind (
 
 insert into package_kind values (0, 'chart');
 
-create function generate_package_tsdoc(
+create or replace function generate_package_tsdoc(
     p_name text,
     p_display_name text,
     p_description text,
@@ -57,7 +57,7 @@ create function generate_package_tsdoc(
         setweight(to_tsvector(p_name), 'A') ||
         setweight(to_tsvector(coalesce(p_display_name, '')), 'A') ||
         setweight(to_tsvector(coalesce(p_description, '')), 'B') ||
-        setweight(array_to_tsvector(coalesce(p_keywords, '{}')), 'C');
+        setweight(to_tsvector(array_to_string(coalesce(p_keywords, '{}'), ' ')), 'C');
 $$ language sql immutable;
 
 create table if not exists package (
