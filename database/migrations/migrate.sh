@@ -7,6 +7,7 @@ echo "- Applying schema migrations.."
 cd schema
 tern status --config $TERN_CONF --version-table $schemaVersionTable
 tern migrate --config $TERN_CONF --version-table $schemaVersionTable
+if [ $? -ne 0 ]; then exit 1; fi
 echo "Done"
 cd ..
 
@@ -18,4 +19,5 @@ if [ $? -eq 0 ]; then
 else
     tern migrate --config $TERN_CONF --version-table $functionsVersionTable
 fi
+if [ $? -ne 0 ]; then exit 1; fi
 echo "Done"
