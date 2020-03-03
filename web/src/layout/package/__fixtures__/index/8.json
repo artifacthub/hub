@@ -8,7 +8,6 @@
   "appVersion":"1.0.0",
   "readme": "readme",
   "chartRepository":{
-    "chartRepositoryId":"repoId",
     "name":"stable",
     "displayName":null,
     "url": "repoUrl"

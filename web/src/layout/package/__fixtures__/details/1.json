@@ -42,7 +42,6 @@
   "digest": "4213f8b0a86bcd063a253ec2395586ec1ff932594ced221ce25a1e75d681ccd2",
   "maintainers": null,
   "chartRepository": {
-    "chartRepositoryId": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
     "name": "incubator",
     "displayName": null,
     "url": "https://kubernetes-charts-incubator.storage.googleapis.com"

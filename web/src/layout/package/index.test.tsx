@@ -25,7 +25,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
-  packageId: 'id',
+  repoName: 'repoName',
+  packageName: 'packageName',
   searchUrlReferer: null,
 };
 
@@ -136,7 +137,7 @@ describe('Package index', () => {
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(location.pathname).toBe('/search');
-      expect(location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.chartRepositoryId}`);
+      expect(location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
 
       await wait();
     });

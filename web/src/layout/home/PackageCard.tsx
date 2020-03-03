@@ -57,7 +57,7 @@ const PackageCard = (props: Props) => {
                                     search: prepareQueryString({
                                       pageNumber: 1,
                                       filters: {
-                                        'repo': [props.package.chartRepository!.chartRepositoryId!],
+                                        'repo': [props.package.chartRepository!.name],
                                       },
                                     }),
                                   });

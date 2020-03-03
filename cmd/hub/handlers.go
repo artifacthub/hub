@@ -15,7 +15,6 @@ import (
 
 	"github.com/cncf/hub/internal/hub"
 	"github.com/cncf/hub/internal/img/pg"
-	"github.com/google/uuid"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
 	"github.com/julienschmidt/httprouter"
@@ -184,18 +183,18 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 	// Repos
 	repos := qs["repo"]
 	for _, repo := range repos {
-		if _, err := uuid.Parse(repo); err != nil {
+		if repo == "" {
 			return nil, fmt.Errorf("invalid repo: %s", repo)
 		}
 	}
 
 	return &hub.Query{
-		Limit:                limit,
-		Offset:               offset,
-		Facets:               facets,
-		Text:                 text,
-		PackageKinds:         kinds,
-		ChartRepositoriesIDs: repos,
+		Limit:             limit,
+		Offset:            offset,
+		Facets:            facets,
+		Text:              text,
+		PackageKinds:      kinds,
+		ChartRepositories: repos,
 	}, nil
 }
 
