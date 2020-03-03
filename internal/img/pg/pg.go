@@ -82,7 +82,7 @@ func (s *ImageStore) getImageID(ctx context.Context, hash []byte) (string, error
 // registerImage stores the image provided in the database.
 func (s *ImageStore) registerImage(ctx context.Context, hash []byte, version string, data []byte) (string, error) {
 	var imageID string
-	query := "select register_image($1, $2, $3)"
+	query := "select register_image($1::bytea, $2::text, $3::bytea)"
 	err := s.db.QueryRow(ctx, query, hash, version, data).Scan(&imageID)
 	if err != nil {
 		return "", err
@@ -93,7 +93,7 @@ func (s *ImageStore) registerImage(ctx context.Context, hash []byte, version str
 // GetImage returns an image stored in the database.
 func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
 	var data []byte
-	query := "select get_image($1, $2)"
+	query := "select get_image($1::uuid, $2::text)"
 	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
 	if err != nil {
 		return nil, err

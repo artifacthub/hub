@@ -21,7 +21,7 @@ func New(db DB) *Hub {
 // provided.
 func (h *Hub) GetChartRepositoryByName(ctx context.Context, name string) (*ChartRepository, error) {
 	var r *ChartRepository
-	err := h.dbQueryUnmarshal(ctx, &r, "select get_chart_repository_by_name($1)", name)
+	err := h.dbQueryUnmarshal(ctx, &r, "select get_chart_repository_by_name($1::text)", name)
 	return r, err
 }
 
@@ -39,7 +39,7 @@ func (h *Hub) GetChartRepositoryPackagesDigest(
 	chartRepositoryID string,
 ) (map[string]string, error) {
 	pd := make(map[string]string)
-	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1)", chartRepositoryID)
+	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1::uuid)", chartRepositoryID)
 	return pd, err
 }
 
@@ -53,12 +53,12 @@ func (h *Hub) GetStatsJSON(ctx context.Context) ([]byte, error) {
 // the query provided. The json object is built by the database.
 func (h *Hub) SearchPackagesJSON(ctx context.Context, query *Query) ([]byte, error) {
 	queryJSON, _ := json.Marshal(query)
-	return h.dbQueryJSON(ctx, "select search_packages($1)", queryJSON)
+	return h.dbQueryJSON(ctx, "select search_packages($1::jsonb)", queryJSON)
 }
 
 // RegisterPackage registers the package provided in the database.
 func (h *Hub) RegisterPackage(ctx context.Context, pkg *Package) error {
-	return h.dbExec(ctx, "select register_package($1)", pkg)
+	return h.dbExec(ctx, "select register_package($1::jsonb)", pkg)
 }
 
 // GetPackageJSON returns the package identified by the input provided as a

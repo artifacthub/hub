@@ -43,7 +43,7 @@ func TestSaveImage(t *testing.T) {
 		for _, version := range []string{"1x", "2x", "3x", "4x"} {
 			db.On(
 				"QueryRow",
-				"select register_image($1, $2, $3)", pngImgHash, version, mock.Anything,
+				"select register_image($1::bytea, $2::text, $3::bytea)", pngImgHash, version, mock.Anything,
 			).Return("pngImgID", nil)
 		}
 		s := NewImageStore(db)
@@ -62,7 +62,7 @@ func TestSaveImage(t *testing.T) {
 		).Return(nil, pgx.ErrNoRows)
 		db.On(
 			"QueryRow",
-			"select register_image($1, $2, $3)", svgImgHash, "svg", mock.Anything,
+			"select register_image($1::bytea, $2::text, $3::bytea)", svgImgHash, "svg", mock.Anything,
 		).Return("svgImgID", nil)
 		s := NewImageStore(db)
 
@@ -108,7 +108,7 @@ func TestSaveImage(t *testing.T) {
 		).Return(nil, pgx.ErrNoRows)
 		db.On(
 			"QueryRow",
-			"select register_image($1, $2, $3)", pngImgHash, "1x", mock.Anything,
+			"select register_image($1::bytea, $2::text, $3::bytea)", pngImgHash, "1x", mock.Anything,
 		).Return(nil, errFakeDatabaseFailure)
 		s := NewImageStore(db)
 

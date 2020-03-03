@@ -5,7 +5,7 @@ metadata:
   annotations:
     "helm.sh/hook": post-install,pre-upgrade
     "helm.sh/hook-weight": "0"
-    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   template:
     spec:
@@ -28,11 +28,14 @@ spec:
       - name: db-migrator
         image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag }}
         imagePullPolicy: {{ .Values.pullPolicy }}
+        env:
+          - name: TERN_CONF
+            value: /home/db-migrator/.cfg/tern.conf
         volumeMounts:
-        - name: db-migrator-config
-          mountPath: "/home/db-migrator/.cfg"
-          readOnly: true
-        command: ["./tern", "migrate", "-c", ".cfg/tern.conf"]
+          - name: db-migrator-config
+            mountPath: "/home/db-migrator/.cfg"
+            readOnly: true
+        command: ["./migrate.sh"]
       volumes:
       - name: db-migrator-config
         secret:

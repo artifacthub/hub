@@ -26,7 +26,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On(
 			"QueryRow",
-			"select get_chart_repository_by_name($1)", "repo1",
+			"select get_chart_repository_by_name($1::text)", "repo1",
 		).Return([]byte(`
 		{
 			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
@@ -50,7 +50,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On(
 			"QueryRow",
-			"select get_chart_repository_by_name($1)", "repo1",
+			"select get_chart_repository_by_name($1::text)", "repo1",
 		).Return(nil, errFakeDatabaseFailure)
 		h := New(db)
 
@@ -64,7 +64,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On(
 			"QueryRow",
-			"select get_chart_repository_by_name($1)", "repo1",
+			"select get_chart_repository_by_name($1::text)", "repo1",
 		).Return([]byte("invalid json"), nil)
 		h := New(db)
 
@@ -122,7 +122,7 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 	db := &tests.DBMock{}
 	db.On(
 		"QueryRow",
-		"select get_chart_repository_packages_digest($1)", mock.Anything,
+		"select get_chart_repository_packages_digest($1::uuid)", mock.Anything,
 	).Return([]byte(`
 	{
         "package1@1.0.0": "digest-package1-1.0.0",
@@ -177,7 +177,7 @@ func TestSearchPackagesJSON(t *testing.T) {
 	db := &tests.DBMock{}
 	db.On(
 		"QueryRow",
-		"select search_packages($1)", mock.Anything,
+		"select search_packages($1::jsonb)", mock.Anything,
 	).Return([]byte("searchResultsDataJSON"), nil)
 	h := New(db)
 
@@ -225,7 +225,7 @@ func TestRegisterPackage(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On(
 			"Exec",
-			"select register_package($1)", mock.Anything,
+			"select register_package($1::jsonb)", mock.Anything,
 		).Return(nil)
 		h := New(db)
 
@@ -238,7 +238,7 @@ func TestRegisterPackage(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On(
 			"Exec",
-			"select register_package($1)", mock.Anything,
+			"select register_package($1::jsonb)", mock.Anything,
 		).Return(errFakeDatabaseFailure)
 		h := New(db)
 

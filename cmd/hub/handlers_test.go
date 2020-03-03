@@ -188,7 +188,7 @@ func TestSearch(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select search_packages($1)", mock.Anything,
+			"select search_packages($1::jsonb)", mock.Anything,
 		).Return([]byte("searchResultsDataJSON"), nil)
 
 		w := httptest.NewRecorder()
@@ -210,7 +210,7 @@ func TestSearch(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select search_packages($1)", mock.Anything,
+			"select search_packages($1::jsonb)", mock.Anything,
 		).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
@@ -287,7 +287,7 @@ func TestImage(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select get_image($1, $2)", mock.Anything, mock.Anything,
+			"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
 		).Return(nil, pgx.ErrNoRows)
 
 		w := httptest.NewRecorder()
@@ -304,7 +304,7 @@ func TestImage(t *testing.T) {
 		th := setupTestHandlers()
 		th.db.On(
 			"QueryRow",
-			"select get_image($1, $2)", mock.Anything, mock.Anything,
+			"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
 		).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
@@ -334,7 +334,7 @@ func TestImage(t *testing.T) {
 				th := setupTestHandlers()
 				th.db.On(
 					"QueryRow",
-					"select get_image($1, $2)", mock.Anything, mock.Anything,
+					"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
 				).Return(imgData, nil)
 
 				w := httptest.NewRecorder()

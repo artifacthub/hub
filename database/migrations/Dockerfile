@@ -8,5 +8,5 @@ FROM alpine:latest
 RUN addgroup -S db-migrator && adduser -S db-migrator -G db-migrator
 USER db-migrator
 WORKDIR /home/db-migrator
-COPY --from=tern /go/bin/tern .
+COPY --from=tern /go/bin/tern /usr/local/bin
 COPY database/migrations .
