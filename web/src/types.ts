@@ -7,7 +7,6 @@ export interface ChartRepository {
   name: string;
   displayName: string | null;
   url: string;
-  chartRepositoryId?: string;
 }
 
 export interface Maintainer {

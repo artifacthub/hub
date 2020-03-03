@@ -4,14 +4,14 @@ create or replace function search_packages(p_query jsonb)
 returns setof json as $$
 declare
     v_package_kinds int[];
-    v_chart_repositories_ids uuid[];
+    v_chart_repositories text[];
     v_facets boolean := (p_query->>'facets')::boolean;
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_package_kinds
     from jsonb_array_elements_text(p_query->'package_kinds') e;
-    select array_agg(e::uuid) into v_chart_repositories_ids
-    from jsonb_array_elements_text(p_query->'chart_repositories_ids') e;
+    select array_agg(e::text) into v_chart_repositories
+    from jsonb_array_elements_text(p_query->'chart_repositories') e;
 
     return query
     with packages_applying_text_filter as (
@@ -24,7 +24,6 @@ begin
             p.description,
             p.logo_image_id,
             s.app_version,
-            r.chart_repository_id as chart_repository_id,
             r.name as chart_repository_name,
             r.display_name as chart_repository_display_name
         from package p
@@ -42,8 +41,8 @@ begin
             case when cardinality(v_package_kinds) > 0
             then package_kind_id = any(v_package_kinds) else true end
         and
-            case when cardinality(v_chart_repositories_ids) > 0
-            then chart_repository_id = any(v_chart_repositories_ids) else true end
+            case when cardinality(v_chart_repositories) > 0
+            then chart_repository_name = any(v_chart_repositories) else true end
     )
     select json_build_object(
         'data', (
@@ -59,7 +58,6 @@ begin
                         'app_version', app_version,
                         'chart_repository', (
                             select json_build_object(
-                                'chart_repository_id', chart_repository_id,
                                 'name', chart_repository_name,
                                 'display_name', chart_repository_display_name
                             )
@@ -102,17 +100,16 @@ begin
                                 'filter_key', 'repo',
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
-                                        'id', chart_repository_id,
+                                        'id', chart_repository_name,
                                         'name', initcap(chart_repository_name),
                                         'total', total
                                     )), '[]')
                                     from (
                                         select
-                                            chart_repository_id,
                                             chart_repository_name,
                                             count(*) as total
                                         from packages_applying_text_filter
-                                        group by chart_repository_id, chart_repository_name
+                                        group by chart_repository_name
                                         order by total desc
                                     ) as breakdown
                                 )

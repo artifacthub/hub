@@ -142,7 +142,7 @@ const PackageView = (props: Props) => {
                               search: prepareQueryString({
                                 pageNumber: 1,
                                 filters: {
-                                  repo: [detail.chartRepository!.chartRepositoryId!],
+                                  repo: [detail.chartRepository!.name],
                                 },
                               }),
                             }}

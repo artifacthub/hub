@@ -7,7 +7,6 @@
   "logoImageId":"imageId",
   "appVersion":"1.0.0",
   "chartRepository":{
-    "chartRepositoryId":"repoId",
     "name":"stable",
     "displayName":null,
     "url": "repoUrl"

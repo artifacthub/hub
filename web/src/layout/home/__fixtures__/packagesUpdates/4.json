@@ -8,7 +8,6 @@
             "logoImageId": "aca0e134-7e18-411c-9662-1245f92f438d",
             "appVersion": "1.6.8",
             "chartRepository": {
-                "chartRepositoryId": "c38bdb18-40c4-4835-b2f8-44df3ebb2d3d",
                 "name": "halkeye",
                 "displayName": null
             }
@@ -21,7 +20,6 @@
             "logoImageId": "18db8f84-f8a7-4203-9116-60f24d34914f",
             "appVersion": "4.3.2-1",
             "chartRepository": {
-                "chartRepositoryId": "c38bdb18-40c4-4835-b2f8-44df3ebb2d3d",
                 "name": "halkeye",
                 "displayName": null
             }
@@ -34,7 +32,6 @@
             "logoImageId": null,
             "appVersion": "1.17.8",
             "chartRepository": {
-                "chartRepositoryId": "f34e1c55-a4f9-4fa7-aef6-416afcce0810",
                 "name": "gabibbo97",
                 "displayName": null
             }
@@ -47,7 +44,6 @@
             "logoImageId": "56724a8a-d8de-4700-8f23-1cf828220d51",
             "appVersion": "latest",
             "chartRepository": {
-                "chartRepositoryId": "c38bdb18-40c4-4835-b2f8-44df3ebb2d3d",
                 "name": "halkeye",
                 "displayName": null
             }
@@ -60,7 +56,6 @@
             "logoImageId": "2fbaacae-e538-4706-a9fc-bcf443218af1",
             "appVersion": "1.0",
             "chartRepository": {
-                "chartRepositoryId": "77cd4586-0551-4e80-be64-cddca21c2d3b",
                 "name": "billimek",
                 "displayName": null
             }

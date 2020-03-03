@@ -9,7 +9,6 @@ require (
 	github.com/emicklei/go-restful v2.11.2+incompatible // indirect
 	github.com/go-openapi/spec v0.19.4 // indirect
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
-	github.com/google/uuid v1.1.1
 	github.com/googleapis/gnostic v0.3.1 // indirect
 	github.com/gregjones/httpcache v0.0.0-20181110185634-c63ab54fda8f // indirect
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c

@@ -114,7 +114,7 @@ describe('PackageCard', () => {
         search: prepareQuerystring({
           pageNumber: 1,
           filters: {
-            repo: [mockPackage.chartRepository!.chartRepositoryId!]
+            repo: [mockPackage.chartRepository!.name]
           },
         }),
         state: { fromSearchCard: true },

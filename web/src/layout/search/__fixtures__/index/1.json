@@ -10,7 +10,6 @@
             "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
             "appVersion": "2.1.0",
             "chartRepository": {
-               "chartRepositoryId": "43898497-a9d0-41eb-9dc7-5c4de0cd0433",
                "name": "stable",
                "displayName": null,
                "url": "url"
@@ -25,7 +24,6 @@
             "logoImageId": null,
             "appVersion": "5.0.1",
             "chartRepository": {
-               "chartRepositoryId": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
                "name": "incubator",
                "displayName": null,
                "url": "url"

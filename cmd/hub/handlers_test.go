@@ -167,7 +167,7 @@ func TestSearch(t *testing.T) {
 			{"invalid facets", "facets=z"},
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
-			{"invalid repo", "repo=repo1"},
+			{"invalid repo", "repo="},
 		}
 		for _, tc := range badRequests {
 			tc := tc

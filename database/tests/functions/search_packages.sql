@@ -155,7 +155,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -168,7 +167,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -199,7 +197,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -212,7 +209,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -229,11 +225,11 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "00000000-0000-0000-0000-000000000001",
+                    "id": "repo1",
                     "name": "Repo1",
                     "total": 1
                 }, {
-                    "id": "00000000-0000-0000-0000-000000000002",
+                    "id": "repo2",
                     "name": "Repo2",
                     "total": 1
                 }]
@@ -263,7 +259,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -280,7 +275,7 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "00000000-0000-0000-0000-000000000001",
+                    "id": "repo1",
                     "name": "Repo1",
                     "total": 1
                 }]
@@ -315,8 +310,8 @@ select is(
 -- Tests with kind and repositories filters
 select is(
     search_packages('{
-        "chart_repositories_ids": [
-            "00000000-0000-0000-0000-000000000001"
+        "chart_repositories": [
+            "repo1"
         ]
     }')::jsonb,
     '{
@@ -330,7 +325,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -348,8 +342,8 @@ select is(
 select is(
     search_packages('{
         "text": "",
-        "chart_repositories_ids": [
-            "00000000-0000-0000-0000-000000000001"
+        "chart_repositories": [
+            "repo1"
         ]
     }')::jsonb,
     '{
@@ -363,7 +357,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -383,8 +376,8 @@ select is(
     '{
         "facets": true,
         "text": "kw1",
-        "chart_repositories_ids": [
-            "00000000-0000-0000-0000-000000000002"
+        "chart_repositories": [
+            "repo2"
         ]
     }')::jsonb,
     '{
@@ -398,7 +391,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -415,11 +407,11 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "00000000-0000-0000-0000-000000000001",
+                    "id": "repo1",
                     "name": "Repo1",
                     "total": 1
                 }, {
-                    "id": "00000000-0000-0000-0000-000000000002",
+                    "id": "repo2",
                     "name": "Repo2",
                     "total": 1
                 }]
@@ -437,8 +429,8 @@ select is(
     search_packages('{
         "facets": true,
         "text": "kw1",
-        "chart_repositories_ids": [
-            "00000000-0000-0000-0000-000000000003"
+        "chart_repositories": [
+            "repo3"
         ]
     }')::jsonb,
     '{
@@ -456,11 +448,11 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "00000000-0000-0000-0000-000000000001",
+                    "id": "repo1",
                     "name": "Repo1",
                     "total": 1
                 }, {
-                    "id": "00000000-0000-0000-0000-000000000002",
+                    "id": "repo2",
                     "name": "Repo2",
                     "total": 1
                 }]
@@ -512,7 +504,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -525,7 +516,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -557,7 +547,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -608,7 +597,6 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -664,11 +652,11 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "00000000-0000-0000-0000-000000000001",
+                    "id": "repo1",
                     "name": "Repo1",
                     "total": 1
                 }, {
-                    "id": "00000000-0000-0000-0000-000000000002",
+                    "id": "repo2",
                     "name": "Repo2",
                     "total": 1
                 }]

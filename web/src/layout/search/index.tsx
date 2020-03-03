@@ -61,7 +61,6 @@ const SearchView = (props: Props) => {
   useScrollRestorationFix();
 
   const saveScrollPosition = () => {
-    console.log('call');
     setScrollPosition(window.scrollY);
   };
 
