@@ -52,8 +52,10 @@ const PackageView = (props: Props) => {
     async function fetchPackageDetail() {
       try {
         setDetail(await API.getPackage(repoName, packageName, version));
-      } catch {
-        setDetail(null);
+      } catch(err) {
+        if (err.name !== 'AbortError') {
+          setDetail(null);
+        }
       } finally {
         setIsLoadingPackage(false);
       }

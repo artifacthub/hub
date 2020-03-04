@@ -15,13 +15,15 @@ const PackagesUpdates = () => {
     async function fetchPackagesUpdates() {
       try {
         setPackagesUpdates(await API.getPackagesUpdates());
-      } catch {
-        setPackagesUpdates({
-          latestPackagesAdded: [],
-          packagesRecentlyUpdated: [],
-        });
-      } finally {
         setIsLoading(false);
+      } catch(err) {
+        if (err.name !== 'AbortError') {
+          setPackagesUpdates({
+            latestPackagesAdded: [],
+            packagesRecentlyUpdated: [],
+          });
+          setIsLoading(false);
+        }
       }
     };
     fetchPackagesUpdates();

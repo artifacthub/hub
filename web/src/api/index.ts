@@ -24,13 +24,45 @@ const toCamelCase = (r: any): Result => {
   return r;
 };
 
-const apiFetch = (url: string): any => {
-  return fetch(url)
+class Fetcher {
+  cancellableRequests: AbortController[];
+
+  constructor() {
+    this.cancellableRequests = [];
+  }
+
+  public do(url: string, cancellable: boolean): any {
+    if (cancellable) {
+      return this.fetchCancellablePromise(url);
+    } else {
+      return this.fetchPromise(fetch(url));
+    }
+  }
+
+  public cancelRequests() {
+    if (this.cancellableRequests.length > 0) {
+      this.cancellableRequests.forEach(r => r.abort());
+      this.cancellableRequests = [];
+    }
+  }
+
+  private fetchCancellablePromise(url: string): any {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const response = this.fetchPromise(fetch(url, { signal }));
+    this.cancellableRequests.push(controller);
+    return response;
+  }
+
+  private fetchPromise(promise: Promise<Response>): any {
+    return promise
     .then(res => (res.ok ? res : Promise.reject(res)))
     .then(res => res.json())
     .then(res => toCamelCase(res));
+  }
 }
 
+const fetcher = new Fetcher();
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
 export const API = {
@@ -39,10 +71,11 @@ export const API = {
     if (!isUndefined(version)) {
       url += `/${version}`;
     }
-    return apiFetch(url);
+    fetcher.cancelRequests();
+    return fetcher.do(url, true);
   },
 
-  searchPackages: (query: SearchQuery): Promise<SearchResults> => {
+  searchPackages: (query: SearchQuery, cancellable: boolean): Promise<SearchResults> => {
     const q = new URLSearchParams();
     q.set('facets', 'true');
     q.set('limit', (query.limit).toString());
@@ -57,14 +90,18 @@ export const API = {
     if (!isUndefined(query.text)) {
       q.set('text', query.text);
     }
-    return apiFetch(`${API_BASE_URL}/search?${q.toString()}`);
+    if (cancellable) {
+      fetcher.cancelRequests();
+    }
+    return fetcher.do(`${API_BASE_URL}/search?${q.toString()}`, cancellable);
   },
 
   getStats: (): Promise<Stats> => {
-    return apiFetch(`${API_BASE_URL}/stats`);
+    return fetcher.do(`${API_BASE_URL}/stats`, true);
   },
 
   getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
-    return apiFetch(`${API_BASE_URL}/updates`);
+    fetcher.cancelRequests();
+    return fetcher.do(`${API_BASE_URL}/updates`, true);
   },
 };

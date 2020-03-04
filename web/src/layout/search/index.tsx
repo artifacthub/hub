@@ -116,6 +116,22 @@ const SearchView = (props: Props) => {
   };
 
   useEffect(() => {
+    const updateScrollPosition = () => {
+      // Update scroll position
+      if (history.action === 'PUSH') {
+        // When search page is open from detail page
+        if (props.fromDetail) {
+          updateWindowScrollPosition(scrollPosition);
+          // When search has changed
+        } else {
+          updateWindowScrollPosition(0);
+        }
+        // On pop action and when scroll position has been previously saved
+      } else if (scrollPosition !== 0) {
+        updateWindowScrollPosition(scrollPosition);
+      }
+    }
+
     async function fetchSearchResults() {
       setIsSearching(true);
       const query = {
@@ -126,7 +142,7 @@ const SearchView = (props: Props) => {
       };
 
       try {
-        const searchResults = await API.searchPackages(query);
+        const searchResults = await API.searchPackages(query, true);
         setSearchResults({...searchResults});
 
         // Preload next page if required
@@ -134,36 +150,27 @@ const SearchView = (props: Props) => {
           API.searchPackages({
             ...query,
             offset: props.pageNumber * limit,
-          });
+          }, false);
         }
-      } catch {
-        // TODO - show error badge
-        setSearchResults({
-          data: {
-            facets: [],
-            packages: [],
-          },
-          metadata: {
-            total: 0,
-            offset: 0,
-            limit: 0,
-          },
-        });
+        updateScrollPosition();
+
+      } catch(err) {
+        if (err.name !== 'AbortError') {
+          setSearchResults({
+            data: {
+              facets: [],
+              packages: [],
+            },
+            metadata: {
+              total: 0,
+              offset: 0,
+              limit: 0,
+            },
+          });
+          updateScrollPosition();
+        }
       } finally {
         setIsSearching(false);
-        // Update scroll position
-        if (history.action === 'PUSH') {
-          // When search page is open from detail page
-          if (props.fromDetail) {
-            updateWindowScrollPosition(scrollPosition);
-            // When search has changed
-          } else {
-            updateWindowScrollPosition(0);
-          }
-          // On pop action and when scroll position has been previously saved
-        } else if (scrollPosition !== 0) {
-          updateWindowScrollPosition(scrollPosition);
-        }
       }
     };
     fetchSearchResults();

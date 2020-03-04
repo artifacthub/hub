@@ -11,6 +11,7 @@ interface Props {
   text?: string;
   size: 'big' | 'normal';
   isSearching: boolean;
+  autoFocus?: boolean;
 }
 
 const SearchBar = (props: Props) => {
@@ -91,7 +92,7 @@ const SearchBar = (props: Props) => {
             aria-label="Search"
             value={value}
             onChange={onChange}
-            disabled={props.isSearching}
+            autoFocus={props.autoFocus || false}
           />
 
           <button
