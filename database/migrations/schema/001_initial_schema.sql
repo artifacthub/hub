@@ -2,10 +2,10 @@ do $$ begin execute
 'alter database ' || current_database() || ' set default_text_search_config = simple';
 end; $$;
 
-create extension if not exists "uuid-ossp";
+create extension if not exists pgcrypto;
 
 create table if not exists organization (
-    organization_id uuid primary key default uuid_generate_v4(),
+    organization_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
     description text check (description <> '') unique,
     home_url text check (home_url <> ''),
@@ -15,11 +15,12 @@ create table if not exists organization (
 );
 
 create table if not exists "user" (
-    user_id uuid primary key default uuid_generate_v4(),
+    user_id uuid primary key default gen_random_uuid(),
     alias text not null check (alias <> '') unique,
     first_name text check (first_name <> ''),
     last_name text check (last_name <> ''),
     email text not null check (email <> '') unique,
+    email_verified boolean not null default false,
     password text check (password <> ''),
     created_at timestamptz default current_timestamp not null
 );
@@ -30,8 +31,14 @@ create table if not exists user__organization (
     primary key (user_id, organization_id)
 );
 
+create table if not exists email_verification_code (
+    email_verification_code_id uuid primary key default gen_random_uuid(),
+    user_id uuid not null unique references "user" on delete cascade,
+    created_at timestamptz default current_timestamp not null
+);
+
 create table if not exists chart_repository (
-    chart_repository_id uuid primary key default uuid_generate_v4(),
+    chart_repository_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
     display_name text,
     url text not null check (url <> '') unique,
@@ -61,7 +68,7 @@ create or replace function generate_package_tsdoc(
 $$ language sql immutable;
 
 create table if not exists package (
-    package_id uuid primary key default uuid_generate_v4(),
+    package_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> ''),
     display_name text check (display_name <> ''),
     description text check (description <> ''),
@@ -98,7 +105,7 @@ create table if not exists snapshot (
 );
 
 create table if not exists maintainer (
-    maintainer_id uuid primary key default uuid_generate_v4(),
+    maintainer_id uuid primary key default gen_random_uuid(),
     name text not null,
     email text not null check (email <> '') unique
 );
@@ -110,7 +117,7 @@ create table if not exists package__maintainer (
 );
 
 create table if not exists image (
-    image_id uuid primary key default uuid_generate_v4(),
+    image_id uuid primary key default gen_random_uuid(),
     original_hash bytea not null check (original_hash <> '') unique
 );
 

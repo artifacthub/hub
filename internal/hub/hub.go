@@ -1,19 +1,39 @@
 package hub
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
+
+	"github.com/cncf/hub/internal/email"
+	"github.com/jackc/pgconn"
+	"github.com/jackc/pgx/v4"
+	"golang.org/x/crypto/bcrypt"
 )
+
+// DB defines the methods the database handler must provide.
+type DB interface {
+	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
+	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
+}
+
+// EmailSender defines the methods the email sender must provide.
+type EmailSender interface {
+	SendEmail(data *email.Data) error
+}
 
 // Hub provides an API to manage repositories, packages, etc.
 type Hub struct {
 	db DB
+	es EmailSender
 }
 
 // New creates a new Hub instance.
-func New(db DB) *Hub {
+func New(db DB, es EmailSender) *Hub {
 	return &Hub{
 		db: db,
+		es: es,
 	}
 }
 
@@ -73,6 +93,53 @@ func (h *Hub) GetPackageJSON(ctx context.Context, input *GetPackageInput) ([]byt
 // built by the database.
 func (h *Hub) GetPackagesUpdatesJSON(ctx context.Context) ([]byte, error) {
 	return h.dbQueryJSON(ctx, "select get_packages_updates()")
+}
+
+// RegisterUser registers the user provided in the database.
+func (h *Hub) RegisterUser(ctx context.Context, user *User) error {
+	// Hash password
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hashedPassword)
+
+	// Register user in database
+	userJSON, _ := json.Marshal(user)
+	var code string
+	err = h.db.QueryRow(ctx, "select register_user($1::jsonb)", userJSON).Scan(&code)
+	if err != nil {
+		return err
+	}
+
+	// Send email verification code
+	if h.es != nil {
+		templateData := map[string]string{
+			"link": fmt.Sprintf("/verifyEmail?code=%s", code),
+		}
+		var emailBody bytes.Buffer
+		if err := emailVerificationTmpl.Execute(&emailBody, templateData); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      user.Email,
+			Subject: "Verify your email address",
+			Body:    emailBody.Bytes(),
+		}
+		if err := h.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// VerifyEmail verifies a user's email using the email verification code
+// provided.
+func (h *Hub) VerifyEmail(ctx context.Context, code string) (bool, error) {
+	var verified bool
+	err := h.db.QueryRow(ctx, "select verify_email($1::uuid)", code).Scan(&verified)
+	return verified, err
 }
 
 // dbQueryJSON is a helper that executes the query provided and returns a bytes

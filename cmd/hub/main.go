@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cncf/hub/internal/email"
 	"github.com/cncf/hub/internal/hub"
 	"github.com/cncf/hub/internal/img/pg"
 	"github.com/cncf/hub/internal/util"
@@ -30,7 +31,11 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := hub.New(db)
+	var es hub.EmailSender
+	if s := email.NewSender(cfg); s != nil {
+		es = s
+	}
+	hubAPI := hub.New(db, es)
 	imageStore := pg.NewImageStore(db)
 
 	// Setup and launch server

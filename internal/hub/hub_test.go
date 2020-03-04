@@ -9,16 +9,22 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/bcrypt"
 )
 
-var errFakeDatabaseFailure = errors.New("fake database failure")
+var (
+	errFakeDatabaseFailure    = errors.New("fake database failure")
+	errFakeEmailSenderFailure = errors.New("fake email sender failure")
+)
 
 func TestNew(t *testing.T) {
 	db := &tests.DBMock{}
-	h := New(db)
+	es := &tests.EmailSenderMock{}
+	h := New(db, es)
 
 	assert.IsType(t, &Hub{}, h)
 	assert.Equal(t, db, h.db)
+	assert.Equal(t, es, h.es)
 }
 
 func TestGetChartRepositoryByName(t *testing.T) {
@@ -35,7 +41,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 			"url": "https://repo1.com"
 		}
 		`), nil)
-		h := New(db)
+		h := New(db, nil)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
 		require.NoError(t, err)
@@ -52,7 +58,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 			"QueryRow",
 			"select get_chart_repository_by_name($1::text)", "repo1",
 		).Return(nil, errFakeDatabaseFailure)
-		h := New(db)
+		h := New(db, nil)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
 		assert.Equal(t, errFakeDatabaseFailure, err)
@@ -66,7 +72,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 			"QueryRow",
 			"select get_chart_repository_by_name($1::text)", "repo1",
 		).Return([]byte("invalid json"), nil)
-		h := New(db)
+		h := New(db, nil)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
 		assert.Error(t, err)
@@ -98,7 +104,7 @@ func TestGetChartRepositories(t *testing.T) {
         "url": "https://repo3.com"
     }]
 	`), nil)
-	h := New(db)
+	h := New(db, nil)
 
 	r, err := h.GetChartRepositories(context.Background())
 	require.NoError(t, err)
@@ -131,7 +137,7 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
         "package2@0.0.9": "digest-package2-0.0.9"
     }
 	`), nil)
-	h := New(db)
+	h := New(db, nil)
 
 	pd, err := h.GetChartRepositoryPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
 	require.NoError(t, err)
@@ -150,7 +156,7 @@ func TestGetStatsJSON(t *testing.T) {
 			"QueryRow",
 			"select get_stats()",
 		).Return([]byte("statsDataJSON"), nil)
-		h := New(db)
+		h := New(db, nil)
 
 		data, err := h.GetStatsJSON(context.Background())
 		assert.Equal(t, nil, err)
@@ -164,7 +170,7 @@ func TestGetStatsJSON(t *testing.T) {
 			"QueryRow",
 			"select get_stats()",
 		).Return(nil, errFakeDatabaseFailure)
-		h := New(db)
+		h := New(db, nil)
 
 		data, err := h.GetStatsJSON(context.Background())
 		assert.Equal(t, errFakeDatabaseFailure, err)
@@ -179,7 +185,7 @@ func TestSearchPackagesJSON(t *testing.T) {
 		"QueryRow",
 		"select search_packages($1::jsonb)", mock.Anything,
 	).Return([]byte("searchResultsDataJSON"), nil)
-	h := New(db)
+	h := New(db, nil)
 
 	query := &Query{Text: "kw1"}
 	data, err := h.SearchPackagesJSON(context.Background(), query)
@@ -227,7 +233,7 @@ func TestRegisterPackage(t *testing.T) {
 			"Exec",
 			"select register_package($1::jsonb)", mock.Anything,
 		).Return(nil)
-		h := New(db)
+		h := New(db, nil)
 
 		err := h.RegisterPackage(context.Background(), p)
 		assert.Equal(t, nil, err)
@@ -240,7 +246,7 @@ func TestRegisterPackage(t *testing.T) {
 			"Exec",
 			"select register_package($1::jsonb)", mock.Anything,
 		).Return(errFakeDatabaseFailure)
-		h := New(db)
+		h := New(db, nil)
 
 		err := h.RegisterPackage(context.Background(), p)
 		assert.Equal(t, errFakeDatabaseFailure, err)
@@ -254,7 +260,7 @@ func TestGetPackageJSON(t *testing.T) {
 		"QueryRow",
 		"select get_package($1::jsonb)", mock.Anything,
 	).Return([]byte("packageDataJSON"), nil)
-	h := New(db)
+	h := New(db, nil)
 
 	data, err := h.GetPackageJSON(context.Background(), &GetPackageInput{})
 	assert.Equal(t, nil, err)
@@ -268,10 +274,98 @@ func TestGetPackagesUpdatesJSON(t *testing.T) {
 		"QueryRow",
 		"select get_packages_updates()",
 	).Return([]byte("packagesUpdatesDataJSON"), nil)
-	h := New(db)
+	h := New(db, nil)
 
 	data, err := h.GetPackagesUpdatesJSON(context.Background())
 	assert.Equal(t, nil, err)
 	assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
 	db.AssertExpectations(t)
+}
+
+func TestRegisterUser(t *testing.T) {
+	t.Run("successful user registration in database", func(t *testing.T) {
+		testCases := []struct {
+			description         string
+			emailSenderResponse error
+		}{
+			{
+				"email verification code sent successfully",
+				nil,
+			},
+			{
+				"error sending email verification code",
+				errFakeEmailSenderFailure,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On(
+					"QueryRow",
+					"select register_user($1::jsonb)", mock.Anything,
+				).Return("emailVerificationCode", nil)
+				es := &tests.EmailSenderMock{}
+				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
+				h := New(db, es)
+
+				u := &User{
+					Alias:     "alias",
+					FirstName: "first_name",
+					LastName:  "last_name",
+					Email:     "email@email.com",
+					Password:  "password",
+				}
+				err := h.RegisterUser(context.Background(), u)
+				assert.Equal(t, tc.emailSenderResponse, err)
+				assert.NoError(t, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte("password")))
+				db.AssertExpectations(t)
+				es.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("database error registering user", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select register_user($1::jsonb)", mock.Anything,
+		).Return("", errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		u := &User{}
+		err := h.RegisterUser(context.Background(), u)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestVerifyEmail(t *testing.T) {
+	t.Run("successful email verification", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select verify_email($1::uuid)", mock.Anything,
+		).Return(true, nil)
+		h := New(db, nil)
+
+		verified, err := h.VerifyEmail(context.Background(), "emailVerificationCode")
+		assert.Equal(t, nil, err)
+		assert.Equal(t, true, verified)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error verifying email", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			"select verify_email($1::uuid)", mock.Anything,
+		).Return(false, errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		verified, err := h.VerifyEmail(context.Background(), "emailVerificationCode")
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, false, verified)
+		db.AssertExpectations(t)
+	})
 }
