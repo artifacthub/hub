@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -282,6 +283,164 @@ func TestGetPackage(t *testing.T) {
 	})
 }
 
+func TestRegisterUser(t *testing.T) {
+	t.Run("no user provided", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
+		th.h.registerUser(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid user provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			userJSON    string
+		}{
+			{
+				"invalid json",
+				"-",
+			},
+			{
+				"missing alias",
+				`{"email": "email", "password": "password"}`,
+			},
+			{
+				"missing email",
+				`{"alias": "alias", "password": "password"}`,
+			},
+			{
+				"missing password",
+				`{"alias": "alias", "email": "email"}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.userJSON))
+				th.h.registerUser(w, r, nil)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid user provided", func(t *testing.T) {
+		userJSON := `
+		{
+			"alias": "alias",
+			"first_name": "first_name",
+			"last_name": "last_name",
+			"email": "email",
+			"password": "password"
+		}
+		`
+		testCases := []struct {
+			description        string
+			dbResponse         []interface{}
+			expectedStatusCode int
+		}{
+			{
+				"registration succeeded",
+				[]interface{}{"", nil},
+				http.StatusOK,
+			},
+			{
+				"database error",
+				[]interface{}{"", errFakeDatabaseFailure},
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On(
+					"QueryRow",
+					"select register_user($1::jsonb)", mock.Anything,
+				).Return(tc.dbResponse...)
+				th.es.On("SendEmail", mock.Anything).Return(nil)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
+				th.h.registerUser(w, r, nil)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestVerifyEmail(t *testing.T) {
+	t.Run("no code provided", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		th.h.verifyEmail(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("code provided", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			dbResponse         []interface{}
+			expectedStatusCode int
+		}{
+			{
+				"code not verified",
+				[]interface{}{false, nil},
+				http.StatusGone,
+			},
+			{
+				"code verified",
+				[]interface{}{true, nil},
+				http.StatusOK,
+			},
+			{
+				"database error",
+				[]interface{}{false, errFakeDatabaseFailure},
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On(
+					"QueryRow",
+					"select verify_email($1::uuid)", mock.Anything,
+				).Return(tc.dbResponse...)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
+				r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+				th.h.verifyEmail(w, r, nil)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestImage(t *testing.T) {
 	t.Run("non existing image", func(t *testing.T) {
 		th := setupTestHandlers()
@@ -389,6 +548,7 @@ func TestBasicAuth(t *testing.T) {
 type testHandlers struct {
 	cfg *viper.Viper
 	db  *tests.DBMock
+	es  *tests.EmailSenderMock
 	h   *handlers
 }
 
@@ -396,12 +556,14 @@ func setupTestHandlers() *testHandlers {
 	cfg := viper.New()
 	cfg.Set("server.webBuildPath", "testdata")
 	db := &tests.DBMock{}
-	hubAPI := hub.New(db)
+	es := &tests.EmailSenderMock{}
+	hubAPI := hub.New(db, es)
 	imageStore := pg.NewImageStore(db)
 
 	return &testHandlers{
 		cfg: cfg,
 		db:  db,
+		es:  es,
 		h:   setupHandlers(cfg, hubAPI, imageStore),
 	}
 }

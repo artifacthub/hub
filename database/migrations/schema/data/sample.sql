@@ -6,8 +6,8 @@ insert into organization (organization_id, name) values ('00000000-0000-0000-000
 insert into organization (organization_id, name) values ('00000000-0000-0000-0000-000000000005', 'Linkerd');
 
 -- Register 2 sample users and add them to the Helm organization
-insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000001', 'cynthiasg', 'cynthiasg@icloud.com');
-insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000002', 'tegioz', 'tegioz@icloud.com');
+insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000001', 'user1', 'user1@email.com');
+insert into "user" (user_id, alias, email) values ('00000000-0000-0000-0000-000000000002', 'user2', 'user2@email.com');
 insert into user__organization values('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001');
 insert into user__organization values('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001');
 

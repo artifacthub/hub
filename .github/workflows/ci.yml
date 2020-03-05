@@ -101,7 +101,7 @@ jobs:
         run: yarn build
 
   build-docker-images:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/staging'
     needs:
       - linter-backend
       - tests-database
@@ -143,7 +143,7 @@ jobs:
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/chart-tracker:$GITHUB_SHA
 
   deploy-staging:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/staging'
     needs: build-docker-images
     runs-on: ubuntu-latest
     env:

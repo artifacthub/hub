@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(35);
+select plan(38);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -9,12 +9,13 @@ select results_eq(
     'default_text_search_config is pg_catalog.simple'
 );
 
--- Check uuid extension exist
-select has_extension('uuid-ossp');
+-- Check pgcrypto extension exist
+select has_extension('pgcrypto');
 
 -- Check expected tables exist
 select tables_are(array[
     'chart_repository',
+    'email_verification_code',
     'image',
     'image_version',
     'maintainer',
@@ -37,6 +38,11 @@ select columns_are('chart_repository', array[
     'url',
     'user_id',
     'organization_id'
+]);
+select columns_are('email_verification_code', array[
+    'email_verification_code_id',
+    'user_id',
+    'created_at'
 ]);
 select columns_are('image', array[
     'image_id',
@@ -99,6 +105,7 @@ select columns_are('user', array[
     'first_name',
     'last_name',
     'email',
+    'email_verified',
     'password',
     'created_at'
 ]);
@@ -155,6 +162,8 @@ select has_function('get_package');
 select has_function('get_packages_updates');
 select has_function('register_image');
 select has_function('get_image');
+select has_function('register_user');
+select has_function('verify_email');
 
 -- Check package kinds exist
 select results_eq(

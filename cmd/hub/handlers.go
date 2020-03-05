@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/subtle"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -66,6 +67,8 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/search", h.search)
 	r.GET("/api/v1/package/chart/:repoName/:packageName", h.getPackage(hub.Chart))
 	r.GET("/api/v1/package/chart/:repoName/:packageName/:version", h.getPackage(hub.Chart))
+	r.POST("/api/v1/user", h.registerUser)
+	r.POST("/api/v1/user/verifyEmail", h.verifyEmail)
 
 	// Images
 	r.GET("/image/:image", h.image)
@@ -221,6 +224,63 @@ func (h *handlers) getPackage(kind hub.PackageKind) httprouter.Handle {
 	}
 }
 
+// registerUser is an http handler used to register a user in the hub database.
+func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	user := &hub.User{}
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		log.Error().Err(err).Msg("invalid user")
+		http.Error(w, "user provided is not valid", http.StatusBadRequest)
+		return
+	}
+	if err := validateUser(user); err != nil {
+		log.Error().Err(err).Msg("invalid user")
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	err = h.hubAPI.RegisterUser(r.Context(), user)
+	if err != nil {
+		log.Error().Err(err).Msg("registerUser failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// validateUser validates a user instance before we attempt to register it in
+// the database.
+func validateUser(user *hub.User) error {
+	if user.Alias == "" {
+		return fmt.Errorf("alias not provided")
+	}
+	if user.Email == "" {
+		return fmt.Errorf("email not provided")
+	}
+	if user.Password == "" {
+		return fmt.Errorf("password not provided")
+	}
+	return nil
+}
+
+// verifyEmail is an http handler used to verify a user's email address.
+func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	code := r.FormValue("code")
+	if code == "" {
+		errMsg := "email verification code not provided"
+		log.Error().Msg(errMsg)
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+	verified, err := h.hubAPI.VerifyEmail(r.Context(), code)
+	if err != nil {
+		log.Error().Err(err).Msg("verifyEmail failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	if !verified {
+		w.WriteHeader(http.StatusGone)
+	}
+}
+
 // image in an http handler that serves images stored in the database.
 func (h *handlers) image(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	// Extract image id and version
@@ -288,7 +348,7 @@ func (h *handlers) basicAuth(next http.Handler) http.Handler {
 		user, pass, ok := r.BasicAuth()
 		if !ok || !areCredentialsValid([]byte(user), []byte(pass)) {
 			w.Header().Set("WWW-Authenticate", "Basic realm="+realm+`"`)
-			w.WriteHeader(401)
+			w.WriteHeader(http.StatusUnauthorized)
 			_, _ = w.Write([]byte("Unauthorized\n"))
 			return
 		}

@@ -9,6 +9,8 @@
 {{ template "functions/get_packages_updates.sql" }}
 {{ template "functions/register_image.sql" }}
 {{ template "functions/get_image.sql" }}
+{{ template "functions/register_user.sql" }}
+{{ template "functions/verify_email.sql" }}
 
 ---- create above / drop below ----
 

@@ -47,6 +47,8 @@ func (m *RowMock) Scan(dest ...interface{}) error {
 			*v = m.data.([]byte)
 		case *string:
 			*v = m.data.(string)
+		case *bool:
+			*v = m.data.(bool)
 		}
 	}
 	return m.err

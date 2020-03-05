@@ -1,18 +1,5 @@
 package hub
 
-import (
-	"context"
-
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx/v4"
-)
-
-// DB defines the methods the database handler must provide.
-type DB interface {
-	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
-	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
-}
-
 // ChartRepository represents a Helm chart repository.
 type ChartRepository struct {
 	ChartRepositoryID string `json:"chart_repository_id"`
@@ -97,4 +84,15 @@ type GetPackageInput struct {
 	ChartRepositoryName string      `json:"chart_repository_name"`
 	PackageName         string      `json:"package_name"`
 	Version             string      `json:"version"`
+}
+
+// User represents a Hub user.
+type User struct {
+	UserID        string `json:"user_id"`
+	Alias         string `json:"alias"`
+	FirstName     string `json:"first_name"`
+	LastName      string `json:"last_name"`
+	Email         string `json:"email"`
+	EmailVerified bool   `json:"email_verified"`
+	Password      string `json:"password"`
 }

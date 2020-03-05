@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(10);
+select plan(11);
 
 -- Try registering an image version with empty version
 select throws_ok(
@@ -11,9 +11,14 @@ select throws_ok(
 );
 
 -- Register image1 version 2x
-select register_image('image1Hash'::bytea, '2x', 'image12xData'::bytea);
+select register_image('image1Hash'::bytea, '2x', 'image12xData'::bytea) as image1_id \gset
 
 -- Image1 2x has been registered
+select is(
+    image_id,
+    :'image1_id',
+    'Returned image id should be registered'
+) from image where original_hash = 'image1Hash'::bytea;
 select results_eq(
     'select original_hash from image',
     $$ values ('image1Hash'::bytea) $$,

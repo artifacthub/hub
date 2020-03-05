@@ -36,12 +36,12 @@ func main() {
 		log.Info().Msg("Chart tracker shutting down..")
 	}()
 
-	// Setup database, hub api and image store
+	// Setup hub api and image store instances
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := hub.New(db)
+	hubAPI := hub.New(db, nil)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
