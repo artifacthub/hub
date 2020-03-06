@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"crypto/subtle"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net"
 	"net/http"
 	"net/url"
 	"path"
@@ -16,6 +18,7 @@ import (
 
 	"github.com/cncf/hub/internal/hub"
 	"github.com/cncf/hub/internal/img/pg"
+	"github.com/gorilla/securecookie"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
 	"github.com/julienschmidt/httprouter"
@@ -25,9 +28,19 @@ import (
 )
 
 const (
+	// Cache
 	staticCacheMaxAge     = 365 * 24 * time.Hour
 	defaultAPICacheMaxAge = 15 * time.Minute
+
+	// Session
+	sessionCookieName = "sid"
+	sessionDuration   = 30 * 24 * time.Hour
 )
+
+type userIDKey struct{}
+
+// UserIDKey represents the key used for the userID value inside a context.
+var UserIDKey = userIDKey{}
 
 // handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
@@ -36,6 +49,7 @@ type handlers struct {
 	hubAPI     *hub.Hub
 	imageStore *pg.ImageStore
 	router     http.Handler
+	sc         *securecookie.SecureCookie
 
 	mu          sync.RWMutex
 	imagesCache map[string][]byte
@@ -43,11 +57,14 @@ type handlers struct {
 
 // setupHandlers creates a new handlers instance.
 func setupHandlers(cfg *viper.Viper, hubAPI *hub.Hub, imageStore *pg.ImageStore) *handlers {
+	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
+	sc.MaxAge(int(sessionDuration.Seconds()))
 	h := &handlers{
 		cfg:         cfg,
 		hubAPI:      hubAPI,
 		imageStore:  imageStore,
 		imagesCache: make(map[string][]byte),
+		sc:          sc,
 	}
 	h.setupRouter()
 	return h
@@ -69,9 +86,17 @@ func (h *handlers) setupRouter() {
 	r.GET("/api/v1/package/chart/:repoName/:packageName/:version", h.getPackage(hub.Chart))
 	r.POST("/api/v1/user", h.registerUser)
 	r.POST("/api/v1/user/verifyEmail", h.verifyEmail)
+	r.POST("/api/v1/user/login", h.login)
 
 	// Images
 	r.GET("/image/:image", h.image)
+
+	// Misc
+	r.Handler("GET", "/admin/test", h.requireLogin(http.HandlerFunc(
+		func(w http.ResponseWriter, req *http.Request) {
+			w.WriteHeader(http.StatusOK)
+		},
+	)))
 
 	// Static files
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
@@ -279,6 +304,97 @@ func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request, _ httprou
 	if !verified {
 		w.WriteHeader(http.StatusGone)
 	}
+}
+
+// login is an http handler used to log a user in.
+func (h *handlers) login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	// Extract credentials from request
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+	if email == "" || password == "" {
+		errMsg := "credentials not provided"
+		log.Error().Msg(errMsg)
+		http.Error(w, errMsg, http.StatusBadRequest)
+		return
+	}
+
+	// Check if the credentials provided are valid
+	checkCredentialsOutput, err := h.hubAPI.CheckCredentials(r.Context(), email, password)
+	if err != nil {
+		log.Error().Err(err).Msg("checkCredentials failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	if !checkCredentialsOutput.Valid {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	// Register user session
+	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
+	session := &hub.Session{
+		UserID:    checkCredentialsOutput.UserID,
+		IP:        ip,
+		UserAgent: r.UserAgent(),
+	}
+	sessionID, err := h.hubAPI.RegisterSession(r.Context(), session)
+	if err != nil {
+		log.Error().Err(err).Msg("registerSession failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+
+	// Generate and set session cookie
+	encodedSessionID, err := h.sc.Encode(sessionCookieName, sessionID)
+	if err != nil {
+		log.Error().Err(err).Msg("sessionID encoding failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	cookie := &http.Cookie{
+		Name:     sessionCookieName,
+		Value:    encodedSessionID,
+		Expires:  time.Now().Add(sessionDuration),
+		HttpOnly: true,
+	}
+	if h.cfg.GetBool("server.cookie.secure") {
+		cookie.Secure = true
+	}
+	http.SetCookie(w, cookie)
+}
+
+// requireLogin is a middleware that verifies if a user is logged in.
+func (h *handlers) requireLogin(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Extract and validate cookie from request
+		cookie, err := r.Cookie(sessionCookieName)
+		if err != nil {
+			http.Error(w, "", http.StatusUnauthorized)
+			return
+		}
+		var sessionID []byte
+		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+			log.Error().Err(err).Msg("sessionID decoding failed")
+			http.Error(w, "", http.StatusUnauthorized)
+			return
+		}
+
+		// Check the session provided is valid
+		checkSessionOutput, err := h.hubAPI.CheckSession(r.Context(), sessionID, sessionDuration)
+		if err != nil {
+			log.Error().Err(err).Msg("checkSession failed")
+			http.Error(w, "", http.StatusInternalServerError)
+			return
+		}
+		if !checkSessionOutput.Valid {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		// Inject userID in context and call next handler
+		ctx := context.WithValue(r.Context(), UserIDKey, checkSessionOutput.UserID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 // image in an http handler that serves images stored in the database.

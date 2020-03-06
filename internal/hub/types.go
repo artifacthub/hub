@@ -96,3 +96,24 @@ type User struct {
 	EmailVerified bool   `json:"email_verified"`
 	Password      string `json:"password"`
 }
+
+// CheckCredentialsOutput represents the output returned by the
+// CheckCredentials method.
+type CheckCredentialsOutput struct {
+	Valid  bool   `json:"valid"`
+	UserID string `json:"user_id"`
+}
+
+// Session represents some information about a user session.
+type Session struct {
+	SessionID string `json:"session_id"`
+	UserID    string `json:"user_id"`
+	IP        string `json:"ip"`
+	UserAgent string `json:"user_agent"`
+}
+
+// CheckSessionOutput represents the output returned by the CheckSession method.
+type CheckSessionOutput struct {
+	Valid  bool   `json:"valid"`
+	UserID string `json:"user_id"`
+}

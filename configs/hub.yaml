@@ -14,3 +14,6 @@ server:
     enabled: false
     username: hub
     password: changeme
+  cookie:
+    hashKey: default-unsafe-key
+    secure: false

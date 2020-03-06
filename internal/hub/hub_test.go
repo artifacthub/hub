@@ -4,8 +4,10 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/cncf/hub/internal/tests"
+	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -28,12 +30,11 @@ func TestNew(t *testing.T) {
 }
 
 func TestGetChartRepositoryByName(t *testing.T) {
+	dbQuery := "select get_chart_repository_by_name($1::text)"
+
 	t.Run("get existing repository by name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select get_chart_repository_by_name($1::text)", "repo1",
-		).Return([]byte(`
+		db.On("QueryRow", dbQuery, "repo1").Return([]byte(`
 		{
 			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -54,10 +55,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 
 	t.Run("database error calling get_chart_repository_by_name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select get_chart_repository_by_name($1::text)", "repo1",
-		).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "repo1").Return(nil, errFakeDatabaseFailure)
 		h := New(db, nil)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
@@ -68,10 +66,7 @@ func TestGetChartRepositoryByName(t *testing.T) {
 
 	t.Run("invalid json data returned from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select get_chart_repository_by_name($1::text)", "repo1",
-		).Return([]byte("invalid json"), nil)
+		db.On("QueryRow", dbQuery, "repo1").Return([]byte("invalid json"), nil)
 		h := New(db, nil)
 
 		r, err := h.GetChartRepositoryByName(context.Background(), "repo1")
@@ -82,11 +77,9 @@ func TestGetChartRepositoryByName(t *testing.T) {
 }
 
 func TestGetChartRepositories(t *testing.T) {
+	dbQuery := "select get_chart_repositories()"
 	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select get_chart_repositories()",
-	).Return([]byte(`
+	db.On("QueryRow", dbQuery).Return([]byte(`
 	[{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -125,11 +118,9 @@ func TestGetChartRepositories(t *testing.T) {
 }
 
 func TestGetChartRepositoryPackagesDigest(t *testing.T) {
+	dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
 	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select get_chart_repository_packages_digest($1::uuid)", mock.Anything,
-	).Return([]byte(`
+	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte(`
 	{
         "package1@1.0.0": "digest-package1-1.0.0",
         "package1@0.0.9": "digest-package1-0.0.9",
@@ -150,26 +141,22 @@ func TestGetChartRepositoryPackagesDigest(t *testing.T) {
 }
 
 func TestGetStatsJSON(t *testing.T) {
+	dbQuery := "select get_stats()"
+
 	t.Run("chart repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select get_stats()",
-		).Return([]byte("statsDataJSON"), nil)
+		db.On("QueryRow", dbQuery).Return([]byte("statsDataJSON"), nil)
 		h := New(db, nil)
 
 		data, err := h.GetStatsJSON(context.Background())
-		assert.Equal(t, nil, err)
+		assert.NoError(t, err)
 		assert.Equal(t, []byte("statsDataJSON"), data)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select get_stats()",
-		).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
 		h := New(db, nil)
 
 		data, err := h.GetStatsJSON(context.Background())
@@ -180,21 +167,21 @@ func TestGetStatsJSON(t *testing.T) {
 }
 
 func TestSearchPackagesJSON(t *testing.T) {
+	dbQuery := "select search_packages($1::jsonb)"
 	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select search_packages($1::jsonb)", mock.Anything,
-	).Return([]byte("searchResultsDataJSON"), nil)
+	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("searchResultsDataJSON"), nil)
 	h := New(db, nil)
 
-	query := &Query{Text: "kw1"}
-	data, err := h.SearchPackagesJSON(context.Background(), query)
-	assert.Equal(t, nil, err)
+	searchQuery := &Query{Text: "kw1"}
+	data, err := h.SearchPackagesJSON(context.Background(), searchQuery)
+	assert.NoError(t, err)
 	assert.Equal(t, []byte("searchResultsDataJSON"), data)
 	db.AssertExpectations(t)
 }
 
 func TestRegisterPackage(t *testing.T) {
+	dbQuery := "select register_package($1::jsonb)"
+
 	p := &Package{
 		Kind:        Chart,
 		Name:        "package1",
@@ -229,23 +216,17 @@ func TestRegisterPackage(t *testing.T) {
 
 	t.Run("successful package registration", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"Exec",
-			"select register_package($1::jsonb)", mock.Anything,
-		).Return(nil)
+		db.On("Exec", dbQuery, mock.Anything).Return(nil)
 		h := New(db, nil)
 
 		err := h.RegisterPackage(context.Background(), p)
-		assert.Equal(t, nil, err)
+		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"Exec",
-			"select register_package($1::jsonb)", mock.Anything,
-		).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
 		h := New(db, nil)
 
 		err := h.RegisterPackage(context.Background(), p)
@@ -255,34 +236,32 @@ func TestRegisterPackage(t *testing.T) {
 }
 
 func TestGetPackageJSON(t *testing.T) {
+	dbQuery := "select get_package($1::jsonb)"
 	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select get_package($1::jsonb)", mock.Anything,
-	).Return([]byte("packageDataJSON"), nil)
+	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("packageDataJSON"), nil)
 	h := New(db, nil)
 
 	data, err := h.GetPackageJSON(context.Background(), &GetPackageInput{})
-	assert.Equal(t, nil, err)
+	assert.NoError(t, err)
 	assert.Equal(t, []byte("packageDataJSON"), data)
 	db.AssertExpectations(t)
 }
 
 func TestGetPackagesUpdatesJSON(t *testing.T) {
+	dbQuery := "select get_packages_updates()"
 	db := &tests.DBMock{}
-	db.On(
-		"QueryRow",
-		"select get_packages_updates()",
-	).Return([]byte("packagesUpdatesDataJSON"), nil)
+	db.On("QueryRow", dbQuery).Return([]byte("packagesUpdatesDataJSON"), nil)
 	h := New(db, nil)
 
 	data, err := h.GetPackagesUpdatesJSON(context.Background())
-	assert.Equal(t, nil, err)
+	assert.NoError(t, err)
 	assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
 	db.AssertExpectations(t)
 }
 
 func TestRegisterUser(t *testing.T) {
+	dbQuery := "select register_user($1::jsonb)"
+
 	t.Run("successful user registration in database", func(t *testing.T) {
 		testCases := []struct {
 			description         string
@@ -301,10 +280,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On(
-					"QueryRow",
-					"select register_user($1::jsonb)", mock.Anything,
-				).Return("emailVerificationCode", nil)
+				db.On("QueryRow", dbQuery, mock.Anything).Return("emailVerificationCode", nil)
 				es := &tests.EmailSenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				h := New(db, es)
@@ -327,10 +303,7 @@ func TestRegisterUser(t *testing.T) {
 
 	t.Run("database error registering user", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select register_user($1::jsonb)", mock.Anything,
-		).Return("", errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return("", errFakeDatabaseFailure)
 		h := New(db, nil)
 
 		u := &User{}
@@ -341,31 +314,169 @@ func TestRegisterUser(t *testing.T) {
 }
 
 func TestVerifyEmail(t *testing.T) {
+	dbQuery := "select verify_email($1::uuid)"
+
 	t.Run("successful email verification", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select verify_email($1::uuid)", mock.Anything,
-		).Return(true, nil)
+		db.On("QueryRow", dbQuery, mock.Anything).Return(true, nil)
 		h := New(db, nil)
 
 		verified, err := h.VerifyEmail(context.Background(), "emailVerificationCode")
-		assert.Equal(t, nil, err)
-		assert.Equal(t, true, verified)
+		assert.NoError(t, err)
+		assert.True(t, verified)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error verifying email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			"select verify_email($1::uuid)", mock.Anything,
-		).Return(false, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return(false, errFakeDatabaseFailure)
 		h := New(db, nil)
 
 		verified, err := h.VerifyEmail(context.Background(), "emailVerificationCode")
 		assert.Equal(t, errFakeDatabaseFailure, err)
-		assert.Equal(t, false, verified)
+		assert.False(t, verified)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestCheckCredentials(t *testing.T) {
+	dbQuery := `select user_id, password from "user" where email = $1`
+
+	t.Run("credentials provided not found in database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pgx.ErrNoRows)
+		h := New(db, nil)
+
+		output, err := h.CheckCredentials(context.Background(), "user", "pass")
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error getting credentials from database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		output, err := h.CheckCredentials(context.Background(), "user", "pass")
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Nil(t, output)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid credentials provided", func(t *testing.T) {
+		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+		h := New(db, nil)
+
+		output, err := h.CheckCredentials(context.Background(), "email", "pass2")
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("valid credentials provided", func(t *testing.T) {
+		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+		h := New(db, nil)
+
+		output, err := h.CheckCredentials(context.Background(), "email", "pass")
+		assert.NoError(t, err)
+		assert.True(t, output.Valid)
+		assert.Equal(t, "userID", output.UserID)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestRegisterSession(t *testing.T) {
+	dbQuery := "select register_session($1::jsonb)"
+
+	s := &Session{
+		UserID:    "00000000-0000-0000-0000-000000000001",
+		IP:        "192.168.1.100",
+		UserAgent: "Safari 13.0.5",
+	}
+
+	t.Run("successful session registration", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("sessionID"), nil)
+		h := New(db, nil)
+
+		sessionID, err := h.RegisterSession(context.Background(), s)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("sessionID"), sessionID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		sessionID, err := h.RegisterSession(context.Background(), s)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Nil(t, sessionID)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestCheckSession(t *testing.T) {
+	dbQuery := `
+	select user_id, floor(extract(epoch from created_at))
+	from session where session_id = $1
+	`
+
+	t.Run("session not found in database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pgx.ErrNoRows)
+		h := New(db, nil)
+
+		output, err := h.CheckSession(context.Background(), []byte("sessionID"), 1*time.Hour)
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error getting session from database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		output, err := h.CheckSession(context.Background(), []byte("sessionID"), 1*time.Hour)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Nil(t, output)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("session has expired", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", int64(1)}, nil)
+		h := New(db, nil)
+
+		output, err := h.CheckSession(context.Background(), []byte("sessionID"), 1*time.Hour)
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("valid session", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{
+			"userID",
+			time.Now().Unix(),
+		}, nil)
+		h := New(db, nil)
+
+		output, err := h.CheckSession(context.Background(), []byte("sessionID"), 1*time.Hour)
+		assert.NoError(t, err)
+		assert.True(t, output.Valid)
+		assert.Equal(t, "userID", output.UserID)
 		db.AssertExpectations(t)
 	})
 }

@@ -22,6 +22,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var errFakeDatabaseFailure = errors.New("fake database failure")
@@ -74,12 +75,11 @@ func TestServeStaticFile(t *testing.T) {
 }
 
 func TestGetStats(t *testing.T) {
+	dbQuery := "select get_stats()"
+
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_stats()",
-		).Return([]byte("statsDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery).Return([]byte("statsDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -98,10 +98,7 @@ func TestGetStats(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_stats()",
-		).Return(nil, errFakeDatabaseFailure)
+		th.db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -115,12 +112,11 @@ func TestGetStats(t *testing.T) {
 }
 
 func TestGetPackagesUpdates(t *testing.T) {
+	dbQuery := "select get_packages_updates()"
+
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_packages_updates()",
-		).Return([]byte("packagesUpdatesDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery).Return([]byte("packagesUpdatesDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -139,10 +135,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_packages_updates()",
-		).Return(nil, errFakeDatabaseFailure)
+		th.db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -156,6 +149,8 @@ func TestGetPackagesUpdates(t *testing.T) {
 }
 
 func TestSearch(t *testing.T) {
+	dbQuery := "select search_packages($1::jsonb)"
+
 	t.Run("invalid requests", func(t *testing.T) {
 		th := setupTestHandlers()
 
@@ -187,10 +182,7 @@ func TestSearch(t *testing.T) {
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select search_packages($1::jsonb)", mock.Anything,
-		).Return([]byte("searchResultsDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("searchResultsDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -209,10 +201,7 @@ func TestSearch(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select search_packages($1::jsonb)", mock.Anything,
-		).Return(nil, errFakeDatabaseFailure)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -226,12 +215,11 @@ func TestSearch(t *testing.T) {
 }
 
 func TestGetPackage(t *testing.T) {
+	dbQuery := "select get_package($1::jsonb)"
+
 	t.Run("non existing package", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package($1::jsonb)", mock.Anything,
-		).Return(nil, pgx.ErrNoRows)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pgx.ErrNoRows)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -245,10 +233,7 @@ func TestGetPackage(t *testing.T) {
 
 	t.Run("existing package", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package($1::jsonb)", mock.Anything,
-		).Return([]byte("packageDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("packageDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -267,10 +252,7 @@ func TestGetPackage(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_package($1::jsonb)", mock.Anything,
-		).Return(nil, errFakeDatabaseFailure)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -284,6 +266,8 @@ func TestGetPackage(t *testing.T) {
 }
 
 func TestRegisterUser(t *testing.T) {
+	dbQuery := "select register_user($1::jsonb)"
+
 	t.Run("no user provided", func(t *testing.T) {
 		th := setupTestHandlers()
 
@@ -364,10 +348,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				th := setupTestHandlers()
-				th.db.On(
-					"QueryRow",
-					"select register_user($1::jsonb)", mock.Anything,
-				).Return(tc.dbResponse...)
+				th.db.On("QueryRow", dbQuery, mock.Anything).Return(tc.dbResponse...)
 				th.es.On("SendEmail", mock.Anything).Return(nil)
 
 				w := httptest.NewRecorder()
@@ -384,6 +365,8 @@ func TestRegisterUser(t *testing.T) {
 }
 
 func TestVerifyEmail(t *testing.T) {
+	dbQuery := "select verify_email($1::uuid)"
+
 	t.Run("no code provided", func(t *testing.T) {
 		th := setupTestHandlers()
 
@@ -422,10 +405,7 @@ func TestVerifyEmail(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				th := setupTestHandlers()
-				th.db.On(
-					"QueryRow",
-					"select verify_email($1::uuid)", mock.Anything,
-				).Return(tc.dbResponse...)
+				th.db.On("QueryRow", dbQuery, mock.Anything).Return(tc.dbResponse...)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
@@ -441,13 +421,198 @@ func TestVerifyEmail(t *testing.T) {
 	})
 }
 
+func TestLogin(t *testing.T) {
+	dbQuery1 := `select user_id, password from "user" where email = $1`
+	dbQuery2 := `select register_session($1::jsonb)`
+
+	t.Run("credentials not provided", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", nil)
+		th.h.login(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("error checking credentials", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery1, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		th.h.login(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("invalid credentials provided", func(t *testing.T) {
+		th := setupTestHandlers()
+		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
+		th.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass2"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		th.h.login(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("error registering session", func(t *testing.T) {
+		th := setupTestHandlers()
+		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
+		th.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+		th.db.On("QueryRow", dbQuery2, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		th.h.login(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("login succeeded", func(t *testing.T) {
+		th := setupTestHandlers()
+		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
+		th.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+		th.db.On("QueryRow", dbQuery2, mock.Anything).Return([]byte("sessionID"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		th.h.login(w, r, nil)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		require.Len(t, resp.Cookies(), 1)
+		cookie := resp.Cookies()[0]
+		assert.Equal(t, sessionCookieName, cookie.Name)
+		assert.True(t, cookie.HttpOnly)
+		assert.False(t, cookie.Secure)
+		var sessionID []byte
+		err := th.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
+		require.NoError(t, err)
+		assert.Equal(t, []byte("sessionID"), sessionID)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestRequireLogin(t *testing.T) {
+	dbQuery := `
+	select user_id, floor(extract(epoch from created_at))
+	from session where session_id = $1
+	`
+
+	t.Run("session cookie not provided", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		th.h.requireLogin(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("invalid session cookie provided", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: "invalidValue",
+		})
+		th.h.requireLogin(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("error checking session", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := th.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		th.h.requireLogin(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("invalid session provided", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", int64(1)}, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := th.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		th.h.requireLogin(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("require login succeeded", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{
+			"userID",
+			time.Now().Unix(),
+		}, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := th.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		th.h.requireLogin(http.HandlerFunc(th.h.serveIndex)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
 func TestImage(t *testing.T) {
+	dbQuery := "select get_image($1::uuid, $2::text)"
+
 	t.Run("non existing image", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
-		).Return(nil, pgx.ErrNoRows)
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, pgx.ErrNoRows)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -461,10 +626,7 @@ func TestImage(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On(
-			"QueryRow",
-			"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
-		).Return(nil, errFakeDatabaseFailure)
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -491,10 +653,7 @@ func TestImage(t *testing.T) {
 				imgData, err := ioutil.ReadFile(tc.imgPath)
 				require.NoError(t, err)
 				th := setupTestHandlers()
-				th.db.On(
-					"QueryRow",
-					"select get_image($1::uuid, $2::text)", mock.Anything, mock.Anything,
-				).Return(imgData, nil)
+				th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(imgData, nil)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)

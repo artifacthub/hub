@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"time"
 
 	"github.com/cncf/hub/internal/email"
 	"github.com/jackc/pgconn"
@@ -140,6 +142,67 @@ func (h *Hub) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	var verified bool
 	err := h.db.QueryRow(ctx, "select verify_email($1::uuid)", code).Scan(&verified)
 	return verified, err
+}
+
+// CheckCredentials checks if the credentials provided are valid.
+func (h *Hub) CheckCredentials(ctx context.Context, email, password string) (*CheckCredentialsOutput, error) {
+	// Get password for email provided from database
+	var userID, hashedPassword string
+	query := `select user_id, password from "user" where email = $1`
+	err := h.db.QueryRow(ctx, query, email).Scan(&userID, &hashedPassword)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return &CheckCredentialsOutput{Valid: false}, nil
+		}
+		return nil, err
+	}
+
+	// Check if the password provided is valid
+	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err != nil {
+		return &CheckCredentialsOutput{Valid: false}, nil
+	}
+
+	return &CheckCredentialsOutput{
+		Valid:  true,
+		UserID: userID,
+	}, err
+}
+
+// RegisterSession registers a user session in the database.
+func (h *Hub) RegisterSession(ctx context.Context, session *Session) ([]byte, error) {
+	sessionJSON, _ := json.Marshal(session)
+	var sessionID []byte
+	err := h.db.QueryRow(ctx, "select register_session($1::jsonb)", sessionJSON).Scan(&sessionID)
+	return sessionID, err
+}
+
+// CheckSession checks if the user session provided is valid.
+func (h *Hub) CheckSession(ctx context.Context, sessionID []byte, duration time.Duration) (*CheckSessionOutput, error) {
+	// Get session details from database
+	var userID string
+	var createdAt int64
+	query := `
+	select user_id, floor(extract(epoch from created_at))
+	from session where session_id = $1
+	`
+	err := h.db.QueryRow(ctx, query, sessionID).Scan(&userID, &createdAt)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return &CheckSessionOutput{Valid: false}, nil
+		}
+		return nil, err
+	}
+
+	// Check if the session has expired
+	if time.Unix(createdAt, 0).Add(duration).Before(time.Now()) {
+		return &CheckSessionOutput{Valid: false}, nil
+	}
+
+	return &CheckSessionOutput{
+		Valid:  true,
+		UserID: userID,
+	}, nil
 }
 
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
