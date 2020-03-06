@@ -11,6 +11,7 @@
 {{ template "functions/get_image.sql" }}
 {{ template "functions/register_user.sql" }}
 {{ template "functions/verify_email.sql" }}
+{{ template "functions/register_session.sql" }}
 
 ---- create above / drop below ----
 

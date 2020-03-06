@@ -15,10 +15,16 @@ type DBMock struct {
 
 func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
 	args := m.Called(append([]interface{}{query}, params...)...)
-	return &RowMock{
-		data: args.Get(0),
-		err:  args.Error(1),
+	rowMock := &RowMock{
+		err: args.Error(1),
 	}
+	switch v := args.Get(0).(type) {
+	case []interface{}:
+		rowMock.data = v
+	case interface{}:
+		rowMock.data = []interface{}{args.Get(0)}
+	}
+	return rowMock
 }
 
 func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
@@ -27,7 +33,7 @@ func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) 
 }
 
 type RowMock struct {
-	data interface{}
+	data []interface{}
 	err  error
 }
 
@@ -41,14 +47,18 @@ func (m *RowMock) Values() ([]interface{}, error)                 { return nil, 
 func (m *RowMock) RawValues() [][]byte                            { return nil }
 
 func (m *RowMock) Scan(dest ...interface{}) error {
-	if m.data != nil {
-		switch v := dest[0].(type) {
-		case *[]byte:
-			*v = m.data.([]byte)
-		case *string:
-			*v = m.data.(string)
-		case *bool:
-			*v = m.data.(bool)
+	for i, e := range m.data {
+		if e != nil {
+			switch v := dest[i].(type) {
+			case *[]byte:
+				*v = e.([]byte)
+			case *string:
+				*v = e.(string)
+			case *bool:
+				*v = e.(bool)
+			case *int64:
+				*v = e.(int64)
+			}
 		}
 	}
 	return m.err

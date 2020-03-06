@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(38);
+select plan(39);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -23,6 +23,7 @@ select tables_are(array[
     'package',
     'package__maintainer',
     'package_kind',
+    'session',
     'snapshot',
     'user',
     'user__organization',
@@ -90,6 +91,13 @@ select columns_are('package__maintainer', array[
 select columns_are('package_kind', array[
     'package_kind_id',
     'name'
+]);
+select columns_are('session', array[
+    'session_id',
+    'user_id',
+    'ip',
+    'user_agent',
+    'created_at'
 ]);
 select columns_are('snapshot', array[
     'package_id',

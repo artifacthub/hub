@@ -37,6 +37,14 @@ create table if not exists email_verification_code (
     created_at timestamptz default current_timestamp not null
 );
 
+create table if not exists session (
+    session_id bytea primary key default gen_random_bytes(32),
+    user_id uuid not null references "user" on delete cascade,
+    ip inet,
+    user_agent text,
+    created_at timestamptz default current_timestamp not null
+);
+
 create table if not exists chart_repository (
     chart_repository_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
