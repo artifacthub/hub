@@ -2,6 +2,12 @@
   animation: fadeIn .25s 1 ease-in-out forwards;
 }
 
+.content {
+  border-radius: 15px !important;
+  border: 3px solid var(--color-1-500) !important;
+  box-shadow: 0px 0px 5px 0px var(--color-1-20) !important;
+}
+
 .activeBackdrop {
   animation: fadeIn50 .15s 1 ease-in-out forwards;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import classnames from 'classnames';
+import isNull from 'lodash/isNull';
 import { FiHexagon } from 'react-icons/fi';
 import Navbar from './navigation/Navbar';
 import HomeView from './home';
@@ -13,6 +14,15 @@ import './App.css';
 import '../themes/default.scss';
 import '../themes/theme2.scss';
 
+const getQueryParam = (query: string, param: string): string | undefined => {
+  let result;
+  const p = new URLSearchParams(query);
+  if (p.has(param) && !isNull(p.get(param))) {
+    result = p.get(param) as string;
+  }
+  return result;
+}
+
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
@@ -22,12 +32,13 @@ export default function App() {
     <Router>
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Switch>
-          <Route path="/" exact render={() => (
+          <Route  path={['/', '/verifyEmail']} exact render={({location}) => (
             <>
               <Navbar isSearching={isSearching} fromHome />
               <div className="d-flex flex-column flex-grow-1">
                 <HomeView
                   isSearching={isSearching}
+                  emailCode={getQueryParam(location.search, 'code')}
                 />
               </div>
             </>
@@ -45,7 +56,7 @@ export default function App() {
                     setIsSearching={setIsSearching}
                     scrollPosition={scrollPosition}
                     setScrollPosition={setScrollPosition}
-                    fromDetail={location.state ? location.state.fromDetail : false}
+                    fromDetail={location.state ? location.state.emailKey : undefined}
                   />
                 </div>
               </>

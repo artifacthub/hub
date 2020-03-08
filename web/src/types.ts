@@ -82,3 +82,11 @@ export interface PackagesUpdatesList {
   latestPackagesAdded: Package[];
   packagesRecentlyUpdated: Package[];
 }
+
+export interface User {
+  alias: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  password: string;
+}
