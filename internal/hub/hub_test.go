@@ -292,7 +292,7 @@ func TestRegisterUser(t *testing.T) {
 					Email:     "email@email.com",
 					Password:  "password",
 				}
-				err := h.RegisterUser(context.Background(), u)
+				err := h.RegisterUser(context.Background(), u, "")
 				assert.Equal(t, tc.emailSenderResponse, err)
 				assert.NoError(t, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte("password")))
 				db.AssertExpectations(t)
@@ -307,7 +307,7 @@ func TestRegisterUser(t *testing.T) {
 		h := New(db, nil)
 
 		u := &User{}
-		err := h.RegisterUser(context.Background(), u)
+		err := h.RegisterUser(context.Background(), u, "")
 		assert.Equal(t, errFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
