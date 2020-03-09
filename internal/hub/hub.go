@@ -97,8 +97,11 @@ func (h *Hub) GetPackagesUpdatesJSON(ctx context.Context) ([]byte, error) {
 	return h.dbQueryJSON(ctx, "select get_packages_updates()")
 }
 
-// RegisterUser registers the user provided in the database.
-func (h *Hub) RegisterUser(ctx context.Context, user *User) error {
+// RegisterUser registers the user provided in the database. When the user is
+// registered a verification email will be sent to the email address provided.
+// The base url provided will be used to build the url the user will need to
+// click to complete the verification.
+func (h *Hub) RegisterUser(ctx context.Context, user *User, baseURL string) error {
 	// Hash password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -117,7 +120,7 @@ func (h *Hub) RegisterUser(ctx context.Context, user *User) error {
 	// Send email verification code
 	if h.es != nil {
 		templateData := map[string]string{
-			"link": fmt.Sprintf("/verifyEmail?code=%s", code),
+			"link": fmt.Sprintf("%s/verifyEmail?code=%s", baseURL, code),
 		}
 		var emailBody bytes.Buffer
 		if err := emailVerificationTmpl.Execute(&emailBody, templateData); err != nil {

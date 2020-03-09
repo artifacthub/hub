@@ -263,7 +263,12 @@ func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request, _ httpro
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	err = h.hubAPI.RegisterUser(r.Context(), user)
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
+	}
+	baseURL := fmt.Sprintf("%s://%s", scheme, r.Host)
+	err = h.hubAPI.RegisterUser(r.Context(), user, baseURL)
 	if err != nil {
 		log.Error().Err(err).Msg("registerUser failed")
 		http.Error(w, "", http.StatusInternalServerError)
