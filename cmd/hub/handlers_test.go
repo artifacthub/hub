@@ -512,6 +512,91 @@ func TestLogin(t *testing.T) {
 	})
 }
 
+func TestLogout(t *testing.T) {
+	dbQuery := "delete from session where session_id = $1"
+
+	t.Run("invalid or no session cookie provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			cookie      *http.Cookie
+		}{
+			{
+				"invalid session cookie provided",
+				nil,
+			},
+			{
+				"no session cookie provided",
+				&http.Cookie{
+					Name:  sessionCookieName,
+					Value: "invalidValue",
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				if tc.cookie != nil {
+					r.AddCookie(tc.cookie)
+				}
+				th.h.logout(w, r, nil)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				require.Len(t, resp.Cookies(), 1)
+				cookie := resp.Cookies()[0]
+				assert.Equal(t, sessionCookieName, cookie.Name)
+				assert.True(t, cookie.Expires.Before(time.Now().Add(-24*time.Hour)))
+			})
+		}
+	})
+
+	t.Run("valid session cookie provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			dbResponse  interface{}
+		}{
+			{
+				"session deleted successfully from database",
+				nil,
+			},
+			{
+				"error deleting session from database",
+				errFakeDatabaseFailure,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				encodedSessionID, _ := th.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+				r.AddCookie(&http.Cookie{
+					Name:  sessionCookieName,
+					Value: encodedSessionID,
+				})
+				th.h.logout(w, r, nil)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				require.Len(t, resp.Cookies(), 1)
+				cookie := resp.Cookies()[0]
+				assert.Equal(t, sessionCookieName, cookie.Name)
+				assert.True(t, cookie.Expires.Before(time.Now().Add(-24*time.Hour)))
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestRequireLogin(t *testing.T) {
 	dbQuery := `
 	select user_id, floor(extract(epoch from created_at))
