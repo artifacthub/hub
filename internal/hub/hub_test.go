@@ -480,3 +480,35 @@ func TestCheckSession(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 }
+
+func TestDeleteSession(t *testing.T) {
+	dbQuery := "delete from session where session_id = $1"
+
+	t.Run("delete session", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			dbResponse  interface{}
+		}{
+			{
+				"session deleted successfully",
+				nil,
+			},
+			{
+				"error deleting session from database",
+				errFakeDatabaseFailure,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+				h := New(db, nil)
+
+				err := h.DeleteSession(context.Background(), []byte("sessionID"))
+				assert.Equal(t, tc.dbResponse, err)
+				db.AssertExpectations(t)
+			})
+		}
+	})
+}

@@ -87,6 +87,7 @@ func (h *handlers) setupRouter() {
 	r.POST("/api/v1/user", h.registerUser)
 	r.POST("/api/v1/user/verifyEmail", h.verifyEmail)
 	r.POST("/api/v1/user/login", h.login)
+	r.GET("/api/v1/user/logout", h.logout)
 
 	// Images
 	r.GET("/image/:image", h.image)
@@ -364,6 +365,29 @@ func (h *handlers) login(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 	}
 	if h.cfg.GetBool("server.cookie.secure") {
 		cookie.Secure = true
+	}
+	http.SetCookie(w, cookie)
+}
+
+// logout is an http handler used to log a user out.
+func (h *handlers) logout(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	// Delete user session
+	cookie, err := r.Cookie(sessionCookieName)
+	if err == nil {
+		var sessionID []byte
+		err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
+		if err == nil {
+			err = h.hubAPI.DeleteSession(r.Context(), sessionID)
+			if err != nil {
+				log.Error().Err(err).Msg("deleteSession failed")
+			}
+		}
+	}
+
+	// Request browser to delete session cookie
+	cookie = &http.Cookie{
+		Name:    sessionCookieName,
+		Expires: time.Now().Add(-24 * time.Hour),
 	}
 	http.SetCookie(w, cookie)
 }

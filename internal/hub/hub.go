@@ -208,6 +208,12 @@ func (h *Hub) CheckSession(ctx context.Context, sessionID []byte, duration time.
 	}, nil
 }
 
+// DeleteSession deletes a user session from the database.
+func (h *Hub) DeleteSession(ctx context.Context, sessionID []byte) error {
+	_, err := h.db.Exec(ctx, "delete from session where session_id = $1", sessionID)
+	return err
+}
+
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (h *Hub) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
