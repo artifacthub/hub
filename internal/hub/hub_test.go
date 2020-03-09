@@ -76,6 +76,29 @@ func TestGetChartRepositoryByName(t *testing.T) {
 	})
 }
 
+func TestGetChartRepositoryPackagesDigest(t *testing.T) {
+	dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
+	db := &tests.DBMock{}
+	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte(`
+	{
+        "package1@1.0.0": "digest-package1-1.0.0",
+        "package1@0.0.9": "digest-package1-0.0.9",
+        "package2@1.0.0": "digest-package2-1.0.0",
+        "package2@0.0.9": "digest-package2-0.0.9"
+    }
+	`), nil)
+	h := New(db, nil)
+
+	pd, err := h.GetChartRepositoryPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
+	require.NoError(t, err)
+	assert.Len(t, pd, 4)
+	assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
+	assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
+	assert.Equal(t, "digest-package2-1.0.0", pd["package2@1.0.0"])
+	assert.Equal(t, "digest-package2-0.0.9", pd["package2@0.0.9"])
+	db.AssertExpectations(t)
+}
+
 func TestGetChartRepositories(t *testing.T) {
 	dbQuery := "select get_chart_repositories()"
 	db := &tests.DBMock{}
@@ -117,33 +140,156 @@ func TestGetChartRepositories(t *testing.T) {
 	db.AssertExpectations(t)
 }
 
-func TestGetChartRepositoryPackagesDigest(t *testing.T) {
-	dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
-	db := &tests.DBMock{}
-	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte(`
-	{
-        "package1@1.0.0": "digest-package1-1.0.0",
-        "package1@0.0.9": "digest-package1-0.0.9",
-        "package2@1.0.0": "digest-package2-1.0.0",
-        "package2@0.0.9": "digest-package2-0.0.9"
-    }
-	`), nil)
-	h := New(db, nil)
+func TestGetChartRepositoriesByUser(t *testing.T) {
+	dbQuery := "select get_chart_repositories_by_user($1)"
+	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
 
-	pd, err := h.GetChartRepositoryPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
-	require.NoError(t, err)
-	assert.Len(t, pd, 4)
-	assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
-	assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
-	assert.Equal(t, "digest-package2-1.0.0", pd["package2@1.0.0"])
-	assert.Equal(t, "digest-package2-0.0.9", pd["package2@0.0.9"])
-	db.AssertExpectations(t)
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		h := New(nil, nil)
+		assert.Panics(t, func() {
+			_, _ = h.GetChartRepositoriesByUserJSON(context.Background())
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		data, err := h.GetChartRepositoriesByUserJSON(ctx)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Nil(t, data)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("user chart repositories data returned successfully", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("userChartRepositoriesJSON"), nil)
+		h := New(db, nil)
+
+		data, err := h.GetChartRepositoriesByUserJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("userChartRepositoriesJSON"), data)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestAddChartRepository(t *testing.T) {
+	dbQuery := "select add_chart_repository($1::jsonb)"
+	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
+
+	r := &ChartRepository{
+		Name:        "repo1",
+		DisplayName: "Repository 1",
+		URL:         "https://repo1.com",
+	}
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		h := New(nil, nil)
+		assert.Panics(t, func() {
+			_ = h.AddChartRepository(context.Background(), r)
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		err := h.AddChartRepository(ctx, r)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("add chart repository succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		h := New(db, nil)
+
+		err := h.AddChartRepository(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestUpdateChartRepository(t *testing.T) {
+	dbQuery := "select update_chart_repository($1::jsonb)"
+	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
+
+	r := &ChartRepository{
+		Name:        "repo1",
+		DisplayName: "Repository 1",
+		URL:         "https://repo1.com",
+	}
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		h := New(nil, nil)
+		assert.Panics(t, func() {
+			_ = h.UpdateChartRepository(context.Background(), r)
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		err := h.UpdateChartRepository(ctx, r)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("update chart repository succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		h := New(db, nil)
+
+		err := h.UpdateChartRepository(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestDeleteChartRepository(t *testing.T) {
+	dbQuery := "select delete_chart_repository($1::jsonb)"
+	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
+
+	r := &ChartRepository{
+		Name: "repo1",
+	}
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		h := New(nil, nil)
+		assert.Panics(t, func() {
+			_ = h.DeleteChartRepository(context.Background(), r)
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		err := h.DeleteChartRepository(ctx, r)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("delete chart repository succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		h := New(db, nil)
+
+		err := h.DeleteChartRepository(ctx, r)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetStatsJSON(t *testing.T) {
 	dbQuery := "select get_stats()"
 
-	t.Run("chart repositories data returned successfully", func(t *testing.T) {
+	t.Run("stats data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery).Return([]byte("statsDataJSON"), nil)
 		h := New(db, nil)

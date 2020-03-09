@@ -37,11 +37,6 @@ const (
 	sessionDuration   = 30 * 24 * time.Hour
 )
 
-type userIDKey struct{}
-
-// UserIDKey represents the key used for the userID value inside a context.
-var UserIDKey = userIDKey{}
-
 // handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type handlers struct {
@@ -100,6 +95,14 @@ func (h *handlers) setupRouter() {
 			r.Post("/verifyEmail", h.verifyEmail)
 			r.Post("/login", h.login)
 			r.Get("/logout", h.logout)
+		})
+
+		r.Route("/admin", func(r chi.Router) {
+			r.Use(h.requireLogin)
+			r.Get("/chart", h.getChartRepositories)
+			r.Post("/chart", h.addChartRepository)
+			r.Put("/chart/{repoName}", h.updateChartRepository)
+			r.Delete("/chart/{repoName}", h.deleteChartRepository)
 		})
 	})
 
@@ -390,6 +393,68 @@ func (h *handlers) logout(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, cookie)
 }
 
+// getChartRepositories is an http handler that returns the chart repositories
+// owned by the user doing the request.
+func (h *handlers) getChartRepositories(w http.ResponseWriter, r *http.Request) {
+	jsonData, err := h.hubAPI.GetChartRepositoriesByUserJSON(r.Context())
+	if err != nil {
+		log.Error().Err(err).Msg("getChartRepositories failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
+}
+
+// addChartRepository is an http handler that adds the provided chart
+// repository to the database.
+func (h *handlers) addChartRepository(w http.ResponseWriter, r *http.Request) {
+	repo := &hub.ChartRepository{}
+	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
+		log.Error().Err(err).Msg("invalid chart repository")
+		http.Error(w, "chart repository provided is not valid", http.StatusBadRequest)
+		return
+	}
+	if repo.Name == "" || repo.URL == "" {
+		http.Error(w, "chart repository name and url must be provided", http.StatusBadRequest)
+		return
+	}
+	if err := h.hubAPI.AddChartRepository(r.Context(), repo); err != nil {
+		log.Error().Err(err).Msg("addChartRepository failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// updateChartRepository is an http handler that updates the provided chart
+// repository in the database.
+func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request) {
+	repo := &hub.ChartRepository{}
+	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
+		log.Error().Err(err).Msg("invalid chart repository")
+		http.Error(w, "chart repository provided is not valid", http.StatusBadRequest)
+		return
+	}
+	repo.Name = chi.URLParam(r, "repoName")
+	if err := h.hubAPI.UpdateChartRepository(r.Context(), repo); err != nil {
+		log.Error().Err(err).Msg("updateChartRepository failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// deleteChartRepository is an http handler that deletes the provided chart
+// repository from the database.
+func (h *handlers) deleteChartRepository(w http.ResponseWriter, r *http.Request) {
+	repo := &hub.ChartRepository{
+		Name: chi.URLParam(r, "repoName"),
+	}
+	if err := h.hubAPI.DeleteChartRepository(r.Context(), repo); err != nil {
+		log.Error().Err(err).Msg("deleteChartRepository failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
 // requireLogin is a middleware that verifies if a user is logged in.
 func (h *handlers) requireLogin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -419,7 +484,7 @@ func (h *handlers) requireLogin(next http.Handler) http.Handler {
 		}
 
 		// Inject userID in context and call next handler
-		ctx := context.WithValue(r.Context(), UserIDKey, checkSessionOutput.UserID)
+		ctx := context.WithValue(r.Context(), hub.UserIDKey, checkSessionOutput.UserID)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

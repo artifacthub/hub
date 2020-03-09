@@ -61,8 +61,35 @@ func (h *Hub) GetChartRepositoryPackagesDigest(
 	chartRepositoryID string,
 ) (map[string]string, error) {
 	pd := make(map[string]string)
-	err := h.dbQueryUnmarshal(ctx, &pd, "select get_chart_repository_packages_digest($1::uuid)", chartRepositoryID)
+	query := "select get_chart_repository_packages_digest($1::uuid)"
+	err := h.dbQueryUnmarshal(ctx, &pd, query, chartRepositoryID)
 	return pd, err
+}
+
+// GetChartRepositoriesByUserJSON returns all chart repositories that belong to
+// the user making the request.
+func (h *Hub) GetChartRepositoriesByUserJSON(ctx context.Context) ([]byte, error) {
+	userID := ctx.Value(UserIDKey).(string)
+	return h.dbQueryJSON(ctx, "select get_chart_repositories_by_user($1)", userID)
+}
+
+// AddChartRepository adds the provided chart repository to the database.
+func (h *Hub) AddChartRepository(ctx context.Context, r *ChartRepository) error {
+	r.UserID = ctx.Value(UserIDKey).(string)
+	return h.dbExec(ctx, "select add_chart_repository($1::jsonb)", r)
+}
+
+// UpdateChartRepository updates the provided chart repository in the database.
+func (h *Hub) UpdateChartRepository(ctx context.Context, r *ChartRepository) error {
+	r.UserID = ctx.Value(UserIDKey).(string)
+	return h.dbExec(ctx, "select update_chart_repository($1::jsonb)", r)
+}
+
+// DeleteChartRepository deletes the provided chart repository from the
+// database.
+func (h *Hub) DeleteChartRepository(ctx context.Context, r *ChartRepository) error {
+	r.UserID = ctx.Value(UserIDKey).(string)
+	return h.dbExec(ctx, "select delete_chart_repository($1::jsonb)", r)
 }
 
 // GetStatsJSON returns a json object describing the number of packages and

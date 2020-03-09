@@ -1,11 +1,17 @@
 package hub
 
+type userIDKey struct{}
+
+// UserIDKey represents the key used for the userID value inside a context.
+var UserIDKey = userIDKey{}
+
 // ChartRepository represents a Helm chart repository.
 type ChartRepository struct {
 	ChartRepositoryID string `json:"chart_repository_id"`
 	Name              string `json:"name"`
 	DisplayName       string `json:"display_name"`
 	URL               string `json:"url"`
+	UserID            string `json:"user_id"`
 }
 
 // OperatorProvider represents an entity that provides operators that can be
