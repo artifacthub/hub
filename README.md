@@ -2,7 +2,11 @@
 
 [![CI](https://github.com/cncf/hub/workflows/CI/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ACI)
 
-Hub is a web-based application that enables finding, installing and publishing Kubernetes packages.
+Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
+
+Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The CNCF Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
+
+The project is currently in development in a pre-alpha state. Support for Helm charts is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome.
 
 <table>
     <tr>
