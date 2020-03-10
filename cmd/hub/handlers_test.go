@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -16,7 +15,6 @@ import (
 	"github.com/cncf/hub/internal/img/pg"
 	"github.com/cncf/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
-	"github.com/julienschmidt/httprouter"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
@@ -83,7 +81,7 @@ func TestGetStats(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getStats(w, r, nil)
+		th.h.getStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -102,7 +100,7 @@ func TestGetStats(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getStats(w, r, nil)
+		th.h.getStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -120,7 +118,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackagesUpdates(w, r, nil)
+		th.h.getPackagesUpdates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -139,7 +137,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackagesUpdates(w, r, nil)
+		th.h.getPackagesUpdates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -170,7 +168,7 @@ func TestSearch(t *testing.T) {
 			t.Run("bad request: "+tc.desc, func(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
-				th.h.search(w, r, nil)
+				th.h.search(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -186,7 +184,7 @@ func TestSearch(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.search(w, r, nil)
+		th.h.search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -205,7 +203,7 @@ func TestSearch(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.search(w, r, nil)
+		th.h.search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -223,7 +221,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -237,7 +235,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -256,7 +254,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r, nil)
+		th.h.getPackage(hub.Chart)(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -273,7 +271,7 @@ func TestRegisterUser(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
-		th.h.registerUser(w, r, nil)
+		th.h.registerUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -309,7 +307,7 @@ func TestRegisterUser(t *testing.T) {
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.userJSON))
-				th.h.registerUser(w, r, nil)
+				th.h.registerUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -353,7 +351,7 @@ func TestRegisterUser(t *testing.T) {
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
-				th.h.registerUser(w, r, nil)
+				th.h.registerUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -372,7 +370,7 @@ func TestVerifyEmail(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", nil)
-		th.h.verifyEmail(w, r, nil)
+		th.h.verifyEmail(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -410,7 +408,7 @@ func TestVerifyEmail(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
 				r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-				th.h.verifyEmail(w, r, nil)
+				th.h.verifyEmail(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -430,7 +428,7 @@ func TestLogin(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", nil)
-		th.h.login(w, r, nil)
+		th.h.login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -444,7 +442,7 @@ func TestLogin(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		th.h.login(w, r, nil)
+		th.h.login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -460,7 +458,7 @@ func TestLogin(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass2"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		th.h.login(w, r, nil)
+		th.h.login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -477,7 +475,7 @@ func TestLogin(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		th.h.login(w, r, nil)
+		th.h.login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -494,7 +492,7 @@ func TestLogin(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-		th.h.login(w, r, nil)
+		th.h.login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -542,7 +540,7 @@ func TestLogout(t *testing.T) {
 				if tc.cookie != nil {
 					r.AddCookie(tc.cookie)
 				}
-				th.h.logout(w, r, nil)
+				th.h.logout(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -582,7 +580,7 @@ func TestLogout(t *testing.T) {
 					Name:  sessionCookieName,
 					Value: encodedSessionID,
 				})
-				th.h.logout(w, r, nil)
+				th.h.logout(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -701,7 +699,7 @@ func TestImage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.image(w, r, nil)
+		th.h.image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -715,7 +713,7 @@ func TestImage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.image(w, r, nil)
+		th.h.image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -742,10 +740,7 @@ func TestImage(t *testing.T) {
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
-				ps := httprouter.Params{
-					httprouter.Param{Key: "image", Value: strconv.Itoa(i)},
-				}
-				th.h.image(w, r, ps)
+				th.h.image(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 				h := resp.Header
