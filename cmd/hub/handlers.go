@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"runtime/debug"
 	"strconv"
 	"strings"
 	"sync"
@@ -18,11 +17,12 @@ import (
 
 	"github.com/cncf/hub/internal/hub"
 	"github.com/cncf/hub/internal/img/pg"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/gorilla/securecookie"
 	svg "github.com/h2non/go-is-svg"
+	"github.com/ironstar-io/chizerolog"
 	"github.com/jackc/pgx/v4"
-	"github.com/julienschmidt/httprouter"
-	"github.com/rs/zerolog/hlog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
@@ -73,47 +73,45 @@ func setupHandlers(cfg *viper.Viper, hubAPI *hub.Hub, imageStore *pg.ImageStore)
 // setupRouter initializes the handlers router, defining all routes used within
 // the hub, as well as some essential middleware to handle panics, logging, etc.
 func (h *handlers) setupRouter() {
-	r := httprouter.New()
+	r := chi.NewRouter()
 
-	// Recover panics from http handlers
-	r.PanicHandler = panicHandler
+	// Setup middleware and special handlers
+	r.Use(middleware.RealIP)
+	r.Use(chizerolog.LoggerMiddleware(&log.Logger))
+	r.Use(middleware.Recoverer)
+	if h.cfg.GetBool("server.basicAuth.enabled") {
+		r.Use(h.basicAuth)
+	}
+	r.NotFound(h.serveIndex)
 
 	// API
-	r.GET("/api/v1/stats", h.getStats)
-	r.GET("/api/v1/updates", h.getPackagesUpdates)
-	r.GET("/api/v1/search", h.search)
-	r.GET("/api/v1/package/chart/:repoName/:packageName", h.getPackage(hub.Chart))
-	r.GET("/api/v1/package/chart/:repoName/:packageName/:version", h.getPackage(hub.Chart))
-	r.POST("/api/v1/user", h.registerUser)
-	r.POST("/api/v1/user/verifyEmail", h.verifyEmail)
-	r.POST("/api/v1/user/login", h.login)
-	r.GET("/api/v1/user/logout", h.logout)
+	r.Route("/api/v1", func(r chi.Router) {
+		r.Get("/stats", h.getStats)
+		r.Get("/updates", h.getPackagesUpdates)
+		r.Get("/search", h.search)
+
+		r.Route("/package", func(r chi.Router) {
+			r.Get("/chart/{repoName}/{packageName}", h.getPackage(hub.Chart))
+			r.Get("/chart/{repoName}/{packageName}/{version}", h.getPackage(hub.Chart))
+		})
+
+		r.Route("/user", func(r chi.Router) {
+			r.Post("/", h.registerUser)
+			r.Post("/verifyEmail", h.verifyEmail)
+			r.Post("/login", h.login)
+			r.Get("/logout", h.logout)
+		})
+	})
 
 	// Images
-	r.GET("/image/:image", h.image)
+	r.Get("/image/{image}", h.image)
 
-	// Misc
-	r.Handler("GET", "/admin/test", h.requireLogin(http.HandlerFunc(
-		func(w http.ResponseWriter, req *http.Request) {
-			w.WriteHeader(http.StatusOK)
-		},
-	)))
-
-	// Static files
+	// Static files and index
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
-	staticFilesServer := http.FileServer(http.Dir(staticFilesPath))
-	r.GET("/static/*filepath", func(w http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(staticCacheMaxAge.Seconds())))
-		req.URL.Path = ps.ByName("filepath")
-		staticFilesServer.ServeHTTP(w, req)
-	})
-	r.NotFound = http.HandlerFunc(h.serveIndex)
+	fileServer(r, "/static", http.Dir(staticFilesPath))
+	r.Get("/", h.serveIndex)
 
-	// Apply middleware
-	h.router = accessHandler()(r)
-	if h.cfg.GetBool("server.basicAuth.enabled") {
-		h.router = h.basicAuth(h.router)
-	}
+	h.router = r
 }
 
 // serveIndex is an http handler that serves the index.html file.
@@ -124,7 +122,7 @@ func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
 
 // getStats is an http handler used to get some stats about packages registered
 // in the hub database.
-func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) getStats(w http.ResponseWriter, r *http.Request) {
 	jsonData, err := h.hubAPI.GetStatsJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
@@ -136,7 +134,7 @@ func (h *handlers) getStats(w http.ResponseWriter, r *http.Request, _ httprouter
 
 // getPackagesUpdates is an http handler used to get the last packages updates
 // in the hub database.
-func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request) {
 	jsonData, err := h.hubAPI.GetPackagesUpdatesJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getPackagesUpdates failed")
@@ -147,7 +145,7 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request, _ 
 }
 
 // search is an http handler used to search for packages in the hub database.
-func (h *handlers) search(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) search(w http.ResponseWriter, r *http.Request) {
 	query, err := buildQuery(r.URL.Query())
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid query")
@@ -228,13 +226,13 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 }
 
 // getPackage is an http handler used to get a package details.
-func (h *handlers) getPackage(kind hub.PackageKind) httprouter.Handle {
-	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *handlers) getPackage(kind hub.PackageKind) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 		input := &hub.GetPackageInput{
 			Kind:                kind,
-			ChartRepositoryName: ps.ByName("repoName"),
-			PackageName:         ps.ByName("packageName"),
-			Version:             ps.ByName("version"),
+			ChartRepositoryName: chi.URLParam(r, "repoName"),
+			PackageName:         chi.URLParam(r, "packageName"),
+			Version:             chi.URLParam(r, "version"),
 		}
 		jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), input)
 		if err != nil {
@@ -251,7 +249,7 @@ func (h *handlers) getPackage(kind hub.PackageKind) httprouter.Handle {
 }
 
 // registerUser is an http handler used to register a user in the hub database.
-func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request) {
 	user := &hub.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -293,7 +291,7 @@ func validateUser(user *hub.User) error {
 }
 
 // verifyEmail is an http handler used to verify a user's email address.
-func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request) {
 	code := r.FormValue("code")
 	if code == "" {
 		errMsg := "email verification code not provided"
@@ -313,7 +311,7 @@ func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request, _ httprou
 }
 
 // login is an http handler used to log a user in.
-func (h *handlers) login(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) login(w http.ResponseWriter, r *http.Request) {
 	// Extract credentials from request
 	email := r.FormValue("email")
 	password := r.FormValue("password")
@@ -370,7 +368,7 @@ func (h *handlers) login(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 }
 
 // logout is an http handler used to log a user out.
-func (h *handlers) logout(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *handlers) logout(w http.ResponseWriter, r *http.Request) {
 	// Delete user session
 	cookie, err := r.Cookie(sessionCookieName)
 	if err == nil {
@@ -427,9 +425,9 @@ func (h *handlers) requireLogin(next http.Handler) http.Handler {
 }
 
 // image in an http handler that serves images stored in the database.
-func (h *handlers) image(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *handlers) image(w http.ResponseWriter, r *http.Request) {
 	// Extract image id and version
-	image := ps.ByName("image")
+	image := chi.URLParam(r, "image")
 	parts := strings.Split(image, "@")
 	var imageID, version string
 	if len(parts) == 2 {
@@ -501,34 +499,27 @@ func (h *handlers) basicAuth(next http.Handler) http.Handler {
 	})
 }
 
-// panicHandler is an http handler invoked when a panic occurs during a request.
-func panicHandler(w http.ResponseWriter, r *http.Request, err interface{}) {
-	log.Error().
-		Str("method", r.Method).
-		Str("url", r.URL.String()).
-		Bytes("stacktrace", debug.Stack()).
-		Msgf("%v", err)
-	w.WriteHeader(http.StatusInternalServerError)
-}
-
-// accessHandler is a middleware invoked for each request. At the moment it is
-// only used to log requests.
-func accessHandler() func(http.Handler) http.Handler {
-	return hlog.AccessHandler(func(r *http.Request, status, size int, duration time.Duration) {
-		log.Debug().
-			Str("method", r.Method).
-			Str("url", r.URL.String()).
-			Int("status", status).
-			Int("size", size).
-			Float64("duration", duration.Seconds()).
-			Msg("request processed")
-	})
-}
-
 // renderJSON is a helper to write the json data provided to the given http
 // response writer, setting the appropriate content type and cache
 func renderJSON(w http.ResponseWriter, jsonData []byte, cacheMaxAge time.Duration) {
 	w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(cacheMaxAge.Seconds())))
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(jsonData)
+}
+
+// fileServer sets up a http.FileServer handler to serve static files from a
+// a http.FileSystem.
+func fileServer(r chi.Router, path string, fs http.FileSystem) {
+	fsHandler := http.StripPrefix(path, http.FileServer(fs))
+
+	if path != "/" && path[len(path)-1] != '/' {
+		r.Get(path, http.RedirectHandler(path+"/", 301).ServeHTTP)
+		path += "/"
+	}
+	path += "*"
+
+	r.Get(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(staticCacheMaxAge.Seconds())))
+		fsHandler.ServeHTTP(w, r)
+	}))
 }

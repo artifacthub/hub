@@ -8,6 +8,7 @@ require (
 	github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c // indirect
 	github.com/domodwyer/mailyak v3.1.1+incompatible
 	github.com/emicklei/go-restful v2.11.2+incompatible // indirect
+	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/go-openapi/spec v0.19.4 // indirect
 	github.com/golang/groupcache v0.0.0-20191027212112-611e8accdfc9 // indirect
 	github.com/googleapis/gnostic v0.3.1 // indirect
@@ -16,10 +17,10 @@ require (
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
+	github.com/ironstar-io/chizerolog v0.0.0-20190729084312-7eaca6bf60e6
 	github.com/jackc/pgconn v1.3.2
 	github.com/jackc/pgproto3 v1.1.0
 	github.com/jackc/pgx/v4 v4.4.1
-	github.com/julienschmidt/httprouter v1.3.0
 	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/rs/zerolog v1.18.0
 	github.com/spf13/cast v1.3.1 // indirect
