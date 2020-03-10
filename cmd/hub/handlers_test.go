@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -592,6 +593,242 @@ func TestLogout(t *testing.T) {
 				th.db.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestGetChartRepositories(t *testing.T) {
+	dbQuery := "select get_chart_repositories_by_user($1)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("userChartRepositoriesJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getChartRepositories(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("userChartRepositoriesJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getChartRepositories(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestAddChartRepository(t *testing.T) {
+	dbQuery := "select add_chart_repository($1::jsonb)"
+
+	t.Run("invalid chart repository provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			repoJSON    string
+		}{
+			{
+				"no chart repository provided",
+				"",
+			},
+			{
+				"invalid json",
+				"-",
+			},
+			{
+				"missing name",
+				`{"url": "https://repo1.url"}`,
+			},
+			{
+				"missing url",
+				`{"name": "repo1"}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.addChartRepository(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid chart repository provided", func(t *testing.T) {
+		repoJSON := `
+		{
+			"name": "repo1",
+			"display_name": "Repository 1",
+			"url": "https://repo1.url"
+		}
+		`
+		testCases := []struct {
+			description        string
+			dbResponse         interface{}
+			expectedStatusCode int
+		}{
+			{
+				"success",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"database error",
+				errFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.addChartRepository(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestUpdateChartRepository(t *testing.T) {
+	dbQuery := "select update_chart_repository($1::jsonb)"
+
+	t.Run("invalid chart repository provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			repoJSON    string
+		}{
+			{
+				"no chart repository provided",
+				"",
+			},
+			{
+				"invalid json",
+				"-",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.updateChartRepository(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid chart repository provided", func(t *testing.T) {
+		repoJSON := `
+		{
+			"display_name": "Repository 1 updated",
+			"url": "https://repo1.url/updated"
+		}
+		`
+		testCases := []struct {
+			description        string
+			dbResponse         interface{}
+			expectedStatusCode int
+		}{
+			{
+				"success",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"database error",
+				errFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.updateChartRepository(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestDeleteChartRepository(t *testing.T) {
+	dbQuery := "select delete_chart_repository($1::jsonb)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("DELETE", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.deleteChartRepository(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("DELETE", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.deleteChartRepository(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
 	})
 }
 
