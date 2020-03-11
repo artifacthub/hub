@@ -57,14 +57,14 @@ export const API = {
     if (!isUndefined(query.text)) {
       q.set('text', query.text);
     }
-    return apiFetch(`${API_BASE_URL}/search?${q.toString()}`);
+    return apiFetch(`${API_BASE_URL}/package/search?${q.toString()}`);
   },
 
   getStats: (): Promise<Stats> => {
-    return apiFetch(`${API_BASE_URL}/stats`);
+    return apiFetch(`${API_BASE_URL}/package/stats`);
   },
 
   getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
-    return apiFetch(`${API_BASE_URL}/updates`);
+    return apiFetch(`${API_BASE_URL}/package/updates`);
   },
 };

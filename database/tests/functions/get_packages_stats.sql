@@ -11,7 +11,7 @@ select plan(2);
 
 -- No packages at this point
 select is(
-    get_stats()::jsonb,
+    get_packages_stats()::jsonb,
     '{
         "packages": 0,
         "releases": 0
@@ -131,7 +131,7 @@ insert into snapshot (
 
 -- Some packages have just been seeded
 select is(
-    get_stats()::jsonb,
+    get_packages_stats()::jsonb,
     '{
         "packages": 2,
         "releases": 4

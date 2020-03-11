@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(39);
+select plan(44);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -160,18 +160,23 @@ select indexes_are('snapshot', array[
 -- Check expected functions exist
 select has_function('generate_package_tsdoc');
 select has_function('semver_gte');
+select has_function('add_chart_repository');
+select has_function('update_chart_repository');
+select has_function('delete_chart_repository');
 select has_function('get_chart_repositories');
+select has_function('get_chart_repositories_by_user');
 select has_function('get_chart_repository_by_name');
 select has_function('get_chart_repository_packages_digest');
-select has_function('register_package');
-select has_function('get_stats');
-select has_function('search_packages');
-select has_function('get_package');
+select has_function('get_packages_stats');
 select has_function('get_packages_updates');
-select has_function('register_image');
+select has_function('get_package');
+select has_function('register_package');
+select has_function('search_packages');
 select has_function('get_image');
+select has_function('register_image');
 select has_function('register_user');
 select has_function('verify_email');
+select has_function('register_session');
 
 -- Check package kinds exist
 select results_eq(

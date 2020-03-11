@@ -73,16 +73,16 @@ func TestServeStaticFile(t *testing.T) {
 	})
 }
 
-func TestGetStats(t *testing.T) {
-	dbQuery := "select get_stats()"
+func TestGetPackagesStats(t *testing.T) {
+	dbQuery := "select get_packages_stats()"
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery).Return([]byte("statsDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery).Return([]byte("packagesStatsDataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getStats(w, r)
+		th.h.getPackagesStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -91,7 +91,7 @@ func TestGetStats(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("statsDataJSON"), data)
+		assert.Equal(t, []byte("packagesStatsDataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -101,7 +101,7 @@ func TestGetStats(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getStats(w, r)
+		th.h.getPackagesStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -147,7 +147,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 	})
 }
 
-func TestSearch(t *testing.T) {
+func TestSearchPackages(t *testing.T) {
 	dbQuery := "select search_packages($1::jsonb)"
 
 	t.Run("invalid requests", func(t *testing.T) {
@@ -169,7 +169,7 @@ func TestSearch(t *testing.T) {
 			t.Run("bad request: "+tc.desc, func(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
-				th.h.search(w, r)
+				th.h.searchPackages(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
@@ -185,7 +185,7 @@ func TestSearch(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.search(w, r)
+		th.h.searchPackages(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -204,7 +204,7 @@ func TestSearch(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.search(w, r)
+		th.h.searchPackages(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

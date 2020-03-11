@@ -81,11 +81,10 @@ func (h *handlers) setupRouter() {
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Get("/stats", h.getStats)
-		r.Get("/updates", h.getPackagesUpdates)
-		r.Get("/search", h.search)
-
 		r.Route("/package", func(r chi.Router) {
+			r.Get("/stats", h.getPackagesStats)
+			r.Get("/updates", h.getPackagesUpdates)
+			r.Get("/search", h.searchPackages)
 			r.Get("/chart/{repoName}/{packageName}", h.getPackage(hub.Chart))
 			r.Get("/chart/{repoName}/{packageName}/{version}", h.getPackage(hub.Chart))
 		})
@@ -99,10 +98,12 @@ func (h *handlers) setupRouter() {
 
 		r.Route("/admin", func(r chi.Router) {
 			r.Use(h.requireLogin)
-			r.Get("/chart", h.getChartRepositories)
-			r.Post("/chart", h.addChartRepository)
-			r.Put("/chart/{repoName}", h.updateChartRepository)
-			r.Delete("/chart/{repoName}", h.deleteChartRepository)
+			r.Route("/chart", func(r chi.Router) {
+				r.Get("/", h.getChartRepositories)
+				r.Post("/", h.addChartRepository)
+				r.Put("/{repoName}", h.updateChartRepository)
+				r.Delete("/{repoName}", h.deleteChartRepository)
+			})
 		})
 	})
 
@@ -123,10 +124,10 @@ func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
 }
 
-// getStats is an http handler used to get some stats about packages registered
-// in the hub database.
-func (h *handlers) getStats(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetStatsJSON(r.Context())
+// getPackagesStats is an http handler used to get some stats about packages
+// registered in the hub database.
+func (h *handlers) getPackagesStats(w http.ResponseWriter, r *http.Request) {
+	jsonData, err := h.hubAPI.GetPackagesStatsJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -147,15 +148,16 @@ func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request) {
 	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
-// search is an http handler used to search for packages in the hub database.
-func (h *handlers) search(w http.ResponseWriter, r *http.Request) {
-	query, err := buildQuery(r.URL.Query())
+// searchPackages is an http handler used to searchPackages for packages in the
+// hub database.
+func (h *handlers) searchPackages(w http.ResponseWriter, r *http.Request) {
+	input, err := buildSearchPackageInput(r.URL.Query())
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("invalid query")
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	jsonData, err := h.hubAPI.SearchPackagesJSON(r.Context(), query)
+	jsonData, err := h.hubAPI.SearchPackagesJSON(r.Context(), input)
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -164,9 +166,9 @@ func (h *handlers) search(w http.ResponseWriter, r *http.Request) {
 	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
-// buildQuery builds a packages search query from a map of query string values,
-// validating them as they are extracted.
-func buildQuery(qs url.Values) (*hub.Query, error) {
+// buildSearchPackageInput builds a packages search query from a map of query
+// string values, validating them as they are extracted.
+func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	// Limit
 	var limit int
 	if qs.Get("limit") != "" {
@@ -218,7 +220,7 @@ func buildQuery(qs url.Values) (*hub.Query, error) {
 		}
 	}
 
-	return &hub.Query{
+	return &hub.SearchPackageInput{
 		Limit:             limit,
 		Offset:            offset,
 		Facets:            facets,

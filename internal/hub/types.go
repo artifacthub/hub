@@ -74,8 +74,8 @@ type Package struct {
 	OperatorProvider  *OperatorProvider `json:"operator_provider"`
 }
 
-// Query represents the query used when searching for packages.
-type Query struct {
+// SearchPackageInput represents the query input when searching for packages.
+type SearchPackageInput struct {
 	Limit             int           `json:"limit,omitempty"`
 	Offset            int           `json:"offset,omitempty"`
 	Facets            bool          `json:"facets"`

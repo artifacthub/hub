@@ -1,17 +1,17 @@
 -- search_packages searchs packages in the database that match the criteria in
 -- the query provided.
-create or replace function search_packages(p_query jsonb)
+create or replace function search_packages(p_input jsonb)
 returns setof json as $$
 declare
     v_package_kinds int[];
     v_chart_repositories text[];
-    v_facets boolean := (p_query->>'facets')::boolean;
+    v_facets boolean := (p_input->>'facets')::boolean;
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_package_kinds
-    from jsonb_array_elements_text(p_query->'package_kinds') e;
+    from jsonb_array_elements_text(p_input->'package_kinds') e;
     select array_agg(e::text) into v_chart_repositories
-    from jsonb_array_elements_text(p_query->'chart_repositories') e;
+    from jsonb_array_elements_text(p_input->'chart_repositories') e;
 
     return query
     with packages_applying_text_filter as (
@@ -32,8 +32,8 @@ begin
         join snapshot s using (package_id)
         where s.version = p.latest_version
         and
-            case when p_query ? 'text' and p_query->>'text' <> '' then
-                websearch_to_tsquery(p_query->>'text') @@ p.tsdoc
+            case when p_input ? 'text' and p_input->>'text' <> '' then
+                websearch_to_tsquery(p_input->>'text') @@ p.tsdoc
             else true end
     ), packages_applying_all_filters as (
         select * from packages_applying_text_filter
@@ -66,8 +66,8 @@ begin
                     from (
                         select * from packages_applying_all_filters
                         order by name asc
-                        limit (p_query->>'limit')::int
-                        offset (p_query->>'offset')::int
+                        limit (p_input->>'limit')::int
+                        offset (p_input->>'offset')::int
                     ) packages_applying_all_filters_paginated
                 ),
                 'facets', case when v_facets then (
@@ -121,8 +121,8 @@ begin
         ),
         'metadata', (
             select json_build_object(
-                'limit', (p_query->>'limit')::int,
-                'offset', (p_query->>'offset')::int,
+                'limit', (p_input->>'limit')::int,
+                'offset', (p_input->>'offset')::int,
                 'total', (select count(*) from packages_applying_all_filters)
             )
         )
