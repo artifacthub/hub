@@ -11,7 +11,7 @@ button:focus, a:focus, input:focus, select:focus {
 }
 
 .noScroll {
-  position: fixed;
-  width: 100%;
-  overflow-y: scroll;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }

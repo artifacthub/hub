@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, RefObject } from 'react';
 
 export default function useClickOutside(
   refs: RefObject<HTMLElement>[],
+  enabled: boolean,
   onClickOutside: (e: MouseEvent) => void
 ): [boolean] {
   const [isActive, setActive] = useState(false);
@@ -21,12 +22,12 @@ export default function useClickOutside(
 
   const mousedown = useCallback(
     (e: MouseEvent) => {
-      if (isOutside(e)) {
+      if (isOutside(e) && enabled) {
         setActive(true);
         onClickOutside(e);
       }
     },
-    [isOutside, onClickOutside]
+    [isOutside, onClickOutside, enabled]
   );
 
   useEffect(() => {

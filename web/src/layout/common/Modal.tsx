@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classnames from 'classnames';
 import isString from 'lodash/isString';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -12,32 +12,55 @@ interface Props {
   buttonTitle?: string;
   buttonIcon?: JSX.Element;
   header: JSX.Element | string;
-  closeButton?: JSX.Element | string;
+  closeButton?: JSX.Element;
   className?: string;
+  modalClassName?: string;
+  open?: boolean;
+  disabledClose?: boolean;
+  onClose?: () => void;
 }
 
 const Modal = (props: Props) => {
-  const [openStatus, setOpenStatus] = useState(false);
+  const [openStatus, setOpenStatus] = useState(props.open || false);
   const ref = useRef(null);
-  useOutsideClick([ref], () => setOpenStatus(false));
+  useOutsideClick([ref], openStatus, () => {
+    closeModal();
+  });
   useBodyScroll(openStatus);
+
+  const closeModal = () => {
+    if (isUndefined(props.disabledClose) || !props.disabledClose) {
+      setOpenStatus(false);
+      if (!isUndefined(props.onClose)) {
+        props.onClose();
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!isUndefined(props.open)) {
+      setOpenStatus(props.open);
+    }
+  }, [props.open]);
 
   return (
     <div className={props.className}>
-      <button
-        type="button"
-        className={classnames(
-          'font-weight-bold text-uppercase position-relative btn btn-block',
-          {[`${props.buttonType}`]: !isUndefined(props.buttonType)},
-          {'btn-primary': isUndefined(props.buttonType)},
-        )}
-        onClick={() => setOpenStatus(true)}
-      >
-        <div className="d-flex align-items-center justify-content-center">
-          {props.buttonIcon && <>{props.buttonIcon}</>}
-          {props.buttonTitle && <span>{props.buttonTitle}</span>}
-        </div>
-      </button>
+      {(!isUndefined(props.buttonTitle) || !isUndefined(props.buttonIcon)) && (
+        <button
+          type="button"
+          className={classnames(
+            'font-weight-bold text-uppercase position-relative btn btn-block',
+            {[`${props.buttonType}`]: !isUndefined(props.buttonType)},
+            {'btn-primary': isUndefined(props.buttonType)},
+          )}
+          onClick={() => setOpenStatus(true)}
+        >
+          <div className="d-flex align-items-center justify-content-center">
+            {props.buttonIcon && <>{props.buttonIcon}</>}
+            {props.buttonTitle && <span>{props.buttonTitle}</span>}
+          </div>
+        </button>
+      )}
 
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} />}
 
@@ -49,7 +72,7 @@ const Modal = (props: Props) => {
         role="dialog"
       >
         <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" ref={ref}>
-          <div className={`modal-content ${styles.content}`}>
+          <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
             <div className={`modal-header ${styles.header}`}>
               {isString(props.header) ? (
                 <div className="modal-title h5">{props.header}</div>
@@ -57,27 +80,33 @@ const Modal = (props: Props) => {
                 <>{props.header}</>
               )}
 
-              <button type="button" className="close" onClick={() => setOpenStatus(false)}>
+              <button
+                type="button"
+                className="close"
+                onClick={closeModal}
+                disabled={props.disabledClose}
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
 
-            <div className="modal-body p-4">
-              {props.children}
+            <div className="modal-body p-4 h-100">
+              {openStatus && <>{props.children}</>}
             </div>
 
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setOpenStatus(false)}
-              >
-                {isUndefined(props.closeButton) ? (
-                  <>Close</>
-                ) : (
-                  <>{props.closeButton}</>
-                )}
-              </button>
+            <div className="modal-footer p-3">
+              {isUndefined(props.closeButton) ? (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={closeModal}
+                  disabled={props.disabledClose}
+                >
+                  Close
+                </button>
+              ) : (
+                <>{props.closeButton}</>
+              )}
             </div>
           </div>
         </div>

@@ -1,0 +1,29 @@
+.button {
+  letter-spacing: 2px;
+  color: var(--white) !important;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+}
+
+.button:focus {
+  box-shadow: 0;
+}
+
+@media (hover: hover) {
+  .button:hover::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--white);
+    opacity: .5;
+  }
+}
+
+.modal {
+  max-width: 90%;
+  width: 620px !important;
+  height: 685px;
+}

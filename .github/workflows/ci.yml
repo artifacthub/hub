@@ -68,7 +68,7 @@ jobs:
         run: yarn install
       - name: Run frontend tests
         working-directory: ./web
-        run: yarn test --watchAll=false --passWithNoTests
+        run: yarn test --watchAll=false --passWithNoTests --verbose
 
   build-backend:
     if: github.ref != 'refs/heads/production'

@@ -12,7 +12,7 @@ interface Props {
 const Dropdown = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(false);
   const ref = useRef(null);
-  useOutsideClick([ref], () => setOpenStatus(false));
+  useOutsideClick([ref], openStatus, () => setOpenStatus(false));
 
   return (
     <>

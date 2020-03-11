@@ -2,11 +2,19 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 
 interface Result {
   [key: string]: any;
+}
+
+interface FetchOptions {
+  method: 'POST' | 'GET';
+  headers?: {
+    [key: string]: string;
+  };
+  body?: any;
 }
 
 const toCamelCase = (r: any): Result => {
@@ -24,11 +32,34 @@ const toCamelCase = (r: any): Result => {
   return r;
 };
 
-const apiFetch = (url: string): any => {
-  return fetch(url)
-    .then(res => (res.ok ? res : Promise.reject(res)))
-    .then(res => res.json())
-    .then(res => toCamelCase(res));
+const handleErrors = async (res: any) => {
+  if (!res.ok) {
+    let text = await res.text();
+    return Promise.reject({
+      status: res.status,
+      statusText: text || res.statusText,
+    });
+  }
+  return res;
+}
+
+const handleContent = async (res: any) => {
+  switch (res.headers.get('Content-Type')) {
+    case 'text/plain; charset=utf-8':
+      const text = await res.text();
+      return text;
+    case 'application/json':
+      const json = await res.json();
+      return toCamelCase(json);
+  }
+}
+
+const apiFetch = (url: string, opts?: FetchOptions): any => {
+  const options = opts || {};
+  return fetch(url, options)
+    .then(handleErrors)
+    .then(handleContent)
+    .catch((error) => Promise.reject(error));
 }
 
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
@@ -66,5 +97,25 @@ export const API = {
 
   getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
     return apiFetch(`${API_BASE_URL}/package/updates`);
+  },
+
+  registerUser: (user: User): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+  },
+
+  verifyEmail: (code: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/user/verifyEmail`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `code=${code}`,
+    });
   },
 };

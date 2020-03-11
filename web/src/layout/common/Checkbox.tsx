@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import styles from './Checkbox.module.css';
+import isUndefined from 'lodash/isUndefined';
 
 interface Props {
   name: string;
@@ -36,7 +37,9 @@ const CheckBox = (props: Props) => {
           <span className="d-inline-block text-truncate">
             {props.label}
           </span>
-          <small className="pl-1">({props.legend})</small>
+          {!isUndefined(props.legend) && (
+            <small className="pl-1">({props.legend})</small>
+          )}
         </div>
       </label>
     </div>

@@ -8,10 +8,12 @@ import Counter from './Counter';
 import PackagesUpdates from './PackagesUpdates';
 import logo from '../../images/cncf.svg';
 import ExternalLink from '../common/ExternalLink';
+import UserConfirmation from './UserConfirmation';
 import styles from './HomeView.module.css';
 
 interface Props {
   isSearching: boolean;
+  emailCode?: string;
 }
 
 const HomeView = (props: Props) => {
@@ -23,6 +25,8 @@ const HomeView = (props: Props) => {
     async function fetchStats() {
       try {
         setStats(await API.getStats());
+      } catch {
+        setStats(null);
       } finally {
         setIsLoadingStats(false);
       }
@@ -73,6 +77,10 @@ const HomeView = (props: Props) => {
           </div>
         </div>
       </div>
+
+      <UserConfirmation
+        emailCode={props.emailCode}
+      />
     </div>
   );
 }
