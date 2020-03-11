@@ -140,7 +140,7 @@ func TestGetChartRepositories(t *testing.T) {
 	db.AssertExpectations(t)
 }
 
-func TestGetChartRepositoriesByUser(t *testing.T) {
+func TestGetChartRepositoriesByUserJSON(t *testing.T) {
 	dbQuery := "select get_chart_repositories_by_user($1)"
 	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
 
@@ -286,17 +286,17 @@ func TestDeleteChartRepository(t *testing.T) {
 	})
 }
 
-func TestGetStatsJSON(t *testing.T) {
-	dbQuery := "select get_stats()"
+func TestGetPackagesStatsJSON(t *testing.T) {
+	dbQuery := "select get_packages_stats()"
 
-	t.Run("stats data returned successfully", func(t *testing.T) {
+	t.Run("packages stats data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery).Return([]byte("statsDataJSON"), nil)
+		db.On("QueryRow", dbQuery).Return([]byte("packagesStatsDataJSON"), nil)
 		h := New(db, nil)
 
-		data, err := h.GetStatsJSON(context.Background())
+		data, err := h.GetPackagesStatsJSON(context.Background())
 		assert.NoError(t, err)
-		assert.Equal(t, []byte("statsDataJSON"), data)
+		assert.Equal(t, []byte("packagesStatsDataJSON"), data)
 		db.AssertExpectations(t)
 	})
 
@@ -305,7 +305,7 @@ func TestGetStatsJSON(t *testing.T) {
 		db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
 		h := New(db, nil)
 
-		data, err := h.GetStatsJSON(context.Background())
+		data, err := h.GetPackagesStatsJSON(context.Background())
 		assert.Equal(t, errFakeDatabaseFailure, err)
 		assert.Nil(t, data)
 		db.AssertExpectations(t)
@@ -318,8 +318,8 @@ func TestSearchPackagesJSON(t *testing.T) {
 	db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("searchResultsDataJSON"), nil)
 	h := New(db, nil)
 
-	searchQuery := &Query{Text: "kw1"}
-	data, err := h.SearchPackagesJSON(context.Background(), searchQuery)
+	input := &SearchPackageInput{Text: "kw1"}
+	data, err := h.SearchPackagesJSON(context.Background(), input)
 	assert.NoError(t, err)
 	assert.Equal(t, []byte("searchResultsDataJSON"), data)
 	db.AssertExpectations(t)

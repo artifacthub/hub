@@ -47,13 +47,6 @@ func (h *Hub) GetChartRepositoryByName(ctx context.Context, name string) (*Chart
 	return r, err
 }
 
-// GetChartRepositories returns all available chart repositories.
-func (h *Hub) GetChartRepositories(ctx context.Context) ([]*ChartRepository, error) {
-	var r []*ChartRepository
-	err := h.dbQueryUnmarshal(ctx, &r, "select get_chart_repositories()")
-	return r, err
-}
-
 // GetChartRepositoryPackagesDigest returns the digests for all packages in the
 // repository identified by the id provided.
 func (h *Hub) GetChartRepositoryPackagesDigest(
@@ -64,6 +57,13 @@ func (h *Hub) GetChartRepositoryPackagesDigest(
 	query := "select get_chart_repository_packages_digest($1::uuid)"
 	err := h.dbQueryUnmarshal(ctx, &pd, query, chartRepositoryID)
 	return pd, err
+}
+
+// GetChartRepositories returns all available chart repositories.
+func (h *Hub) GetChartRepositories(ctx context.Context) ([]*ChartRepository, error) {
+	var r []*ChartRepository
+	err := h.dbQueryUnmarshal(ctx, &r, "select get_chart_repositories()")
+	return r, err
 }
 
 // GetChartRepositoriesByUserJSON returns all chart repositories that belong to
@@ -92,17 +92,18 @@ func (h *Hub) DeleteChartRepository(ctx context.Context, r *ChartRepository) err
 	return h.dbExec(ctx, "select delete_chart_repository($1::jsonb)", r)
 }
 
-// GetStatsJSON returns a json object describing the number of packages and
-// releases available in the database. The json object is built by the database.
-func (h *Hub) GetStatsJSON(ctx context.Context) ([]byte, error) {
-	return h.dbQueryJSON(ctx, "select get_stats()")
+// GetPackagesStatsJSON returns a json object describing the number of packages
+// and releases available in the database. The json object is built by the
+// database.
+func (h *Hub) GetPackagesStatsJSON(ctx context.Context) ([]byte, error) {
+	return h.dbQueryJSON(ctx, "select get_packages_stats()")
 }
 
 // SearchPackagesJSON returns a json object with the search results produced by
-// the query provided. The json object is built by the database.
-func (h *Hub) SearchPackagesJSON(ctx context.Context, query *Query) ([]byte, error) {
-	queryJSON, _ := json.Marshal(query)
-	return h.dbQueryJSON(ctx, "select search_packages($1::jsonb)", queryJSON)
+// the input provided. The json object is built by the database.
+func (h *Hub) SearchPackagesJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error) {
+	inputJSON, _ := json.Marshal(input)
+	return h.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
 }
 
 // RegisterPackage registers the package provided in the database.
