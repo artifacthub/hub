@@ -363,6 +363,7 @@ func (h *handlers) login(w http.ResponseWriter, r *http.Request) {
 	cookie := &http.Cookie{
 		Name:     sessionCookieName,
 		Value:    encodedSessionID,
+		Path:     "/",
 		Expires:  time.Now().Add(sessionDuration),
 		HttpOnly: true,
 	}

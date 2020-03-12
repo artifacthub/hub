@@ -501,6 +501,7 @@ func TestLogin(t *testing.T) {
 		require.Len(t, resp.Cookies(), 1)
 		cookie := resp.Cookies()[0]
 		assert.Equal(t, sessionCookieName, cookie.Name)
+		assert.Equal(t, "/", cookie.Path)
 		assert.True(t, cookie.HttpOnly)
 		assert.False(t, cookie.Secure)
 		var sessionID []byte
