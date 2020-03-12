@@ -50,6 +50,8 @@ create table if not exists chart_repository (
     name text not null check (name <> '') unique,
     display_name text,
     url text not null check (url <> '') unique,
+    last_tracking_ts timestamptz,
+    last_tracking_errors text,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,
     check (user_id is null or organization_id is null)

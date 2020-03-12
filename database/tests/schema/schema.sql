@@ -37,6 +37,8 @@ select columns_are('chart_repository', array[
     'name',
     'display_name',
     'url',
+    'last_tracking_ts',
+    'last_tracking_errors',
     'user_id',
     'organization_id'
 ]);
