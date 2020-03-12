@@ -25,6 +25,7 @@ import (
 type worker struct {
 	ctx        context.Context
 	id         int
+	ec         *errorsCollector
 	hubAPI     *hub.Hub
 	imageStore img.Store
 	logger     zerolog.Logger
@@ -32,10 +33,11 @@ type worker struct {
 }
 
 // newWorker creates a new worker instance.
-func newWorker(ctx context.Context, id int, hubAPI *hub.Hub, imageStore img.Store) *worker {
+func newWorker(ctx context.Context, id int, ec *errorsCollector, hubAPI *hub.Hub, imageStore img.Store) *worker {
 	return &worker{
 		ctx:        ctx,
 		id:         id,
+		ec:         ec,
 		hubAPI:     hubAPI,
 		imageStore: imageStore,
 		logger:     log.With().Int("worker", id).Logger(),
@@ -95,6 +97,7 @@ func (w *worker) handleJob(j *job) error {
 	if _, err := url.ParseRequestURI(u); err != nil {
 		tmp, err := url.Parse(j.repo.URL)
 		if err != nil {
+			w.ec.append(j.repo.ChartRepositoryID, fmt.Errorf("invalid chart url: %s", u))
 			w.logger.Error().Str("url", u).Msg("invalid url")
 			return err
 		}
@@ -102,9 +105,10 @@ func (w *worker) handleJob(j *job) error {
 		u = tmp.String()
 	}
 
-	// Load chart from remote archive in memory
+	// Load chart from remote archive
 	chart, err := w.loadChart(u)
 	if err != nil {
+		w.ec.append(j.repo.ChartRepositoryID, fmt.Errorf("error loading chart %s: %w", u, err))
 		w.logger.Warn().
 			Str("repo", j.repo.Name).
 			Str("chart", j.chartVersion.Metadata.Name).
@@ -122,6 +126,7 @@ func (w *worker) handleJob(j *job) error {
 			logoURL = md.Icon
 			data, err := w.downloadImage(md.Icon)
 			if err != nil {
+				w.ec.append(j.repo.ChartRepositoryID, fmt.Errorf("error dowloading logo %s: %w", md.Icon, err))
 				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("Image download failed")
 			} else {
 				logoImageID, err = w.imageStore.SaveImage(w.ctx, data)

@@ -27,16 +27,18 @@ type job struct {
 // available workers.
 type dispatcher struct {
 	ctx    context.Context
+	ec     *errorsCollector
 	hubAPI *hub.Hub
 	Queue  chan *job
 }
 
 // newDispatcher creates a new dispatcher instance.
-func newDispatcher(ctx context.Context, hubAPI *hub.Hub) *dispatcher {
+func newDispatcher(ctx context.Context, ec *errorsCollector, hubAPI *hub.Hub) *dispatcher {
 	return &dispatcher{
 		ctx:    ctx,
 		hubAPI: hubAPI,
 		Queue:  make(chan *job),
+		ec:     ec,
 	}
 }
 
@@ -103,7 +105,9 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 	log.Info().Str("repo", r.Name).Msg("Loading chart repository index file")
 	indexFile, err := loadIndexFile(r)
 	if err != nil {
-		log.Error().Err(err).Str("repo", r.Name).Msg("Error loading repository index file")
+		msg := "Error loading repository index file"
+		d.ec.append(r.ChartRepositoryID, fmt.Errorf("%s: %w", msg, err))
+		log.Error().Err(err).Str("repo", r.Name).Msg(msg)
 		return
 	}
 	log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
@@ -132,6 +136,11 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 			default:
 			}
 		}
+	}
+
+	err = d.hubAPI.SetChartRepositoryLastTrackingTs(d.ctx, r.ChartRepositoryID)
+	if err != nil {
+		log.Error().Err(err).Str("repo", r.Name).Msg("Error setting repository last tracking ts")
 	}
 }
 

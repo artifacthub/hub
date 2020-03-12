@@ -92,6 +92,26 @@ func (h *Hub) DeleteChartRepository(ctx context.Context, r *ChartRepository) err
 	return h.dbExec(ctx, "select delete_chart_repository($1::jsonb)", r)
 }
 
+// SetChartRepositoryLastTrackingTs updates the timestamp of the last tracking
+// of the provided repository in the database.
+func (h *Hub) SetChartRepositoryLastTrackingTs(ctx context.Context, chartRepositoryID string) error {
+	query := `
+	update chart_repository set last_tracking_ts = current_timestamp
+	where chart_repository_id = $1`
+	_, err := h.db.Exec(ctx, query, chartRepositoryID)
+	return err
+}
+
+// SetChartRepositoryLastTrackingErrors updates the errors that happened during
+// the last tracking of the provided repository in the database.
+func (h *Hub) SetChartRepositoryLastTrackingErrors(ctx context.Context, chartRepositoryID, errs string) error {
+	query := `
+	update chart_repository set last_tracking_errors = $2
+	where chart_repository_id = $1`
+	_, err := h.db.Exec(ctx, query, chartRepositoryID, errs)
+	return err
+}
+
 // GetPackagesStatsJSON returns a json object describing the number of packages
 // and releases available in the database. The json object is built by the
 // database.

@@ -49,14 +49,16 @@ func main() {
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	dispatcher := newDispatcher(ctx, hubAPI)
+	ec := newErrorsCollector(ctx, hubAPI)
+	dispatcher := newDispatcher(ctx, ec, hubAPI)
 	wg.Add(1)
 	go dispatcher.run(&wg, cfg.GetStringSlice("tracker.repositoriesNames"))
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := newWorker(ctx, i, hubAPI, imageStore)
+		w := newWorker(ctx, i, ec, hubAPI, imageStore)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}
 	wg.Wait()
+	ec.flush()
 	log.Info().Msg("Chart tracker finished")
 }
