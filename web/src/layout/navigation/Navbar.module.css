@@ -16,6 +16,7 @@
 
 .brand {
   font-family: var(--logo-font);
+  margin-right: 0.5rem !important;
 }
 
 .brand:focus {

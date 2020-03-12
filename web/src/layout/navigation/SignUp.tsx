@@ -28,7 +28,7 @@ const SignUp = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [password, setPassword] = useState({value: '', isValid: false});
+  const [password, setPassword] = useState<Password>({value: '', isValid: false});
   const [success, setSuccess] = useState(false);
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ const SignUp = (props: Props) => {
 
   async function registerUser(user: User) {
     try {
-      await API.registerUser(user);
+      await API.register(user);
       setSuccess(true);
     } catch(err) {
       let error = 'An error occurred, please try again later';
@@ -111,13 +111,19 @@ const SignUp = (props: Props) => {
       {isLoading ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">Loading...</span>
+          <span className="ml-2">Signing up...</span>
         </>
       ) : (
-        <>Send</>
+        <>Sign up</>
       )}
     </button>
   );
+
+  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      submitForm();
+    }
+  }
 
   return (
     <Modal
@@ -147,7 +153,6 @@ const SignUp = (props: Props) => {
             {'needs-validation': !isValidated},
             {'was-validated': isValidated},
           )}
-          onSubmit={submitForm}
           onFocus={cleanApiError}
           noValidate
         >
@@ -158,6 +163,7 @@ const SignUp = (props: Props) => {
             name="alias"
             invalidText="This field is required"
             validateOnBlur
+            autoComplete="username"
             required
           />
 
@@ -168,6 +174,7 @@ const SignUp = (props: Props) => {
             name="email"
             invalidText="Please enter a valid email address"
             validateOnBlur
+            autoComplete="email"
             required
           />
 
@@ -175,12 +182,14 @@ const SignUp = (props: Props) => {
             type="text"
             label="First Name"
             name="firstName"
+            autoComplete="given-name"
           />
 
           <InputField
             type="text"
             label="Last Name"
             name="lastName"
+            autoComplete="family-name"
           />
 
           <div className="form-row">
@@ -208,6 +217,7 @@ const SignUp = (props: Props) => {
               invalidText="Passwords don't match"
               autoComplete="new-password"
               validateOnBlur={password.isValid}
+              onKeyDown={handleOnReturnKeyDown}
               required
             />
           </div>

@@ -83,10 +83,22 @@ export interface PackagesUpdatesList {
   packagesRecentlyUpdated: Package[];
 }
 
-export interface User {
-  alias: string;
+export interface UserLogin {
   email: string;
+  password: string;
+}
+
+export interface Alias {
+  alias: string;
+}
+
+export interface User extends UserLogin {
+  alias: string;
   first_name?: string;
   last_name?: string;
-  password: string;
+}
+
+export interface UserAuth {
+  alias?: string;
+  status: boolean;
 }

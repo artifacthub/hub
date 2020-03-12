@@ -18,6 +18,7 @@ export interface Props {
   pattern?: string;
   labelLegend?: JSX.Element;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
   autoComplete?: string;
 }
@@ -64,6 +65,7 @@ const InputField = (props: Props) => {
         autoComplete={props.autoComplete}
         onChange={handleOnChange}
         onBlur={handleOnBlur}
+        onKeyDown={props.onKeyDown}
       />
 
       {!isUndefined(props.validText) && (
