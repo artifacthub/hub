@@ -6,7 +6,9 @@ returns setof json as $$
         'chart_repository_id', chart_repository_id,
         'name', name,
         'display_name', display_name,
-        'url', url
+        'url', url,
+        'last_tracking_ts', floor(extract(epoch from last_tracking_ts)),
+        'last_tracking_errors', last_tracking_errors
     )), '[]')
     from chart_repository
     where user_id is not null
