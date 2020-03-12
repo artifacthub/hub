@@ -262,6 +262,14 @@ func (h *Hub) DeleteSession(ctx context.Context, sessionID []byte) error {
 	return err
 }
 
+// GetUserAlias returns the alias of the user doing the request.
+func (h *Hub) GetUserAlias(ctx context.Context) (string, error) {
+	userID := ctx.Value(UserIDKey).(string)
+	var alias string
+	err := h.db.QueryRow(ctx, `select alias from "user" where user_id = $1`, userID).Scan(&alias)
+	return alias, err
+}
+
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (h *Hub) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {

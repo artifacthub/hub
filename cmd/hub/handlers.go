@@ -94,6 +94,7 @@ func (h *handlers) setupRouter() {
 			r.Post("/verifyEmail", h.verifyEmail)
 			r.Post("/login", h.login)
 			r.Get("/logout", h.logout)
+			r.With(h.requireLogin).Get("/alias", h.getUserAlias)
 		})
 
 		r.Route("/admin", func(r chi.Router) {
@@ -394,6 +395,18 @@ func (h *handlers) logout(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(-24 * time.Hour),
 	}
 	http.SetCookie(w, cookie)
+}
+
+// getUserAlias is an http handler used to get a logged in user alias.
+func (h *handlers) getUserAlias(w http.ResponseWriter, r *http.Request) {
+	alias, err := h.hubAPI.GetUserAlias(r.Context())
+	if err != nil {
+		log.Error().Err(err).Msg("getUserAlias failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	jsonData := []byte(fmt.Sprintf(`{"alias": "%s"}`, alias))
+	renderJSON(w, jsonData, 0)
 }
 
 // getChartRepositories is an http handler that returns the chart repositories

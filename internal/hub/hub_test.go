@@ -710,3 +710,30 @@ func TestDeleteSession(t *testing.T) {
 		}
 	})
 }
+
+func TestGetUserAlias(t *testing.T) {
+	dbQuery := `select alias from "user" where user_id = $1`
+	ctx := context.WithValue(context.Background(), UserIDKey, "userID")
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return("alias", nil)
+		h := New(db, nil)
+
+		alias, err := h.GetUserAlias(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, "alias", alias)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything).Return("", errFakeDatabaseFailure)
+		h := New(db, nil)
+
+		alias, err := h.GetUserAlias(ctx)
+		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Empty(t, alias)
+		db.AssertExpectations(t)
+	})
+}

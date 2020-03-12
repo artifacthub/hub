@@ -597,6 +597,45 @@ func TestLogout(t *testing.T) {
 	})
 }
 
+func TestGetUserAlias(t *testing.T) {
+	dbQuery := `select alias from "user" where user_id = $1`
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return("alias", nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getUserAlias(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte(`{"alias": "alias"}`), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return("", errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getUserAlias(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
 func TestGetChartRepositories(t *testing.T) {
 	dbQuery := "select get_chart_repositories_by_user($1)"
 
