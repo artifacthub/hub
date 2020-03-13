@@ -63,6 +63,7 @@ type Package struct {
 	LogoURL           string            `json:"logo_url"`
 	LogoImageID       string            `json:"logo_image_id"`
 	Keywords          []string          `json:"keywords"`
+	Deprecated        bool              `json:"deprecated"`
 	Readme            string            `json:"readme"`
 	Links             []*Link           `json:"links"`
 	Version           string            `json:"version"`
@@ -82,6 +83,7 @@ type SearchPackageInput struct {
 	Text              string        `json:"text"`
 	PackageKinds      []PackageKind `json:"package_kinds,omitempty"`
 	ChartRepositories []string      `json:"chart_repositories,omitempty"`
+	Deprecated        bool          `json:"deprecated"`
 }
 
 // GetPackageInput represents the input used to get a specific package.

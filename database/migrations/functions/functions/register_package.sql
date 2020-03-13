@@ -21,6 +21,7 @@ begin
         logo_url,
         logo_image_id,
         keywords,
+        deprecated,
         latest_version,
         package_kind_id,
         chart_repository_id
@@ -32,6 +33,7 @@ begin
         nullif(p_pkg->>'logo_url', ''),
         nullif(p_pkg->>'logo_image_id', '')::uuid,
         (select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]),
+        (p_pkg->>'deprecated')::boolean,
         p_pkg->>'version',
         (p_pkg->>'kind')::int,
         nullif(v_chart_repository_id, '')::uuid
@@ -45,6 +47,7 @@ begin
         logo_url = excluded.logo_url,
         logo_image_id = excluded.logo_image_id,
         keywords = excluded.keywords,
+        deprecated = excluded.deprecated,
         latest_version = excluded.latest_version,
         updated_at = current_timestamp
     where semver_gte(p_pkg->>'version', package.latest_version) = true

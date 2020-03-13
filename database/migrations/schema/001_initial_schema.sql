@@ -86,6 +86,7 @@ create table if not exists package (
     logo_url text check (logo_url <> ''),
     logo_image_id uuid,
     keywords text[],
+    deprecated boolean,
     latest_version text not null check (latest_version <> ''),
     created_at timestamptz default current_timestamp not null,
     updated_at timestamptz default current_timestamp not null,
@@ -98,6 +99,7 @@ create table if not exists package (
     unique (chart_repository_id, name)
 );
 
+create index package_deprecated_idx on package (deprecated);
 create index package_tsdoc_idx on package using gin (tsdoc);
 create index package_package_kind_id_idx on package (package_kind_id);
 create index package_chart_repository_id_idx on package (chart_repository_id);

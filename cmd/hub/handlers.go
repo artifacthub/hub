@@ -223,6 +223,16 @@ func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		}
 	}
 
+	// Include deprecated packages
+	var deprecated bool
+	if qs.Get("deprecated") != "" {
+		var err error
+		deprecated, err = strconv.ParseBool(qs.Get("deprecated"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid deprecated: %s", qs.Get("deprecated"))
+		}
+	}
+
 	return &hub.SearchPackageInput{
 		Limit:             limit,
 		Offset:            offset,
@@ -230,6 +240,7 @@ func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Text:              text,
 		PackageKinds:      kinds,
 		ChartRepositories: repos,
+		Deprecated:        deprecated,
 	}, nil
 }
 

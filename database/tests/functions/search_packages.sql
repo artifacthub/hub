@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(16);
+select plan(18);
 
 -- Declare some variables
 \set repo1ID '00000000-0000-0000-0000-000000000001'
@@ -95,6 +95,7 @@ insert into package (
     home_url,
     logo_image_id,
     keywords,
+    deprecated,
     latest_version,
     package_kind_id,
     chart_repository_id
@@ -106,6 +107,7 @@ insert into package (
     'home_url',
     :'image2ID',
     '{"kw1", "kw2"}',
+    true,
     '1.0.0',
     0,
     :'repo2ID'
@@ -143,7 +145,9 @@ insert into snapshot (
 
 -- Some packages have just been seeded
 select is(
-    search_packages('{}')::jsonb,
+    search_packages('{
+        "deprecated": true
+    }')::jsonb,
     '{
         "data": {
             "packages": [{
@@ -184,7 +188,8 @@ select is(
 select is(
     search_packages('{
         "facets": true,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -378,7 +383,8 @@ select is(
         "text": "kw1",
         "chart_repositories": [
             "repo2"
-        ]
+        ],
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -424,6 +430,91 @@ select is(
         }
     }'::jsonb,
     'Facets: true Text: kw1 Repo: repo2 | Package 2 expected - Facets expected'
+);
+select is(
+    search_packages(
+    '{
+        "facets": true,
+        "text": "kw1",
+        "chart_repositories": [
+            "repo2"
+        ],
+        "deprecated": false
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "repo1",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "repo2",
+                    "name": "Repo2",
+                    "total": 1
+                }]
+            }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
+    }'::jsonb,
+    'Facets: true Text: kw1 Repo: repo2 Deprecated: false | Package 2 expected - Facets expected'
+);
+select is(
+    search_packages(
+    '{
+        "facets": true,
+        "text": "kw1",
+        "chart_repositories": [
+            "repo2"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [],
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "repo1",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "repo2",
+                    "name": "Repo2",
+                    "total": 1
+                }]
+            }]
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 0
+        }
+    }'::jsonb,
+    'Facets: true Text: kw1 Repo: repo2 Deprecated: not provided | Package 2 expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -491,7 +582,8 @@ select is(
     search_packages('{
         "limit": 2,
         "offset": 0,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -534,7 +626,8 @@ select is(
     search_packages('{
         "limit": 1,
         "offset": 0,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -565,7 +658,8 @@ select is(
     search_packages('{
         "limit": 1,
         "offset": 2,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -584,7 +678,8 @@ select is(
     search_packages('{
         "limit": 1,
         "offset": 1,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -615,7 +710,8 @@ select is(
     search_packages('{
         "limit": 0,
         "offset": 0,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {
@@ -635,7 +731,8 @@ select is(
         "limit": 1,
         "offset": 2,
         "facets": true,
-        "text": "kw1"
+        "text": "kw1",
+        "deprecated": true
     }')::jsonb,
     '{
         "data": {

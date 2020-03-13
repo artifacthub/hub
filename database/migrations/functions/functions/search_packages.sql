@@ -23,6 +23,7 @@ begin
             p.display_name,
             p.description,
             p.logo_image_id,
+            p.deprecated,
             s.app_version,
             r.name as chart_repository_name,
             r.display_name as chart_repository_display_name
@@ -43,6 +44,12 @@ begin
         and
             case when cardinality(v_chart_repositories) > 0
             then chart_repository_name = any(v_chart_repositories) else true end
+        and
+            case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
+                true
+            else
+                (deprecated is null or deprecated = false)
+            end
     )
     select json_build_object(
         'data', (

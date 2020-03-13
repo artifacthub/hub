@@ -164,6 +164,7 @@ func TestSearchPackages(t *testing.T) {
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
 			{"invalid repo", "repo="},
+			{"invalid deprecated", "deprecated=z"},
 		}
 		for _, tc := range badRequests {
 			tc := tc

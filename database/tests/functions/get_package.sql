@@ -101,6 +101,7 @@ insert into package (
     home_url,
     logo_image_id,
     keywords,
+    deprecated,
     latest_version,
     package_kind_id,
     chart_repository_id
@@ -112,6 +113,7 @@ insert into package (
     'home_url',
     :'image1ID',
     '{"kw1", "kw2"}',
+    true,
     '1.0.0',
     0,
     :'repo1ID'
@@ -167,6 +169,7 @@ select is(
         "home_url": "home_url",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
+        "deprecated": true,
         "readme": "readme-version-1.0.0",
         "links": {
             "link1": "https://link1",
@@ -211,6 +214,7 @@ select is(
         "home_url": "home_url",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
+        "deprecated": true,
         "readme": "readme-version-0.0.9",
         "links": {
             "link1": "https://link1",

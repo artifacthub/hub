@@ -35,6 +35,7 @@ begin
         'home_url', p.home_url,
         'logo_image_id', p.logo_image_id,
         'keywords', p.keywords,
+        'deprecated', p.deprecated,
         'readme', s.readme,
         'links', s.links,
         'version', s.version,

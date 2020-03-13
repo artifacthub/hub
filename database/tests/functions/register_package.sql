@@ -20,6 +20,7 @@ select register_package('
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "keywords": ["kw1", "kw2"],
+    "deprecated": false,
     "readme": "readme-version-1.0.0",
     "links": {
         "link1": "https://link1",
@@ -55,6 +56,7 @@ select results_eq(
             logo_url,
             logo_image_id,
             keywords,
+            deprecated,
             latest_version,
             package_kind_id,
             chart_repository_id
@@ -70,6 +72,7 @@ select results_eq(
             'logo_url',
             '00000000-0000-0000-0000-000000000001'::uuid,
             '{kw1,kw2}'::text[],
+            false,
             '1.0.0',
             0,
             '00000000-0000-0000-0000-000000000001'::uuid
@@ -131,6 +134,7 @@ select register_package('
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "keywords": ["kw1", "kw2"],
+    "deprecated": true,
     "readme": "readme-version-2.0.0",
     "version": "2.0.0",
     "app_version": "13.0.0",
@@ -149,9 +153,9 @@ select register_package('
 
 -- Check if package registration succeeded
 select results_eq(
-    $$ select display_name, description from package where name='package1' $$,
-    $$ values ('Package 1 v2', 'description v2') $$,
-    'Package display name and description should have been updated'
+    $$ select display_name, description, deprecated from package where name='package1' $$,
+    $$ values ('Package 1 v2', 'description v2', true) $$,
+    'Package display name, description and deprecated should have been updated'
 );
 select results_eq(
     $$
@@ -213,6 +217,7 @@ select register_package('
     "home_url": "home_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "keywords": ["kw1", "kw2"],
+    "deprecated": true,
     "readme": "readme-version-0.0.9",
     "version": "0.0.9",
     "app_version": "11.0.0",
