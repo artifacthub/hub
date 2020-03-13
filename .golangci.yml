@@ -28,7 +28,7 @@ linters:
 
 linters-settings:
   funlen:
-    lines: 100
+    lines: 120
   golint:
     min-confidence: 0
 

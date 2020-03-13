@@ -4,15 +4,16 @@ import (
 	"context"
 
 	"github.com/jackc/pgconn"
-	"github.com/jackc/pgproto3"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/mock"
 )
 
+// DBMock is a mock implementation of the DB interface.
 type DBMock struct {
 	mock.Mock
 }
 
+// QueryRow implements the DB interface.
 func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
 	args := m.Called(append([]interface{}{query}, params...)...)
 	rowMock := &RowMock{
@@ -27,25 +28,19 @@ func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface
 	return rowMock
 }
 
+// Exec implements the DB interface.
 func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
 	args := m.Called(append([]interface{}{query}, params...)...)
 	return nil, args.Error(0)
 }
 
+// RowMock is a mock implementation of the pgx.Row interface.
 type RowMock struct {
 	data []interface{}
 	err  error
 }
 
-// Implement pgx.Row interface
-func (m *RowMock) Close()                                         {}
-func (m *RowMock) Err() error                                     { return nil }
-func (m *RowMock) CommandTag() pgconn.CommandTag                  { return nil }
-func (m *RowMock) FieldDescriptions() []pgproto3.FieldDescription { return nil }
-func (m *RowMock) Next() bool                                     { return false }
-func (m *RowMock) Values() ([]interface{}, error)                 { return nil, nil }
-func (m *RowMock) RawValues() [][]byte                            { return nil }
-
+// Scan implements pgx.Row interface.
 func (m *RowMock) Scan(dest ...interface{}) error {
 	for i, e := range m.data {
 		if e != nil {

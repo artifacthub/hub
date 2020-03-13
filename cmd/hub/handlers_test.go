@@ -15,6 +15,7 @@ import (
 	"github.com/cncf/hub/internal/hub"
 	"github.com/cncf/hub/internal/img/pg"
 	"github.com/cncf/hub/internal/tests"
+	"github.com/go-chi/chi"
 	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
@@ -1030,6 +1031,122 @@ func TestImage(t *testing.T) {
 				th.db.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestCheckAvailability(t *testing.T) {
+	t.Run("invalid resource kind", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+		rctx := &chi.Context{
+			URLParams: chi.RouteParams{
+				Keys:   []string{"resourceKind"},
+				Values: []string{"invalidKind"},
+			},
+		}
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+		th.h.checkAvailability(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid value", func(t *testing.T) {
+		th := setupTestHandlers()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("HEAD", "/", nil)
+		rctx := &chi.Context{
+			URLParams: chi.RouteParams{
+				Keys:   []string{"resourceKind"},
+				Values: []string{"userAlias"},
+			},
+		}
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+		th.h.checkAvailability(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("valid resource kind", func(t *testing.T) {
+		t.Run("database query succeeded", func(t *testing.T) {
+			testCases := []struct {
+				resourceKind string
+				dbQuery      string
+				available    bool
+			}{
+				{
+					"userAlias",
+					`select user_id from "user" where alias = $1`,
+					true,
+				},
+				{
+					"chartRepositoryName",
+					`select chart_repository_id from chart_repository where name = $1`,
+					true,
+				},
+				{
+					"chartRepositoryURL",
+					`select chart_repository_id from chart_repository where url = $1`,
+					false,
+				},
+			}
+			for _, tc := range testCases {
+				tc := tc
+				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+					tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
+					th := setupTestHandlers()
+					th.db.On("QueryRow", tc.dbQuery, mock.Anything).Return(tc.available, nil)
+
+					w := httptest.NewRecorder()
+					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+					rctx := &chi.Context{
+						URLParams: chi.RouteParams{
+							Keys:   []string{"resourceKind"},
+							Values: []string{tc.resourceKind},
+						},
+					}
+					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+					th.h.checkAvailability(w, r)
+					resp := w.Result()
+					defer resp.Body.Close()
+
+					if tc.available {
+						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+					} else {
+						assert.Equal(t, http.StatusOK, resp.StatusCode)
+					}
+					th.db.AssertExpectations(t)
+				})
+			}
+		})
+
+		t.Run("database query failed", func(t *testing.T) {
+			th := setupTestHandlers()
+			dbQuery := `select not exists (select user_id from "user" where alias = $1)`
+			th.db.On("QueryRow", dbQuery, mock.Anything).Return(false, errFakeDatabaseFailure)
+
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+			rctx := &chi.Context{
+				URLParams: chi.RouteParams{
+					Keys:   []string{"resourceKind"},
+					Values: []string{"userAlias"},
+				},
+			}
+			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+			th.h.checkAvailability(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			th.db.AssertExpectations(t)
+		})
 	})
 }
 
