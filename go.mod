@@ -19,7 +19,6 @@ require (
 	github.com/imdario/mergo v0.3.8 // indirect
 	github.com/ironstar-io/chizerolog v0.0.0-20190729084312-7eaca6bf60e6
 	github.com/jackc/pgconn v1.3.2
-	github.com/jackc/pgproto3 v1.1.0
 	github.com/jackc/pgx/v4 v4.4.1
 	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/rs/zerolog v1.18.0
