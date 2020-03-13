@@ -270,6 +270,28 @@ func (h *Hub) GetUserAlias(ctx context.Context) (string, error) {
 	return alias, err
 }
 
+// CheckAvailability checks the availability of a given value for the provided
+// resource kind.
+func (h *Hub) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
+	var available bool
+	var query string
+
+	switch resourceKind {
+	case "userAlias":
+		query = `select user_id from "user" where alias = $1`
+	case "chartRepositoryName":
+		query = `select chart_repository_id from chart_repository where name = $1`
+	case "chartRepositoryURL":
+		query = `select chart_repository_id from chart_repository where url = $1`
+	default:
+		return false, errors.New("resource kind not supported")
+	}
+
+	query = fmt.Sprintf("select not exists (%s)", query)
+	err := h.db.QueryRow(ctx, query, value).Scan(&available)
+	return available, err
+}
+
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (h *Hub) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {

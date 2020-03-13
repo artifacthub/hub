@@ -106,6 +106,8 @@ func (h *handlers) setupRouter() {
 				r.Delete("/{repoName}", h.deleteChartRepository)
 			})
 		})
+
+		r.Head("/checkAvailability/{resourceKind}", h.checkAvailability)
 	})
 
 	// Images
@@ -550,6 +552,47 @@ func (h *handlers) image(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", http.DetectContentType(data))
 	}
 	_, _ = w.Write(data)
+}
+
+// checkAvailability is a middleware that checks the availability of a given
+// value for the provided resource kind.
+func (h *handlers) checkAvailability(w http.ResponseWriter, r *http.Request) {
+	resourceKind := chi.URLParam(r, "resourceKind")
+	value := r.FormValue("v")
+
+	// Check if resource kind and value received are valid
+	validResourceKinds := []string{
+		"userAlias",
+		"chartRepositoryName",
+		"chartRepositoryURL",
+	}
+	isResourceKindValid := func(resourceKind string) bool {
+		for _, k := range validResourceKinds {
+			if resourceKind == k {
+				return true
+			}
+		}
+		return false
+	}
+	if !isResourceKindValid(resourceKind) {
+		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
+		return
+	}
+	if value == "" {
+		http.Error(w, "invalid value provided", http.StatusBadRequest)
+		return
+	}
+
+	// Check availability in database
+	available, err := h.hubAPI.CheckAvailability(r.Context(), resourceKind, value)
+	if err != nil {
+		log.Error().Err(err).Msg("checkAvailability failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	if available {
+		w.WriteHeader(http.StatusNotFound)
+	}
 }
 
 // basicAuth is a middleware that provides basic auth support.
