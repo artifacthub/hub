@@ -1,0 +1,20 @@
+.iconWrapper {
+  width: 32px;
+  height: 32px;
+  background-color: var(--white);
+  line-height: 1;
+  font-size: 1.75rem !important;
+}
+
+.dropdown {
+  width: 16rem;
+  top: 120% !important;
+}
+
+.arrow {
+  right: 1.25rem !important;
+}
+
+.signedInText {
+  padding: 0.25rem 1.5rem;
+}

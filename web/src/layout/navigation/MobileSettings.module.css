@@ -1,21 +1,17 @@
-.btnSettings {
+.navbarToggler {
   border: 0 !important;
   transition: all .3s ease-in-out;
-  background-color: var(--body-bg) !important;
-  color: var(--color-1-700) !important;
-  height: 32px;
+  background-color: transparent !important;
+}
+
+.iconWrapper {
   width: 32px;
-  line-height: 1rem !important;
+  height: 32px;
+  background-color: var(--white);
+  line-height: 1;
+  font-size: 1.5rem !important;
 }
 
-@media (hover: hover) {
-  .btnSettings:hover {
-    background-color: var(--body-bg) !important;
-  }
-}
-
-@media (min-width: 576px) {
-  .dropdown {
-    display: none !important;
-  }
+.iconAuthWrapper {
+  font-size: 1.75rem !important;
 }

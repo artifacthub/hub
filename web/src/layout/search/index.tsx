@@ -183,6 +183,7 @@ const SearchView = (props: Props) => {
               {!isEmptyFacets() && (
                 <Sidebar
                   className="d-inline-block d-md-none mr-2"
+                  wrapperClassName="px-4"
                   buttonType={`btn-sm rounded-circle ${styles.btnMobileFilters}`}
                   buttonIcon={<FaFilter />}
                   closeButton={(

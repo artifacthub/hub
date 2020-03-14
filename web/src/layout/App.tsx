@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch, Router } from 'react-router-dom';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import { FiHexagon } from 'react-icons/fi';
@@ -13,6 +13,10 @@ import styles from './App.module.css';
 import './App.css';
 import '../themes/default.scss';
 import '../themes/theme2.scss';
+import { UserAuth, Alias } from '../types';
+import { API } from '../api';
+import isUndefined from 'lodash/isUndefined';
+import history from '../utils/history';
 
 const getQueryParam = (query: string, param: string): string | undefined => {
   let result;
@@ -27,14 +31,35 @@ export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [isAuth, setIsAuth] = useState<UserAuth | null>(null);
+
+  useEffect(() => {
+    async function isUserAuth() {
+      try {
+        const user: Alias = await API.getUserAlias();
+        setIsAuth({status: true, alias: user.alias});
+      } catch(err) {
+        setIsAuth({status: false});
+      }
+    };
+    if (isNull(isAuth) || (isAuth.status && isUndefined(isAuth.alias))) {
+      isUserAuth();
+    }
+  }, [isAuth]);
 
   return (
-    <Router>
+    <Router history={history}>
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Switch>
-          <Route  path={['/', '/verifyEmail']} exact render={({location}) => (
+          <Route  path={['/', '/verifyEmail', '/login']} exact render={({location}) => (
             <>
-              <Navbar isSearching={isSearching} fromHome />
+              <Navbar
+                isAuth={isAuth}
+                setIsAuth={setIsAuth}
+                isSearching={isSearching}
+                redirect={getQueryParam(location.search, 'redirect') || undefined}
+                fromHome
+              />
               <div className="d-flex flex-column flex-grow-1">
                 <HomeView
                   isSearching={isSearching}
@@ -48,7 +73,7 @@ export default function App() {
             const searchParams = buildSearchParams(location.search);
             return (
               <>
-                <Navbar isSearching={isSearching} searchText={searchParams.text} />
+                <Navbar isAuth={isAuth} setIsAuth={setIsAuth} isSearching={isSearching} searchText={searchParams.text} />
                 <div className="d-flex flex-column flex-grow-1">
                   <SearchView
                     {...searchParams}
@@ -65,7 +90,7 @@ export default function App() {
 
           <Route path="/package/chart/:repoName/:packageName/:version?" exact render={({location, match}) => (
             <>
-              <Navbar isSearching={isSearching} />
+              <Navbar isAuth={isAuth} setIsAuth={setIsAuth} isSearching={isSearching} />
               <div className="d-flex flex-column flex-grow-1">
                 <PackageView
                   isLoadingPackage={isLoadingPackage}
@@ -79,7 +104,7 @@ export default function App() {
 
           <Route render={() => (
             <>
-              <Navbar isSearching={isSearching} />
+              <Navbar isAuth={isAuth} setIsAuth={setIsAuth} isSearching={isSearching} />
               <NotFound />
             </>
           )} />

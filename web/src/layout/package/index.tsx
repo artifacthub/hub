@@ -52,9 +52,9 @@ const PackageView = (props: Props) => {
     async function fetchPackageDetail() {
       try {
         setDetail(await API.getPackage(repoName, packageName, version));
+        setIsLoadingPackage(false);
       } catch {
         setDetail(null);
-      } finally {
         setIsLoadingPackage(false);
       }
     };

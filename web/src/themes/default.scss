@@ -1,8 +1,3 @@
 $enable-rounded: false;
 
 @import '~bootstrap/scss/bootstrap.scss';
-
-.was-validated .form-control:valid {
-  border-color: #ced4da !important;
-  background-image: none !important;
-}

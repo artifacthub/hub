@@ -2,8 +2,9 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
+import history from '../utils/history';
 
 interface Result {
   [key: string]: any;
@@ -32,6 +33,17 @@ const toCamelCase = (r: any): Result => {
   return r;
 };
 
+const handleUnauthorizedRequests = async (res: any) => {
+  if (res.status === 401 && history.location.pathname.startsWith('/admin')) {
+    history.push(`/login?redirect=${history.location.pathname}`);
+    return Promise.reject({
+      status: res.status,
+      statusText: 'ErrLoginRedirect',
+    });
+  }
+  return res;
+}
+
 const handleErrors = async (res: any) => {
   if (!res.ok) {
     let text = await res.text();
@@ -57,6 +69,7 @@ const handleContent = async (res: any) => {
 const apiFetch = (url: string, opts?: FetchOptions): any => {
   const options = opts || {};
   return fetch(url, options)
+    .then(handleUnauthorizedRequests)
     .then(handleErrors)
     .then(handleContent)
     .catch((error) => Promise.reject(error));
@@ -99,7 +112,7 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/package/updates`);
   },
 
-  registerUser: (user: User): Promise<null | string> => {
+  register: (user: User): Promise<null | string> => {
     return apiFetch(`${API_BASE_URL}/user`, {
       method: 'POST',
       headers: {
@@ -117,5 +130,23 @@ export const API = {
       },
       body: `code=${code}`,
     });
+  },
+
+  login: (user: UserLogin): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `email=${user.email}&password=${user.password}`,
+    });
+  },
+
+  logout: (): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/user/logout`);
+  },
+
+  getUserAlias: (): Promise<Alias> => {
+    return apiFetch(`${API_BASE_URL}/user/alias`);
   },
 };
