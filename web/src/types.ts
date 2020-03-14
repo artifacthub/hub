@@ -29,6 +29,7 @@ export interface Package {
   homeUrl?: string | null;
   keywords?: string[];
   maintainers?: Maintainer[];
+  deprecated: boolean | null;
 }
 
 export interface SearchFiltersURL {
@@ -37,6 +38,7 @@ export interface SearchFiltersURL {
     [key: string]: string[];
   };
   pageNumber: number;
+  deprecated: boolean;
 }
 
 export interface SearchQuery {
@@ -44,6 +46,7 @@ export interface SearchQuery {
   filters: {
     [key: string]: string[];
   };
+  deprecated: boolean;
   limit: number;
   offset: number;
   total?: number;

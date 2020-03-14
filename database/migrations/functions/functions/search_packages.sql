@@ -62,6 +62,7 @@ begin
                         'display_name', display_name,
                         'description', description,
                         'logo_image_id', logo_image_id,
+                        'deprecated', deprecated,
                         'app_version', app_version,
                         'chart_repository', (
                             select json_build_object(

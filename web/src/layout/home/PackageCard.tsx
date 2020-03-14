@@ -59,6 +59,7 @@ const PackageCard = (props: Props) => {
                                       filters: {
                                         'repo': [props.package.chartRepository!.name],
                                       },
+                                      deprecated: false,
                                     }),
                                   });
                                 }}

@@ -29,6 +29,7 @@ interface Props {
   filters: {
     [key: string]: string[];
   };
+  deprecated: boolean;
   fromDetail: boolean;
 }
 
@@ -86,6 +87,19 @@ const SearchView = (props: Props) => {
           ...props.filters,
           [name]: newFilters,
         },
+        deprecated: props.deprecated,
+      }),
+    });
+  };
+
+  const onDeprecatedChange = (): void => {
+    history.push({
+      pathname: '/search',
+      search: prepareQueryString({
+        pageNumber: props.pageNumber,
+        text: props.text,
+        filters: props.filters,
+        deprecated: !props.deprecated,
       }),
     });
   };
@@ -97,6 +111,7 @@ const SearchView = (props: Props) => {
         pageNumber: pageNumber,
         text: props.text,
         filters: props.filters,
+        deprecated: props.deprecated,
       }),
     });
   };
@@ -108,6 +123,7 @@ const SearchView = (props: Props) => {
         pageNumber: 1,
         text: props.text,
         filters: props.filters,
+        deprecated: props.deprecated,
       }),
     });
     setScrollPosition(0);
@@ -123,6 +139,7 @@ const SearchView = (props: Props) => {
         filters: props.filters,
         offset: (props.pageNumber - 1) * parseInt(limit),
         limit: parseInt(limit),
+        deprecated: props.deprecated,
       };
 
       try {
@@ -168,7 +185,7 @@ const SearchView = (props: Props) => {
     };
     fetchSearchResults();
     // https://twitter.com/dan_abramov/status/1104414272753487872
-  }, [props.text, props.pageNumber, JSON.stringify(props.filters), limit]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.text, props.pageNumber, JSON.stringify(props.filters), props.deprecated, limit]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const { packages, facets } = searchResults.data;
   const { total, offset } = searchResults.metadata;
@@ -204,6 +221,8 @@ const SearchView = (props: Props) => {
                     facets={facets}
                     activeFilters={props.filters}
                     onChange={onFiltersChange}
+                    deprecated={props.deprecated}
+                    onDeprecatedChange={onDeprecatedChange}
                     visibleTitle={false}
                   />
                 </Sidebar>
@@ -245,6 +264,8 @@ const SearchView = (props: Props) => {
                   facets={facets}
                   activeFilters={props.filters}
                   onChange={onFiltersChange}
+                  deprecated={props.deprecated}
+                  onDeprecatedChange={onDeprecatedChange}
                   visibleTitle
                 />
               </div>
@@ -279,6 +300,7 @@ const SearchView = (props: Props) => {
                             text: props.text,
                             pageNumber: props.pageNumber,
                             filters: props.filters,
+                            deprecated: props.deprecated,
                           }}
                           saveScrollPosition={saveScrollPosition}
                         />

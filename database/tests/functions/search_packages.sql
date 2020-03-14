@@ -158,6 +158,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -170,6 +171,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
+                "deprecated": true,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -201,6 +203,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -213,6 +216,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
+                "deprecated": true,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -263,6 +267,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -329,6 +334,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -361,6 +367,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -396,6 +403,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
+                "deprecated": true,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -595,6 +603,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -607,6 +616,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
+                "deprecated": true,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -639,6 +649,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
+                "deprecated": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -691,6 +702,7 @@ select is(
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
+                "deprecated": true,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"

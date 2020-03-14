@@ -94,6 +94,7 @@ describe('Package index', () => {
         text: 'test',
         filters: {},
         pageNumber: 1,
+        deprecated: false,
       };
       const mockPackage = getMockPackage('4');
       mocked(API).getPackage.mockResolvedValue(mockPackage);

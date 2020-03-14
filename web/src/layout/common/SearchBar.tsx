@@ -56,6 +56,7 @@ const SearchBar = (props: Props) => {
             pageNumber: 1,
             text: value,
             filters: {},
+            deprecated: false,
           }),
         });
       }

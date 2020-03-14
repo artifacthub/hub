@@ -109,6 +109,7 @@ const Details = (props: Props) => {
                     text: keyword,
                     pageNumber: 1,
                     filters: {},
+                    deprecated: false,
                   }),
                 });
               }}

@@ -34,7 +34,7 @@ const PackageView = (props: Props) => {
   const [packageName, setPackageName] = useState(props.packageName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null>(null);
-  const { text, pageNumber, filters } = props.searchUrlReferer || {};
+  const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
 
   useScrollRestorationFix();
@@ -109,6 +109,7 @@ const PackageView = (props: Props) => {
                   pageNumber: pageNumber || 1,
                   text: text,
                   filters: filters || {},
+                  deprecated: deprecated || false,
                 }),
                 state: { fromDetail: true },
               });
@@ -136,7 +137,14 @@ const PackageView = (props: Props) => {
                 </div>
 
                 <div className="ml-3">
-                  <div className="h3 mb-0">{detail.displayName || detail.name}</div>
+                  <div className="d-flex flex-row align-items-center">
+                    <div className="h3 mb-0">
+                      {detail.displayName || detail.name}
+                    </div>
+                    {!isNull(detail.deprecated) && detail.deprecated && (
+                      <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>Deprecated</div>
+                    )}
+                  </div>
 
                   {(() => {
                     switch (detail.kind) {
@@ -152,6 +160,7 @@ const PackageView = (props: Props) => {
                                 filters: {
                                   repo: [detail.chartRepository!.name],
                                 },
+                                deprecated: false,
                               }),
                             }}
                           >
