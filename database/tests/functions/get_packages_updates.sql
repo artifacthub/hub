@@ -5,10 +5,13 @@ select plan(3);
 -- Declare some variables
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
+\set repo3ID '00000000-0000-0000-0000-000000000003'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
+\set package3ID '00000000-0000-0000-0000-000000000003'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
+\set image3ID '00000000-0000-0000-0000-000000000003'
 
 -- No packages at this point
 select is(
@@ -25,6 +28,8 @@ insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
+insert into chart_repository (chart_repository_id, name, display_name, url)
+values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com');
 insert into package (
     package_id,
     name,
@@ -33,6 +38,7 @@ insert into package (
     home_url,
     logo_image_id,
     keywords,
+    deprecated,
     latest_version,
     created_at,
     updated_at,
@@ -46,6 +52,7 @@ insert into package (
     'home_url',
     :'image1ID',
     '{"kw1", "kw2"}',
+    false,
     '1.0.0',
     current_timestamp - '1s'::interval,
     current_timestamp - '1s'::interval,
@@ -106,6 +113,50 @@ insert into snapshot (
     '1.0.0',
     '12.1.0',
     'digest-package2-1.0.0',
+    'readme',
+    '{"link1": "https://link1", "link2": "https://link2"}'
+);
+insert into package (
+    package_id,
+    name,
+    display_name,
+    description,
+    home_url,
+    logo_image_id,
+    keywords,
+    deprecated,
+    latest_version,
+    created_at,
+    updated_at,
+    package_kind_id,
+    chart_repository_id
+) values (
+    :'package3ID',
+    'package3',
+    'Package 3',
+    'description',
+    'home_url',
+    :'image3ID',
+    '{"kw1", "kw2"}',
+    true,
+    '1.0.0',
+    current_timestamp - '3s'::interval,
+    current_timestamp - '3s'::interval,
+    0,
+    :'repo3ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    app_version,
+    digest,
+    readme,
+    links
+) values (
+    :'package3ID',
+    '1.0.0',
+    '12.1.0',
+    'digest-package3-1.0.0',
     'readme',
     '{"link1": "https://link1", "link2": "https://link2"}'
 );

@@ -34,6 +34,7 @@ returns setof json as $$
                 join snapshot s using (package_id)
                 join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
+                and (p.deprecated is null or p.deprecated = false)
                 order by created_at desc limit 5
             ) as lpa
         ),
@@ -68,6 +69,7 @@ returns setof json as $$
                 join snapshot s using (package_id)
                 join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
+                and (p.deprecated is null or p.deprecated = false)
                 order by updated_at desc limit 5
             ) as pru
         )

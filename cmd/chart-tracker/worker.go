@@ -146,6 +146,7 @@ func (w *worker) handleJob(j *job) error {
 		LogoURL:         logoURL,
 		LogoImageID:     logoImageID,
 		Keywords:        md.Keywords,
+		Deprecated:      md.Deprecated,
 		Version:         md.Version,
 		AppVersion:      md.AppVersion,
 		Digest:          j.chartVersion.Digest,

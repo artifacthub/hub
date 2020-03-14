@@ -79,6 +79,7 @@ select columns_are('package', array[
     'logo_url',
     'logo_image_id',
     'keywords',
+    'deprecated',
     'latest_version',
     'created_at',
     'updated_at',
@@ -142,6 +143,7 @@ select indexes_are('maintainer', array[
 ]);
 select indexes_are('package', array[
     'package_pkey',
+    'package_deprecated_idx',
     'package_chart_repository_id_name_key',
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
