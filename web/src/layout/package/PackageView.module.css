@@ -46,6 +46,12 @@
   color: inherit;
 }
 
+.deprecatedBadge {
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  font-size: .5rem !important;
+}
+
 @media only screen and (max-width: 768px) {
   .imageWrapper {
     min-width: 50px;

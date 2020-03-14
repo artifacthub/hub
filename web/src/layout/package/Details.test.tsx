@@ -30,7 +30,8 @@ describe('Details', () => {
         searchUrlReferer={{
           text: 'test',
           pageNumber: 1,
-          filters: {}
+          filters: {},
+          deprecated: false,
         }}
       />
     );
@@ -112,6 +113,7 @@ describe('Details', () => {
           text: mockPackage.keywords![0],
           pageNumber: 1,
           filters: {},
+          deprecated: false,
         }),
       });
     });

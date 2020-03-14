@@ -116,6 +116,7 @@ describe('PackageCard', () => {
           filters: {
             repo: [mockPackage.chartRepository!.name]
           },
+          deprecated: false,
         }),
         state: { fromSearchCard: true },
       });
@@ -141,6 +142,7 @@ describe('PackageCard', () => {
         text: 'test',
         filters: {},
         pageNumber: 1,
+        deprecated: false,
       };
       const { queryByTestId } = render(
         <Router>

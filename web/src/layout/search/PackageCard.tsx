@@ -6,6 +6,7 @@ import PackageIcon from '../common/PackageIcon';
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './PackageCard.module.css';
 import buildPackageURL from '../../utils/buildPackageURL';
+import isNull from 'lodash/isNull';
 
 interface Props {
   package: Package;
@@ -40,8 +41,11 @@ const PackageCard = (props: Props) => {
 
                 <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>
                   <div className={`card-title font-weight-bolder mb-2 ${styles.title}`}>
-                    <div className="h5">
+                    <div className="h5 d-flex flex-row align-items-center">
                       {props.package.displayName || props.package.name}
+                      {!isNull(props.package.deprecated) && props.package.deprecated && (
+                        <div className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}>Deprecated</div>
+                      )}
                     </div>
                   </div>
 
@@ -65,6 +69,7 @@ const PackageCard = (props: Props) => {
                                         filters: {
                                           'repo': [props.package.chartRepository!.name],
                                         },
+                                        deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
                                       }),
                                       state: { fromSearchCard: true },
                                     });
@@ -96,6 +101,10 @@ const PackageCard = (props: Props) => {
             <p className={`mb-0 card-text overflow-hidden ${styles.description}`}>
               {props.package.description}
             </p>
+
+            {!isNull(props.package.deprecated) && props.package.deprecated && (
+              <div className={`d-inline d-sm-none badge badge-pill mt-1 text-uppercase ${styles.deprecatedBadge}`}>Deprecated</div>
+            )}
           </div>
         </Link>
       </div>

@@ -121,6 +121,7 @@ describe('SearchBar', () => {
           text: 'testing',
           pageNumber: 1,
           filters: {},
+          deprecated: false,
         }),
       });
     });

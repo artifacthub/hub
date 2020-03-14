@@ -101,6 +101,9 @@ export const API = {
     if (!isUndefined(query.text)) {
       q.set('text', query.text);
     }
+    if (query.deprecated) {
+      q.set('deprecated', 'true');
+    }
     return apiFetch(`${API_BASE_URL}/package/search?${q.toString()}`);
   },
 

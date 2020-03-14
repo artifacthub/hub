@@ -35,6 +35,7 @@ const defaultProps = {
   pageNumber: 1,
   filters: {},
   fromDetail: false,
+  deprecated: false,
 };
 
 describe('Search index', () => {
@@ -151,7 +152,7 @@ describe('Search index', () => {
   });
 
   describe('Filters', () => {
-    it('renders 2 facets groups', async () => {
+    it('renders 2 facets groups + deprecated', async () => {
       const mockSearchResults = getMockSearchResults('7');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
@@ -161,14 +162,16 @@ describe('Search index', () => {
         </Router>
       );
 
-      const [facets, options] = await waitForElement(() => [
+      const [facets, options, deprecated] = await waitForElement(() => [
         screen.getAllByRole('menuitem'),
         screen.getAllByTestId('checkbox'),
+        screen.getAllByTestId('deprecatedCheckbox'),
       ]);
 
       // Desktop + mobile (sidebar)
-      expect(facets).toHaveLength(2 * 2);
+      expect(facets).toHaveLength(2 * 2 + 2);
       expect(options).toHaveLength(4 * 2);
+      expect(deprecated).toHaveLength(1 * 2);
       await wait();
     });
 
@@ -194,6 +197,7 @@ describe('Search index', () => {
           text: 'test',
           pageNumber: 1,
           filters: {kind: ['0']},
+          deprecated: false,
         }),
       });
 
@@ -292,6 +296,7 @@ describe('Search index', () => {
           text: 'test',
           pageNumber: 2,
           filters: {kind: ['0']},
+          deprecated: false,
         }),
       });
 
@@ -344,6 +349,7 @@ describe('Search index', () => {
           text: 'test',
           pageNumber: 1,
           filters: {},
+          deprecated: false,
         }),
       });
 
