@@ -14,19 +14,6 @@ type ChartRepository struct {
 	UserID            string `json:"user_id"`
 }
 
-// OperatorProvider represents an entity that provides operators that can be
-// managed by the Operator Lifecycle Manager (part of the Operator Framework).
-type OperatorProvider struct {
-	OperatorProviderID string `json:"operator_provider_id"`
-	Name               string `json:"name"`
-}
-
-// OperatorCategory represents a category an operator may belong to.
-type OperatorCategory struct {
-	OperatorCategoryID string `json:"operator_category_id"`
-	Name               string `json:"name"`
-}
-
 // Link represents a url associated with a package.
 type Link struct {
 	Name string `json:"name"`
@@ -47,32 +34,34 @@ const (
 	// Chart represents a Helm chart.
 	Chart PackageKind = 0
 
-	// Operator represents an operator that can be managed by the Operator
-	// Lifecycle Manager (Operator Framework).
-	Operator PackageKind = 1
+	// Falco represents a set of Falco rules.
+	Falco PackageKind = 1
+
+	// OPA represents a set of OPA policies.
+	OPA PackageKind = 2
 )
 
 // Package represents a Kubernetes package.
 type Package struct {
-	PackageID         string            `json:"package_id"`
-	Kind              PackageKind       `json:"kind"`
-	Name              string            `json:"name"`
-	DisplayName       string            `json:"display_name"`
-	Description       string            `json:"description"`
-	HomeURL           string            `json:"home_url"`
-	LogoURL           string            `json:"logo_url"`
-	LogoImageID       string            `json:"logo_image_id"`
-	Keywords          []string          `json:"keywords"`
-	Deprecated        bool              `json:"deprecated"`
-	Readme            string            `json:"readme"`
-	Links             []*Link           `json:"links"`
-	Version           string            `json:"version"`
-	AvailableVersions []string          `json:"available_versions"`
-	AppVersion        string            `json:"app_version"`
-	Digest            string            `json:"digest"`
-	Maintainers       []*Maintainer     `json:"maintainers"`
-	ChartRepository   *ChartRepository  `json:"chart_repository"`
-	OperatorProvider  *OperatorProvider `json:"operator_provider"`
+	PackageID         string                 `json:"package_id"`
+	Kind              PackageKind            `json:"kind"`
+	Name              string                 `json:"name"`
+	DisplayName       string                 `json:"display_name"`
+	Description       string                 `json:"description"`
+	HomeURL           string                 `json:"home_url"`
+	LogoURL           string                 `json:"logo_url"`
+	LogoImageID       string                 `json:"logo_image_id"`
+	Keywords          []string               `json:"keywords"`
+	Deprecated        bool                   `json:"deprecated"`
+	Readme            string                 `json:"readme"`
+	Links             []*Link                `json:"links"`
+	Version           string                 `json:"version"`
+	AvailableVersions []string               `json:"available_versions"`
+	AppVersion        string                 `json:"app_version"`
+	Digest            string                 `json:"digest"`
+	Data              map[string]interface{} `json:"data"`
+	Maintainers       []*Maintainer          `json:"maintainers"`
+	ChartRepository   *ChartRepository       `json:"chart_repository"`
 }
 
 // SearchPackageInput represents the query input when searching for packages.
@@ -88,10 +77,9 @@ type SearchPackageInput struct {
 
 // GetPackageInput represents the input used to get a specific package.
 type GetPackageInput struct {
-	Kind                PackageKind `json:"kind"`
-	ChartRepositoryName string      `json:"chart_repository_name"`
-	PackageName         string      `json:"package_name"`
-	Version             string      `json:"version"`
+	ChartRepositoryName string `json:"chart_repository_name"`
+	PackageName         string `json:"package_name"`
+	Version             string `json:"version"`
 }
 
 // User represents a Hub user.

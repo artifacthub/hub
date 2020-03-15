@@ -38,7 +38,7 @@ begin
         (p_pkg->>'kind')::int,
         nullif(v_chart_repository_id, '')::uuid
     )
-    on conflict (chart_repository_id, name) do update
+    on conflict (package_kind_id, chart_repository_id, name) do update
     set
         name = excluded.name,
         display_name = excluded.display_name,
@@ -104,14 +104,16 @@ begin
         app_version,
         digest,
         readme,
-        links
+        links,
+        data
     ) values (
         v_package_id,
         p_pkg->>'version',
         nullif(p_pkg->>'app_version', ''),
-        p_pkg->>'digest',
+        nullif(p_pkg->>'digest', ''),
         nullif(p_pkg->>'readme', ''),
-        p_pkg->'links'
+        p_pkg->'links',
+        p_pkg->'data'
     )
     on conflict (package_id, version) do update
     set

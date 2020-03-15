@@ -7,7 +7,7 @@ create extension if not exists pgcrypto;
 create table if not exists organization (
     organization_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
-    description text check (description <> '') unique,
+    description text check (description <> ''),
     home_url text check (home_url <> ''),
     logo_url text check (logo_url <> ''),
     logo_image_id uuid,
@@ -63,6 +63,8 @@ create table if not exists package_kind (
 );
 
 insert into package_kind values (0, 'chart');
+insert into package_kind values (1, 'falco');
+insert into package_kind values (2, 'opa');
 
 create or replace function generate_package_tsdoc(
     p_name text,
@@ -80,6 +82,9 @@ $$ language sql immutable;
 create table if not exists package (
     package_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> ''),
+    normalized_name text generated always as (
+        replace(lower(name), ' ', '-')
+    ) stored,
     display_name text check (display_name <> ''),
     description text check (description <> ''),
     home_url text check (home_url <> ''),
@@ -96,7 +101,7 @@ create table if not exists package (
     package_kind_id integer not null references package_kind on delete restrict,
     chart_repository_id uuid references chart_repository on delete cascade,
     check (package_kind_id <> 0 or chart_repository_id is not null),
-    unique (chart_repository_id, name)
+    unique (package_kind_id, chart_repository_id, name)
 );
 
 create index package_deprecated_idx on package (deprecated);
@@ -110,9 +115,10 @@ create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,
     version text not null check (version <> ''),
     app_version text check (app_version <> ''),
-    digest text not null check (digest <> ''),
+    digest text check (digest <> ''),
     readme text check (readme <> ''),
     links jsonb,
+    data jsonb,
     primary key (package_id, version)
 );
 

@@ -7,8 +7,10 @@ select plan(18);
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
+\set package3ID '00000000-0000-0000-0000-000000000003'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
+\set image3ID '00000000-0000-0000-0000-000000000003'
 
 -- No packages at this point
 select is(
@@ -142,10 +144,41 @@ insert into snapshot (
     'readme',
     '{"link1": "https://link1", "link2": "https://link2"}'
 );
+insert into package (
+    package_id,
+    name,
+    display_name,
+    description,
+    logo_image_id,
+    keywords,
+    latest_version,
+    package_kind_id
+) values (
+    :'package3ID',
+    'package3',
+    'Package 3',
+    'description',
+    :'image3ID',
+    '{"kw3"}',
+    '1.0.0',
+    1
+);
+insert into snapshot (
+    package_id,
+    version,
+    readme,
+    links
+) values (
+    :'package3ID',
+    '1.0.0',
+    'readme',
+    '{"link1": "https://link1", "link2": "https://link2"}'
+);
 
 -- Some packages have just been seeded
 select is(
     search_packages('{
+        "facets": true,
         "deprecated": true
     }')::jsonb,
     '{
@@ -153,8 +186,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -166,8 +201,10 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
+                "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
@@ -176,16 +213,52 @@ select is(
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
+            }, {
+                "kind": 1,
+                "name": "package3",
+                "normalized_name": "package3",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                "package_id": "00000000-0000-0000-0000-000000000003",
+                "version": "1.0.0",
+                "app_version": null,
+                "description": "description",
+                "display_name": "Package 3",
+                "deprecated": null,
+                "chart_repository": null
             }],
-            "facets": null
+            "facets": [{
+                "title": "Kind",
+                "filter_key": "kind",
+                "options": [{
+                    "id": 0,
+                    "name": "Chart",
+                    "total": 2
+                }, {
+                    "id": 1,
+                    "name": "Falco",
+                    "total": 1
+                }]
+            }, {
+                "title": "Repository",
+                "filter_key": "repo",
+                "options": [{
+                    "id": "repo1",
+                    "name": "Repo1",
+                    "total": 1
+                }, {
+                    "id": "repo2",
+                    "name": "Repo2",
+                    "total": 1
+                }]
+            }]
         },
         "metadata": {
             "limit": null,
             "offset": null,
-            "total": 2
+            "total": 3
         }
     }'::jsonb,
-    'Text: empty | Two packages expected (all) - No facets expected'
+    'Text: empty | Three packages expected (all) - Facets expected'
 );
 select is(
     search_packages('{
@@ -198,8 +271,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -211,8 +286,10 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
+                "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
@@ -262,8 +339,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -301,7 +380,7 @@ select is(
 );
 select is(
     search_packages('{
-        "text": "kw3"
+        "text": "kw9"
     }')::jsonb,
     '{
         "data": {
@@ -314,7 +393,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Text: kw3 (inexistent) | No packages or facets expected'
+    'Text: kw9 (inexistent) | No packages or facets expected'
 );
 
 -- Tests with kind and repositories filters
@@ -329,8 +408,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -362,8 +443,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -398,8 +481,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package2",
+                "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
@@ -598,8 +683,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -611,8 +698,10 @@ select is(
             }, {
                 "kind": 0,
                 "name": "package2",
+                "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",
@@ -644,8 +733,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package1",
+                "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
                 "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 1",
@@ -697,8 +788,10 @@ select is(
             "packages": [{
                 "kind": 0,
                 "name": "package2",
+                "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
                 "package_id": "00000000-0000-0000-0000-000000000002",
+                "version": "1.0.0",
                 "app_version": "12.1.0",
                 "description": "description",
                 "display_name": "Package 2",

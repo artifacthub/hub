@@ -2,7 +2,6 @@ export enum PackageKind {
   Chart = 0,
   Falco,
   Opa,
-  Operator,
 };
 
 export interface ChartRepository {

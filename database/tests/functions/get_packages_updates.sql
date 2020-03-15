@@ -3,7 +3,6 @@ begin;
 select plan(3);
 
 -- Declare some variables
-\set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set repo3ID '00000000-0000-0000-0000-000000000003'
 \set package1ID '00000000-0000-0000-0000-000000000001'
@@ -25,8 +24,6 @@ select is(
 
 -- Seed some packages
 insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com');
@@ -42,8 +39,7 @@ insert into package (
     latest_version,
     created_at,
     updated_at,
-    package_kind_id,
-    chart_repository_id
+    package_kind_id
 ) values (
     :'package1ID',
     'package1',
@@ -56,21 +52,16 @@ insert into package (
     '1.0.0',
     current_timestamp - '1s'::interval,
     current_timestamp - '1s'::interval,
-    0,
-    :'repo1ID'
+    1
 );
 insert into snapshot (
     package_id,
     version,
-    app_version,
-    digest,
     readme,
     links
 ) values (
     :'package1ID',
     '1.0.0',
-    '12.1.0',
-    'digest-package1-1.0.0',
     'readme',
     '{"link1": "https://link1", "link2": "https://link2"}'
 );
@@ -167,22 +158,22 @@ select is(
     '{
         "latest_packages_added": [{
             "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
+            "kind": 1,
             "name": "package1",
+            "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
+            "version": "1.0.0",
+            "app_version": null,
+            "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "normalized_name": "package2",
             "display_name": "Package 2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "version": "1.0.0",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -192,22 +183,22 @@ select is(
         }],
         "packages_recently_updated": [{
             "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
+            "kind": 1,
             "name": "package1",
+            "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
+            "version": "1.0.0",
+            "app_version": null,
+            "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "normalized_name": "package2",
             "display_name": "Package 2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "version": "1.0.0",
             "app_version": "12.1.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -251,22 +242,22 @@ select is(
     '{
         "latest_packages_added": [{
             "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
+            "kind": 1,
             "name": "package1",
+            "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
+            "version": "1.0.0",
+            "app_version": null,
+            "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "normalized_name": "package2",
             "display_name": "Package 2 v2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "version": "2.0.0",
             "app_version": "13.0.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -278,8 +269,10 @@ select is(
             "package_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
             "name": "package2",
+            "normalized_name": "package2",
             "display_name": "Package 2 v2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "version": "2.0.0",
             "app_version": "13.0.0",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
@@ -288,16 +281,14 @@ select is(
             }
         }, {
             "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
+            "kind": 1,
             "name": "package1",
+            "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
-            "app_version": "12.1.0",
-            "chart_repository": {
-                "chart_repository_id": "00000000-0000-0000-0000-000000000001",
-                "name": "repo1",
-                "display_name": "Repo 1"
-            }
+            "version": "1.0.0",
+            "app_version": null,
+            "chart_repository": null
         }]
     }'::jsonb,
     'packages_recently_updated should have changed: package2 is now first and version has changed'

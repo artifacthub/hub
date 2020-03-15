@@ -224,7 +224,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r)
+		th.h.getPackage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -238,7 +238,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r)
+		th.h.getPackage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -257,7 +257,7 @@ func TestGetPackage(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
-		th.h.getPackage(hub.Chart)(w, r)
+		th.h.getPackage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

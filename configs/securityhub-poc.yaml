@@ -1,0 +1,11 @@
+log:
+  level: debug
+  pretty: true
+db:
+  db:
+  host: localhost
+  port: "5432"
+  database: hub
+  user: postgres
+tracker:
+  imageStore: pg
