@@ -94,7 +94,7 @@ create table if not exists package (
         generate_package_tsdoc(name, display_name, description, keywords)
     ) stored,
     package_kind_id integer not null references package_kind on delete restrict,
-    chart_repository_id uuid references chart_repository on delete restrict,
+    chart_repository_id uuid references chart_repository on delete cascade,
     check (package_kind_id <> 0 or chart_repository_id is not null),
     unique (chart_repository_id, name)
 );

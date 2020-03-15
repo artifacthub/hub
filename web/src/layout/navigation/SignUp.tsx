@@ -89,11 +89,11 @@ const SignUp = (props: Props) => {
       };
 
       if (formData.get('firstName') !== '') {
-        user['first_name'] = formData.get('firstName') as string;
+        user['firstName'] = formData.get('firstName') as string;
       }
 
       if (formData.get('lastName') !== '') {
-        user['last_name'] = formData.get('lastName') as string;
+        user['lastName'] = formData.get('lastName') as string;
       }
     } else {
       setIsValidated(true);

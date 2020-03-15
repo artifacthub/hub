@@ -1,0 +1,11 @@
+
+@media only screen and (max-width: 576px) {
+  .btnAction {
+    margin-left: .5rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    font-size: 1.5rem !important;
+  }
+}

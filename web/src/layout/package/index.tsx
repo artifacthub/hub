@@ -71,8 +71,12 @@ const PackageView = (props: Props) => {
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element => (
     <Modal
       buttonType={buttonType}
-      buttonTitle="Install"
-      buttonIcon={buttonIcon ? <FiDownload className="mr-2" /> : undefined}
+      buttonContent={(
+        <>
+          {buttonIcon ? <FiDownload className="mr-2" /> : undefined}
+          <span>Install</span>
+        </>
+      )}
       header={<ModalHeader package={detail!} />}
       className={styles.modalInstallationWrapper}
     >
@@ -182,8 +186,12 @@ const PackageView = (props: Props) => {
                 <div className="d-inline-block mr-2">
                   <Modal
                     buttonType="btn-outline-secondary"
-                    buttonTitle="Info"
-                    buttonIcon={<FiPlus className="mr-2" />}
+                    buttonContent={(
+                      <>
+                        <FiPlus className="mr-2" />
+                        <span>Info</span>
+                      </>
+                    )}
                     header={<ModalHeader package={detail} />}
                     className={styles.wrapper}
                   >

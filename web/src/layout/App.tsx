@@ -7,6 +7,7 @@ import Navbar from './navigation/Navbar';
 import HomeView from './home';
 import SearchView from './search';
 import PackageView from './package';
+import AdminView from './admin';
 import NotFound from './notFound';
 import buildSearchParams from '../utils/buildSearchParams';
 import styles from './App.module.css';
@@ -98,6 +99,15 @@ export default function App() {
                   searchUrlReferer={location.state || null}
                   {...match.params}
                 />
+              </div>
+            </>
+          )} />
+
+          <Route path="/admin" exact render={() => (
+            <>
+              <Navbar isAuth={isAuth} setIsAuth={setIsAuth} isSearching={isSearching} privateRoute />
+              <div className="d-flex flex-column flex-grow-1">
+                <AdminView isAuth={isAuth} setIsAuth={setIsAuth} />
               </div>
             </>
           )} />

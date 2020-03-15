@@ -4,8 +4,8 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 export interface Props {
-  type: 'text' | 'password' | 'email';
-  label: string;
+  type: 'text' | 'password' | 'email' | 'url';
+  label?: string;
   name: string;
   value?: string;
   validText?: string;
@@ -21,6 +21,7 @@ export interface Props {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
   autoComplete?: string;
+  readOnly?: boolean;
 }
 
 const InputField = (props: Props) => {
@@ -42,12 +43,14 @@ const InputField = (props: Props) => {
 
   return (
     <div className={`form-group mb-4 position-relative ${props.className}`}>
-      <label htmlFor={props.name}>
-        {props.label}
-        {!isUndefined(props.labelLegend) && (
-          <>{props.labelLegend}</>
-        )}
-      </label>
+      {!isUndefined(props.label) && (
+        <label htmlFor={props.name}>
+          {props.label}
+          {!isUndefined(props.labelLegend) && (
+            <>{props.labelLegend}</>
+          )}
+        </label>
+      )}
 
       <input
         type={props.type}
@@ -63,6 +66,7 @@ const InputField = (props: Props) => {
         maxLength={props.maxLength}
         pattern={props.pattern}
         autoComplete={props.autoComplete}
+        readOnly={props.readOnly || false}
         onChange={handleOnChange}
         onBlur={handleOnBlur}
         onKeyDown={props.onKeyDown}

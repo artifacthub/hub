@@ -3,14 +3,17 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { API } from '../../api';
 import { UserAuth } from '../../types';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   onSuccess?: () => void;
   className?: string;
+  privateRoute?: boolean;
 }
 
 const LogOut = (props: Props) => {
+  const history = useHistory();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -23,6 +26,10 @@ const LogOut = (props: Props) => {
         props.onSuccess();
       }
       props.setIsAuth({status: false});
+      if (!isUndefined(props.privateRoute) && props.privateRoute) {
+        history.push('/');
+      }
+
     } catch(err) {
       let error = 'An error occurred, please try again later';
       switch(err.status) {

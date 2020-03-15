@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -9,6 +10,7 @@ import styles from './UserAuthDropdown.module.css';
 interface Props {
   alias: string;
   setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
+  privateRoute?: boolean;
 }
 
 const UserAuthDropdown = (props: Props) => {
@@ -42,10 +44,21 @@ const UserAuthDropdown = (props: Props) => {
 
         <div className="dropdown-divider my-3" />
 
+        <Link
+          className="dropdown-item"
+          to={{
+            pathname: '/admin',
+          }}
+          onClick={() => setOpenStatus(false)}
+        >
+          My packages
+        </Link>
+
         <LogOut
           className="mb-2"
           setIsAuth={props.setIsAuth}
           onSuccess={() => setOpenStatus(false)}
+          privateRoute={props.privateRoute}
         />
       </div>
     </div>

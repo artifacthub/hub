@@ -2,16 +2,17 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias, ChartRepository } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 import history from '../utils/history';
+import renameKeysInObject from '../utils/renameKeysInObject';
 
 interface Result {
   [key: string]: any;
 }
 
 interface FetchOptions {
-  method: 'POST' | 'GET';
+  method: 'POST' | 'GET' | 'PUT' | 'DELETE';
   headers?: {
     [key: string]: string;
   };
@@ -116,12 +117,13 @@ export const API = {
   },
 
   register: (user: User): Promise<null | string> => {
+    const newUser = renameKeysInObject(user, {'firstName': 'first_name', 'lastName': 'last_name'});
     return apiFetch(`${API_BASE_URL}/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(newUser),
     });
   },
 
@@ -151,5 +153,37 @@ export const API = {
 
   getUserAlias: (): Promise<Alias> => {
     return apiFetch(`${API_BASE_URL}/user/alias`);
+  },
+
+  getChartRepositories: (): Promise<ChartRepository[]> => {
+    return apiFetch(`${API_BASE_URL}/admin/chart`);
+  },
+
+  addChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
+    const chartRepo = renameKeysInObject(chartRepository, {'displayName': 'display_name'});
+    return apiFetch(`${API_BASE_URL}/admin/chart`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chartRepo),
+    });
+  },
+
+  deleteChartRepository: (chartRepositoryName: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/admin/chart/${chartRepositoryName}`, {
+      method: 'DELETE',
+    });
+  },
+
+  updateChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
+    const chartRepo = renameKeysInObject(chartRepository, {'displayName': 'display_name'});
+    return apiFetch(`${API_BASE_URL}/admin/chart/${chartRepository.name}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chartRepo),
+    });
   },
 };
