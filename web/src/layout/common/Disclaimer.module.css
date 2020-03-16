@@ -1,0 +1,11 @@
+.disclaimer {
+  font-size: .85rem;
+  line-height: .85rem;
+  border-bottom: 2px solid #856404;
+}
+
+.close {
+  top: 0;
+  bottom: 0;
+  right: 10px;
+}
