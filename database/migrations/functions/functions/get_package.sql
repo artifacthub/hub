@@ -7,29 +7,28 @@ declare
     v_package_name text := p_input->>'package_name';
     v_chart_repository_name text := p_input->>'chart_repository_name';
 begin
-    case (p_input->>'kind')::int
-        when 0 then -- chart
-            if v_chart_repository_name is null or v_chart_repository_name = '' then
-                raise 'a valid chart repository name must be provided';
-            end if;
-            if v_package_name is null or v_package_name = '' then
-                raise 'a valid package name must be provided';
-            end if;
+    if v_package_name is null or v_package_name = '' then
+        raise 'a valid package name must be provided';
+    end if;
 
-            select p.package_id into v_package_id
-            from package p
-            join chart_repository r using (chart_repository_id)
-            where r.name = v_chart_repository_name
-            and p.name = v_package_name;
-        else
-            raise 'a valid package kind must be provided';
-    end case;
+    if v_chart_repository_name <> '' then
+        select p.package_id into v_package_id
+        from package p
+        join chart_repository r using (chart_repository_id)
+        where r.name = v_chart_repository_name
+        and p.normalized_name = v_package_name;
+    else
+        select p.package_id into v_package_id
+        from package p
+        where p.normalized_name = v_package_name;
+    end if;
 
     return query
     select json_build_object(
         'package_id', p.package_id,
         'kind', p.package_kind_id,
         'name', p.name,
+        'normalized_name', p.normalized_name,
         'display_name', p.display_name,
         'description', p.description,
         'home_url', p.home_url,
@@ -38,6 +37,7 @@ begin
         'deprecated', p.deprecated,
         'readme', s.readme,
         'links', s.links,
+        'data', s.data,
         'version', s.version,
         'available_versions', (
             select json_agg(distinct(version))
@@ -55,18 +55,19 @@ begin
             join package__maintainer pm using (maintainer_id)
             where pm.package_id = v_package_id
         ),
-        'chart_repository', (
-            select json_build_object(
+        'chart_repository', (select nullif(
+            jsonb_build_object(
                 'chart_repository_id', r.chart_repository_id,
                 'name', r.name,
                 'display_name', r.display_name,
                 'url', r.url
-            )
-        )
+            ),
+            '{"url": null, "name": null, "display_name": null, "chart_repository_id": null}'::jsonb
+        ))
     )
     from package p
     join snapshot s using (package_id)
-    join chart_repository r using (chart_repository_id)
+    left join chart_repository r using (chart_repository_id)
     where p.package_id = v_package_id
     and
         case when p_input->>'version' <> '' then

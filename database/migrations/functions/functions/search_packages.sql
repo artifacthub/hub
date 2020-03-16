@@ -20,17 +20,19 @@ begin
             p.package_kind_id,
             pk.name as package_kind_name,
             p.name,
+            p.normalized_name,
             p.display_name,
             p.description,
             p.logo_image_id,
             p.deprecated,
+            s.version,
             s.app_version,
             r.name as chart_repository_name,
             r.display_name as chart_repository_display_name
         from package p
         join package_kind pk using (package_kind_id)
-        join chart_repository r using (chart_repository_id)
         join snapshot s using (package_id)
+        left join chart_repository r using (chart_repository_id)
         where s.version = p.latest_version
         and
             case when p_input ? 'text' and p_input->>'text' <> '' then
@@ -59,17 +61,20 @@ begin
                         'package_id', package_id,
                         'kind', package_kind_id,
                         'name', name,
+                        'normalized_name', normalized_name,
                         'display_name', display_name,
                         'description', description,
                         'logo_image_id', logo_image_id,
                         'deprecated', deprecated,
+                        'version', version,
                         'app_version', app_version,
-                        'chart_repository', (
-                            select json_build_object(
+                        'chart_repository', (select nullif(
+                            jsonb_build_object(
                                 'name', chart_repository_name,
                                 'display_name', chart_repository_display_name
-                            )
-                        )
+                            ),
+                            '{"name": null, "display_name": null}'::jsonb
+                        ))
                     )), '[]')
                     from (
                         select * from packages_applying_all_filters
@@ -117,6 +122,7 @@ begin
                                             chart_repository_name,
                                             count(*) as total
                                         from packages_applying_text_filter
+                                        where chart_repository_name is not null
                                         group by chart_repository_name
                                         order by total desc
                                     ) as breakdown

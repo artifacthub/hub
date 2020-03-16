@@ -8,31 +8,36 @@ returns setof json as $$
                 'package_id', package_id,
                 'kind', package_kind_id,
                 'name', name,
+                'normalized_name', normalized_name,
                 'display_name', display_name,
                 'logo_image_id', logo_image_id,
+                'version', version,
                 'app_version', app_version,
-                'chart_repository', (
-                    select json_build_object(
+                'chart_repository', (select nullif(
+                    jsonb_build_object(
                         'chart_repository_id', chart_repository_id,
                         'name', chart_repository_name,
                         'display_name', chart_repository_display_name
-                    )
-                )
+                    ),
+                    '{"chart_repository_id": null, "name": null, "display_name": null}'::jsonb
+                ))
             )), '[]')
             from (
                 select
                     p.package_id,
                     p.package_kind_id,
                     p.name,
+                    p.normalized_name,
                     p.display_name,
                     p.logo_image_id,
+                    s.version,
                     s.app_version,
                     r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
-                join chart_repository r using (chart_repository_id)
+                left join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)
                 order by created_at desc limit 5
@@ -43,31 +48,36 @@ returns setof json as $$
                 'package_id', package_id,
                 'kind', package_kind_id,
                 'name', name,
+                'normalized_name', normalized_name,
                 'display_name', display_name,
                 'logo_image_id', logo_image_id,
+                'version', version,
                 'app_version', app_version,
-                'chart_repository', (
-                    select json_build_object(
+                'chart_repository', (select nullif(
+                    jsonb_build_object(
                         'chart_repository_id', chart_repository_id,
                         'name', chart_repository_name,
                         'display_name', chart_repository_display_name
-                    )
-                )
+                    ),
+                    '{"chart_repository_id": null, "name": null, "display_name": null}'::jsonb
+                ))
             )), '[]')
             from (
                 select
                     p.package_id,
                     p.package_kind_id,
                     p.name,
+                    p.normalized_name,
                     p.display_name,
                     p.logo_image_id,
+                    s.version,
                     s.app_version,
                     r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
-                join chart_repository r using (chart_repository_id)
+                left join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)
                 order by updated_at desc limit 5

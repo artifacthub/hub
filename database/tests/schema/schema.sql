@@ -73,6 +73,7 @@ select columns_are('organization', array[
 select columns_are('package', array[
     'package_id',
     'name',
+    'normalized_name',
     'display_name',
     'description',
     'home_url',
@@ -108,7 +109,8 @@ select columns_are('snapshot', array[
     'app_version',
     'digest',
     'readme',
-    'links'
+    'links',
+    'data'
 ]);
 select columns_are('user', array[
     'user_id',
@@ -144,7 +146,7 @@ select indexes_are('maintainer', array[
 select indexes_are('package', array[
     'package_pkey',
     'package_deprecated_idx',
-    'package_chart_repository_id_name_key',
+    'package_package_kind_id_chart_repository_id_name_key',
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
     'package_tsdoc_idx',
@@ -185,7 +187,11 @@ select has_function('register_session');
 -- Check package kinds exist
 select results_eq(
     'select * from package_kind',
-    $$ values (0, 'chart') $$,
+    $$ values
+        (0, 'chart'),
+        (1, 'falco'),
+        (2, 'opa')
+    $$,
     'Package kinds should exist'
 );
 

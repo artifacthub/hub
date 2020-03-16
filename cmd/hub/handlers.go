@@ -85,8 +85,10 @@ func (h *handlers) setupRouter() {
 			r.Get("/stats", h.getPackagesStats)
 			r.Get("/updates", h.getPackagesUpdates)
 			r.Get("/search", h.searchPackages)
-			r.Get("/chart/{repoName}/{packageName}", h.getPackage(hub.Chart))
-			r.Get("/chart/{repoName}/{packageName}/{version}", h.getPackage(hub.Chart))
+			r.Get("/chart/{repoName}/{packageName}/{version}", h.getPackage)
+			r.Get("/chart/{repoName}/{packageName}", h.getPackage)
+			r.Get("/{packageName}/{version}", h.getPackage)
+			r.Get("/{packageName}", h.getPackage)
 		})
 
 		r.Route("/user", func(r chi.Router) {
@@ -245,26 +247,26 @@ func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 }
 
 // getPackage is an http handler used to get a package details.
-func (h *handlers) getPackage(kind hub.PackageKind) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		input := &hub.GetPackageInput{
-			Kind:                kind,
-			ChartRepositoryName: chi.URLParam(r, "repoName"),
-			PackageName:         chi.URLParam(r, "packageName"),
-			Version:             chi.URLParam(r, "version"),
-		}
-		jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), input)
-		if err != nil {
-			if errors.Is(err, pgx.ErrNoRows) {
-				http.NotFound(w, r)
-			} else {
-				log.Error().Err(err).Interface("input", input).Msg("getPackage failed")
-				http.Error(w, "", http.StatusInternalServerError)
-			}
-			return
-		}
-		renderJSON(w, jsonData, defaultAPICacheMaxAge)
+func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request) {
+	input := &hub.GetPackageInput{
+		PackageName: chi.URLParam(r, "packageName"),
+		Version:     chi.URLParam(r, "version"),
 	}
+	chartRepositoryName := chi.URLParam(r, "repoName")
+	if chartRepositoryName != "" {
+		input.ChartRepositoryName = chartRepositoryName
+	}
+	jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), input)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			http.NotFound(w, r)
+		} else {
+			log.Error().Err(err).Interface("input", input).Msg("getPackage failed")
+			http.Error(w, "", http.StatusInternalServerError)
+		}
+		return
+	}
+	renderJSON(w, jsonData, defaultAPICacheMaxAge)
 }
 
 // registerUser is an http handler used to register a user in the hub database.

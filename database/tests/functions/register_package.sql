@@ -26,6 +26,9 @@ select register_package('
         "link1": "https://link1",
         "link2": "https://link2"
     },
+    "data": {
+        "key": "value"
+    },
     "version": "1.0.0",
     "app_version": "12.1.0",
     "digest": "digest-package1-1.0.0",
@@ -87,7 +90,8 @@ select results_eq(
             s.app_version,
             s.digest,
             s.readme,
-            s.links
+            s.links,
+            s.data
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -99,7 +103,8 @@ select results_eq(
             '12.1.0',
             'digest-package1-1.0.0',
             'readme-version-1.0.0',
-            '{"link1": "https://link1", "link2": "https://link2"}'::jsonb
+            '{"link1": "https://link1", "link2": "https://link2"}'::jsonb,
+            '{"key": "value"}'::jsonb
         )
     $$,
     'Snapshot should exist'
