@@ -9,6 +9,7 @@ import SearchView from './search';
 import PackageView from './package';
 import AdminView from './admin';
 import NotFound from './notFound';
+import Disclaimer from './common/Disclaimer';
 import buildSearchParams from '../utils/buildSearchParams';
 import styles from './App.module.css';
 import './App.css';
@@ -50,6 +51,7 @@ export default function App() {
 
   return (
     <Router history={history}>
+      <Disclaimer />
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Switch>
           <Route  path={['/', '/verifyEmail', '/login']} exact render={({location}) => (
