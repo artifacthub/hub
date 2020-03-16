@@ -36,6 +36,19 @@ hub:
       enabled: false
       username: hub
       password: changeme
+    cookie:
+      hashKey: default-unsafe-key
+      secure: false
+  email:
+    fromName: ""
+    from: ""
+    replyTo: ""
+    smtp:
+      host: ""
+      port: 587
+      username: ""
+      password: ""
+
 
 chartTracker:
   cronjob:
