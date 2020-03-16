@@ -101,7 +101,7 @@ jobs:
         run: yarn build
 
   build-docker-images:
-    if: github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/master'
     needs:
       - linter-backend
       - tests-database
@@ -154,6 +154,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Check commit exists in master branch
+        run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/master
+          git branch -a --contains $GITHUB_SHA | grep -w master
       - name: Install Helm 3
         run: |
           curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
