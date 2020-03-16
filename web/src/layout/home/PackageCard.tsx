@@ -22,9 +22,9 @@ const PackageCard = (props: Props) => {
           pathname: buildPackageURL(props.package),
         }}
       >
-        <div className={`card-body ${styles.body}`}>
+        <div className={`card-body d-flex ${styles.body}`}>
           <div className="d-flex align-items-start justify-content-between flex-grow-1">
-            <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
+            <div className={`d-flex align-items-center flex-grow-1 h-100 ${styles.truncateWrapper}`}>
               <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
                 <Image
                   imageId={props.package.logoImageId}
@@ -74,6 +74,16 @@ const PackageCard = (props: Props) => {
                             </div>
                           </>
                         );
+
+                      case PackageKind.Falco:
+                      case PackageKind.Opa:
+                        return (
+                          <div className="text-truncate">
+                            <span className="text-muted text-uppercase mr-1">Version: </span>
+                            {props.package.version || '-'}
+                          </div>
+                        );
+
                       default:
                         return null;
                     }

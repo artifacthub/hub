@@ -63,17 +63,23 @@ const Facet = (props: Props) => {
     }
   };
 
-  const allOptions = getSortedOptions().map((option: FacetOption) => (
-    <Checkbox
-      key={`fo_${option.id}`}
-      name={props.filterKey}
-      value={option.id.toString()}
-      legend={option.total}
-      label={option.name}
-      checked={isChecked(option.id.toString())}
-      onChange={props.onChange}
-    />
-  ));
+  const allOptions = getSortedOptions().map((option: FacetOption) => {
+    let label = option.name;
+    if (option.name === 'Opa') {
+      label = 'OPA';
+    }
+    return (
+      <Checkbox
+        key={`fo_${option.id}`}
+        name={props.filterKey}
+        value={option.id.toString()}
+        legend={option.total}
+        label={label}
+        checked={isChecked(option.id.toString())}
+        onChange={props.onChange}
+      />
+    );
+  });
 
   if (allOptions.length === 0) return null;
 

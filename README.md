@@ -24,6 +24,11 @@ We're envisioning that CNCF Hub will have three main components:
         <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot2.png?raw=true"></td>
         <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot3.png?raw=true"></td>
     </tr>
+    <tr>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot4.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot5.png?raw=true"></td>
+        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot6.png?raw=true"></td>
+    </tr>
 </table>
 
 ## Getting started

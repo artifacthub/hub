@@ -1,8 +1,13 @@
-.readme {
+.mainContent {
   flex: 0 0 calc(100% - 300px);
   max-width: calc(100% - 300px);
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.mainContent code {
+  word-wrap: normal !important;
+  white-space: pre !important;
 }
 
 .jumbotron {
@@ -36,6 +41,11 @@
 /* Installation Modal */
 .modalInstallationWrapper {
   margin-top: 35px;
+}
+
+.modalInstallationWrapper code {
+  word-wrap: normal !important;
+  white-space: pre !important;
 }
 
 .link {

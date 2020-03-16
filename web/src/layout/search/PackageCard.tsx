@@ -85,6 +85,16 @@ const PackageCard = (props: Props) => {
                               </div>
                             </>
                           );
+
+                        case PackageKind.Falco:
+                        case PackageKind.Opa:
+                          return (
+                            <div className="text-truncate">
+                              <span className="text-muted text-uppercase mr-1">Version: </span>
+                              {props.package.version || '-'}
+                            </div>
+                          );
+
                         default:
                           return null;
                       }

@@ -19,7 +19,7 @@ describe('buildPackageURL', () => {
 
     it('renders URL with version', () => {
       const mockPackage = getMockPackage('3');
-      expect(buildPackageURL(mockPackage)).toBe(`/package/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}/${mockPackage.version}`);
+      expect(buildPackageURL(mockPackage, true)).toBe(`/package/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}/${mockPackage.version}`);
     });
   });
 });

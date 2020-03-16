@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import classnames from 'classnames';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import { ChartRepository } from '../../types';
 import NoData from '../common/NoData';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExternalLink from '../common/ExternalLink';
-import SmallTitle from '../common/SmallTitle';
-import isUndefined from 'lodash/isUndefined';
 import styles from './ContentInstall.module.css';
 
 interface Props {
-  name: string;
-  version?: string;
-  repository: ChartRepository;
+  normalizedName: string;
 }
 
 interface Tab {
@@ -29,10 +24,8 @@ const TABS: Tab[] = [
 ];
 const ACTIVE_TAB: string = 'cli';
 
-const ChartInstall = (props: Props) => {
+const FalcoInstall = (props: Props) => {
   const [activeTab, setActiveTab] = useState(ACTIVE_TAB);
-
-  if (isUndefined(props.version)) return null;
 
   return (
     <>
@@ -56,35 +49,18 @@ const ChartInstall = (props: Props) => {
         {(() => {
           switch (activeTab) {
             case 'cli':
-              const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
-              const block2 = `helm install ${props.repository.name}/${props.name} --version ${props.version}`;
+              const block1 = `helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/${props.normalizedName}/custom-rules.yaml stable/falco`;
 
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex justify-content-between mt-2 mb-2">
-                    <SmallTitle text="Add repository" />
+                  <div className="d-flex justify-content-end mt-2 mb-2">
                     <div>
                       <ButtonCopyToClipboard text={block1} />
                     </div>
                   </div>
 
-                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
-                    backgroundColor: 'var(--color-1-10)',
-                  }}>
+                  <SyntaxHighlighter language="bash" style={docco}>
                     {block1}
-                  </SyntaxHighlighter>
-
-                  <div className="d-flex justify-content-between mt-2 mb-2">
-                    <SmallTitle text="Install chart" />
-                    <div>
-                      <ButtonCopyToClipboard text={block2} />
-                    </div>
-                  </div>
-
-                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
-                    backgroundColor: 'var(--color-1-10)',
-                  }}>
-                    {block2}
                   </SyntaxHighlighter>
 
                   <div className="mt-2">
@@ -107,4 +83,4 @@ const ChartInstall = (props: Props) => {
   );
 };
 
-export default ChartInstall;
+export default FalcoInstall;

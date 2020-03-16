@@ -80,7 +80,11 @@ const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
 export const API = {
   getPackage: (repoName: string, packageName: string, version?: string): Promise<Package> => {
-    let url = `${API_BASE_URL}/package/chart/${repoName}/${packageName}`;
+    let url = `${API_BASE_URL}/package`;
+    if (!isUndefined(repoName)) {
+      url += `/chart/${repoName}`;
+    }
+    url += `/${packageName}`;
     if (!isUndefined(version)) {
       url += `/${version}`;
     }

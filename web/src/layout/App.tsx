@@ -91,7 +91,7 @@ export default function App() {
             );
           }} />
 
-          <Route path="/package/chart/:repoName/:packageName/:version?" exact render={({location, match}) => (
+          <Route path={["/package/chart/:repoName/:packageName/:version?", "/package/:packageName/:version?"]} exact render={({location, match}) => (
             <>
               <Navbar isAuth={isAuth} setIsAuth={setIsAuth} isSearching={isSearching} />
               <div className="d-flex flex-column flex-grow-1">
