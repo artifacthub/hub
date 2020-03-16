@@ -18,7 +18,7 @@ const Version = (props: Props) => {
     setIsLoading(true);
 
     history.push({
-      pathname: buildPackageURL(props.packageItem),
+      pathname: buildPackageURL(props.packageItem, true),
       state: props.searchUrlReferer,
     });
   }

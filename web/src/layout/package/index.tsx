@@ -2,7 +2,10 @@ import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPlus, FiDownload } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import isNull from 'lodash/isNull';
+import map from 'lodash/map';
 import isUndefined from 'lodash/isUndefined';
 import { API } from '../../api';
 import { PackageKind, Package, SearchFiltersURL } from '../../types';
@@ -12,6 +15,7 @@ import Readme from './Readme';
 import Details from './Details';
 import NoData from '../common/NoData';
 import ChartInstall from './ChartInstall';
+import FalcoInstall from './FalcoInstall';
 import Modal from '../common/Modal';
 import ModalHeader from './ModalHeader';
 import Loading from '../common/Loading';
@@ -68,36 +72,65 @@ const PackageView = (props: Props) => {
     };
   }, [setIsLoadingPackage]);
 
-  const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element => (
-    <Modal
-      buttonType={buttonType}
-      buttonContent={(
+  const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element | null => {
+    // OPA policies doesn't have any installation modal info
+    if (detail!.kind === PackageKind.Opa) {
+      return null;
+    }
+
+    return (
+      <Modal
+        buttonType={buttonType}
+        buttonContent={(
+          <>
+            {buttonIcon ? <FiDownload className="mr-2" /> : undefined}
+            <span>Install</span>
+          </>
+        )}
+        header={<ModalHeader package={detail!} />}
+        className={styles.modalInstallationWrapper}
+      >
         <>
-          {buttonIcon ? <FiDownload className="mr-2" /> : undefined}
-          <span>Install</span>
+          {(() => {
+            switch (detail!.kind) {
+              case PackageKind.Chart:
+                return (
+                  <ChartInstall
+                    name={detail!.name}
+                    version={detail!.version}
+                    repository={detail!.chartRepository!}
+                  />
+                );
+              case PackageKind.Falco:
+                return (
+                  <FalcoInstall
+                    normalizedName={detail!.normalizedName!}
+                  />
+                );
+              default:
+                return null;
+            }
+          })()}
         </>
-      )}
-      header={<ModalHeader package={detail!} />}
-      className={styles.modalInstallationWrapper}
-    >
-      <>
-        {(() => {
-          switch (detail!.kind) {
-            case PackageKind.Chart:
-              return (
-                <ChartInstall
-                  name={detail!.name}
-                  version={detail!.version}
-                  repository={detail!.chartRepository!}
-                />
-              );
-            default:
-              return null;
-          }
-        })()}
-      </>
-    </Modal>
-  );
+      </Modal>
+    );
+  }
+
+  const getFalcoRules = (): string | undefined => {
+    let rules: string | undefined;
+    if (!isNull(detail) && !isNull(detail.data) && !isUndefined(detail.data) && !isUndefined(detail.data.rules)) {
+      rules = map(detail.data.rules, 'raw').join(' ');
+    }
+    return rules;
+  }
+
+  const getOPAPolicies = (): string | undefined => {
+    let policies: string | undefined;
+    if (!isNull(detail) && !isNull(detail.data) && !isUndefined(detail.data) && !isUndefined(detail.data.policies)) {
+      policies = map(detail.data.policies, 'raw').join(' ');
+    }
+    return policies;
+  }
 
   return (
     <>
@@ -216,13 +249,56 @@ const PackageView = (props: Props) => {
           ) : (
             <div className="row">
               {!isNull(detail) && (
-                <div className={styles.readme}>
-                  {isNull(detail.readme) || isUndefined(detail.readme) ? (
-                    <NoData>No README file available for this package</NoData>
-                  ) : (
-                    <Readme markdownContent={detail.readme} />
-                  )}
-                </div>
+                <>
+                  <div className={styles.mainContent}>
+                    {isNull(detail.readme) || isUndefined(detail.readme) ? (
+                      <NoData>No README file available for this package</NoData>
+                    ) : (
+                      <Readme markdownContent={detail.readme} />
+                    )}
+
+                    {(() => {
+                      switch (detail.kind) {
+                        case PackageKind.Falco:
+                          let rules: string | undefined = getFalcoRules();
+                          return (
+                            <>
+                              {!isUndefined(rules) && (
+                                <div className="mb-5">
+                                  <div className="h2 mb-4">
+                                    Rules
+                                  </div>
+                                  <SyntaxHighlighter language="yaml" style={tomorrowNightBright} customStyle={{padding: '1.5rem'}}>
+                                    {rules}
+                                  </SyntaxHighlighter>
+                                </div>
+                              )}
+                            </>
+                          );
+
+                        case PackageKind.Opa:
+                          let policies: string | undefined = getOPAPolicies();
+                          return (
+                            <>
+                              {!isUndefined(policies) && (
+                                <div className="mb-5">
+                                  <div className="h2 mb-4">
+                                    Policies
+                                  </div>
+                                  <SyntaxHighlighter language="rego" style={tomorrowNightBright} customStyle={{padding: '1.5rem'}}>
+                                    {policies}
+                                  </SyntaxHighlighter>
+                                </div>
+                              )}
+                            </>
+                          );
+
+                        default:
+                          return null;
+                      }
+                    })()}
+                  </div>
+                </>
               )}
 
               <div className="col col-auto pl-5 pb-4 d-none d-md-block">

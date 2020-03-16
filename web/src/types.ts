@@ -22,17 +22,24 @@ export interface Package {
   kind: PackageKind;
   name: string;
   displayName: string | null;
+  normalizedName: string;
   description: string;
   logoImageId: string | null;
   appVersion: string;
   chartRepository: ChartRepository | null;
   readme?: string | null;
+  data?: PackageData | null;
   availableVersions?: string[];
   version?: string;
   homeUrl?: string | null;
   keywords?: string[];
   maintainers?: Maintainer[];
   deprecated: boolean | null;
+}
+
+export interface PackageData {
+  policies?: {raw: string}[];
+  rules?: {raw: string}[];
 }
 
 export interface SearchFiltersURL {

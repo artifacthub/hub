@@ -2,6 +2,7 @@
   "packageId":"id",
   "kind":0,
   "name":"test",
+  "normalizedName":"test",
   "displayName":"Pretty name",
   "description":"desc",
   "logoImageId":"imageId",

@@ -1,7 +1,8 @@
 {
   "packageId":"id",
-  "kind":1,
+  "kind":null,
   "name":"test",
+  "normalizedName":"test",
   "displayName":"Pretty name",
   "description":"desc",
   "logoImageId":null,

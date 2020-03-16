@@ -135,7 +135,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                             </tr>
                           </tbody>
                         </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">After activation you may sign in to <a href="https://hub.cncf.io" target="_blank" style="display: inline-block; color: #659DBD; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0;">CNCF Hub</a> using your credentials.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">After activation you may sign in to CNCF Hub using your credentials.</p>
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for creating an account.</p>
                       </td>
                     </tr>
