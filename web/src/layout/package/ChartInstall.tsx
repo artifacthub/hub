@@ -68,7 +68,9 @@ const ChartInstall = (props: Props) => {
                     </div>
                   </div>
 
-                  <SyntaxHighlighter language="bash" style={docco}>
+                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
+                    backgroundColor: 'var(--color-1-10)',
+                  }}>
                     {block1}
                   </SyntaxHighlighter>
 
@@ -79,7 +81,9 @@ const ChartInstall = (props: Props) => {
                     </div>
                   </div>
 
-                  <SyntaxHighlighter language="bash" style={docco}>
+                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
+                    backgroundColor: 'var(--color-1-10)',
+                  }}>
                     {block2}
                   </SyntaxHighlighter>
 

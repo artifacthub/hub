@@ -9,12 +9,12 @@ import useBodyScroll from '../../hooks/useBodyScroll';
 interface Props {
   children: JSX.Element | JSX.Element[];
   buttonType?: string;
-  buttonTitle?: string;
-  buttonIcon?: JSX.Element;
+  buttonContent?: string | JSX.Element;
   header: JSX.Element | string;
   closeButton?: JSX.Element;
   className?: string;
   modalClassName?: string;
+  modalDialogClassName?: string;
   open?: boolean;
   disabledClose?: boolean;
   onClose?: () => void;
@@ -45,7 +45,7 @@ const Modal = (props: Props) => {
 
   return (
     <div className={props.className}>
-      {(!isUndefined(props.buttonTitle) || !isUndefined(props.buttonIcon)) && (
+      {!isUndefined(props.buttonContent) && (
         <button
           type="button"
           className={classnames(
@@ -53,11 +53,13 @@ const Modal = (props: Props) => {
             {[`${props.buttonType}`]: !isUndefined(props.buttonType)},
             {'btn-primary': isUndefined(props.buttonType)},
           )}
-          onClick={() => setOpenStatus(true)}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            setOpenStatus(true);
+          }}
         >
           <div className="d-flex align-items-center justify-content-center">
-            {props.buttonIcon && <>{props.buttonIcon}</>}
-            {props.buttonTitle && <span>{props.buttonTitle}</span>}
+            {props.buttonContent}
           </div>
         </button>
       )}
@@ -71,7 +73,7 @@ const Modal = (props: Props) => {
         )}
         role="dialog"
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" ref={ref}>
+        <div className={`modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ${props.modalDialogClassName}`} ref={ref}>
           <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
             <div className={`modal-header ${styles.header}`}>
               {isString(props.header) ? (
@@ -83,7 +85,10 @@ const Modal = (props: Props) => {
               <button
                 type="button"
                 className="close"
-                onClick={closeModal}
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  closeModal();
+                }}
                 disabled={props.disabledClose}
               >
                 <span aria-hidden="true">&times;</span>
@@ -99,7 +104,10 @@ const Modal = (props: Props) => {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={closeModal}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeModal();
+                  }}
                   disabled={props.disabledClose}
                 >
                   Close

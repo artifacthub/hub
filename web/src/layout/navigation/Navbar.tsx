@@ -19,17 +19,18 @@ interface Props {
   fromHome?: boolean;
   searchText?: string;
   redirect?: string;
+  privateRoute?: boolean;
 }
 
 const Navbar = (props: Props) => {
+  const openLogInModal = !isUndefined(props.redirect) && (!isNull(props.isAuth) && !props.isAuth.status);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
-  const [openLogIn, setOpenLogIn] = useState<boolean>(!isUndefined(props.redirect) ? true : false);
-
+  const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
   useEffect(() => {
-    if (!isUndefined(props.redirect)) {
+    if (!isUndefined(props.redirect) && (!isNull(props.isAuth) && !props.isAuth.status)) {
       setOpenLogIn(true);
     }
-  }, [props.redirect]);
+  }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <nav className={classnames(
@@ -49,14 +50,23 @@ const Navbar = (props: Props) => {
         {openSignUp && (
           <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />
         )}
+
         {openLogIn && (
           <LogIn
             openLogIn={openLogIn}
             setOpenLogIn={setOpenLogIn}
             setIsAuth={props.setIsAuth}
             redirect={props.redirect}
-          />)}
-        <MobileSettings setOpenSignUp={setOpenSignUp} setOpenLogIn={setOpenLogIn} isAuth={props.isAuth} setIsAuth={props.setIsAuth} />
+          />
+        )}
+
+        <MobileSettings
+          setOpenSignUp={setOpenSignUp}
+          setOpenLogIn={setOpenLogIn}
+          isAuth={props.isAuth}
+          setIsAuth={props.setIsAuth}
+          privateRoute={props.privateRoute}
+        />
 
         {isUndefined(props.fromHome) && (
           <SearchBar
@@ -95,6 +105,7 @@ const Navbar = (props: Props) => {
                     <UserAuthDropdown
                       alias={props.isAuth.alias!}
                       setIsAuth={props.setIsAuth}
+                      privateRoute={props.privateRoute}
                     />
                   ) : (
                     <button

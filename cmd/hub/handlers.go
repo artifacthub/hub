@@ -30,7 +30,7 @@ import (
 const (
 	// Cache
 	staticCacheMaxAge     = 365 * 24 * time.Hour
-	defaultAPICacheMaxAge = 15 * time.Minute
+	defaultAPICacheMaxAge = 5 * time.Minute
 
 	// Session
 	sessionCookieName = "sid"
@@ -431,7 +431,7 @@ func (h *handlers) getChartRepositories(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	renderJSON(w, jsonData, defaultAPICacheMaxAge)
+	renderJSON(w, jsonData, 0)
 }
 
 // addChartRepository is an http handler that adds the provided chart

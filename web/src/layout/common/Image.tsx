@@ -34,7 +34,6 @@ const Image = (props: Props) => {
         />
       )}
     </>
-
   );
 }
 

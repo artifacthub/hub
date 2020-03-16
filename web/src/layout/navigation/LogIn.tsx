@@ -97,7 +97,7 @@ const LogIn = (props: Props) => {
     if (isValid) {
       const formData = new FormData(form);
       user = {
-        email: formData.get('email')as string,
+        email: formData.get('email') as string,
         password: formData.get('password') as string,
       };
     } else {

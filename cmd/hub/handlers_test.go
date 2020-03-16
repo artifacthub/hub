@@ -656,7 +656,7 @@ func TestGetChartRepositories(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("userChartRepositoriesJSON"), data)
 		th.db.AssertExpectations(t)
 	})

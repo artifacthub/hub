@@ -1,12 +1,16 @@
 export enum PackageKind {
   Chart = 0,
+  Falco,
+  Opa,
   Operator,
 };
 
 export interface ChartRepository {
   name: string;
-  displayName: string | null;
+  displayName?: string | null;
   url: string;
+  lastTrackingTs?: number | null;
+  lastTrackingErrors?: string | null;
 }
 
 export interface Maintainer {
@@ -97,8 +101,8 @@ export interface Alias {
 
 export interface User extends UserLogin {
   alias: string;
-  first_name?: string;
-  last_name?: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface UserAuth {
