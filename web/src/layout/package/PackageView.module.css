@@ -63,6 +63,10 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .mainContent {
+    max-width: 100%;
+  }
+
   .imageWrapper {
     min-width: 50px;
     width: 50px;

@@ -79,8 +79,13 @@ const PackageCard = (props: Props) => {
                                 </button>
                               </div>
 
-                              <div className="text-truncate">
+                              <div className="mr-2 text-truncate">
                                 <span className="text-muted text-uppercase mr-1">Version: </span>
+                                {props.package.version || '-'}
+                              </div>
+
+                              <div className="text-truncate">
+                                <span className="text-muted text-uppercase mr-1">App version: </span>
                                 {props.package.appVersion || '-'}
                               </div>
                             </>

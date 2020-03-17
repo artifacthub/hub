@@ -193,7 +193,7 @@ describe('Details', () => {
       const chartVersions = queryByTestId('chartVersions');
       expect(chartVersions).toBeInTheDocument();
       const versions = queryAllByTestId('version');
-      expect(versions).toHaveLength(5);
+      expect(versions).toHaveLength(4);
     });
 
     it('renders placeholder when no home url', () => {
