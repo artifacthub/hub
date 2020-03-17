@@ -62,9 +62,9 @@ create table if not exists package_kind (
     name text not null check (name <> '')
 );
 
-insert into package_kind values (0, 'chart');
-insert into package_kind values (1, 'falco');
-insert into package_kind values (2, 'opa');
+insert into package_kind values (0, 'Helm charts');
+insert into package_kind values (1, 'Falco rules');
+insert into package_kind values (2, 'OPA policies');
 
 create or replace function generate_package_tsdoc(
     p_name text,
