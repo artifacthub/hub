@@ -13,9 +13,6 @@ interface Props {
 const DefaultDetails = (props: Props) => {
   return (
     <>
-      <SmallTitle text="Version" />
-      <p data-testid="version" className="text-truncate">{props.package.version || '-'}</p>
-
       <SmallTitle text="Versions" />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
         <p data-testid="versions">-</p>

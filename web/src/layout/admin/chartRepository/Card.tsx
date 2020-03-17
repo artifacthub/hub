@@ -27,7 +27,7 @@ const ChartRepositoryCard = (props: Props) => {
   const hasErrors = !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull((props.chartRepository.lastTrackingErrors));
   const getLastTracking = (): JSX.Element => {
     if (isUndefined(props.chartRepository.lastTrackingTs) || isNull(props.chartRepository.lastTrackingTs)) {
-      return <>Not processed yet</>;
+      return <>Not processed yet, it will be processed very soon</>;
     }
 
     const content = (
@@ -140,12 +140,12 @@ const ChartRepositoryCard = (props: Props) => {
       </div>
       <div className="mt-2 text-truncate">
         <small className="text-muted text-uppercase mr-1">Url: </small>
-        {props.chartRepository.url}
+        <small>{props.chartRepository.url}</small>
       </div>
       {!isUndefined(props.chartRepository.lastTrackingTs) && (
         <div className="mt-2">
           <small className="text-muted text-uppercase mr-1">Last processed: </small>
-          {getLastTracking()}
+          <small>{getLastTracking()}</small>
         </div>
       )}
     </li>

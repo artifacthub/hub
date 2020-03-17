@@ -73,10 +73,7 @@ const AdminView = (props: Props) => {
                 <div className="d-flex flex-row align-items-center">
                   <PackageIcon className={`mr-md-2 ${styles.icon}`} kind={packageItem.kind} />
                   <span className="d-none d-md-block">
-                    <span>{packageItem.name}</span>
-                    {packageItem.disabled && (
-                      <small className="font-italic ml-2">(coming soon)</small>
-                    )}
+                    {packageItem.name}
                   </span>
                   <span className="d-inline d-md-none ml-2">
                     {packageItem.shortName}

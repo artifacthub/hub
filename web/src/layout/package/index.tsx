@@ -218,7 +218,7 @@ const PackageView = (props: Props) => {
               <div className="d-block d-md-none">
                 <div className="d-inline-block mr-2">
                   <Modal
-                    buttonType="btn-outline-secondary"
+                    buttonType="btn-outline-secondary mt-4"
                     buttonContent={(
                       <>
                         <FiPlus className="mr-2" />

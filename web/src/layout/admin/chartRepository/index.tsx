@@ -61,13 +61,13 @@ const ChartRepository = (props: Props) => {
 
           <div>
             <button
-              className={`btn btn-primary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
+              className={`btn btn-secondary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
               onClick={fetchCharts}
             >
               <div className="d-flex flex-row align-items-center justify-content-center">
-                <IoMdRefresh className="d-inline d-sm-none" />
-                <IoMdRefreshCircle className="d-none d-sm-inline mr-2" />
-                <span className="d-none d-sm-inline">Refresh</span>
+                <IoMdRefresh className="d-inline d-md-none" />
+                <IoMdRefreshCircle className="d-none d-md-inline mr-2" />
+                <span className="d-none d-md-inline">Refresh</span>
               </div>
             </button>
 
@@ -76,9 +76,9 @@ const ChartRepository = (props: Props) => {
               onClick={() => setModalStatus({open: true})}
             >
               <div className="d-flex flex-row align-items-center justify-content-center">
-                <MdAdd className="d-inline d-sm-none" />
-                <MdAddCircle className="d-none d-sm-inline mr-2" />
-                <span className="d-none d-sm-inline">Add</span>
+                <MdAdd className="d-inline d-md-none" />
+                <MdAddCircle className="d-none d-md-inline mr-2" />
+                <span className="d-none d-md-inline">Add</span>
               </div>
             </button>
           </div>

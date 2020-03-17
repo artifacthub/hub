@@ -43,7 +43,7 @@ const Navbar = (props: Props) => {
           <FiHexagon className="mr-2" />
           <div className="d-flex align-items-start">
             <span className={styles.brand}>HUB</span>
-            <span className={`ml-2 text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}>Beta</span>
+            <span className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}>Alpha</span>
           </div>
         </Link>
 

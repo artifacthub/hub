@@ -22,9 +22,6 @@ const ChartDetails = (props: Props) => {
       <SmallTitle text="Application version" />
       <p data-testid="appVersion" className="text-truncate">{props.package.appVersion || '-'}</p>
 
-      <SmallTitle text="Version" />
-      <p data-testid="version" className="text-truncate">{props.package.version || '-'}</p>
-
       <SmallTitle text="Chart Versions" />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
         <p data-testid="chartVersions">-</p>
