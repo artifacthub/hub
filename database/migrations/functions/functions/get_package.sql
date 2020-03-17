@@ -18,9 +18,10 @@ begin
         where r.name = v_chart_repository_name
         and p.normalized_name = v_package_name;
     else
-        select p.package_id into v_package_id
-        from package p
-        where p.normalized_name = v_package_name;
+        select package_id into v_package_id
+        from package
+        where normalized_name = v_package_name
+        and chart_repository_id is null;
     end if;
 
     return query
