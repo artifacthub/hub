@@ -139,7 +139,7 @@ export default function App() {
 
               <div className="d-flex">
                 <span className="d-none d-sm-block mr-1">Copyright</span>
-                © CNCF 2020
+                © Artifact Hub 2020
               </div>
             </div>
           </div>

@@ -73,7 +73,7 @@ const UserConfirmation = (props: Props) => {
             {validEmail ? (
               <>
                 <MdDone className="display-4 text-success mb-4" />
-                You email has been verified! Please, login to CNCF Hub.
+                You email has been verified! Please, login to Artifact Hub.
               </>
             ) : (
               <>

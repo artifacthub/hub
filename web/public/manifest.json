@@ -1,6 +1,6 @@
 {
   "short_name": "Hub",
-  "name": "CNCF Hub",
+  "name": "Artifact Hub",
   "icons": [
     {
       "src": "/static/media/favicon.ico",

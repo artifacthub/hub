@@ -128,7 +128,7 @@ describe('Package index', () => {
       );
 
       expect(CNCFInfo).toBeInTheDocument();
-      expect(CNCFInfo.textContent).toBe('CNCF Hub aspires to be a Cloud Native Computing Foundation sandbox project.');
+      expect(CNCFInfo.textContent).toBe('Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.');
       await wait();
     });
   });
