@@ -188,9 +188,9 @@ select has_function('register_session');
 select results_eq(
     'select * from package_kind',
     $$ values
-        (0, 'chart'),
-        (1, 'falco'),
-        (2, 'opa')
+        (0, 'Helm charts'),
+        (1, 'Falco rules'),
+        (2, 'OPA policies')
     $$,
     'Package kinds should exist'
 );

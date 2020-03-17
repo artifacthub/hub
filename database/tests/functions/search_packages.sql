@@ -231,11 +231,11 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }, {
                     "id": 1,
-                    "name": "Falco",
+                    "name": "Falco rules",
                     "total": 1
                 }]
             }, {
@@ -304,7 +304,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {
@@ -357,7 +357,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 1
                 }]
             }, {
@@ -499,7 +499,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {
@@ -542,7 +542,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {
@@ -584,7 +584,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {
@@ -625,7 +625,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {
@@ -847,7 +847,7 @@ select is(
                 "filter_key": "kind",
                 "options": [{
                     "id": 0,
-                    "name": "Chart",
+                    "name": "Helm charts",
                     "total": 2
                 }]
             }, {

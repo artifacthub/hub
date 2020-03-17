@@ -92,7 +92,7 @@ begin
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
                                         'id', package_kind_id,
-                                        'name', initcap(package_kind_name),
+                                        'name', package_kind_name,
                                         'total', total
                                     )), '[]')
                                     from (
