@@ -4,6 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import { API } from '../../api';
 import { ResourceKind } from '../../types';
+import styles from './InputField.module.css';
 
 interface Availability {
   status: boolean;
@@ -32,26 +33,36 @@ export interface Props {
   readOnly?: boolean;
 }
 
+const AVAILABILITY_INVALID_TEXT = {
+  [ResourceKind.userAlias]: 'Username not available',
+  [ResourceKind.chartRepositoryName]: 'There is another repository with this name',
+  [ResourceKind.chartRepositoryURL]: 'There is another repository using this url',
+};
+
 const InputField = (props: Props) => {
   const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
   const [invalidText, setInvalidText] = useState(props.invalidText);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
 
   const checkAvailability = (value: string): void  => {
     async function checkAvailability() {
       try {
+        setIsCheckingAvailability(true);
         await API.checkAvailability({
           resourceKind: props.checkAvailability!,
           value: value,
         });
+        const errorText = AVAILABILITY_INVALID_TEXT[props.checkAvailability!];
         setIsValid(false);
-        setInvalidText('Not available');
-        input.current!.setCustomValidity('Not available');
+        setInvalidText(errorText);
+        input.current!.setCustomValidity(errorText);
       } catch {
         setIsValid(true);
         input.current!.setCustomValidity('');
       } finally {
+        setIsCheckingAvailability(false);
         setIsValid(input.current!.checkValidity());
       }
     }
@@ -111,6 +122,12 @@ const InputField = (props: Props) => {
         onBlur={handleOnBlur}
         onKeyDown={props.onKeyDown}
       />
+
+      {isCheckingAvailability && (
+        <div className={`position-absolute ${styles.spinner}`}>
+          <span className="spinner-border spinner-border-sm text-primary" />
+        </div>
+      )}
 
       {!isUndefined(props.validText) && (
         <div className="valid-feedback position-absolute mt-0">
