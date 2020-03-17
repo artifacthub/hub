@@ -115,3 +115,14 @@ export interface UserAuth {
   alias?: string;
   status: boolean;
 }
+
+export interface CheckAvailabilityProps {
+  resourceKind: ResourceKind;
+  value: string;
+}
+
+export enum ResourceKind {
+  userAlias = 'userAlias',
+  chartRepositoryName = 'chartRepositoryName',
+  chartRepositoryURL = 'chartRepositoryURL',
+};

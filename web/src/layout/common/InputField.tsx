@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
+import { API } from '../../api';
+import { ResourceKind } from '../../types';
+
+interface Availability {
+  status: boolean;
+  errorTxt?: string;
+}
 
 export interface Props {
   type: 'text' | 'password' | 'email' | 'url';
@@ -20,17 +27,49 @@ export interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
+  checkAvailability?: ResourceKind;
   autoComplete?: string;
   readOnly?: boolean;
 }
 
 const InputField = (props: Props) => {
+  const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
+  const [invalidText, setInvalidText] = useState(props.invalidText);
+
+  const checkAvailability = (value: string): void  => {
+    async function checkAvailability() {
+      try {
+        await API.checkAvailability({
+          resourceKind: props.checkAvailability!,
+          value: value,
+        });
+        setIsValid(false);
+        setInvalidText('Not available');
+        input.current!.setCustomValidity('Not available');
+      } catch {
+        setIsValid(true);
+        input.current!.setCustomValidity('');
+      } finally {
+        setIsValid(input.current!.checkValidity());
+      }
+    }
+    if (value !== '') {
+      checkAvailability();
+    } else {
+      setInvalidText(props.invalidText);
+      setIsValid(input.current!.checkValidity());
+    }
+  }
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
-      setIsValid(e.currentTarget.checkValidity());
+      if (isUndefined(props.checkAvailability)) {
+        setIsValid(e.currentTarget.checkValidity());
+      } else {
+        checkAvailability(e.target.value);
+      }
     }
   }
 
@@ -53,6 +92,7 @@ const InputField = (props: Props) => {
       )}
 
       <input
+        ref={input}
         type={props.type}
         name={props.name}
         value={inputValue}
@@ -78,9 +118,9 @@ const InputField = (props: Props) => {
         </div>
       )}
 
-      {!isUndefined(props.invalidText) && (
+      {!isUndefined(invalidText) && (
         <div className="invalid-feedback position-absolute mt-0">
-          {props.invalidText}
+          {invalidText}
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import { API } from '../../../api';
-import { ChartRepository } from '../../../types';
+import { ChartRepository, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 import isUndefined from 'lodash/isUndefined';
 import Modal from '../../common/Modal';
@@ -161,6 +161,7 @@ const ChartRepositoryModal = (props: Props) => {
             readOnly={!isUndefined(props.chartRepository)}
             invalidText="This field is required"
             validateOnBlur
+            checkAvailability={ResourceKind.chartRepositoryName}
             required
           />
 
@@ -180,6 +181,7 @@ const ChartRepositoryModal = (props: Props) => {
             invalidText="Please enter a valid url"
             onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
+            checkAvailability={ResourceKind.chartRepositoryURL}
             required
           />
 
