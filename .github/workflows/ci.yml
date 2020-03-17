@@ -144,7 +144,6 @@ jobs:
 
   deploy-staging:
     if: github.ref == 'refs/heads/staging'
-    needs: build-docker-images
     runs-on: ubuntu-latest
     env:
       AWS_DEFAULT_REGION: us-east-2
