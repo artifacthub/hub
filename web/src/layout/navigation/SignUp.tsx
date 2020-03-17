@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import { MdDone } from 'react-icons/md';
-import { User } from '../../types';
+import { User, ResourceKind } from '../../types';
 import { API } from '../../api';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
@@ -162,6 +162,7 @@ const SignUp = (props: Props) => {
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="alias"
             invalidText="This field is required"
+            checkAvailability={ResourceKind.userAlias}
             validateOnBlur
             autoComplete="username"
             required

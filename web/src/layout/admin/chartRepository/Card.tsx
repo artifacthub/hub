@@ -59,7 +59,7 @@ const ChartRepositoryCard = (props: Props) => {
             header={<div className="h3 m-2">Errors log</div>}
           >
             <div className="mt-3">
-              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{fontSize: '75%'}}>
+              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{fontSize: '90%'}}>
                 {props.chartRepository.lastTrackingErrors}
               </SyntaxHighlighter>
             </div>

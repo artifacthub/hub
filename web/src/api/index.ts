@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
 import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias, ChartRepository } from '../types';
+import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias, ChartRepository, CheckAvailabilityProps } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 import history from '../utils/history';
 import renameKeysInObject from '../utils/renameKeysInObject';
@@ -12,7 +12,7 @@ interface Result {
 }
 
 interface FetchOptions {
-  method: 'POST' | 'GET' | 'PUT' | 'DELETE';
+  method: 'POST' | 'GET' | 'PUT' | 'DELETE' | 'HEAD';
   headers?: {
     [key: string]: string;
   };
@@ -188,6 +188,12 @@ export const API = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(chartRepo),
+    });
+  },
+
+  checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/checkAvailability/${props.resourceKind}?v=${props.value}`, {
+      method: 'HEAD',
     });
   },
 };
