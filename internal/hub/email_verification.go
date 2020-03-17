@@ -100,7 +100,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
           <div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Welcome to CNCF Hub!</span>
+            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Welcome to Artifact Hub!</span>
             <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px; border-top: 7px solid #659DBD;">
 
               <!-- START MAIN CONTENT AREA -->
@@ -110,7 +110,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi!</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Welcome to CNCF Hub! You are only one step from being able to sign in on our site. Please simply click on the link below to confirm your account.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Welcome to Artifact Hub! You are only one step from being able to sign in on our site. Please simply click on the link below to confirm your account.</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>
                             <tr>
@@ -135,7 +135,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                             </tr>
                           </tbody>
                         </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">After activation you may sign in to CNCF Hub using your credentials.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">After activation you may sign in to Artifact Hub using your credentials.</p>
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Thanks for creating an account.</p>
                       </td>
                     </tr>
@@ -151,12 +151,12 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 10px; color: #545454; text-align: center;">
-                    <p style="color: #545454; font-size: 10px; text-align: center; text-decoration: none;">Didn't create a CNCF Hub account? I's likely someone just typed in your email address by accident.<br>Feel free to ignore this email.</p>
+                    <p style="color: #545454; font-size: 10px; text-align: center; text-decoration: none;">Didn't create an Artifact Hub account? I's likely someone just typed in your email address by accident.<br>Feel free to ignore this email.</p>
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #39596C; text-align: center;">
-                    <a href="https://www.cncf.io" style="color: #39596C; font-size: 12px; text-align: center; text-decoration: none;">© CNCF</a>
+                    <a href="https://www.cncf.io" style="color: #39596C; font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
                   </td>
                 </tr>
               </table>
