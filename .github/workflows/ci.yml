@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   linter-backend:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,7 +18,7 @@ jobs:
         run: ./bin/golangci-lint --timeout 2m run ./...
 
   tests-database:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     container:
       image: tegioz/db-tests
@@ -45,7 +45,7 @@ jobs:
         run: pg_prove --host postgres --dbname tests --username tests --verbose **/*.sql
 
   tests-backend:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -58,7 +58,7 @@ jobs:
         run: go test -cover -race -v -mod=readonly ./...
 
   tests-frontend:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -71,7 +71,7 @@ jobs:
         run: yarn test --watchAll=false --passWithNoTests --verbose
 
   build-backend:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -88,7 +88,7 @@ jobs:
         run: go build -v
 
   build-frontend:
-    if: github.ref != 'refs/heads/production'
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
