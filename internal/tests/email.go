@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"github.com/cncf/hub/internal/email"
+	"github.com/artifacthub/hub/internal/email"
 	"github.com/stretchr/testify/mock"
 )
 

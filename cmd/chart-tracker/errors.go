@@ -5,7 +5,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cncf/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
 )
 

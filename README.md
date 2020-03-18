@@ -1,6 +1,6 @@
 # Artifact Hub
 
-[![CI](https://github.com/cncf/hub/workflows/CI/badge.svg)](https://github.com/cncf/hub/actions?query=workflow%3ACI)
+[![CI](https://github.com/artifacthub/hub/workflows/CI/badge.svg)](https://github.com/artifacthub/hub/actions?query=workflow%3ACI)
 
 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
 
@@ -20,14 +20,14 @@ We're envisioning that Artifact Hub will have three main components:
 ## Screenshots
 <table>
     <tr>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot1.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot2.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot3.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot1.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot2.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot3.jpg?raw=true"></td>
     </tr>
     <tr>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot4.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot5.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/cncf/hub/blob/master/docs/screenshot6.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot4.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot5.jpg?raw=true"></td>
+        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot6.jpg?raw=true"></td>
     </tr>
 </table>
 
@@ -48,7 +48,7 @@ Before proceeding, please make sure your system meets the following requirements
 At the moment, the Artifact Hub Docker images haven't been published yet to any Docker registry, so you need to build them locally to make them available to your local cluster.
 
 ```console
-$ git clone https://github.com/cncf/hub && cd hub
+$ git clone https://github.com/artifacthub/hub && cd hub
 $ eval $(minikube docker-env)
 $ scripts/docker-build.sh
 ```

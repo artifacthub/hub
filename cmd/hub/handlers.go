@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cncf/hub/internal/hub"
-	"github.com/cncf/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/gorilla/securecookie"

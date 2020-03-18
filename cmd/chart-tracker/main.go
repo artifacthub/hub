@@ -7,8 +7,8 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/cncf/hub/internal/hub"
-	"github.com/cncf/hub/internal/util"
+	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 )
 

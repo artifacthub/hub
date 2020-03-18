@@ -1,6 +1,6 @@
 # Build chart-tracker
 FROM golang:1.14-alpine AS builder
-WORKDIR /go/src/github.com/cncf/hub
+WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/chart-tracker cmd/chart-tracker
 COPY internal internal
