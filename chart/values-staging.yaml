@@ -17,8 +17,24 @@ hub:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{ "HTTP": 80 }, { "HTTPS": 443 }]'
+      alb.ingress.kubernetes.io/actions.notfound-redirect: '{"Type":"redirect", "RedirectConfig": {"Host": "not-found.cncf.io", "Port": "443", "Protocol": "HTTPS", "StatusCode": "HTTP_302"}}'
+      alb.ingress.kubernetes.io/actions.artifacthub-redirect: '{"Type":"redirect", "RedirectConfig": {"Host": "staging.artifacthub.io", "Port": "443", "Protocol": "HTTPS", "StatusCode": "HTTP_301"}}'
       alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301" }}'
     rules:
+      - host: hub-staging.cncf.io
+        http:
+          paths:
+            - backend:
+                serviceName: notfound-redirect
+                servicePort: use-annotation
+              path: /*
+      - host: staging.hubtest.io
+        http:
+          paths:
+            - backend:
+                serviceName: artifacthub-redirect
+                servicePort: use-annotation
+              path: /*
       - http:
           paths:
             - path: /*
