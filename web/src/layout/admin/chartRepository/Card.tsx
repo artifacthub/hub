@@ -155,7 +155,7 @@ const ChartRepositoryCard = (props: Props) => {
               >
                 <div className="d-flex flex-row align-items-center">
                   <IoMdCloseCircle className="mr-2" />
-                  <span>Close</span>
+                  <span>Cancel</span>
                 </div>
               </button>
 
