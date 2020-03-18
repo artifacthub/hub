@@ -26,7 +26,7 @@ hub:
   deploy:
     replicaCount: 1
     image:
-      repository: cncf/hub
+      repository: artifacthub/hub
     resources:
       requests:
         cpu: 100m
@@ -53,7 +53,7 @@ hub:
 chartTracker:
   cronjob:
     image:
-      repository: cncf/chart-tracker
+      repository: artifacthub/chart-tracker
     resources:
       requests:
         cpu: 100m
@@ -65,7 +65,7 @@ chartTracker:
 dbMigrator:
   job:
     image:
-      repository: cncf/db-migrator
+      repository: artifacthub/db-migrator
   loadSampleData: true
 
 # Values for postgresql chart dependency

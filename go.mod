@@ -1,4 +1,4 @@
-module github.com/cncf/hub
+module github.com/artifacthub/hub
 
 go 1.13
 

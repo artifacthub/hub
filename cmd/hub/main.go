@@ -8,10 +8,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cncf/hub/internal/email"
-	"github.com/cncf/hub/internal/hub"
-	"github.com/cncf/hub/internal/img/pg"
-	"github.com/cncf/hub/internal/util"
+	"github.com/artifacthub/hub/internal/email"
+	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 )
 

@@ -12,9 +12,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cncf/hub/internal/hub"
-	"github.com/cncf/hub/internal/img/pg"
-	"github.com/cncf/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"

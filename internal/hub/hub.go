@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cncf/hub/internal/email"
+	"github.com/artifacthub/hub/internal/email"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
 	"golang.org/x/crypto/bcrypt"

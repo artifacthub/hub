@@ -156,7 +156,7 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                 </tr>
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #39596C; text-align: center;">
-                    <a href="https://www.cncf.io" style="color: #39596C; font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
+                    <a href="https://artifacthub.io" style="color: #39596C; font-size: 12px; text-align: center; text-decoration: none;">© Artifact Hub</a>
                   </td>
                 </tr>
               </table>
