@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import isNull from 'lodash/isNull';
 import { API } from '../../api';
-import { Stats } from '../../types';
+import { Stats, PackageKind } from '../../types';
 import SearchBar from '../common/SearchBar';
 import Counter from './Counter';
 import PackagesUpdates from './PackagesUpdates';
@@ -10,6 +10,7 @@ import logo from '../../images/cncf.svg';
 import ExternalLink from '../common/ExternalLink';
 import UserConfirmation from './UserConfirmation';
 import styles from './HomeView.module.css';
+import PackageIcon from '../common/PackageIcon';
 
 interface Props {
   isSearching: boolean;
@@ -68,6 +69,22 @@ const HomeView = (props: Props) => {
       </div>
 
       <PackagesUpdates />
+
+      <div className={`py-5 ${styles.about}`}>
+        <div className="container py-3">
+          <div className="text-center">
+            Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
+
+            <div className="m-5 d-flex flex-row align-items-center justify-content-around">
+              <PackageIcon kind={PackageKind.Chart} type="white" className={styles.aboutIcon} />
+              <PackageIcon kind={PackageKind.Falco} type="white" className={styles.aboutIcon} />
+              <PackageIcon kind={PackageKind.Opa} type="white" className={styles.aboutIcon} />
+            </div>
+
+            Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
+          </div>
+        </div>
+      </div>
 
       <div data-testid="CNCFInfo" className="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1">
         <div>

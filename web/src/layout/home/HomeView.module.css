@@ -30,6 +30,17 @@
   max-width: 75%;
 }
 
+.about {
+  background-color: var(--color-1-700);
+  color: var(--white);
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.aboutIcon {
+  width: 75px;
+}
+
 @media only screen and (max-width: 768px) {
   .mainTitle {
     font-size: 2.5rem !important;
@@ -39,5 +50,9 @@
 @media only screen and (max-width: 576px) {
   .mainTitle {
     font-size: 2rem !important;
+  }
+
+  .aboutIcon {
+    width: 50px;
   }
 }
