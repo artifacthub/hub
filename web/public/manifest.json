@@ -3,7 +3,7 @@
   "name": "Artifact Hub",
   "icons": [
     {
-      "src": "/static/media/favicon.ico",
+      "src": "/static/media/logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
