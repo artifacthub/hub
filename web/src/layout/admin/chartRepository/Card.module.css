@@ -11,7 +11,7 @@
   background-color: var(--color-1-500);
 }
 
-.btnIcon {
+.btnIcon, .btnDeleteIcon {
   font-size: .65rem;
 }
 
@@ -20,14 +20,27 @@
   white-space: pre !important;
 }
 
+.dropdown {
+  width: 20rem;
+}
+
+.btnLight {
+  background-color: var(--color-1-20) !important;
+  border-color: var(--color-1-20) !important;
+}
+
 @media (hover: hover) {
   .buttons {
-    transition: all .15s linear;
     opacity: 0;
   }
 }
 
 @media only screen and (max-width: 576px) {
+  .dropdown {
+    right: -14px !important;
+    top: 120% !important;
+  }
+
   .btnIcon {
     font-size: .95rem;
   }

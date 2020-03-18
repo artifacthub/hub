@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import moment from 'moment';
+import classnames from 'classnames';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { ChartRepository } from '../../../types';
 import { FaExclamation, FaCheck, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import { IoMdCloseCircle } from 'react-icons/io';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import Modal from '../../common/Modal';
+import useOutsideClick from '../../../hooks/useOutsideClick';
 import { API } from '../../../api';
 import styles from './Card.module.css';
 
@@ -24,6 +27,10 @@ interface Props {
 
 const ChartRepositoryCard = (props: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [apiDeleteError, setApiDeleteError] = useState<string | null>(null);
+  const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
+  const dropdown = useRef(null);
+  useOutsideClick([dropdown], openDropdownStatus, () => setOpenDropdownStatus(false));
   const hasErrors = !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull((props.chartRepository.lastTrackingErrors));
   const getLastTracking = (): JSX.Element => {
     if (isUndefined(props.chartRepository.lastTrackingTs) || isNull(props.chartRepository.lastTrackingTs)) {
@@ -33,7 +40,6 @@ const ChartRepositoryCard = (props: Props) => {
     const content = (
       <>
         <span>{moment(props.chartRepository.lastTrackingTs! * 1000).fromNow()}</span>
-
         {hasErrors ? (
           <FaExclamation className="mx-2 text-warning" />
         ) : (
@@ -76,14 +82,16 @@ const ChartRepositoryCard = (props: Props) => {
       setIsDeleting(true);
       await API.deleteChartRepository(props.chartRepository.name);
       setIsDeleting(false);
+      setOpenDropdownStatus(false);
       props.onSuccess();
 
     } catch(err) {
       setIsDeleting(false);
-      // TODO - api error
-
       if (err.statusText === 'ErrLoginRedirect') {
+        setOpenDropdownStatus(false);
         props.onAuthError();
+      } else {
+        setApiDeleteError('An error occurred, please try again later');
       }
     }
   }
@@ -95,7 +103,10 @@ const ChartRepositoryCard = (props: Props) => {
           {props.chartRepository.displayName || props.chartRepository.name}
         </h5>
 
-        <div className={`d-flex flex-nowrap ${styles.buttons}`}>
+        <div className={classnames(
+          'd-flex flex-nowrap position-relative',
+          {[styles.buttons]: !openDropdownStatus},
+        )}>
           <button
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,26 +127,68 @@ const ChartRepositoryCard = (props: Props) => {
 
           <button
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              deleteChartRepository();
-            }}
-            disabled={isDeleting}
+            onClick={() => setOpenDropdownStatus(true)}
           >
             <div className="d-flex flex-row align-items-center">
-              {isDeleting ? (
-                <>
-                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                  <span className="ml-2 d-none d-sm-inline">Deleting...</span>
-                </>
-              ) : (
-                <>
-                  <FaTrashAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                  <span className="d-none d-sm-inline">Delete</span>
-                </>
-              )}
+              <FaTrashAlt className={`mr-sm-2 ${styles.btnIcon}`} />
+              <span className="d-none d-sm-inline">Delete</span>
             </div>
           </button>
+
+          <div ref={dropdown} className={classnames(
+            'dropdown-menu dropdown-menu-right p-0',
+            styles.dropdown,
+            {'show': openDropdownStatus},
+          )}>
+            <div className={`arrow ${styles.arrow}`} />
+
+            <p className="p-3 text-center mb-0">
+              If you delete this chart repository all packages belonging to it will be deleted
+            </p>
+
+            <div className="dropdown-divider m-0" />
+
+            <div className="d-flex flex-row justify-content-between p-3">
+              <button
+                className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                onClick={() => setOpenDropdownStatus(false)}
+              >
+                <div className="d-flex flex-row align-items-center">
+                  <IoMdCloseCircle className="mr-2" />
+                  <span>Close</span>
+                </div>
+              </button>
+
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteChartRepository();
+                }}
+                disabled={isDeleting}
+              >
+                <div className="d-flex flex-row align-items-center text-uppercase">
+                  {isDeleting ? (
+                    <>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                      <span className="ml-2">Deleting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                      <span>Delete</span>
+                    </>
+                  )}
+                </div>
+              </button>
+            </div>
+
+            {!isNull(apiDeleteError) && (
+              <div className="alert alert-danger mx-3" role="alert">
+                {apiDeleteError}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="mt-2 text-truncate">
