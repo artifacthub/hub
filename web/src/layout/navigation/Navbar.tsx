@@ -34,7 +34,7 @@ const Navbar = (props: Props) => {
 
   return (
     <nav className={classnames(
-      'navbar navbar-top navbar-expand-sm navbar-dark',
+      'navbar navbar-top navbar-expand-md navbar-dark',
       styles.navbar,
       {[styles.homeNavbar]: props.fromHome}
     )}>
@@ -42,7 +42,10 @@ const Navbar = (props: Props) => {
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <FiHexagon className="mr-2" />
           <div className="d-flex align-items-start">
-            <span className={styles.brand}>HUB</span>
+            <div className="d-flex align-items-baseline">
+              <span className="mr-1">Artifact</span>
+              <span className={styles.brand}>HUB</span>
+            </div>
             <span className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}>Alpha</span>
           </div>
         </Link>

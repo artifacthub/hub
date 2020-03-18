@@ -71,7 +71,7 @@ const HomeView = (props: Props) => {
       <PackagesUpdates />
 
       <div className={`py-5 ${styles.about}`}>
-        <div className="container py-3">
+        <div className="container py-5">
           <div className="text-center">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
 

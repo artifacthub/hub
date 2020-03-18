@@ -19,6 +19,9 @@
 }
 
 .brand {
-  font-family: var(--logo-font);
   font-size: 2rem;
+}
+
+.hubFont {
+  font-family: var(--logo-font);
 }

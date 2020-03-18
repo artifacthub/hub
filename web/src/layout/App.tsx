@@ -134,7 +134,10 @@ export default function App() {
             <div className="d-flex flex-column align-items-center">
               <div className={`mb-3 d-flex align-items-center ${styles.brand}`}>
                 <FiHexagon className="mr-2" />
-                HUB
+                <div className="d-flex align-items-baseline">
+                  <span className="mr-2">Artifact</span>
+                  <span className={styles.hubFont}>HUB</span>
+                </div>
               </div>
 
               <div className="d-flex">
