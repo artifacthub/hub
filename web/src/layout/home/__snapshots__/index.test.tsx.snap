@@ -165,7 +165,7 @@ exports[`Package index creates snapshot 1`] = `
       class="py-5 about"
     >
       <div
-        class="container py-3"
+        class="container py-5"
       >
         <div
           class="text-center"
