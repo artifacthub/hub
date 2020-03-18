@@ -160,7 +160,8 @@ select indexes_are('package_kind', array[
     'package_kind_pkey'
 ]);
 select indexes_are('snapshot', array[
-    'snapshot_pkey'
+    'snapshot_pkey',
+    'snapshot_digest_key'
 ]);
 
 -- Check expected functions exist
