@@ -170,7 +170,14 @@ func (w *worker) handleJob(j *job) error {
 	}
 
 	// Register package
-	return w.hubAPI.RegisterPackage(w.ctx, p)
+	err = w.hubAPI.RegisterPackage(w.ctx, p)
+	if err != nil {
+		w.ec.append(
+			j.repo.ChartRepositoryID,
+			fmt.Errorf("error registering package %s version %s: %w", p.Name, p.Version, err),
+		)
+	}
+	return err
 }
 
 // loadChart loads a chart from a remote archive located at the url provided.

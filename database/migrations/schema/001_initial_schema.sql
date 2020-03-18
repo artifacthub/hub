@@ -115,7 +115,7 @@ create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,
     version text not null check (version <> ''),
     app_version text check (app_version <> ''),
-    digest text check (digest <> ''),
+    digest text check (digest <> '') unique,
     readme text check (readme <> ''),
     links jsonb,
     data jsonb,
