@@ -543,7 +543,7 @@ select is(
                 "options": [{
                     "id": 0,
                     "name": "Helm charts",
-                    "total": 2
+                    "total": 1
                 }]
             }, {
                 "title": "Repository",
@@ -551,10 +551,6 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
                     "total": 1
                 }]
             }]
@@ -565,7 +561,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 Deprecated: false | Package 2 expected - Facets expected'
+    'Facets: true Text: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
 );
 select is(
     search_packages(
@@ -585,7 +581,7 @@ select is(
                 "options": [{
                     "id": 0,
                     "name": "Helm charts",
-                    "total": 2
+                    "total": 1
                 }]
             }, {
                 "title": "Repository",
@@ -593,10 +589,6 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
                     "total": 1
                 }]
             }]
@@ -607,7 +599,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 Deprecated: not provided | Package 2 expected - Facets expected'
+    'Facets: true Text: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -626,7 +618,7 @@ select is(
                 "options": [{
                     "id": 0,
                     "name": "Helm charts",
-                    "total": 2
+                    "total": 1
                 }]
             }, {
                 "title": "Repository",
@@ -634,10 +626,6 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
-                    "total": 1
-                }, {
-                    "id": "repo2",
-                    "name": "Repo2",
                     "total": 1
                 }]
             }]
