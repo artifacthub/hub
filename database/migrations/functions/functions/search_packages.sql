@@ -14,7 +14,7 @@ begin
     from jsonb_array_elements_text(p_input->'chart_repositories') e;
 
     return query
-    with packages_applying_text_filter as (
+    with packages_applying_text_and_deprecated_filters as (
         select
             p.package_id,
             p.package_kind_id,
@@ -38,8 +38,14 @@ begin
             case when p_input ? 'text' and p_input->>'text' <> '' then
                 websearch_to_tsquery(p_input->>'text') @@ p.tsdoc
             else true end
+        and
+            case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
+                true
+            else
+                (deprecated is null or deprecated = false)
+            end
     ), packages_applying_all_filters as (
-        select * from packages_applying_text_filter
+        select * from packages_applying_text_and_deprecated_filters
         where
             case when cardinality(v_package_kinds) > 0
             then package_kind_id = any(v_package_kinds) else true end
@@ -100,7 +106,7 @@ begin
                                             package_kind_id,
                                             package_kind_name,
                                             count(*) as total
-                                        from packages_applying_text_filter
+                                        from packages_applying_text_and_deprecated_filters
                                         group by package_kind_id, package_kind_name
                                         order by total desc
                                     ) as breakdown
@@ -121,7 +127,7 @@ begin
                                         select
                                             chart_repository_name,
                                             count(*) as total
-                                        from packages_applying_text_filter
+                                        from packages_applying_text_and_deprecated_filters
                                         where chart_repository_name is not null
                                         group by chart_repository_name
                                         order by total desc
