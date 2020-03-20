@@ -31,6 +31,7 @@ export interface Props {
   checkAvailability?: ResourceKind;
   autoComplete?: string;
   readOnly?: boolean;
+  additionalInfo?: string | JSX.Element;
 }
 
 const AVAILABILITY_INVALID_TEXT = {
@@ -138,6 +139,12 @@ const InputField = (props: Props) => {
       {!isUndefined(invalidText) && (
         <div className="invalid-feedback position-absolute mt-0">
           {invalidText}
+        </div>
+      )}
+
+      {!isUndefined(props.additionalInfo) && (
+        <div className="alert alert-ligth p-0 mt-3">
+          {props.additionalInfo}
         </div>
       )}
     </div>

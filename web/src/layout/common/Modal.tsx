@@ -95,7 +95,7 @@ const Modal = (props: Props) => {
               </button>
             </div>
 
-            <div className="modal-body p-4 h-100">
+            <div className="modal-body p-4 h-100 d-flex">
               {openStatus && <>{props.children}</>}
             </div>
 

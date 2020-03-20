@@ -7,6 +7,7 @@ import InputField from '../../common/InputField';
 import isUndefined from 'lodash/isUndefined';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
+import ExternalLink from '../../common/ExternalLink';
 
 interface FormValidation {
   isValid: boolean;
@@ -140,7 +141,7 @@ const ChartRepositoryModal = (props: Props) => {
       )}
       onClose={onCloseModal}
     >
-      <div className="h-100 d-flex align-items-center">
+      <div className="w-100">
         <form
           ref={form}
           className={classnames(
@@ -182,6 +183,20 @@ const ChartRepositoryModal = (props: Props) => {
             onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryURL}
+            additionalInfo={(
+              <div className={`text-muted text-break ${styles.inputAdditionalInfo}`}>
+                <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
+                <p>
+                  If you host your charts in Github, you can use <ExternalLink href="https://helm.sh/docs/topics/chart_repository/#github-pages-example" className="text-reset"><u>GitHub Pages</u></ExternalLink> to serve them or you can use a URL like the one below:
+                </p>
+                <p className={`font-italic ml-3 ${styles.inputAdditionalInfoURL}`}>
+                  https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
+                </p>
+                <p className="mb-0">
+                  For more information about how to create and host your own chart repository please visit the <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset"><u>Helm chart repository guide</u></ExternalLink>.
+                </p>
+              </div>
+            )}
             required
           />
 
