@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaSlack } from 'react-icons/fa';
 import isNull from 'lodash/isNull';
 import { API } from '../../api';
 import { Stats, PackageKind } from '../../types';
@@ -59,10 +59,17 @@ const HomeView = (props: Props) => {
         </div>
 
         <div className="mt-5 mb-2 text-center">
-          <ExternalLink className="btn btn-secondary" href="https://github.com/cncf/hub">
-            <div className="d-flex align-items-center">
+          <ExternalLink className={`btn btn-secondary ${styles.socialBtn}`} href="https://github.com/cncf/hub">
+            <div className="d-flex align-items-center justify-content-center">
               <FaGithub className="mr-2" />
               GitHub
+            </div>
+          </ExternalLink>
+
+          <ExternalLink className={`btn btn-secondary ml-3 ${styles.socialBtn}`} href="https://cloud-native.slack.com/channels/artifact-hub">
+            <div className="d-flex align-items-center justify-content-center">
+              <FaSlack className="mr-2" />
+              Slack
             </div>
           </ExternalLink>
         </div>
