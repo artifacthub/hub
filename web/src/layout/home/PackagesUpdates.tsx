@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { API } from '../../api';
-import { PackagesUpdatesList, Package } from '../../types';
-import PackageCard from './PackageCard';
 import isNull from 'lodash/isNull';
+import React, { useEffect, useState } from 'react';
+
+import { API } from '../../api';
+import { Package, PackagesUpdatesList } from '../../types';
 import Loading from '../common/Loading';
+import PackageCard from './PackageCard';
 import styles from './PackagesUpdates.module.css';
 
 const PackagesUpdates = () => {
@@ -23,11 +24,16 @@ const PackagesUpdates = () => {
       } finally {
         setIsLoading(false);
       }
-    };
+    }
     fetchPackagesUpdates();
   }, []);
 
-  if (!isLoading && !isNull(packagesUpdates) && (packagesUpdates.latestPackagesAdded.length === 0 && packagesUpdates.packagesRecentlyUpdated.length === 0)) {
+  if (
+    !isLoading &&
+    !isNull(packagesUpdates) &&
+    packagesUpdates.latestPackagesAdded.length === 0 &&
+    packagesUpdates.packagesRecentlyUpdated.length === 0
+  ) {
     return null;
   }
 
@@ -42,12 +48,7 @@ const PackagesUpdates = () => {
                   <div className="h5 text-center text-muted mb-4">Latest packages added</div>
 
                   {packagesUpdates.latestPackagesAdded.map((item: Package) => {
-                    return (
-                      <PackageCard
-                        key={`lpa_${item.packageId}`}
-                        package={item}
-                      />
-                    );
+                    return <PackageCard key={`lpa_${item.packageId}`} package={item} />;
                   })}
                 </div>
               )}
@@ -57,12 +58,7 @@ const PackagesUpdates = () => {
                   <div className="h5 text-center text-muted mb-4">Packages recently updated</div>
 
                   {packagesUpdates.packagesRecentlyUpdated.map((item: Package) => {
-                    return (
-                      <PackageCard
-                        key={`pru_${item.packageId}`}
-                        package={item}
-                      />
-                    );
+                    return <PackageCard key={`pru_${item.packageId}`} package={item} />;
                   })}
                 </div>
               )}
@@ -74,6 +70,6 @@ const PackagesUpdates = () => {
       </div>
     </div>
   );
-}
+};
 
 export default PackagesUpdates;

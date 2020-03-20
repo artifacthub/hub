@@ -2,7 +2,7 @@ export enum PackageKind {
   Chart = 0,
   Falco,
   Opa,
-};
+}
 
 export interface ChartRepository {
   name: string;
@@ -38,8 +38,8 @@ export interface Package {
 }
 
 export interface PackageData {
-  policies?: {raw: string}[];
-  rules?: {raw: string}[];
+  policies?: { raw: string }[];
+  rules?: { raw: string }[];
 }
 
 export interface SearchFiltersURL {
@@ -83,7 +83,7 @@ export interface Facets {
   filterKey: string;
   title: string;
   options: FacetOption[];
-};
+}
 
 export interface FacetOption {
   id: string | number;
@@ -125,4 +125,4 @@ export enum ResourceKind {
   userAlias = 'userAlias',
   chartRepositoryName = 'chartRepositoryName',
   chartRepositoryURL = 'chartRepositoryURL',
-};
+}

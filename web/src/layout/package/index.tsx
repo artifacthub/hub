@@ -1,27 +1,28 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiPlus, FiDownload } from 'react-icons/fi';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import map from 'lodash/map';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { FiDownload, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
+import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import isNull from 'lodash/isNull';
-import map from 'lodash/map';
-import isUndefined from 'lodash/isUndefined';
+
 import { API } from '../../api';
-import { PackageKind, Package, SearchFiltersURL } from '../../types';
-import SubNavbar from '../navigation/SubNavbar';
-import Image from '../common/Image';
-import Readme from './Readme';
-import Details from './Details';
-import NoData from '../common/NoData';
-import ChartInstall from './ChartInstall';
-import FalcoInstall from './FalcoInstall';
-import Modal from '../common/Modal';
-import ModalHeader from './ModalHeader';
-import Loading from '../common/Loading';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import styles from './PackageView.module.css';
+import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
+import Image from '../common/Image';
+import Loading from '../common/Loading';
+import Modal from '../common/Modal';
+import NoData from '../common/NoData';
+import SubNavbar from '../navigation/SubNavbar';
+import ChartInstall from './ChartInstall';
+import Details from './Details';
+import FalcoInstall from './FalcoInstall';
+import ModalHeader from './ModalHeader';
+import styles from './PackageView.module.css';
+import Readme from './Readme';
 
 interface Props {
   isLoadingPackage: boolean;
@@ -61,7 +62,7 @@ const PackageView = (props: Props) => {
         setDetail(null);
         setIsLoadingPackage(false);
       }
-    };
+    }
     fetchPackageDetail();
     window.scrollTo(0, 0); // Scroll to top when a new version is loaded
   }, [repoName, packageName, version, setIsLoadingPackage]);
@@ -81,12 +82,12 @@ const PackageView = (props: Props) => {
     return (
       <Modal
         buttonType={buttonType}
-        buttonContent={(
+        buttonContent={
           <>
             {buttonIcon ? <FiDownload className="mr-2" /> : undefined}
             <span>Install</span>
           </>
-        )}
+        }
         header={<ModalHeader package={detail!} />}
         className={styles.modalInstallationWrapper}
       >
@@ -95,18 +96,10 @@ const PackageView = (props: Props) => {
             switch (detail!.kind) {
               case PackageKind.Chart:
                 return (
-                  <ChartInstall
-                    name={detail!.name}
-                    version={detail!.version}
-                    repository={detail!.chartRepository!}
-                  />
+                  <ChartInstall name={detail!.name} version={detail!.version} repository={detail!.chartRepository!} />
                 );
               case PackageKind.Falco:
-                return (
-                  <FalcoInstall
-                    normalizedName={detail!.normalizedName!}
-                  />
-                );
+                return <FalcoInstall normalizedName={detail!.normalizedName!} />;
               default:
                 return null;
             }
@@ -114,7 +107,7 @@ const PackageView = (props: Props) => {
         </>
       </Modal>
     );
-  }
+  };
 
   const getFalcoRules = (): string | undefined => {
     let rules: string | undefined;
@@ -122,7 +115,7 @@ const PackageView = (props: Props) => {
       rules = map(detail.data.rules, 'raw').join(' ');
     }
     return rules;
-  }
+  };
 
   const getOPAPolicies = (): string | undefined => {
     let policies: string | undefined;
@@ -130,7 +123,7 @@ const PackageView = (props: Props) => {
       policies = map(detail.data.policies, 'raw').join(' ');
     }
     return policies;
-  }
+  };
 
   return (
     <>
@@ -165,7 +158,9 @@ const PackageView = (props: Props) => {
           <div className={`jumbotron ${styles.jumbotron}`}>
             <div className="container">
               <div className="d-flex align-items-center mb-3">
-                <div className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}>
+                <div
+                  className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
+                >
                   <Image
                     className={styles.image}
                     alt={detail.displayName || detail.name}
@@ -175,11 +170,11 @@ const PackageView = (props: Props) => {
 
                 <div className="ml-3">
                   <div className="d-flex flex-row align-items-center">
-                    <div className="h3 mb-0">
-                      {detail.displayName || detail.name}
-                    </div>
+                    <div className="h3 mb-0">{detail.displayName || detail.name}</div>
                     {!isNull(detail.deprecated) && detail.deprecated && (
-                      <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>Deprecated</div>
+                      <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
+                        Deprecated
+                      </div>
                     )}
                   </div>
 
@@ -201,9 +196,9 @@ const PackageView = (props: Props) => {
                               }),
                             }}
                           >
-                            <u><small>
-                              {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                            </small></u>
+                            <u>
+                              <small>{detail.chartRepository!.displayName || detail.chartRepository!.name}</small>
+                            </u>
                           </Link>
                         );
                       default:
@@ -219,25 +214,20 @@ const PackageView = (props: Props) => {
                 <div className="d-inline-block mr-2">
                   <Modal
                     buttonType="btn-outline-secondary mt-4"
-                    buttonContent={(
+                    buttonContent={
                       <>
                         <FiPlus className="mr-2" />
                         <span>Info</span>
                       </>
-                    )}
+                    }
                     header={<ModalHeader package={detail} />}
                     className={styles.wrapper}
                   >
-                    <Details
-                      package={detail}
-                      searchUrlReferer={props.searchUrlReferer}
-                    />
+                    <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
                   </Modal>
                 </div>
 
-                <div className="d-inline-block">
-                  {InstallationModal(true, 'btn-outline-secondary')}
-                </div>
+                <div className="d-inline-block">{InstallationModal(true, 'btn-outline-secondary')}</div>
               </div>
             </div>
           </div>
@@ -265,10 +255,12 @@ const PackageView = (props: Props) => {
                             <>
                               {!isUndefined(rules) && (
                                 <div className="mb-5">
-                                  <div className="h2 mb-4">
-                                    Rules
-                                  </div>
-                                  <SyntaxHighlighter language="yaml" style={tomorrowNightBright} customStyle={{padding: '1.5rem'}}>
+                                  <div className="h2 mb-4">Rules</div>
+                                  <SyntaxHighlighter
+                                    language="yaml"
+                                    style={tomorrowNightBright}
+                                    customStyle={{ padding: '1.5rem' }}
+                                  >
                                     {rules}
                                   </SyntaxHighlighter>
                                 </div>
@@ -282,10 +274,12 @@ const PackageView = (props: Props) => {
                             <>
                               {!isUndefined(policies) && (
                                 <div className="mb-5">
-                                  <div className="h2 mb-4">
-                                    Policies
-                                  </div>
-                                  <SyntaxHighlighter language="rego" style={tomorrowNightBright} customStyle={{padding: '1.5rem'}}>
+                                  <div className="h2 mb-4">Policies</div>
+                                  <SyntaxHighlighter
+                                    language="rego"
+                                    style={tomorrowNightBright}
+                                    customStyle={{ padding: '1.5rem' }}
+                                  >
                                     {policies}
                                   </SyntaxHighlighter>
                                 </div>
@@ -308,10 +302,7 @@ const PackageView = (props: Props) => {
 
                     <div className={`card shadow-sm position-relative ${styles.info}`}>
                       <div className="card-body">
-                        <Details
-                          package={detail}
-                          searchUrlReferer={props.searchUrlReferer}
-                        />
+                        <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
                       </div>
                     </div>
                   </>

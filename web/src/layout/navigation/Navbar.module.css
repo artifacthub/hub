@@ -31,7 +31,7 @@
   letter-spacing: 2px;
   color: var(--white) !important;
   text-decoration: none;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .button:focus {
@@ -44,13 +44,13 @@
 
 @media (hover: hover) {
   .button:hover::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -18px;
     left: 0;
     right: 0;
     height: 4px;
     background-color: var(--white);
-    opacity: .5;
+    opacity: 0.5;
   }
 }

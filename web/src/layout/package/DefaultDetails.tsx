@@ -1,5 +1,6 @@
-import React from 'react';
 import isUndefined from 'lodash/isUndefined';
+import React from 'react';
+
 import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import SmallTitle from '../common/SmallTitle';
@@ -26,6 +27,6 @@ const DefaultDetails = (props: Props) => {
       <Keywords keywords={props.package.keywords} />
     </>
   );
-}
+};
 
 export default DefaultDetails;

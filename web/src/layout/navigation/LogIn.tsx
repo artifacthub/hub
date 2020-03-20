@@ -1,13 +1,14 @@
-import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import { API } from '../../api';
-import { UserLogin, UserAuth } from '../../types';
-import InputField from '../common/InputField';
 import isUndefined from 'lodash/isUndefined';
+import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { API } from '../../api';
+import { UserAuth, UserLogin } from '../../types';
+import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './LogIn.module.css';
-import { useHistory } from 'react-router-dom';
 
 interface FormValidation {
   isValid: boolean;
@@ -34,7 +35,7 @@ const LogIn = (props: Props) => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  }
+  };
 
   const onCloseModal = () => {
     if (!isUndefined(props.redirect)) {
@@ -45,7 +46,7 @@ const LogIn = (props: Props) => {
       });
     }
     props.setOpenLogIn(false);
-  }
+  };
 
   async function loginUser(user: UserLogin) {
     try {
@@ -54,16 +55,16 @@ const LogIn = (props: Props) => {
         props.onSuccess();
       }
       setIsLoggingIn(false);
-      props.setIsAuth({status: true});
+      props.setIsAuth({ status: true });
       props.setOpenLogIn(false);
       if (!isUndefined(props.redirect)) {
         history.push({
           pathname: props.redirect,
         });
       }
-    } catch(err) {
+    } catch (err) {
       let error = 'An error occurred, please try again later';
-      switch(err.status) {
+      switch (err.status) {
         case 400:
           error = `Error: ${err.statusText}`;
           break;
@@ -73,7 +74,7 @@ const LogIn = (props: Props) => {
       }
       setApiError(error);
       setIsLoggingIn(false);
-      props.setIsAuth({status: false});
+      props.setIsAuth({ status: false });
     }
   }
 
@@ -81,14 +82,14 @@ const LogIn = (props: Props) => {
     cleanApiError();
     setIsLoggingIn(true);
     if (loginForm.current) {
-      const {isValid, user} = validateForm(loginForm.current);
+      const { isValid, user } = validateForm(loginForm.current);
       if (isValid && !isNull(user)) {
         loginUser(user);
       } else {
         setIsLoggingIn(false);
       }
     }
-  }
+  };
 
   const validateForm = (form: HTMLFormElement): FormValidation => {
     let isValid = form.checkValidity();
@@ -104,25 +105,20 @@ const LogIn = (props: Props) => {
       setIsValidated(true);
     }
     return { isValid, user };
-  }
+  };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(loginForm)) {
       submitForm();
     }
-  }
+  };
 
   return (
     <Modal
       header={<div className="h3 m-2">Sign in</div>}
       modalClassName={styles.modal}
-      closeButton={(
-        <button
-          className="btn btn-secondary"
-          type="button"
-          disabled={isLoggingIn}
-          onClick={submitForm}
-        >
+      closeButton={
+        <button className="btn btn-secondary" type="button" disabled={isLoggingIn} onClick={submitForm}>
           {isLoggingIn ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -132,18 +128,14 @@ const LogIn = (props: Props) => {
             <>Sign in</>
           )}
         </button>
-      )}
+      }
       open={props.openLogIn}
       onClose={onCloseModal}
     >
       <div className="d-flex align-items-center flex-grow-1">
         <form
           ref={loginForm}
-          className={classnames(
-            'w-100',
-            {'needs-validation': !isValidated},
-            {'was-validated': isValidated},
-          )}
+          className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           onFocus={cleanApiError}
           autoComplete="on"
           noValidate
@@ -154,7 +146,7 @@ const LogIn = (props: Props) => {
             name="email"
             value=""
             invalidText={{
-              default: "This field is required",
+              default: 'This field is required',
             }}
             validateOnBlur
             autoComplete="email"
@@ -167,7 +159,7 @@ const LogIn = (props: Props) => {
             name="password"
             value=""
             invalidText={{
-              default: "This field is required",
+              default: 'This field is required',
             }}
             validateOnBlur
             onKeyDown={handleOnReturnKeyDown}
@@ -184,6 +176,6 @@ const LogIn = (props: Props) => {
       </div>
     </Modal>
   );
-}
+};
 
 export default LogIn;

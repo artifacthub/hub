@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
 import classnames from 'classnames';
+import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import NoData from '../common/NoData';
+
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExternalLink from '../common/ExternalLink';
+import NoData from '../common/NoData';
 import styles from './ContentInstall.module.css';
 
 interface Props {
@@ -32,11 +33,10 @@ const FalcoInstall = (props: Props) => {
       <ul className={`nav nav-tabs ${styles.tabs}`}>
         {TABS.map((tab: Tab) => (
           <li className="nav-item" key={tab.name}>
-            <button className={classnames(
-                'btn btn-link nav-item',
-                styles.btn,
-                {[`active btn-primary ${styles.active}`]: tab.name === activeTab},
-              )}
+            <button
+              className={classnames('btn btn-link nav-item', styles.btn, {
+                [`active btn-primary ${styles.active}`]: tab.name === activeTab,
+              })}
               onClick={() => setActiveTab(tab.name)}
             >
               {tab.title}

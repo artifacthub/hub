@@ -1,11 +1,12 @@
+import { fireEvent, render, screen, wait, waitForElement, within } from '@testing-library/react';
 import React from 'react';
-import { render, screen, wait, waitForElement, fireEvent, within } from '@testing-library/react';
-import { mocked } from 'ts-jest/utils';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mocked } from 'ts-jest/utils';
+
 import { API } from '../../api';
-import SearchView from './index';
-import prepareQuerystring from '../../utils/prepareQueryString';
 import { SearchResults } from '../../types';
+import prepareQuerystring from '../../utils/prepareQueryString';
+import SearchView from './index';
 jest.mock('../../api');
 
 const getMockSearchResults = (fixtureId: string): SearchResults => {
@@ -84,9 +85,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const spinner = await waitForElement(() =>
-        screen.getByRole('status'),
-      );
+      const spinner = await waitForElement(() => screen.getByRole('status'));
 
       expect(spinner).toBeInTheDocument();
       await wait();
@@ -102,9 +101,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const results = await waitForElement(() =>
-        screen.getByTestId('resultsText'),
-      );
+      const results = await waitForElement(() => screen.getByTestId('resultsText'));
 
       expect(results).toBeInTheDocument();
       expect(results.textContent).toBe('1 - 7 of 7 results for "test"');
@@ -122,9 +119,7 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      const packages = await waitForElement(() =>
-        screen.getAllByRole('listitem'),
-      );
+      const packages = await waitForElement(() => screen.getAllByRole('listitem'));
 
       expect(packages).toHaveLength(7);
       await wait();
@@ -140,12 +135,12 @@ describe('Search index', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() =>
-        screen.getByTestId('noData'),
-      );
+      const noData = await waitForElement(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(noData.textContent).toBe(`We're sorry! We can't seem to find any packages that match your search for \"test\"`);
+      expect(noData.textContent).toBe(
+        `We're sorry! We can't seem to find any packages that match your search for "test"`
+      );
 
       await wait();
     });
@@ -185,9 +180,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const options = await waitForElement(() =>
-        screen.getAllByTestId('checkbox'),
-      );
+      const options = await waitForElement(() => screen.getAllByTestId('checkbox'));
       // Check first facet: kind 0
       fireEvent.click(options[0]);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -196,7 +189,7 @@ describe('Search index', () => {
         search: prepareQuerystring({
           text: 'test',
           pageNumber: 1,
-          filters: {kind: ['0']},
+          filters: { kind: ['0'] },
           deprecated: false,
         }),
       });
@@ -235,9 +228,7 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      await waitForElement(() =>
-        screen.queryByRole('main'),
-      );
+      await waitForElement(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
       expect(pagination).toBeNull();
 
@@ -255,9 +246,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitForElement(() =>
-        screen.queryByRole('main'),
-      );
+      await waitForElement(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
 
       expect(pagination).toBeInTheDocument();
@@ -272,17 +261,15 @@ describe('Search index', () => {
 
       const props = {
         ...defaultProps,
-        filters: {kind: ['0']},
-      }
+        filters: { kind: ['0'] },
+      };
       render(
         <Router>
           <SearchView {...props} />
         </Router>
       );
 
-      await waitForElement(() =>
-        screen.queryByRole('main'),
-      );
+      await waitForElement(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
 
       expect(pagination).toBeInTheDocument();
@@ -295,7 +282,7 @@ describe('Search index', () => {
         search: prepareQuerystring({
           text: 'test',
           pageNumber: 2,
-          filters: {kind: ['0']},
+          filters: { kind: ['0'] },
           deprecated: false,
         }),
       });
@@ -315,8 +302,8 @@ describe('Search index', () => {
         </Router>
       );
 
-      const paginationLimit = await waitForElement(() =>
-        screen.getByLabelText('pagination-limit') as HTMLSelectElement,
+      const paginationLimit = await waitForElement(
+        () => screen.getByLabelText('pagination-limit') as HTMLSelectElement
       );
       expect(paginationLimit.value).toBe('15');
     });
@@ -335,8 +322,8 @@ describe('Search index', () => {
         </Router>
       );
 
-      const paginationLimit = await waitForElement(() =>
-        screen.getByLabelText('pagination-limit') as HTMLSelectElement
+      const paginationLimit = await waitForElement(
+        () => screen.getByLabelText('pagination-limit') as HTMLSelectElement
       );
       expect(paginationLimit.value).toBe('15');
 

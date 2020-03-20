@@ -1,11 +1,12 @@
+import { fireEvent, render, screen, wait, waitForElement } from '@testing-library/react';
 import React from 'react';
-import { render, screen, wait, waitForElement, fireEvent, waitForElementToBeRemoved, within } from '@testing-library/react';
-import { mocked } from 'ts-jest/utils';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mocked } from 'ts-jest/utils';
+
 import { API } from '../../api';
-import PackageView from './index';
-import prepareQuerystring from '../../utils/prepareQueryString';
 import { Package } from '../../types';
+import prepareQuerystring from '../../utils/prepareQueryString';
+import PackageView from './index';
 jest.mock('../../api');
 
 const getMockPackage = (fixtureId: string): Package => {
@@ -79,9 +80,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitForElement(() =>
-        screen.getByRole('status'),
-      );
+      const spinner = await waitForElement(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await wait();
@@ -101,16 +100,11 @@ describe('Package index', () => {
 
       render(
         <Router>
-          <PackageView
-            {...defaultProps}
-            searchUrlReferer={searchUrlReferer}
-          />
+          <PackageView {...defaultProps} searchUrlReferer={searchUrlReferer} />
         </Router>
       );
 
-      const goBack = await waitForElement(() =>
-        screen.getByTestId('goBack'),
-      );
+      const goBack = await waitForElement(() => screen.getByTestId('goBack'));
 
       expect(goBack).toBeInTheDocument();
       fireEvent.click(goBack);
@@ -135,13 +129,11 @@ describe('Package index', () => {
           <PackageView {...defaultProps} />
         </Router>
       );
-      const link = await waitForElement(() =>
-        screen.getByTestId('link'),
-      );
+      const link = await waitForElement(() => screen.getByTestId('link'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
-      expect(location.pathname).toBe('/search');
-      expect(location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
+      expect(window.location.pathname).toBe('/search');
+      expect(window.location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
 
       await wait();
     });
@@ -158,9 +150,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const dialogs = await waitForElement(() =>
-        screen.getAllByRole('dialog'),
-      );
+      const dialogs = await waitForElement(() => screen.getAllByRole('dialog'));
 
       expect(dialogs).toHaveLength(3);
 
@@ -179,9 +169,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      await waitForElement(() =>
-        screen.getByTestId('mainPackage'),
-      );
+      await waitForElement(() => screen.getByTestId('mainPackage'));
 
       const noData = screen.getByTestId('noData');
       expect(noData).toBeInTheDocument();
@@ -201,9 +189,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const readme = await waitForElement(() =>
-        screen.queryByTestId('readme'),
-      );
+      const readme = await waitForElement(() => screen.queryByTestId('readme'));
 
       expect(readme).toBeInTheDocument();
       expect(readme?.textContent).toBe(mockPackage.readme);

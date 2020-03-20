@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
 import classnames from 'classnames';
+import isUndefined from 'lodash/isUndefined';
+import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+
 import { ChartRepository } from '../../types';
-import NoData from '../common/NoData';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExternalLink from '../common/ExternalLink';
+import NoData from '../common/NoData';
 import SmallTitle from '../common/SmallTitle';
-import isUndefined from 'lodash/isUndefined';
 import styles from './ContentInstall.module.css';
 
 interface Props {
@@ -39,11 +40,10 @@ const ChartInstall = (props: Props) => {
       <ul className={`nav nav-tabs ${styles.tabs}`}>
         {TABS.map((tab: Tab) => (
           <li className="nav-item" key={tab.name}>
-            <button className={classnames(
-                'btn btn-link nav-item',
-                styles.btn,
-                {[`active btn-primary ${styles.active}`]: tab.name === activeTab},
-              )}
+            <button
+              className={classnames('btn btn-link nav-item', styles.btn, {
+                [`active btn-primary ${styles.active}`]: tab.name === activeTab,
+              })}
               onClick={() => setActiveTab(tab.name)}
             >
               {tab.title}
@@ -68,9 +68,13 @@ const ChartInstall = (props: Props) => {
                     </div>
                   </div>
 
-                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
-                    backgroundColor: 'var(--color-1-10)',
-                  }}>
+                  <SyntaxHighlighter
+                    language="bash"
+                    style={docco}
+                    customStyle={{
+                      backgroundColor: 'var(--color-1-10)',
+                    }}
+                  >
                     {block1}
                   </SyntaxHighlighter>
 
@@ -81,9 +85,13 @@ const ChartInstall = (props: Props) => {
                     </div>
                   </div>
 
-                  <SyntaxHighlighter language="bash" style={docco} customStyle={{
-                    backgroundColor: 'var(--color-1-10)',
-                  }}>
+                  <SyntaxHighlighter
+                    language="bash"
+                    style={docco}
+                    customStyle={{
+                      backgroundColor: 'var(--color-1-10)',
+                    }}
+                  >
                     {block2}
                   </SyntaxHighlighter>
 

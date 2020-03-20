@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import classnames from 'classnames';
 import isNumber from 'lodash/isNumber';
+import React, { useEffect, useState } from 'react';
+
 import styles from './Pagination.module.css';
 
 interface Props {
@@ -26,7 +27,7 @@ const getPaginationOptions = (currentPage: number, pageCount: number): (string |
   range.unshift(1);
   range.push(pageCount);
   return range;
-}
+};
 
 const Pagination = (props: Props) => {
   const [totalPages, setTotalPages] = useState(Math.ceil(props.total / props.limit));
@@ -55,25 +56,23 @@ const Pagination = (props: Props) => {
   return (
     <nav role="navigation" aria-label="pagination">
       <ul className="pagination justify-content-center mt-5 mb-5">
-        <li className={classnames(
-          'page-item',
-          {'disabled': props.active === 1},
-        )}>
-          {getButton(props.active - 1, (
+        <li className={classnames('page-item', { disabled: props.active === 1 })}>
+          {getButton(
+            props.active - 1,
             <>
               <span className="d-none d-sm-block">Previous</span>
               <span className="d-block d-sm-none">Prev</span>
             </>
-          ))}
+          )}
         </li>
 
         {visiblePages.map((value: number | string, index: number) => {
           if (isNumber(value)) {
             return (
-              <li key={`pag_${index}`} className={classnames(
-                'page-item',
-                {[`active ${styles.active}`]: props.active === value},
-              )}>
+              <li
+                key={`pag_${index}`}
+                className={classnames('page-item', { [`active ${styles.active}`]: props.active === value })}
+              >
                 {getButton(value)}
               </li>
             );
@@ -86,15 +85,12 @@ const Pagination = (props: Props) => {
           }
         })}
 
-        <li className={classnames(
-          'page-item',
-          {'disabled': props.active === totalPages},
-        )}>
+        <li className={classnames('page-item', { disabled: props.active === totalPages })}>
           {getButton(props.active + 1, 'Next')}
         </li>
       </ul>
     </nav>
   );
-}
+};
 
 export default Pagination;

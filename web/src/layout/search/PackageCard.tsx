@@ -1,12 +1,13 @@
+import isNull from 'lodash/isNull';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import { Package, PackageKind, SearchFiltersURL } from '../../types';
+import buildPackageURL from '../../utils/buildPackageURL';
+import prepareQueryString from '../../utils/prepareQueryString';
 import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
-import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './PackageCard.module.css';
-import buildPackageURL from '../../utils/buildPackageURL';
-import isNull from 'lodash/isNull';
 
 interface Props {
   package: Package;
@@ -31,7 +32,9 @@ const PackageCard = (props: Props) => {
           <div className={`card-body ${styles.body}`}>
             <div className="d-flex align-items-start justify-content-between mb-3">
               <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
-                <div className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}>
+                <div
+                  className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
+                >
                   <Image
                     imageId={props.package.logoImageId}
                     alt={`Logo ${props.package.displayName || props.package.name}`}
@@ -44,7 +47,11 @@ const PackageCard = (props: Props) => {
                     <div className="h5 d-flex flex-row align-items-center">
                       {props.package.displayName || props.package.name}
                       {!isNull(props.package.deprecated) && props.package.deprecated && (
-                        <div className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}>Deprecated</div>
+                        <div
+                          className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}
+                        >
+                          Deprecated
+                        </div>
                       )}
                     </div>
                   </div>
@@ -67,7 +74,7 @@ const PackageCard = (props: Props) => {
                                       search: prepareQueryString({
                                         pageNumber: 1,
                                         filters: {
-                                          'repo': [props.package.chartRepository!.name],
+                                          repo: [props.package.chartRepository!.name],
                                         },
                                         deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
                                       }),
@@ -75,7 +82,9 @@ const PackageCard = (props: Props) => {
                                     });
                                   }}
                                 >
-                                  <u>{props.package.chartRepository!.displayName || props.package.chartRepository!.name}</u>
+                                  <u>
+                                    {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
+                                  </u>
                                 </button>
                               </div>
 
@@ -113,18 +122,18 @@ const PackageCard = (props: Props) => {
               </div>
             </div>
 
-            <p className={`mb-0 card-text overflow-hidden ${styles.description}`}>
-              {props.package.description}
-            </p>
+            <p className={`mb-0 card-text overflow-hidden ${styles.description}`}>{props.package.description}</p>
 
             {!isNull(props.package.deprecated) && props.package.deprecated && (
-              <div className={`d-inline d-sm-none badge badge-pill mt-1 text-uppercase ${styles.deprecatedBadge}`}>Deprecated</div>
+              <div className={`d-inline d-sm-none badge badge-pill mt-1 text-uppercase ${styles.deprecatedBadge}`}>
+                Deprecated
+              </div>
             )}
           </div>
         </Link>
       </div>
     </div>
   );
-}
+};
 
 export default PackageCard;

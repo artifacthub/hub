@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SearchFiltersURL, Package } from '../../types';
+
+import { Package, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 
 interface Props {
@@ -21,7 +22,7 @@ const Version = (props: Props) => {
       pathname: buildPackageURL(props.packageItem, true),
       state: props.searchUrlReferer,
     });
-  }
+  };
 
   useEffect(() => {
     // Spinning is not rendered when version has been loaded
@@ -33,9 +34,7 @@ const Version = (props: Props) => {
   return (
     <div className="py-1 py-sm-0">
       {props.isActive ? (
-        <div className="d-flex align-items-center text-truncate">
-          {props.version}
-        </div>
+        <div className="d-flex align-items-center text-truncate">{props.version}</div>
       ) : (
         <button
           data-testid="version"

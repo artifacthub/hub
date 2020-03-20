@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
 import classnames from 'classnames';
 import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
+import React, { useEffect, useRef, useState } from 'react';
+
+import useBodyScroll from '../../hooks/useBodyScroll';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './Modal.module.css';
-import isUndefined from 'lodash/isUndefined';
-import useBodyScroll from '../../hooks/useBodyScroll';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -35,7 +36,7 @@ const Modal = (props: Props) => {
         props.onClose();
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (!isUndefined(props.open)) {
@@ -50,37 +51,28 @@ const Modal = (props: Props) => {
           type="button"
           className={classnames(
             'font-weight-bold text-uppercase position-relative btn btn-block',
-            {[`${props.buttonType}`]: !isUndefined(props.buttonType)},
-            {'btn-primary': isUndefined(props.buttonType)},
+            { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
+            { 'btn-primary': isUndefined(props.buttonType) }
           )}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             setOpenStatus(true);
           }}
         >
-          <div className="d-flex align-items-center justify-content-center">
-            {props.buttonContent}
-          </div>
+          <div className="d-flex align-items-center justify-content-center">{props.buttonContent}</div>
         </button>
       )}
 
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} />}
 
-      <div className={classnames(
-          'modal',
-          styles.modal,
-          {[`${styles.active} d-block`]: openStatus},
-        )}
-        role="dialog"
-      >
-        <div className={`modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ${props.modalDialogClassName}`} ref={ref}>
+      <div className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })} role="dialog">
+        <div
+          className={`modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ${props.modalDialogClassName}`}
+          ref={ref}
+        >
           <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
             <div className={`modal-header ${styles.header}`}>
-              {isString(props.header) ? (
-                <div className="modal-title h5">{props.header}</div>
-              ) : (
-                <>{props.header}</>
-              )}
+              {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
 
               <button
                 type="button"
@@ -95,9 +87,7 @@ const Modal = (props: Props) => {
               </button>
             </div>
 
-            <div className="modal-body p-4 h-100 d-flex flex-column">
-              {openStatus && <>{props.children}</>}
-            </div>
+            <div className="modal-body p-4 h-100 d-flex flex-column">{openStatus && <>{props.children}</>}</div>
 
             <div className="modal-footer p-3">
               {isUndefined(props.closeButton) ? (
@@ -121,6 +111,6 @@ const Modal = (props: Props) => {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

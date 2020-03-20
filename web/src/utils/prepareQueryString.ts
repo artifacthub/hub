@@ -1,4 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
+
 import { SearchFiltersURL } from '../types';
 
 export default (query: SearchFiltersURL): string => {
@@ -19,4 +20,4 @@ export default (query: SearchFiltersURL): string => {
   }
   const result = p.toString();
   return result === '' ? '' : `?${result}`;
-}
+};

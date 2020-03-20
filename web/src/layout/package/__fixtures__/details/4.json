@@ -9,9 +9,5 @@
   "appVersion": null,
   "maintainers": null,
   "chartRepository": null,
-  "keywords": [
-    "test",
-    "helm",
-    "charts repo"
-  ]
+  "keywords": ["test", "helm", "charts repo"]
 }

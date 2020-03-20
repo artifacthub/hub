@@ -1,4 +1,5 @@
 import isNull from 'lodash/isNull';
+
 import { SearchFiltersURL } from '../types';
 
 const SPECIAL_KEYS = ['text', 'page', 'deprecated'];
@@ -25,4 +26,4 @@ export default (query: string): SearchFiltersURL => {
     pageNumber: p.has('page') && !isNull(p.get('page')) ? parseInt(p.get('page')!) : 1,
     deprecated: p.has('deprecated') ? p.get('deprecated') === 'true' : false,
   };
-}
+};

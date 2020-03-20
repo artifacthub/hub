@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
+
 import styles from './ButtonCopyToClipboard.module.css';
 
 interface Props {
@@ -18,7 +19,7 @@ const copyToClipboard = (text: string): boolean => {
   } catch {
     return false;
   }
-}
+};
 
 const ButtonCopyToClipboard = (props: Props) => {
   const [copyStatus, setCopyStatus] = useState(false);
@@ -33,9 +34,7 @@ const ButtonCopyToClipboard = (props: Props) => {
       {copyStatus && (
         <div className={`tooltip bs-tooltip-bottom show ${styles.tooltip}`} role="tooltip">
           <div className={`arrow ${styles.tooltipArrow}`} />
-          <div className={`tooltip-inner ${styles.tooltipContent}`}>
-            Copied!
-          </div>
+          <div className={`tooltip-inner ${styles.tooltipContent}`}>Copied!</div>
         </div>
       )}
 
@@ -48,6 +47,6 @@ const ButtonCopyToClipboard = (props: Props) => {
       </button>
     </div>
   );
-}
+};
 
 export default ButtonCopyToClipboard;

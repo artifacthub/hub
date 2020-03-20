@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { MdAddCircle, MdAdd } from 'react-icons/md';
-import { IoMdRefreshCircle, IoMdRefresh } from 'react-icons/io';
-import { ChartRepository as ChartRepo, UserAuth } from '../../../types';
-import { API } from '../../../api';
 import isNull from 'lodash/isNull';
+import React, { useEffect, useState } from 'react';
+import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
+import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
+
+import { API } from '../../../api';
+import { ChartRepository as ChartRepo, UserAuth } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
-import ChartRepositoryModal from './Modal';
 import ChartRepositoryCard from './Card';
 import styles from './ChartRepository.module.css';
+import ChartRepositoryModal from './Modal';
 
 interface ModalStatus {
   open: boolean;
@@ -34,24 +35,24 @@ const ChartRepository = (props: Props) => {
       setIsLoading(true);
       setChartRepositories(await API.getChartRepositories());
       setIsLoading(false);
-    } catch(err) {
+    } catch (err) {
       setIsLoading(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setChartRepositories([]);
       } else {
-       onAuthError();
+        onAuthError();
       }
     }
-  };
+  }
 
   useEffect(() => {
     fetchCharts();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const onAuthError = (): void => {
-    props.setIsAuth({status: false});
+    props.setIsAuth({ status: false });
     history.push(`/login?redirect=/admin`);
-  }
+  };
 
   return (
     <>
@@ -73,7 +74,7 @@ const ChartRepository = (props: Props) => {
 
             <button
               className={`btn btn-secondary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
-              onClick={() => setModalStatus({open: true})}
+              onClick={() => setModalStatus({ open: true })}
             >
               <div className="d-flex flex-row align-items-center justify-content-center">
                 <MdAdd className="d-inline d-md-none" />
@@ -91,7 +92,7 @@ const ChartRepository = (props: Props) => {
           chartRepository={modalStatus.chartRepository}
           onSuccess={fetchCharts}
           onAuthError={onAuthError}
-          onClose={() => setModalStatus({open: false})}
+          onClose={() => setModalStatus({ open: false })}
         />
       )}
 
@@ -102,15 +103,9 @@ const ChartRepository = (props: Props) => {
           {chartRepositories.length === 0 ? (
             <NoData>
               <>
-                <p className="h6 my-4">
-                  Add your first chart repository!
-                </p>
+                <p className="h6 my-4">Add your first chart repository!</p>
 
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setModalStatus({open: true})}
-                >
+                <button type="button" className="btn btn-secondary" onClick={() => setModalStatus({ open: true })}>
                   <div className="d-flex flex-row align-items-center">
                     <MdAddCircle className="mr-2" />
                     <span>Add chart repository</span>
@@ -135,6 +130,6 @@ const ChartRepository = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default ChartRepository;

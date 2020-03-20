@@ -34,6 +34,6 @@ const ExpandableList = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default ExpandableList;

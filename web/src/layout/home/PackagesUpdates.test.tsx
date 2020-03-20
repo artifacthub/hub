@@ -1,10 +1,11 @@
-import React from 'react';
 import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
-import { mocked } from 'ts-jest/utils';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mocked } from 'ts-jest/utils';
+
 import { API } from '../../api';
-import PackagesUpdates from './PackagesUpdates';
 import { PackagesUpdatesList } from '../../types';
+import PackagesUpdates from './PackagesUpdates';
 jest.mock('../../api');
 
 const getMockPackagesUpdates = (fixtureId: string): PackagesUpdatesList => {
@@ -54,9 +55,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() =>
-        screen.getByRole('status'),
-      );
+      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await wait();
@@ -72,9 +71,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const latest = await waitForElement(() =>
-        screen.getByTestId('latestPackagesList'),
-      );
+      const latest = await waitForElement(() => screen.getByTestId('latestPackagesList'));
 
       expect(latest).toBeInTheDocument();
       expect(screen.queryByTestId('recentlyUpdatedPackagesList')).toBeNull();
@@ -91,9 +88,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const recentlyUpdated = await waitForElement(() =>
-        screen.getByTestId('recentlyUpdatedPackagesList'),
-      );
+      const recentlyUpdated = await waitForElement(() => screen.getByTestId('recentlyUpdatedPackagesList'));
 
       expect(screen.queryByTestId('latestPackagesList')).toBeNull();
       expect(recentlyUpdated).toBeInTheDocument();

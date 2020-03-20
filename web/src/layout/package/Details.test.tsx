@@ -1,8 +1,9 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import Details from './Details';
-import prepareQuerystring from '../../utils/prepareQueryString';
+
 import { Package } from '../../types';
+import prepareQuerystring from '../../utils/prepareQueryString';
+import Details from './Details';
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/details/${fixtureId}.json`) as Package;
@@ -41,23 +42,13 @@ describe('Details', () => {
   describe('Application version', () => {
     it('renders correct app version', () => {
       const mockPackage = getMockPackage('2');
-      const { queryByText } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
       expect(queryByText(mockPackage.appVersion)).toBeInTheDocument();
     });
 
     it('renders placeholder when no app version', () => {
       const mockPackage = getMockPackage('3');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const appVersion = queryByTestId('appVersion');
       expect(appVersion).toBeInTheDocument();
@@ -68,12 +59,7 @@ describe('Details', () => {
   describe('Keywords', () => {
     it('renders 3 keywords', () => {
       const mockPackage = getMockPackage('4');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const keywords = queryByTestId('keywords');
       expect(keywords?.children).toHaveLength(mockPackage.keywords!.length);
@@ -82,12 +68,7 @@ describe('Details', () => {
 
     it('renders placeholder when no keywords', () => {
       const mockPackage = getMockPackage('5');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const keywords = queryByTestId('keywords');
       expect(keywords).toBeInTheDocument();
@@ -96,12 +77,7 @@ describe('Details', () => {
 
     it('calls history push on keyword click', () => {
       const mockPackage = getMockPackage('6');
-      const { queryByText } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const keywordBtn = queryByText(mockPackage.keywords![0])?.closest('button');
       expect(keywordBtn).toBeInTheDocument();
@@ -122,12 +98,7 @@ describe('Details', () => {
   describe('Maintainers', () => {
     it('renders 2 maintainers', () => {
       const mockPackage = getMockPackage('7');
-      const { queryByTestId, queryByText } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId, queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const maintainers = queryByTestId('maintainers');
       expect(maintainers?.children).toHaveLength(2);
@@ -138,12 +109,7 @@ describe('Details', () => {
 
     it('renders placeholder when no maintainers', () => {
       const mockPackage = getMockPackage('8');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const maintainers = queryByTestId('maintainers');
       expect(maintainers).toBeInTheDocument();
@@ -154,12 +120,7 @@ describe('Details', () => {
   describe('Home url', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('9');
-      const { queryByText } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
       const homeUrl = queryByText('Home url');
       expect(homeUrl).toBeInTheDocument();
       expect(homeUrl).toHaveAttribute('href', mockPackage.homeUrl);
@@ -167,12 +128,7 @@ describe('Details', () => {
 
     it('renders placeholder when no home url', () => {
       const mockPackage = getMockPackage('10');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const homeUrl = queryByTestId('homeUrl');
       expect(homeUrl).toBeInTheDocument();
@@ -183,12 +139,7 @@ describe('Details', () => {
   describe('Chart versions', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('11');
-      const { queryByTestId, queryAllByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId, queryAllByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const chartVersions = queryByTestId('chartVersions');
       expect(chartVersions).toBeInTheDocument();
@@ -198,12 +149,7 @@ describe('Details', () => {
 
     it('renders placeholder when no home url', () => {
       const mockPackage = getMockPackage('12');
-      const { queryByTestId } = render(
-        <Details
-          package={mockPackage}
-          searchUrlReferer={null}
-        />
-      );
+      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
 
       const chartVersions = queryByTestId('chartVersions');
       expect(chartVersions).toBeInTheDocument();

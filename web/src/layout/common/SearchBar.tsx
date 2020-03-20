@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
-import { useHistory } from 'react-router-dom';
 import isNull from 'lodash/isNull';
+import React, { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
+
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchBar.module.css';
 
@@ -20,7 +21,7 @@ const SearchBar = (props: Props) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value);
-  }
+  };
 
   const cleanSearch = (): void => {
     setValue('');
@@ -60,7 +61,7 @@ const SearchBar = (props: Props) => {
           }),
         });
       }
-    }
+    };
 
     window.addEventListener('keydown', downHandler);
 
@@ -73,10 +74,7 @@ const SearchBar = (props: Props) => {
     <>
       <div className={`position-relative ${props.formClassName}`}>
         <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
-          <div
-            className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
-            onClick={forceFocus}
-          >
+          <div className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`} onClick={forceFocus}>
             <FiSearch />
           </div>
 
@@ -98,11 +96,7 @@ const SearchBar = (props: Props) => {
           <button
             data-testid="cleanBtn"
             type="button"
-            className={classnames(
-              'close',
-              styles.inputClean,
-              {'invisible': value === ''}
-            )}
+            className={classnames('close', styles.inputClean, { invisible: value === '' })}
             aria-label="Close"
             onClick={cleanSearch}
           >
@@ -112,12 +106,15 @@ const SearchBar = (props: Props) => {
 
         {props.isSearching && (
           <div className={`position-absolute text-light ${styles.loading}`}>
-            <span data-testid="searchBarSpinning" className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`} />
+            <span
+              data-testid="searchBarSpinning"
+              className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`}
+            />
           </div>
         )}
       </div>
     </>
   );
-}
+};
 
 export default SearchBar;

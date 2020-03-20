@@ -1,8 +1,8 @@
+import forEach from 'lodash/forEach';
 import get from 'lodash/get';
+import has from 'lodash/has';
 import set from 'lodash/set';
 import unset from 'lodash/unset';
-import has from 'lodash/has';
-import forEach from 'lodash/forEach';
 
 interface Keys {
   [key: string]: string;
@@ -16,4 +16,4 @@ export default (obj: any, keys: Keys): any => {
     }
   });
   return obj;
-}
+};

@@ -1,6 +1,7 @@
-import React, { ChangeEvent } from 'react';
-import styles from './Checkbox.module.css';
 import isUndefined from 'lodash/isUndefined';
+import React, { ChangeEvent } from 'react';
+
+import styles from './Checkbox.module.css';
 
 interface Props {
   name: string;
@@ -34,16 +35,12 @@ const CheckBox = (props: Props) => {
       />
       <label className="custom-control-label w-100" htmlFor={id}>
         <div className="d-flex align-items-center mw-100">
-          <span className="d-inline-block text-truncate">
-            {props.label}
-          </span>
-          {!isUndefined(props.legend) && (
-            <small className="pl-1">({props.legend})</small>
-          )}
+          <span className="d-inline-block text-truncate">{props.label}</span>
+          {!isUndefined(props.legend) && <small className="pl-1">({props.legend})</small>}
         </div>
       </label>
     </div>
   );
-}
+};
 
 export default CheckBox;

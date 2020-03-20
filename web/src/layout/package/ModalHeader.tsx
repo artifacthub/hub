@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Package } from '../../types';
 import Image from '../common/Image';
 import styles from './ModalHeader.module.css';
@@ -18,9 +19,7 @@ const ModalHeader = (props: Props) => (
     </div>
 
     <div className="ml-3">
-      <div className="h5 mb-0">
-        {props.package.displayName || props.package.name}
-      </div>
+      <div className="h5 mb-0">{props.package.displayName || props.package.name}</div>
     </div>
   </div>
 );

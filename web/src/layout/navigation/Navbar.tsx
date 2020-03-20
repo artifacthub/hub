@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import isUndefined from 'lodash/isUndefined';
-import { FiHexagon } from 'react-icons/fi';
 import classnames from 'classnames';
-import SearchBar from '../common/SearchBar';
-import MobileSettings from './MobileSettings';
-import SignUp from './SignUp';
-import { UserAuth } from '../../types';
 import isNull from 'lodash/isNull';
-import UserAuthDropdown from './UserAuthDropdown';
+import isUndefined from 'lodash/isUndefined';
+import React, { useEffect, useState } from 'react';
+import { FiHexagon } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+
+import { UserAuth } from '../../types';
+import SearchBar from '../common/SearchBar';
 import LogIn from './LogIn';
+import MobileSettings from './MobileSettings';
 import styles from './Navbar.module.css';
+import SignUp from './SignUp';
+import UserAuthDropdown from './UserAuthDropdown';
 
 interface Props {
   isSearching: boolean;
@@ -23,21 +24,21 @@ interface Props {
 }
 
 const Navbar = (props: Props) => {
-  const openLogInModal = !isUndefined(props.redirect) && (!isNull(props.isAuth) && !props.isAuth.status);
+  const openLogInModal = !isUndefined(props.redirect) && !isNull(props.isAuth) && !props.isAuth.status;
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
   useEffect(() => {
-    if (!isUndefined(props.redirect) && (!isNull(props.isAuth) && !props.isAuth.status)) {
+    if (!isUndefined(props.redirect) && !isNull(props.isAuth) && !props.isAuth.status) {
       setOpenLogIn(true);
     }
   }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <nav className={classnames(
-      'navbar navbar-top navbar-expand-md navbar-dark',
-      styles.navbar,
-      {[styles.homeNavbar]: props.fromHome}
-    )}>
+    <nav
+      className={classnames('navbar navbar-top navbar-expand-md navbar-dark', styles.navbar, {
+        [styles.homeNavbar]: props.fromHome,
+      })}
+    >
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <FiHexagon className="mr-2" />
@@ -46,13 +47,15 @@ const Navbar = (props: Props) => {
               <span className="mr-1">Artifact</span>
               <span className={styles.brand}>HUB</span>
             </div>
-            <span className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}>Alpha</span>
+            <span
+              className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}
+            >
+              Alpha
+            </span>
           </div>
         </Link>
 
-        {openSignUp && (
-          <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />
-        )}
+        {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
 
         {openLogIn && (
           <LogIn
@@ -88,7 +91,7 @@ const Navbar = (props: Props) => {
                   type="button"
                   className={classnames(
                     'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
-                    styles.button,
+                    styles.button
                   )}
                   onClick={() => setOpenSignUp(true)}
                 >
@@ -115,7 +118,7 @@ const Navbar = (props: Props) => {
                       type="button"
                       className={classnames(
                         'btn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
-                        styles.button,
+                        styles.button
                       )}
                       onClick={() => setOpenLogIn(true)}
                     >
@@ -130,6 +133,6 @@ const Navbar = (props: Props) => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

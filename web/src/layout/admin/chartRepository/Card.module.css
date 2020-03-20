@@ -11,8 +11,9 @@
   background-color: var(--color-1-500);
 }
 
-.btnIcon, .btnDeleteIcon {
-  font-size: .65rem;
+.btnIcon,
+.btnDeleteIcon {
+  font-size: 0.65rem;
 }
 
 .modal code {
@@ -42,11 +43,11 @@
   }
 
   .btnIcon {
-    font-size: .95rem;
+    font-size: 0.95rem;
   }
 
   .btnAction {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     height: 2rem;
     width: 2rem;
     border-radius: 50% !important;

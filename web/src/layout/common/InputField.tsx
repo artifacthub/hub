@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
-import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import React, { useRef, useState } from 'react';
+
 import { API } from '../../api';
 import { ResourceKind } from '../../types';
 import styles from './InputField.module.css';
@@ -39,7 +40,7 @@ const InputField = (props: Props) => {
   const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
 
-  const checkAvailability = (value: string): void  => {
+  const checkAvailability = (value: string): void => {
     async function checkAvailability() {
       try {
         setIsCheckingAvailability(true);
@@ -61,7 +62,7 @@ const InputField = (props: Props) => {
     } else {
       checkValidity();
     }
-  }
+  };
 
   const checkValidity = () => {
     const isValid = input.current!.checkValidity();
@@ -84,7 +85,7 @@ const InputField = (props: Props) => {
       setInvalidText(errorTxt);
     }
     setIsValid(isValid);
-  }
+  };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
@@ -94,23 +95,21 @@ const InputField = (props: Props) => {
         checkAvailability(e.target.value);
       }
     }
-  }
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
     if (!isUndefined(props.onChange)) {
       props.onChange(e);
     }
-  }
+  };
 
   return (
     <div className={`form-group mb-4 position-relative ${props.className}`}>
       {!isUndefined(props.label) && (
         <label htmlFor={props.name}>
           {props.label}
-          {!isUndefined(props.labelLegend) && (
-            <>{props.labelLegend}</>
-          )}
+          {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
         </label>
       )}
 
@@ -119,10 +118,7 @@ const InputField = (props: Props) => {
         type={props.type}
         name={props.name}
         value={inputValue}
-        className={classnames(
-          'form-control',
-          {'is-invalid': !isNull(isValid) && !isValid},
-        )}
+        className={classnames('form-control', { 'is-invalid': !isNull(isValid) && !isValid })}
         placeholder={props.placeholder}
         required={props.required}
         minLength={props.minLength}
@@ -142,24 +138,16 @@ const InputField = (props: Props) => {
       )}
 
       {!isUndefined(props.validText) && (
-        <div className={`valid-feedback mt-0 ${styles.inputFeedback}`}>
-          {props.validText}
-        </div>
+        <div className={`valid-feedback mt-0 ${styles.inputFeedback}`}>{props.validText}</div>
       )}
 
       {!isUndefined(invalidText) && (
-        <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>
-          {invalidText}
-        </div>
+        <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>{invalidText}</div>
       )}
 
-      {!isUndefined(props.additionalInfo) && (
-        <div className="alert alert-ligth p-0 mt-3">
-          {props.additionalInfo}
-        </div>
-      )}
+      {!isUndefined(props.additionalInfo) && <div className="alert alert-ligth p-0 mt-3">{props.additionalInfo}</div>}
     </div>
   );
-}
+};
 
 export default InputField;

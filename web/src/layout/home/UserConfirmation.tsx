@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import isUndefined from 'lodash/isUndefined';
+import React, { useEffect, useState } from 'react';
 import { MdClose, MdDone } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
+
 import { API } from '../../api';
-import Modal from '../common/Modal';
 import Loading from '../common/Loading';
+import Modal from '../common/Modal';
 import styles from './UserConfirmation.module.css';
 
 interface Props {
@@ -24,9 +25,9 @@ const UserConfirmation = (props: Props) => {
       try {
         await API.verifyEmail(emailCode!);
         setValidEmail(true);
-      } catch(err) {
+      } catch (err) {
         let error = 'An error occureed verifying your email, please contact us about this issue.';
-        switch(err.status) {
+        switch (err.status) {
           case 400:
             error = err.message;
             break;
@@ -39,7 +40,7 @@ const UserConfirmation = (props: Props) => {
       } finally {
         setVerifying(false);
       }
-    };
+    }
 
     if (!isUndefined(emailCode)) {
       history.replace({
@@ -59,13 +60,12 @@ const UserConfirmation = (props: Props) => {
       modalClassName={styles.modal}
       open={!isUndefined(emailCode)}
     >
-      <div className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}>
+      <div
+        className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}
+      >
         {verifying ? (
           <>
-            <Loading
-              className={styles.loading}
-              spinnerClassName="mt-0"
-            />
+            <Loading className={styles.loading} spinnerClassName="mt-0" />
             <small className="text-muted">We are verifying your email...</small>
           </>
         ) : (
@@ -86,6 +86,6 @@ const UserConfirmation = (props: Props) => {
       </div>
     </Modal>
   );
-}
+};
 
 export default UserConfirmation;
