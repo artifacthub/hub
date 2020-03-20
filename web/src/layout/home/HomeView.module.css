@@ -41,6 +41,10 @@
   width: 75px;
 }
 
+.socialBtn {
+  width: 110px;
+}
+
 @media only screen and (max-width: 768px) {
   .mainTitle {
     font-size: 2.5rem !important;
