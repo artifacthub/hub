@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -35,6 +36,10 @@ const (
 	// Session
 	sessionCookieName = "sid"
 	sessionDuration   = 30 * 24 * time.Hour
+)
+
+var (
+	chartRepositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
 )
 
 // handlers groups all the http handlers defined for the hub, including the
@@ -447,6 +452,10 @@ func (h *handlers) addChartRepository(w http.ResponseWriter, r *http.Request) {
 	}
 	if repo.Name == "" || repo.URL == "" {
 		http.Error(w, "chart repository name and url must be provided", http.StatusBadRequest)
+		return
+	}
+	if !chartRepositoryNameRE.MatchString(repo.Name) {
+		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
 	if err := h.hubAPI.AddChartRepository(r.Context(), repo); err != nil {
