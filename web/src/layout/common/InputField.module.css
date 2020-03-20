@@ -2,3 +2,9 @@
   right: 10px;
   top: 38px;
 }
+
+@media only screen and (min-width: 768px) {
+  .inputFeedback {
+    position: absolute;
+  }
+}

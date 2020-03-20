@@ -162,12 +162,12 @@ const ChartRepositoryModal = (props: Props) => {
             readOnly={!isUndefined(props.chartRepository)}
             invalidText={{
               default: "This field is required",
-              patternMismatch: "Chart names must be lower case letters and numbers",
+              patternMismatch: "Only lower case letters, numbers or hyphens. Must start with a letter",
               customError: "There is another repository with this name",
             }}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryName}
-            pattern="[a-z0-9-]+"
+            pattern="[a-z][a-z0-9-]*"
             autoComplete="off"
             required
           />

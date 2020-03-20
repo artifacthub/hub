@@ -142,13 +142,13 @@ const InputField = (props: Props) => {
       )}
 
       {!isUndefined(props.validText) && (
-        <div className="valid-feedback position-absolute mt-0">
+        <div className={`valid-feedback mt-0 ${styles.inputFeedback}`}>
           {props.validText}
         </div>
       )}
 
       {!isUndefined(invalidText) && (
-        <div className="invalid-feedback position-absolute mt-0">
+        <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>
           {invalidText}
         </div>
       )}

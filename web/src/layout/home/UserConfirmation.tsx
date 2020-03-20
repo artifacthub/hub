@@ -59,7 +59,7 @@ const UserConfirmation = (props: Props) => {
       modalClassName={styles.modal}
       open={!isUndefined(emailCode)}
     >
-      <div className={`d-flex flex-column h-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}>
+      <div className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}>
         {verifying ? (
           <>
             <Loading
