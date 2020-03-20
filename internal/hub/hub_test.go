@@ -287,35 +287,11 @@ func TestDeleteChartRepository(t *testing.T) {
 	})
 }
 
-func TestSetChartRepositoryLastTrackingTs(t *testing.T) {
+func TestSetChartRepositoryLastTrackingResults(t *testing.T) {
 	dbQuery := `
-	update chart_repository set last_tracking_ts = current_timestamp
-	where chart_repository_id = $1`
-
-	t.Run("database update succeeded", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(nil)
-		h := New(db, nil)
-
-		err := h.SetChartRepositoryLastTrackingTs(context.Background(), "repoID")
-		assert.NoError(t, err)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
-		h := New(db, nil)
-
-		err := h.SetChartRepositoryLastTrackingTs(context.Background(), "repoID")
-		assert.Equal(t, errFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestSetChartRepositoryLastTrackingErrors(t *testing.T) {
-	dbQuery := `
-	update chart_repository set last_tracking_errors = $2
+	update chart_repository set
+		last_tracking_ts = current_timestamp,
+		last_tracking_errors = nullif($2, '')
 	where chart_repository_id = $1`
 
 	t.Run("database update succeeded", func(t *testing.T) {
@@ -323,7 +299,7 @@ func TestSetChartRepositoryLastTrackingErrors(t *testing.T) {
 		db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
 		h := New(db, nil)
 
-		err := h.SetChartRepositoryLastTrackingErrors(context.Background(), "repoID", "errors")
+		err := h.SetChartRepositoryLastTrackingResults(context.Background(), "repoID", "errors")
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -333,7 +309,7 @@ func TestSetChartRepositoryLastTrackingErrors(t *testing.T) {
 		db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(errFakeDatabaseFailure)
 		h := New(db, nil)
 
-		err := h.SetChartRepositoryLastTrackingErrors(context.Background(), "repoID", "errors")
+		err := h.SetChartRepositoryLastTrackingResults(context.Background(), "repoID", "errors")
 		assert.Equal(t, errFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})

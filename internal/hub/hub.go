@@ -92,21 +92,13 @@ func (h *Hub) DeleteChartRepository(ctx context.Context, r *ChartRepository) err
 	return h.dbExec(ctx, "select delete_chart_repository($1::jsonb)", r)
 }
 
-// SetChartRepositoryLastTrackingTs updates the timestamp of the last tracking
-// of the provided repository in the database.
-func (h *Hub) SetChartRepositoryLastTrackingTs(ctx context.Context, chartRepositoryID string) error {
-	query := `
-	update chart_repository set last_tracking_ts = current_timestamp
-	where chart_repository_id = $1`
-	_, err := h.db.Exec(ctx, query, chartRepositoryID)
-	return err
-}
-
-// SetChartRepositoryLastTrackingErrors updates the errors that happened during
+// SetChartRepositoryLastTrackingResults updates the timestamp and errors of
 // the last tracking of the provided repository in the database.
-func (h *Hub) SetChartRepositoryLastTrackingErrors(ctx context.Context, chartRepositoryID, errs string) error {
+func (h *Hub) SetChartRepositoryLastTrackingResults(ctx context.Context, chartRepositoryID, errs string) error {
 	query := `
-	update chart_repository set last_tracking_errors = $2
+	update chart_repository set
+		last_tracking_ts = current_timestamp,
+		last_tracking_errors = nullif($2, '')
 	where chart_repository_id = $1`
 	_, err := h.db.Exec(ctx, query, chartRepositoryID, errs)
 	return err

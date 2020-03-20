@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"strings"
 	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -43,19 +42,9 @@ func newDispatcher(ctx context.Context, ec *errorsCollector, hubAPI *hub.Hub) *d
 }
 
 // run instructs the dispatcher to start processing the repositories provided.
-func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
+func (d *dispatcher) run(wg *sync.WaitGroup, repos []*hub.ChartRepository) {
 	defer wg.Done()
 	defer close(d.Queue)
-
-	// Get repositories to scan for charts to track
-	repos, err := d.getRepositories(reposNames)
-	if err != nil {
-		log.Error().
-			Err(err).
-			Str("repos", strings.Join(reposNames, ",")).
-			Msg("Error getting repositories")
-		return
-	}
 
 	// Track repositories charts
 	var wgRepos sync.WaitGroup
@@ -70,30 +59,6 @@ func (d *dispatcher) run(wg *sync.WaitGroup, reposNames []string) {
 	}
 
 	wgRepos.Wait()
-}
-
-// getRepositories returns the details of the repositories provided. If no
-// repositories are provided, all available in the database will be used.
-func (d *dispatcher) getRepositories(names []string) ([]*hub.ChartRepository, error) {
-	var repos []*hub.ChartRepository
-
-	if len(names) > 0 {
-		for _, name := range names {
-			repo, err := d.hubAPI.GetChartRepositoryByName(d.ctx, name)
-			if err != nil {
-				return nil, err
-			}
-			repos = append(repos, repo)
-		}
-	} else {
-		var err error
-		repos, err = d.hubAPI.GetChartRepositories(d.ctx)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return repos, nil
 }
 
 // trackRepositoryCharts generates jobs for each of the chart versions found in
@@ -136,11 +101,6 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 			default:
 			}
 		}
-	}
-
-	err = d.hubAPI.SetChartRepositoryLastTrackingTs(d.ctx, r.ChartRepositoryID)
-	if err != nil {
-		log.Error().Err(err).Str("repo", r.Name).Msg("Error setting repository last tracking ts")
 	}
 }
 
