@@ -6,18 +6,16 @@ import { API } from '../../api';
 import { ResourceKind } from '../../types';
 import styles from './InputField.module.css';
 
-interface Availability {
-  status: boolean;
-  errorTxt?: string;
-}
-
 export interface Props {
   type: 'text' | 'password' | 'email' | 'url';
   label?: string;
   name: string;
   value?: string;
   validText?: string;
-  invalidText?: string;
+  invalidText?: {
+    default: string;
+    [key: string]: string;
+  };
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -34,17 +32,11 @@ export interface Props {
   additionalInfo?: string | JSX.Element;
 }
 
-const AVAILABILITY_INVALID_TEXT = {
-  [ResourceKind.userAlias]: 'Username not available',
-  [ResourceKind.chartRepositoryName]: 'There is another repository with this name',
-  [ResourceKind.chartRepositoryURL]: 'There is another repository using this url',
-};
-
 const InputField = (props: Props) => {
   const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
-  const [invalidText, setInvalidText] = useState(props.invalidText);
+  const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
 
   const checkAvailability = (value: string): void  => {
@@ -55,30 +47,49 @@ const InputField = (props: Props) => {
           resourceKind: props.checkAvailability!,
           value: value,
         });
-        const errorText = AVAILABILITY_INVALID_TEXT[props.checkAvailability!];
-        setIsValid(false);
-        setInvalidText(errorText);
-        input.current!.setCustomValidity(errorText);
+        input.current!.setCustomValidity('Already taken');
       } catch {
-        setIsValid(true);
         input.current!.setCustomValidity('');
       } finally {
+        checkValidity();
         setIsCheckingAvailability(false);
-        setIsValid(input.current!.checkValidity());
       }
     }
     if (value !== '') {
+      input.current!.setCustomValidity('');
       checkAvailability();
     } else {
-      setInvalidText(props.invalidText);
-      setIsValid(input.current!.checkValidity());
+      checkValidity();
     }
+  }
+
+  const checkValidity = () => {
+    const isValid = input.current!.checkValidity();
+    if (!isValid && !isUndefined(props.invalidText)) {
+      let errorTxt = props.invalidText.default;
+      const validityState: ValidityState | undefined = input.current?.validity;
+      if (!isUndefined(validityState)) {
+        if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
+          errorTxt = props.invalidText.typeMismatch;
+        } else if (validityState.tooShort && !isUndefined(props.invalidText.tooShort)) {
+          errorTxt = props.invalidText.tooShort;
+        } else if (validityState.patternMismatch && !isUndefined(props.invalidText.patternMismatch)) {
+          errorTxt = props.invalidText.patternMismatch;
+        } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
+          errorTxt = props.invalidText.typeMismatch;
+        } else if (validityState.customError && !isUndefined(props.invalidText.customError)) {
+          errorTxt = props.invalidText.customError;
+        }
+      }
+      setInvalidText(errorTxt);
+    }
+    setIsValid(isValid);
   }
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
       if (isUndefined(props.checkAvailability)) {
-        setIsValid(e.currentTarget.checkValidity());
+        checkValidity();
       } else {
         checkAvailability(e.target.value);
       }

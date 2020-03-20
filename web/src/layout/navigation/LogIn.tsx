@@ -153,7 +153,9 @@ const LogIn = (props: Props) => {
             label="Email address"
             name="email"
             value=""
-            invalidText="This field is required"
+            invalidText={{
+              default: "This field is required",
+            }}
             validateOnBlur
             autoComplete="email"
             required
@@ -164,7 +166,9 @@ const LogIn = (props: Props) => {
             label="Password"
             name="password"
             value=""
-            invalidText="This field is required"
+            invalidText={{
+              default: "This field is required",
+            }}
             validateOnBlur
             onKeyDown={handleOnReturnKeyDown}
             autoComplete="current-password"

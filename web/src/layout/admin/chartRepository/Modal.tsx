@@ -160,9 +160,15 @@ const ChartRepositoryModal = (props: Props) => {
             name="name"
             value={!isUndefined(props.chartRepository) ? props.chartRepository.name : ''}
             readOnly={!isUndefined(props.chartRepository)}
-            invalidText="This field is required"
+            invalidText={{
+              default: "This field is required",
+              patternMismatch: "Chart names must be lower case letters and numbers",
+              customError: "There is another repository with this name",
+            }}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryName}
+            pattern="[a-z0-9-]+"
+            autoComplete="off"
             required
           />
 
@@ -179,12 +185,16 @@ const ChartRepositoryModal = (props: Props) => {
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="url"
             value={!isUndefined(props.chartRepository) ? props.chartRepository.url : ''}
-            invalidText="Please enter a valid url"
+            invalidText={{
+              default: "This field is required",
+              typeMismatch: "Please enter a valid url",
+              customError: "There is another repository using this url",
+            }}
             onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryURL}
             additionalInfo={(
-              <div className={`text-muted text-break ${styles.inputAdditionalInfo}`}>
+              <small className="text-muted text-break mt-1">
                 <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
                 <p>
                   If you host your charts in Github, you can use <ExternalLink href="https://helm.sh/docs/topics/chart_repository/#github-pages-example" className="text-reset"><u>GitHub Pages</u></ExternalLink> to serve them or you can use a URL like the one below:
@@ -195,7 +205,7 @@ const ChartRepositoryModal = (props: Props) => {
                 <p className="mb-0">
                   For more information about how to create and host your own chart repository please visit the <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset"><u>Helm chart repository guide</u></ExternalLink>.
                 </p>
-              </div>
+              </small>
             )}
             required
           />

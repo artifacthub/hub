@@ -134,7 +134,7 @@ const SignUp = (props: Props) => {
       onClose={onCloseModal}
     >
       {success ? (
-        <div className="d-flex h-100 align-items-center justify-content-center">
+        <div className="d-flex h-100 w-100 align-items-center justify-content-center">
           <div className="alert" role="alert">
             <div className="d-flex flex-sm-column flex-md-row align-items-center">
               <div className="mr-3">
@@ -150,6 +150,7 @@ const SignUp = (props: Props) => {
         <form
           ref={registerForm}
           className={classnames(
+            'w-100',
             {'needs-validation': !isValidated},
             {'was-validated': isValidated},
           )}
@@ -161,7 +162,10 @@ const SignUp = (props: Props) => {
             label="Username"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="alias"
-            invalidText="This field is required"
+            invalidText={{
+              default: "This field is required",
+              customValidity: "Username not available",
+            }}
             checkAvailability={ResourceKind.userAlias}
             validateOnBlur
             autoComplete="username"
@@ -173,7 +177,10 @@ const SignUp = (props: Props) => {
             label="Email"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="email"
-            invalidText="Please enter a valid email address"
+            invalidText={{
+              default: "This field is required",
+              typeMismatch: "Please enter a valid email address",
+            }}
             validateOnBlur
             autoComplete="email"
             required
@@ -201,7 +208,10 @@ const SignUp = (props: Props) => {
               labelLegend={<small className="ml-1 font-italic">(6 characters min.)</small>}
               name="password"
               minLength={6}
-              invalidText="Passwords must be at least 6 characters long"
+              invalidText={{
+                default: "This field is required",
+                tooShort: "Passwords must be at least 6 characters long",
+              }}
               onChange={onPasswordChange}
               autoComplete="new-password"
               validateOnBlur
@@ -215,7 +225,10 @@ const SignUp = (props: Props) => {
               labelLegend={<small className="ml-1 font-italic">(Required)</small>}
               name="confirmPassword"
               pattern={password.value}
-              invalidText="Passwords don't match"
+              invalidText={{
+                default: "This field is required",
+                patternMismatch: "Passwords don't match",
+              }}
               autoComplete="new-password"
               validateOnBlur={password.isValid}
               onKeyDown={handleOnReturnKeyDown}
