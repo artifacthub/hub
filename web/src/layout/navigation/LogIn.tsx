@@ -136,7 +136,7 @@ const LogIn = (props: Props) => {
       open={props.openLogIn}
       onClose={onCloseModal}
     >
-      <div className="h-100 d-flex align-items-center">
+      <div className="d-flex align-items-center flex-grow-1">
         <form
           ref={loginForm}
           className={classnames(

@@ -2,3 +2,11 @@
   max-width: 90%;
   width: 620px !important;
 }
+
+.inputAdditionalInfo {
+  font-size: 70%;
+}
+
+.inputAdditionalInfoURL {
+  font-size: 85%;
+}
