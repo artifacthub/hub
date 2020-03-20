@@ -701,6 +701,18 @@ func TestAddChartRepository(t *testing.T) {
 				"missing url",
 				`{"name": "repo1"}`,
 			},
+			{
+				"invalid name",
+				`{"name": "1repo"}`,
+			},
+			{
+				"invalid name",
+				`{"name": "repo_underscore"}`,
+			},
+			{
+				"invalid name",
+				`{"name": "REPO_UPPERCASE"}`,
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
