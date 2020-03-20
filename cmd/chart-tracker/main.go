@@ -47,12 +47,32 @@ func main() {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
 	}
 
+	// Get chart repositories to process
+	reposNames := cfg.GetStringSlice("tracker.repositoriesNames")
+	var repos []*hub.ChartRepository
+	if len(reposNames) > 0 {
+		for _, name := range reposNames {
+			repo, err := hubAPI.GetChartRepositoryByName(context.Background(), name)
+			if err != nil {
+				log.Error().Err(err).Str("name", name).Msg("Error getting chart repository")
+				continue
+			}
+			repos = append(repos, repo)
+		}
+	} else {
+		var err error
+		repos, err = hubAPI.GetChartRepositories(context.Background())
+		if err != nil {
+			log.Fatal().Err(err).Msg("Error getting chart repositories")
+		}
+	}
+
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	ec := newErrorsCollector(ctx, hubAPI)
+	ec := newErrorsCollector(ctx, hubAPI, repos)
 	dispatcher := newDispatcher(ctx, ec, hubAPI)
 	wg.Add(1)
-	go dispatcher.run(&wg, cfg.GetStringSlice("tracker.repositoriesNames"))
+	go dispatcher.run(&wg, repos)
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
 		w := newWorker(ctx, i, ec, hubAPI, imageStore)
 		wg.Add(1)

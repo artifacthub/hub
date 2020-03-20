@@ -4,7 +4,6 @@ linters:
     - bodyclose
     - deadcode
     - errcheck
-    - funlen
     - goconst
     - gocyclo
     - goimports
@@ -27,8 +26,6 @@ linters:
   fast: false
 
 linters-settings:
-  funlen:
-    lines: 120
   golint:
     min-confidence: 0
 

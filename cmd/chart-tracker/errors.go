@@ -27,12 +27,16 @@ type errorsCollector struct {
 }
 
 // newErrorsCollector creates a new errorsCollector instance.
-func newErrorsCollector(ctx context.Context, hubAPI *hub.Hub) *errorsCollector {
-	return &errorsCollector{
+func newErrorsCollector(ctx context.Context, hubAPI *hub.Hub, repos []*hub.ChartRepository) *errorsCollector {
+	ec := &errorsCollector{
 		ctx:    ctx,
 		hubAPI: hubAPI,
 		errors: make(map[string][]error),
 	}
+	for _, r := range repos {
+		ec.errors[r.ChartRepositoryID] = nil
+	}
+	return ec
 }
 
 // appends adds the error provided to the chart repository's list of errors.
@@ -54,7 +58,7 @@ func (c *errorsCollector) flush() {
 			errStr.WriteString(err.Error())
 			errStr.WriteString("\n")
 		}
-		err := c.hubAPI.SetChartRepositoryLastTrackingErrors(c.ctx, chartRepositoryID, errStr.String())
+		err := c.hubAPI.SetChartRepositoryLastTrackingResults(c.ctx, chartRepositoryID, errStr.String())
 		if err != nil {
 			log.Error().Err(err).Str("repoID", chartRepositoryID).Send()
 		}
