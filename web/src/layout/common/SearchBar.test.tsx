@@ -81,7 +81,7 @@ describe('SearchBar', () => {
       expect(input).not.toBe(document.activeElement);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQueryString({
           text: 'testing',
           pageNumber: 1,

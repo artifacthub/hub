@@ -54,7 +54,7 @@ const PackageCard = (props: Props) => {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   history.push({
-                                    pathname: '/search',
+                                    pathname: '/packages/search',
                                     search: prepareQueryString({
                                       pageNumber: 1,
                                       filters: {

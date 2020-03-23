@@ -134,7 +134,7 @@ const PackageView = (props: Props) => {
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
-                pathname: '/search',
+                pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: pageNumber || 1,
                   text: text,
@@ -186,7 +186,7 @@ const PackageView = (props: Props) => {
                             data-testid="link"
                             className={`text-muted text-uppercase`}
                             to={{
-                              pathname: '/search',
+                              pathname: '/packages/search',
                               search: prepareQueryString({
                                 pageNumber: 1,
                                 filters: {

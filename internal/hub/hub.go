@@ -160,7 +160,7 @@ func (h *Hub) RegisterUser(ctx context.Context, user *User, baseURL string) erro
 	// Send email verification code
 	if h.es != nil {
 		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/verifyEmail?code=%s", baseURL, code),
+			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, code),
 		}
 		var emailBody bytes.Buffer
 		if err := emailVerificationTmpl.Execute(&emailBody, templateData); err != nil {

@@ -111,7 +111,7 @@ describe('PackageCard', () => {
       fireEvent.click(button!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring({
           pageNumber: 1,
           filters: {
