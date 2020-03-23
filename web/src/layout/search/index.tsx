@@ -1,23 +1,24 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { FaFilter } from 'react-icons/fa';
-import isUndefined from 'lodash/isUndefined';
-import isNull from 'lodash/isNull';
 import every from 'lodash/every';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { FaFilter } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
+
 import { API } from '../../api';
-import { Package, Facets, SearchResults } from '../../types';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
+import { Facets, Package, SearchResults } from '../../types';
+import prepareQueryString from '../../utils/prepareQueryString';
+import Loading from '../common/Loading';
+import NoData from '../common/NoData';
+import Pagination from '../common/Pagination';
 import Sidebar from '../common/Sidebar';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
-import NoData from '../common/NoData';
-import Loading from '../common/Loading';
-import Pagination from '../common/Pagination';
-import PaginationLimit from './PaginationLimit';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import PackageCard from './PackageCard';
-import prepareQueryString from '../../utils/prepareQueryString';
+import PaginationLimit from './PaginationLimit';
 import styles from './SearchView.module.css';
-import { useHistory } from 'react-router-dom';
 
 interface Props {
   isSearching: boolean;
@@ -55,9 +56,11 @@ const SearchView = (props: Props) => {
     if (isNull(searchResults.data.facets)) {
       return true;
     } else {
-      return every(searchResults.data.facets, (f: Facets) => { return f.options.length === 0 });
+      return every(searchResults.data.facets, (f: Facets) => {
+        return f.options.length === 0;
+      });
     }
-  }
+  };
 
   useScrollRestorationFix();
 
@@ -67,7 +70,7 @@ const SearchView = (props: Props) => {
 
   const updateWindowScrollPosition = (newPosition: number) => {
     window.scrollTo(0, newPosition);
-  }
+  };
 
   const onFiltersChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
@@ -75,7 +78,7 @@ const SearchView = (props: Props) => {
     if (checked) {
       newFilters.push(value);
     } else {
-      newFilters = newFilters.filter(el => el !== value);
+      newFilters = newFilters.filter((el) => el !== value);
     }
 
     history.push({
@@ -144,10 +147,10 @@ const SearchView = (props: Props) => {
 
       try {
         const searchResults = await API.searchPackages(query);
-        setSearchResults({...searchResults});
+        setSearchResults({ ...searchResults });
 
         // Preload next page if required
-        if (total > (limit + offset)) {
+        if (total > limit + offset) {
           API.searchPackages({
             ...query,
             offset: props.pageNumber * limit,
@@ -182,10 +185,19 @@ const SearchView = (props: Props) => {
           updateWindowScrollPosition(scrollPosition);
         }
       }
-    };
+    }
     fetchSearchResults();
-    // https://twitter.com/dan_abramov/status/1104414272753487872
-  }, [props.text, props.pageNumber, JSON.stringify(props.filters), props.deprecated, limit]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+    // prettier-ignore
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, [
+    props.text,
+    props.pageNumber,
+    JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
+    props.deprecated,
+    limit,
+  ]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const { packages, facets } = searchResults.data;
   const { total, offset } = searchResults.metadata;
@@ -203,7 +215,7 @@ const SearchView = (props: Props) => {
                   wrapperClassName="px-4"
                   buttonType={`btn-sm rounded-circle ${styles.btnMobileFilters}`}
                   buttonIcon={<FaFilter />}
-                  closeButton={(
+                  closeButton={
                     <>
                       {isSearching ? (
                         <>
@@ -214,7 +226,7 @@ const SearchView = (props: Props) => {
                         <>See {total} results</>
                       )}
                     </>
-                  )}
+                  }
                   header={<div className="h6 text-uppercase mb-0">Filters</div>}
                 >
                   <Filters
@@ -231,12 +243,16 @@ const SearchView = (props: Props) => {
               {!isSearching && (
                 <div data-testid="resultsText" className="text-truncate">
                   {total > 0 && (
-                    <span className="pr-1">{offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of </span>
+                    <span className="pr-1">
+                      {offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of{' '}
+                    </span>
                   )}
                   {total}
                   <span className="d-none d-sm-inline pl-1"> results </span>
                   {!isUndefined(props.text) && (
-                    <span className="pl-1">for "<span className="font-weight-bold">{props.text}</span>"</span>
+                    <span className="pl-1">
+                      for "<span className="font-weight-bold">{props.text}</span>"
+                    </span>
                   )}
                 </div>
               )}
@@ -323,6 +339,6 @@ const SearchView = (props: Props) => {
       </div>
     </>
   );
-}
+};
 
 export default SearchView;

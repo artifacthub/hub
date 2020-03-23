@@ -22,9 +22,15 @@
     "@types/semver": "^7.1.0",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
+    "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
@@ -35,11 +41,31 @@
     "semver": "^7.1.2",
     "typescript": "^3.7.4"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:diff": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "isready": "yarn format && yarn lint && yarn test && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"

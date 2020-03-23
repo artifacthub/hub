@@ -4,7 +4,12 @@
   hyphens: auto;
 }
 
-.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 {
+.md h1,
+.md h2,
+.md h3,
+.md h4,
+.md h5,
+.md h6 {
   line-height: 1.5;
   margin: 25px 0 15px 0;
 }
@@ -34,7 +39,7 @@
 }
 
 .md hr {
-  height: .25em;
+  height: 0.25em;
   padding: 0;
   margin: 24px 0;
   background-color: var(--border-md);
@@ -56,7 +61,9 @@
   white-space: normal;
 }
 
-.md table th, .md table tr, .md table td {
+.md table th,
+.md table tr,
+.md table td {
   border: 1px solid var(--border-md);
   padding: 6px 13px;
 }

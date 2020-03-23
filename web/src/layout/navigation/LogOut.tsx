@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { API } from '../../api';
 import { UserAuth } from '../../types';
-import { useHistory } from 'react-router-dom';
 
 interface Props {
   setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
@@ -25,14 +26,13 @@ const LogOut = (props: Props) => {
       if (!isUndefined(props.onSuccess)) {
         props.onSuccess();
       }
-      props.setIsAuth({status: false});
+      props.setIsAuth({ status: false });
       if (!isUndefined(props.privateRoute) && props.privateRoute) {
         history.push('/');
       }
-
-    } catch(err) {
+    } catch (err) {
       let error = 'An error occurred, please try again later';
-      switch(err.status) {
+      switch (err.status) {
         case 400:
           error = `Error: ${err.statusText}`;
           break;
@@ -44,10 +44,7 @@ const LogOut = (props: Props) => {
 
   return (
     <>
-      <button
-        className={`dropdown-item ${props.className}`}
-        onClick={logoutUser}
-      >
+      <button className={`dropdown-item ${props.className}`} onClick={logoutUser}>
         {isLoggingOut ? (
           <>
             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -65,6 +62,6 @@ const LogOut = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default LogOut;

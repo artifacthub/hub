@@ -51,18 +51,18 @@
 }
 
 .subtitle {
-  font-size: .80rem;
+  font-size: 0.8rem;
   line-height: 1rem;
 }
 
 .subtitle span {
-  font-size: .65rem;
+  font-size: 0.65rem;
 }
 
 .kind {
   min-width: 20px;
-  font-size: .75rem;
-  color: var(--color-1-500)
+  font-size: 0.75rem;
+  color: var(--color-1-500);
 }
 
 .truncateWrapper {

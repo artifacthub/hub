@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
 import classnames from 'classnames';
-import { PackageKind, UserAuth } from '../../types';
-import ChartRepository from './chartRepository';
-import styles from './AdminView.module.css';
-import PackageIcon from '../common/PackageIcon';
 import isNull from 'lodash/isNull';
+import React, { useState } from 'react';
+
+import { PackageKind, UserAuth } from '../../types';
+import PackageIcon from '../common/PackageIcon';
+import styles from './AdminView.module.css';
+import ChartRepository from './chartRepository';
 
 interface PackageItem {
   kind: PackageKind;
@@ -46,7 +47,7 @@ const AdminView = (props: Props) => {
 
   const onMenuItemClick = (kind: PackageKind) => {
     setActivePackageKind(kind);
-  }
+  };
 
   if (!isNull(props.isAuth) && !props.isAuth.status) {
     return null;
@@ -65,19 +66,15 @@ const AdminView = (props: Props) => {
                 className={classnames(
                   'list-group-item list-group-item-action',
                   styles.listItem,
-                  {[styles.isActive]: packageItem.kind === activePackageKind},
-                  {'disabled': packageItem.disabled},
+                  { [styles.isActive]: packageItem.kind === activePackageKind },
+                  { disabled: packageItem.disabled }
                 )}
                 onClick={() => onMenuItemClick(packageItem.kind)}
               >
                 <div className="d-flex flex-row align-items-center">
                   <PackageIcon className={`mr-md-2 ${styles.icon}`} kind={packageItem.kind} />
-                  <span className="d-none d-md-block">
-                    {packageItem.name}
-                  </span>
-                  <span className="d-inline d-md-none ml-2">
-                    {packageItem.shortName}
-                  </span>
+                  <span className="d-none d-md-block">{packageItem.name}</span>
+                  <span className="d-inline d-md-none ml-2">{packageItem.shortName}</span>
                 </div>
               </button>
             );
@@ -89,9 +86,7 @@ const AdminView = (props: Props) => {
         {(() => {
           switch (activePackageKind) {
             case PackageKind.Chart:
-              return (
-                <ChartRepository {...props} />
-              );
+              return <ChartRepository {...props} />;
             default:
               return null;
           }
@@ -99,6 +94,6 @@ const AdminView = (props: Props) => {
       </div>
     </main>
   );
-}
+};
 
 export default AdminView;

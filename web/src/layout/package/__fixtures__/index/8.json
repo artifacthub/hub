@@ -1,15 +1,15 @@
 {
-  "packageId":"id",
-  "kind":0,
-  "name":"test",
-  "displayName":"Pretty name",
-  "description":"desc",
-  "logoImageId":"imageId",
-  "appVersion":"1.0.0",
+  "packageId": "id",
+  "kind": 0,
+  "name": "test",
+  "displayName": "Pretty name",
+  "description": "desc",
+  "logoImageId": "imageId",
+  "appVersion": "1.0.0",
   "readme": "readme",
-  "chartRepository":{
-    "name":"stable",
-    "displayName":null,
+  "chartRepository": {
+    "name": "stable",
+    "displayName": null,
     "url": "repoUrl"
   }
 }

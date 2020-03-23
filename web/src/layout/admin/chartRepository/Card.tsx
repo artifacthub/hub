@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react';
-import moment from 'moment';
 import classnames from 'classnames';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import moment from 'moment';
+import React, { useRef, useState } from 'react';
+import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import { IoMdCloseCircle } from 'react-icons/io';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import { ChartRepository } from '../../../types';
-import { FaExclamation, FaCheck, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { IoMdCloseCircle } from 'react-icons/io';
-import isUndefined from 'lodash/isUndefined';
-import isNull from 'lodash/isNull';
-import Modal from '../../common/Modal';
-import useOutsideClick from '../../../hooks/useOutsideClick';
+
 import { API } from '../../../api';
+import useOutsideClick from '../../../hooks/useOutsideClick';
+import { ChartRepository } from '../../../types';
+import Modal from '../../common/Modal';
 import styles from './Card.module.css';
 
 interface ModalStatus {
@@ -20,7 +21,7 @@ interface ModalStatus {
 
 interface Props {
   chartRepository: ChartRepository;
-  setModalStatus:  React.Dispatch<React.SetStateAction<ModalStatus>>;
+  setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
   onSuccess: () => void;
   onAuthError: () => void;
 }
@@ -31,7 +32,9 @@ const ChartRepositoryCard = (props: Props) => {
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
   useOutsideClick([dropdown], openDropdownStatus, () => setOpenDropdownStatus(false));
-  const hasErrors = !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull((props.chartRepository.lastTrackingErrors));
+  const hasErrors =
+    !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull(props.chartRepository.lastTrackingErrors);
+
   const getLastTracking = (): JSX.Element => {
     if (isUndefined(props.chartRepository.lastTrackingTs) || isNull(props.chartRepository.lastTrackingTs)) {
       return <>Not processed yet, it will be processed very soon</>;
@@ -40,11 +43,7 @@ const ChartRepositoryCard = (props: Props) => {
     const content = (
       <>
         <span>{moment(props.chartRepository.lastTrackingTs! * 1000).fromNow()}</span>
-        {hasErrors ? (
-          <FaExclamation className="mx-2 text-warning" />
-        ) : (
-          <FaCheck className="mx-2 text-success" />
-        )}
+        {hasErrors ? <FaExclamation className="mx-2 text-warning" /> : <FaCheck className="mx-2 text-success" />}
       </>
     );
 
@@ -56,16 +55,16 @@ const ChartRepositoryCard = (props: Props) => {
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block ${styles.modal}`}
             buttonType="ml-1 btn badge btn-secondary"
-            buttonContent={(
+            buttonContent={
               <>
                 <span className="d-none d-sm-inline">Show errors log</span>
                 <span className="d-inline d-sm-none">Log</span>
               </>
-            )}
+            }
             header={<div className="h3 m-2">Errors log</div>}
           >
             <div className="mt-3 mw-100">
-              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{fontSize: '90%'}}>
+              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
                 {props.chartRepository.lastTrackingErrors}
               </SyntaxHighlighter>
             </div>
@@ -84,8 +83,7 @@ const ChartRepositoryCard = (props: Props) => {
       setIsDeleting(false);
       setOpenDropdownStatus(false);
       props.onSuccess();
-
-    } catch(err) {
+    } catch (err) {
       setIsDeleting(false);
       if (err.statusText === 'ErrLoginRedirect') {
         setOpenDropdownStatus(false);
@@ -99,14 +97,9 @@ const ChartRepositoryCard = (props: Props) => {
   return (
     <li className={`list-group-item list-group-item-action ${styles.listItem}`}>
       <div className="d-flex flex-row w-100 justify-content-between">
-        <h5 className="mb-1">
-          {props.chartRepository.displayName || props.chartRepository.name}
-        </h5>
+        <h5 className="mb-1">{props.chartRepository.displayName || props.chartRepository.name}</h5>
 
-        <div className={classnames(
-          'd-flex flex-nowrap position-relative',
-          {[styles.buttons]: !openDropdownStatus},
-        )}>
+        <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
           <button
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -135,11 +128,12 @@ const ChartRepositoryCard = (props: Props) => {
             </div>
           </button>
 
-          <div ref={dropdown} className={classnames(
-            'dropdown-menu dropdown-menu-right p-0',
-            styles.dropdown,
-            {'show': openDropdownStatus},
-          )}>
+          <div
+            ref={dropdown}
+            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
+              show: openDropdownStatus,
+            })}
+          >
             <div className={`arrow ${styles.arrow}`} />
 
             <p className="p-3 text-center mb-0">
@@ -203,6 +197,6 @@ const ChartRepositoryCard = (props: Props) => {
       )}
     </li>
   );
-}
+};
 
 export default ChartRepositoryCard;

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
+import React, { useRef, useState } from 'react';
+
 import useOutsideClick from '../../hooks/useOutsideClick';
 import styles from './Dropdown.module.css';
 
@@ -18,25 +19,19 @@ const Dropdown = (props: Props) => {
     <>
       <button
         type="button"
-        className={classnames(
-          'btn font-weight-bold text-uppercase position-relative',
-          styles.button,
-          {[styles.active]: openStatus},
-        )}
+        className={classnames('btn font-weight-bold text-uppercase position-relative', styles.button, {
+          [styles.active]: openStatus,
+        })}
         onClick={() => setOpenStatus(true)}
       >
         {props.button}
       </button>
 
-      <form ref={ref} className={classnames(
-        'dropdown-menu p-4',
-        styles.dropdown,
-        {'show': openStatus},
-      )}>
+      <form ref={ref} className={classnames('dropdown-menu p-4', styles.dropdown, { show: openStatus })}>
         {props.children}
       </form>
     </>
   );
-}
+};
 
 export default Dropdown;

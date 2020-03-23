@@ -1,8 +1,20 @@
-import isUndefined from 'lodash/isUndefined';
 import camelCase from 'lodash/camelCase';
-import isObject from 'lodash/isObject';
 import isArray from 'lodash/isArray';
-import { Package, Stats, SearchQuery, PackagesUpdatesList, SearchResults, User, UserLogin, Alias, ChartRepository, CheckAvailabilityProps } from '../types';
+import isObject from 'lodash/isObject';
+import isUndefined from 'lodash/isUndefined';
+
+import {
+  Alias,
+  ChartRepository,
+  CheckAvailabilityProps,
+  Package,
+  PackagesUpdatesList,
+  SearchQuery,
+  SearchResults,
+  Stats,
+  User,
+  UserLogin,
+} from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 import history from '../utils/history';
 import renameKeysInObject from '../utils/renameKeysInObject';
@@ -21,14 +33,14 @@ interface FetchOptions {
 
 const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
-    return r.map(v => toCamelCase(v));
+    return r.map((v) => toCamelCase(v));
   } else if (isObject(r)) {
     return Object.keys(r).reduce(
       (result, key) => ({
         ...result,
         [camelCase(key)]: toCamelCase((r as Result)[key]),
       }),
-      {},
+      {}
     );
   }
   return r;
@@ -43,7 +55,7 @@ const handleUnauthorizedRequests = async (res: any) => {
     });
   }
   return res;
-}
+};
 
 const handleErrors = async (res: any) => {
   if (!res.ok) {
@@ -54,7 +66,7 @@ const handleErrors = async (res: any) => {
     });
   }
   return res;
-}
+};
 
 const handleContent = async (res: any) => {
   switch (res.headers.get('Content-Type')) {
@@ -65,7 +77,7 @@ const handleContent = async (res: any) => {
       const json = await res.json();
       return toCamelCase(json);
   }
-}
+};
 
 const apiFetch = (url: string, opts?: FetchOptions): any => {
   const options = opts || {};
@@ -74,7 +86,7 @@ const apiFetch = (url: string, opts?: FetchOptions): any => {
     .then(handleErrors)
     .then(handleContent)
     .catch((error) => Promise.reject(error));
-}
+};
 
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
@@ -94,8 +106,8 @@ export const API = {
   searchPackages: (query: SearchQuery): Promise<SearchResults> => {
     const q = new URLSearchParams();
     q.set('facets', 'true');
-    q.set('limit', (query.limit).toString());
-    q.set('offset', (query.offset).toString());
+    q.set('limit', query.limit.toString());
+    q.set('offset', query.offset.toString());
     if (!isUndefined(query.filters)) {
       Object.keys(query.filters).forEach((filterId: string) => {
         return query.filters[filterId].forEach((id: string) => {
@@ -121,7 +133,7 @@ export const API = {
   },
 
   register: (user: User): Promise<null | string> => {
-    const newUser = renameKeysInObject(user, {'firstName': 'first_name', 'lastName': 'last_name'});
+    const newUser = renameKeysInObject(user, { firstName: 'first_name', lastName: 'last_name' });
     return apiFetch(`${API_BASE_URL}/user`, {
       method: 'POST',
       headers: {
@@ -164,7 +176,7 @@ export const API = {
   },
 
   addChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
-    const chartRepo = renameKeysInObject(chartRepository, {'displayName': 'display_name'});
+    const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
     return apiFetch(`${API_BASE_URL}/admin/chart`, {
       method: 'POST',
       headers: {
@@ -181,7 +193,7 @@ export const API = {
   },
 
   updateChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
-    const chartRepo = renameKeysInObject(chartRepository, {'displayName': 'display_name'});
+    const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
     return apiFetch(`${API_BASE_URL}/admin/chart/${chartRepository.name}`, {
       method: 'PUT',
       headers: {

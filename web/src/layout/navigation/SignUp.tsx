@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
+import React, { useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
-import { User, ResourceKind } from '../../types';
+
 import { API } from '../../api';
+import { ResourceKind, User } from '../../types';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './SignUp.module.css';
@@ -28,31 +29,31 @@ const SignUp = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [password, setPassword] = useState<Password>({value: '', isValid: false});
+  const [password, setPassword] = useState<Password>({ value: '', isValid: false });
   const [success, setSuccess] = useState(false);
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword({value: e.target.value, isValid: e.currentTarget.checkValidity()});
-  }
+    setPassword({ value: e.target.value, isValid: e.currentTarget.checkValidity() });
+  };
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  }
+  };
 
   const onCloseModal = () => {
     props.setOpenSignUp(false);
-  }
+  };
 
   async function registerUser(user: User) {
     try {
       await API.register(user);
       setSuccess(true);
-    } catch(err) {
+    } catch (err) {
       let error = 'An error occurred, please try again later';
-      switch(err.status) {
+      switch (err.status) {
         case 400:
           error = `Error: ${err.statusText}`;
           break;
@@ -67,14 +68,14 @@ const SignUp = (props: Props) => {
     cleanApiError();
     setIsLoading(true);
     if (registerForm.current) {
-      const {isValid, user} = validateForm(registerForm.current);
+      const { isValid, user } = validateForm(registerForm.current);
       if (isValid && !isNull(user)) {
         registerUser(user);
       } else {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const validateForm = (form: HTMLFormElement): FormValidation => {
     let isValid = form.checkValidity();
@@ -84,7 +85,7 @@ const SignUp = (props: Props) => {
       const formData = new FormData(form);
       user = {
         alias: formData.get('alias') as string,
-        email: formData.get('email')as string,
+        email: formData.get('email') as string,
         password: formData.get('password') as string,
       };
 
@@ -99,15 +100,10 @@ const SignUp = (props: Props) => {
       setIsValidated(true);
     }
     return { isValid, user };
-  }
+  };
 
   const closeButton = (
-    <button
-      className="btn btn-secondary"
-      type="button"
-      disabled={isLoading}
-      onClick={submitForm}
-    >
+    <button className="btn btn-secondary" type="button" disabled={isLoading} onClick={submitForm}>
       {isLoading ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -123,7 +119,7 @@ const SignUp = (props: Props) => {
     if (event.key === 'Enter') {
       submitForm();
     }
-  }
+  };
 
   return (
     <Modal
@@ -143,17 +139,16 @@ const SignUp = (props: Props) => {
               <h4 className="alert-heading">A verification link has been sent to your email account</h4>
             </div>
             <hr />
-            <p className="mb-0">Please click on the link that has just been sent to your email account to verify your email and finish the registration process.</p>
+            <p className="mb-0">
+              Please click on the link that has just been sent to your email account to verify your email and finish the
+              registration process.
+            </p>
           </div>
         </div>
       ) : (
         <form
           ref={registerForm}
-          className={classnames(
-            'w-100',
-            {'needs-validation': !isValidated},
-            {'was-validated': isValidated},
-          )}
+          className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           onFocus={cleanApiError}
           noValidate
         >
@@ -163,8 +158,8 @@ const SignUp = (props: Props) => {
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="alias"
             invalidText={{
-              default: "This field is required",
-              customValidity: "Username not available",
+              default: 'This field is required',
+              customValidity: 'Username not available',
             }}
             checkAvailability={ResourceKind.userAlias}
             validateOnBlur
@@ -178,27 +173,17 @@ const SignUp = (props: Props) => {
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="email"
             invalidText={{
-              default: "This field is required",
-              typeMismatch: "Please enter a valid email address",
+              default: 'This field is required',
+              typeMismatch: 'Please enter a valid email address',
             }}
             validateOnBlur
             autoComplete="email"
             required
           />
 
-          <InputField
-            type="text"
-            label="First Name"
-            name="firstName"
-            autoComplete="given-name"
-          />
+          <InputField type="text" label="First Name" name="firstName" autoComplete="given-name" />
 
-          <InputField
-            type="text"
-            label="Last Name"
-            name="lastName"
-            autoComplete="family-name"
-          />
+          <InputField type="text" label="Last Name" name="lastName" autoComplete="family-name" />
 
           <div className="form-row">
             <InputField
@@ -209,8 +194,8 @@ const SignUp = (props: Props) => {
               name="password"
               minLength={6}
               invalidText={{
-                default: "This field is required",
-                tooShort: "Passwords must be at least 6 characters long",
+                default: 'This field is required',
+                tooShort: 'Passwords must be at least 6 characters long',
               }}
               onChange={onPasswordChange}
               autoComplete="new-password"
@@ -226,7 +211,7 @@ const SignUp = (props: Props) => {
               name="confirmPassword"
               pattern={password.value}
               invalidText={{
-                default: "This field is required",
+                default: 'This field is required',
                 patternMismatch: "Passwords don't match",
               }}
               autoComplete="new-password"
@@ -245,6 +230,6 @@ const SignUp = (props: Props) => {
       )}
     </Modal>
   );
-}
+};
 
 export default SignUp;

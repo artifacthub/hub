@@ -1,13 +1,14 @@
-import React, { useState, useRef } from 'react';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import React, { useRef, useState } from 'react';
+
 import { API } from '../../../api';
 import { ChartRepository, ResourceKind } from '../../../types';
+import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
-import isUndefined from 'lodash/isUndefined';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
-import ExternalLink from '../../common/ExternalLink';
 
 interface FormValidation {
   isValid: boolean;
@@ -33,11 +34,11 @@ const ChartRepositoryModal = (props: Props) => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
-  }
+  };
 
   const onCloseModal = () => {
     props.onClose();
-  }
+  };
 
   async function handleChartRepository(chartRepository: ChartRepository) {
     try {
@@ -51,7 +52,7 @@ const ChartRepositoryModal = (props: Props) => {
       }
       setIsSending(false);
       onCloseModal();
-    } catch(err) {
+    } catch (err) {
       setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setApiError('An error occureed adding the chart repository, please try again later');
@@ -65,14 +66,14 @@ const ChartRepositoryModal = (props: Props) => {
     cleanApiError();
     setIsSending(true);
     if (form.current) {
-      const {isValid, chartRepository} = validateForm(form.current);
+      const { isValid, chartRepository } = validateForm(form.current);
       if (isValid) {
         handleChartRepository(chartRepository!);
       } else {
         setIsSending(false);
       }
     }
-  }
+  };
 
   const validateForm = (form: HTMLFormElement): FormValidation => {
     let isValid = form.checkValidity();
@@ -89,66 +90,43 @@ const ChartRepositoryModal = (props: Props) => {
       setIsValidated(true);
     }
     return { isValid, chartRepository };
-  }
+  };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       submitForm();
     }
-  }
+  };
 
   return (
     <Modal
-      header={(
+      header={
         <div className="h3 m-2">
-          {isUndefined(props.chartRepository) ? (
-            <>Add chart repository</>
-          ) : (
-            <>Update chart repository</>
-          )}
+          {isUndefined(props.chartRepository) ? <>Add chart repository</> : <>Update chart repository</>}
         </div>
-      )}
+      }
       open={props.open}
       modalClassName={styles.modal}
-      closeButton={(
-        <button
-          className="btn btn-secondary"
-          type="button"
-          disabled={isSending}
-          onClick={submitForm}
-        >
+      closeButton={
+        <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
               <span className="ml-2">
-                {isUndefined(props.chartRepository) ? (
-                  <>Adding chart repository</>
-                ) : (
-                  <>Updating chart repository</>
-                )}
+                {isUndefined(props.chartRepository) ? <>Adding chart repository</> : <>Updating chart repository</>}
               </span>
             </>
           ) : (
-            <>
-              {isUndefined(props.chartRepository) ? (
-                <>Add</>
-              ) : (
-                <>Update</>
-              )}
-            </>
+            <>{isUndefined(props.chartRepository) ? <>Add</> : <>Update</>}</>
           )}
         </button>
-      )}
+      }
       onClose={onCloseModal}
     >
       <div className="w-100">
         <form
           ref={form}
-          className={classnames(
-            'w-100',
-            {'needs-validation': !isValidated},
-            {'was-validated': isValidated},
-          )}
+          className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           onFocus={cleanApiError}
           autoComplete="on"
           noValidate
@@ -161,9 +139,9 @@ const ChartRepositoryModal = (props: Props) => {
             value={!isUndefined(props.chartRepository) ? props.chartRepository.name : ''}
             readOnly={!isUndefined(props.chartRepository)}
             invalidText={{
-              default: "This field is required",
-              patternMismatch: "Only lower case letters, numbers or hyphens. Must start with a letter",
-              customError: "There is another repository with this name",
+              default: 'This field is required',
+              patternMismatch: 'Only lower case letters, numbers or hyphens. Must start with a letter',
+              customError: 'There is another repository with this name',
             }}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryName}
@@ -176,7 +154,11 @@ const ChartRepositoryModal = (props: Props) => {
             type="text"
             label="Display name"
             name="displayName"
-            value={!isUndefined(props.chartRepository) && !isNull(props.chartRepository.displayName) ? props.chartRepository.displayName : ''}
+            value={
+              !isUndefined(props.chartRepository) && !isNull(props.chartRepository.displayName)
+                ? props.chartRepository.displayName
+                : ''
+            }
           />
 
           <InputField
@@ -186,27 +168,38 @@ const ChartRepositoryModal = (props: Props) => {
             name="url"
             value={!isUndefined(props.chartRepository) ? props.chartRepository.url : ''}
             invalidText={{
-              default: "This field is required",
-              typeMismatch: "Please enter a valid url",
-              customError: "There is another repository using this url",
+              default: 'This field is required',
+              typeMismatch: 'Please enter a valid url',
+              customError: 'There is another repository using this url',
             }}
             onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
             checkAvailability={ResourceKind.chartRepositoryURL}
-            additionalInfo={(
+            additionalInfo={
               <small className="text-muted text-break mt-1">
                 <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
                 <p>
-                  If you host your charts in Github, you can use <ExternalLink href="https://helm.sh/docs/topics/chart_repository/#github-pages-example" className="text-reset"><u>GitHub Pages</u></ExternalLink> to serve them or you can use a URL like the one below:
+                  If you host your charts in Github, you can use{' '}
+                  <ExternalLink
+                    href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
+                    className="text-reset"
+                  >
+                    <u>GitHub Pages</u>
+                  </ExternalLink>{' '}
+                  to serve them or you can use a URL like the one below:
                 </p>
                 <p className={`font-italic ml-3 ${styles.inputAdditionalInfoURL}`}>
                   https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
                 </p>
                 <p className="mb-0">
-                  For more information about how to create and host your own chart repository please visit the <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset"><u>Helm chart repository guide</u></ExternalLink>.
+                  For more information about how to create and host your own chart repository please visit the{' '}
+                  <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset">
+                    <u>Helm chart repository guide</u>
+                  </ExternalLink>
+                  .
                 </p>
               </small>
-            )}
+            }
             required
           />
 
@@ -219,6 +212,6 @@ const ChartRepositoryModal = (props: Props) => {
       </div>
     </Modal>
   );
-}
+};
 
 export default ChartRepositoryModal;

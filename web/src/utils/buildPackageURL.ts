@@ -1,4 +1,5 @@
 import isUndefined from 'lodash/isUndefined';
+
 import { Package, PackageKind } from '../types';
 
 export default (packageItem: Package, withVersion?: boolean): string => {
@@ -19,5 +20,5 @@ export default (packageItem: Package, withVersion?: boolean): string => {
       break;
   }
 
-  return  url;
-}
+  return url;
+};

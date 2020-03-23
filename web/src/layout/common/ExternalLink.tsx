@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './ExternalLink.module.css';
 
 interface Props {

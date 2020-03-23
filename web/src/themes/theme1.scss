@@ -1,11 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto+Mono|Original+Surfer);
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700|Roboto+Mono|Original+Surfer');
 
 $font-family-sans-serif: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
-$font-family-monospace:  'Roboto Mono', 'Liberation Mono', 'Courier New', monospace !default;
+$font-family-monospace: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospace !default;
 
 $theme-colors: (
-  primary: #328CC1,
-  secondary: #0B3C5D,
+  primary: #328cc1,
+  secondary: #0b3c5d,
 );
 
 $body-bg: #f4f4f4;
@@ -15,25 +15,25 @@ $body-color: #38383f;
   --border-md: #eaecef;
   --code-bg-md: #f6f8fa;
 
-  --color-1-100: #F1F6FA;
-  --color-1-500: #328CC1;
-  --color-1-700: #0B3C5D;
-  --color-1-900: #1D2731;
+  --color-1-100: #f1f6fa;
+  --color-1-500: #328cc1;
+  --color-1-700: #0b3c5d;
+  --color-1-900: #1d2731;
 
-  --color-1-2: rgba(29, 39, 49, .2);
-  --color-1-5: rgba(29, 39, 49, .05);
-  --color-1-10: rgba(29, 39, 49, .10);
-  --color-1-20: rgba(29, 39, 49, .20);
+  --color-1-2: rgba(29, 39, 49, 0.2);
+  --color-1-5: rgba(29, 39, 49, 0.05);
+  --color-1-10: rgba(29, 39, 49, 0.1);
+  --color-1-20: rgba(29, 39, 49, 0.2);
 
   --color-2-500: #c16732;
 
-  --color-2-10: rgba(193, 103, 50, .10);
+  --color-2-10: rgba(193, 103, 50, 0.1);
 
-  --color-black-5: rgba(0, 0, 0, .05);
-  --color-black-15: rgba(0, 0, 0, .15);
-  --color-black-25: rgba(0, 0, 0, .25);
+  --color-black-5: rgba(0, 0, 0, 0.05);
+  --color-black-15: rgba(0, 0, 0, 0.15);
+  --color-black-25: rgba(0, 0, 0, 0.25);
 
-  --color-white-50: rgba(256, 256, 256, .50);
+  --color-white-50: rgba(256, 256, 256, 0.5);
 
   --logo-font: 'Original Surfer', cursive;
 

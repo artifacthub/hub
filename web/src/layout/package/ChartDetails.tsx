@@ -1,15 +1,16 @@
-import React from 'react';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { TiHome } from 'react-icons/ti';
-import { GiEnvelope } from 'react-icons/gi';
+import React from 'react';
 import { FiExternalLink } from 'react-icons/fi';
-import { Package, Maintainer } from '../../types';
+import { GiEnvelope } from 'react-icons/gi';
+import { TiHome } from 'react-icons/ti';
+
+import { Maintainer, Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import ExternalLink from '../common/ExternalLink';
 import SmallTitle from '../common/SmallTitle';
-import Keywords from './Keywords';
 import styles from './ChartDetails.module.css';
+import Keywords from './Keywords';
 
 interface Props {
   package: Package;
@@ -20,7 +21,9 @@ const ChartDetails = (props: Props) => {
   return (
     <>
       <SmallTitle text="Application version" />
-      <p data-testid="appVersion" className="text-truncate">{props.package.appVersion || '-'}</p>
+      <p data-testid="appVersion" className="text-truncate">
+        {props.package.appVersion || '-'}
+      </p>
 
       <SmallTitle text="Chart Versions" />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
@@ -35,17 +38,25 @@ const ChartDetails = (props: Props) => {
       {isUndefined(props.package.homeUrl) || isNull(props.package.homeUrl) ? (
         <p data-testid="homeUrl">-</p>
       ) : (
-        <ExternalLink data-testid="homeUrl" href={props.package.homeUrl} className="text-primary d-flex align-items-center mb-3">
+        <ExternalLink
+          data-testid="homeUrl"
+          href={props.package.homeUrl}
+          className="text-primary d-flex align-items-center mb-3"
+        >
           <>
             <TiHome className="text-muted mr-2" />
             Home url
-            <span className={styles.smallIcon}><FiExternalLink className="ml-1" /></span>
+            <span className={styles.smallIcon}>
+              <FiExternalLink className="ml-1" />
+            </span>
           </>
         </ExternalLink>
       )}
 
       <SmallTitle text="Maintainers" />
-      {isUndefined(props.package.maintainers) || isNull(props.package.maintainers) || props.package.maintainers.length === 0 ? (
+      {isUndefined(props.package.maintainers) ||
+      isNull(props.package.maintainers) ||
+      props.package.maintainers.length === 0 ? (
         <p data-testid="maintainers">-</p>
       ) : (
         <div data-testid="maintainers" className="mb-3">
@@ -66,6 +77,6 @@ const ChartDetails = (props: Props) => {
       <Keywords keywords={props.package.keywords} />
     </>
   );
-}
+};
 
 export default ChartDetails;

@@ -66,6 +66,12 @@ jobs:
       - name: Install dependencies
         working-directory: ./web
         run: yarn install
+      - name: Run prettier
+        working-directory: ./web
+        run: yarn format:diff
+      - name: Run eslint
+        working-directory: ./web
+        run: yarn lint
       - name: Run frontend tests
         working-directory: ./web
         run: yarn test --watchAll=false --passWithNoTests --verbose

@@ -1,12 +1,13 @@
-import React from 'react';
-import chartIcon from '../../images/helm.svg';
-import falcoIcon from '../../images/falco.svg';
-import opaIcon from '../../images/opa.svg';
-import chartWhiteIcon from '../../images/helm-white.svg';
-import falcoWhiteIcon from '../../images/falco-white.svg';
-import opaWhiteIcon from '../../images/opa-white.svg';
-import { PackageKind } from '../../types';
 import isUndefined from 'lodash/isUndefined';
+import React from 'react';
+
+import falcoWhiteIcon from '../../images/falco-white.svg';
+import falcoIcon from '../../images/falco.svg';
+import chartWhiteIcon from '../../images/helm-white.svg';
+import chartIcon from '../../images/helm.svg';
+import opaWhiteIcon from '../../images/opa-white.svg';
+import opaIcon from '../../images/opa.svg';
+import { PackageKind } from '../../types';
 
 interface Props {
   kind: PackageKind;
@@ -35,13 +36,7 @@ const PackageIcon = (props: Props) => {
     src = ICONS[props.kind][props.type];
   }
 
-  return (
-    <img
-      alt="Icon"
-      src={src}
-      className={props.className}
-    />
-  );
+  return <img alt="Icon" src={src} className={props.className} />;
 };
 
 export default PackageIcon;

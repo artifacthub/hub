@@ -1,10 +1,11 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, queryByText, fireEvent } from '@testing-library/react';
-import PackageCard from './PackageCard';
 import { BrowserRouter as Router } from 'react-router-dom';
-import prepareQuerystring from '../../utils/prepareQueryString';
+
 import { Package } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
+import prepareQuerystring from '../../utils/prepareQueryString';
+import PackageCard from './PackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/packageCard/${fixtureId}.json`) as Package;
@@ -24,7 +25,7 @@ const mockSaveScrollPosition = jest.fn();
 const defaultProps = {
   saveScrollPosition: mockSaveScrollPosition,
   searchUrlReferer: null,
-}
+};
 
 describe('PackageCard', () => {
   afterEach(() => {
@@ -114,7 +115,7 @@ describe('PackageCard', () => {
         search: prepareQuerystring({
           pageNumber: 1,
           filters: {
-            repo: [mockPackage.chartRepository!.name]
+            repo: [mockPackage.chartRepository!.name],
           },
           deprecated: false,
         }),
@@ -146,18 +147,14 @@ describe('PackageCard', () => {
       };
       const { queryByTestId } = render(
         <Router>
-          <PackageCard
-            {...defaultProps}
-            package={mockPackage}
-            searchUrlReferer={urlReferer}
-          />
+          <PackageCard {...defaultProps} package={mockPackage} searchUrlReferer={urlReferer} />
         </Router>
       );
       const link = queryByTestId('link');
       expect(link).toBeInTheDocument();
       fireEvent.click(link!);
       expect(mockSaveScrollPosition).toHaveBeenCalledTimes(1);
-      expect(location.pathname).toBe(buildPackageURL(mockPackage));
+      expect(window.location.pathname).toBe(buildPackageURL(mockPackage));
     });
   });
 });

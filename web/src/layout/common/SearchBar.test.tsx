@@ -1,7 +1,8 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent, wait } from '@testing-library/react';
-import SearchBar from './SearchBar';
+
 import prepareQueryString from '../../utils/prepareQueryString';
+import SearchBar from './SearchBar';
 
 const mockHistoryPush = jest.fn();
 
@@ -20,35 +21,17 @@ describe('SearchBar', () => {
   });
 
   it('renders correctly', () => {
-    const { asFragment } = render(
-      <SearchBar
-        text="test"
-        size="big"
-        isSearching={false}
-      />
-    );
+    const { asFragment } = render(<SearchBar text="test" size="big" isSearching={false} />);
     expect(asFragment).toMatchSnapshot();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId } = render(
-      <SearchBar
-        text="test"
-        size="big"
-        isSearching
-      />
-    );
+    const { getByTestId } = render(<SearchBar text="test" size="big" isSearching />);
     expect(getByTestId('searchBarSpinning')).toBeInTheDocument();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId, getByPlaceholderText } = render(
-      <SearchBar
-        text="test"
-        size="big"
-        isSearching
-      />
-    );
+    const { getByTestId, getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching />);
 
     const spinning = getByTestId('searchBarSpinning');
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -58,13 +41,7 @@ describe('SearchBar', () => {
   });
 
   it('focuses input when clean button is clicked', () => {
-    const { getByTestId, getByPlaceholderText } = render(
-      <SearchBar
-        text="test"
-        size="big"
-        isSearching={false}
-      />
-    );
+    const { getByTestId, getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
 
     const cleanBtn = getByTestId('cleanBtn');
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -76,13 +53,7 @@ describe('SearchBar', () => {
   });
 
   it('updates value on change input', () => {
-    const { getByPlaceholderText } = render(
-      <SearchBar
-        text="test"
-        size="big"
-        isSearching={false}
-      />
-    );
+    const { getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
 
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
 
@@ -102,17 +73,11 @@ describe('SearchBar', () => {
     });
 
     it('calls on Enter key press', () => {
-      const { getByPlaceholderText } = render(
-        <SearchBar
-          text="test"
-          size="big"
-          isSearching={false}
-        />
-      );
+      const { getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: 'testing' } });
-      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() })
+      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
       expect(input).not.toBe(document.activeElement);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -127,17 +92,12 @@ describe('SearchBar', () => {
     });
 
     it('does not call history push on Enter key press when text is empty', () => {
-      const { getByPlaceholderText } = render(
-        <SearchBar
-          size="big"
-          isSearching={false}
-        />
-      );
+      const { getByPlaceholderText } = render(<SearchBar size="big" isSearching={false} />);
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: '' } });
-      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() })
+      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
       expect(mockHistoryPush).not.toHaveBeenCalled();
     });
-  })
+  });
 });

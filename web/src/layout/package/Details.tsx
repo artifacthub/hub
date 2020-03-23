@@ -1,10 +1,11 @@
+import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import * as semver from 'semver';
-import isUndefined from 'lodash/isUndefined';
-import { Package, SearchFiltersURL, PackageKind } from '../../types';
-import Version from './Version';
+
+import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import ChartDetails from './ChartDetails';
 import DefaultDetails from './DefaultDetails';
+import Version from './Version';
 
 interface Props {
   package: Package;
@@ -16,7 +17,7 @@ const Details = (props: Props) => {
   const getSortedVersions = () => {
     if (!isUndefined(availableVersions)) {
       const validVersions = availableVersions.filter((version: string) => semver.valid(version));
-      const invalidVersions = availableVersions.filter((version: string) =>  !semver.valid(version));
+      const invalidVersions = availableVersions.filter((version: string) => !semver.valid(version));
       try {
         return [...semver.rsort(validVersions), ...invalidVersions];
       } catch {
@@ -24,7 +25,7 @@ const Details = (props: Props) => {
       }
     }
     return [];
-  }
+  };
 
   const allVersions: JSX.Element[] = getSortedVersions().map((av_version: string) => (
     <Version
@@ -44,15 +45,11 @@ const Details = (props: Props) => {
       {(() => {
         switch (props.package.kind) {
           case PackageKind.Chart:
-            return (
-              <ChartDetails package={props.package} allVersions={allVersions} />
-            );
+            return <ChartDetails package={props.package} allVersions={allVersions} />;
 
           case PackageKind.Falco:
           case PackageKind.Opa:
-            return (
-              <DefaultDetails package={props.package} allVersions={allVersions} />
-            );
+            return <DefaultDetails package={props.package} allVersions={allVersions} />;
 
           default:
             return null;
@@ -60,6 +57,6 @@ const Details = (props: Props) => {
       })()}
     </>
   );
-}
+};
 
 export default Details;

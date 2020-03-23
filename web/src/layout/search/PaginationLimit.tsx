@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './PaginationLimit.module.css';
 
 interface Props {
@@ -12,7 +13,7 @@ const LIMIT_VALUES: number[] = [15, 25, 50];
 const PaginationLimit = (props: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.updateLimit(parseInt(event.target.value));
-  }
+  };
 
   return (
     <div className="form-inline flex-nowrap align-items-center">
@@ -25,16 +26,14 @@ const PaginationLimit = (props: Props) => {
         disabled={props.disabled}
       >
         {LIMIT_VALUES.map((value: number) => (
-          <option
-            key={`opt_${value}`}
-            value={value}
-          >
+          <option key={`opt_${value}`} value={value}>
             {value}
           </option>
-        ))};
+        ))}
+        ;
       </select>
     </div>
   );
-}
+};
 
 export default PaginationLimit;

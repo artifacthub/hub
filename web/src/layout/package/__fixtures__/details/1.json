@@ -6,11 +6,7 @@
   "description": "Helm Chart Repository with support for Amazon S3 and Google Cloud Storage",
   "homeUrl": "https://github.com/chartmuseum/chartmuseum",
   "logoImageId": "f83e00ec-d460-4f14-a4b2-918b594eb107",
-  "keywords": [
-    "chartmuseum",
-    "helm",
-    "charts repo"
-  ],
+  "keywords": ["chartmuseum", "helm", "charts repo"],
   "readme": null,
   "links": null,
   "version": "1.1.1",

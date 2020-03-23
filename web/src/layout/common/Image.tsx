@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import isNull from 'lodash/isNull';
+import React, { useState } from 'react';
+
 import placeholder from '../../images/kubernetes_grey.svg';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 
@@ -14,16 +15,12 @@ const Image = (props: Props) => {
 
   const getSrc = () => {
     return `${getHubBaseURL()}/image/${props.imageId}`;
-  }
+  };
 
   return (
     <>
       {error || isNull(props.imageId) ? (
-        <img
-          alt={props.alt}
-          src={placeholder}
-          className={props.className}
-        />
+        <img alt={props.alt} src={placeholder} className={props.className} />
       ) : (
         <img
           alt={props.alt}
@@ -35,6 +32,6 @@ const Image = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default Image;

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+
 import styles from './Readme.module.css';
 
 interface Props {
@@ -40,27 +41,27 @@ const Code: React.ElementType = (props: CodeProps) => {
   } else {
     return null;
   }
-}
+};
 
 // TODO - get correct image
 const Image: React.ElementType = (props: ImageProps) => {
-  return /^https?:/.test(props.src)
-  ? <img src={props.src} alt={props.alt} />
-  : null;
+  return /^https?:/.test(props.src) ? <img src={props.src} alt={props.alt} /> : null;
 };
 
 // TODO - get only absolute links
 const Link: React.ElementType = (props: LinkProps) => {
-  return /^https?:/.test(props.href)
-  ? <a href={props.href} target={props.target}>{props.children}</a>
-  : <>{props.children}</>;
+  return /^https?:/.test(props.href) ? (
+    <a href={props.href} target={props.target}>
+      {props.children}
+    </a>
+  ) : (
+    <>{props.children}</>
+  );
 };
 
 const Table: React.ElementType = (props: TableProps) => (
   <div className="w-100 overflow-auto">
-    <table>
-      {props.children}
-    </table>
+    <table>{props.children}</table>
   </div>
 );
 

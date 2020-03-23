@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
 import filter from 'lodash/filter';
+import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import { FacetOption } from '../../types';
-import SmallTitle from '../common/SmallTitle';
 import Checkbox from '../common/Checkbox';
 import ExpandableList from '../common/ExpandableList';
-import isUndefined from 'lodash/isUndefined';
+import SmallTitle from '../common/SmallTitle';
 import styles from './Facet.module.css';
 
 interface Props {
@@ -26,7 +27,7 @@ const Facet = (props: Props) => {
     (facetOptionId: string) => {
       return props.active.includes(facetOptionId.toString());
     },
-    [props.active],
+    [props.active]
   );
 
   useEffect(() => {
@@ -38,9 +39,8 @@ const Facet = (props: Props) => {
     }
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
-
   const getSortedOptions = () => {
-    switch(props.filterKey) {
+    switch (props.filterKey) {
       case 'repo':
         let options = filter(props.options, (option: FacetOption) => {
           return !SPECIAL_REPOS.includes(option.name);

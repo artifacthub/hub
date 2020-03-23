@@ -1,5 +1,6 @@
-import React from 'react';
 import isNull from 'lodash/isNull';
+import React from 'react';
+
 import styles from './Counter.module.css';
 
 interface Props {
@@ -11,11 +12,11 @@ interface Props {
 const Counter = (props: Props) => (
   <div className={`text-center ${styles.counterWrapper}`}>
     {props.isLoading ? (
-      <div className="h3"><div role="status" className="spinner-grow text-primary" /></div>
-    ) : (
       <div className="h3">
-        {isNull(props.value) || props.value === 0 ? '-' : props.value }
+        <div role="status" className="spinner-grow text-primary" />
       </div>
+    ) : (
+      <div className="h3">{isNull(props.value) || props.value === 0 ? '-' : props.value}</div>
     )}
     <small className="text-uppercase">{props.name}</small>
   </div>

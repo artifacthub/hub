@@ -1,7 +1,8 @@
-import React from 'react';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './Keywords.module.css';
 
@@ -41,6 +42,6 @@ const Keywords = (props: Props) => {
       )}
     </>
   );
-}
+};
 
 export default Keywords;

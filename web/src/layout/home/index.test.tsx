@@ -1,10 +1,11 @@
-import React from 'react';
 import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
-import { mocked } from 'ts-jest/utils';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mocked } from 'ts-jest/utils';
+
 import { API } from '../../api';
-import HomeView from './index';
 import { Stats } from '../../types';
+import HomeView from './index';
 jest.mock('../../api');
 
 jest.mock('./PackagesUpdates', () => () => <div />);
@@ -63,9 +64,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() =>
-        screen.getAllByRole('status'),
-      );
+      const spinner = await waitForElementToBeRemoved(() => screen.getAllByRole('status'));
 
       expect(spinner).toBeTruthy();
       await wait();
@@ -85,9 +84,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const emptyStats = await waitForElement(() =>
-        screen.getAllByText('-'),
-      );
+      const emptyStats = await waitForElement(() => screen.getAllByText('-'));
 
       expect(emptyStats).toHaveLength(2);
       await wait();
@@ -103,15 +100,12 @@ describe('Package index', () => {
         </Router>
       );
 
-      const heading = await waitForElement(() =>
-        screen.getByRole('heading'),
-      );
+      const heading = await waitForElement(() => screen.getByRole('heading'));
 
       expect(heading).toBeInTheDocument();
       expect(heading.innerHTML).toBe('Find, install and publish<br>Kubernetes packages');
       await wait();
     });
-
 
     it('renders CNCF info', async () => {
       const mockStats = getMockStats('6');
@@ -123,12 +117,12 @@ describe('Package index', () => {
         </Router>
       );
 
-      const CNCFInfo = await waitForElement(() =>
-        screen.getByTestId('CNCFInfo'),
-      );
+      const CNCFInfo = await waitForElement(() => screen.getByTestId('CNCFInfo'));
 
       expect(CNCFInfo).toBeInTheDocument();
-      expect(CNCFInfo.textContent).toBe('Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.');
+      expect(CNCFInfo.textContent).toBe(
+        'Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.'
+      );
       await wait();
     });
   });

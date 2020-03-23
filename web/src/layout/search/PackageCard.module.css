@@ -17,7 +17,7 @@
 }
 
 .legend {
-  font-size: .5rem;
+  font-size: 0.5rem;
 }
 
 .icon {
@@ -54,17 +54,17 @@
 }
 
 .subtitle {
-  font-size: .85rem;
+  font-size: 0.85rem;
   line-height: 1.2;
 }
 
 .subtitle span {
-  font-size: .65rem;
+  font-size: 0.65rem;
 }
 
 .kind {
-  font-size: .75rem;
-  color: var(--color-1-500)
+  font-size: 0.75rem;
+  color: var(--color-1-500);
 }
 
 .description {
@@ -80,7 +80,7 @@
 .deprecatedBadge {
   border: 1px solid var(--danger);
   color: var(--danger);
-  font-size: .5rem !important;
+  font-size: 0.5rem !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -106,6 +106,6 @@
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .subtitle {
-    font-size: .95rem;
+    font-size: 0.95rem;
   }
 }

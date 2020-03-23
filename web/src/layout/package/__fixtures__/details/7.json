@@ -9,8 +9,8 @@
   "appVersion": null,
   "maintainers": [
     {
-        "name": "test1",
-        "email": "test1@gmail.com"
+      "name": "test1",
+      "email": "test1@gmail.com"
     },
     {
       "name": "test2",
