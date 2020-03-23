@@ -57,7 +57,7 @@ export default function App() {
       <div className="d-flex flex-column min-vh-100 position-relative">
         <Switch>
           <Route
-            path={['/', '/verifyEmail', '/login']}
+            path={['/', '/verify-email', '/login']}
             exact
             render={({ location }) => (
               <>
@@ -76,7 +76,7 @@ export default function App() {
           />
 
           <Route
-            path="/search"
+            path="/packages/search"
             exact
             render={({ location }) => {
               const searchParams = buildSearchParams(location.search);
@@ -122,7 +122,7 @@ export default function App() {
           />
 
           <Route
-            path="/admin"
+            path={['/admin', '/admin/chart-repositories']}
             exact
             render={() => (
               <>

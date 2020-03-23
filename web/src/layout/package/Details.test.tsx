@@ -84,7 +84,7 @@ describe('Details', () => {
       fireEvent.click(keywordBtn!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring({
           text: mockPackage.keywords![0],
           pageNumber: 1,

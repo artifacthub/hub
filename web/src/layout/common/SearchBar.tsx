@@ -52,7 +52,7 @@ const SearchBar = (props: Props) => {
         forceBlur();
 
         history.push({
-          pathname: '/search',
+          pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,
             text: value,

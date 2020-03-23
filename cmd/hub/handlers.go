@@ -86,35 +86,40 @@ func (h *handlers) setupRouter() {
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Route("/package", func(r chi.Router) {
+		r.Route("/packages", func(r chi.Router) {
 			r.Get("/stats", h.getPackagesStats)
 			r.Get("/updates", h.getPackagesUpdates)
 			r.Get("/search", h.searchPackages)
-			r.Get("/chart/{repoName}/{packageName}/{version}", h.getPackage)
-			r.Get("/chart/{repoName}/{packageName}", h.getPackage)
-			r.Get("/{packageName}/{version}", h.getPackage)
-			r.Get("/{packageName}", h.getPackage)
 		})
-
-		r.Route("/user", func(r chi.Router) {
-			r.Post("/", h.registerUser)
-			r.Post("/verifyEmail", h.verifyEmail)
-			r.Post("/login", h.login)
-			r.Get("/logout", h.logout)
-			r.With(h.requireLogin).Get("/alias", h.getUserAlias)
-		})
-
-		r.Route("/admin", func(r chi.Router) {
-			r.Use(h.requireLogin)
-			r.Route("/chart", func(r chi.Router) {
-				r.Get("/", h.getChartRepositories)
-				r.Post("/", h.addChartRepository)
-				r.Put("/{repoName}", h.updateChartRepository)
-				r.Delete("/{repoName}", h.deleteChartRepository)
+		r.Route("/package", func(r chi.Router) {
+			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
+				r.Get("/{version}", h.getPackage)
+				r.Get("/", h.getPackage)
+			})
+			r.Route("/{packageName}", func(r chi.Router) {
+				r.Get("/{version}", h.getPackage)
+				r.Get("/", h.getPackage)
 			})
 		})
-
-		r.Head("/checkAvailability/{resourceKind}", h.checkAvailability)
+		r.Route("/users", func(r chi.Router) {
+			r.Post("/", h.registerUser)
+		})
+		r.Route("/user", func(r chi.Router) {
+			r.Use(h.requireLogin)
+			r.Get("/alias", h.getUserAlias)
+			r.Route("/chart-repositories", func(r chi.Router) {
+				r.Get("/", h.getChartRepositories)
+				r.Post("/", h.addChartRepository)
+			})
+			r.Route("/chart-repository/{name}", func(r chi.Router) {
+				r.Put("/", h.updateChartRepository)
+				r.Delete("/", h.deleteChartRepository)
+			})
+		})
+		r.Post("/verify-email", h.verifyEmail)
+		r.Post("/login", h.login)
+		r.With(h.requireLogin).Get("/logout", h.logout)
+		r.Head("/check-availability/{resourceKind}", h.checkAvailability)
 	})
 
 	// Images
@@ -474,7 +479,7 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "chart repository provided is not valid", http.StatusBadRequest)
 		return
 	}
-	repo.Name = chi.URLParam(r, "repoName")
+	repo.Name = chi.URLParam(r, "name")
 	if err := h.hubAPI.UpdateChartRepository(r.Context(), repo); err != nil {
 		log.Error().Err(err).Msg("updateChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -486,7 +491,7 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 // repository from the database.
 func (h *handlers) deleteChartRepository(w http.ResponseWriter, r *http.Request) {
 	repo := &hub.ChartRepository{
-		Name: chi.URLParam(r, "repoName"),
+		Name: chi.URLParam(r, "name"),
 	}
 	if err := h.hubAPI.DeleteChartRepository(r.Context(), repo); err != nil {
 		log.Error().Err(err).Msg("deleteChartRepository failed")

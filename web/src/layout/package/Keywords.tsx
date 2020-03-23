@@ -25,7 +25,7 @@ const Keywords = (props: Props) => {
               key={keyword}
               onClick={() => {
                 history.push({
-                  pathname: '/search',
+                  pathname: '/packages/search',
                   search: prepareQueryString({
                     text: keyword,
                     pageNumber: 1,

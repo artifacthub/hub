@@ -110,7 +110,7 @@ describe('Package index', () => {
       fireEvent.click(goBack);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring(searchUrlReferer),
         state: { fromDetail: true },
       });
@@ -132,7 +132,7 @@ describe('Package index', () => {
       const link = await waitForElement(() => screen.getByTestId('link'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
-      expect(window.location.pathname).toBe('/search');
+      expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
 
       await wait();

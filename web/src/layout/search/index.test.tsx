@@ -31,7 +31,7 @@ const defaultProps = {
   setIsSearching: mockIsSearching,
   scrollPosition: 0,
   setScrollPosition: jest.fn(),
-  pathname: '/search',
+  pathname: '/packages/search',
   text: 'test',
   pageNumber: 1,
   filters: {},
@@ -185,7 +185,7 @@ describe('Search index', () => {
       fireEvent.click(options[0]);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring({
           text: 'test',
           pageNumber: 1,
@@ -278,7 +278,7 @@ describe('Search index', () => {
       fireEvent.click(button);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring({
           text: 'test',
           pageNumber: 2,
@@ -331,7 +331,7 @@ describe('Search index', () => {
       expect(paginationLimit.value).toBe('25');
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
-        pathname: '/search',
+        pathname: '/packages/search',
         search: prepareQuerystring({
           text: 'test',
           pageNumber: 1,

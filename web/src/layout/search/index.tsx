@@ -82,7 +82,7 @@ const SearchView = (props: Props) => {
     }
 
     history.push({
-      pathname: '/search',
+      pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
         text: props.text,
@@ -97,7 +97,7 @@ const SearchView = (props: Props) => {
 
   const onDeprecatedChange = (): void => {
     history.push({
-      pathname: '/search',
+      pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: props.pageNumber,
         text: props.text,
@@ -109,7 +109,7 @@ const SearchView = (props: Props) => {
 
   const onPageChange = (pageNumber: number): void => {
     history.push({
-      pathname: '/search',
+      pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: pageNumber,
         text: props.text,
@@ -121,7 +121,7 @@ const SearchView = (props: Props) => {
 
   const onPaginationLimitChange = (newLimit: number): void => {
     history.replace({
-      pathname: '/search',
+      pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
         text: props.text,

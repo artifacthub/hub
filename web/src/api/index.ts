@@ -47,7 +47,7 @@ const toCamelCase = (r: any): Result => {
 };
 
 const handleUnauthorizedRequests = async (res: any) => {
-  if (res.status === 401 && history.location.pathname.startsWith('/admin')) {
+  if (res.status === 401) {
     history.push(`/login?redirect=${history.location.pathname}`);
     return Promise.reject({
       status: res.status,
@@ -121,20 +121,20 @@ export const API = {
     if (query.deprecated) {
       q.set('deprecated', 'true');
     }
-    return apiFetch(`${API_BASE_URL}/package/search?${q.toString()}`);
+    return apiFetch(`${API_BASE_URL}/packages/search?${q.toString()}`);
   },
 
   getStats: (): Promise<Stats> => {
-    return apiFetch(`${API_BASE_URL}/package/stats`);
+    return apiFetch(`${API_BASE_URL}/packages/stats`);
   },
 
   getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
-    return apiFetch(`${API_BASE_URL}/package/updates`);
+    return apiFetch(`${API_BASE_URL}/packages/updates`);
   },
 
   register: (user: User): Promise<null | string> => {
     const newUser = renameKeysInObject(user, { firstName: 'first_name', lastName: 'last_name' });
-    return apiFetch(`${API_BASE_URL}/user`, {
+    return apiFetch(`${API_BASE_URL}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export const API = {
   },
 
   verifyEmail: (code: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/user/verifyEmail`, {
+    return apiFetch(`${API_BASE_URL}/verify-email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -154,7 +154,7 @@ export const API = {
   },
 
   login: (user: UserLogin): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/user/login`, {
+    return apiFetch(`${API_BASE_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -164,7 +164,7 @@ export const API = {
   },
 
   logout: (): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/user/logout`);
+    return apiFetch(`${API_BASE_URL}/logout`);
   },
 
   getUserAlias: (): Promise<Alias> => {
@@ -172,12 +172,12 @@ export const API = {
   },
 
   getChartRepositories: (): Promise<ChartRepository[]> => {
-    return apiFetch(`${API_BASE_URL}/admin/chart`);
+    return apiFetch(`${API_BASE_URL}/user/chart-repositories`);
   },
 
   addChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/admin/chart`, {
+    return apiFetch(`${API_BASE_URL}/user/chart-repositories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -187,14 +187,14 @@ export const API = {
   },
 
   deleteChartRepository: (chartRepositoryName: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/admin/chart/${chartRepositoryName}`, {
+    return apiFetch(`${API_BASE_URL}/user/chart-repository/${chartRepositoryName}`, {
       method: 'DELETE',
     });
   },
 
   updateChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/admin/chart/${chartRepository.name}`, {
+    return apiFetch(`${API_BASE_URL}/user/chart-repository/${chartRepository.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export const API = {
   },
 
   checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/checkAvailability/${props.resourceKind}?v=${props.value}`, {
+    return apiFetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${props.value}`, {
       method: 'HEAD',
     });
   },

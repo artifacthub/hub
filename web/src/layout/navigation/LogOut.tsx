@@ -56,7 +56,7 @@ const LogOut = (props: Props) => {
       </button>
 
       {!isNull(apiError) && (
-        <div className="alert alert-danger mt-3" role="alert">
+        <div className="alert alert-danger m-3" role="alert">
           {apiError}
         </div>
       )}
