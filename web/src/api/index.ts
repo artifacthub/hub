@@ -47,7 +47,7 @@ const toCamelCase = (r: any): Result => {
 };
 
 const handleUnauthorizedRequests = async (res: any) => {
-  if (res.status === 401) {
+  if (res.status === 401 && !res.url.includes('/user/alias')) {
     history.push(`/login?redirect=${history.location.pathname}`);
     return Promise.reject({
       status: res.status,

@@ -65,7 +65,7 @@
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format:diff": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "isready": "yarn format && yarn lint && yarn test && yarn build"
+    "isready": "yarn format && yarn lint && yarn test --watchAll=false --passWithNoTests --verbose && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"

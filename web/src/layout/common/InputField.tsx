@@ -31,6 +31,7 @@ export interface Props {
   autoComplete?: string;
   readOnly?: boolean;
   additionalInfo?: string | JSX.Element;
+  setValidationStatus?: (status: boolean) => void;
 }
 
 const InputField = (props: Props) => {
@@ -85,10 +86,16 @@ const InputField = (props: Props) => {
       setInvalidText(errorTxt);
     }
     setIsValid(isValid);
+    if (!isUndefined(props.setValidationStatus)) {
+      props.setValidationStatus(false);
+    }
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
+      if (!isUndefined(props.setValidationStatus)) {
+        props.setValidationStatus(true);
+      }
       if (isUndefined(props.checkAvailability)) {
         checkValidity();
       } else {
