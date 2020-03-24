@@ -40,6 +40,7 @@ const (
 
 var (
 	chartRepositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
+	organizationNameRE    = regexp.MustCompile(`^[a-z0-9-]+$`)
 )
 
 // handlers groups all the http handlers defined for the hub, including the
@@ -101,17 +102,35 @@ func (h *handlers) setupRouter() {
 				r.Get("/", h.getPackage)
 			})
 		})
-		r.Route("/users", func(r chi.Router) {
-			r.Post("/", h.registerUser)
-		})
+		r.Post("/users", h.registerUser)
 		r.Route("/user", func(r chi.Router) {
 			r.Use(h.requireLogin)
 			r.Get("/alias", h.getUserAlias)
+			r.Get("/orgs", h.getUserOrganizations)
 			r.Route("/chart-repositories", func(r chi.Router) {
-				r.Get("/", h.getChartRepositories)
+				r.Get("/", h.getUserChartRepositories)
 				r.Post("/", h.addChartRepository)
 			})
-			r.Route("/chart-repository/{name}", func(r chi.Router) {
+			r.Route("/chart-repository/{repoName}", func(r chi.Router) {
+				r.Put("/", h.updateChartRepository)
+				r.Delete("/", h.deleteChartRepository)
+			})
+		})
+		r.With(h.requireLogin).Post("/orgs", h.addOrganization)
+		r.Route("/org/{orgName}", func(r chi.Router) {
+			r.Use(h.requireLogin)
+			r.Put("/", h.updateOrganization)
+			r.Get("/accept-invitation", h.confirmOrganizationMembership)
+			r.Get("/members", h.getOrganizationMembers)
+			r.Route("/member/{userAlias}", func(r chi.Router) {
+				r.Post("/", h.addOrganizationMember)
+				r.Delete("/", h.deleteOrganizationMember)
+			})
+			r.Route("/chart-repositories", func(r chi.Router) {
+				r.Get("/", h.getOrgChartRepositories)
+				r.Post("/", h.addChartRepository)
+			})
+			r.Route("/chart-repository/{repoName}", func(r chi.Router) {
 				r.Put("/", h.updateChartRepository)
 				r.Delete("/", h.deleteChartRepository)
 			})
@@ -293,12 +312,7 @@ func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	scheme := "http"
-	if r.TLS != nil {
-		scheme = "https"
-	}
-	baseURL := fmt.Sprintf("%s://%s", scheme, r.Host)
-	err = h.hubAPI.RegisterUser(r.Context(), user, baseURL)
+	err = h.hubAPI.RegisterUser(r.Context(), user, getBaseURL(r))
 	if err != nil {
 		log.Error().Err(err).Msg("registerUser failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -434,12 +448,26 @@ func (h *handlers) getUserAlias(w http.ResponseWriter, r *http.Request) {
 	renderJSON(w, jsonData, 0)
 }
 
-// getChartRepositories is an http handler that returns the chart repositories
-// owned by the user doing the request.
-func (h *handlers) getChartRepositories(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetChartRepositoriesByUserJSON(r.Context())
+// getUserChartRepositories is an http handler that returns the chart
+// repositories owned by the user doing the request.
+func (h *handlers) getUserChartRepositories(w http.ResponseWriter, r *http.Request) {
+	jsonData, err := h.hubAPI.GetUserChartRepositoriesJSON(r.Context())
 	if err != nil {
-		log.Error().Err(err).Msg("getChartRepositories failed")
+		log.Error().Err(err).Msg("getUserChartRepositories failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	renderJSON(w, jsonData, 0)
+}
+
+// getOrgChartRepositories is an http handler that returns the chart
+// repositories owned by the organization provided. The user doing the request
+// must belong to the organization.
+func (h *handlers) getOrgChartRepositories(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	jsonData, err := h.hubAPI.GetOrgChartRepositoriesJSON(r.Context(), orgName)
+	if err != nil {
+		log.Error().Err(err).Msg("getOrgChartRepositories failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
@@ -449,6 +477,7 @@ func (h *handlers) getChartRepositories(w http.ResponseWriter, r *http.Request) 
 // addChartRepository is an http handler that adds the provided chart
 // repository to the database.
 func (h *handlers) addChartRepository(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
 	repo := &hub.ChartRepository{}
 	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
 		log.Error().Err(err).Msg("invalid chart repository")
@@ -463,7 +492,7 @@ func (h *handlers) addChartRepository(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
-	if err := h.hubAPI.AddChartRepository(r.Context(), repo); err != nil {
+	if err := h.hubAPI.AddChartRepository(r.Context(), orgName, repo); err != nil {
 		log.Error().Err(err).Msg("addChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -479,7 +508,7 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "chart repository provided is not valid", http.StatusBadRequest)
 		return
 	}
-	repo.Name = chi.URLParam(r, "name")
+	repo.Name = chi.URLParam(r, "repoName")
 	if err := h.hubAPI.UpdateChartRepository(r.Context(), repo); err != nil {
 		log.Error().Err(err).Msg("updateChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -490,10 +519,110 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 // deleteChartRepository is an http handler that deletes the provided chart
 // repository from the database.
 func (h *handlers) deleteChartRepository(w http.ResponseWriter, r *http.Request) {
-	repo := &hub.ChartRepository{
-		Name: chi.URLParam(r, "name"),
+	repoName := chi.URLParam(r, "repoName")
+	if err := h.hubAPI.DeleteChartRepository(r.Context(), repoName); err != nil {
+		log.Error().Err(err).Msg("deleteChartRepository failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
 	}
-	if err := h.hubAPI.DeleteChartRepository(r.Context(), repo); err != nil {
+}
+
+// getUserOrganizations is an http handler that returns the organizations the
+// user doing the request belongs to.
+func (h *handlers) getUserOrganizations(w http.ResponseWriter, r *http.Request) {
+	jsonData, err := h.hubAPI.GetUserOrganizationsJSON(r.Context())
+	if err != nil {
+		log.Error().Err(err).Msg("getUserOrganizations failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	renderJSON(w, jsonData, 0)
+}
+
+// addOrganization is an http handler that adds the provided organization to
+// the database.
+func (h *handlers) addOrganization(w http.ResponseWriter, r *http.Request) {
+	org := &hub.Organization{}
+	if err := json.NewDecoder(r.Body).Decode(&org); err != nil {
+		log.Error().Err(err).Msg("invalid organization")
+		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
+		return
+	}
+	if org.Name == "" {
+		http.Error(w, "organization name must be provided", http.StatusBadRequest)
+		return
+	}
+	if !organizationNameRE.MatchString(org.Name) {
+		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
+		return
+	}
+	if err := h.hubAPI.AddOrganization(r.Context(), org); err != nil {
+		log.Error().Err(err).Msg("addOrganization failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// updateOrganization is an http handler that updates the provided organization
+// in the database.
+func (h *handlers) updateOrganization(w http.ResponseWriter, r *http.Request) {
+	org := &hub.Organization{}
+	if err := json.NewDecoder(r.Body).Decode(&org); err != nil {
+		log.Error().Err(err).Msg("invalid organization")
+		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
+		return
+	}
+	org.Name = chi.URLParam(r, "orgName")
+	if err := h.hubAPI.UpdateOrganization(r.Context(), org); err != nil {
+		log.Error().Err(err).Msg("updateOrganization failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// getOrganizationMembers is an http handler that returns the members of the
+// provided organization.
+func (h *handlers) getOrganizationMembers(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	jsonData, err := h.hubAPI.GetOrganizationMembersJSON(r.Context(), orgName)
+	if err != nil {
+		log.Error().Err(err).Msg("getOrganizationMembers failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	renderJSON(w, jsonData, 0)
+}
+
+// addOrganizationMember is an http handler that adds a member to the provided
+// organization.
+func (h *handlers) addOrganizationMember(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	userAlias := chi.URLParam(r, "userAlias")
+	err := h.hubAPI.AddOrganizationMember(r.Context(), orgName, userAlias, getBaseURL(r))
+	if err != nil {
+		log.Error().Err(err).Msg("addOrganizationMember failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// confirmOrganizationMembership is an http handler used to confirm a user's
+// membership to an organization.
+func (h *handlers) confirmOrganizationMembership(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	if err := h.hubAPI.ConfirmOrganizationMembership(r.Context(), orgName); err != nil {
+		log.Error().Err(err).Msg("confirmOrganizationMembership failed")
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
+// deleteOrganizationMember is an http handler that deletes a member from the
+// provided organization.
+func (h *handlers) deleteOrganizationMember(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	userAlias := chi.URLParam(r, "userAlias")
+	if err := h.hubAPI.DeleteOrganizationMember(r.Context(), orgName, userAlias); err != nil {
 		log.Error().Err(err).Msg("deleteChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -592,6 +721,7 @@ func (h *handlers) checkAvailability(w http.ResponseWriter, r *http.Request) {
 		"userAlias",
 		"chartRepositoryName",
 		"chartRepositoryURL",
+		"organizationName",
 	}
 	isResourceKindValid := func(resourceKind string) bool {
 		for _, k := range validResourceKinds {
@@ -673,4 +803,14 @@ func fileServer(r chi.Router, path string, fs http.FileSystem) {
 		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(staticCacheMaxAge.Seconds())))
 		fsHandler.ServeHTTP(w, r)
 	}))
+}
+
+// getBaseURL is a helper function that builds the base url from the request
+// provided.
+func getBaseURL(r *http.Request) string {
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
+	}
+	return fmt.Sprintf("%s://%s", scheme, r.Host)
 }

@@ -7,6 +7,7 @@ create extension if not exists pgcrypto;
 create table if not exists organization (
     organization_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
+    display_name text check (display_name <> ''),
     description text check (description <> ''),
     home_url text check (home_url <> ''),
     logo_url text check (logo_url <> ''),
@@ -28,6 +29,7 @@ create table if not exists "user" (
 create table if not exists user__organization (
     user_id uuid not null references "user" on delete cascade,
     organization_id uuid not null references organization on delete cascade,
+    confirmed boolean not null default false,
     primary key (user_id, organization_id)
 );
 
@@ -48,7 +50,7 @@ create table if not exists session (
 create table if not exists chart_repository (
     chart_repository_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
-    display_name text,
+    display_name text check (display_name <> ''),
     url text not null check (url <> '') unique,
     last_tracking_ts timestamptz,
     last_tracking_errors text,
