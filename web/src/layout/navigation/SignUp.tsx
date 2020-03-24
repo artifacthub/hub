@@ -28,6 +28,7 @@ const SignUp = (props: Props) => {
   const registerForm = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
+  const [isValidatingField, setIsValidatingField] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [password, setPassword] = useState<Password>({ value: '', isValid: false });
   const [success, setSuccess] = useState(false);
@@ -65,14 +66,16 @@ const SignUp = (props: Props) => {
   }
 
   const submitForm = () => {
-    cleanApiError();
-    setIsLoading(true);
-    if (registerForm.current) {
-      const { isValid, user } = validateForm(registerForm.current);
-      if (isValid && !isNull(user)) {
-        registerUser(user);
-      } else {
-        setIsLoading(false);
+    if (!isValidatingField) {
+      cleanApiError();
+      setIsLoading(true);
+      if (registerForm.current) {
+        const { isValid, user } = validateForm(registerForm.current);
+        if (isValid && !isNull(user)) {
+          registerUser(user);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -162,6 +165,7 @@ const SignUp = (props: Props) => {
               customValidity: 'Username not available',
             }}
             checkAvailability={ResourceKind.userAlias}
+            setValidationStatus={setIsValidatingField}
             validateOnBlur
             autoComplete="username"
             required
