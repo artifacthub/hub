@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
@@ -35,7 +36,7 @@ func main() {
 	if s := email.NewSender(cfg); s != nil {
 		es = s
 	}
-	hubAPI := hub.New(db, es)
+	hubAPI := api.New(db, es)
 	imageStore := pg.NewImageStore(db)
 
 	// Setup and launch server

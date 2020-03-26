@@ -7,6 +7,7 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
@@ -41,7 +42,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := hub.New(db, nil)
+	hubAPI := api.New(db, nil)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
@@ -52,7 +53,7 @@ func main() {
 	var repos []*hub.ChartRepository
 	if len(reposNames) > 0 {
 		for _, name := range reposNames {
-			repo, err := hubAPI.GetChartRepositoryByName(context.Background(), name)
+			repo, err := hubAPI.ChartRepositories.GetByName(context.Background(), name)
 			if err != nil {
 				log.Error().Err(err).Str("name", name).Msg("Error getting chart repository")
 				continue
@@ -61,7 +62,7 @@ func main() {
 		}
 	} else {
 		var err error
-		repos, err = hubAPI.GetChartRepositories(context.Background())
+		repos, err = hubAPI.ChartRepositories.GetAll(context.Background())
 		if err != nil {
 			log.Fatal().Err(err).Msg("Error getting chart repositories")
 		}

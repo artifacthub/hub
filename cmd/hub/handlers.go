@@ -16,8 +16,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/gorilla/securecookie"
@@ -47,7 +49,7 @@ var (
 // router in charge of sending requests to the right handler.
 type handlers struct {
 	cfg        *viper.Viper
-	hubAPI     *hub.Hub
+	hubAPI     *api.API
 	imageStore *pg.ImageStore
 	router     http.Handler
 	sc         *securecookie.SecureCookie
@@ -57,7 +59,7 @@ type handlers struct {
 }
 
 // setupHandlers creates a new handlers instance.
-func setupHandlers(cfg *viper.Viper, hubAPI *hub.Hub, imageStore *pg.ImageStore) *handlers {
+func setupHandlers(cfg *viper.Viper, hubAPI *api.API, imageStore *pg.ImageStore) *handlers {
 	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
 	sc.MaxAge(int(sessionDuration.Seconds()))
 	h := &handlers{
@@ -161,7 +163,7 @@ func (h *handlers) serveIndex(w http.ResponseWriter, r *http.Request) {
 // getPackagesStats is an http handler used to get some stats about packages
 // registered in the hub database.
 func (h *handlers) getPackagesStats(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetPackagesStatsJSON(r.Context())
+	jsonData, err := h.hubAPI.Packages.GetStatsJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getStats failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -173,7 +175,7 @@ func (h *handlers) getPackagesStats(w http.ResponseWriter, r *http.Request) {
 // getPackagesUpdates is an http handler used to get the last packages updates
 // in the hub database.
 func (h *handlers) getPackagesUpdates(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetPackagesUpdatesJSON(r.Context())
+	jsonData, err := h.hubAPI.Packages.GetUpdatesJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getPackagesUpdates failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -191,7 +193,7 @@ func (h *handlers) searchPackages(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	jsonData, err := h.hubAPI.SearchPackagesJSON(r.Context(), input)
+	jsonData, err := h.hubAPI.Packages.SearchJSON(r.Context(), input)
 	if err != nil {
 		log.Error().Err(err).Str("query", r.URL.RawQuery).Msg("search failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -202,7 +204,7 @@ func (h *handlers) searchPackages(w http.ResponseWriter, r *http.Request) {
 
 // buildSearchPackageInput builds a packages search query from a map of query
 // string values, validating them as they are extracted.
-func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
+func buildSearchPackageInput(qs url.Values) (*pkg.SearchInput, error) {
 	// Limit
 	var limit int
 	if qs.Get("limit") != "" {
@@ -264,7 +266,7 @@ func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		}
 	}
 
-	return &hub.SearchPackageInput{
+	return &pkg.SearchInput{
 		Limit:             limit,
 		Offset:            offset,
 		Facets:            facets,
@@ -277,7 +279,7 @@ func buildSearchPackageInput(qs url.Values) (*hub.SearchPackageInput, error) {
 
 // getPackage is an http handler used to get a package details.
 func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request) {
-	input := &hub.GetPackageInput{
+	input := &pkg.GetInput{
 		PackageName: chi.URLParam(r, "packageName"),
 		Version:     chi.URLParam(r, "version"),
 	}
@@ -285,7 +287,7 @@ func (h *handlers) getPackage(w http.ResponseWriter, r *http.Request) {
 	if chartRepositoryName != "" {
 		input.ChartRepositoryName = chartRepositoryName
 	}
-	jsonData, err := h.hubAPI.GetPackageJSON(r.Context(), input)
+	jsonData, err := h.hubAPI.Packages.GetJSON(r.Context(), input)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			http.NotFound(w, r)
@@ -312,7 +314,7 @@ func (h *handlers) registerUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	err = h.hubAPI.RegisterUser(r.Context(), user, getBaseURL(r))
+	err = h.hubAPI.User.RegisterUser(r.Context(), user, getBaseURL(r))
 	if err != nil {
 		log.Error().Err(err).Msg("registerUser failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -344,7 +346,7 @@ func (h *handlers) verifyEmail(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, errMsg, http.StatusBadRequest)
 		return
 	}
-	verified, err := h.hubAPI.VerifyEmail(r.Context(), code)
+	verified, err := h.hubAPI.User.VerifyEmail(r.Context(), code)
 	if err != nil {
 		log.Error().Err(err).Msg("verifyEmail failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -368,7 +370,7 @@ func (h *handlers) login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the credentials provided are valid
-	checkCredentialsOutput, err := h.hubAPI.CheckCredentials(r.Context(), email, password)
+	checkCredentialsOutput, err := h.hubAPI.User.CheckCredentials(r.Context(), email, password)
 	if err != nil {
 		log.Error().Err(err).Msg("checkCredentials failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -386,7 +388,7 @@ func (h *handlers) login(w http.ResponseWriter, r *http.Request) {
 		IP:        ip,
 		UserAgent: r.UserAgent(),
 	}
-	sessionID, err := h.hubAPI.RegisterSession(r.Context(), session)
+	sessionID, err := h.hubAPI.User.RegisterSession(r.Context(), session)
 	if err != nil {
 		log.Error().Err(err).Msg("registerSession failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -421,7 +423,7 @@ func (h *handlers) logout(w http.ResponseWriter, r *http.Request) {
 		var sessionID []byte
 		err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
 		if err == nil {
-			err = h.hubAPI.DeleteSession(r.Context(), sessionID)
+			err = h.hubAPI.User.DeleteSession(r.Context(), sessionID)
 			if err != nil {
 				log.Error().Err(err).Msg("deleteSession failed")
 			}
@@ -438,7 +440,7 @@ func (h *handlers) logout(w http.ResponseWriter, r *http.Request) {
 
 // getUserAlias is an http handler used to get a logged in user alias.
 func (h *handlers) getUserAlias(w http.ResponseWriter, r *http.Request) {
-	alias, err := h.hubAPI.GetUserAlias(r.Context())
+	alias, err := h.hubAPI.User.GetAlias(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getUserAlias failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -451,7 +453,7 @@ func (h *handlers) getUserAlias(w http.ResponseWriter, r *http.Request) {
 // getUserChartRepositories is an http handler that returns the chart
 // repositories owned by the user doing the request.
 func (h *handlers) getUserChartRepositories(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetUserChartRepositoriesJSON(r.Context())
+	jsonData, err := h.hubAPI.ChartRepositories.GetOwnedByUserJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getUserChartRepositories failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -465,7 +467,7 @@ func (h *handlers) getUserChartRepositories(w http.ResponseWriter, r *http.Reque
 // must belong to the organization.
 func (h *handlers) getOrgChartRepositories(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	jsonData, err := h.hubAPI.GetOrgChartRepositoriesJSON(r.Context(), orgName)
+	jsonData, err := h.hubAPI.ChartRepositories.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		log.Error().Err(err).Msg("getOrgChartRepositories failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -492,7 +494,7 @@ func (h *handlers) addChartRepository(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
-	if err := h.hubAPI.AddChartRepository(r.Context(), orgName, repo); err != nil {
+	if err := h.hubAPI.ChartRepositories.Add(r.Context(), orgName, repo); err != nil {
 		log.Error().Err(err).Msg("addChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -509,7 +511,7 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	repo.Name = chi.URLParam(r, "repoName")
-	if err := h.hubAPI.UpdateChartRepository(r.Context(), repo); err != nil {
+	if err := h.hubAPI.ChartRepositories.Update(r.Context(), repo); err != nil {
 		log.Error().Err(err).Msg("updateChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -520,7 +522,7 @@ func (h *handlers) updateChartRepository(w http.ResponseWriter, r *http.Request)
 // repository from the database.
 func (h *handlers) deleteChartRepository(w http.ResponseWriter, r *http.Request) {
 	repoName := chi.URLParam(r, "repoName")
-	if err := h.hubAPI.DeleteChartRepository(r.Context(), repoName); err != nil {
+	if err := h.hubAPI.ChartRepositories.Delete(r.Context(), repoName); err != nil {
 		log.Error().Err(err).Msg("deleteChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -530,7 +532,7 @@ func (h *handlers) deleteChartRepository(w http.ResponseWriter, r *http.Request)
 // getUserOrganizations is an http handler that returns the organizations the
 // user doing the request belongs to.
 func (h *handlers) getUserOrganizations(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.GetUserOrganizationsJSON(r.Context())
+	jsonData, err := h.hubAPI.Organizations.GetByUserJSON(r.Context())
 	if err != nil {
 		log.Error().Err(err).Msg("getUserOrganizations failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -556,7 +558,7 @@ func (h *handlers) addOrganization(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
-	if err := h.hubAPI.AddOrganization(r.Context(), org); err != nil {
+	if err := h.hubAPI.Organizations.Add(r.Context(), org); err != nil {
 		log.Error().Err(err).Msg("addOrganization failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -573,7 +575,7 @@ func (h *handlers) updateOrganization(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	org.Name = chi.URLParam(r, "orgName")
-	if err := h.hubAPI.UpdateOrganization(r.Context(), org); err != nil {
+	if err := h.hubAPI.Organizations.Update(r.Context(), org); err != nil {
 		log.Error().Err(err).Msg("updateOrganization failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -584,7 +586,7 @@ func (h *handlers) updateOrganization(w http.ResponseWriter, r *http.Request) {
 // provided organization.
 func (h *handlers) getOrganizationMembers(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	jsonData, err := h.hubAPI.GetOrganizationMembersJSON(r.Context(), orgName)
+	jsonData, err := h.hubAPI.Organizations.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		log.Error().Err(err).Msg("getOrganizationMembers failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -598,7 +600,7 @@ func (h *handlers) getOrganizationMembers(w http.ResponseWriter, r *http.Request
 func (h *handlers) addOrganizationMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
-	err := h.hubAPI.AddOrganizationMember(r.Context(), orgName, userAlias, getBaseURL(r))
+	err := h.hubAPI.Organizations.AddMember(r.Context(), orgName, userAlias, getBaseURL(r))
 	if err != nil {
 		log.Error().Err(err).Msg("addOrganizationMember failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -610,7 +612,7 @@ func (h *handlers) addOrganizationMember(w http.ResponseWriter, r *http.Request)
 // membership to an organization.
 func (h *handlers) confirmOrganizationMembership(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	if err := h.hubAPI.ConfirmOrganizationMembership(r.Context(), orgName); err != nil {
+	if err := h.hubAPI.Organizations.ConfirmMembership(r.Context(), orgName); err != nil {
 		log.Error().Err(err).Msg("confirmOrganizationMembership failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -622,7 +624,7 @@ func (h *handlers) confirmOrganizationMembership(w http.ResponseWriter, r *http.
 func (h *handlers) deleteOrganizationMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
-	if err := h.hubAPI.DeleteOrganizationMember(r.Context(), orgName, userAlias); err != nil {
+	if err := h.hubAPI.Organizations.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		log.Error().Err(err).Msg("deleteChartRepository failed")
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -646,7 +648,7 @@ func (h *handlers) requireLogin(next http.Handler) http.Handler {
 		}
 
 		// Check the session provided is valid
-		checkSessionOutput, err := h.hubAPI.CheckSession(r.Context(), sessionID, sessionDuration)
+		checkSessionOutput, err := h.hubAPI.User.CheckSession(r.Context(), sessionID, sessionDuration)
 		if err != nil {
 			log.Error().Err(err).Msg("checkSession failed")
 			http.Error(w, "", http.StatusInternalServerError)
