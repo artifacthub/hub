@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/tests"
@@ -1609,7 +1610,7 @@ func setupTestHandlers() *testHandlers {
 	cfg.Set("server.webBuildPath", "testdata")
 	db := &tests.DBMock{}
 	es := &tests.EmailSenderMock{}
-	hubAPI := hub.New(db, es)
+	hubAPI := api.New(db, es)
 	imageStore := pg.NewImageStore(db)
 
 	return &testHandlers{

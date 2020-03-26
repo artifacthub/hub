@@ -1,9 +1,28 @@
 package hub
 
+import (
+	"context"
+
+	"github.com/artifacthub/hub/internal/email"
+	"github.com/jackc/pgconn"
+	"github.com/jackc/pgx/v4"
+)
+
 type userIDKey struct{}
 
 // UserIDKey represents the key used for the userID value inside a context.
 var UserIDKey = userIDKey{}
+
+// DB defines the methods the database handler must provide.
+type DB interface {
+	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
+	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
+}
+
+// EmailSender defines the methods the email sender must provide.
+type EmailSender interface {
+	SendEmail(data *email.Data) error
+}
 
 // ChartRepository represents a Helm chart repository.
 type ChartRepository struct {
@@ -64,24 +83,6 @@ type Package struct {
 	ChartRepository   *ChartRepository       `json:"chart_repository"`
 }
 
-// SearchPackageInput represents the query input when searching for packages.
-type SearchPackageInput struct {
-	Limit             int           `json:"limit,omitempty"`
-	Offset            int           `json:"offset,omitempty"`
-	Facets            bool          `json:"facets"`
-	Text              string        `json:"text"`
-	PackageKinds      []PackageKind `json:"package_kinds,omitempty"`
-	ChartRepositories []string      `json:"chart_repositories,omitempty"`
-	Deprecated        bool          `json:"deprecated"`
-}
-
-// GetPackageInput represents the input used to get a specific package.
-type GetPackageInput struct {
-	ChartRepositoryName string `json:"chart_repository_name"`
-	PackageName         string `json:"package_name"`
-	Version             string `json:"version"`
-}
-
 // User represents a Hub user.
 type User struct {
 	UserID        string `json:"user_id"`
@@ -93,25 +94,12 @@ type User struct {
 	Password      string `json:"password"`
 }
 
-// CheckCredentialsOutput represents the output returned by the
-// CheckCredentials method.
-type CheckCredentialsOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
-}
-
 // Session represents some information about a user session.
 type Session struct {
 	SessionID string `json:"session_id"`
 	UserID    string `json:"user_id"`
 	IP        string `json:"ip"`
 	UserAgent string `json:"user_agent"`
-}
-
-// CheckSessionOutput represents the output returned by the CheckSession method.
-type CheckSessionOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
 }
 
 // Organization represents an entity with one or more users associated that can

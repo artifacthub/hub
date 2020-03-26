@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/util"
@@ -38,7 +39,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := hub.New(db, nil)
+	hubAPI := api.New(db, nil)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
@@ -89,7 +90,7 @@ type Policy struct {
 
 type SecurityHubRegistrar struct {
 	ctx        context.Context
-	hubAPI     *hub.Hub
+	hubAPI     *api.API
 	imageStore img.Store
 }
 
@@ -137,7 +138,7 @@ func (r *SecurityHubRegistrar) registerPackage(path string) error {
 		p.Data = map[string]interface{}{"policies": e.Policies}
 	}
 
-	return r.hubAPI.RegisterPackage(r.ctx, p)
+	return r.hubAPI.Packages.Register(r.ctx, p)
 }
 
 func downloadImage(u string) ([]byte, error) {
