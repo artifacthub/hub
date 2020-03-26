@@ -1,11 +1,11 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FiHexagon } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-import { UserAuth } from '../../types';
+import { AppCtx } from '../../context/AppCtx';
 import SearchBar from '../common/SearchBar';
 import LogIn from './LogIn';
 import MobileSettings from './MobileSettings';
@@ -15,8 +15,6 @@ import UserAuthDropdown from './UserAuthDropdown';
 
 interface Props {
   isSearching: boolean;
-  isAuth: null | UserAuth;
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   fromHome?: boolean;
   searchText?: string;
   redirect?: string;
@@ -24,11 +22,12 @@ interface Props {
 }
 
 const Navbar = (props: Props) => {
-  const openLogInModal = !isUndefined(props.redirect) && !isNull(props.isAuth) && !props.isAuth.status;
+  const { ctx } = useContext(AppCtx);
+  const openLogInModal = !isUndefined(props.redirect) && isNull(ctx.user);
   const [openSignUp, setOpenSignUp] = useState<boolean>(false);
   const [openLogIn, setOpenLogIn] = useState<boolean>(openLogInModal);
   useEffect(() => {
-    if (!isUndefined(props.redirect) && !isNull(props.isAuth) && !props.isAuth.status) {
+    if (!isUndefined(props.redirect) && isNull(ctx.user)) {
       setOpenLogIn(true);
     }
   }, [props.redirect]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -57,22 +56,9 @@ const Navbar = (props: Props) => {
 
         {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
 
-        {openLogIn && (
-          <LogIn
-            openLogIn={openLogIn}
-            setOpenLogIn={setOpenLogIn}
-            setIsAuth={props.setIsAuth}
-            redirect={props.redirect}
-          />
-        )}
+        {openLogIn && <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={props.redirect} />}
 
-        <MobileSettings
-          setOpenSignUp={setOpenSignUp}
-          setOpenLogIn={setOpenLogIn}
-          isAuth={props.isAuth}
-          setIsAuth={props.setIsAuth}
-          privateRoute={props.privateRoute}
-        />
+        <MobileSettings setOpenSignUp={setOpenSignUp} setOpenLogIn={setOpenLogIn} privateRoute={props.privateRoute} />
 
         {isUndefined(props.fromHome) && (
           <SearchBar
@@ -85,49 +71,47 @@ const Navbar = (props: Props) => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav align-items-center ml-auto">
-            {(isNull(props.isAuth) || !props.isAuth.status) && (
-              <li className="nav-item position-relative ml-4">
-                <button
-                  type="button"
-                  className={classnames(
-                    'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
-                    styles.button
-                  )}
-                  onClick={() => setOpenSignUp(true)}
-                >
-                  Sign up
-                </button>
-              </li>
-            )}
+            {isUndefined(ctx) || isUndefined(ctx.user) ? (
+              <div className="spinner-grow spinner-grow-sm text-light" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            ) : (
+              <>
+                {isNull(ctx.user) ? (
+                  <>
+                    <li className="nav-item position-relative ml-4">
+                      <button
+                        type="button"
+                        className={classnames(
+                          'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                          styles.button
+                        )}
+                        onClick={() => setOpenSignUp(true)}
+                      >
+                        Sign up
+                      </button>
+                    </li>
 
-            <li className="nav-item ml-4 position-relative">
-              {isNull(props.isAuth) ? (
-                <div className="spinner-grow spinner-grow-sm text-light" role="status">
-                  <span className="sr-only">Loading...</span>
-                </div>
-              ) : (
-                <>
-                  {props.isAuth.status ? (
-                    <UserAuthDropdown
-                      alias={props.isAuth.alias!}
-                      setIsAuth={props.setIsAuth}
-                      privateRoute={props.privateRoute}
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      className={classnames(
-                        'btn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
-                        styles.button
-                      )}
-                      onClick={() => setOpenLogIn(true)}
-                    >
-                      Sign in
-                    </button>
-                  )}
-                </>
-              )}
-            </li>
+                    <li className="nav-item ml-4 position-relative">
+                      <button
+                        type="button"
+                        className={classnames(
+                          'btn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
+                          styles.button
+                        )}
+                        onClick={() => setOpenLogIn(true)}
+                      >
+                        Sign in
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <li className="nav-item ml-4 position-relative">
+                    <UserAuthDropdown privateRoute={props.privateRoute} />
+                  </li>
+                )}
+              </>
+            )}
           </ul>
         </div>
       </div>

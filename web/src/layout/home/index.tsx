@@ -8,6 +8,7 @@ import { PackageKind, Stats } from '../../types';
 import ExternalLink from '../common/ExternalLink';
 import PackageIcon from '../common/PackageIcon';
 import SearchBar from '../common/SearchBar';
+import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
 import PackagesUpdates from './PackagesUpdates';
@@ -16,6 +17,7 @@ import UserConfirmation from './UserConfirmation';
 interface Props {
   isSearching: boolean;
   emailCode?: string;
+  orgToConfirm?: string;
 }
 
 const HomeView = (props: Props) => {
@@ -113,6 +115,7 @@ const HomeView = (props: Props) => {
       </div>
 
       <UserConfirmation emailCode={props.emailCode} />
+      <UserInvitation orgToConfirm={props.orgToConfirm} />
     </div>
   );
 };

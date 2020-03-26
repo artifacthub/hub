@@ -7,6 +7,7 @@ import {
   Alias,
   ChartRepository,
   CheckAvailabilityProps,
+  Organization,
   Package,
   PackagesUpdatesList,
   SearchQuery,
@@ -86,6 +87,14 @@ const apiFetch = (url: string, opts?: FetchOptions): any => {
     .then(handleErrors)
     .then(handleContent)
     .catch((error) => Promise.reject(error));
+};
+
+const getChartRepositoryUrlContext = (fromOrgName?: string): string => {
+  let context = '/user';
+  if (!isUndefined(fromOrgName)) {
+    context = `/org/${fromOrgName}`;
+  }
+  return context;
 };
 
 const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
@@ -171,13 +180,13 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/user/alias`);
   },
 
-  getChartRepositories: (): Promise<ChartRepository[]> => {
-    return apiFetch(`${API_BASE_URL}/user/chart-repositories`);
+  getChartRepositories: (fromOrgName?: string): Promise<ChartRepository[]> => {
+    return apiFetch(`${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repositories`);
   },
 
-  addChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
+  addChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/user/chart-repositories`, {
+    return apiFetch(`${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repositories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -186,26 +195,90 @@ export const API = {
     });
   },
 
-  deleteChartRepository: (chartRepositoryName: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/user/chart-repository/${chartRepositoryName}`, {
-      method: 'DELETE',
-    });
+  deleteChartRepository: (chartRepositoryName: string, fromOrgName?: string): Promise<null | string> => {
+    return apiFetch(
+      `${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repository/${chartRepositoryName}`,
+      {
+        method: 'DELETE',
+      }
+    );
   },
 
-  updateChartRepository: (chartRepository: ChartRepository): Promise<null | string> => {
+  updateChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/user/chart-repository/${chartRepository.name}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(chartRepo),
-    });
+    return apiFetch(
+      `${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repository/${chartRepository.name}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(chartRepo),
+      }
+    );
   },
 
   checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
     return apiFetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${props.value}`, {
       method: 'HEAD',
     });
+  },
+
+  getUserOrganizations: (): Promise<Organization[]> => {
+    return apiFetch(`${API_BASE_URL}/user/orgs`);
+  },
+
+  getOrganization: (organizationName: string): Promise<Organization> => {
+    return apiFetch(`${API_BASE_URL}/org/${organizationName}`);
+  },
+
+  addOrganization: (organization: Organization): Promise<null | string> => {
+    const org = renameKeysInObject(organization, {
+      displayName: 'display_name',
+      logoUrl: 'logo_url',
+      homeUrl: 'home_url',
+    });
+    return apiFetch(`${API_BASE_URL}/orgs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(org),
+    });
+  },
+
+  updateOrganization: (organization: Organization): Promise<null | string> => {
+    const org = renameKeysInObject(organization, {
+      displayName: 'display_name',
+      logoUrl: 'logo_url',
+      homeUrl: 'home_url',
+    });
+    return apiFetch(`${API_BASE_URL}/org/${org.name}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(org),
+    });
+  },
+
+  getOrganizationMembers: (organizationName: string): Promise<User[]> => {
+    return apiFetch(`${API_BASE_URL}/org/${organizationName}/members`);
+  },
+
+  addOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/org/${organizationName}/member/${alias}`, {
+      method: 'POST',
+    });
+  },
+
+  deleteOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/org/${organizationName}/member/${alias}`, {
+      method: 'DELETE',
+    });
+  },
+
+  confirmOrganizationMembership: (organizationName: string): Promise<null> => {
+    return apiFetch(`${API_BASE_URL}/org/${organizationName}/accept-invitation`);
   },
 };

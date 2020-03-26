@@ -1,11 +1,11 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import isUndefined from 'lodash/isUndefined';
+import React, { useContext, useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
-import { Link } from 'react-router-dom';
 
-import { UserAuth } from '../../types';
+import { AppCtx } from '../../context/AppCtx';
 import Sidebar from '../common/Sidebar';
 import LogOut from './LogOut';
 import styles from './MobileSettings.module.css';
@@ -13,17 +13,16 @@ import styles from './MobileSettings.module.css';
 interface Props {
   setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
-  isAuth: null | UserAuth;
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   privateRoute?: boolean;
 }
 
 const MobileSettings = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
   const [openSideBarStatus, setOpenSideBarStatus] = useState(false);
 
   return (
     <div className={`btn-group navbar-toggler pr-0 ${styles.navbarToggler}`}>
-      {isNull(props.isAuth) ? (
+      {isUndefined(ctx.user) ? (
         <div className="spinner-grow spinner-grow-sm text-light" role="status">
           <span className="sr-only">Loading...</span>
         </div>
@@ -38,15 +37,15 @@ const MobileSettings = (props: Props) => {
                 styles.iconWrapper
               )}
             >
-              {props.isAuth.status ? <FaUserCircle /> : <GoThreeBars />}
+              {!isNull(ctx.user) ? <FaUserCircle /> : <GoThreeBars />}
             </div>
           }
           direction="right"
           header={
             <>
-              {props.isAuth.status && (
+              {!isNull(ctx.user) && (
                 <div className="h6 mb-0">
-                  Signed in as <span className="font-weight-bold">{props.isAuth.alias}</span>
+                  Signed in as <span className="font-weight-bold">{ctx.user.alias}</span>
                 </div>
               )}
             </>
@@ -55,23 +54,23 @@ const MobileSettings = (props: Props) => {
           onOpenStatusChange={(status: boolean) => setOpenSideBarStatus(status)}
         >
           <>
-            {!isNull(props.isAuth) && (
+            {!isUndefined(ctx.user) && (
               <>
-                {props.isAuth.status ? (
+                {!isNull(ctx.user) ? (
                   <>
-                    <Link
+                    {/* TODO - Control panel mobile version */}
+                    {/* <Link
                       className="dropdown-item my-2"
                       to={{
-                        pathname: '/admin',
+                        pathname: '/control-panel',
                       }}
                       onClick={() => setOpenSideBarStatus(false)}
                     >
-                      My packages
-                    </Link>
+                      Control Panel
+                    </Link> */}
 
                     <LogOut
                       className="my-2"
-                      setIsAuth={props.setIsAuth}
                       onSuccess={() => setOpenSideBarStatus(false)}
                       privateRoute={props.privateRoute}
                     />

@@ -28,6 +28,7 @@ export interface Props {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
   checkAvailability?: ResourceKind;
+  isValidResource?: ResourceKind;
   autoComplete?: string;
   readOnly?: boolean;
   additionalInfo?: string | JSX.Element;
@@ -40,6 +41,7 @@ const InputField = (props: Props) => {
   const [inputValue, setInputValue] = useState(props.value || '');
   const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [isValidatingResource, setIsValidatingResource] = useState(false);
 
   const checkAvailability = (value: string): void => {
     async function checkAvailability() {
@@ -60,6 +62,30 @@ const InputField = (props: Props) => {
     if (value !== '') {
       input.current!.setCustomValidity('');
       checkAvailability();
+    } else {
+      checkValidity();
+    }
+  };
+
+  const isValidResource = (value: string): void => {
+    async function checkIsValidResource() {
+      try {
+        setIsValidatingResource(true);
+        await API.checkAvailability({
+          resourceKind: props.isValidResource!,
+          value: value,
+        });
+        input.current!.setCustomValidity('');
+      } catch {
+        input.current!.setCustomValidity('Is not a valid resource');
+      } finally {
+        checkValidity();
+        setIsValidatingResource(false);
+      }
+    }
+    if (value !== '') {
+      input.current!.setCustomValidity('');
+      checkIsValidResource();
     } else {
       checkValidity();
     }
@@ -96,11 +122,18 @@ const InputField = (props: Props) => {
       if (!isUndefined(props.setValidationStatus)) {
         props.setValidationStatus(true);
       }
-      if (isUndefined(props.checkAvailability)) {
-        checkValidity();
-      } else {
+
+      if (!isUndefined(props.checkAvailability)) {
         checkAvailability(e.target.value);
+        return;
       }
+
+      if (!isUndefined(props.isValidResource)) {
+        isValidResource(e.target.value);
+        return;
+      }
+
+      checkValidity();
     }
   };
 
@@ -138,7 +171,7 @@ const InputField = (props: Props) => {
         onKeyDown={props.onKeyDown}
       />
 
-      {isCheckingAvailability && (
+      {(isCheckingAvailability || isValidatingResource) && (
         <div className={`position-absolute ${styles.spinner}`}>
           <span className="spinner-border spinner-border-sm text-primary" />
         </div>

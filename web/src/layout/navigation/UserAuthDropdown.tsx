@@ -1,20 +1,19 @@
 import classnames from 'classnames';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { FaCaretDown, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { UserAuth } from '../../types';
 import LogOut from './LogOut';
 import styles from './UserAuthDropdown.module.css';
 
 interface Props {
-  alias: string;
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   privateRoute?: boolean;
 }
 
 const UserAuthDropdown = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
   const [openStatus, setOpenStatus] = useState(false);
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
@@ -38,7 +37,7 @@ const UserAuthDropdown = (props: Props) => {
         <div className={`arrow ${styles.arrow}`} />
 
         <p className={`mt-2 mb-0 ${styles.signedInText}`}>
-          Signed in as <span className="font-weight-bold">{props.alias}</span>
+          Signed in as <span className="font-weight-bold">{ctx.user!.alias}</span>
         </p>
 
         <div className="dropdown-divider my-3" />
@@ -46,19 +45,14 @@ const UserAuthDropdown = (props: Props) => {
         <Link
           className="dropdown-item"
           to={{
-            pathname: '/admin',
+            pathname: '/control-panel',
           }}
           onClick={() => setOpenStatus(false)}
         >
-          My packages
+          Control Panel
         </Link>
 
-        <LogOut
-          className="mb-2"
-          setIsAuth={props.setIsAuth}
-          onSuccess={() => setOpenStatus(false)}
-          privateRoute={props.privateRoute}
-        />
+        <LogOut className="mb-2" onSuccess={() => setOpenStatus(false)} privateRoute={props.privateRoute} />
       </div>
     </div>
   );

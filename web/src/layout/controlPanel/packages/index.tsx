@@ -1,11 +1,10 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 
-import { PackageKind, UserAuth } from '../../types';
-import PackageIcon from '../common/PackageIcon';
-import styles from './AdminView.module.css';
+import { PackageKind } from '../../../types';
+import PackageIcon from '../../common/PackageIcon';
 import ChartRepository from './chartRepository';
+import styles from './PackagesSection.module.css';
 
 interface PackageItem {
   kind: PackageKind;
@@ -36,35 +35,29 @@ const packages: PackageItem[] = [
 ];
 
 interface Props {
-  isAuth: null | UserAuth;
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
+  onAuthError: () => void;
 }
 
 const DEFAULT_PACKAGE_KIND = PackageKind.Chart;
 
-const AdminView = (props: Props) => {
+const PackagesSection = (props: Props) => {
   const [activePackageKind, setActivePackageKind] = useState<PackageKind>(DEFAULT_PACKAGE_KIND);
 
   const onMenuItemClick = (kind: PackageKind) => {
     setActivePackageKind(kind);
   };
 
-  if (!isNull(props.isAuth) && !props.isAuth.status) {
-    return null;
-  }
-
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-5">
+    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
       <nav className={styles.sidebar}>
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
-          <li className={`list-group-item d-none d-md-block ${styles.listTitle}`}>My packages</li>
           {packages.map((packageItem: PackageItem) => {
             return (
               <button
                 key={`package_${packageItem.kind}`}
                 type="button"
                 className={classnames(
-                  'list-group-item list-group-item-action',
+                  'list-group-item list-group-item-action overflow-hidden',
                   styles.listItem,
                   { [styles.isActive]: packageItem.kind === activePackageKind },
                   { disabled: packageItem.disabled }
@@ -96,4 +89,4 @@ const AdminView = (props: Props) => {
   );
 };
 
-export default AdminView;
+export default PackagesSection;

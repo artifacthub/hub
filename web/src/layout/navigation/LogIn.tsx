@@ -1,11 +1,12 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import { UserAuth, UserLogin } from '../../types';
+import { AppCtx, requestSignIn, signOut } from '../../context/AppCtx';
+import { UserLogin } from '../../types';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './LogIn.module.css';
@@ -16,7 +17,6 @@ interface FormValidation {
 }
 
 interface Props {
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   onSuccess?: () => void;
   openLogIn: boolean;
   setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +24,7 @@ interface Props {
 }
 
 const LogIn = (props: Props) => {
+  const { dispatch } = useContext(AppCtx);
   const history = useHistory();
   const loginForm = useRef<HTMLFormElement>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -55,7 +56,7 @@ const LogIn = (props: Props) => {
         props.onSuccess();
       }
       setIsLoggingIn(false);
-      props.setIsAuth({ status: true });
+      dispatch(requestSignIn());
       props.setOpenLogIn(false);
       if (!isUndefined(props.redirect)) {
         history.push({
@@ -74,7 +75,7 @@ const LogIn = (props: Props) => {
       }
       setApiError(error);
       setIsLoggingIn(false);
-      props.setIsAuth({ status: false });
+      dispatch(signOut());
     }
   }
 

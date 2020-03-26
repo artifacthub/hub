@@ -2,16 +2,17 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { API } from '../../../api';
-import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ChartRepository } from '../../../types';
-import Modal from '../../common/Modal';
+import { API } from '../../../../api';
+import { AppCtx } from '../../../../context/AppCtx';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
+import { ChartRepository } from '../../../../types';
+import Modal from '../../../common/Modal';
 import styles from './Card.module.css';
 
 interface ModalStatus {
@@ -27,17 +28,25 @@ interface Props {
 }
 
 const ChartRepositoryCard = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState(false);
   const [apiDeleteError, setApiDeleteError] = useState<string | null>(null);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
-  useOutsideClick([dropdown], openDropdownStatus, () => setOpenDropdownStatus(false));
+  const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
   const hasErrors =
     !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull(props.chartRepository.lastTrackingErrors);
 
+  const closeDropdown = () => {
+    setApiDeleteError(null);
+    setOpenDropdownStatus(false);
+  };
+
+  useOutsideClick([dropdown], openDropdownStatus, closeDropdown);
+
   const getLastTracking = (): JSX.Element => {
     if (isUndefined(props.chartRepository.lastTrackingTs) || isNull(props.chartRepository.lastTrackingTs)) {
-      return <>Not processed yet, it will be processed very soon</>;
+      return <>Not processed yet, it will be processed automatically in less than 30m</>;
     }
 
     const content = (
@@ -79,7 +88,7 @@ const ChartRepositoryCard = (props: Props) => {
   async function deleteChartRepository() {
     try {
       setIsDeleting(true);
-      await API.deleteChartRepository(props.chartRepository.name);
+      await API.deleteChartRepository(props.chartRepository.name, organizationName);
       setIsDeleting(false);
       setOpenDropdownStatus(false);
       props.onSuccess();
@@ -143,10 +152,7 @@ const ChartRepositoryCard = (props: Props) => {
             <div className="dropdown-divider m-0" />
 
             <div className="d-flex flex-row justify-content-between p-3">
-              <button
-                className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
-                onClick={() => setOpenDropdownStatus(false)}
-              >
+              <button className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`} onClick={closeDropdown}>
                 <div className="d-flex flex-row align-items-center">
                   <IoMdCloseCircle className="mr-2" />
                   <span>Cancel</span>

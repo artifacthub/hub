@@ -1,19 +1,19 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import { UserAuth } from '../../types';
+import { AppCtx, signOut } from '../../context/AppCtx';
 
 interface Props {
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
   onSuccess?: () => void;
   className?: string;
   privateRoute?: boolean;
 }
 
 const LogOut = (props: Props) => {
+  const { dispatch } = useContext(AppCtx);
   const history = useHistory();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -26,7 +26,7 @@ const LogOut = (props: Props) => {
       if (!isUndefined(props.onSuccess)) {
         props.onSuccess();
       }
-      props.setIsAuth({ status: false });
+      dispatch(signOut());
       if (!isUndefined(props.privateRoute) && props.privateRoute) {
         history.push('/');
       }

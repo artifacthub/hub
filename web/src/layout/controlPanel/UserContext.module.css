@@ -1,0 +1,28 @@
+.badgeIcon {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  line-height: 1rem;
+}
+
+.ctxBtn {
+  width: 180px;
+}
+
+.loading {
+  right: -22px;
+  top: 22px;
+}
+
+.dropdown {
+  top: 80%;
+}
+
+.legendCtx {
+  font-size: 70%;
+}
+
+.caret {
+  bottom: 22px;
+  right: 5px;
+}

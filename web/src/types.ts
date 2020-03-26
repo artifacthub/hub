@@ -111,6 +111,10 @@ export interface User extends UserLogin {
   lastName?: string;
 }
 
+export interface Member extends User {
+  confirmed?: boolean;
+}
+
 export interface UserAuth {
   alias?: string;
   status: boolean;
@@ -125,4 +129,15 @@ export enum ResourceKind {
   userAlias = 'userAlias',
   chartRepositoryName = 'chartRepositoryName',
   chartRepositoryURL = 'chartRepositoryURL',
+  organizationName = 'organizationName',
+}
+
+export interface Organization {
+  name: string;
+  displayName?: string;
+  homeUrl?: string;
+  logoUrl?: string;
+  description?: string;
+  membersCount?: number | null;
+  confirmed?: boolean | null;
 }
