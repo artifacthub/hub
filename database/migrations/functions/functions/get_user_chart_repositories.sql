@@ -1,6 +1,6 @@
--- get_chart_repositories_by_user returns all available chart repositories that
+-- get_user_chart_repositories returns all available chart repositories that
 -- belong to the provided user as a json array.
-create or replace function get_chart_repositories_by_user(p_user_id uuid)
+create or replace function get_user_chart_repositories(p_user_id uuid)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'chart_repository_id', chart_repository_id,

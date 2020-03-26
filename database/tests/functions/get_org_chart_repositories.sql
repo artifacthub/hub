@@ -4,14 +4,19 @@ select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
+\set user2ID '00000000-0000-0000-0000-000000000002'
+\set org1ID '00000000-0000-0000-0000-000000000001'
 
--- Seed user
-insert into "user" (user_id, alias, email)
-values (:'user1ID', 'user1', 'user1@email.com');
+-- Seed user and organization
+insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
+insert into "user" (user_id, alias, email) values (:'user2ID', 'user2', 'user2@email.com');
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
+insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
 
 -- No repositories at this point
 select is(
-    get_chart_repositories_by_user(:'user1ID')::jsonb,
+    get_org_chart_repositories(:'user1ID', 'org1')::jsonb,
     '[]'::jsonb,
     'With no repositories an empty json array is returned'
 );
@@ -24,7 +29,7 @@ insert into chart_repository (
     url,
     last_tracking_ts,
     last_tracking_errors,
-    user_id
+    organization_id
 ) values (
     '00000000-0000-0000-0000-000000000001',
     'repo1',
@@ -32,20 +37,20 @@ insert into chart_repository (
     'https://repo1.com',
     '1970-01-01 00:00:00 UTC',
     'error1\nerror2\nerror3',
-    :'user1ID'
+    :'org1ID'
 );
 insert into chart_repository (
     chart_repository_id,
     name,
     display_name,
     url,
-    user_id
+    organization_id
 ) values (
     '00000000-0000-0000-0000-000000000002',
     'repo2',
     'Repo 2',
     'https://repo2.com',
-    :'user1ID'
+    :'org1ID'
 );
 insert into chart_repository (
     chart_repository_id,
@@ -61,7 +66,7 @@ insert into chart_repository (
 
 -- Some repositories have just been seeded
 select is(
-    get_chart_repositories_by_user(:'user1ID')::jsonb,
+    get_org_chart_repositories(:'user1ID', 'org1')::jsonb,
     '[{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -80,9 +85,9 @@ select is(
     'Repositories belonging to user provided are returned as a json array of objects'
 );
 select is(
-    get_chart_repositories_by_user(null)::jsonb,
+    get_org_chart_repositories(:'user2ID', 'org1')::jsonb,
     '[]'::jsonb,
-    'Repositories not belonging to any user are not returned'
+    'No repositories are returned as user provided does not belong to the organization'
 );
 
 -- Finish tests and rollback transaction

@@ -79,7 +79,7 @@ func TestGetPackagesStats(t *testing.T) {
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery).Return([]byte("packagesStatsDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -92,7 +92,7 @@ func TestGetPackagesStats(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("packagesStatsDataJSON"), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -116,7 +116,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery).Return([]byte("packagesUpdatesDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -129,7 +129,7 @@ func TestGetPackagesUpdates(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("packagesUpdatesDataJSON"), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -183,7 +183,7 @@ func TestSearchPackages(t *testing.T) {
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("searchResultsDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -196,7 +196,7 @@ func TestSearchPackages(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("searchResultsDataJSON"), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -234,7 +234,7 @@ func TestGetPackage(t *testing.T) {
 
 	t.Run("existing package", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("packageDataJSON"), nil)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -247,7 +247,7 @@ func TestGetPackage(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(defaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("packageDataJSON"), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -638,17 +638,17 @@ func TestGetUserAlias(t *testing.T) {
 	})
 }
 
-func TestGetChartRepositories(t *testing.T) {
-	dbQuery := "select get_chart_repositories_by_user($1)"
+func TestGetUserChartRepositories(t *testing.T) {
+	dbQuery := "select get_user_chart_repositories($1::uuid)"
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("userChartRepositoriesJSON"), nil)
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		th.h.getChartRepositories(w, r)
+		th.h.getUserChartRepositories(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -657,7 +657,7 @@ func TestGetChartRepositories(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("userChartRepositoriesJSON"), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		th.db.AssertExpectations(t)
 	})
 
@@ -668,7 +668,46 @@ func TestGetChartRepositories(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		th.h.getChartRepositories(w, r)
+		th.h.getUserChartRepositories(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestGetOrgChartRepositories(t *testing.T) {
+	dbQuery := "select get_org_chart_repositories($1::uuid, $2::text)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getOrgChartRepositories(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getOrgChartRepositories(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -678,7 +717,7 @@ func TestGetChartRepositories(t *testing.T) {
 }
 
 func TestAddChartRepository(t *testing.T) {
-	dbQuery := "select add_chart_repository($1::jsonb)"
+	dbQuery := "select add_chart_repository($1::uuid, $2::text, $3::jsonb)"
 
 	t.Run("invalid chart repository provided", func(t *testing.T) {
 		testCases := []struct {
@@ -759,7 +798,8 @@ func TestAddChartRepository(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				th := setupTestHandlers()
-				th.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+				th.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).
+					Return(tc.dbResponse)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(repoJSON))
@@ -776,7 +816,7 @@ func TestAddChartRepository(t *testing.T) {
 }
 
 func TestUpdateChartRepository(t *testing.T) {
-	dbQuery := "select update_chart_repository($1::jsonb)"
+	dbQuery := "select update_chart_repository($1::uuid, $2::jsonb)"
 
 	t.Run("invalid chart repository provided", func(t *testing.T) {
 		testCases := []struct {
@@ -836,7 +876,7 @@ func TestUpdateChartRepository(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				th := setupTestHandlers()
-				th.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+				th.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tc.dbResponse)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(repoJSON))
@@ -853,11 +893,11 @@ func TestUpdateChartRepository(t *testing.T) {
 }
 
 func TestDeleteChartRepository(t *testing.T) {
-	dbQuery := "select delete_chart_repository($1::jsonb)"
+	dbQuery := "select delete_chart_repository($1::uuid, $2::text)"
 
 	t.Run("valid request", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
@@ -872,12 +912,378 @@ func TestDeleteChartRepository(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		th := setupTestHandlers()
-		th.db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(errFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		th.h.deleteChartRepository(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestGetUserOrganizations(t *testing.T) {
+	dbQuery := "select get_user_organizations($1::uuid)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getUserOrganizations(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getUserOrganizations(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestAddOrganization(t *testing.T) {
+	dbQuery := "select add_organization($1::uuid, $2::jsonb)"
+
+	t.Run("invalid organization provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			repoJSON    string
+		}{
+			{
+				"no organization provided",
+				"",
+			},
+			{
+				"invalid json",
+				"-",
+			},
+			{
+				"missing name",
+				`{"display_name": "Display Name"}`,
+			},
+			{
+				"invalid name",
+				`{"name": "_org"}`,
+			},
+			{
+				"invalid name",
+				`{"name": " org"}`,
+			},
+			{
+				"invalid name",
+				`{"name": "ORG"}`,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.addOrganization(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid organization provided", func(t *testing.T) {
+		orgJSON := `
+		{
+			"name": "org1",
+			"display_name": "Organization 1",
+			"description": "description"
+		}
+		`
+		testCases := []struct {
+			description        string
+			dbResponse         interface{}
+			expectedStatusCode int
+		}{
+			{
+				"success",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"database error",
+				errFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tc.dbResponse)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(orgJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.addOrganization(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestUpdateOrganization(t *testing.T) {
+	dbQuery := "select update_organization($1::uuid, $2::jsonb)"
+
+	t.Run("invalid organization provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			repoJSON    string
+		}{
+			{
+				"no organization provided",
+				"",
+			},
+			{
+				"invalid json",
+				"-",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.updateOrganization(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+			})
+		}
+	})
+
+	t.Run("valid organization provided", func(t *testing.T) {
+		orgJSON := `
+		{
+			"name": "org1",
+			"display_name": "Organization 1 updated",
+			"description": "description updated"
+		}
+		`
+		testCases := []struct {
+			description        string
+			dbResponse         interface{}
+			expectedStatusCode int
+		}{
+			{
+				"success",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"database error",
+				errFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tc.dbResponse)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(orgJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.updateOrganization(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestGetOrganizationMembers(t *testing.T) {
+	dbQuery := "select get_organization_members($1::uuid, $2::text)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getOrganizationMembers(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, buildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.getOrganizationMembers(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestAddOrganizationMember(t *testing.T) {
+	dbQueryAddMember := `select add_organization_member($1::uuid, $2::text, $3::text)`
+	dbQueryGetUserEmail := `select email from "user" where alias = $1`
+
+	t.Run("valid member provided", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			dbResponse         interface{}
+			expectedStatusCode int
+		}{
+			{
+				"success",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"database error",
+				errFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				th := setupTestHandlers()
+				th.db.On("Exec", dbQueryAddMember, mock.Anything, mock.Anything, mock.Anything).
+					Return(tc.dbResponse)
+				if tc.dbResponse == nil {
+					th.db.On("QueryRow", dbQueryGetUserEmail, mock.Anything).Return("email", nil)
+					th.es.On("SendEmail", mock.Anything).Return(nil)
+					defer th.es.AssertExpectations(t)
+				}
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader("member=userAlias"))
+				r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				th.h.addOrganizationMember(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				th.db.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestConfirmOrganizationMembership(t *testing.T) {
+	dbQuery := "select confirm_organization_membership($1::uuid, $2::text)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.confirmOrganizationMembership(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.confirmOrganizationMembership(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+}
+
+func TestDeleteOrganizationMember(t *testing.T) {
+	dbQuery := "select delete_organization_member($1::uuid, $2::text, $3::text)"
+
+	t.Run("valid request", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("DELETE", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.deleteOrganizationMember(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		th.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		th := setupTestHandlers()
+		th.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(errFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("DELETE", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		th.h.deleteOrganizationMember(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

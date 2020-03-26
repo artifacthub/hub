@@ -66,30 +66,47 @@ func (h *Hub) GetChartRepositories(ctx context.Context) ([]*ChartRepository, err
 	return r, err
 }
 
-// GetChartRepositoriesByUserJSON returns all chart repositories that belong to
+// GetUserChartRepositoriesJSON returns all chart repositories that belong to
 // the user making the request.
-func (h *Hub) GetChartRepositoriesByUserJSON(ctx context.Context) ([]byte, error) {
+func (h *Hub) GetUserChartRepositoriesJSON(ctx context.Context) ([]byte, error) {
+	query := "select get_user_chart_repositories($1::uuid)"
 	userID := ctx.Value(UserIDKey).(string)
-	return h.dbQueryJSON(ctx, "select get_chart_repositories_by_user($1)", userID)
+	return h.dbQueryJSON(ctx, query, userID)
+}
+
+// GetOrgChartRepositoriesJSON returns all chart repositories that belong to
+// the user making the request.
+func (h *Hub) GetOrgChartRepositoriesJSON(ctx context.Context, orgName string) ([]byte, error) {
+	query := "select get_org_chart_repositories($1::uuid, $2::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	return h.dbQueryJSON(ctx, query, userID, orgName)
 }
 
 // AddChartRepository adds the provided chart repository to the database.
-func (h *Hub) AddChartRepository(ctx context.Context, r *ChartRepository) error {
-	r.UserID = ctx.Value(UserIDKey).(string)
-	return h.dbExec(ctx, "select add_chart_repository($1::jsonb)", r)
+func (h *Hub) AddChartRepository(ctx context.Context, orgName string, r *ChartRepository) error {
+	query := "select add_chart_repository($1::uuid, $2::text, $3::jsonb)"
+	userID := ctx.Value(UserIDKey).(string)
+	rJSON, _ := json.Marshal(r)
+	_, err := h.db.Exec(ctx, query, userID, orgName, rJSON)
+	return err
 }
 
 // UpdateChartRepository updates the provided chart repository in the database.
 func (h *Hub) UpdateChartRepository(ctx context.Context, r *ChartRepository) error {
-	r.UserID = ctx.Value(UserIDKey).(string)
-	return h.dbExec(ctx, "select update_chart_repository($1::jsonb)", r)
+	query := "select update_chart_repository($1::uuid, $2::jsonb)"
+	userID := ctx.Value(UserIDKey).(string)
+	rJSON, _ := json.Marshal(r)
+	_, err := h.db.Exec(ctx, query, userID, rJSON)
+	return err
 }
 
 // DeleteChartRepository deletes the provided chart repository from the
 // database.
-func (h *Hub) DeleteChartRepository(ctx context.Context, r *ChartRepository) error {
-	r.UserID = ctx.Value(UserIDKey).(string)
-	return h.dbExec(ctx, "select delete_chart_repository($1::jsonb)", r)
+func (h *Hub) DeleteChartRepository(ctx context.Context, name string) error {
+	query := "select delete_chart_repository($1::uuid, $2::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	_, err := h.db.Exec(ctx, query, userID, name)
+	return err
 }
 
 // SetChartRepositoryLastTrackingResults updates the timestamp and errors of
@@ -262,6 +279,98 @@ func (h *Hub) GetUserAlias(ctx context.Context) (string, error) {
 	return alias, err
 }
 
+// GetUserOrganizationsJSON returns the organizations the user doing the
+// request belongs to as a json object.
+func (h *Hub) GetUserOrganizationsJSON(ctx context.Context) ([]byte, error) {
+	query := "select get_user_organizations($1::uuid)"
+	userID := ctx.Value(UserIDKey).(string)
+	return h.dbQueryJSON(ctx, query, userID)
+}
+
+// AddOrganization adds the provided organization to the database.
+func (h *Hub) AddOrganization(ctx context.Context, org *Organization) error {
+	query := "select add_organization($1::uuid, $2::jsonb)"
+	userID := ctx.Value(UserIDKey).(string)
+	orgJSON, _ := json.Marshal(org)
+	_, err := h.db.Exec(ctx, query, userID, orgJSON)
+	return err
+}
+
+// UpdateOrganization updates the provided organization in the database.
+func (h *Hub) UpdateOrganization(ctx context.Context, org *Organization) error {
+	query := "select update_organization($1::uuid, $2::jsonb)"
+	userID := ctx.Value(UserIDKey).(string)
+	orgJSON, _ := json.Marshal(org)
+	_, err := h.db.Exec(ctx, query, userID, orgJSON)
+	return err
+}
+
+// GetOrganizationMembersJSON returns the members of the provided organization
+// as a json object.
+func (h *Hub) GetOrganizationMembersJSON(ctx context.Context, orgName string) ([]byte, error) {
+	query := "select get_organization_members($1::uuid, $2::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	return h.dbQueryJSON(ctx, query, userID, orgName)
+}
+
+// AddOrganizationMember adds a new member to the provided organization. The
+// new member must be a registered user. The user will receive an email to
+// confirm her willingness to join the organization. The user doing the request
+// must be a member of the organization.
+func (h *Hub) AddOrganizationMember(ctx context.Context, orgName, userAlias, baseURL string) error {
+	query := "select add_organization_member($1::uuid, $2::text, $3::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	_, err := h.db.Exec(ctx, query, userID, orgName, userAlias)
+	if err != nil {
+		return err
+	}
+
+	// Send organization invitation email
+	if h.es != nil {
+		var userEmail string
+		query := `select email from "user" where alias = $1`
+		if err := h.db.QueryRow(ctx, query, userAlias).Scan(&userEmail); err != nil {
+			return err
+		}
+		templateData := map[string]string{
+			"link":    fmt.Sprintf("%s/accept-invitation?org=%s", baseURL, orgName),
+			"orgName": orgName,
+		}
+		var emailBody bytes.Buffer
+		if err := organizationInvitationTmpl.Execute(&emailBody, templateData); err != nil {
+			return err
+		}
+		emailData := &email.Data{
+			To:      userEmail,
+			Subject: fmt.Sprintf("Invitation to join %s on Artifact Hub", orgName),
+			Body:    emailBody.Bytes(),
+		}
+		if err := h.es.SendEmail(emailData); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ConfirmOrganizationMembership confirms the user doing the request membership
+// to the provided organization.
+func (h *Hub) ConfirmOrganizationMembership(ctx context.Context, orgName string) error {
+	query := "select confirm_organization_membership($1::uuid, $2::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	_, err := h.db.Exec(ctx, query, userID, orgName)
+	return err
+}
+
+// DeleteOrganizationMember removes a member from the provided organization.
+// The user doing the request must be a member of the organization.
+func (h *Hub) DeleteOrganizationMember(ctx context.Context, orgName, userAlias string) error {
+	query := "select delete_organization_member($1::uuid, $2::text, $3::text)"
+	userID := ctx.Value(UserIDKey).(string)
+	_, err := h.db.Exec(ctx, query, userID, orgName, userAlias)
+	return err
+}
+
 // CheckAvailability checks the availability of a given value for the provided
 // resource kind.
 func (h *Hub) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
@@ -275,6 +384,8 @@ func (h *Hub) CheckAvailability(ctx context.Context, resourceKind, value string)
 		query = `select chart_repository_id from chart_repository where name = $1`
 	case "chartRepositoryURL":
 		query = `select chart_repository_id from chart_repository where url = $1`
+	case "organizationName":
+		query = `select organization_id from organization where name = $1`
 	default:
 		return false, errors.New("resource kind not supported")
 	}

@@ -113,3 +113,15 @@ type CheckSessionOutput struct {
 	Valid  bool   `json:"valid"`
 	UserID string `json:"user_id"`
 }
+
+// Organization represents an entity with one or more users associated that can
+// own packages and other entities like chart repositories.
+type Organization struct {
+	OrganizationID string `json:"organization_id"`
+	Name           string `json:"name"`
+	DisplayName    string `json:"display_name"`
+	Description    string `json:"description"`
+	HomeURL        string `json:"home_url"`
+	LogoURL        string `json:"logo_url"`
+	LogoImageID    string `json:"logo_image_id"`
+}

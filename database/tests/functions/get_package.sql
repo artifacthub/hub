@@ -18,8 +18,7 @@ select throws_ok(
             "chart_repository_name": "repo1"
         }')
     $$,
-    'a valid package name must be provided',
-    'Package name must be provided'
+    'a valid package name must be provided'
 );
 select throws_ok(
     $$
@@ -28,8 +27,7 @@ select throws_ok(
             "chart_repository_name": "repo1"
         }')
     $$,
-    'a valid package name must be provided',
-    'A valid package name must be provided'
+    'a valid package name must be provided'
 );
 
 -- No packages at this point
