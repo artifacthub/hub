@@ -49,8 +49,6 @@ const UserContext = () => {
     fetchOrganizations();
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  if (isNull(organizations) || organizations.length === 0) return null;
-
   return (
     <div className="position-relative pb-3">
       <div className="d-flex flex-column">
@@ -104,15 +102,19 @@ const UserContext = () => {
             {isNull(ctx.org) && <GoCheck className="ml-2 text-success" />}
           </div>
         </button>
-        {organizations.map((org: Organization) => (
-          <button key={`opt_${org.name}`} className="dropdown-item" onClick={() => handleChange(org)}>
-            <div className="d-flex flex-row align-items-center">
-              <MdBusiness className="mr-2" />
-              <span>{org.name}</span>
-              {!isNull(ctx.org) && org.name === ctx.org.name && <GoCheck className="ml-2 text-success" />}
-            </div>
-          </button>
-        ))}
+        {!isNull(organizations) && (
+          <>
+            {organizations.map((org: Organization) => (
+              <button key={`opt_${org.name}`} className="dropdown-item" onClick={() => handleChange(org)}>
+                <div className="d-flex flex-row align-items-center">
+                  <MdBusiness className="mr-2" />
+                  <span>{org.name}</span>
+                  {!isNull(ctx.org) && org.name === ctx.org.name && <GoCheck className="ml-2 text-success" />}
+                </div>
+              </button>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
