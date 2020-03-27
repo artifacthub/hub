@@ -7,14 +7,16 @@ returns setof json as $$
         'display_name', o.display_name,
         'description', o.description,
         'home_url', o.home_url,
+        'confirmed', o.confirmed,
         'members_count', (
             select count(*)
             from user__organization
             where organization_id = o.organization_id
+            and confirmed = true
         )
     )), '[]')
     from (
-        select o.*
+        select o.*, uo.confirmed
         from organization o
         join user__organization uo using (organization_id)
         where uo.user_id = p_user_id

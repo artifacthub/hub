@@ -99,6 +99,7 @@ func (h *Handlers) setupRouter() {
 		r.With(h.User.RequireLogin).Post("/orgs", h.Organizations.Add)
 		r.Route("/org/{orgName}", func(r chi.Router) {
 			r.Use(h.User.RequireLogin)
+			r.Get("/", h.Organizations.Get)
 			r.Put("/", h.Organizations.Update)
 			r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
 			r.Get("/members", h.Organizations.GetMembers)

@@ -90,6 +90,18 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Get is an http handler that returns the organization requested.
+func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	jsonData, err := h.hubAPI.Organizations.Get(r.Context(), orgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "Get").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	helpers.RenderJSON(w, jsonData, 0)
+}
+
 // GetByUser is an http handler that returns the organizations the user doing
 // the request belongs to.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
