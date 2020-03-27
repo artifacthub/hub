@@ -3,7 +3,6 @@ package pg
 import (
 	"context"
 	"crypto/sha256"
-	"errors"
 	"io/ioutil"
 	"testing"
 
@@ -13,8 +12,6 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
-
-var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestNewImageStore(t *testing.T) {
 	db := &tests.DBMock{}
@@ -91,11 +88,11 @@ func TestSaveImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select image_id from image where original_hash = $1", pngImgHash,
-		).Return(nil, errFakeDatabaseFailure)
+		).Return(nil, tests.ErrFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		imageID, err := s.SaveImage(context.Background(), pngImgData)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Empty(t, imageID)
 		db.AssertExpectations(t)
 	})
@@ -109,11 +106,11 @@ func TestSaveImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			"select register_image($1::bytea, $2::text, $3::bytea)", pngImgHash, "1x", mock.Anything,
-		).Return(nil, errFakeDatabaseFailure)
+		).Return(nil, tests.ErrFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		imageID, err := s.SaveImage(context.Background(), pngImgData)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Empty(t, imageID)
 		db.AssertExpectations(t)
 	})
@@ -139,11 +136,11 @@ func TestGetImage(t *testing.T) {
 		db.On(
 			"QueryRow",
 			mock.Anything, "imageID", "2x",
-		).Return(nil, errFakeDatabaseFailure)
+		).Return(nil, tests.ErrFakeDatabaseFailure)
 		s := NewImageStore(db)
 
 		data, err := s.GetImage(context.Background(), "imageID", "2x")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})

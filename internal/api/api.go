@@ -15,21 +15,23 @@ import (
 // API provides a wrapper around several internal apis to manage packages,
 // users, organizations, etc.
 type API struct {
-	db                hub.DB
-	ChartRepositories *chartrepo.Manager
+	db hub.DB
+
 	Organizations     *org.Manager
-	Packages          *pkg.Manager
 	User              *user.Manager
+	Packages          *pkg.Manager
+	ChartRepositories *chartrepo.Manager
 }
 
 // New creates a new API instance.
 func New(db hub.DB, es hub.EmailSender) *API {
 	return &API{
-		db:                db,
-		ChartRepositories: chartrepo.NewManager(db),
+		db: db,
+
 		Organizations:     org.NewManager(db, es),
-		Packages:          pkg.NewManager(db),
 		User:              user.NewManager(db, es),
+		Packages:          pkg.NewManager(db),
+		ChartRepositories: chartrepo.NewManager(db),
 	}
 }
 
