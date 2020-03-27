@@ -1,13 +1,13 @@
 import isNull from 'lodash/isNull';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
 
-import { API } from '../../../api';
-import { ChartRepository as ChartRepo, UserAuth } from '../../../types';
-import Loading from '../../common/Loading';
-import NoData from '../../common/NoData';
+import { API } from '../../../../api';
+import { AppCtx } from '../../../../context/AppCtx';
+import { ChartRepository as ChartRepo } from '../../../../types';
+import Loading from '../../../common/Loading';
+import NoData from '../../../common/NoData';
 import ChartRepositoryCard from './Card';
 import styles from './ChartRepository.module.css';
 import ChartRepositoryModal from './Modal';
@@ -18,41 +18,41 @@ interface ModalStatus {
 }
 
 interface Props {
-  isAuth: null | UserAuth;
-  setIsAuth: React.Dispatch<React.SetStateAction<UserAuth | null>>;
+  onAuthError: () => void;
 }
 
 const ChartRepository = (props: Props) => {
-  const history = useHistory();
+  const { ctx } = useContext(AppCtx);
   const [isLoading, setIsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
   });
   const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | null>(null);
+  const selectedOrg = isNull(ctx.org) ? undefined : ctx.org.name;
+  const [activeOrg, setActiveOrg] = useState(selectedOrg);
 
   async function fetchCharts() {
     try {
       setIsLoading(true);
-      setChartRepositories(await API.getChartRepositories());
+      setChartRepositories(await API.getChartRepositories(activeOrg));
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setChartRepositories([]);
       } else {
-        onAuthError();
+        props.onAuthError();
       }
     }
   }
 
   useEffect(() => {
     fetchCharts();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  const onAuthError = (): void => {
-    props.setIsAuth({ status: false });
-    history.push(`/login?redirect=/admin`);
-  };
+  useEffect(() => {
+    setActiveOrg(selectedOrg);
+  }, [selectedOrg]);
 
   return (
     <>
@@ -73,7 +73,7 @@ const ChartRepository = (props: Props) => {
             </button>
 
             <button
-              className={`btn btn-secondary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
+              className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
               onClick={() => setModalStatus({ open: true })}
             >
               <div className="d-flex flex-row align-items-center justify-content-center">
@@ -91,7 +91,7 @@ const ChartRepository = (props: Props) => {
           open={modalStatus.open}
           chartRepository={modalStatus.chartRepository}
           onSuccess={fetchCharts}
-          onAuthError={onAuthError}
+          onAuthError={props.onAuthError}
           onClose={() => setModalStatus({ open: false })}
         />
       )}
@@ -121,7 +121,7 @@ const ChartRepository = (props: Props) => {
                   chartRepository={repo}
                   setModalStatus={setModalStatus}
                   onSuccess={fetchCharts}
-                  onAuthError={onAuthError}
+                  onAuthError={props.onAuthError}
                 />
               ))}
             </div>

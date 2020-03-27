@@ -1,0 +1,88 @@
+import isUndefined from 'lodash/isUndefined';
+import React, { useEffect, useState } from 'react';
+import { MdClose, MdDone } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
+
+import { API } from '../../../api';
+import Loading from '../../common/Loading';
+import Modal from '../../common/Modal';
+import styles from './UserInvitation.module.css';
+
+interface Props {
+  orgToConfirm?: string;
+}
+
+const UserInvitation = (props: Props) => {
+  const [orgToConfirm] = useState(props.orgToConfirm);
+  const [isAccepting, setIsAccepting] = useState(false);
+  const [validInvitation, setValidInvitation] = useState<boolean | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const history = useHistory();
+
+  useEffect(() => {
+    async function confirmOrganizationMembership() {
+      setIsAccepting(true);
+      try {
+        await API.confirmOrganizationMembership(orgToConfirm!);
+        setValidInvitation(true);
+      } catch (err) {
+        let error = 'An error occurred accepting your invitation, please contact us about this issue.';
+        switch (err.status) {
+          case 400:
+            error = err.message;
+            break;
+        }
+        setApiError(error);
+        setValidInvitation(false);
+      } finally {
+        setIsAccepting(false);
+      }
+    }
+
+    if (!isUndefined(orgToConfirm)) {
+      history.replace({
+        pathname: '/',
+        search: '',
+      });
+      confirmOrganizationMembership();
+    }
+  }, [orgToConfirm, history]);
+
+  if (isUndefined(orgToConfirm)) return null;
+
+  return (
+    <Modal
+      header={<div className="h6 text-uppercase mb-0">Confirm invitation</div>}
+      disabledClose={isAccepting}
+      modalClassName={styles.modal}
+      open={!isUndefined(orgToConfirm)}
+    >
+      <div
+        className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}
+      >
+        {isAccepting ? (
+          <>
+            <Loading className={styles.loading} spinnerClassName="mt-0" />
+            <small className="text-muted">Your invitation is being confirmed...</small>
+          </>
+        ) : (
+          <>
+            {validInvitation ? (
+              <>
+                <MdDone className="display-4 text-success mb-4" />
+                Your invitation has been confirmed!
+              </>
+            ) : (
+              <>
+                <MdClose className="display-4 text-danger mb-4" />
+                {apiError}
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </Modal>
+  );
+};
+
+export default UserInvitation;

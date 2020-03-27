@@ -26,7 +26,7 @@ const UserConfirmation = (props: Props) => {
         await API.verifyEmail(emailCode!);
         setValidEmail(true);
       } catch (err) {
-        let error = 'An error occureed verifying your email, please contact us about this issue.';
+        let error = 'An error occurred verifying your email, please contact us about this issue.';
         switch (err.status) {
           case 400:
             error = err.message;

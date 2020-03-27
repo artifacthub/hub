@@ -1,0 +1,36 @@
+.navWrapper {
+  background-color: var(--color-1-10);
+}
+
+.navWrapper::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--color-1-20);
+}
+
+.section {
+  border-color: transparent !important;
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
+
+.activeSection {
+  border-color: var(--color-1-20) !important;
+  border-bottom-color: transparent !important;
+}
+
+.activeSection::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  height: 4px;
+  left: 0;
+  right: 0;
+  background-color: var(--color-1-700);
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}

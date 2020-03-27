@@ -1,13 +1,14 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
-import { API } from '../../../api';
-import { ChartRepository, ResourceKind } from '../../../types';
-import ExternalLink from '../../common/ExternalLink';
-import InputField from '../../common/InputField';
-import Modal from '../../common/Modal';
+import { API } from '../../../../api';
+import { AppCtx } from '../../../../context/AppCtx';
+import { ChartRepository, ResourceKind } from '../../../../types';
+import ExternalLink from '../../../common/ExternalLink';
+import InputField from '../../../common/InputField';
+import Modal from '../../../common/Modal';
 import styles from './Modal.module.css';
 
 interface FormValidation {
@@ -24,11 +25,12 @@ interface Props {
 }
 
 const ChartRepositoryModal = (props: Props) => {
+  const { ctx } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
-  const [isValidatingField, setIsValidatingField] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -44,9 +46,9 @@ const ChartRepositoryModal = (props: Props) => {
   async function handleChartRepository(chartRepository: ChartRepository) {
     try {
       if (isUndefined(props.chartRepository)) {
-        await API.addChartRepository(chartRepository);
+        await API.addChartRepository(chartRepository, organizationName);
       } else {
-        await API.updateChartRepository(chartRepository);
+        await API.updateChartRepository(chartRepository, organizationName);
       }
       if (!isUndefined(props.onSuccess)) {
         props.onSuccess();
@@ -54,9 +56,9 @@ const ChartRepositoryModal = (props: Props) => {
       setIsSending(false);
       onCloseModal();
     } catch (err) {
+      setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        setIsSending(false);
-        setApiError('An error occureed adding the chart repository, please try again later');
+        setApiError('An error occurred adding the chart repository, please try again later');
       } else {
         props.onAuthError();
       }
@@ -64,16 +66,14 @@ const ChartRepositoryModal = (props: Props) => {
   }
 
   const submitForm = () => {
-    if (!isValidatingField) {
-      cleanApiError();
-      setIsSending(true);
-      if (form.current) {
-        const { isValid, chartRepository } = validateForm(form.current);
-        if (isValid) {
-          handleChartRepository(chartRepository!);
-        } else {
-          setIsSending(false);
-        }
+    cleanApiError();
+    setIsSending(true);
+    if (form.current) {
+      const { isValid, chartRepository } = validateForm(form.current);
+      if (isValid) {
+        handleChartRepository(chartRepository!);
+      } else {
+        setIsSending(false);
       }
     }
   };
@@ -93,6 +93,12 @@ const ChartRepositoryModal = (props: Props) => {
       setIsValidated(true);
     }
     return { isValid, chartRepository };
+  };
+
+  const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter' && !isNull(form)) {
+      submitForm();
+    }
   };
 
   return (
@@ -144,7 +150,6 @@ const ChartRepositoryModal = (props: Props) => {
             checkAvailability={ResourceKind.chartRepositoryName}
             pattern="[a-z][a-z0-9-]*"
             autoComplete="off"
-            setValidationStatus={setIsValidatingField}
             required
           />
 
@@ -170,8 +175,8 @@ const ChartRepositoryModal = (props: Props) => {
               typeMismatch: 'Please enter a valid url',
               customError: 'There is another repository using this url',
             }}
+            onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
-            setValidationStatus={setIsValidatingField}
             checkAvailability={ResourceKind.chartRepositoryURL}
             additionalInfo={
               <small className="text-muted text-break mt-1">
