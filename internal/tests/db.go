@@ -2,11 +2,15 @@ package tests
 
 import (
 	"context"
+	"errors"
 
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/mock"
 )
+
+// ErrFakeDatabaseFailure represents a fake database error.
+var ErrFakeDatabaseFailure = errors.New("fake database failure")
 
 // DBMock is a mock implementation of the DB interface.
 type DBMock struct {

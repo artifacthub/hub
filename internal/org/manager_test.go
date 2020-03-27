@@ -2,18 +2,12 @@ package org
 
 import (
 	"context"
-	"errors"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-)
-
-var (
-	errFakeDatabaseFailure    = errors.New("fake database failure")
-	errFakeEmailSenderFailure = errors.New("fake email sender failure")
 )
 
 func TestAdd(t *testing.T) {
@@ -39,11 +33,11 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.Add(ctx, &hub.Organization{})
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -71,7 +65,7 @@ func TestAddMember(t *testing.T) {
 			},
 			{
 				"error sending organization invitation email",
-				errFakeEmailSenderFailure,
+				tests.ErrFakeEmailSenderFailure,
 			},
 		}
 		for _, tc := range testCases {
@@ -95,11 +89,11 @@ func TestAddMember(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQueryAddMember, "userID", "orgName", "userAlias").
-			Return(errFakeDatabaseFailure)
+			Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.AddMember(ctx, "orgName", "userAlias", "")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -127,11 +121,11 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName").Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", "orgName").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -159,11 +153,11 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", "userAlias").Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", "orgName", "userAlias").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -192,11 +186,11 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -226,11 +220,11 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -259,11 +253,11 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.Update(ctx, &hub.Organization{})
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }

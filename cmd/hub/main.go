@@ -8,6 +8,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/artifacthub/hub/cmd/hub/handlers"
 	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
@@ -46,7 +47,7 @@ func main() {
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
 		IdleTimeout:  1 * time.Minute,
-		Handler:      setupHandlers(cfg, hubAPI, imageStore).router,
+		Handler:      handlers.Setup(cfg, hubAPI, imageStore).Router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {

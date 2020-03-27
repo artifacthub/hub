@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"context"
-	"errors"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -10,8 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
-
-var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestGetJSON(t *testing.T) {
 	dbQuery := "select get_package($1::jsonb)"
@@ -29,11 +26,11 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(context.Background(), &GetInput{})
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -55,11 +52,11 @@ func TestGetStatsJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStatsJSON(context.Background())
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -81,11 +78,11 @@ func TestGetUpdatesJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetUpdatesJSON(context.Background())
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -138,11 +135,11 @@ func TestRegister(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Register(context.Background(), p)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -164,11 +161,11 @@ func TestSearchJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.SearchJSON(context.Background(), input)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})

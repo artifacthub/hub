@@ -2,7 +2,6 @@ package chartrepo
 
 import (
 	"context"
-	"errors"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -11,8 +10,6 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
-
-var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestAdd(t *testing.T) {
 	dbQuery := "select add_chart_repository($1::uuid, $2::text, $3::jsonb)"
@@ -33,11 +30,11 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Add(ctx, "orgName", r)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 
@@ -65,11 +62,11 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "repo1").Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", "repo1").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, "repo1")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 
@@ -151,11 +148,11 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("database error calling get_chart_repository_by_name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "repo1").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
 	})
@@ -208,11 +205,11 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -242,11 +239,11 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
@@ -282,11 +279,11 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "repoID", "errors").Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "repoID", "errors").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.SetLastTrackingResults(context.Background(), "repoID", "errors")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -310,11 +307,11 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(errFakeDatabaseFailure)
+		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Update(ctx, r)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 

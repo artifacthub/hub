@@ -2,15 +2,12 @@ package api
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 )
-
-var errFakeDatabaseFailure = errors.New("fake database failure")
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("resource kind not supported", func(t *testing.T) {
@@ -65,11 +62,11 @@ func TestCheckAvailability(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		dbQuery := `select not exists (select user_id from "user" where alias = $1)`
-		db.On("QueryRow", dbQuery, "value").Return(false, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
 		a := New(db, nil)
 
 		available, err := a.CheckAvailability(context.Background(), "userAlias", "value")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)
 	})
