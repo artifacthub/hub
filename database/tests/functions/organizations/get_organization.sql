@@ -1,20 +1,12 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set user2ID '00000000-0000-0000-0000-000000000002'
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set org2ID '00000000-0000-0000-0000-000000000002'
-\set org3ID '00000000-0000-0000-0000-000000000003'
-
--- No organizations at this point
-select is(
-    get_user_organizations(:'user1ID')::jsonb,
-    '[]'::jsonb,
-    'With no organizations an empty json array is returned'
-);
 
 -- Seed some users and organizations
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
@@ -23,32 +15,30 @@ insert into organization (organization_id, name, display_name, description, home
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org2ID', 'org2', 'Organization 2', 'Description 2', 'https://org2.com');
-insert into organization (organization_id, name, display_name, description, home_url)
-values (:'org3ID', 'org3', 'Organization 3', 'Description 3', 'https://org3.com');
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
-insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org2ID', false);
-insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', true);
+insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org2ID', false);
 
 -- Users and organizations have just been seeded
 select is(
-    get_user_organizations(:'user1ID')::jsonb,
-    '[{
+    get_organization(:'user1ID', 'org1')::jsonb, '
+    {
         "name": "org1",
         "display_name": "Organization 1",
         "description": "Description 1",
-        "home_url": "https://org1.com",
-        "confirmed": true,
-        "members_count": 2
-    }, {
-        "name": "org2",
-        "display_name": "Organization 2",
-        "description": "Description 2",
-        "home_url": "https://org2.com",
-        "confirmed": false,
-        "members_count": 0
-    }]'::jsonb,
-    'Organizations are returned as a json array of objects'
+        "home_url": "https://org1.com"
+    }
+    '::jsonb,
+    'Organization1 should exist and user1 should be able to get it'
 );
+select is_empty(
+    $$ select get_organization('00000000-0000-0000-0000-000000000002', 'org1')::jsonb $$,
+    'Organization1 exists but user2 should not be able to get it'
+);
+select is_empty(
+    $$ select get_organization('00000000-0000-0000-0000-000000000002', 'org2')::jsonb $$,
+    'Organization2 exists but user2 should not be able to get he did not confirm his membership'
+);
+
 
 -- Finish tests and rollback transaction
 select * from finish();

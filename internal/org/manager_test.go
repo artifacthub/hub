@@ -162,6 +162,40 @@ func TestDeleteMember(t *testing.T) {
 	})
 }
 
+func TestGet(t *testing.T) {
+	dbQuery := `select get_organization($1::uuid, $2::text)`
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_, _ = m.Get(context.Background(), "orgName")
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		m := NewManager(db, nil)
+
+		dataJSON, err := m.Get(ctx, "orgName")
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		dataJSON, err := m.Get(ctx, "orgName")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetByUserJSON(t *testing.T) {
 	dbQuery := `select get_user_organizations($1::uuid)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
