@@ -83,7 +83,7 @@ export default function App() {
             />
 
             <Route
-              path={['/package/chart/:repoName/:packageName/:version?', '/package/:packageName/:version?']}
+              path={['/package/chart/:repoName/:packageName/:version?', `/package/:packageKind/:packageName/:version?`]}
               exact
               render={({ location, match }) => (
                 <>

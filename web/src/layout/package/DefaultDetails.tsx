@@ -5,6 +5,7 @@ import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import SmallTitle from '../common/SmallTitle';
 import Keywords from './Keywords';
+import Links from './Links';
 
 interface Props {
   package: Package;
@@ -22,6 +23,8 @@ const DefaultDetails = (props: Props) => {
           <ExpandableList items={props.allVersions} />
         </div>
       )}
+
+      <Links links={props.package.links} />
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} />
