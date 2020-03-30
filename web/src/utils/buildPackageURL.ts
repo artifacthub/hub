@@ -12,8 +12,13 @@ export default (packageItem: Package, withVersion?: boolean): string => {
       }
       break;
     case PackageKind.Falco:
+      url = `/package/falco/${packageItem.normalizedName}`;
+      if (!isUndefined(packageItem.version) && !isUndefined(withVersion) && withVersion) {
+        url += `/${packageItem.version}`;
+      }
+      break;
     case PackageKind.Opa:
-      url = `/package/${packageItem.normalizedName}`;
+      url = `/package/opa/${packageItem.normalizedName}`;
       if (!isUndefined(packageItem.version) && !isUndefined(withVersion) && withVersion) {
         url += `/${packageItem.version}`;
       }

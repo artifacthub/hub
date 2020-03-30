@@ -1,16 +1,14 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
-import { FiExternalLink } from 'react-icons/fi';
 import { GiEnvelope } from 'react-icons/gi';
-import { TiHome } from 'react-icons/ti';
 
 import { Maintainer, Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import ExternalLink from '../common/ExternalLink';
 import SmallTitle from '../common/SmallTitle';
-import styles from './ChartDetails.module.css';
 import Keywords from './Keywords';
+import Links from './Links';
 
 interface Props {
   package: Package;
@@ -34,24 +32,7 @@ const ChartDetails = (props: Props) => {
         </div>
       )}
 
-      <SmallTitle text="Links" />
-      {isUndefined(props.package.homeUrl) || isNull(props.package.homeUrl) ? (
-        <p data-testid="homeUrl">-</p>
-      ) : (
-        <ExternalLink
-          data-testid="homeUrl"
-          href={props.package.homeUrl}
-          className="text-primary d-flex align-items-center mb-3"
-        >
-          <>
-            <TiHome className="text-muted mr-2" />
-            Home url
-            <span className={styles.smallIcon}>
-              <FiExternalLink className="ml-1" />
-            </span>
-          </>
-        </ExternalLink>
-      )}
+      <Links links={props.package.links} homeUrl={props.package.homeUrl} />
 
       <SmallTitle text="Maintainers" />
       {isUndefined(props.package.maintainers) ||

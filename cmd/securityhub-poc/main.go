@@ -133,10 +133,26 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, path string) error {
 	}
 	switch e.Kind {
 	case "FalcoRules":
+		yamlFile := filepath.Base(path)
+		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/%s", yamlFile)
 		p.Kind = hub.Falco
+		p.Links = []*hub.Link{
+			{
+				Name: "source",
+				URL:  sourceURL,
+			},
+		}
 		p.Data = map[string]interface{}{"rules": e.Rules}
 	case "OpenPolicyAgentPolicies":
+		yamlFile := filepath.Base(path)
+		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/openpolicyagent/%s", yamlFile)
 		p.Kind = hub.OPA
+		p.Links = []*hub.Link{
+			{
+				Name: "source",
+				URL:  sourceURL,
+			},
+		}
 		p.Data = map[string]interface{}{"policies": e.Policies}
 	}
 

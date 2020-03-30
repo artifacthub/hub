@@ -77,7 +77,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
-			r.Route("/{packageName}", func(r chi.Router) {
+			r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})

@@ -31,12 +31,14 @@ interface Props {
   repoName: string;
   packageName: string;
   version?: string;
+  packageKind?: string;
 }
 
 const PackageView = (props: Props) => {
   const history = useHistory();
   const [repoName, setRepoName] = useState(props.repoName);
   const [packageName, setPackageName] = useState(props.packageName);
+  const [packageKind, setPackageKind] = useState(props.packageKind);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null>(null);
   const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
@@ -49,6 +51,7 @@ const PackageView = (props: Props) => {
       setRepoName(props.repoName);
       setPackageName(props.packageName);
       setVersion(props.version);
+      setPackageKind(props.packageKind);
     }
   }, [props, isLoadingPackage]);
 
@@ -56,7 +59,14 @@ const PackageView = (props: Props) => {
     setIsLoadingPackage(true);
     async function fetchPackageDetail() {
       try {
-        setDetail(await API.getPackage(repoName, packageName, version));
+        setDetail(
+          await API.getPackage({
+            repoName: repoName,
+            packageName: packageName,
+            version: version,
+            packageKind: packageKind,
+          })
+        );
         setIsLoadingPackage(false);
       } catch {
         setDetail(null);
@@ -65,7 +75,7 @@ const PackageView = (props: Props) => {
     }
     fetchPackageDetail();
     window.scrollTo(0, 0); // Scroll to top when a new version is loaded
-  }, [repoName, packageName, version, setIsLoadingPackage]);
+  }, [repoName, packageName, version, packageKind, setIsLoadingPackage]);
 
   useEffect(() => {
     return () => {

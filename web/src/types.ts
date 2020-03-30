@@ -17,6 +17,11 @@ export interface Maintainer {
   email: string;
 }
 
+export interface PackageLink {
+  name: string;
+  url: string;
+}
+
 export interface Package {
   packageId: string;
   kind: PackageKind;
@@ -37,6 +42,7 @@ export interface Package {
   deprecated: boolean | null;
   organizationName?: string | null;
   organizationDisplayName?: string | null;
+  links?: PackageLink[];
 }
 
 export interface PackageData {

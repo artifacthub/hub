@@ -121,18 +121,9 @@ describe('Details', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('9');
       const { queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
-      const homeUrl = queryByText('Home url');
+      const homeUrl = queryByText('Home');
       expect(homeUrl).toBeInTheDocument();
       expect(homeUrl).toHaveAttribute('href', mockPackage.homeUrl);
-    });
-
-    it('renders placeholder when no home url', () => {
-      const mockPackage = getMockPackage('10');
-      const { queryByTestId } = render(<Details package={mockPackage} searchUrlReferer={null} />);
-
-      const homeUrl = queryByTestId('homeUrl');
-      expect(homeUrl).toBeInTheDocument();
-      expect(homeUrl?.textContent).toBe('-');
     });
   });
 
