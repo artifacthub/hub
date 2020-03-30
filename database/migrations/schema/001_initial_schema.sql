@@ -101,7 +101,12 @@ create table if not exists package (
         generate_package_tsdoc(name, display_name, description, keywords)
     ) stored,
     package_kind_id integer not null references package_kind on delete restrict,
+    user_id uuid references "user" on delete restrict,
+    organization_id uuid references organization on delete restrict,
     chart_repository_id uuid references chart_repository on delete cascade,
+    check (user_id is null or organization_id is null),
+    check (user_id is null or chart_repository_id is null),
+    check (organization_id is null or chart_repository_id is null),
     check (package_kind_id <> 0 or chart_repository_id is not null),
     unique (package_kind_id, chart_repository_id, name)
 );
@@ -112,6 +117,8 @@ create index package_package_kind_id_idx on package (package_kind_id);
 create index package_chart_repository_id_idx on package (chart_repository_id);
 create index package_created_at_idx on package (created_at);
 create index package_updated_at_idx on package (updated_at);
+create index package_user_id_idx on package (user_id);
+create index package_organization_id_idx on package (organization_id);
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,

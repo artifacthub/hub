@@ -3,6 +3,7 @@ begin;
 select plan(18);
 
 -- Declare some variables
+\set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
@@ -31,7 +32,9 @@ select is(
     'Text: package1 | No packages in db yet | No packages or facets expected'
 );
 
--- Seed some packages
+-- Seed some data
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
@@ -152,7 +155,8 @@ insert into package (
     logo_image_id,
     keywords,
     latest_version,
-    package_kind_id
+    package_kind_id,
+    organization_id
 ) values (
     :'package3ID',
     'package3',
@@ -161,7 +165,8 @@ insert into package (
     :'image3ID',
     '{"kw3"}',
     '1.0.0',
-    1
+    1,
+    :'org1ID'
 );
 insert into snapshot (
     package_id,
@@ -194,6 +199,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -209,6 +216,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -224,6 +233,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 3",
                 "deprecated": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": null
             }],
             "facets": [{
@@ -239,7 +250,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -279,6 +290,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -294,6 +307,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -308,7 +323,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -347,6 +362,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -361,7 +378,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -416,6 +433,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -451,6 +470,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -489,6 +510,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -503,7 +526,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -546,7 +569,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -584,7 +607,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -621,7 +644,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -679,6 +702,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -694,6 +719,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -729,6 +756,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
@@ -784,6 +813,8 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -839,7 +870,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Repository",
+                "title": "Chart Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",

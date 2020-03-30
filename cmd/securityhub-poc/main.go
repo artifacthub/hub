@@ -21,6 +21,7 @@ import (
 )
 
 var path = flag.String("path", ".", "Path containing SecurityHub yaml files to process")
+var orgID = flag.String("org-id", "", "ID of the organization that will own the packages added")
 
 func main() {
 	flag.Parse()
@@ -61,7 +62,7 @@ func main() {
 		if !strings.HasSuffix(info.Name(), "yaml") {
 			return nil
 		}
-		return r.registerPackage(path)
+		return r.registerPackage(*orgID, path)
 	})
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error processing SecurityHub yaml files")
@@ -94,7 +95,7 @@ type SecurityHubRegistrar struct {
 	imageStore img.Store
 }
 
-func (r *SecurityHubRegistrar) registerPackage(path string) error {
+func (r *SecurityHubRegistrar) registerPackage(orgID, path string) error {
 	// Parse SecurityHub entry in yaml file
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -121,13 +122,14 @@ func (r *SecurityHubRegistrar) registerPackage(path string) error {
 
 	// Build package to register
 	p := &hub.Package{
-		Name:        e.Name,
-		Description: e.ShortDescription,
-		LogoURL:     logoURL,
-		LogoImageID: logoImageID,
-		Keywords:    e.Keywords,
-		Version:     e.Version,
-		Readme:      e.Description,
+		Name:           e.Name,
+		Description:    e.ShortDescription,
+		LogoURL:        logoURL,
+		LogoImageID:    logoImageID,
+		Keywords:       e.Keywords,
+		Version:        e.Version,
+		Readme:         e.Description,
+		OrganizationID: orgID,
 	}
 	switch e.Kind {
 	case "FalcoRules":

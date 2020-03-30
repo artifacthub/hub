@@ -24,6 +24,7 @@ begin
         deprecated,
         latest_version,
         package_kind_id,
+        organization_id,
         chart_repository_id
     ) values (
         p_pkg->>'name',
@@ -36,6 +37,7 @@ begin
         (p_pkg->>'deprecated')::boolean,
         p_pkg->>'version',
         (p_pkg->>'kind')::int,
+        nullif(p_pkg->>'organization_id', '')::uuid,
         nullif(v_chart_repository_id, '')::uuid
     )
     on conflict (package_kind_id, chart_repository_id, name) do update

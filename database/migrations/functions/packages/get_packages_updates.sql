@@ -13,6 +13,8 @@ returns setof json as $$
                 'logo_image_id', logo_image_id,
                 'version', version,
                 'app_version', app_version,
+                'organization_name', organization_name,
+                'organization_display_name', organization_display_name,
                 'chart_repository', (select nullif(
                     jsonb_build_object(
                         'chart_repository_id', chart_repository_id,
@@ -32,15 +34,18 @@ returns setof json as $$
                     p.logo_image_id,
                     s.version,
                     s.app_version,
+                    o.name as organization_name,
+                    o.display_name as organization_display_name,
                     r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
+                left join organization o using (organization_id)
                 left join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)
-                order by created_at desc limit 5
+                order by p.created_at desc limit 5
             ) as lpa
         ),
         'packages_recently_updated', (
@@ -53,6 +58,8 @@ returns setof json as $$
                 'logo_image_id', logo_image_id,
                 'version', version,
                 'app_version', app_version,
+                'organization_name', organization_name,
+                'organization_display_name', organization_display_name,
                 'chart_repository', (select nullif(
                     jsonb_build_object(
                         'chart_repository_id', chart_repository_id,
@@ -72,11 +79,14 @@ returns setof json as $$
                     p.logo_image_id,
                     s.version,
                     s.app_version,
+                    o.name as organization_name,
+                    o.display_name as organization_display_name,
                     r.chart_repository_id,
                     r.name as chart_repository_name,
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
+                left join organization o using (organization_id)
                 left join chart_repository r using (chart_repository_id)
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)

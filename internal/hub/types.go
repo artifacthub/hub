@@ -80,6 +80,8 @@ type Package struct {
 	Digest            string                 `json:"digest"`
 	Data              map[string]interface{} `json:"data"`
 	Maintainers       []*Maintainer          `json:"maintainers"`
+	UserID            string                 `json:"user_id"`
+	OrganizationID    string                 `json:"organization_id"`
 	ChartRepository   *ChartRepository       `json:"chart_repository"`
 }
 

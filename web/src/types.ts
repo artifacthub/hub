@@ -35,6 +35,8 @@ export interface Package {
   keywords?: string[];
   maintainers?: Maintainer[];
   deprecated: boolean | null;
+  organizationName?: string | null;
+  organizationDisplayName?: string | null;
 }
 
 export interface PackageData {
