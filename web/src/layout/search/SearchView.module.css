@@ -10,6 +10,18 @@
   width: 32px;
 }
 
+.filtersBadge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #dc3545;
+  border: 2px solid var(--color-black-5);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
 @media (hover: hover) {
   .btnMobileFilters:hover {
     background-color: var(--color-black-15) !important;

@@ -1,4 +1,6 @@
+import classnames from 'classnames';
 import every from 'lodash/every';
+import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -202,6 +204,8 @@ const SearchView = (props: Props) => {
   const { packages, facets } = searchResults.data;
   const { total, offset } = searchResults.metadata;
 
+  const activeFilters = props.deprecated || !isEmpty(props.filters);
+
   return (
     <>
       <SubNavbar>
@@ -213,7 +217,9 @@ const SearchView = (props: Props) => {
                 <Sidebar
                   className="d-inline-block d-md-none mr-2"
                   wrapperClassName="px-4"
-                  buttonType={`btn-sm rounded-circle ${styles.btnMobileFilters}`}
+                  buttonType={classnames('btn-sm rounded-circle position-relative', styles.btnMobileFilters, {
+                    [styles.filtersBadge]: activeFilters,
+                  })}
                   buttonIcon={<FaFilter />}
                   closeButton={
                     <>

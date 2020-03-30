@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
@@ -19,11 +20,14 @@ interface Props {
   open?: boolean;
   disabledClose?: boolean;
   onClose?: () => void;
+  error?: string | null;
+  cleanError?: () => void;
 }
 
 const Modal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(props.open || false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const errorWrapper = useRef<HTMLDivElement>(null);
   useOutsideClick([ref], openStatus, () => {
     closeModal();
   });
@@ -43,6 +47,12 @@ const Modal = (props: Props) => {
       setOpenStatus(props.open);
     }
   }, [props.open]);
+
+  useEffect(() => {
+    if (!isUndefined(props.error) && !isNull(props.error)) {
+      errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [props.error]);
 
   return (
     <div className={props.className}>
@@ -87,7 +97,27 @@ const Modal = (props: Props) => {
               </button>
             </div>
 
-            <div className="modal-body p-4 h-100 d-flex flex-column">{openStatus && <>{props.children}</>}</div>
+            <div className="modal-body p-4 h-100 d-flex flex-column">
+              {openStatus && <>{props.children}</>}
+              {!isUndefined(props.error) && !isNull(props.error) && (
+                <div className={`alert alert-danger mt-3 ${styles.errorAlert}`} role="alert" ref={errorWrapper}>
+                  <div className="d-flex flex-row align-items-center justify-content-between">
+                    <div>{props.error}</div>
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={() => {
+                        if (!isUndefined(props.cleanError)) {
+                          props.cleanError();
+                        }
+                      }}
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             <div className="modal-footer p-3">
               {isUndefined(props.closeButton) ? (

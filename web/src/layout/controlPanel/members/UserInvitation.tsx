@@ -56,6 +56,8 @@ const UserInvitation = (props: Props) => {
       disabledClose={isAccepting}
       modalClassName={styles.modal}
       open={!isUndefined(orgToConfirm)}
+      error={apiError}
+      cleanError={() => setApiError(null)}
     >
       <div
         className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}

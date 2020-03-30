@@ -112,6 +112,8 @@ const MemberModal = (props: Props) => {
         </button>
       }
       onClose={onCloseModal}
+      error={apiError}
+      cleanError={cleanApiError}
     >
       <div className="w-100">
         <form
@@ -138,12 +140,6 @@ const MemberModal = (props: Props) => {
             onKeyDown={handleOnReturnKeyDown}
             required
           />
-
-          {!isNull(apiError) && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {apiError}
-            </div>
-          )}
         </form>
       </div>
     </Modal>

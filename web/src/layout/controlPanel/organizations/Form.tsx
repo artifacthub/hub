@@ -18,6 +18,7 @@ interface Props {
   onSuccess?: () => void;
   onAuthError: () => void;
   setIsSending: (status: boolean) => void;
+  setApiError?: React.Dispatch<React.SetStateAction<null>>;
 }
 
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
@@ -29,6 +30,9 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
   const cleanApiError = () => {
     if (!isNull(apiError)) {
       setApiError(null);
+      if (!isUndefined(props.setApiError)) {
+        props.setApiError(null);
+      }
     }
   };
 
@@ -49,7 +53,11 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
     } catch (err) {
       props.setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred adding the organization, please try again later');
+        const error = 'An error occurred adding the organization, please try again later';
+        setApiError(error);
+        if (!isUndefined(setApiError)) {
+          setApiError(error);
+        }
       } else {
         props.onAuthError();
       }
@@ -156,7 +164,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         />
       </div>
 
-      {!isNull(apiError) && (
+      {!isNull(apiError) && isUndefined(props.setApiError) && (
         <div className="alert alert-danger mt-3" role="alert">
           {apiError}
         </div>
