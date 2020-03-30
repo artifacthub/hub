@@ -87,6 +87,8 @@ select columns_are('package', array[
     'updated_at',
     'tsdoc',
     'package_kind_id',
+    'user_id',
+    'organization_id',
     'chart_repository_id'
 ]);
 select columns_are('package__maintainer', array[
@@ -153,7 +155,9 @@ select indexes_are('package', array[
     'package_package_kind_id_idx',
     'package_tsdoc_idx',
     'package_created_at_idx',
-    'package_updated_at_idx'
+    'package_updated_at_idx',
+    'package_user_id_idx',
+    'package_organization_id_idx'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'

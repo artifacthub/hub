@@ -56,6 +56,8 @@ begin
             join package__maintainer pm using (maintainer_id)
             where pm.package_id = v_package_id
         ),
+        'organization_name', o.name,
+        'organization_display_name', o.display_name,
         'chart_repository', (select nullif(
             jsonb_build_object(
                 'chart_repository_id', r.chart_repository_id,
@@ -68,6 +70,7 @@ begin
     )
     from package p
     join snapshot s using (package_id)
+    left join organization o using (organization_id)
     left join chart_repository r using (chart_repository_id)
     where p.package_id = v_package_id
     and

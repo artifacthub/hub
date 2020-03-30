@@ -27,11 +27,14 @@ begin
             p.deprecated,
             s.version,
             s.app_version,
+            o.name as organization_name,
+            o.display_name as organization_display_name,
             r.name as chart_repository_name,
             r.display_name as chart_repository_display_name
         from package p
         join package_kind pk using (package_kind_id)
         join snapshot s using (package_id)
+        left join organization o using (organization_id)
         left join chart_repository r using (chart_repository_id)
         where s.version = p.latest_version
         and
@@ -80,7 +83,9 @@ begin
                                 'display_name', chart_repository_display_name
                             ),
                             '{"name": null, "display_name": null}'::jsonb
-                        ))
+                        )),
+                        'organization_name', organization_name,
+                        'organization_display_name', organization_display_name
                     )), '[]')
                     from (
                         select * from packages_applying_all_filters
@@ -115,7 +120,7 @@ begin
                         ),
                         (
                             select json_build_object(
-                                'title', 'Repository',
+                                'title', 'Chart Repository',
                                 'filter_key', 'repo',
                                 'options', (
                                     select coalesce(json_agg(json_build_object(

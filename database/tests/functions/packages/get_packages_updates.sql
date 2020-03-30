@@ -3,6 +3,7 @@ begin;
 select plan(3);
 
 -- Declare some variables
+\set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
 \set repo3ID '00000000-0000-0000-0000-000000000003'
 \set package1ID '00000000-0000-0000-0000-000000000001'
@@ -22,7 +23,9 @@ select is(
     'No packages in db yet, no updates expected'
 );
 
--- Seed some packages
+-- Seed some data
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
@@ -39,7 +42,8 @@ insert into package (
     latest_version,
     created_at,
     updated_at,
-    package_kind_id
+    package_kind_id,
+    organization_id
 ) values (
     :'package1ID',
     'package1',
@@ -52,7 +56,8 @@ insert into package (
     '1.0.0',
     current_timestamp - '1s'::interval,
     current_timestamp - '1s'::interval,
-    1
+    1,
+    :'org1ID'
 );
 insert into snapshot (
     package_id,
@@ -165,6 +170,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "version": "1.0.0",
             "app_version": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
@@ -175,6 +182,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "version": "1.0.0",
             "app_version": "12.1.0",
+            "organization_name": null,
+            "organization_display_name": null,
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -190,6 +199,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "version": "1.0.0",
             "app_version": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
@@ -200,6 +211,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "version": "1.0.0",
             "app_version": "12.1.0",
+            "organization_name": null,
+            "organization_display_name": null,
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -230,6 +243,8 @@ select register_package('
             "email": "email1"
         }
     ],
+    "organization_name": null,
+    "organization_display_name": null,
     "chart_repository": {
         "chart_repository_id": "00000000-0000-0000-0000-000000000002"
     }
@@ -249,6 +264,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "version": "1.0.0",
             "app_version": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": null
         }, {
             "package_id": "00000000-0000-0000-0000-000000000002",
@@ -259,6 +276,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "version": "2.0.0",
             "app_version": "13.0.0",
+            "organization_name": null,
+            "organization_display_name": null,
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -274,6 +293,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
             "version": "2.0.0",
             "app_version": "13.0.0",
+            "organization_name": null,
+            "organization_display_name": null,
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -288,6 +309,8 @@ select is(
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
             "version": "1.0.0",
             "app_version": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": null
         }]
     }'::jsonb,

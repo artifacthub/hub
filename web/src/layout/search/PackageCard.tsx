@@ -1,4 +1,5 @@
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -103,10 +104,24 @@ const PackageCard = (props: Props) => {
                         case PackageKind.Falco:
                         case PackageKind.Opa:
                           return (
-                            <div className="text-truncate">
-                              <span className="text-muted text-uppercase mr-1">Version: </span>
-                              {props.package.version || '-'}
-                            </div>
+                            <>
+                              {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                                <div className="mr-2 text-truncate">
+                                  <span className="text-muted text-uppercase mr-1">Organization: </span>
+                                  {!isUndefined(props.package.organizationDisplayName) &&
+                                  props.package.organizationDisplayName ? (
+                                    <>{props.package.organizationDisplayName}</>
+                                  ) : (
+                                    <>{props.package.organizationName}</>
+                                  )}
+                                </div>
+                              )}
+
+                              <div className="text-truncate">
+                                <span className="text-muted text-uppercase mr-1">Version: </span>
+                                {props.package.version || '-'}
+                              </div>
+                            </>
                           );
 
                         default:

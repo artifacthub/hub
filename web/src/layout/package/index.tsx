@@ -184,7 +184,6 @@ const PackageView = (props: Props) => {
                         return (
                           <Link
                             data-testid="link"
-                            className={`text-muted text-uppercase`}
                             to={{
                               pathname: '/packages/search',
                               search: prepareQueryString({
@@ -196,11 +195,29 @@ const PackageView = (props: Props) => {
                               }),
                             }}
                           >
-                            <u>
-                              <small>{detail.chartRepository!.displayName || detail.chartRepository!.name}</small>
+                            <small className="mr-1 text-muted text-uppercase text-decoration-none">Repository: </small>
+                            <u className="text-dark">
+                              {detail.chartRepository!.displayName || detail.chartRepository!.name}
                             </u>
                           </Link>
                         );
+                      case PackageKind.Falco:
+                      case PackageKind.Opa:
+                        return (
+                          <div>
+                            {!isUndefined(detail.organizationName) && detail.organizationName && (
+                              <>
+                                <small className="mr-1 text-uppercase text-muted">Organization: </small>
+                                {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
+                                  <>{detail.organizationDisplayName}</>
+                                ) : (
+                                  <>{detail.organizationName}</>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        );
+
                       default:
                         return null;
                     }

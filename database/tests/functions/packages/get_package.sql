@@ -3,6 +3,7 @@ begin;
 select plan(6);
 
 -- Declare some variables
+\set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
@@ -41,7 +42,9 @@ select is_empty(
     'If package requested does not exist no rows are returned'
 );
 
--- Seed some packages
+-- Seed some data
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into maintainer (maintainer_id, name, email)
@@ -119,7 +122,8 @@ insert into package (
     logo_image_id,
     keywords,
     latest_version,
-    package_kind_id
+    package_kind_id,
+    organization_id
 ) values (
     :'package2ID',
     'package2',
@@ -128,7 +132,8 @@ insert into package (
     :'image2ID',
     '{"kw1", "kw2"}',
     '1.0.0',
-    1
+    1,
+    :'org1ID'
 );
 insert into snapshot (
     package_id,
@@ -181,6 +186,8 @@ select is(
                 "email": "email2"
             }
         ],
+        "organization_name": null,
+        "organization_display_name": null,
         "chart_repository": {
             "chart_repository_id": "00000000-0000-0000-0000-000000000001",
             "name": "repo1",
@@ -229,6 +236,8 @@ select is(
                 "email": "email2"
             }
         ],
+        "organization_name": null,
+        "organization_display_name": null,
         "chart_repository": {
             "chart_repository_id": "00000000-0000-0000-0000-000000000001",
             "name": "repo1",
@@ -263,6 +272,8 @@ select is(
         "app_version": null,
         "available_versions": ["1.0.0"],
         "maintainers": null,
+        "organization_name": "org1",
+        "organization_display_name": "Organization 1",
         "chart_repository": null
     }'::jsonb,
     'Last package2 version is returned as a json object'
