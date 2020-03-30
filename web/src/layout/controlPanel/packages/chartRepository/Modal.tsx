@@ -125,6 +125,8 @@ const ChartRepositoryModal = (props: Props) => {
         </button>
       }
       onClose={onCloseModal}
+      error={apiError}
+      cleanError={cleanApiError}
     >
       <div className="w-100">
         <form

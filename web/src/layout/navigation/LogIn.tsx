@@ -132,6 +132,8 @@ const LogIn = (props: Props) => {
       }
       open={props.openLogIn}
       onClose={onCloseModal}
+      error={apiError}
+      cleanError={cleanApiError}
     >
       <div className="d-flex align-items-center flex-grow-1">
         <form
@@ -167,12 +169,6 @@ const LogIn = (props: Props) => {
             autoComplete="current-password"
             required
           />
-
-          {!isNull(apiError) && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {apiError}
-            </div>
-          )}
         </form>
       </div>
     </Modal>

@@ -131,6 +131,8 @@ const SignUp = (props: Props) => {
       closeButton={!success ? closeButton : undefined}
       open={props.openSignUp}
       onClose={onCloseModal}
+      error={apiError}
+      cleanError={cleanApiError}
     >
       {success ? (
         <div className="d-flex h-100 w-100 align-items-center justify-content-center">
@@ -224,12 +226,6 @@ const SignUp = (props: Props) => {
               required
             />
           </div>
-
-          {!isNull(apiError) && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {apiError}
-            </div>
-          )}
         </form>
       )}
     </Modal>

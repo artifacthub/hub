@@ -17,6 +17,7 @@ interface Props {
 const OrganizationModal = (props: Props) => {
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   const onCloseModal = () => {
     props.onClose();
@@ -52,6 +53,8 @@ const OrganizationModal = (props: Props) => {
         </button>
       }
       onClose={onCloseModal}
+      error={apiError}
+      cleanError={() => setApiError(null)}
     >
       <div className="w-100">
         <OrganizationForm
@@ -65,6 +68,7 @@ const OrganizationModal = (props: Props) => {
           }}
           setIsSending={setIsSending}
           onAuthError={props.onAuthError}
+          setApiError={setApiError}
         />
       </div>
     </Modal>

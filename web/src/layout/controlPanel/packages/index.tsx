@@ -75,7 +75,7 @@ const PackagesSection = (props: Props) => {
         </div>
       </nav>
 
-      <div className={`flex-grow-1 ${styles.packagesList}`}>
+      <div className={`flex-grow-1 position-relative ${styles.packagesList}`}>
         {(() => {
           switch (activePackageKind) {
             case PackageKind.Chart:

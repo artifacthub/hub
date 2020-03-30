@@ -75,3 +75,7 @@
 .md a {
   word-break: break-all;
 }
+
+.md img {
+  max-width: 100%;
+}
