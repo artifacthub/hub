@@ -1,4 +1,5 @@
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
@@ -27,7 +28,7 @@ const ChartRepository = (props: Props) => {
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
   });
-  const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | null>(null);
+  const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | undefined>(undefined);
   const selectedOrg = isNull(ctx.org) ? undefined : ctx.org.name;
   const [activeOrg, setActiveOrg] = useState(selectedOrg);
 
@@ -96,9 +97,9 @@ const ChartRepository = (props: Props) => {
         />
       )}
 
-      {(isLoading || isNull(chartRepositories)) && <Loading />}
+      {(isLoading || isUndefined(chartRepositories)) && <Loading />}
 
-      {!isNull(chartRepositories) && (
+      {!isUndefined(chartRepositories) && (
         <>
           {chartRepositories.length === 0 ? (
             <NoData>

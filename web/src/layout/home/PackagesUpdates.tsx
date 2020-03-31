@@ -1,4 +1,4 @@
-import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 
 import { API } from '../../api';
@@ -9,7 +9,7 @@ import styles from './PackagesUpdates.module.css';
 
 const PackagesUpdates = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesList | null>(null);
+  const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesList | undefined>(undefined);
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,7 +30,7 @@ const PackagesUpdates = () => {
 
   if (
     !isLoading &&
-    !isNull(packagesUpdates) &&
+    !isUndefined(packagesUpdates) &&
     packagesUpdates.latestPackagesAdded.length === 0 &&
     packagesUpdates.packagesRecentlyUpdated.length === 0
   ) {
@@ -41,7 +41,7 @@ const PackagesUpdates = () => {
     <div className={`position-relative ${styles.wrapper}`}>
       <div className="container mb-5 mt-4">
         <div className="d-flex flex-wrap justify-content-center">
-          {!isNull(packagesUpdates) && !isLoading ? (
+          {!isUndefined(packagesUpdates) && !isLoading ? (
             <>
               {packagesUpdates.latestPackagesAdded.length > 0 && (
                 <div data-testid="latestPackagesList" className="m-sm-4 m-0 mb-4 mw-100">

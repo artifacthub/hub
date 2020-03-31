@@ -5,21 +5,6 @@ exports[`Package index creates snapshot 1`] = `
   <div
     class="position-relative flex-grow-1"
     data-testid="mainPackage"
-  >
-    <div
-      class="container"
-    >
-      <div
-        class="alert alert-primary ml-auto mr-auto my-5 w-75 text-center p-4 p-sm-5 border"
-        data-testid="noData"
-      >
-        <div
-          class="h4"
-        >
-          No data available for this package
-        </div>
-      </div>
-    </div>
-  </div>
+  />
 </DocumentFragment>
 `;

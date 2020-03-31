@@ -40,7 +40,7 @@ const PackageView = (props: Props) => {
   const [packageName, setPackageName] = useState(props.packageName);
   const [packageKind, setPackageKind] = useState(props.packageKind);
   const [version, setVersion] = useState(props.version);
-  const [detail, setDetail] = useState<Package | null>(null);
+  const [detail, setDetail] = useState<Package | null | undefined>(undefined);
   const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
 
@@ -121,7 +121,13 @@ const PackageView = (props: Props) => {
 
   const getFalcoRules = (): string | undefined => {
     let rules: string | undefined;
-    if (!isNull(detail) && !isNull(detail.data) && !isUndefined(detail.data) && !isUndefined(detail.data.rules)) {
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.rules)
+    ) {
       rules = map(detail.data.rules, 'raw').join(' ');
     }
     return rules;
@@ -129,7 +135,13 @@ const PackageView = (props: Props) => {
 
   const getOPAPolicies = (): string | undefined => {
     let policies: string | undefined;
-    if (!isNull(detail) && !isNull(detail.data) && !isUndefined(detail.data) && !isUndefined(detail.data.policies)) {
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.policies)
+    ) {
       policies = map(detail.data.policies, 'raw').join(' ');
     }
     return policies;
@@ -164,180 +176,186 @@ const PackageView = (props: Props) => {
       <div data-testid="mainPackage" className="position-relative flex-grow-1">
         {isLoadingPackage && <Loading />}
 
-        {!isNull(detail) && (
-          <div className={`jumbotron ${styles.jumbotron}`}>
-            <div className="container">
-              <div className="d-flex align-items-center mb-3">
-                <div
-                  className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
-                >
-                  <Image
-                    className={styles.image}
-                    alt={detail.displayName || detail.name}
-                    imageId={detail.logoImageId}
-                  />
-                </div>
-
-                <div className="ml-3">
-                  <div className="d-flex flex-row align-items-center">
-                    <div className="h3 mb-0">{detail.displayName || detail.name}</div>
-                    {!isNull(detail.deprecated) && detail.deprecated && (
-                      <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
-                        Deprecated
-                      </div>
-                    )}
-                  </div>
-
-                  {(() => {
-                    switch (detail.kind) {
-                      case PackageKind.Chart:
-                        return (
-                          <Link
-                            data-testid="link"
-                            to={{
-                              pathname: '/packages/search',
-                              search: prepareQueryString({
-                                pageNumber: 1,
-                                filters: {
-                                  repo: [detail.chartRepository!.name],
-                                },
-                                deprecated: false,
-                              }),
-                            }}
-                          >
-                            <small className="mr-1 text-muted text-uppercase text-decoration-none">Repository: </small>
-                            <u className="text-dark">
-                              {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                            </u>
-                          </Link>
-                        );
-                      case PackageKind.Falco:
-                      case PackageKind.Opa:
-                        return (
-                          <div>
-                            {!isUndefined(detail.organizationName) && detail.organizationName && (
-                              <>
-                                <small className="mr-1 text-uppercase text-muted">Organization: </small>
-                                {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
-                                  <>{detail.organizationDisplayName}</>
-                                ) : (
-                                  <>{detail.organizationName}</>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        );
-
-                      default:
-                        return null;
-                    }
-                  })()}
-                </div>
-              </div>
-
-              <p className="mb-0">{detail.description}</p>
-
-              <div className="d-block d-md-none">
-                <div className="d-inline-block mr-2">
-                  <Modal
-                    buttonType="btn-outline-secondary mt-4"
-                    buttonContent={
-                      <>
-                        <FiPlus className="mr-2" />
-                        <span>Info</span>
-                      </>
-                    }
-                    header={<ModalHeader package={detail} />}
-                    className={styles.wrapper}
-                  >
-                    <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
-                  </Modal>
-                </div>
-
-                <div className="d-inline-block">{InstallationModal(true, 'btn-outline-secondary')}</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="container">
-          {isNull(detail) && !isLoadingPackage ? (
-            <NoData>No data available for this package</NoData>
-          ) : (
-            <div className="row">
-              {!isNull(detail) && (
-                <>
-                  <div className={styles.mainContent}>
-                    {isNull(detail.readme) || isUndefined(detail.readme) ? (
-                      <NoData>No README file available for this package</NoData>
-                    ) : (
-                      <Readme markdownContent={detail.readme} />
-                    )}
-
-                    {(() => {
-                      switch (detail.kind) {
-                        case PackageKind.Falco:
-                          let rules: string | undefined = getFalcoRules();
-                          return (
-                            <>
-                              {!isUndefined(rules) && (
-                                <div className="mb-5">
-                                  <div className="h2 mb-4">Rules</div>
-                                  <SyntaxHighlighter
-                                    language="yaml"
-                                    style={tomorrowNightBright}
-                                    customStyle={{ padding: '1.5rem' }}
-                                  >
-                                    {rules}
-                                  </SyntaxHighlighter>
-                                </div>
-                              )}
-                            </>
-                          );
-
-                        case PackageKind.Opa:
-                          let policies: string | undefined = getOPAPolicies();
-                          return (
-                            <>
-                              {!isUndefined(policies) && (
-                                <div className="mb-5">
-                                  <div className="h2 mb-4">Policies</div>
-                                  <SyntaxHighlighter
-                                    language="rego"
-                                    style={tomorrowNightBright}
-                                    customStyle={{ padding: '1.5rem' }}
-                                  >
-                                    {policies}
-                                  </SyntaxHighlighter>
-                                </div>
-                              )}
-                            </>
-                          );
-
-                        default:
-                          return null;
-                      }
-                    })()}
-                  </div>
-                </>
-              )}
-
-              <div className="col col-auto pl-5 pb-4 d-none d-md-block">
-                {!isNull(detail) && (
-                  <>
-                    {InstallationModal(false)}
-
-                    <div className={`card shadow-sm position-relative ${styles.info}`}>
-                      <div className="card-body">
-                        <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
-                      </div>
+        {!isUndefined(detail) && (
+          <>
+            {!isNull(detail) && (
+              <div className={`jumbotron ${styles.jumbotron}`}>
+                <div className="container">
+                  <div className="d-flex align-items-center mb-3">
+                    <div
+                      className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
+                    >
+                      <Image
+                        className={styles.image}
+                        alt={detail.displayName || detail.name}
+                        imageId={detail.logoImageId}
+                      />
                     </div>
-                  </>
-                )}
+
+                    <div className="ml-3">
+                      <div className="d-flex flex-row align-items-center">
+                        <div className="h3 mb-0">{detail.displayName || detail.name}</div>
+                        {!isNull(detail.deprecated) && detail.deprecated && (
+                          <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
+                            Deprecated
+                          </div>
+                        )}
+                      </div>
+
+                      {(() => {
+                        switch (detail.kind) {
+                          case PackageKind.Chart:
+                            return (
+                              <Link
+                                data-testid="link"
+                                to={{
+                                  pathname: '/packages/search',
+                                  search: prepareQueryString({
+                                    pageNumber: 1,
+                                    filters: {
+                                      repo: [detail.chartRepository!.name],
+                                    },
+                                    deprecated: false,
+                                  }),
+                                }}
+                              >
+                                <small className="mr-1 text-muted text-uppercase text-decoration-none">
+                                  Repository:{' '}
+                                </small>
+                                <u className="text-dark">
+                                  {detail.chartRepository!.displayName || detail.chartRepository!.name}
+                                </u>
+                              </Link>
+                            );
+                          case PackageKind.Falco:
+                          case PackageKind.Opa:
+                            return (
+                              <div>
+                                {!isUndefined(detail.organizationName) && detail.organizationName && (
+                                  <>
+                                    <small className="mr-1 text-uppercase text-muted">Organization: </small>
+                                    {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
+                                      <>{detail.organizationDisplayName}</>
+                                    ) : (
+                                      <>{detail.organizationName}</>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            );
+
+                          default:
+                            return null;
+                        }
+                      })()}
+                    </div>
+                  </div>
+
+                  <p className="mb-0">{detail.description}</p>
+
+                  <div className="d-block d-md-none">
+                    <div className="d-inline-block mr-2">
+                      <Modal
+                        buttonType="btn-outline-secondary mt-4"
+                        buttonContent={
+                          <>
+                            <FiPlus className="mr-2" />
+                            <span>Info</span>
+                          </>
+                        }
+                        header={<ModalHeader package={detail} />}
+                        className={styles.wrapper}
+                      >
+                        <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
+                      </Modal>
+                    </div>
+
+                    <div className="d-inline-block">{InstallationModal(true, 'btn-outline-secondary')}</div>
+                  </div>
+                </div>
               </div>
+            )}
+
+            <div className="container">
+              {isNull(detail) && !isLoadingPackage ? (
+                <NoData>No data available for this package</NoData>
+              ) : (
+                <div className="row">
+                  {!isNull(detail) && (
+                    <>
+                      <div className={styles.mainContent}>
+                        {isNull(detail.readme) || isUndefined(detail.readme) ? (
+                          <NoData>No README file available for this package</NoData>
+                        ) : (
+                          <Readme markdownContent={detail.readme} />
+                        )}
+
+                        {(() => {
+                          switch (detail.kind) {
+                            case PackageKind.Falco:
+                              let rules: string | undefined = getFalcoRules();
+                              return (
+                                <>
+                                  {!isUndefined(rules) && (
+                                    <div className="mb-5">
+                                      <div className="h2 mb-4">Rules</div>
+                                      <SyntaxHighlighter
+                                        language="yaml"
+                                        style={tomorrowNightBright}
+                                        customStyle={{ padding: '1.5rem' }}
+                                      >
+                                        {rules}
+                                      </SyntaxHighlighter>
+                                    </div>
+                                  )}
+                                </>
+                              );
+
+                            case PackageKind.Opa:
+                              let policies: string | undefined = getOPAPolicies();
+                              return (
+                                <>
+                                  {!isUndefined(policies) && (
+                                    <div className="mb-5">
+                                      <div className="h2 mb-4">Policies</div>
+                                      <SyntaxHighlighter
+                                        language="rego"
+                                        style={tomorrowNightBright}
+                                        customStyle={{ padding: '1.5rem' }}
+                                      >
+                                        {policies}
+                                      </SyntaxHighlighter>
+                                    </div>
+                                  )}
+                                </>
+                              );
+
+                            default:
+                              return null;
+                          }
+                        })()}
+                      </div>
+                    </>
+                  )}
+
+                  <div className="col col-auto pl-5 pb-4 d-none d-md-block">
+                    {!isNull(detail) && (
+                      <>
+                        {InstallationModal(false)}
+
+                        <div className={`card shadow-sm position-relative ${styles.info}`}>
+                          <div className="card-body">
+                            <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </>
   );

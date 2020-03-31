@@ -1,4 +1,4 @@
-import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
@@ -17,7 +17,7 @@ interface Props {
 const MembersSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [isGettingMembers, setIsGettingMembers] = useState(false);
-  const [members, setMembers] = useState<Member[] | null>(null);
+  const [members, setMembers] = useState<Member[] | undefined>(undefined);
   const [modalMemberOpen, setModalMemberOpen] = useState(false);
   const [confirmedMembersNumber, setConfirmedMembersNumber] = useState<number>(0);
   const organization = ctx.org!;
@@ -67,10 +67,10 @@ const MembersSection = (props: Props) => {
           </div>
         </div>
 
-        {(isGettingMembers || isNull(members)) && <Loading />}
+        {(isGettingMembers || isUndefined(members)) && <Loading />}
 
         <div className="mt-4">
-          {!isNull(members) && (
+          {!isUndefined(members) && (
             <>
               {members.length === 0 ? (
                 <NoData>
