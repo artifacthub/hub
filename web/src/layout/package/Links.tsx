@@ -21,7 +21,7 @@ interface IconTypeList {
 }
 
 const ICONS: IconTypeList = {
-  home: TiHome,
+  homepage: TiHome,
   source: FaGithub,
   default: FaLink,
 };
@@ -30,7 +30,7 @@ const Links = (props: Props) => {
   const linksList = props.links || [];
   if (!isUndefined(props.homeUrl) && !isNull(props.homeUrl)) {
     linksList.push({
-      name: 'Home',
+      name: 'Homepage',
       url: props.homeUrl,
     });
   }

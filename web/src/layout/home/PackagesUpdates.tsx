@@ -39,7 +39,7 @@ const PackagesUpdates = () => {
 
   return (
     <div className={`position-relative ${styles.wrapper}`}>
-      <div className="container mb-5 mt-4">
+      <div className="container mb-5 mt-5">
         <div className="d-flex flex-wrap justify-content-center">
           {!isUndefined(packagesUpdates) && !isLoading ? (
             <>
