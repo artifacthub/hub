@@ -20,7 +20,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var path = flag.String("path", ".", "Path containing SecurityHub yaml files to process")
+var basePath = flag.String("base-path", ".", "Path containing SecurityHub yaml files to process")
 var orgID = flag.String("org-id", "", "ID of the organization that will own the packages added")
 
 func main() {
@@ -52,7 +52,7 @@ func main() {
 	}
 
 	// Walk the path provided looking for SecurityHub yaml files to process
-	err = filepath.Walk(*path, func(path string, info os.FileInfo, err error) error {
+	err = filepath.Walk(*basePath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -62,7 +62,7 @@ func main() {
 		if !strings.HasSuffix(info.Name(), "yaml") {
 			return nil
 		}
-		return r.registerPackage(*orgID, path)
+		return r.registerPackage(*orgID, *basePath, path)
 	})
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error processing SecurityHub yaml files")
@@ -95,9 +95,9 @@ type SecurityHubRegistrar struct {
 	imageStore img.Store
 }
 
-func (r *SecurityHubRegistrar) registerPackage(orgID, path string) error {
+func (r *SecurityHubRegistrar) registerPackage(orgID, basePath, pkgPath string) error {
 	// Parse SecurityHub entry in yaml file
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(pkgPath)
 	if err != nil {
 		return err
 	}
@@ -133,8 +133,8 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, path string) error {
 	}
 	switch e.Kind {
 	case "FalcoRules":
-		yamlFile := filepath.Base(path)
-		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/%s", yamlFile)
+		yamlFile := strings.TrimPrefix(pkgPath, basePath)
+		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources%s", yamlFile)
 		p.Kind = hub.Falco
 		p.Links = []*hub.Link{
 			{
@@ -144,8 +144,8 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, path string) error {
 		}
 		p.Data = map[string]interface{}{"rules": e.Rules}
 	case "OpenPolicyAgentPolicies":
-		yamlFile := filepath.Base(path)
-		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/openpolicyagent/%s", yamlFile)
+		yamlFile := strings.TrimPrefix(pkgPath, basePath)
+		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources%s", yamlFile)
 		p.Kind = hub.OPA
 		p.Links = []*hub.Link{
 			{
