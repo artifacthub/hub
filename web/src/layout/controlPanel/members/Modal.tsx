@@ -138,6 +138,11 @@ const MemberModal = (props: Props) => {
             validateOnBlur
             autoComplete="off"
             onKeyDown={handleOnReturnKeyDown}
+            additionalInfo={
+              <small className="text-muted text-break mt-1">
+                <p>The user must be previously registered</p>
+              </small>
+            }
             required
           />
         </form>
