@@ -10,6 +10,13 @@ The project, accessible at https://artifacthub.io, is currently in development i
 
 Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit http://slack.cncf.io/.
 
+## Community
+
+The Artifact Hub is an open source project. Aside from contributing code and feature suggestions you can also engage via:
+
+* Attending a meeting. Meetings are on the 2nd and 4th Wednesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
+* Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
+
 ## Process
 
 We are in conversation with the CNCF [TOC](https://github.com/cncf/toc) on whether it makes sense for Artifact Hub to become a sandbox project or whether a working group or similar mechanism might be better.
