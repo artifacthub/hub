@@ -1,9 +1,12 @@
 .iconWrapper {
   width: 2rem;
   height: 2rem;
-  background-color: var(--white);
+  background-color: var(--color-1-700);
+  border: 2px solid var(--white);
+  padding: 2px;
+  overflow: hidden;
   line-height: 1;
-  font-size: 1.75rem !important;
+  font-size: 1.25rem !important;
 }
 
 .dropdown {

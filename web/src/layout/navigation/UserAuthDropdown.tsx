@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React, { useContext, useRef, useState } from 'react';
-import { FaCaretDown, FaUserCircle } from 'react-icons/fa';
+import { FaCaretDown, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -21,11 +21,11 @@ const UserAuthDropdown = (props: Props) => {
   return (
     <div className="btn-group">
       <button className="btn p-0 position-relative" type="button" onClick={() => setOpenStatus(true)}>
-        <div className="d-flex flex-row align-items-center">
+        <div className="d-flex flex-row align-items-center justify-content-center">
           <div
-            className={`rounded-circle d-flex align-items-center justify-content-center text-secondary ${styles.iconWrapper}`}
+            className={`rounded-circle d-flex align-items-center justify-content-center text-light ${styles.iconWrapper}`}
           >
-            <FaUserCircle />
+            <FaUser className="rounded-circle" />
           </div>
           <small className="ml-1 text-light">
             <FaCaretDown />

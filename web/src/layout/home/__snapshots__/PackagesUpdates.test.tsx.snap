@@ -6,7 +6,7 @@ exports[`Package index creates snapshot 1`] = `
     class="position-relative wrapper"
   >
     <div
-      class="container mb-5 mt-4"
+      class="container mb-5 mt-5"
     >
       <div
         class="d-flex flex-wrap justify-content-center"

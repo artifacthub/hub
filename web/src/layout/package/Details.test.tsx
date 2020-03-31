@@ -121,7 +121,7 @@ describe('Details', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('9');
       const { queryByText } = render(<Details package={mockPackage} searchUrlReferer={null} />);
-      const homeUrl = queryByText('Home');
+      const homeUrl = queryByText('Homepage');
       expect(homeUrl).toBeInTheDocument();
       expect(homeUrl).toHaveAttribute('href', mockPackage.homeUrl);
     });

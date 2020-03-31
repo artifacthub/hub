@@ -206,26 +206,26 @@ const PackageView = (props: Props) => {
                         switch (detail.kind) {
                           case PackageKind.Chart:
                             return (
-                              <Link
-                                data-testid="link"
-                                to={{
-                                  pathname: '/packages/search',
-                                  search: prepareQueryString({
-                                    pageNumber: 1,
-                                    filters: {
-                                      repo: [detail.chartRepository!.name],
-                                    },
-                                    deprecated: false,
-                                  }),
-                                }}
-                              >
-                                <small className="mr-1 text-muted text-uppercase text-decoration-none">
-                                  Repository:{' '}
-                                </small>
-                                <u className="text-dark">
-                                  {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                </u>
-                              </Link>
+                              <>
+                                <small className="mr-1 text-muted text-uppercase">Repository: </small>
+                                <Link
+                                  data-testid="link"
+                                  to={{
+                                    pathname: '/packages/search',
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        repo: [detail.chartRepository!.name],
+                                      },
+                                      deprecated: false,
+                                    }),
+                                  }}
+                                >
+                                  <u className="text-dark">
+                                    {detail.chartRepository!.displayName || detail.chartRepository!.name}
+                                  </u>
+                                </Link>
+                              </>
                             );
                           case PackageKind.Falco:
                           case PackageKind.Opa:
