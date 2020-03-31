@@ -1,4 +1,4 @@
-import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
@@ -23,7 +23,7 @@ const OrganizationsSection = (props: Props) => {
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
   });
-  const [organizations, setOrganizations] = useState<Organization[] | null>(null);
+  const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
 
   async function fetchOrganizations() {
     try {
@@ -65,9 +65,9 @@ const OrganizationsSection = (props: Props) => {
             </div>
           </div>
 
-          {(isLoading || isNull(organizations)) && <Loading />}
+          {(isLoading || isUndefined(organizations)) && <Loading />}
 
-          {!isNull(organizations) && (
+          {!isUndefined(organizations) && (
             <>
               {organizations.length === 0 ? (
                 <NoData>

@@ -54,29 +54,33 @@ const OrganizationSettings = (props: Props) => {
         <div className={`mx-auto mt-5 ${styles.form}`}>
           {(isUndefined(organization) || isLoading) && <Loading />}
 
-          {isNull(organization) || isUndefined(organization) ? (
-            <NoData>Sorry, the information for this organization is missing.</NoData>
-          ) : (
+          {!isUndefined(organization) && (
             <>
-              <OrganizationForm
-                ref={form}
-                organization={organization}
-                onAuthError={props.onAuthError}
-                setIsSending={setIsSending}
-              />
+              {isNull(organization) ? (
+                <NoData>Sorry, the information for this organization is missing.</NoData>
+              ) : (
+                <>
+                  <OrganizationForm
+                    ref={form}
+                    organization={organization}
+                    onAuthError={props.onAuthError}
+                    setIsSending={setIsSending}
+                  />
 
-              <div className="text-right mt-4">
-                <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
-                  {isSending ? (
-                    <>
-                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Updating organization</span>
-                    </>
-                  ) : (
-                    <>Update</>
-                  )}
-                </button>
-              </div>
+                  <div className="text-right mt-4">
+                    <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+                      {isSending ? (
+                        <>
+                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                          <span className="ml-2">Updating organization</span>
+                        </>
+                      ) : (
+                        <>Update</>
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
