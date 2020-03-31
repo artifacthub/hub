@@ -9,10 +9,10 @@ import (
 	"sync"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/go-chi/chi"
 	svg "github.com/h2non/go-is-svg"
-	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -61,7 +61,7 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 		var err error
 		data, err = h.imageStore.GetImage(r.Context(), imageID, version)
 		if err != nil {
-			if errors.Is(err, pgx.ErrNoRows) {
+			if errors.Is(err, img.ErrNotFound) {
 				http.NotFound(w, r)
 			} else {
 				h.logger.Error().Err(err).Str("method", "Image").Str("imageID", imageID).Send()
