@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(4);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -23,6 +23,26 @@ select results_eq(
     $$,
     $$ values (false) $$,
     'User1 membership in organization1 should not be confirmed'
+);
+select throws_ok(
+    $$
+        select confirm_organization_membership(
+            '00000000-0000-0000-0000-000000000002',
+            'org1'
+        )
+    $$,
+    'organization membership confirmation failed',
+    'User has not been invited to join organization, confirmation should fail'
+);
+select throws_ok(
+    $$
+        select confirm_organization_membership(
+            '00000000-0000-0000-0000-000000000001',
+            'org9'
+        )
+    $$,
+    'organization membership confirmation failed',
+    'Organization does not exist, confirmation should fail'
 );
 
 -- Confirm organization membership and check it succeeded
