@@ -31,6 +31,10 @@ const UserInvitation = (props: Props) => {
           case 400:
             error = err.message;
             break;
+          case 401:
+            error =
+              'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.';
+            break;
         }
         setApiError(error);
         setValidInvitation(false);
@@ -52,12 +56,10 @@ const UserInvitation = (props: Props) => {
 
   return (
     <Modal
-      header={<div className="h6 text-uppercase mb-0">Confirm invitation</div>}
+      header={<div className="h6 text-uppercase mb-0">Membership confirmation</div>}
       disabledClose={isAccepting}
       modalClassName={styles.modal}
       open={!isUndefined(orgToConfirm)}
-      error={apiError}
-      cleanError={() => setApiError(null)}
     >
       <div
         className={`d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative ${styles.content}`}
@@ -65,14 +67,14 @@ const UserInvitation = (props: Props) => {
         {isAccepting ? (
           <>
             <Loading className={styles.loading} spinnerClassName="mt-0" />
-            <small className="text-muted">Your invitation is being confirmed...</small>
+            <small className="text-muted">Your are accepting the invitation...</small>
           </>
         ) : (
           <>
             {validInvitation ? (
               <>
                 <MdDone className="display-4 text-success mb-4" />
-                Your invitation has been confirmed!
+                You have accepted the invitation to join the organization.
               </>
             ) : (
               <>
