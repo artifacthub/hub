@@ -1,11 +1,14 @@
 -- Start transaction and plan tests
 begin;
-select plan(10);
+select plan(11);
 
 -- Declare some variables
+\set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 
--- Seed one chart repository
+-- Seed some data
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 
@@ -286,6 +289,44 @@ select results_eq(
     $$,
     $$ values ('name1', 'email1') $$,
     'Package maintainers should not have been updated'
+);
+
+-- Register package that belongs to an organization and check it succeeded
+select register_package('
+{
+    "kind": 1,
+    "name": "package3",
+    "display_name": "Package 3",
+    "description": "description",
+    "version": "1.0.0",
+    "organization_id": "00000000-0000-0000-0000-000000000001"
+}
+');
+select results_eq(
+    $$
+        select
+            name,
+            display_name,
+            description,
+            latest_version,
+            package_kind_id,
+            organization_id,
+            chart_repository_id
+        from package
+        where name='package3'
+    $$,
+    $$
+        values (
+            'package3',
+            'Package 3',
+            'description',
+            '1.0.0',
+            1,
+            '00000000-0000-0000-0000-000000000001'::uuid,
+            null::uuid
+        )
+    $$,
+    'Package that belongs to organization should exist'
 );
 
 -- Finish tests and rollback transaction
