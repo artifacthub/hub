@@ -96,6 +96,9 @@ func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]b
 	query := "select get_image($1::uuid, $2::text)"
 	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, img.ErrNotFound
+		}
 		return nil, err
 	}
 	return data, nil

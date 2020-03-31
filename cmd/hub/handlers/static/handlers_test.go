@@ -10,10 +10,10 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
-	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
@@ -31,7 +31,7 @@ func TestImage(t *testing.T) {
 
 	t.Run("non existing image", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, pgx.ErrNoRows)
+		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, img.ErrNotFound)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)

@@ -9,8 +9,8 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tests"
-	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -26,7 +26,7 @@ func TestGet(t *testing.T) {
 
 	t.Run("non existing package", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pgx.ErrNoRows)
+		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pkg.ErrNotFound)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)

@@ -12,7 +12,6 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/go-chi/chi"
-	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -44,7 +43,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	jsonData, err := h.hubAPI.Packages.GetJSON(r.Context(), input)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
+		if errors.Is(err, pkg.ErrNotFound) {
 			http.NotFound(w, r)
 		} else {
 			h.logger.Error().Err(err).Interface("input", input).Str("method", "Get").Send()

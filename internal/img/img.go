@@ -3,9 +3,13 @@ package img
 import (
 	"bytes"
 	"context"
+	"errors"
 
 	"github.com/disintegration/imaging"
 )
+
+// ErrNotFound indicates that the image requested was not found.
+var ErrNotFound = errors.New("image not found")
 
 // Store describes the methods an image.Store implementation must provide.
 type Store interface {

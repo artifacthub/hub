@@ -3,9 +3,14 @@ package pkg
 import (
 	"context"
 	"encoding/json"
+	"errors"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/jackc/pgx/v4"
 )
+
+// ErrNotFound indicates that the package requested was not found.
+var ErrNotFound = errors.New("package not found")
 
 // Manager provides an API to manage packages.
 type Manager struct {
@@ -23,7 +28,14 @@ func NewManager(db hub.DB) *Manager {
 // object. The json object is built by the database.
 func (m *Manager) GetJSON(ctx context.Context, input *GetInput) ([]byte, error) {
 	inputJSON, _ := json.Marshal(input)
-	return m.dbQueryJSON(ctx, "select get_package($1::jsonb)", inputJSON)
+	dataJSON, err := m.dbQueryJSON(ctx, "select get_package($1::jsonb)", inputJSON)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return dataJSON, nil
 }
 
 // GetStatsJSON returns a json object describing the number of packages and
