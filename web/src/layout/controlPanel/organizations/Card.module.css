@@ -10,6 +10,7 @@
 .separator {
   width: 2px;
   background-color: var(--color-1-500);
+  height: 15px;
 }
 
 .btnIcon,

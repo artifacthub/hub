@@ -134,7 +134,7 @@ const OrganizationCard = (props: Props) => {
 
               {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                 <>
-                  <div className={`mx-2 my-auto h-50 d-none d-sm-inline ${styles.separator}`} />
+                  <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
 
                   <button
                     className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}

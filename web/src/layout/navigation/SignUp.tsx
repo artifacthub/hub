@@ -1,10 +1,11 @@
 import classnames from 'classnames';
+import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import React, { useRef, useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
 import { API } from '../../api';
-import { ResourceKind, User } from '../../types';
+import { RefInputField, ResourceKind, User } from '../../types';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './SignUp.module.css';
@@ -26,6 +27,10 @@ interface Props {
 
 const SignUp = (props: Props) => {
   const registerForm = useRef<HTMLFormElement>(null);
+  const usernameInput = useRef<RefInputField>(null);
+  const emailInput = useRef<RefInputField>(null);
+  const passwordInput = useRef<RefInputField>(null);
+  const repeatPasswordInput = useRef<RefInputField>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [isValidatingField, setIsValidatingField] = useState(false);
@@ -70,39 +75,51 @@ const SignUp = (props: Props) => {
       cleanApiError();
       setIsLoading(true);
       if (registerForm.current) {
-        const { isValid, user } = validateForm(registerForm.current);
-        if (isValid && !isNull(user)) {
-          registerUser(user);
-        } else {
-          setIsLoading(false);
-        }
+        validateForm(registerForm.current).then((validation: FormValidation) => {
+          if (validation.isValid && !isNull(validation.user)) {
+            registerUser(validation.user);
+          } else {
+            setIsLoading(false);
+          }
+        });
       }
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let isValid = form.checkValidity();
+  const validateForm = async (form: HTMLFormElement): Promise<FormValidation> => {
     let user: User | null = null;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      user = {
-        alias: formData.get('alias') as string,
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-      };
+    return validateAllFields().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        user = {
+          alias: formData.get('alias') as string,
+          email: formData.get('email') as string,
+          password: formData.get('password') as string,
+        };
 
-      if (formData.get('firstName') !== '') {
-        user['firstName'] = formData.get('firstName') as string;
-      }
+        if (formData.get('firstName') !== '') {
+          user['firstName'] = formData.get('firstName') as string;
+        }
 
-      if (formData.get('lastName') !== '') {
-        user['lastName'] = formData.get('lastName') as string;
+        if (formData.get('lastName') !== '') {
+          user['lastName'] = formData.get('lastName') as string;
+        }
       }
-    } else {
       setIsValidated(true);
-    }
-    return { isValid, user };
+      return { isValid, user };
+    });
+  };
+
+  const validateAllFields = async (): Promise<boolean> => {
+    return Promise.all([
+      usernameInput.current!.checkIsValid(),
+      emailInput.current!.checkIsValid(),
+      passwordInput.current!.checkIsValid(),
+      repeatPasswordInput.current!.checkIsValid(),
+    ]).then((res: boolean[]) => {
+      return every(res, (isValid: boolean) => isValid);
+    });
   };
 
   const closeButton = (
@@ -158,13 +175,14 @@ const SignUp = (props: Props) => {
           noValidate
         >
           <InputField
+            ref={usernameInput}
             type="text"
             label="Username"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
             name="alias"
             invalidText={{
               default: 'This field is required',
-              customValidity: 'Username not available',
+              customError: 'Username not available',
             }}
             checkAvailability={ResourceKind.userAlias}
             setValidationStatus={setIsValidatingField}
@@ -174,6 +192,7 @@ const SignUp = (props: Props) => {
           />
 
           <InputField
+            ref={emailInput}
             type="email"
             label="Email"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
@@ -193,6 +212,7 @@ const SignUp = (props: Props) => {
 
           <div className="form-row">
             <InputField
+              ref={passwordInput}
               className="col-sm-12 col-md-6"
               type="password"
               label="Password"
@@ -210,6 +230,7 @@ const SignUp = (props: Props) => {
             />
 
             <InputField
+              ref={repeatPasswordInput}
               className="col-sm-12 col-md-6"
               type="password"
               label="Confirm password"
