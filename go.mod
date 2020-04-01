@@ -17,7 +17,6 @@ require (
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hashicorp/golang-lru v0.5.3 // indirect
 	github.com/imdario/mergo v0.3.8 // indirect
-	github.com/ironstar-io/chizerolog v0.0.0-20190729084312-7eaca6bf60e6
 	github.com/jackc/pgconn v1.3.2
 	github.com/jackc/pgx/v4 v4.4.1
 	github.com/pelletier/go-toml v1.6.0 // indirect
