@@ -122,6 +122,12 @@ export const API = {
     return apiFetch(url);
   },
 
+  toggleStar: (packageId: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/package/${packageId}`, {
+      method: 'PUT',
+    });
+  },
+
   searchPackages: (query: SearchQuery): Promise<SearchResults> => {
     const q = new URLSearchParams();
     q.set('facets', 'true');
