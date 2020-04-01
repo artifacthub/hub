@@ -5,7 +5,7 @@ import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ResourceKind } from '../../../types';
+import { RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
@@ -24,10 +24,10 @@ interface Props {
 
 const MemberModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
+  const aliasInput = useRef<RefInputField>(null);
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
-  const [isValidatingField, setIsValidatingField] = useState(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
   // Clean API error when form is focused after validation
@@ -60,37 +60,36 @@ const MemberModal = (props: Props) => {
   }
 
   const submitForm = () => {
-    if (!isValidatingField) {
-      cleanApiError();
-      setIsSending(true);
-      if (form.current) {
-        const { isValid, alias } = validateForm(form.current);
-        if (isValid && !isUndefined(alias)) {
-          handleOrganizationMember(alias);
+    cleanApiError();
+    setIsSending(true);
+    if (form.current) {
+      validateForm(form.current).then((validation: FormValidation) => {
+        if (validation.isValid && !isUndefined(validation.alias)) {
+          handleOrganizationMember(validation.alias);
         } else {
           setIsSending(false);
         }
-      }
+      });
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let isValid = form.checkValidity();
-    let alias;
+  const validateForm = async (form: HTMLFormElement): Promise<FormValidation> => {
+    let alias: undefined | string;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      alias = formData.get('alias') as string;
-    } else {
+    return aliasInput.current!.checkIsValid().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        alias = formData.get('alias') as string;
+      }
       setIsValidated(true);
-    }
-    return { isValid, alias };
+      return { isValid: isValid, alias };
+    });
   };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       event.preventDefault();
-      // submitForm();
+      submitForm();
     }
   };
 
@@ -124,6 +123,7 @@ const MemberModal = (props: Props) => {
           noValidate
         >
           <InputField
+            ref={aliasInput}
             type="text"
             label="Username"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
@@ -134,8 +134,6 @@ const MemberModal = (props: Props) => {
               customError: 'User not found',
             }}
             isValidResource={ResourceKind.userAlias}
-            setValidationStatus={setIsValidatingField}
-            validateOnBlur
             autoComplete="off"
             onKeyDown={handleOnReturnKeyDown}
             additionalInfo={

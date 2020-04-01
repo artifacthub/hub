@@ -149,3 +149,7 @@ export interface Organization {
   membersCount?: number | null;
   confirmed?: boolean | null;
 }
+
+export interface RefInputField {
+  checkIsValid: () => Promise<boolean>;
+}

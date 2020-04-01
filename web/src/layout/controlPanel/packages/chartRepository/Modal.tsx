@@ -1,11 +1,12 @@
 import classnames from 'classnames';
+import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { ChartRepository, ResourceKind } from '../../../../types';
+import { ChartRepository, RefInputField, ResourceKind } from '../../../../types';
 import ExternalLink from '../../../common/ExternalLink';
 import InputField from '../../../common/InputField';
 import Modal from '../../../common/Modal';
@@ -27,6 +28,8 @@ interface Props {
 const ChartRepositoryModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
+  const nameInput = useRef<RefInputField>(null);
+  const urlInput = useRef<RefInputField>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -69,30 +72,37 @@ const ChartRepositoryModal = (props: Props) => {
     cleanApiError();
     setIsSending(true);
     if (form.current) {
-      const { isValid, chartRepository } = validateForm(form.current);
-      if (isValid) {
-        handleChartRepository(chartRepository!);
-      } else {
-        setIsSending(false);
-      }
+      validateForm(form.current).then((validation: FormValidation) => {
+        if (validation.isValid && !isNull(validation.chartRepository)) {
+          handleChartRepository(validation.chartRepository);
+        } else {
+          setIsSending(false);
+        }
+      });
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let isValid = form.checkValidity();
+  const validateForm = async (form: HTMLFormElement): Promise<FormValidation> => {
     let chartRepository: ChartRepository | null = null;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      chartRepository = {
-        name: formData.get('name') as string,
-        url: formData.get('url') as string,
-        displayName: formData.get('displayName') as string,
-      };
-    } else {
+    return validateAllFields().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        chartRepository = {
+          name: formData.get('name') as string,
+          url: formData.get('url') as string,
+          displayName: formData.get('displayName') as string,
+        };
+      }
       setIsValidated(true);
-    }
-    return { isValid, chartRepository };
+      return { isValid, chartRepository };
+    });
+  };
+
+  const validateAllFields = async (): Promise<boolean> => {
+    return Promise.all([nameInput.current!.checkIsValid(), urlInput.current!.checkIsValid()]).then((res: boolean[]) => {
+      return every(res, (isValid: boolean) => isValid);
+    });
   };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -137,6 +147,7 @@ const ChartRepositoryModal = (props: Props) => {
           noValidate
         >
           <InputField
+            ref={nameInput}
             type="text"
             label="Name"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}
@@ -167,6 +178,7 @@ const ChartRepositoryModal = (props: Props) => {
           />
 
           <InputField
+            ref={urlInput}
             type="url"
             label="Url"
             labelLegend={<small className="ml-1 font-italic">(Required)</small>}

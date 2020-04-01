@@ -1,10 +1,10 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useRef, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 import { API } from '../../api';
-import { ResourceKind } from '../../types';
+import { RefInputField, ResourceKind } from '../../types';
 import styles from './InputField.module.css';
 
 export interface Props {
@@ -35,7 +35,7 @@ export interface Props {
   setValidationStatus?: (status: boolean) => void;
 }
 
-const InputField = (props: Props) => {
+const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const input = useRef<HTMLInputElement>(null);
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [inputValue, setInputValue] = useState(props.value || '');
@@ -43,55 +43,13 @@ const InputField = (props: Props) => {
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
   const [isValidatingResource, setIsValidatingResource] = useState(false);
 
-  const checkAvailability = (value: string): void => {
-    async function checkAvailability() {
-      try {
-        setIsCheckingAvailability(true);
-        await API.checkAvailability({
-          resourceKind: props.checkAvailability!,
-          value: value,
-        });
-        input.current!.setCustomValidity('Already taken');
-      } catch {
-        input.current!.setCustomValidity('');
-      } finally {
-        checkValidity();
-        setIsCheckingAvailability(false);
-      }
-    }
-    if (value !== '') {
-      input.current!.setCustomValidity('');
-      checkAvailability();
-    } else {
-      checkValidity();
-    }
-  };
+  useImperativeHandle(ref, () => ({
+    checkIsValid(): Promise<boolean> {
+      return isValidField();
+    },
+  }));
 
-  const isValidResource = (value: string): void => {
-    async function checkIsValidResource() {
-      try {
-        setIsValidatingResource(true);
-        await API.checkAvailability({
-          resourceKind: props.isValidResource!,
-          value: value,
-        });
-        input.current!.setCustomValidity('');
-      } catch {
-        input.current!.setCustomValidity('Is not a valid resource');
-      } finally {
-        checkValidity();
-        setIsValidatingResource(false);
-      }
-    }
-    if (value !== '') {
-      input.current!.setCustomValidity('');
-      checkIsValidResource();
-    } else {
-      checkValidity();
-    }
-  };
-
-  const checkValidity = () => {
+  const checkValidity = (): boolean => {
     const isValid = input.current!.checkValidity();
     if (!isValid && !isUndefined(props.invalidText)) {
       let errorTxt = props.invalidText.default;
@@ -115,25 +73,49 @@ const InputField = (props: Props) => {
     if (!isUndefined(props.setValidationStatus)) {
       props.setValidationStatus(false);
     }
+    return isValid;
+  };
+
+  const isValidField = async (): Promise<boolean> => {
+    const value = input.current!.value;
+    if (value !== '') {
+      if (!isUndefined(props.isValidResource)) {
+        setIsValidatingResource(true);
+        await API.checkAvailability({
+          resourceKind: props.isValidResource!,
+          value: value,
+        })
+          .then(() => {
+            input.current!.setCustomValidity('');
+          })
+          .catch(() => {
+            input.current!.setCustomValidity('Is not a valid resource');
+          });
+        setIsValidatingResource(false);
+      }
+
+      if (!isUndefined(props.checkAvailability)) {
+        setIsCheckingAvailability(true);
+        await API.checkAvailability({
+          resourceKind: props.checkAvailability!,
+          value: value,
+        })
+          .then(() => {
+            input.current!.setCustomValidity('Already taken');
+          })
+          .catch(() => {
+            input.current!.setCustomValidity('');
+          });
+        setIsCheckingAvailability(false);
+      }
+    }
+
+    return checkValidity();
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
-      if (!isUndefined(props.setValidationStatus)) {
-        props.setValidationStatus(true);
-      }
-
-      if (!isUndefined(props.checkAvailability)) {
-        checkAvailability(e.target.value);
-        return;
-      }
-
-      if (!isUndefined(props.isValidResource)) {
-        isValidResource(e.target.value);
-        return;
-      }
-
-      checkValidity();
+      isValidField();
     }
   };
 
@@ -188,6 +170,6 @@ const InputField = (props: Props) => {
       {!isUndefined(props.additionalInfo) && <div className="alert alert-ligth p-0 mt-3">{props.additionalInfo}</div>}
     </div>
   );
-};
+});
 
 export default InputField;

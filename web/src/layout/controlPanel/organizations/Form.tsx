@@ -1,11 +1,12 @@
 import classnames from 'classnames';
+import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx, updateOrg } from '../../../context/AppCtx';
-import { Organization, ResourceKind } from '../../../types';
+import { Organization, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 
 interface FormValidation {
@@ -23,6 +24,8 @@ interface Props {
 
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
   const { ctx, dispatch } = useContext(AppCtx);
+  const nameInput = useRef<RefInputField>(null);
+  const homeUrlInput = useRef<RefInputField>(null);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -71,31 +74,40 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
     cleanApiError();
     props.setIsSending(true);
     if (e.currentTarget) {
-      const { isValid, organization } = validateForm(e.currentTarget);
-      if (isValid) {
-        handleOrganization(organization!);
-      } else {
-        props.setIsSending(false);
-      }
+      validateForm(e.currentTarget).then((validation: FormValidation) => {
+        if (validation.isValid && !isNull(validation.organization)) {
+          handleOrganization(validation.organization);
+        } else {
+          props.setIsSending(false);
+        }
+      });
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let isValid = form.checkValidity();
+  const validateForm = async (form: HTMLFormElement): Promise<FormValidation> => {
     let organization: Organization | null = null;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      organization = {
-        name: formData.get('name') as string,
-        displayName: formData.get('displayName') as string,
-        homeUrl: formData.get('homeUrl') as string,
-        description: formData.get('description') as string,
-      };
-    } else {
+    return validateAllFields().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        organization = {
+          name: formData.get('name') as string,
+          displayName: formData.get('displayName') as string,
+          homeUrl: formData.get('homeUrl') as string,
+          description: formData.get('description') as string,
+        };
+      }
       setIsValidated(true);
-    }
-    return { isValid, organization };
+      return { isValid, organization };
+    });
+  };
+
+  const validateAllFields = async (): Promise<boolean> => {
+    return Promise.all([nameInput.current!.checkIsValid(), homeUrlInput.current!.checkIsValid()]).then(
+      (res: boolean[]) => {
+        return every(res, (isValid: boolean) => isValid);
+      }
+    );
   };
 
   return (
@@ -108,6 +120,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       noValidate
     >
       <InputField
+        ref={nameInput}
         type="text"
         label="Name"
         labelLegend={<small className="ml-1 font-italic">(Required)</small>}
@@ -138,6 +151,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       />
 
       <InputField
+        ref={homeUrlInput}
         type="url"
         label="Home URL"
         name="homeUrl"
