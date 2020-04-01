@@ -97,6 +97,7 @@ create table if not exists package (
     latest_version text not null check (latest_version <> ''),
     created_at timestamptz default current_timestamp not null,
     updated_at timestamptz default current_timestamp not null,
+    stars integer not null default 0,
     tsdoc tsvector generated always as (
         generate_package_tsdoc(name, display_name, description, keywords)
     ) stored,
@@ -117,6 +118,7 @@ create index package_package_kind_id_idx on package (package_kind_id);
 create index package_chart_repository_id_idx on package (chart_repository_id);
 create index package_created_at_idx on package (created_at);
 create index package_updated_at_idx on package (updated_at);
+create index package_stars_idx on package (stars);
 create index package_user_id_idx on package (user_id);
 create index package_organization_id_idx on package (organization_id);
 
@@ -153,6 +155,12 @@ create table if not exists image_version (
     version text not null check (version <> ''),
     data bytea not null,
     primary key (image_id, version)
+);
+
+create table if not exists user_starred_package (
+    user_id uuid not null references "user" on delete cascade,
+    package_id uuid not null references package on delete cascade,
+    primary key (user_id, package_id)
 );
 
 {{ if eq .loadSampleData "true" }}

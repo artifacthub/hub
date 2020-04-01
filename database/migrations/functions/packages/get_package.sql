@@ -1,6 +1,6 @@
 -- get_package returns the details as a json object of the package identified
 -- by the input provided.
-create or replace function get_package(p_input jsonb)
+create or replace function get_package(p_user_id uuid, p_input jsonb)
 returns setof json as $$
 declare
     v_package_id uuid;
@@ -36,6 +36,14 @@ begin
         'logo_image_id', p.logo_image_id,
         'keywords', p.keywords,
         'deprecated', p.deprecated,
+        'stars', p.stars,
+        'starred_by_user', (
+            select exists (
+                select * from user_starred_package
+                where package_id = p.package_id
+                and user_id = p_user_id
+            )
+        ),
         'readme', s.readme,
         'links', s.links,
         'data', s.data,

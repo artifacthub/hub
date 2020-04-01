@@ -48,6 +48,7 @@ insert into package (
     logo_image_id,
     keywords,
     latest_version,
+    stars,
     package_kind_id,
     chart_repository_id
 ) values (
@@ -59,6 +60,7 @@ insert into package (
     :'image1ID',
     '{"kw1", "kw2"}',
     '1.0.0',
+    10,
     0,
     :'repo1ID'
 );
@@ -102,6 +104,7 @@ insert into package (
     keywords,
     deprecated,
     latest_version,
+    stars,
     package_kind_id,
     chart_repository_id
 ) values (
@@ -114,6 +117,7 @@ insert into package (
     '{"kw1", "kw2"}',
     true,
     '1.0.0',
+    5,
     0,
     :'repo2ID'
 );
@@ -199,6 +203,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -216,6 +221,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "stars": 5,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -233,6 +239,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 3",
                 "deprecated": null,
+                "stars": 0,
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": null
@@ -290,6 +297,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -307,6 +315,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "stars": 5,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -362,6 +371,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -433,6 +443,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -470,6 +481,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -510,6 +522,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "stars": 5,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -702,6 +715,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -719,6 +733,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "stars": 5,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -756,6 +771,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 1",
                 "deprecated": null,
+                "stars": 10,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -813,6 +829,7 @@ select is(
                 "description": "description",
                 "display_name": "Package 2",
                 "deprecated": true,
+                "stars": 5,
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {

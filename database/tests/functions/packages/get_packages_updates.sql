@@ -42,6 +42,7 @@ insert into package (
     latest_version,
     created_at,
     updated_at,
+    stars,
     package_kind_id,
     organization_id
 ) values (
@@ -56,6 +57,7 @@ insert into package (
     '1.0.0',
     current_timestamp - '1s'::interval,
     current_timestamp - '1s'::interval,
+    10,
     1,
     :'org1ID'
 );
@@ -81,6 +83,7 @@ insert into package (
     latest_version,
     created_at,
     updated_at,
+    stars,
     package_kind_id,
     chart_repository_id
 ) values (
@@ -94,6 +97,7 @@ insert into package (
     '1.0.0',
     current_timestamp - '2s'::interval,
     current_timestamp - '2s'::interval,
+    5,
     0,
     :'repo2ID'
 );
@@ -168,6 +172,7 @@ select is(
             "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
+            "stars": 10,
             "version": "1.0.0",
             "app_version": null,
             "organization_name": "org1",
@@ -180,6 +185,7 @@ select is(
             "normalized_name": "package2",
             "display_name": "Package 2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "stars": 5,
             "version": "1.0.0",
             "app_version": "12.1.0",
             "organization_name": null,
@@ -197,6 +203,7 @@ select is(
             "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
+            "stars": 10,
             "version": "1.0.0",
             "app_version": null,
             "organization_name": "org1",
@@ -209,6 +216,7 @@ select is(
             "normalized_name": "package2",
             "display_name": "Package 2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "stars": 5,
             "version": "1.0.0",
             "app_version": "12.1.0",
             "organization_name": null,
@@ -262,6 +270,7 @@ select is(
             "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
+            "stars": 10,
             "version": "1.0.0",
             "app_version": null,
             "organization_name": "org1",
@@ -274,6 +283,7 @@ select is(
             "normalized_name": "package2",
             "display_name": "Package 2 v2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "stars": 5,
             "version": "2.0.0",
             "app_version": "13.0.0",
             "organization_name": null,
@@ -291,6 +301,7 @@ select is(
             "normalized_name": "package2",
             "display_name": "Package 2 v2",
             "logo_image_id": "00000000-0000-0000-0000-000000000002",
+            "stars": 5,
             "version": "2.0.0",
             "app_version": "13.0.0",
             "organization_name": null,
@@ -307,6 +318,7 @@ select is(
             "normalized_name": "package1",
             "display_name": "Package 1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
+            "stars": 10,
             "version": "1.0.0",
             "app_version": null,
             "organization_name": "org1",

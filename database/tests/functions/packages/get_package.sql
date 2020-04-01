@@ -4,6 +4,7 @@ select plan(6);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
+\set user1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
@@ -15,7 +16,7 @@ select plan(6);
 -- Some invalid queries
 select throws_ok(
     $$
-        select get_package('{
+        select get_package(null, '{
             "chart_repository_name": "repo1"
         }')
     $$,
@@ -23,7 +24,7 @@ select throws_ok(
 );
 select throws_ok(
     $$
-        select get_package('{
+        select get_package(null, '{
             "package_name": "",
             "chart_repository_name": "repo1"
         }')
@@ -34,7 +35,7 @@ select throws_ok(
 -- No packages at this point
 select is_empty(
     $$
-        select get_package('{
+        select get_package(null, '{
             "package_name": "package1",
             "chart_repository_name": "repo1"
         }')
@@ -45,6 +46,7 @@ select is_empty(
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
+insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into maintainer (maintainer_id, name, email)
@@ -61,6 +63,7 @@ insert into package (
     keywords,
     deprecated,
     latest_version,
+    stars,
     package_kind_id,
     chart_repository_id
 ) values (
@@ -73,6 +76,7 @@ insert into package (
     '{"kw1", "kw2"}',
     true,
     '1.0.0',
+    10,
     0,
     :'repo1ID'
 );
@@ -122,6 +126,7 @@ insert into package (
     logo_image_id,
     keywords,
     latest_version,
+    stars,
     package_kind_id,
     organization_id
 ) values (
@@ -132,6 +137,7 @@ insert into package (
     :'image2ID',
     '{"kw1", "kw2"}',
     '1.0.0',
+    5,
     1,
     :'org1ID'
 );
@@ -146,10 +152,11 @@ insert into snapshot (
     'readme-version-1.0.0',
     '{"key": "value"}'
 );
+insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package2ID');
 
 -- Packages have just been seeded
 select is(
-    get_package('{
+    get_package(null, '{
         "package_name": "package-1",
         "chart_repository_name": "repo1"
     }')::jsonb,
@@ -164,6 +171,8 @@ select is(
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
         "deprecated": true,
+        "stars": 10,
+        "starred_by_user": false,
         "readme": "readme-version-1.0.0",
         "links": {
             "link1": "https://link1",
@@ -198,7 +207,7 @@ select is(
     'Last package1 version is returned as a json object'
 );
 select is(
-    get_package('{
+    get_package(null, '{
         "package_name": "package-1",
         "chart_repository_name": "repo1",
         "version": "0.0.9"
@@ -214,6 +223,8 @@ select is(
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "keywords": ["kw1", "kw2"],
         "deprecated": true,
+        "stars": 10,
+        "starred_by_user": false,
         "readme": "readme-version-0.0.9",
         "links": {
             "link1": "https://link1",
@@ -248,7 +259,7 @@ select is(
     'Requested package version is returned as a json object'
 );
 select is(
-    get_package('{
+    get_package(:'user1ID', '{
         "package_name": "package2"
     }')::jsonb,
     '{
@@ -262,6 +273,8 @@ select is(
         "home_url": null,
         "keywords": ["kw1", "kw2"],
         "deprecated": null,
+        "stars": 5,
+        "starred_by_user": true,
         "readme": "readme-version-1.0.0",
         "links": null,
         "digest": null,

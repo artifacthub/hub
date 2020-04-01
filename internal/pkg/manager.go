@@ -27,8 +27,10 @@ func NewManager(db hub.DB) *Manager {
 // GetJSON returns the package identified by the input provided as a json
 // object. The json object is built by the database.
 func (m *Manager) GetJSON(ctx context.Context, input *GetInput) ([]byte, error) {
+	query := "select get_package($1::uuid, $2::jsonb)"
+	userID := getUserID(ctx)
 	inputJSON, _ := json.Marshal(input)
-	dataJSON, err := m.dbQueryJSON(ctx, "select get_package($1::jsonb)", inputJSON)
+	dataJSON, err := m.dbQueryJSON(ctx, query, userID, inputJSON)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, ErrNotFound
@@ -53,7 +55,9 @@ func (m *Manager) GetUpdatesJSON(ctx context.Context) ([]byte, error) {
 
 // Register registers the package provided in the database.
 func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
-	return m.dbExec(ctx, "select register_package($1::jsonb)", pkg)
+	pkgJSON, _ := json.Marshal(pkg)
+	_, err := m.db.Exec(ctx, "select register_package($1::jsonb)", pkgJSON)
+	return err
 }
 
 // SearchJSON returns a json object with the search results produced by the
@@ -61,6 +65,13 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 func (m *Manager) SearchJSON(ctx context.Context, input *SearchInput) ([]byte, error) {
 	inputJSON, _ := json.Marshal(input)
 	return m.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
+}
+
+// ToggleStar stars on unstars a given package for the provided user.
+func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	_, err := m.db.Exec(ctx, "select toggle_star($1::uuid, $2::uuid)", userID, packageID)
+	return err
 }
 
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
@@ -71,17 +82,6 @@ func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interfa
 		return nil, err
 	}
 	return jsonData, nil
-}
-
-// dbExec is a helper that executes the query provided encoding the argument as
-// json.
-func (m *Manager) dbExec(ctx context.Context, query string, arg interface{}) error {
-	jsonArg, err := json.Marshal(arg)
-	if err != nil {
-		return err
-	}
-	_, err = m.db.Exec(ctx, query, jsonArg)
-	return err
 }
 
 // GetInput represents the input used to get a specific package.
@@ -100,4 +100,14 @@ type SearchInput struct {
 	PackageKinds      []hub.PackageKind `json:"package_kinds,omitempty"`
 	ChartRepositories []string          `json:"chart_repositories,omitempty"`
 	Deprecated        bool              `json:"deprecated"`
+}
+
+// getUserID returns the user id from the context provided when available.
+func getUserID(ctx context.Context) *string {
+	var userID *string
+	v, _ := ctx.Value(hub.UserIDKey).(string)
+	if v != "" {
+		userID = &v
+	}
+	return userID
 }

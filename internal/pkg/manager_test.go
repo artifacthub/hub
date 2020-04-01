@@ -11,14 +11,15 @@ import (
 )
 
 func TestGetJSON(t *testing.T) {
-	dbQuery := "select get_package($1::jsonb)"
+	dbQuery := "select get_package($1::uuid, $2::jsonb)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(context.Background(), &GetInput{})
+		dataJSON, err := m.GetJSON(ctx, &GetInput{})
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -26,7 +27,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(context.Background(), &GetInput{})
@@ -167,6 +168,38 @@ func TestSearchJSON(t *testing.T) {
 		dataJSON, err := m.SearchJSON(context.Background(), input)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestToggleStar(t *testing.T) {
+	dbQuery := "select toggle_star($1::uuid, $2::uuid)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.ToggleStar(context.Background(), "pkgID")
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, "userID", "pkgID").Return(nil)
+		m := NewManager(db)
+
+		err := m.ToggleStar(ctx, "pkgID")
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, "userID", "pkgID").Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		err := m.ToggleStar(ctx, "pkgID")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
