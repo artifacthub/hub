@@ -99,16 +99,16 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
 
       if (!isUndefined(props.checkAvailability)) {
         setIsCheckingAvailability(true);
-        await API.checkAvailability({
-          resourceKind: props.checkAvailability!,
-          value: value,
-        })
-          .then(() => {
-            input.current!.setCustomValidity('Already taken');
-          })
-          .catch(() => {
-            input.current!.setCustomValidity('');
-          });
+        // await API.checkAvailability({
+        //   resourceKind: props.checkAvailability!,
+        //   value: value,
+        // })
+        //   .then(() => {
+        //     input.current!.setCustomValidity('Already taken');
+        //   })
+        //   .catch(() => {
+        //     input.current!.setCustomValidity('');
+        //   });
         setIsCheckingAvailability(false);
       }
     }
@@ -139,6 +139,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
       )}
 
       <input
+        data-testid={`${props.name}Input`}
         ref={input}
         type={props.type}
         name={props.name}

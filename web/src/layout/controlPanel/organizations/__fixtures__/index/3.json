@@ -1,0 +1,18 @@
+[
+  {
+    "name": "test",
+    "displayName": "Test",
+    "description": "Lorem ipsum...",
+    "homeUrl": "https://test.org",
+    "confirmed": true,
+    "membersCount": 1
+  },
+  {
+    "name": "helm",
+    "displayName": "Helm",
+    "description": "The package manager for Kubernetes",
+    "homeUrl": "https://helm.sh",
+    "confirmed": true,
+    "membersCount": 1
+  }
+]

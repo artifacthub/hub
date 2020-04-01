@@ -76,7 +76,7 @@ const MemberCard = (props: Props) => {
   };
 
   return (
-    <li className={`list-group-item list-group-item-action ${styles.listItem}`}>
+    <li className={`list-group-item list-group-item-action ${styles.listItem}`} data-testid="memberCard">
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
         <div className="d-flex flex-row align-items-center">
           <div
@@ -103,6 +103,7 @@ const MemberCard = (props: Props) => {
         <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
           {props.membersNumber > 1 && (
             <button
+              data-testid="leaveOrRemoveDropdownBtn"
               className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
               onClick={() => setOpenDropdownStatus(true)}
             >
@@ -140,7 +141,12 @@ const MemberCard = (props: Props) => {
                 </div>
               </button>
 
-              <button className="btn btn-sm btn-danger" onClick={handleDeleteMember} disabled={isDeletingMember}>
+              <button
+                data-testid="leaveOrRemoveBtn"
+                className="btn btn-sm btn-danger"
+                onClick={handleDeleteMember}
+                disabled={isDeletingMember}
+              >
                 <div className="d-flex flex-row align-items-center text-uppercase">
                   {isDeletingMember ? (
                     <>

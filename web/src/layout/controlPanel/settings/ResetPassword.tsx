@@ -102,6 +102,7 @@ const ResetPassword = () => {
 
   return (
     <form
+      data-testid="resetPasswordForm"
       ref={form}
       className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
       autoComplete="on"
@@ -154,7 +155,13 @@ const ResetPassword = () => {
       />
 
       <div className="text-right mt-4 mb-2">
-        <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+        <button
+          data-testid="updatePasswordBtn"
+          className="btn btn-secondary"
+          type="button"
+          disabled={isSending}
+          onClick={submitForm}
+        >
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />

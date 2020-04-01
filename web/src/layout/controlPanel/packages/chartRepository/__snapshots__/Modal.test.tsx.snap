@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+      >
+        <div
+          class="modal-content content modal"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Add chart repository
+            </div>
+            <button
+              class="close"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100"
+            >
+              <form
+                autocomplete="on"
+                class="w-100 needs-validation"
+                data-testid="chartRepoForm"
+                novalidate=""
+              >
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="name"
+                  >
+                    Name
+                    <small
+                      class="ml-1 font-italic"
+                    >
+                      (Required)
+                    </small>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="form-control"
+                    data-testid="nameInput"
+                    name="name"
+                    pattern="[a-z][a-z0-9-]*"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  >
+                    This field is required
+                  </div>
+                </div>
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="displayName"
+                  >
+                    Display name
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="displayNameInput"
+                    name="displayName"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  />
+                </div>
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="url"
+                  >
+                    Url
+                    <small
+                      class="ml-1 font-italic"
+                    >
+                      (Required)
+                    </small>
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="urlInput"
+                    name="url"
+                    required=""
+                    type="url"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  >
+                    This field is required
+                  </div>
+                  <div
+                    class="alert alert-ligth p-0 mt-3"
+                  >
+                    <small
+                      class="text-muted text-break mt-1"
+                    >
+                      <p>
+                        Base URL of the repository where the index.yaml and optionally some package charts are hosted.
+                      </p>
+                      <p>
+                        If you host your charts in Github, you can use 
+                        <a
+                          class="link text-reset"
+                          href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
+                          rel="noopener noreferrer"
+                          role="button"
+                          target="_blank"
+                        >
+                          <u>
+                            GitHub Pages
+                          </u>
+                        </a>
+                         to serve them or you can use a URL like the one below:
+                      </p>
+                      <p
+                        class="font-italic ml-3 inputAdditionalInfoURL"
+                      >
+                        https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
+                      </p>
+                      <p
+                        class="mb-0"
+                      >
+                        For more information about how to create and host your own chart repository please visit the 
+                        <a
+                          class="link text-reset"
+                          href="https://helm.sh/docs/topics/chart_repository/"
+                          rel="noopener noreferrer"
+                          role="button"
+                          target="_blank"
+                        >
+                          <u>
+                            Helm chart repository guide
+                          </u>
+                        </a>
+                        .
+                      </p>
+                    </small>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="chartRepoBtn"
+              type="button"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

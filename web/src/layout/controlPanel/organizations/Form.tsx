@@ -121,6 +121,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
   return (
     <form
       ref={ref}
+      data-testid="organizationForm"
       className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
       onFocus={cleanApiError}
       autoComplete="on"

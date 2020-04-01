@@ -53,6 +53,7 @@ const OrganizationsSection = (props: Props) => {
 
             <div>
               <button
+                data-testid="addOrgButton"
                 className="btn btn-secondary btn-sm text-uppercase"
                 onClick={() => setModalStatus({ open: true })}
               >
@@ -74,7 +75,12 @@ const OrganizationsSection = (props: Props) => {
                   <>
                     <p className="h6 my-4">Do you need to create a organization?</p>
 
-                    <button type="button" className="btn btn-secondary" onClick={() => setModalStatus({ open: true })}>
+                    <button
+                      data-testid="addFirstOrgBtn"
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setModalStatus({ open: true })}
+                    >
                       <div className="d-flex flex-row align-items-center">
                         <MdAddCircle className="mr-2" />
                         <span>Add new organization</span>

@@ -141,6 +141,7 @@ const LogIn = (props: Props) => {
             value=""
             invalidText={{
               default: 'This field is required',
+              typeMismatch: 'Please enter a valid email address',
             }}
             validateOnBlur
             autoComplete="email"

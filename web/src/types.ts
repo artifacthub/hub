@@ -128,7 +128,10 @@ export interface User extends UserLogin {
   lastName?: string;
 }
 
-export interface Member extends User {
+export interface Member {
+  alias: string;
+  firstName?: string;
+  lastName?: string;
   confirmed?: boolean;
 }
 

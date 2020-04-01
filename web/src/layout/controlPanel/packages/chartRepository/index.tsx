@@ -63,6 +63,7 @@ const ChartRepository = (props: Props) => {
 
           <div>
             <button
+              data-testid="refreshRepoBtn"
               className={`btn btn-secondary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
               onClick={fetchCharts}
             >
@@ -106,7 +107,12 @@ const ChartRepository = (props: Props) => {
               <>
                 <p className="h6 my-4">Add your first chart repository!</p>
 
-                <button type="button" className="btn btn-secondary" onClick={() => setModalStatus({ open: true })}>
+                <button
+                  data-testid="addFirstRepoBtn"
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setModalStatus({ open: true })}
+                >
                   <div className="d-flex flex-row align-items-center">
                     <MdAddCircle className="mr-2" />
                     <span>Add chart repository</span>
@@ -115,7 +121,7 @@ const ChartRepository = (props: Props) => {
               </>
             </NoData>
           ) : (
-            <div className="list-group my-4">
+            <div className="list-group my-4" data-testid="chartRepoList">
               {chartRepositories.map((repo: ChartRepo) => (
                 <ChartRepositoryCard
                   key={repo.name}

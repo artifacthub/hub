@@ -107,12 +107,13 @@ const ChartRepositoryCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item list-group-item-action ${styles.listItem}`}>
+    <li className={`list-group-item list-group-item-action ${styles.listItem}`} data-testid="chartRepoCard">
       <div className="d-flex flex-row w-100 justify-content-between">
         <h5 className="mb-1">{props.chartRepository.displayName || props.chartRepository.name}</h5>
 
         <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
           <button
+            data-testid="updateChartRepoBtn"
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
@@ -131,6 +132,7 @@ const ChartRepositoryCard = (props: Props) => {
           <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
 
           <button
+            data-testid="deleteChartRepoDropdownBtn"
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
             onClick={() => setOpenDropdownStatus(true)}
           >
@@ -163,6 +165,7 @@ const ChartRepositoryCard = (props: Props) => {
               </button>
 
               <button
+                data-testid="deleteChartRepoBtn"
                 className="btn btn-sm btn-danger"
                 onClick={(e) => {
                   e.preventDefault();
