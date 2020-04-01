@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"net"
 	"net/http"
 	"path"
+	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/chartrepo"
 	"github.com/artifacthub/hub/cmd/hub/handlers/org"
@@ -13,7 +15,6 @@ import (
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/ironstar-io/chizerolog"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -58,7 +59,7 @@ func (h *Handlers) setupRouter() {
 
 	// Setup middleware and special handlers
 	r.Use(middleware.RealIP)
-	r.Use(chizerolog.LoggerMiddleware(&log.Logger))
+	r.Use(Logger)
 	r.Use(middleware.Recoverer)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.User.BasicAuth)
@@ -173,4 +174,35 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	if available {
 		w.WriteHeader(http.StatusNotFound)
 	}
+}
+
+// Logger is an http middleware that logs some information about requests
+// processed using zerolog.
+func Logger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
+		host, port, _ := net.SplitHostPort(r.RemoteAddr)
+		defer func() {
+			var event *zerolog.Event
+			if ww.Status() < 500 {
+				event = log.Info()
+			} else {
+				event = log.Error()
+			}
+			event.
+				Fields(map[string]interface{}{
+					"host":      host,
+					"port":      port,
+					"method":    r.Method,
+					"status":    ww.Status(),
+					"took":      float64(time.Since(start)) / 1e6,
+					"bytes_in":  r.Header.Get("Content-Length"),
+					"bytes_out": ww.BytesWritten(),
+				}).
+				Timestamp().
+				Msg(r.URL.Path)
+		}()
+		next.ServeHTTP(ww, r)
+	})
 }
