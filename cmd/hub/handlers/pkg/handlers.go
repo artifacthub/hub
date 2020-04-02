@@ -51,7 +51,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	helpers.RenderJSON(w, jsonData, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, jsonData, 0)
 }
 
 // GetStats is an http handler used to get some stats about packages registered
@@ -75,7 +75,7 @@ func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, jsonData, 0)
 }
 
 // Search is an http handler used to searchPackages for packages in the hub
@@ -93,7 +93,18 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, jsonData, 0)
+}
+
+// ToggleStar is an http handler used to toggle the star on a given package.
+func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	err := h.hubAPI.Packages.ToggleStar(r.Context(), packageID)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
 }
 
 // buildSearchInput builds a packages search query from a map of query string

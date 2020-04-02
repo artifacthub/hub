@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(54);
+select plan(55);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -26,6 +26,7 @@ select tables_are(array[
     'session',
     'snapshot',
     'user',
+    'user_starred_package',
     'user__organization',
     'version_functions',
     'version_schema'
@@ -85,6 +86,7 @@ select columns_are('package', array[
     'latest_version',
     'created_at',
     'updated_at',
+    'stars',
     'tsdoc',
     'package_kind_id',
     'user_id',
@@ -125,6 +127,10 @@ select columns_are('user', array[
     'password',
     'created_at'
 ]);
+select columns_are('user_starred_package', array[
+    'user_id',
+    'package_id'
+]);
 select columns_are('user__organization', array[
     'user_id',
     'organization_id',
@@ -156,6 +162,7 @@ select indexes_are('package', array[
     'package_tsdoc_idx',
     'package_created_at_idx',
     'package_updated_at_idx',
+    'package_stars_idx',
     'package_user_id_idx',
     'package_organization_id_idx'
 ]);

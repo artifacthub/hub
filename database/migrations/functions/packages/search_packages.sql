@@ -25,6 +25,7 @@ begin
             p.description,
             p.logo_image_id,
             p.deprecated,
+            p.stars,
             s.version,
             s.app_version,
             o.name as organization_name,
@@ -75,6 +76,7 @@ begin
                         'description', description,
                         'logo_image_id', logo_image_id,
                         'deprecated', deprecated,
+                        'stars', stars,
                         'version', version,
                         'app_version', app_version,
                         'chart_repository', (select nullif(

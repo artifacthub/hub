@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"context"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/rs/zerolog"
@@ -22,14 +24,15 @@ func TestMain(m *testing.M) {
 }
 
 func TestGet(t *testing.T) {
-	dbQuery := "select get_package($1::jsonb)"
+	dbQuery := "select get_package($1::uuid, $2::jsonb)"
 
 	t.Run("non existing package", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, pkg.ErrNotFound)
+		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, pkg.ErrNotFound)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -40,10 +43,11 @@ func TestGet(t *testing.T) {
 
 	t.Run("existing package", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -52,17 +56,18 @@ func TestGet(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -126,7 +131,7 @@ func TestGetUpdates(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.db.AssertExpectations(t)
 	})
@@ -193,7 +198,7 @@ func TestSearch(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.db.AssertExpectations(t)
 	})
@@ -205,6 +210,40 @@ func TestSearch(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		hw.h.Search(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+}
+
+func TestToggleStar(t *testing.T) {
+	dbQuery := "select toggle_star($1::uuid, $2::uuid)"
+
+	t.Run("valid request", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.ToggleStar(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.ToggleStar(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

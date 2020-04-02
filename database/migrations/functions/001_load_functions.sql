@@ -18,6 +18,7 @@
 {{ template "packages/register_package.sql" }}
 {{ template "packages/search_packages.sql" }}
 {{ template "packages/semver_gte.sql" }}
+{{ template "packages/toggle_star.sql" }}
 
 {{ template "chart_repositories/add_chart_repository.sql" }}
 {{ template "chart_repositories/delete_chart_repository.sql" }}
