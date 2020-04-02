@@ -23,6 +23,7 @@ import FalcoInstall from './FalcoInstall';
 import ModalHeader from './ModalHeader';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
+import StarButton from './StarButton';
 
 interface Props {
   isLoadingPackage: boolean;
@@ -55,27 +56,30 @@ const PackageView = (props: Props) => {
     }
   }, [props, isLoadingPackage]);
 
+  async function fetchPackageDetail() {
+    try {
+      setDetail(
+        await API.getPackage({
+          repoName: repoName,
+          packageName: packageName,
+          version: version,
+          packageKind: packageKind,
+        })
+      );
+      setIsLoadingPackage(false);
+    } catch {
+      setDetail(null);
+      setIsLoadingPackage(false);
+    }
+  }
+
   useEffect(() => {
     setIsLoadingPackage(true);
-    async function fetchPackageDetail() {
-      try {
-        setDetail(
-          await API.getPackage({
-            repoName: repoName,
-            packageName: packageName,
-            version: version,
-            packageKind: packageKind,
-          })
-        );
-        setIsLoadingPackage(false);
-      } catch {
-        setDetail(null);
-        setIsLoadingPackage(false);
-      }
-    }
     fetchPackageDetail();
     window.scrollTo(0, 0); // Scroll to top when a new version is loaded
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [repoName, packageName, version, packageKind, setIsLoadingPackage]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     return () => {
@@ -181,73 +185,87 @@ const PackageView = (props: Props) => {
             {!isNull(detail) && (
               <div className={`jumbotron ${styles.jumbotron}`}>
                 <div className="container">
-                  <div className="d-flex align-items-center mb-3">
-                    <div
-                      className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
-                    >
-                      <Image
-                        className={styles.image}
-                        alt={detail.displayName || detail.name}
-                        imageId={detail.logoImageId}
-                      />
-                    </div>
-
-                    <div className="ml-3">
-                      <div className="d-flex flex-row align-items-center">
-                        <div className="h3 mb-0">{detail.displayName || detail.name}</div>
-                        {!isNull(detail.deprecated) && detail.deprecated && (
-                          <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
-                            Deprecated
-                          </div>
-                        )}
+                  <div className="d-flex align-items-start mb-3">
+                    <div className="d-flex align-items-center">
+                      <div
+                        className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
+                      >
+                        <Image
+                          className={styles.image}
+                          alt={detail.displayName || detail.name}
+                          imageId={detail.logoImageId}
+                        />
                       </div>
 
-                      {(() => {
-                        switch (detail.kind) {
-                          case PackageKind.Chart:
-                            return (
-                              <>
-                                <small className="mr-1 text-muted text-uppercase">Repository: </small>
-                                <Link
-                                  data-testid="link"
-                                  to={{
-                                    pathname: '/packages/search',
-                                    search: prepareQueryString({
-                                      pageNumber: 1,
-                                      filters: {
-                                        repo: [detail.chartRepository!.name],
-                                      },
-                                      deprecated: false,
-                                    }),
-                                  }}
-                                >
-                                  <u className="text-dark">
-                                    {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                  </u>
-                                </Link>
-                              </>
-                            );
-                          case PackageKind.Falco:
-                          case PackageKind.Opa:
-                            return (
-                              <div>
-                                {!isUndefined(detail.organizationName) && detail.organizationName && (
-                                  <>
-                                    <small className="mr-1 text-uppercase text-muted">Organization: </small>
-                                    {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
-                                      <>{detail.organizationDisplayName}</>
-                                    ) : (
-                                      <>{detail.organizationName}</>
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                            );
+                      <div className="ml-3">
+                        <div className="d-flex flex-row align-items-center">
+                          <div className="h3 mb-0">{detail.displayName || detail.name}</div>
+                          {!isNull(detail.deprecated) && detail.deprecated && (
+                            <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
+                              Deprecated
+                            </div>
+                          )}
+                        </div>
 
-                          default:
-                            return null;
-                        }
-                      })()}
+                        {(() => {
+                          switch (detail.kind) {
+                            case PackageKind.Chart:
+                              return (
+                                <>
+                                  <small className="mr-1 text-muted text-uppercase">Repository: </small>
+                                  <Link
+                                    data-testid="link"
+                                    to={{
+                                      pathname: '/packages/search',
+                                      search: prepareQueryString({
+                                        pageNumber: 1,
+                                        filters: {
+                                          repo: [detail.chartRepository!.name],
+                                        },
+                                        deprecated: false,
+                                      }),
+                                    }}
+                                  >
+                                    <u className="text-dark">
+                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
+                                    </u>
+                                  </Link>
+                                </>
+                              );
+                            case PackageKind.Falco:
+                            case PackageKind.Opa:
+                              return (
+                                <div>
+                                  {!isUndefined(detail.organizationName) && detail.organizationName && (
+                                    <>
+                                      <small className="mr-1 text-uppercase text-muted">Organization: </small>
+                                      {!isUndefined(detail.organizationDisplayName) &&
+                                      detail.organizationDisplayName ? (
+                                        <>{detail.organizationDisplayName}</>
+                                      ) : (
+                                        <>{detail.organizationName}</>
+                                      )}
+                                    </>
+                                  )}
+                                </div>
+                              );
+
+                            default:
+                              return null;
+                          }
+                        })()}
+                      </div>
+                    </div>
+
+                    <div className="ml-auto position-relative">
+                      {!isUndefined(detail.stars) && !isNull(detail.stars) && (
+                        <StarButton
+                          stars={detail.stars}
+                          starredByUser={detail.starredByUser}
+                          packageId={detail.packageId}
+                          onSuccess={fetchPackageDetail}
+                        />
+                      )}
                     </div>
                   </div>
 

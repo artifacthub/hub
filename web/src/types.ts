@@ -43,6 +43,8 @@ export interface Package {
   organizationName?: string | null;
   organizationDisplayName?: string | null;
   links?: PackageLink[];
+  stars?: number | null;
+  starredByUser?: boolean;
 }
 
 export interface PackageData {

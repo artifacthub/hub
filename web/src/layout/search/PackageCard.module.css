@@ -83,6 +83,16 @@
   font-size: 0.5rem !important;
 }
 
+.starBadge {
+  font-size: 90%;
+  background-color: var(--color-1-5);
+  border: 1px solid var(--color-1-10);
+}
+
+.starBadgeNumber {
+  margin-bottom: 1px;
+}
+
 @media only screen and (max-width: 768px) {
   .imageWrapper {
     min-width: 40px;

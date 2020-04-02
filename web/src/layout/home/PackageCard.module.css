@@ -68,3 +68,12 @@
 .truncateWrapper {
   min-width: 0;
 }
+
+.starBadge {
+  background-color: var(--color-1-5);
+  border: 1px solid var(--color-1-10);
+}
+
+.starBadgeNumber {
+  margin-top: 1px;
+}

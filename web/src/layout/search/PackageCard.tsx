@@ -1,11 +1,13 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
+import { FaStar } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
+import prettifyNumber from '../../utils/prettifyNumber';
 import Image from '../common/Image';
 import PackageIcon from '../common/PackageIcon';
 import styles from './PackageCard.module.css';
@@ -133,6 +135,14 @@ const PackageCard = (props: Props) => {
               </div>
 
               <div className={`d-flex align-items-center text-uppercase ${styles.kind}`}>
+                {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
+                  <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
+                    <div className="d-flex align-items-center">
+                      <FaStar className="mr-1" />
+                      <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
+                    </div>
+                  </span>
+                )}
                 <PackageIcon className={styles.icon} kind={props.package.kind} />
               </div>
             </div>
