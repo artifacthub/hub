@@ -79,15 +79,15 @@ begin
                         'stars', stars,
                         'version', version,
                         'app_version', app_version,
+                        'organization_name', organization_name,
+                        'organization_display_name', organization_display_name,
                         'chart_repository', (select nullif(
                             jsonb_build_object(
                                 'name', chart_repository_name,
                                 'display_name', chart_repository_display_name
                             ),
                             '{"name": null, "display_name": null}'::jsonb
-                        )),
-                        'organization_name', organization_name,
-                        'organization_display_name', organization_display_name
+                        ))
                     )), '[]')
                     from (
                         select * from packages_applying_all_filters

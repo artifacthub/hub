@@ -40,6 +40,13 @@ func (m *Manager) GetJSON(ctx context.Context, input *GetInput) ([]byte, error) 
 	return dataJSON, nil
 }
 
+// GetStarredByUserJSON returns a json object with packages starred by the user
+// doing the request. The json object is built by the database.
+func (m *Manager) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	return m.dbQueryJSON(ctx, "select get_packages_starred_by_user($1::uuid)", userID)
+}
+
 // GetStatsJSON returns a json object describing the number of packages and
 // releases available in the database. The json object is built by the database.
 func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {

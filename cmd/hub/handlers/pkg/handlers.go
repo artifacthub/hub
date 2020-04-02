@@ -54,6 +54,18 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, jsonData, 0)
 }
 
+// GetStarredByUser is an http handler used to get the packages starred by the
+// user doing the request.
+func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
+	jsonData, err := h.hubAPI.Packages.GetStarredByUserJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetStarredByUser").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	helpers.RenderJSON(w, jsonData, 0)
+}
+
 // GetStats is an http handler used to get some stats about packages registered
 // in the hub database.
 func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {

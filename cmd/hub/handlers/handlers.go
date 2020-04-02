@@ -72,6 +72,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/updates", h.Packages.GetUpdates)
 			r.Get("/search", h.Packages.Search)
+			r.With(h.User.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 		})
 		r.Route("/package", func(r chi.Router) {
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
