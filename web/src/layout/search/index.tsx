@@ -14,11 +14,11 @@ import { Facets, Package, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
+import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
 import Sidebar from '../common/Sidebar';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
-import PackageCard from './PackageCard';
 import PaginationLimit from './PaginationLimit';
 import styles from './SearchView.module.css';
 

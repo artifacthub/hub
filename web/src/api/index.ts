@@ -297,4 +297,8 @@ export const API = {
   confirmOrganizationMembership: (organizationName: string): Promise<null> => {
     return apiFetch(`${API_BASE_URL}/org/${organizationName}/accept-invitation`);
   },
+
+  getStarredByUser: (): Promise<Package[]> => {
+    return apiFetch(`${API_BASE_URL}/packages/starred`);
+  },
 };

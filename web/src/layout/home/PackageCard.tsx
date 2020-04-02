@@ -117,7 +117,7 @@ const PackageCard = (props: Props) => {
                 <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
                   <div className="d-flex align-items-center">
                     <FaStar className="mr-1" />
-                    <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
+                    <div>{prettifyNumber(props.package.stars)}</div>
                   </div>
                 </span>
               )}

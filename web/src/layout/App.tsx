@@ -19,6 +19,7 @@ import Navbar from './navigation/Navbar';
 import NotFound from './notFound';
 import PackageView from './package';
 import SearchView from './search';
+import StarredPackagesView from './starredPackages';
 
 const getQueryParam = (query: string, param: string): string | undefined => {
   let result;
@@ -108,6 +109,19 @@ export default function App() {
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
                     <ControlPanelView {...match.params} />
+                  </div>
+                </>
+              )}
+            />
+
+            <Route
+              path="/user/packages/starred"
+              exact
+              render={() => (
+                <>
+                  <Navbar isSearching={isSearching} privateRoute />
+                  <div className="d-flex flex-column flex-grow-1">
+                    <StarredPackagesView />
                   </div>
                 </>
               )}
