@@ -37,6 +37,40 @@ func TestGetJSON(t *testing.T) {
 	})
 }
 
+func TestGetStarredByUserJSON(t *testing.T) {
+	dbQuery := "select get_packages_starred_by_user($1::uuid)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_, _ = m.GetStarredByUserJSON(context.Background())
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetStarredByUserJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetStarredByUserJSON(ctx)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetStatsJSON(t *testing.T) {
 	dbQuery := "select get_packages_stats()"
 

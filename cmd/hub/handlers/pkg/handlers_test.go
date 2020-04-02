@@ -77,6 +77,45 @@ func TestGet(t *testing.T) {
 	})
 }
 
+func TestGetStarredByUser(t *testing.T) {
+	dbQuery := "select get_packages_starred_by_user($1::uuid)"
+
+	t.Run("valid request", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.GetStarredByUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.GetStarredByUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+}
+
 func TestGetStats(t *testing.T) {
 	dbQuery := "select get_packages_stats()"
 
