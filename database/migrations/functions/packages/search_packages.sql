@@ -91,7 +91,7 @@ begin
                     )), '[]')
                     from (
                         select * from packages_applying_all_filters
-                        order by name asc
+                        order by stars desc, name asc
                         limit (p_input->>'limit')::int
                         offset (p_input->>'offset')::int
                     ) packages_applying_all_filters_paginated
