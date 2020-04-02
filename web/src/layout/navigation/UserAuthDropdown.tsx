@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React, { useContext, useRef, useState } from 'react';
-import { FaCaretDown, FaUser } from 'react-icons/fa';
+import { FaCaretDown, FaCog, FaStar, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -45,11 +45,27 @@ const UserAuthDropdown = (props: Props) => {
         <Link
           className="dropdown-item"
           to={{
+            pathname: '/user/packages/starred',
+          }}
+          onClick={() => setOpenStatus(false)}
+        >
+          <div className="d-flex align-items-center">
+            <FaStar className="mr-2" />
+            <div>Starred packages</div>
+          </div>
+        </Link>
+
+        <Link
+          className="dropdown-item"
+          to={{
             pathname: '/control-panel',
           }}
           onClick={() => setOpenStatus(false)}
         >
-          Control Panel
+          <div className="d-flex align-items-center">
+            <FaCog className="mr-2" />
+            <div>Control Panel</div>
+          </div>
         </Link>
 
         <LogOut className="mb-2" onSuccess={() => setOpenStatus(false)} privateRoute={props.privateRoute} />

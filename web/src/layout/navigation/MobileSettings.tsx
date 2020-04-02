@@ -2,8 +2,9 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import Sidebar from '../common/Sidebar';
@@ -58,6 +59,19 @@ const MobileSettings = (props: Props) => {
               <>
                 {!isNull(ctx.user) ? (
                   <>
+                    <Link
+                      className="dropdown-item my-2"
+                      to={{
+                        pathname: '/user/packages/starred',
+                      }}
+                      onClick={() => setOpenSideBarStatus(false)}
+                    >
+                      <div className="d-flex align-items-center">
+                        <FaStar className="mr-2" />
+                        <div>Starred packages</div>
+                      </div>
+                    </Link>
+
                     {/* TODO - Control panel mobile version */}
                     {/* <Link
                       className="dropdown-item my-2"
@@ -66,7 +80,10 @@ const MobileSettings = (props: Props) => {
                       }}
                       onClick={() => setOpenSideBarStatus(false)}
                     >
-                      Control Panel
+                      <div className="d-flex align-items-center">
+                        <FaCog className="mr-2" />
+                        <div>Control Panel</div>
+                      </div>
                     </Link> */}
 
                     <LogOut

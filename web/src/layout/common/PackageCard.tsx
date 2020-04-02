@@ -8,13 +8,13 @@ import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
-import Image from '../common/Image';
-import PackageIcon from '../common/PackageIcon';
+import Image from './Image';
 import styles from './PackageCard.module.css';
+import PackageIcon from './PackageIcon';
 
 interface Props {
   package: Package;
-  saveScrollPosition: () => void;
+  saveScrollPosition?: () => void;
   searchUrlReferer: SearchFiltersURL | null;
 }
 
@@ -26,7 +26,11 @@ const PackageCard = (props: Props) => {
         <Link
           data-testid="link"
           className={`text-decoration-none ${styles.link}`}
-          onClick={props.saveScrollPosition}
+          onClick={() => {
+            if (!isUndefined(props.saveScrollPosition)) {
+              props.saveScrollPosition();
+            }
+          }}
           to={{
             pathname: buildPackageURL(props.package),
             state: props.searchUrlReferer,

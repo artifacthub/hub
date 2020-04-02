@@ -1,6 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
+import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
@@ -51,7 +52,10 @@ const LogOut = (props: Props) => {
             <span className="ml-2">Signing out...</span>
           </>
         ) : (
-          <>Sign out</>
+          <div className="d-flex align-items-center">
+            <FaSignOutAlt className="mr-2" />
+            <div>Sign out</div>
+          </div>
         )}
       </button>
 
