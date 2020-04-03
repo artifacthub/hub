@@ -47,8 +47,8 @@ select is_empty(
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
+insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
 insert into maintainer (maintainer_id, name, email)
 values (:'maintainer1ID', 'name1', 'email1');
 insert into maintainer (maintainer_id, name, email)
@@ -195,6 +195,7 @@ select is(
                 "email": "email2"
             }
         ],
+        "user_alias": "user1",
         "organization_name": null,
         "organization_display_name": null,
         "chart_repository": {
@@ -247,6 +248,7 @@ select is(
                 "email": "email2"
             }
         ],
+        "user_alias": "user1",
         "organization_name": null,
         "organization_display_name": null,
         "chart_repository": {
@@ -285,6 +287,7 @@ select is(
         "app_version": null,
         "available_versions": ["1.0.0"],
         "maintainers": null,
+        "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",
         "chart_repository": null

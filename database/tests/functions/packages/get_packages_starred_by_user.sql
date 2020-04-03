@@ -122,6 +122,7 @@ select is(
         "display_name": "Package 1",
         "deprecated": null,
         "stars": 10,
+        "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",
         "chart_repository": null

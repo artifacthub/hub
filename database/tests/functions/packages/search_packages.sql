@@ -3,6 +3,7 @@ begin;
 select plan(18);
 
 -- Declare some variables
+\set user1ID '00000000-0000-0000-0000-000000000001'
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
@@ -33,12 +34,13 @@ select is(
 );
 
 -- Seed some data
+insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
+insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
+insert into chart_repository (chart_repository_id, name, display_name, url, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', :'org1ID');
 insert into package (
     package_id,
     name,
@@ -204,8 +206,9 @@ select is(
                 "display_name": "Package 2",
                 "deprecated": true,
                 "stars": 11,
-                "organization_name": null,
-                "organization_display_name": null,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -223,6 +226,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -241,6 +245,7 @@ select is(
                 "display_name": "Package 3",
                 "deprecated": null,
                 "stars": 0,
+                "user_alias": null,
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": null
@@ -299,8 +304,9 @@ select is(
                 "display_name": "Package 2",
                 "deprecated": true,
                 "stars": 11,
-                "organization_name": null,
-                "organization_display_name": null,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -318,6 +324,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -374,6 +381,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -446,6 +454,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -484,6 +493,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -525,8 +535,9 @@ select is(
                 "display_name": "Package 2",
                 "deprecated": true,
                 "stars": 11,
-                "organization_name": null,
-                "organization_display_name": null,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -718,8 +729,9 @@ select is(
                 "display_name": "Package 2",
                 "deprecated": true,
                 "stars": 11,
-                "organization_name": null,
-                "organization_display_name": null,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -737,6 +749,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
@@ -775,8 +788,9 @@ select is(
                 "display_name": "Package 2",
                 "deprecated": true,
                 "stars": 11,
-                "organization_name": null,
-                "organization_display_name": null,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
                     "name": "repo2",
                     "display_name": "Repo 2"
@@ -833,6 +847,7 @@ select is(
                 "display_name": "Package 1",
                 "deprecated": null,
                 "stars": 10,
+                "user_alias": "user1",
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {

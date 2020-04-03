@@ -14,6 +14,7 @@ returns setof json as $$
                 'stars', stars,
                 'version', version,
                 'app_version', app_version,
+                'user_alias', user_alias,
                 'organization_name', organization_name,
                 'organization_display_name', organization_display_name,
                 'chart_repository', (select nullif(
@@ -36,6 +37,7 @@ returns setof json as $$
                     p.stars,
                     s.version,
                     s.app_version,
+                    u.alias as user_alias,
                     o.name as organization_name,
                     o.display_name as organization_display_name,
                     r.chart_repository_id,
@@ -43,8 +45,10 @@ returns setof json as $$
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
-                left join organization o using (organization_id)
                 left join chart_repository r using (chart_repository_id)
+                left join "user" u on p.user_id = u.user_id or r.user_id = u.user_id
+                left join organization o
+                    on p.organization_id = o.organization_id or r.organization_id = o.organization_id
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)
                 order by p.created_at desc limit 5
@@ -61,6 +65,7 @@ returns setof json as $$
                 'stars', stars,
                 'version', version,
                 'app_version', app_version,
+                'user_alias', user_alias,
                 'organization_name', organization_name,
                 'organization_display_name', organization_display_name,
                 'chart_repository', (select nullif(
@@ -83,6 +88,7 @@ returns setof json as $$
                     p.stars,
                     s.version,
                     s.app_version,
+                    u.alias as user_alias,
                     o.name as organization_name,
                     o.display_name as organization_display_name,
                     r.chart_repository_id,
@@ -90,8 +96,10 @@ returns setof json as $$
                     r.display_name as chart_repository_display_name
                 from package p
                 join snapshot s using (package_id)
-                left join organization o using (organization_id)
                 left join chart_repository r using (chart_repository_id)
+                left join "user" u on p.user_id = u.user_id or r.user_id = u.user_id
+                left join organization o
+                    on p.organization_id = o.organization_id or r.organization_id = o.organization_id
                 where s.version = p.latest_version
                 and (p.deprecated is null or p.deprecated = false)
                 order by updated_at desc limit 5
