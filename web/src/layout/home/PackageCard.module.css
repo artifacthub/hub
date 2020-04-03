@@ -60,7 +60,6 @@
 }
 
 .kind {
-  min-width: 20px;
   font-size: 0.9rem;
   color: var(--color-1-500);
 }

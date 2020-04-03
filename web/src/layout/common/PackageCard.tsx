@@ -69,12 +69,32 @@ const PackageCard = (props: Props) => {
                       <>
                         <div className="mr-2 text-truncate">
                           <span className="text-muted text-uppercase mr-1">Org:</span>
-                          {!isUndefined(props.package.organizationDisplayName) &&
-                          props.package.organizationDisplayName ? (
-                            <>{props.package.organizationDisplayName}</>
-                          ) : (
-                            <>{props.package.organizationName}</>
-                          )}
+                          <button
+                            data-testid="orgLink"
+                            className={`p-0 border-0 ${styles.link}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: {
+                                    org: [props.package.organizationName!],
+                                  },
+                                  deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
+                                }),
+                              });
+                            }}
+                          >
+                            <u>
+                              {!isUndefined(props.package.organizationDisplayName) &&
+                              props.package.organizationDisplayName ? (
+                                <>{props.package.organizationDisplayName}</>
+                              ) : (
+                                <>{props.package.organizationName}</>
+                              )}
+                            </u>
+                          </button>
                         </div>
                       </>
                     )}
@@ -82,7 +102,25 @@ const PackageCard = (props: Props) => {
                     {!isNull(props.package.userAlias) && (
                       <div className="mr-2 text-truncate">
                         <span className="text-muted text-uppercase mr-1">User:</span>
-                        {props.package.userAlias}
+                        <button
+                          data-testid="userLink"
+                          className={`p-0 border-0 ${styles.link}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            history.push({
+                              pathname: '/packages/search',
+                              search: prepareQueryString({
+                                pageNumber: 1,
+                                filters: {
+                                  user: [props.package.userAlias!],
+                                },
+                                deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
+                              }),
+                            });
+                          }}
+                        >
+                          <u>{props.package.userAlias}</u>
+                        </button>
                       </div>
                     )}
 

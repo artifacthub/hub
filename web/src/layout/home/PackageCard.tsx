@@ -28,7 +28,7 @@ const PackageCard = (props: Props) => {
         }}
       >
         <div className={`card-body d-flex ${styles.body}`}>
-          <div className="d-flex align-items-start justify-content-between flex-grow-1">
+          <div className="d-flex align-items-start justify-content-between flex-grow-1 mw-100">
             <div className={`d-flex align-items-center flex-grow-1 h-100 ${styles.truncateWrapper}`}>
               <div
                 className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
@@ -48,19 +48,56 @@ const PackageCard = (props: Props) => {
                 <div className={`card-subtitle align-items-center ${styles.subtitle}`}>
                   {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                     <div className="text-truncate">
-                      <span className="text-muted text-uppercase mr-1">Organization: </span>
-                      {!isUndefined(props.package.organizationDisplayName) && props.package.organizationDisplayName ? (
-                        <>{props.package.organizationDisplayName}</>
-                      ) : (
-                        <>{props.package.organizationName}</>
-                      )}
+                      <span className="text-muted text-uppercase mr-1">Org: </span>
+                      <button
+                        className={`p-0 border-0 ${styles.link}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          history.push({
+                            pathname: '/packages/search',
+                            search: prepareQueryString({
+                              pageNumber: 1,
+                              filters: {
+                                org: [props.package.organizationName!],
+                              },
+                              deprecated: false,
+                            }),
+                          });
+                        }}
+                      >
+                        <u>
+                          {!isUndefined(props.package.organizationDisplayName) &&
+                          props.package.organizationDisplayName ? (
+                            <>{props.package.organizationDisplayName}</>
+                          ) : (
+                            <>{props.package.organizationName}</>
+                          )}
+                        </u>
+                      </button>
                     </div>
                   )}
 
                   {!isNull(props.package.userAlias) && (
                     <div className="mr-2 text-truncate">
                       <span className="text-muted text-uppercase mr-1">User:</span>
-                      {props.package.userAlias}
+                      <button
+                        className={`p-0 border-0 ${styles.link}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          history.push({
+                            pathname: '/packages/search',
+                            search: prepareQueryString({
+                              pageNumber: 1,
+                              filters: {
+                                user: [props.package.userAlias!],
+                              },
+                              deprecated: false,
+                            }),
+                          });
+                        }}
+                      >
+                        <u>{props.package.userAlias}</u>
+                      </button>
                     </div>
                   )}
 
@@ -70,7 +107,7 @@ const PackageCard = (props: Props) => {
                         return (
                           <>
                             <div className="mr-2 text-truncate">
-                              <span className="text-muted text-uppercase mr-1">Repository: </span>
+                              <span className="text-muted text-uppercase mr-1">Repo: </span>
                               <button
                                 className={`p-0 border-0 ${styles.link}`}
                                 onClick={(e) => {

@@ -18,7 +18,7 @@ interface Props {
 }
 
 const SPECIAL_REPOS = ['Incubator', 'Stable'];
-const DEFAULT_VISIBLE_ITEMS = 10;
+const DEFAULT_VISIBLE_ITEMS = 5;
 
 const Facet = (props: Props) => {
   const [visibleOptions, setVisibleOptions] = useState(DEFAULT_VISIBLE_ITEMS);
