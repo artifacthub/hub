@@ -15,7 +15,8 @@ import PackageIcon from './PackageIcon';
 interface Props {
   package: Package;
   saveScrollPosition?: () => void;
-  searchUrlReferer: SearchFiltersURL | null;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const PackageCard = (props: Props) => {
@@ -33,7 +34,7 @@ const PackageCard = (props: Props) => {
           }}
           to={{
             pathname: buildPackageURL(props.package),
-            state: props.searchUrlReferer,
+            state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
           }}
         >
           <div className={`card-body ${styles.body}`}>
@@ -85,7 +86,6 @@ const PackageCard = (props: Props) => {
                                         },
                                         deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
                                       }),
-                                      state: { fromSearchCard: true },
                                     });
                                   }}
                                 >

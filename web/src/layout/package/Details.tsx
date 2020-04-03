@@ -9,7 +9,8 @@ import Version from './Version';
 
 interface Props {
   package: Package;
-  searchUrlReferer: SearchFiltersURL | null;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const Details = (props: Props) => {
@@ -37,6 +38,7 @@ const Details = (props: Props) => {
         version: av_version,
       }}
       searchUrlReferer={props.searchUrlReferer}
+      fromStarredPage={props.fromStarredPage}
     />
   ));
 

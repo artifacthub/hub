@@ -93,7 +93,7 @@ export default function App() {
                     <PackageView
                       isLoadingPackage={isLoadingPackage}
                       setIsLoadingPackage={setIsLoadingPackage}
-                      searchUrlReferer={location.state || null}
+                      {...location.state}
                       {...match.params}
                     />
                   </div>

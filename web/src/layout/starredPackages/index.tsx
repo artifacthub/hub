@@ -59,7 +59,7 @@ const StarredPackagesView = () => {
                 ) : (
                   <>
                     {packages.map((item: Package) => (
-                      <PackageCard key={item.packageId} package={item} searchUrlReferer={null} />
+                      <PackageCard key={item.packageId} package={item} fromStarredPage={true} />
                     ))}
                   </>
                 )}

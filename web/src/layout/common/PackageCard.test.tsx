@@ -119,7 +119,6 @@ describe('PackageCard', () => {
           },
           deprecated: false,
         }),
-        state: { fromSearchCard: true },
       });
     });
 
