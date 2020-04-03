@@ -4,12 +4,18 @@ create or replace function search_packages(p_input jsonb)
 returns setof json as $$
 declare
     v_package_kinds int[];
+    v_users text[];
+    v_orgs text[];
     v_chart_repositories text[];
     v_facets boolean := (p_input->>'facets')::boolean;
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_package_kinds
     from jsonb_array_elements_text(p_input->'package_kinds') e;
+    select array_agg(e::text) into v_users
+    from jsonb_array_elements_text(p_input->'users') e;
+    select array_agg(e::text) into v_orgs
+    from jsonb_array_elements_text(p_input->'orgs') e;
     select array_agg(e::text) into v_chart_repositories
     from jsonb_array_elements_text(p_input->'chart_repositories') e;
 
@@ -57,6 +63,12 @@ begin
             case when cardinality(v_package_kinds) > 0
             then package_kind_id = any(v_package_kinds) else true end
         and
+            case when cardinality(v_users) > 0
+            then user_alias = any(v_users) else true end
+        and
+            case when cardinality(v_orgs) > 0
+            then organization_name = any(v_orgs) else true end
+        and
             case when cardinality(v_chart_repositories) > 0
             then chart_repository_name = any(v_chart_repositories) else true end
         and
@@ -102,6 +114,51 @@ begin
                 ),
                 'facets', case when v_facets then (
                     select json_build_array(
+                        (
+                            select json_build_object(
+                                'title', 'Organization',
+                                'filter_key', 'org',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', organization_name,
+                                        'name', organization_display_name,
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select
+                                            organization_name,
+                                            organization_display_name,
+                                            count(*) as total
+                                        from packages_applying_text_and_deprecated_filters
+                                        where organization_name is not null
+                                        group by organization_name, organization_display_name
+                                        order by total desc
+                                    ) as breakdown
+                                )
+                            )
+                        ),
+                        (
+                            select json_build_object(
+                                'title', 'User',
+                                'filter_key', 'user',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', user_alias,
+                                        'name', user_alias,
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select
+                                            user_alias,
+                                            count(*) as total
+                                        from packages_applying_text_and_deprecated_filters
+                                        where user_alias is not null
+                                        group by user_alias
+                                        order by total desc
+                                    ) as breakdown
+                                )
+                            )
+                        ),
                         (
                             select json_build_object(
                                 'title', 'Kind',
