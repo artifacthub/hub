@@ -24,7 +24,7 @@ const mockSaveScrollPosition = jest.fn();
 
 const defaultProps = {
   saveScrollPosition: mockSaveScrollPosition,
-  searchUrlReferer: null,
+  searchUrlReferer: undefined,
 };
 
 describe('PackageCard', () => {
@@ -125,12 +125,12 @@ describe('PackageCard', () => {
     it('does not render repository link when chart kind is not Helm Chart', () => {
       const mockPackage = getMockPackage('7');
 
-      const { queryByRole } = render(
+      const { queryByTestId } = render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const button = queryByRole('button');
+      const button = queryByTestId('repoLink');
       expect(button).toBeNull();
     });
   });
