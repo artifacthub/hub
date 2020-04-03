@@ -12,6 +12,7 @@ import { AppCtxProvider } from '../context/AppCtx';
 import buildSearchParams from '../utils/buildSearchParams';
 import history from '../utils/history';
 import styles from './App.module.css';
+import AlertController from './common/AlertController';
 import Disclaimer from './common/Disclaimer';
 import ControlPanelView from './controlPanel';
 import HomeView from './home';
@@ -40,6 +41,7 @@ export default function App() {
       <Router history={history}>
         <div className="d-flex flex-column min-vh-100 position-relative">
           <Disclaimer />
+          <AlertController />
           <Switch>
             <Route
               path={['/', '/verify-email', '/login', '/accept-invitation']}

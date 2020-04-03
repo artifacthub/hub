@@ -10,6 +10,7 @@ import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { Organization } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import ExternalLink from '../../common/ExternalLink';
 import styles from './Card.module.css';
 
@@ -28,7 +29,6 @@ interface Props {
 const OrganizationCard = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [isLeaving, setIsLeaving] = useState(false);
-  const [apiLeaveError, setApiLeaveError] = useState<string | null>(null);
   const [isAccepting, setIsAccepting] = useState(false);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
@@ -41,7 +41,6 @@ const OrganizationCard = (props: Props) => {
   };
 
   const closeDropdown = () => {
-    setApiLeaveError(null);
     setOpenDropdownStatus(false);
   };
 
@@ -60,7 +59,11 @@ const OrganizationCard = (props: Props) => {
     } catch (err) {
       setIsLeaving(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        setApiLeaveError('An error occurred leaving the organization, please try again later');
+        closeDropdown();
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred leaving the organization, please try again later',
+        });
       } else {
         props.onAuthError();
       }
@@ -184,12 +187,6 @@ const OrganizationCard = (props: Props) => {
                     </div>
                   </button>
                 </div>
-
-                {!isNull(apiLeaveError) && (
-                  <div className="alert alert-danger mx-3" role="alert">
-                    {apiLeaveError}
-                  </div>
-                )}
               </div>
             </>
           ) : (

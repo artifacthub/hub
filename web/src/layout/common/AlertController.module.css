@@ -1,0 +1,6 @@
+.alert {
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  max-width: 350px;
+}

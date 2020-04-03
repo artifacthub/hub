@@ -12,16 +12,16 @@ const PackagesUpdates = () => {
   const [packagesUpdates, setPackagesUpdates] = useState<PackagesUpdatesList | undefined>(undefined);
 
   useEffect(() => {
-    setIsLoading(true);
     async function fetchPackagesUpdates() {
       try {
+        setIsLoading(true);
         setPackagesUpdates(await API.getPackagesUpdates());
+        setIsLoading(false);
       } catch {
         setPackagesUpdates({
           latestPackagesAdded: [],
           packagesRecentlyUpdated: [],
         });
-      } finally {
         setIsLoading(false);
       }
     }

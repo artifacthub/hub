@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
@@ -6,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
+import alertDispatcher from '../../utils/alertDispatcher';
 
 interface Props {
   onSuccess?: () => void;
@@ -17,7 +17,6 @@ const LogOut = (props: Props) => {
   const { dispatch } = useContext(AppCtx);
   const history = useHistory();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
 
   const logoutUser = async () => {
     try {
@@ -39,7 +38,10 @@ const LogOut = (props: Props) => {
           break;
       }
       setIsLoggingOut(false);
-      setApiError(error);
+      alertDispatcher.postAlert({
+        type: 'danger',
+        message: error,
+      });
     }
   };
 
@@ -58,12 +60,6 @@ const LogOut = (props: Props) => {
           </div>
         )}
       </button>
-
-      {!isNull(apiError) && (
-        <div className="alert alert-danger m-3" role="alert">
-          {apiError}
-        </div>
-      )}
     </>
   );
 };

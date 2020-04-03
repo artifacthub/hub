@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
+import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
 import styles from './StarButton.module.css';
 
@@ -37,7 +38,15 @@ const StarButton = (props: Props) => {
       props.onSuccess();
       setIsSending(false);
     } catch {
-      setIsSending(false); // TODO - display error??
+      setIsSending(false);
+      alertDispatcher.postAlert({
+        type: 'danger',
+        message: `An error occurred ${
+          !isLoggedIn || (isLoggedIn && !isUndefined(props.starredByUser) && !props.starredByUser)
+            ? 'staring'
+            : 'unstaring'
+        } the package, please try again later`,
+      });
     }
   }
 

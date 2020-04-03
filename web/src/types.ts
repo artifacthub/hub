@@ -156,3 +156,9 @@ export interface Organization {
 export interface RefInputField {
   checkIsValid: () => Promise<boolean>;
 }
+
+export interface Alert {
+  type: 'success' | 'danger' | 'warning';
+  message: string;
+  dismissOn?: number;
+}
