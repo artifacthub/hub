@@ -45,6 +45,7 @@ export interface Package {
   links?: PackageLink[];
   stars?: number | null;
   starredByUser?: boolean;
+  userAlias: string | null;
 }
 
 export interface PackageData {

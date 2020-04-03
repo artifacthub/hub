@@ -65,13 +65,34 @@ const PackageCard = (props: Props) => {
                   </div>
 
                   <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
+                    {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                      <>
+                        <div className="mr-2 text-truncate">
+                          <span className="text-muted text-uppercase mr-1">Org:</span>
+                          {!isUndefined(props.package.organizationDisplayName) &&
+                          props.package.organizationDisplayName ? (
+                            <>{props.package.organizationDisplayName}</>
+                          ) : (
+                            <>{props.package.organizationName}</>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    {!isNull(props.package.userAlias) && (
+                      <div className="mr-2 text-truncate">
+                        <span className="text-muted text-uppercase mr-1">User:</span>
+                        {props.package.userAlias}
+                      </div>
+                    )}
+
                     {(() => {
                       switch (props.package.kind) {
                         case PackageKind.Chart:
                           return (
                             <>
                               <div className="mr-2 text-truncate">
-                                <span className="text-muted text-uppercase mr-1">Repository: </span>
+                                <span className="text-muted text-uppercase mr-1">Repo:</span>
                                 <button
                                   data-testid="repoLink"
                                   className={`p-0 border-0 ${styles.link}`}
@@ -110,24 +131,10 @@ const PackageCard = (props: Props) => {
                         case PackageKind.Falco:
                         case PackageKind.Opa:
                           return (
-                            <>
-                              {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                <div className="mr-2 text-truncate">
-                                  <span className="text-muted text-uppercase mr-1">Organization: </span>
-                                  {!isUndefined(props.package.organizationDisplayName) &&
-                                  props.package.organizationDisplayName ? (
-                                    <>{props.package.organizationDisplayName}</>
-                                  ) : (
-                                    <>{props.package.organizationName}</>
-                                  )}
-                                </div>
-                              )}
-
-                              <div className="text-truncate">
-                                <span className="text-muted text-uppercase mr-1">Version: </span>
-                                {props.package.version || '-'}
-                              </div>
-                            </>
+                            <div className="text-truncate">
+                              <span className="text-muted text-uppercase mr-1">Version: </span>
+                              {props.package.version || '-'}
+                            </div>
                           );
 
                         default:
