@@ -8,7 +8,8 @@ interface Props {
   isActive: boolean;
   version: string;
   packageItem: Package;
-  searchUrlReferer: SearchFiltersURL | null;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const Version = (props: Props) => {
@@ -20,7 +21,7 @@ const Version = (props: Props) => {
 
     history.push({
       pathname: buildPackageURL(props.packageItem, true),
-      state: props.searchUrlReferer,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 

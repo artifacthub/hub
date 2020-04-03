@@ -28,7 +28,8 @@ import StarButton from './StarButton';
 interface Props {
   isLoadingPackage: boolean;
   setIsLoadingPackage: Dispatch<SetStateAction<boolean>>;
-  searchUrlReferer: SearchFiltersURL | null;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
   repoName: string;
   packageName: string;
   version?: string;
@@ -153,7 +154,7 @@ const PackageView = (props: Props) => {
 
   return (
     <>
-      {!isUndefined(text) && !isNull(props.searchUrlReferer) && (
+      {!isUndefined(text) && !isUndefined(props.searchUrlReferer) && (
         <SubNavbar>
           <button
             data-testid="goBack"
@@ -173,6 +174,26 @@ const PackageView = (props: Props) => {
           >
             <IoIosArrowBack className="mr-2" />
             Back to "<span className="font-weight-bold">{text}</span>" results
+          </button>
+        </SubNavbar>
+      )}
+
+      {!isUndefined(props.fromStarredPage) && props.fromStarredPage && (
+        <SubNavbar>
+          <button
+            data-testid="goBack"
+            className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
+            onClick={() => {
+              history.push({
+                pathname: '/user/packages/starred',
+                state: { fromDetail: true },
+              });
+            }}
+          >
+            <IoIosArrowBack className="mr-2" />
+            <div>
+              Back to <span className="font-weight-bold">starred packages</span>
+            </div>
           </button>
         </SubNavbar>
       )}
@@ -284,7 +305,11 @@ const PackageView = (props: Props) => {
                         header={<ModalHeader package={detail} />}
                         className={styles.wrapper}
                       >
-                        <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
+                        <Details
+                          package={detail}
+                          searchUrlReferer={props.searchUrlReferer}
+                          fromStarredPage={props.fromStarredPage}
+                        />
                       </Modal>
                     </div>
 
@@ -363,7 +388,11 @@ const PackageView = (props: Props) => {
 
                         <div className={`card shadow-sm position-relative ${styles.info}`}>
                           <div className="card-body">
-                            <Details package={detail} searchUrlReferer={props.searchUrlReferer} />
+                            <Details
+                              package={detail}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                            />
                           </div>
                         </div>
                       </>
