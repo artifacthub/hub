@@ -205,6 +205,8 @@ func TestSearch(t *testing.T) {
 			{"invalid facets", "facets=z"},
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
+			{"invalid user", "user="},
+			{"invalid organization", "org="},
 			{"invalid repo", "repo="},
 			{"invalid deprecated", "deprecated=z"},
 		}

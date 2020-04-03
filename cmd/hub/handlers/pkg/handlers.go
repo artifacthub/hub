@@ -165,11 +165,27 @@ func buildSearchInput(qs url.Values) (*pkg.SearchInput, error) {
 		kinds = append(kinds, hub.PackageKind(kind))
 	}
 
+	// Users
+	users := qs["user"]
+	for _, user := range users {
+		if user == "" {
+			return nil, errors.New("user alias cannot be empty")
+		}
+	}
+
+	// Organizations
+	orgs := qs["org"]
+	for _, org := range orgs {
+		if org == "" {
+			return nil, errors.New("organization name cannot be empty")
+		}
+	}
+
 	// Repos
 	repos := qs["repo"]
 	for _, repo := range repos {
 		if repo == "" {
-			return nil, fmt.Errorf("invalid repo: %s", repo)
+			return nil, errors.New("repo name cannot be empty")
 		}
 	}
 
@@ -189,6 +205,8 @@ func buildSearchInput(qs url.Values) (*pkg.SearchInput, error) {
 		Facets:            facets,
 		Text:              text,
 		PackageKinds:      kinds,
+		Users:             users,
+		Orgs:              orgs,
 		ChartRepositories: repos,
 		Deprecated:        deprecated,
 	}, nil

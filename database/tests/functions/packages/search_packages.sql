@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(18);
+select plan(20);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -251,6 +251,22 @@ select is(
                 "chart_repository": null
             }],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": [{
+                    "id": "org1",
+                    "name": "Organization 1",
+                    "total": 2
+                }]
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -333,6 +349,22 @@ select is(
                 }
             }],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": [{
+                    "id": "org1",
+                    "name": "Organization 1",
+                    "total": 1
+                }]
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -390,6 +422,18 @@ select is(
                 }
             }],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": []
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -474,6 +518,79 @@ select is(
 );
 select is(
     search_packages('{
+        "orgs": [
+            "org1"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "kind": 1,
+                "name": "package3",
+                "normalized_name": "package3",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                "package_id": "00000000-0000-0000-0000-000000000003",
+                "version": "1.0.0",
+                "app_version": null,
+                "description": "description",
+                "display_name": "Package 3",
+                "deprecated": null,
+                "stars": 0,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
+                "chart_repository": null
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'Text: missing Org: org1 | Package 3 expected - Facets not expected'
+);
+select is(
+    search_packages('{
+        "users": [
+            "user1"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "kind": 0,
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "description": "description",
+                "display_name": "Package 1",
+                "deprecated": null,
+                "stars": 10,
+                "user_alias": "user1",
+                "organization_name": null,
+                "organization_display_name": null,
+                "chart_repository": {
+                    "name": "repo1",
+                    "display_name": "Repo 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'Text: missing User: user1 | Package 1 expected - Facets not expected'
+);
+select is(
+    search_packages('{
         "text": "",
         "chart_repositories": [
             "repo1"
@@ -544,6 +661,22 @@ select is(
                 }
             }],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": [{
+                    "id": "org1",
+                    "name": "Organization 1",
+                    "total": 1
+                }]
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -587,6 +720,18 @@ select is(
         "data": {
             "packages": [],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": []
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -625,6 +770,18 @@ select is(
         "data": {
             "packages": [],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": []
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -662,6 +819,18 @@ select is(
         "data": {
             "packages": [],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": []
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
@@ -897,6 +1066,22 @@ select is(
         "data": {
             "packages": [],
             "facets": [{
+                "title": "Organization",
+                "filter_key": "org",
+                "options": [{
+                    "id": "org1",
+                    "name": "Organization 1",
+                    "total": 1
+                }]
+            }, {
+                "title": "User",
+                "filter_key": "user",
+                "options": [{
+                    "id": "user1",
+                    "name": "user1",
+                    "total": 1
+                }]
+            }, {
                 "title": "Kind",
                 "filter_key": "kind",
                 "options": [{
