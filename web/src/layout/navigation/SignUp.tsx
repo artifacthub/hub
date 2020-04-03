@@ -57,6 +57,7 @@ const SignUp = (props: Props) => {
     try {
       await API.register(user);
       setSuccess(true);
+      setIsLoading(false);
     } catch (err) {
       let error = 'An error occurred, please try again later';
       switch (err.status) {
@@ -65,7 +66,6 @@ const SignUp = (props: Props) => {
           break;
       }
       setApiError(error);
-    } finally {
       setIsLoading(false);
     }
   }

@@ -12,6 +12,7 @@ import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 import { ChartRepository } from '../../../../types';
+import alertDispatcher from '../../../../utils/alertDispatcher';
 import Modal from '../../../common/Modal';
 import styles from './Card.module.css';
 
@@ -30,7 +31,6 @@ interface Props {
 const ChartRepositoryCard = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [apiDeleteError, setApiDeleteError] = useState<string | null>(null);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
   const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
@@ -38,7 +38,6 @@ const ChartRepositoryCard = (props: Props) => {
     !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull(props.chartRepository.lastTrackingErrors);
 
   const closeDropdown = () => {
-    setApiDeleteError(null);
     setOpenDropdownStatus(false);
   };
 
@@ -98,7 +97,11 @@ const ChartRepositoryCard = (props: Props) => {
         setOpenDropdownStatus(false);
         props.onAuthError();
       } else {
-        setApiDeleteError('An error occurred, please try again later');
+        setOpenDropdownStatus(false);
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred deleting the chart repository, please try again later',
+        });
       }
     }
   }
@@ -182,12 +185,6 @@ const ChartRepositoryCard = (props: Props) => {
                 </div>
               </button>
             </div>
-
-            {!isNull(apiDeleteError) && (
-              <div className="alert alert-danger mx-3" role="alert">
-                {apiDeleteError}
-              </div>
-            )}
           </div>
         </div>
       </div>

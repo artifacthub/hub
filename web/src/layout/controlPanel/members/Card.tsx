@@ -10,6 +10,7 @@ import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { Member } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import styles from './Card.module.css';
 
 interface Props {
@@ -22,7 +23,6 @@ interface Props {
 const MemberCard = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [isDeletingMember, setIsDeletingMember] = useState(false);
-  const [apiDeleteMemberError, setApiDeleteMemberError] = useState<string | null>(null);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
 
@@ -32,7 +32,6 @@ const MemberCard = (props: Props) => {
   };
 
   const closeDropdown = () => {
-    setApiDeleteMemberError(null);
     setOpenDropdownStatus(false);
   };
 
@@ -52,7 +51,11 @@ const MemberCard = (props: Props) => {
     } catch (err) {
       setIsDeletingMember(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        setApiDeleteMemberError('An error occurred removing member from the organization, please try again later');
+        closeDropdown();
+        alertDispatcher.postAlert({
+          type: 'danger',
+          message: 'An error occurred removing member from the organization, please try again later',
+        });
       } else {
         props.onAuthError();
       }
@@ -153,12 +156,6 @@ const MemberCard = (props: Props) => {
                 </div>
               </button>
             </div>
-
-            {!isNull(apiDeleteMemberError) && (
-              <div className="alert alert-danger mx-3" role="alert">
-                {apiDeleteMemberError}
-              </div>
-            )}
           </div>
         </div>
       </div>
