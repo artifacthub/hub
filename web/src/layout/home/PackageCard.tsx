@@ -46,6 +46,24 @@ const PackageCard = (props: Props) => {
                 </div>
 
                 <div className={`card-subtitle align-items-center ${styles.subtitle}`}>
+                  {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                    <div className="text-truncate">
+                      <span className="text-muted text-uppercase mr-1">Organization: </span>
+                      {!isUndefined(props.package.organizationDisplayName) && props.package.organizationDisplayName ? (
+                        <>{props.package.organizationDisplayName}</>
+                      ) : (
+                        <>{props.package.organizationName}</>
+                      )}
+                    </div>
+                  )}
+
+                  {!isNull(props.package.userAlias) && (
+                    <div className="mr-2 text-truncate">
+                      <span className="text-muted text-uppercase mr-1">User:</span>
+                      {props.package.userAlias}
+                    </div>
+                  )}
+
                   {(() => {
                     switch (props.package.kind) {
                       case PackageKind.Chart:
@@ -85,23 +103,10 @@ const PackageCard = (props: Props) => {
                       case PackageKind.Falco:
                       case PackageKind.Opa:
                         return (
-                          <>
-                            {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                              <div className="text-truncate">
-                                <span className="text-muted text-uppercase mr-1">Organization: </span>
-                                {!isUndefined(props.package.organizationDisplayName) &&
-                                props.package.organizationDisplayName ? (
-                                  <>{props.package.organizationDisplayName}</>
-                                ) : (
-                                  <>{props.package.organizationName}</>
-                                )}
-                              </div>
-                            )}
-                            <div className="text-truncate">
-                              <span className="text-muted text-uppercase mr-1">Version: </span>
-                              {props.package.version || '-'}
-                            </div>
-                          </>
+                          <div className="text-truncate">
+                            <span className="text-muted text-uppercase mr-1">Version: </span>
+                            {props.package.version || '-'}
+                          </div>
                         );
 
                       default:
