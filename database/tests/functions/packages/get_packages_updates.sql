@@ -26,8 +26,8 @@ select is(
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com');
+insert into chart_repository (chart_repository_id, name, display_name, url, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', :'org1ID');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com');
 insert into package (
@@ -175,6 +175,7 @@ select is(
             "stars": 10,
             "version": "1.0.0",
             "app_version": null,
+            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
             "chart_repository": null
@@ -188,8 +189,9 @@ select is(
             "stars": 5,
             "version": "1.0.0",
             "app_version": "12.1.0",
-            "organization_name": null,
-            "organization_display_name": null,
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -206,6 +208,7 @@ select is(
             "stars": 10,
             "version": "1.0.0",
             "app_version": null,
+            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
             "chart_repository": null
@@ -219,8 +222,9 @@ select is(
             "stars": 5,
             "version": "1.0.0",
             "app_version": "12.1.0",
-            "organization_name": null,
-            "organization_display_name": null,
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -251,8 +255,6 @@ select register_package('
             "email": "email1"
         }
     ],
-    "organization_name": null,
-    "organization_display_name": null,
     "chart_repository": {
         "chart_repository_id": "00000000-0000-0000-0000-000000000002"
     }
@@ -273,6 +275,7 @@ select is(
             "stars": 10,
             "version": "1.0.0",
             "app_version": null,
+            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
             "chart_repository": null
@@ -286,8 +289,9 @@ select is(
             "stars": 5,
             "version": "2.0.0",
             "app_version": "13.0.0",
-            "organization_name": null,
-            "organization_display_name": null,
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -304,8 +308,9 @@ select is(
             "stars": 5,
             "version": "2.0.0",
             "app_version": "13.0.0",
-            "organization_name": null,
-            "organization_display_name": null,
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1",
             "chart_repository": {
                 "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                 "name": "repo2",
@@ -321,6 +326,7 @@ select is(
             "stars": 10,
             "version": "1.0.0",
             "app_version": null,
+            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
             "chart_repository": null

@@ -28,6 +28,7 @@ begin
             p.stars,
             s.version,
             s.app_version,
+            u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name,
             r.name as chart_repository_name,
@@ -35,8 +36,10 @@ begin
         from package p
         join package_kind pk using (package_kind_id)
         join snapshot s using (package_id)
-        left join organization o using (organization_id)
         left join chart_repository r using (chart_repository_id)
+        left join "user" u on p.user_id = u.user_id or r.user_id = u.user_id
+        left join organization o
+            on p.organization_id = o.organization_id or r.organization_id = o.organization_id
         where s.version = p.latest_version
         and
             case when p_input ? 'text' and p_input->>'text' <> '' then
@@ -79,6 +82,7 @@ begin
                         'stars', stars,
                         'version', version,
                         'app_version', app_version,
+                        'user_alias', user_alias,
                         'organization_name', organization_name,
                         'organization_display_name', organization_display_name,
                         'chart_repository', (select nullif(
