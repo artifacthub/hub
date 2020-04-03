@@ -105,8 +105,8 @@ type SearchInput struct {
 	Facets            bool              `json:"facets"`
 	Text              string            `json:"text"`
 	PackageKinds      []hub.PackageKind `json:"package_kinds,omitempty"`
-	Users             []string          `json:"users"`
-	Orgs              []string          `json:"orgs"`
+	Users             []string          `json:"users,omitempty"`
+	Orgs              []string          `json:"orgs,omitempty"`
 	ChartRepositories []string          `json:"chart_repositories,omitempty"`
 	Deprecated        bool              `json:"deprecated"`
 }
