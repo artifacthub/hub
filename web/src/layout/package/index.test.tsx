@@ -129,7 +129,7 @@ describe('Package index', () => {
           <PackageView {...defaultProps} />
         </Router>
       );
-      const link = await waitForElement(() => screen.getByTestId('link'));
+      const link = await waitForElement(() => screen.getByTestId('repoLink'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe('/packages/search');

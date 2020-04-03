@@ -2,6 +2,39 @@
 
 exports[`Package index creates snapshot 1`] = `
 <DocumentFragment>
+  <nav
+    class="navbar navbar-expand-sm navbar"
+  >
+    <div
+      class="container d-flex justify-content-between flex-nowrap"
+    >
+      <button
+        class="btn btn-link btn-sm pl-0 d-flex align-items-center link"
+        data-testid="goBack"
+      >
+        <svg
+          class="mr-2"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M217.9 256L345 129c9.4-9.4 9.4-24.6 0-33.9-9.4-9.4-24.6-9.3-34 0L167 239c-9.1 9.1-9.3 23.7-.7 33.1L310.9 417c4.7 4.7 10.9 7 17 7s12.3-2.3 17-7c9.4-9.4 9.4-24.6 0-33.9L217.9 256z"
+          />
+        </svg>
+        Back to
+        <span
+          class="font-weight-bold extraSpace"
+        >
+           search results
+        </span>
+      </button>
+    </div>
+  </nav>
   <div
     class="position-relative flex-grow-1"
     data-testid="mainPackage"
