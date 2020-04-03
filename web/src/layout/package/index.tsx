@@ -154,7 +154,7 @@ const PackageView = (props: Props) => {
 
   return (
     <>
-      {!isUndefined(text) && !isUndefined(props.searchUrlReferer) && (
+      {!isUndefined(props.searchUrlReferer) && (
         <SubNavbar>
           <button
             data-testid="goBack"
@@ -173,7 +173,16 @@ const PackageView = (props: Props) => {
             }}
           >
             <IoIosArrowBack className="mr-2" />
-            Back to "<span className="font-weight-bold">{text}</span>" results
+            {!isUndefined(text) ? (
+              <>
+                Back to "<span className="font-weight-bold">{text}</span>" results
+              </>
+            ) : (
+              <>
+                Back to
+                <span className={`font-weight-bold ${styles.extraSpace}`}> search results</span>
+              </>
+            )}
           </button>
         </SubNavbar>
       )}
@@ -228,14 +237,61 @@ const PackageView = (props: Props) => {
                           )}
                         </div>
 
+                        {!isUndefined(detail.organizationName) && detail.organizationName && (
+                          <span className="mr-2">
+                            <small className="mr-1 text-uppercase text-muted">Org: </small>
+                            <Link
+                              to={{
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: {
+                                    org: [detail.organizationName],
+                                  },
+                                  deprecated: detail.deprecated || false,
+                                }),
+                              }}
+                            >
+                              <u className="text-dark">
+                                {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
+                                  <>{detail.organizationDisplayName}</>
+                                ) : (
+                                  <>{detail.organizationName}</>
+                                )}
+                              </u>
+                            </Link>
+                          </span>
+                        )}
+
+                        {!isNull(detail.userAlias) && (
+                          <span className="mr-2">
+                            <small className="mr-1 text-uppercase text-muted">User: </small>
+
+                            <Link
+                              to={{
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: {
+                                    user: [detail.userAlias],
+                                  },
+                                  deprecated: detail.deprecated || false,
+                                }),
+                              }}
+                            >
+                              <u className="text-dark">{detail.userAlias}</u>
+                            </Link>
+                          </span>
+                        )}
+
                         {(() => {
                           switch (detail.kind) {
                             case PackageKind.Chart:
                               return (
                                 <>
-                                  <small className="mr-1 text-muted text-uppercase">Repository: </small>
+                                  <small className="mr-1 text-muted text-uppercase">Repo: </small>
                                   <Link
-                                    data-testid="link"
+                                    data-testid="repoLink"
                                     to={{
                                       pathname: '/packages/search',
                                       search: prepareQueryString({
@@ -252,23 +308,6 @@ const PackageView = (props: Props) => {
                                     </u>
                                   </Link>
                                 </>
-                              );
-                            case PackageKind.Falco:
-                            case PackageKind.Opa:
-                              return (
-                                <div>
-                                  {!isUndefined(detail.organizationName) && detail.organizationName && (
-                                    <>
-                                      <small className="mr-1 text-uppercase text-muted">Organization: </small>
-                                      {!isUndefined(detail.organizationDisplayName) &&
-                                      detail.organizationDisplayName ? (
-                                        <>{detail.organizationDisplayName}</>
-                                      ) : (
-                                        <>{detail.organizationName}</>
-                                      )}
-                                    </>
-                                  )}
-                                </div>
                               );
 
                             default:
