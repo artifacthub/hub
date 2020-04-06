@@ -10,7 +10,6 @@ create table if not exists organization (
     display_name text check (display_name <> ''),
     description text check (description <> ''),
     home_url text check (home_url <> ''),
-    logo_url text check (logo_url <> ''),
     logo_image_id uuid,
     created_at timestamptz default current_timestamp not null
 );

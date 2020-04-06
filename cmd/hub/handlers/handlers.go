@@ -12,7 +12,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
 	"github.com/artifacthub/hub/internal/api"
-	"github.com/artifacthub/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/rs/zerolog"
@@ -36,7 +36,7 @@ type Handlers struct {
 }
 
 // Setup creates a new Handlers instance.
-func Setup(cfg *viper.Viper, hubAPI *api.API, imageStore *pg.ImageStore) *Handlers {
+func Setup(cfg *viper.Viper, hubAPI *api.API, imageStore img.Store) *Handlers {
 	h := &Handlers{
 		cfg:    cfg,
 		hubAPI: hubAPI,
@@ -129,14 +129,13 @@ func (h *Handlers) setupRouter() {
 		r.Post("/login", h.User.Login)
 		r.With(h.User.RequireLogin).Get("/logout", h.User.Logout)
 		r.Head("/check-availability/{resourceKind}", h.CheckAvailability)
+		r.With(h.User.RequireLogin).Post("/images", h.Static.SaveImage)
 	})
-
-	// Images
-	r.Get("/image/{image}", h.Static.Image)
 
 	// Static files and index
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
 	static.FileServer(r, "/static", http.Dir(staticFilesPath))
+	r.Get("/image/{image}", h.Static.Image)
 	r.Get("/", h.Static.ServeIndex)
 
 	h.Router = r

@@ -13,6 +13,9 @@ var ErrNotFound = errors.New("image not found")
 
 // Store describes the methods an image.Store implementation must provide.
 type Store interface {
+	// GetImage returns the image identified by the ID and version provided.
+	GetImage(ctx context.Context, imageID, version string) (datd []byte, err error)
+
 	// SaveImage stores an image returning the image ID.
 	SaveImage(ctx context.Context, data []byte) (imageID string, err error)
 }

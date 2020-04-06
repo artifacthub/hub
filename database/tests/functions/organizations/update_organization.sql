@@ -18,7 +18,8 @@ select update_organization(:'user1ID', '
     "name": "org1",
     "display_name": "Organization 1 updated",
     "description": "Description 1 updated",
-    "home_url": "https://org1.com/updated"
+    "home_url": "https://org1.com/updated",
+    "logo_image_id": "00000000-0000-0000-0000-000000000001"
 }
 '::jsonb);
 
@@ -28,14 +29,16 @@ select results_eq(
         select
             display_name,
             description,
-            home_url
+            home_url,
+            logo_image_id
         from organization
     $$,
     $$
         values (
             'Organization 1 updated',
             'Description 1 updated',
-            'https://org1.com/updated'
+            'https://org1.com/updated',
+            '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
     'Organization should have been updated'

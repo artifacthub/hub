@@ -21,6 +21,36 @@ func TestNewImageStore(t *testing.T) {
 	assert.Equal(t, db, s.db)
 }
 
+func TestGetImage(t *testing.T) {
+	t.Run("existing image", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			mock.Anything, "imageID", "2x",
+		).Return([]byte("image2xData"), nil)
+		s := NewImageStore(db)
+
+		data, err := s.GetImage(context.Background(), "imageID", "2x")
+		assert.Equal(t, nil, err)
+		assert.Equal(t, []byte("image2xData"), data)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On(
+			"QueryRow",
+			mock.Anything, "imageID", "2x",
+		).Return(nil, tests.ErrFakeDatabaseFailure)
+		s := NewImageStore(db)
+
+		data, err := s.GetImage(context.Background(), "imageID", "2x")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, data)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestSaveImage(t *testing.T) {
 	pngImgData, err := ioutil.ReadFile("testdata/image.png")
 	require.NoError(t, err)
@@ -112,36 +142,6 @@ func TestSaveImage(t *testing.T) {
 		imageID, err := s.SaveImage(context.Background(), pngImgData)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Empty(t, imageID)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestGetImage(t *testing.T) {
-	t.Run("existing image", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			mock.Anything, "imageID", "2x",
-		).Return([]byte("image2xData"), nil)
-		s := NewImageStore(db)
-
-		data, err := s.GetImage(context.Background(), "imageID", "2x")
-		assert.Equal(t, nil, err)
-		assert.Equal(t, []byte("image2xData"), data)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On(
-			"QueryRow",
-			mock.Anything, "imageID", "2x",
-		).Return(nil, tests.ErrFakeDatabaseFailure)
-		s := NewImageStore(db)
-
-		data, err := s.GetImage(context.Background(), "imageID", "2x")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})
 }

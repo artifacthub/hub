@@ -7,6 +7,7 @@ returns setof json as $$
         'display_name', o.display_name,
         'description', o.description,
         'home_url', o.home_url,
+        'logo_image_id', o.logo_image_id,
         'confirmed', o.confirmed,
         'members_count', (
             select count(*)

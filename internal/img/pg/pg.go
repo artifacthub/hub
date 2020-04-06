@@ -28,6 +28,20 @@ func NewImageStore(db DB) *ImageStore {
 	}
 }
 
+// GetImage returns an image stored in the database.
+func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
+	var data []byte
+	query := "select get_image($1::uuid, $2::text)"
+	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, img.ErrNotFound
+		}
+		return nil, err
+	}
+	return data, nil
+}
+
 // SaveImage implements the image.Store interface.
 func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error) {
 	// Compute image hash using sha256
@@ -88,18 +102,4 @@ func (s *ImageStore) registerImage(ctx context.Context, hash []byte, version str
 		return "", err
 	}
 	return imageID, nil
-}
-
-// GetImage returns an image stored in the database.
-func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
-	var data []byte
-	query := "select get_image($1::uuid, $2::text)"
-	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, img.ErrNotFound
-		}
-		return nil, err
-	}
-	return data, nil
 }

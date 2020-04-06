@@ -3,6 +3,7 @@ package static
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"path"
 	"strings"
@@ -10,7 +11,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/img"
-	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/go-chi/chi"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/rs/zerolog"
@@ -22,7 +22,7 @@ import (
 // static files operations.
 type Handlers struct {
 	cfg        *viper.Viper
-	imageStore *pg.ImageStore
+	imageStore img.Store
 	logger     zerolog.Logger
 
 	mu          sync.RWMutex
@@ -30,7 +30,7 @@ type Handlers struct {
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(cfg *viper.Viper, imageStore *pg.ImageStore) *Handlers {
+func NewHandlers(cfg *viper.Viper, imageStore img.Store) *Handlers {
 	return &Handlers{
 		cfg:         cfg,
 		imageStore:  imageStore,
@@ -39,7 +39,7 @@ func NewHandlers(cfg *viper.Viper, imageStore *pg.ImageStore) *Handlers {
 	}
 }
 
-// Image in an http handler that serves images stored in the database.
+// Image is an http handler that serves images stored in the database.
 func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 	// Extract image id and version
 	image := chi.URLParam(r, "image")
@@ -84,6 +84,22 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", http.DetectContentType(data))
 	}
 	_, _ = w.Write(data)
+}
+
+// SaveImage is an http handler that stores the provided image returning it id.
+func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
+	data, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "SaveImage").Msg("error reading body data")
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+	imageID, err := h.imageStore.SaveImage(r.Context(), data)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "SaveImage").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+	}
+	jsonData := []byte(fmt.Sprintf(`{"image_id": "%s"}`, imageID))
+	helpers.RenderJSON(w, jsonData, 0)
 }
 
 // ServeIndex is an http handler that serves the index.html file.

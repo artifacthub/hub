@@ -68,7 +68,6 @@ select columns_are('organization', array[
     'display_name',
     'description',
     'home_url',
-    'logo_url',
     'logo_image_id',
     'created_at'
 ]);

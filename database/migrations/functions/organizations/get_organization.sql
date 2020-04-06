@@ -6,7 +6,8 @@ returns setof json as $$
         'name', o.name,
         'display_name', o.display_name,
         'description', o.description,
-        'home_url', o.home_url
+        'home_url', o.home_url,
+        'logo_image_id', o.logo_image_id
     )
     from organization o
     join user__organization uo using (organization_id)
