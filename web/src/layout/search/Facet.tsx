@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import filter from 'lodash/filter';
 import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy';
@@ -15,6 +16,7 @@ interface Props {
   title: string;
   options: FacetOption[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  displaySubtitle?: boolean;
 }
 
 const SPECIAL_REPOS = ['Incubator', 'Stable'];
@@ -78,10 +80,21 @@ const Facet = (props: Props) => {
   if (allOptions.length === 0) return null;
 
   return (
-    <div role="menuitem" className={`mt-4 pt-2 ${styles.facet}`}>
-      <SmallTitle text={props.title} />
+    <div
+      role="menuitem"
+      className={classnames(
+        styles.facet,
+        { 'mt-4 pt-2 ': isUndefined(props.displaySubtitle) },
+        { 'mt-0 pt-0': !isUndefined(props.displaySubtitle) }
+      )}
+    >
+      {!isUndefined(props.displaySubtitle) && props.displaySubtitle ? (
+        <small className={`text-muted ${styles.subtitle}`}>{props.title}</small>
+      ) : (
+        <SmallTitle text={props.title} />
+      )}
 
-      <div className="mt-3">
+      <div className={classnames({ 'mt-3': isUndefined(props.displaySubtitle) })}>
         <ExpandableList items={allOptions} visibleItems={visibleOptions} />
       </div>
     </div>

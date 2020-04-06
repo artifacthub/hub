@@ -1,3 +1,20 @@
 .filters {
   min-width: 175px;
 }
+
+.title {
+  line-height: 1.5;
+}
+
+.resetBtnWrapper {
+  padding-top: 1px;
+}
+
+.resetBtn {
+  font-size: 0.75rem;
+}
+
+.resetBtnDecorator {
+  font-size: 0.8rem;
+  height: 1.5em;
+}
