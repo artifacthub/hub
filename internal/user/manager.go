@@ -153,6 +153,15 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	return nil
 }
 
+// UpdateUserProfile updates the user profile in the database.
+func (m *Manager) UpdateUserProfile(ctx context.Context, user *hub.User) error {
+	query := "select update_user_profile($1::uuid, $2::jsonb)"
+	userID := ctx.Value(hub.UserIDKey).(string)
+	userJSON, _ := json.Marshal(user)
+	_, err := m.db.Exec(ctx, query, userID, userJSON)
+	return err
+}
+
 // VerifyEmail verifies a user's email using the email verification code
 // provided.
 func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {

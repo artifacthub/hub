@@ -569,6 +569,65 @@ func TestRequireLogin(t *testing.T) {
 	})
 }
 
+func TestUpdateUserProfile(t *testing.T) {
+	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
+	userJSON := `{"first_name": "firstname", "last_name": "lastname"}`
+
+	t.Run("no user provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader(""))
+		hw.h.UpdateUserProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid user provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("{invalid json"))
+		hw.h.UpdateUserProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.UpdateUserProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.UpdateUserProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+}
+
 func TestVerifyEmail(t *testing.T) {
 	dbQuery := "select verify_email($1::uuid)"
 

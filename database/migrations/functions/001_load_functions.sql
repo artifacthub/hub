@@ -10,6 +10,7 @@
 
 {{ template "users/register_session.sql" }}
 {{ template "users/register_user.sql" }}
+{{ template "users/update_user_profile.sql" }}
 {{ template "users/verify_email.sql" }}
 
 {{ template "packages/get_package.sql" }}
