@@ -9,6 +9,7 @@ import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Image from '../common/Image';
+import OrganizationInfo from '../common/OrganizationInfo';
 import PackageIcon from '../common/PackageIcon';
 import styles from './PackageCard.module.css';
 
@@ -47,34 +48,11 @@ const PackageCard = (props: Props) => {
 
                 <div className={`card-subtitle align-items-center ${styles.subtitle}`}>
                   {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                    <div className="text-truncate">
-                      <span className="text-muted text-uppercase mr-1">Org: </span>
-                      <button
-                        className={`p-0 border-0 ${styles.link}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          history.push({
-                            pathname: '/packages/search',
-                            search: prepareQueryString({
-                              pageNumber: 1,
-                              filters: {
-                                org: [props.package.organizationName!],
-                              },
-                              deprecated: false,
-                            }),
-                          });
-                        }}
-                      >
-                        <u>
-                          {!isUndefined(props.package.organizationDisplayName) &&
-                          props.package.organizationDisplayName ? (
-                            <>{props.package.organizationDisplayName}</>
-                          ) : (
-                            <>{props.package.organizationName}</>
-                          )}
-                        </u>
-                      </button>
-                    </div>
+                    <OrganizationInfo
+                      organizationName={props.package.organizationName}
+                      organizationDisplayName={props.package.organizationDisplayName}
+                      deprecated={props.package.deprecated}
+                    />
                   )}
 
                   {!isNull(props.package.userAlias) && (

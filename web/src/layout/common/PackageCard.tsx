@@ -9,6 +9,7 @@ import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Image from './Image';
+import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageCard.module.css';
 import PackageIcon from './PackageIcon';
 
@@ -37,7 +38,7 @@ const PackageCard = (props: Props) => {
             state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
           }}
         >
-          <div className={`card-body ${styles.body}`}>
+          <div className={`card-body position-relative ${styles.body}`}>
             <div className="d-flex align-items-start justify-content-between mb-3">
               <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
                 <div
@@ -66,37 +67,11 @@ const PackageCard = (props: Props) => {
 
                   <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
                     {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                      <>
-                        <div className="mr-2 text-truncate">
-                          <span className="text-muted text-uppercase mr-1">Org:</span>
-                          <button
-                            data-testid="orgLink"
-                            className={`p-0 border-0 ${styles.link}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    org: [props.package.organizationName!],
-                                  },
-                                  deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
-                                }),
-                              });
-                            }}
-                          >
-                            <u>
-                              {!isUndefined(props.package.organizationDisplayName) &&
-                              props.package.organizationDisplayName ? (
-                                <>{props.package.organizationDisplayName}</>
-                              ) : (
-                                <>{props.package.organizationName}</>
-                              )}
-                            </u>
-                          </button>
-                        </div>
-                      </>
+                      <OrganizationInfo
+                        organizationName={props.package.organizationName}
+                        organizationDisplayName={props.package.organizationDisplayName}
+                        deprecated={props.package.deprecated}
+                      />
                     )}
 
                     {!isNull(props.package.userAlias) && (
