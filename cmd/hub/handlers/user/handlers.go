@@ -226,6 +226,24 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// UpdateUserProfile is an http handler used to update the user in the hub
+// database.
+func (h *Handlers) UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
+	user := &hub.User{}
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Msg("invalid user")
+		http.Error(w, "user provided is not valid", http.StatusBadRequest)
+		return
+	}
+	err = h.hubAPI.User.UpdateUserProfile(r.Context(), user)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+}
+
 // validateUser validates a user instance before we attempt to register it in
 // the database.
 func validateUser(user *hub.User) error {

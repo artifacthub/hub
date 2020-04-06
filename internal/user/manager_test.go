@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"errors"
 	"testing"
 	"time"
 
@@ -12,11 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"golang.org/x/crypto/bcrypt"
-)
-
-var (
-	errFakeDatabaseFailure    = errors.New("fake database failure")
-	errFakeEmailSenderFailure = errors.New("fake email sender failure")
 )
 
 func TestCheckCredentials(t *testing.T) {
@@ -36,11 +30,11 @@ func TestCheckCredentials(t *testing.T) {
 
 	t.Run("error getting credentials from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "email").Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "email").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckCredentials(context.Background(), "email", "pass")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
@@ -92,11 +86,11 @@ func TestCheckSession(t *testing.T) {
 
 	t.Run("error getting session from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, []byte("sessionID")).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, []byte("sessionID")).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(context.Background(), []byte("sessionID"), 1*time.Hour)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
@@ -143,7 +137,7 @@ func TestDeleteSession(t *testing.T) {
 			},
 			{
 				"error deleting session from database",
-				errFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
 			},
 		}
 		for _, tc := range testCases {
@@ -178,11 +172,11 @@ func TestGetAlias(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return("", errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID").Return("", tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		alias, err := m.GetAlias(ctx)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Empty(t, alias)
 		db.AssertExpectations(t)
 	})
@@ -210,11 +204,11 @@ func TestRegisterSession(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		sessionID, err := m.RegisterSession(context.Background(), s)
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, sessionID)
 		db.AssertExpectations(t)
 	})
@@ -234,7 +228,7 @@ func TestRegisterUser(t *testing.T) {
 			},
 			{
 				"error sending email verification code",
-				errFakeEmailSenderFailure,
+				tests.ErrFakeEmailSenderFailure,
 			},
 		}
 		for _, tc := range testCases {
@@ -264,11 +258,43 @@ func TestRegisterUser(t *testing.T) {
 
 	t.Run("database error registering user", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, mock.Anything).Return("", errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, mock.Anything).Return("", tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.RegisterUser(context.Background(), &hub.User{}, "")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestUpdateUserProfile(t *testing.T) {
+	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_ = m.UpdateUserProfile(context.Background(), &hub.User{})
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
+		m := NewManager(db, nil)
+
+		err := m.UpdateUserProfile(ctx, &hub.User{})
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		err := m.UpdateUserProfile(ctx, &hub.User{})
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -289,11 +315,11 @@ func TestVerifyEmail(t *testing.T) {
 
 	t.Run("database error verifying email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "emailVerificationCode").Return(false, errFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "emailVerificationCode").Return(false, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		verified, err := m.VerifyEmail(context.Background(), "emailVerificationCode")
-		assert.Equal(t, errFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.False(t, verified)
 		db.AssertExpectations(t)
 	})

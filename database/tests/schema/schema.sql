@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(57);
+select plan(58);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -192,6 +192,7 @@ select has_function('user_belongs_to_organization');
 
 select has_function('register_session');
 select has_function('register_user');
+select has_function('update_user_profile');
 select has_function('verify_email');
 
 select has_function('get_package');
