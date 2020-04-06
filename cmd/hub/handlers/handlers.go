@@ -94,7 +94,8 @@ func (h *Handlers) setupRouter() {
 			r.Use(h.User.RequireLogin)
 			r.Get("/alias", h.User.GetAlias)
 			r.Get("/orgs", h.Organizations.GetByUser)
-			r.Put("/profile", h.User.UpdateUserProfile)
+			r.Put("/password", h.User.UpdatePassword)
+			r.Put("/profile", h.User.UpdateProfile)
 			r.Route("/chart-repositories", func(r chi.Router) {
 				r.Get("/", h.ChartRepositories.GetOwnedByUser)
 				r.Post("/", h.ChartRepositories.Add)

@@ -14,6 +14,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// ErrInvalidPassword indicates that the password provided is not valid.
+var ErrInvalidPassword = errors.New("invalid password")
+
 // Manager provides an API to manage users.
 type Manager struct {
 	db hub.DB
@@ -153,8 +156,36 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	return nil
 }
 
-// UpdateUserProfile updates the user profile in the database.
-func (m *Manager) UpdateUserProfile(ctx context.Context, user *hub.User) error {
+// UpdatePassword updates the user password in the database.
+func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate old password
+	var oldHashed string
+	getPasswordQuery := `select password from "user" where user_id = $1`
+	err := m.db.QueryRow(ctx, getPasswordQuery, userID).Scan(&oldHashed)
+	if err != nil {
+		return err
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(oldHashed), []byte(old))
+	if err != nil {
+		return ErrInvalidPassword
+	}
+
+	// Hash new password
+	newHashed, err := bcrypt.GenerateFromPassword([]byte(new), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	// Update user password in database
+	updatePasswordQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
+	_, err = m.db.Exec(ctx, updatePasswordQuery, userID, oldHashed, string(newHashed))
+	return err
+}
+
+// UpdateProfile updates the user profile in the database.
+func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 	query := "select update_user_profile($1::uuid, $2::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
 	userJSON, _ := json.Marshal(user)

@@ -22,7 +22,7 @@ insert into "user" (
     'password'
 );
 
--- Update user
+-- Update user profile
 select update_user_profile(:'user1ID', '
 {
     "first_name": "firstname updated",

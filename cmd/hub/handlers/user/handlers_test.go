@@ -569,7 +569,90 @@ func TestRequireLogin(t *testing.T) {
 	})
 }
 
-func TestUpdateUserProfile(t *testing.T) {
+func TestUpdatePassword(t *testing.T) {
+	getPasswordDBQuery := `select password from "user" where user_id = $1`
+	updatePasswordDBQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
+	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
+
+	t.Run("no old password provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("new=new"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("no new password provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid old password provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=invalid&new=new"))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("database error updating password", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
+		hw.db.On("Exec", updatePasswordDBQuery, mock.Anything, mock.Anything, mock.Anything).
+			Return(tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("password updated successfully", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
+		hw.db.On("Exec", updatePasswordDBQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		hw.h.UpdatePassword(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+}
+
+func TestUpdateProfile(t *testing.T) {
 	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
 	userJSON := `{"first_name": "firstname", "last_name": "lastname"}`
 
@@ -578,7 +661,7 @@ func TestUpdateUserProfile(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(""))
-		hw.h.UpdateUserProfile(w, r)
+		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
@@ -590,26 +673,11 @@ func TestUpdateUserProfile(t *testing.T) {
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("{invalid json"))
-		hw.h.UpdateUserProfile(w, r)
+		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
-
-	t.Run("database query succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.UpdateUserProfile(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -619,11 +687,26 @@ func TestUpdateUserProfile(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.UpdateUserProfile(w, r)
+		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.db.AssertExpectations(t)
+	})
+
+	t.Run("user profile updated successfully", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.UpdateProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		hw.db.AssertExpectations(t)
 	})
 }

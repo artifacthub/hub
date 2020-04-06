@@ -267,14 +267,71 @@ func TestRegisterUser(t *testing.T) {
 	})
 }
 
-func TestUpdateUserProfile(t *testing.T) {
+func TestUpdatePassword(t *testing.T) {
+	getPasswordDBQuery := `select password from "user" where user_id = $1`
+	updatePasswordDBQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_ = m.UpdatePassword(context.Background(), "old", "new")
+		})
+	})
+
+	t.Run("database error getting user password", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", getPasswordDBQuery, "userID").Return("", tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		err := m.UpdatePassword(ctx, "old", "new")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("invalid user password provided", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
+		m := NewManager(db, nil)
+
+		err := m.UpdatePassword(ctx, "old2", "new")
+		assert.Error(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error updating password", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
+		db.On("Exec", updatePasswordDBQuery, "userID", mock.Anything, mock.Anything).
+			Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		err := m.UpdatePassword(ctx, "old", "new")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("successful password update", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
+		db.On("Exec", updatePasswordDBQuery, "userID", mock.Anything, mock.Anything).Return(nil)
+		m := NewManager(db, nil)
+
+		err := m.UpdatePassword(ctx, "old", "new")
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestUpdateProfile(t *testing.T) {
 	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		assert.Panics(t, func() {
-			_ = m.UpdateUserProfile(context.Background(), &hub.User{})
+			_ = m.UpdateProfile(context.Background(), &hub.User{})
 		})
 	})
 
@@ -283,7 +340,7 @@ func TestUpdateUserProfile(t *testing.T) {
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
-		err := m.UpdateUserProfile(ctx, &hub.User{})
+		err := m.UpdateProfile(ctx, &hub.User{})
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -293,7 +350,7 @@ func TestUpdateUserProfile(t *testing.T) {
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		err := m.UpdateUserProfile(ctx, &hub.User{})
+		err := m.UpdateProfile(ctx, &hub.User{})
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
