@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/subtle"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/user"
 	"github.com/gorilla/securecookie"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -222,13 +224,35 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
-		return
 	}
 }
 
-// UpdateUserProfile is an http handler used to update the user in the hub
+// UpdatePassword is an http handler used to update the password in the hub
 // database.
-func (h *Handlers) UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
+	old := r.FormValue("old")
+	if old == "" {
+		http.Error(w, "old password not provided", http.StatusBadRequest)
+		return
+	}
+	new := r.FormValue("new")
+	if new == "" {
+		http.Error(w, "new password not provided", http.StatusBadRequest)
+		return
+	}
+	err := h.hubAPI.User.UpdatePassword(r.Context(), old, new)
+	if err != nil {
+		if errors.Is(err, user.ErrInvalidPassword) {
+			http.Error(w, "", http.StatusUnauthorized)
+		} else {
+			h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
+			http.Error(w, "", http.StatusInternalServerError)
+		}
+	}
+}
+
+// UpdateProfile is an http handler used to update the user in the hub database.
+func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	user := &hub.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -236,11 +260,10 @@ func (h *Handlers) UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "user provided is not valid", http.StatusBadRequest)
 		return
 	}
-	err = h.hubAPI.User.UpdateUserProfile(r.Context(), user)
+	err = h.hubAPI.User.UpdateProfile(r.Context(), user)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
 		http.Error(w, "", http.StatusInternalServerError)
-		return
 	}
 }
 
