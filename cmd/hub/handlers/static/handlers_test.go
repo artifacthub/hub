@@ -1,17 +1,19 @@
 package static
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path"
+	"strings"
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/img"
-	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -27,11 +29,10 @@ func TestMain(m *testing.M) {
 }
 
 func TestImage(t *testing.T) {
-	dbQuery := "select get_image($1::uuid, $2::text)"
-
 	t.Run("non existing image", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, img.ErrNotFound)
+		hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, img.ErrNotFound)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -40,12 +41,13 @@ func TestImage(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.is.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("other internal error", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, errors.New("internal error"))
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -54,7 +56,7 @@ func TestImage(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.is.AssertExpectations(t)
 	})
 
 	t.Run("existing images (png and svg)", func(t *testing.T) {
@@ -72,7 +74,8 @@ func TestImage(t *testing.T) {
 				imgData, err := ioutil.ReadFile(tc.imgPath)
 				require.NoError(t, err)
 				hw := newHandlersWrapper()
-				hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(imgData, nil)
+				hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
+					Return(imgData, nil)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
@@ -86,9 +89,46 @@ func TestImage(t *testing.T) {
 				assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
 				assert.Equal(t, "public, max-age=31536000", h.Get("Cache-Control"))
 				assert.Equal(t, imgData, data)
-				hw.db.AssertExpectations(t)
+				hw.is.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestSaveImage(t *testing.T) {
+	fakeSaveImageError := errors.New("fake save image error")
+
+	t.Run("imageStore.SaveImage failed", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.is.On("SaveImage", mock.Anything, mock.Anything).Return("", fakeSaveImageError)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
+		hw.h.SaveImage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.is.AssertExpectations(t)
+	})
+
+	t.Run("imageStore.SaveImage succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.is.On("SaveImage", mock.Anything, mock.Anything).Return("imageID", nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
+		hw.h.SaveImage(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte(`{"image_id": "imageID"}`), data)
+		hw.is.AssertExpectations(t)
 	})
 }
 
@@ -139,19 +179,36 @@ func TestServeStaticFile(t *testing.T) {
 
 type handlersWrapper struct {
 	cfg *viper.Viper
-	db  *tests.DBMock
+	is  *imageStoreMock
 	h   *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.webBuildPath", "testdata")
-	db := &tests.DBMock{}
-	imageStore := pg.NewImageStore(db)
+	is := &imageStoreMock{}
 
 	return &handlersWrapper{
 		cfg: cfg,
-		db:  db,
-		h:   NewHandlers(cfg, imageStore),
+		is:  is,
+		h:   NewHandlers(cfg, is),
 	}
+}
+
+type imageStoreMock struct {
+	mock.Mock
+}
+
+func (m *imageStoreMock) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
+	args := m.Called(ctx, imageID, version)
+	data := args.Get(0)
+	if data != nil {
+		return data.([]byte), args.Error(1)
+	}
+	return nil, args.Error(1)
+}
+
+func (m *imageStoreMock) SaveImage(ctx context.Context, data []byte) (string, error) {
+	args := m.Called(ctx, data)
+	return args.String(0), args.Error(1)
 }

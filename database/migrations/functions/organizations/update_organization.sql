@@ -10,7 +10,8 @@ begin
     update organization set
         display_name = nullif(p_org->>'display_name', ''),
         description = nullif(p_org->>'description', ''),
-        home_url = nullif(p_org->>'home_url', '')
+        home_url = nullif(p_org->>'home_url', ''),
+        logo_image_id = nullif(p_org->>'logo_image_id', '')::uuid
     where name = p_org->>'name';
 end
 $$ language plpgsql;

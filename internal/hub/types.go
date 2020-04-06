@@ -112,6 +112,5 @@ type Organization struct {
 	DisplayName    string `json:"display_name"`
 	Description    string `json:"description"`
 	HomeURL        string `json:"home_url"`
-	LogoURL        string `json:"logo_url"`
 	LogoImageID    string `json:"logo_image_id"`
 }

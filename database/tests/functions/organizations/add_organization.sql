@@ -15,7 +15,8 @@ select add_organization(:'user1ID', '
     "name": "org1",
     "display_name": "Organization 1",
     "description": "Description 1",
-    "home_url": "https://org1.com"
+    "home_url": "https://org1.com",
+    "logo_image_id": "00000000-0000-0000-0000-000000000001"
 }
 '::jsonb);
 
@@ -26,7 +27,8 @@ select results_eq(
             name,
             display_name,
             description,
-            home_url
+            home_url,
+            logo_image_id
         from organization
     $$,
     $$
@@ -34,7 +36,8 @@ select results_eq(
             'org1',
             'Organization 1',
             'Description 1',
-            'https://org1.com'
+            'https://org1.com',
+            '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
     'Organization should exist'
