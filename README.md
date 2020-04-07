@@ -1,5 +1,6 @@
 # Artifact Hub
 
+test
 [![CI](https://github.com/artifacthub/hub/workflows/CI/badge.svg)](https://github.com/artifacthub/hub/actions?query=workflow%3ACI)
 
 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
@@ -21,6 +22,7 @@ We're envisioning that Artifact Hub will have three main components:
 3. Operational responsibilities. A number of organizations are likely to depend on Artifact Hub not to “break the build” and so the maintainers will need to provide a high level of uptime, with CNCF funding the hosting and related systems
 
 ## Screenshots
+
 <table>
     <tr>
         <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot1.jpg?raw=true"></td>
@@ -56,7 +58,7 @@ $ eval $(minikube docker-env)
 $ scripts/docker-build.sh
 ```
 
-*This may take a few minutes*.
+_This may take a few minutes_.
 
 ### Install chart
 
