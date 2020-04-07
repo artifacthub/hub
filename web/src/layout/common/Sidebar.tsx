@@ -13,6 +13,7 @@ interface Props {
   buttonTitle?: string;
   buttonIcon?: JSX.Element;
   closeButton?: JSX.Element | string;
+  leftButton?: JSX.Element;
   className?: string;
   wrapperClassName?: string;
   direction?: 'left' | 'right';
@@ -79,10 +80,17 @@ const Sidebar = (props: Props) => {
             <div className="overflow-auto mh-100 w-100 py-3">{props.children}</div>
           </div>
 
-          <div className="mt-auto p-4 text-right">
-            <button type="button" className="btn btn-secondary" onClick={() => openStatusChange(false)}>
-              {isUndefined(props.closeButton) ? <>Close</> : <>{props.closeButton}</>}
-            </button>
+          <div className="mt-auto p-4">
+            <div className="d-flex align-items-center justify-content-between">
+              {!isUndefined(props.leftButton) && <>{props.leftButton}</>}
+              <button
+                type="button"
+                className="ml-auto btn btn-sm btn-secondary"
+                onClick={() => openStatusChange(false)}
+              >
+                {isUndefined(props.closeButton) ? <>Close</> : <>{props.closeButton}</>}
+              </button>
+            </div>
           </div>
         </div>
       </div>

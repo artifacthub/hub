@@ -22,6 +22,15 @@
   border-radius: 50%;
 }
 
+.resetBtn {
+  font-size: 0.75rem;
+}
+
+.resetBtnDecorator {
+  font-size: 0.8rem;
+  height: 1.5em;
+}
+
 @media (hover: hover) {
   .btnMobileFilters:hover {
     background-color: var(--color-black-15) !important;

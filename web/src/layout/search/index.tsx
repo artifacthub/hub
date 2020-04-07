@@ -5,12 +5,13 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Facets, Package, SearchResults } from '../../types';
+import { Facets, Package, PackageKind, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -22,6 +23,10 @@ import Filters from './Filters';
 import PaginationLimit from './PaginationLimit';
 import styles from './SearchView.module.css';
 
+interface FiltersProp {
+  [key: string]: string[];
+}
+
 interface Props {
   isSearching: boolean;
   setIsSearching: Dispatch<SetStateAction<boolean>>;
@@ -29,9 +34,7 @@ interface Props {
   setScrollPosition: Dispatch<SetStateAction<number>>;
   text?: string;
   pageNumber: number;
-  filters: {
-    [key: string]: string[];
-  };
+  filters: FiltersProp;
   deprecated: boolean;
   fromDetail: boolean;
 }
@@ -74,6 +77,38 @@ const SearchView = (props: Props) => {
     window.scrollTo(0, newPosition);
   };
 
+  const prepareSelectedFilters = (name: string, newFilters: string[], prevFilters: FiltersProp): FiltersProp => {
+    let cleanFilters: FiltersProp = {};
+    switch (name) {
+      case 'kind':
+        // Remove selected chart repositories when some kind different to Chart is selected and Chart is not selected
+        if (newFilters.length > 0 && !newFilters.includes(PackageKind.Chart.toString())) {
+          cleanFilters['repo'] = [];
+        }
+        break;
+
+      // Remove selected user/s if a org is now selected
+      case 'org':
+        if (newFilters.length > 0) {
+          cleanFilters['user'] = [];
+        }
+        break;
+
+      // Remove selected org/s if a user is now selected
+      case 'user':
+        if (newFilters.length > 0) {
+          cleanFilters['org'] = [];
+        }
+        break;
+    }
+
+    return {
+      ...prevFilters,
+      [name]: newFilters,
+      ...cleanFilters,
+    };
+  };
+
   const onFiltersChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value, checked } = e.target;
     let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
@@ -88,10 +123,7 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         text: props.text,
-        filters: {
-          ...props.filters,
-          [name]: newFilters,
-        },
+        filters: prepareSelectedFilters(name, newFilters, props.filters),
         deprecated: props.deprecated,
       }),
     });
@@ -105,6 +137,18 @@ const SearchView = (props: Props) => {
         text: props.text,
         filters: props.filters,
         deprecated: !props.deprecated,
+      }),
+    });
+  };
+
+  const onResetFilters = (): void => {
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        text: props.text,
+        filters: {},
+        deprecated: false,
       }),
     });
   };
@@ -233,6 +277,19 @@ const SearchView = (props: Props) => {
                       )}
                     </>
                   }
+                  leftButton={
+                    <>
+                      <div className="d-flex align-items-center">
+                        <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
+                        <button
+                          className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
+                          onClick={onResetFilters}
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </>
+                  }
                   header={<div className="h6 text-uppercase mb-0">Filters</div>}
                 >
                   <Filters
@@ -241,6 +298,7 @@ const SearchView = (props: Props) => {
                     onChange={onFiltersChange}
                     deprecated={props.deprecated}
                     onDeprecatedChange={onDeprecatedChange}
+                    onResetFilters={onResetFilters}
                     visibleTitle={false}
                   />
                 </Sidebar>
@@ -288,6 +346,7 @@ const SearchView = (props: Props) => {
                   onChange={onFiltersChange}
                   deprecated={props.deprecated}
                   onDeprecatedChange={onDeprecatedChange}
+                  onResetFilters={onResetFilters}
                   visibleTitle
                 />
               </div>
