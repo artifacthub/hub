@@ -6,7 +6,6 @@ import (
 	"regexp"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -19,15 +18,15 @@ var organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
 // Handlers represents a group of http handlers in charge of handling
 // organizations operations.
 type Handlers struct {
-	hubAPI *api.API
-	logger zerolog.Logger
+	orgManager hub.OrganizationManager
+	logger     zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(hubAPI *api.API) *Handlers {
+func NewHandlers(orgManager hub.OrganizationManager) *Handlers {
 	return &Handlers{
-		hubAPI: hubAPI,
-		logger: log.With().Str("handlers", "org").Logger(),
+		orgManager: orgManager,
+		logger:     log.With().Str("handlers", "org").Logger(),
 	}
 }
 
@@ -47,7 +46,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
-	if err := h.hubAPI.Organizations.Add(r.Context(), org); err != nil {
+	if err := h.orgManager.Add(r.Context(), org); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -59,7 +58,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
 	baseURL := helpers.GetBaseURL(r)
-	err := h.hubAPI.Organizations.AddMember(r.Context(), orgName, userAlias, baseURL)
+	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -71,7 +70,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 // an organization.
 func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	if err := h.hubAPI.Organizations.ConfirmMembership(r.Context(), orgName); err != nil {
+	if err := h.orgManager.ConfirmMembership(r.Context(), orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -83,7 +82,7 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
-	if err := h.hubAPI.Organizations.DeleteMember(r.Context(), orgName, userAlias); err != nil {
+	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -93,7 +92,7 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 // Get is an http handler that returns the organization requested.
 func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.hubAPI.Organizations.GetJSON(r.Context(), orgName)
+	dataJSON, err := h.orgManager.GetJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -105,7 +104,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 // GetByUser is an http handler that returns the organizations the user doing
 // the request belongs to.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.Organizations.GetByUserJSON(r.Context())
+	dataJSON, err := h.orgManager.GetByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -118,7 +117,7 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 // organization.
 func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.hubAPI.Organizations.GetMembersJSON(r.Context(), orgName)
+	dataJSON, err := h.orgManager.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -137,7 +136,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	org.Name = chi.URLParam(r, "orgName")
-	if err := h.hubAPI.Organizations.Update(r.Context(), org); err != nil {
+	if err := h.orgManager.Update(r.Context(), org); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return

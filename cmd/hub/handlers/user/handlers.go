@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/gorilla/securecookie"
@@ -28,21 +27,21 @@ const (
 // Handlers represents a group of http handlers in charge of handling
 // users operations.
 type Handlers struct {
-	hubAPI *api.API
-	cfg    *viper.Viper
-	sc     *securecookie.SecureCookie
-	logger zerolog.Logger
+	userManager hub.UserManager
+	cfg         *viper.Viper
+	sc          *securecookie.SecureCookie
+	logger      zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(hubAPI *api.API, cfg *viper.Viper) *Handlers {
+func NewHandlers(userManager hub.UserManager, cfg *viper.Viper) *Handlers {
 	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
 	sc.MaxAge(int(sessionDuration.Seconds()))
 	return &Handlers{
-		hubAPI: hubAPI,
-		cfg:    cfg,
-		sc:     sc,
-		logger: log.With().Str("handlers", "user").Logger(),
+		userManager: userManager,
+		cfg:         cfg,
+		sc:          sc,
+		logger:      log.With().Str("handlers", "user").Logger(),
 	}
 }
 
@@ -76,7 +75,7 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 
 // GetProfile is an http handler used to get a logged in user profile.
 func (h *Handlers) GetProfile(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.User.GetProfileJSON(r.Context())
+	dataJSON, err := h.userManager.GetProfileJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetProfile").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -112,7 +111,7 @@ func (h *Handlers) InjectUserID(next http.Handler) http.Handler {
 		}
 
 		// Check the session provided is valid
-		checkSessionOutput, err := h.hubAPI.User.CheckSession(r.Context(), sessionID, sessionDuration)
+		checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
 		if err != nil {
 			return
 		}
@@ -137,7 +136,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the credentials provided are valid
-	checkCredentialsOutput, err := h.hubAPI.User.CheckCredentials(r.Context(), email, password)
+	checkCredentialsOutput, err := h.userManager.CheckCredentials(r.Context(), email, password)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("checkCredentials failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -155,7 +154,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		IP:        ip,
 		UserAgent: r.UserAgent(),
 	}
-	sessionID, err := h.hubAPI.User.RegisterSession(r.Context(), session)
+	sessionID, err := h.userManager.RegisterSession(r.Context(), session)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("registerSession failed")
 		http.Error(w, "", http.StatusInternalServerError)
@@ -190,7 +189,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 		var sessionID []byte
 		err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
 		if err == nil {
-			err = h.hubAPI.User.DeleteSession(r.Context(), sessionID)
+			err = h.userManager.DeleteSession(r.Context(), sessionID)
 			if err != nil {
 				h.logger.Error().Err(err).Str("method", "Logout").Msg("deleteSession failed")
 			}
@@ -219,11 +218,45 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	err = h.hubAPI.User.RegisterUser(r.Context(), user, helpers.GetBaseURL(r))
+	err = h.userManager.RegisterUser(r.Context(), user, helpers.GetBaseURL(r))
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 	}
+}
+
+// RequireLogin is a middleware that verifies if a user is logged in.
+func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Extract and validate cookie from request
+		cookie, err := r.Cookie(sessionCookieName)
+		if err != nil {
+			http.Error(w, "", http.StatusUnauthorized)
+			return
+		}
+		var sessionID []byte
+		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
+			http.Error(w, "", http.StatusUnauthorized)
+			return
+		}
+
+		// Check the session provided is valid
+		checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
+		if err != nil {
+			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkSession failed")
+			http.Error(w, "", http.StatusInternalServerError)
+			return
+		}
+		if !checkSessionOutput.Valid {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		// Inject userID in context and call next handler
+		ctx := context.WithValue(r.Context(), hub.UserIDKey, checkSessionOutput.UserID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 // UpdatePassword is an http handler used to update the password in the hub
@@ -239,7 +272,7 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "new password not provided", http.StatusBadRequest)
 		return
 	}
-	err := h.hubAPI.User.UpdatePassword(r.Context(), old, new)
+	err := h.userManager.UpdatePassword(r.Context(), old, new)
 	if err != nil {
 		if errors.Is(err, user.ErrInvalidPassword) {
 			http.Error(w, "", http.StatusUnauthorized)
@@ -259,7 +292,7 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "user provided is not valid", http.StatusBadRequest)
 		return
 	}
-	err = h.hubAPI.User.UpdateProfile(r.Context(), user)
+	err = h.userManager.UpdateProfile(r.Context(), user)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -281,40 +314,6 @@ func validateUser(user *hub.User) error {
 	return nil
 }
 
-// RequireLogin is a middleware that verifies if a user is logged in.
-func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Extract and validate cookie from request
-		cookie, err := r.Cookie(sessionCookieName)
-		if err != nil {
-			http.Error(w, "", http.StatusUnauthorized)
-			return
-		}
-		var sessionID []byte
-		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
-			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
-			http.Error(w, "", http.StatusUnauthorized)
-			return
-		}
-
-		// Check the session provided is valid
-		checkSessionOutput, err := h.hubAPI.User.CheckSession(r.Context(), sessionID, sessionDuration)
-		if err != nil {
-			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkSession failed")
-			http.Error(w, "", http.StatusInternalServerError)
-			return
-		}
-		if !checkSessionOutput.Valid {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-
-		// Inject userID in context and call next handler
-		ctx := context.WithValue(r.Context(), hub.UserIDKey, checkSessionOutput.UserID)
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
-}
-
 // VerifyEmail is an http handler used to verify a user's email address.
 func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	code := r.FormValue("code")
@@ -324,7 +323,7 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, errMsg, http.StatusBadRequest)
 		return
 	}
-	verified, err := h.hubAPI.User.VerifyEmail(r.Context(), code)
+	verified, err := h.userManager.VerifyEmail(r.Context(), code)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyEmail").Send()
 		http.Error(w, "", http.StatusInternalServerError)

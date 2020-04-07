@@ -10,15 +10,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/user"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func TestMain(m *testing.M) {
@@ -54,12 +54,25 @@ func TestBasicAuth(t *testing.T) {
 	})
 }
 
-func TestGetAlias(t *testing.T) {
-	dbQuery := "select get_user_profile($1::uuid)"
-
-	t.Run("database query succeeded", func(t *testing.T) {
+func TestGetProfile(t *testing.T) {
+	t.Run("error getting profile", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.um.On("GetProfileJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.GetProfile(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("profile get succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.um.On("GetProfileJSON", mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -72,33 +85,13 @@ func TestGetAlias(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.GetProfile(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestInjectUserID(t *testing.T) {
-	dbQuery := `
-	select user_id, floor(extract(epoch from created_at))
-	from session where session_id = $1
-	`
-
 	checkUserID := func(expectedUserID interface{}) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
 			if expectedUserID == nil {
@@ -139,7 +132,8 @@ func TestInjectUserID(t *testing.T) {
 
 	t.Run("error checking session", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -153,12 +147,13 @@ func TestInjectUserID(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("invalid session provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", int64(1)}, nil)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -172,15 +167,13 @@ func TestInjectUserID(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("inject user id succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{
-			"userID",
-			time.Now().Unix(),
-		}, nil)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -194,14 +187,11 @@ func TestInjectUserID(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestLogin(t *testing.T) {
-	dbQuery1 := `select user_id, password from "user" where email = $1`
-	dbQuery2 := `select register_session($1::jsonb)`
-
 	t.Run("credentials not provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -216,7 +206,8 @@ func TestLogin(t *testing.T) {
 
 	t.Run("error checking credentials", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery1, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
@@ -226,13 +217,13 @@ func TestLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("invalid credentials provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
-		hw.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
+		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: false, UserID: ""}, nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass2"))
@@ -242,14 +233,15 @@ func TestLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("error registering session", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
-		hw.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
-		hw.db.On("QueryRow", dbQuery2, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
+		hw.um.On("RegisterSession", mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
@@ -259,14 +251,15 @@ func TestLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("login succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
-		hw.db.On("QueryRow", dbQuery1, mock.Anything).Return([]interface{}{"userID", string(pw)}, nil)
-		hw.db.On("QueryRow", dbQuery2, mock.Anything).Return([]byte("sessionID"), nil)
+		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
+		hw.um.On("RegisterSession", mock.Anything, mock.Anything).
+			Return([]byte("sessionID"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
@@ -286,13 +279,11 @@ func TestLogin(t *testing.T) {
 		err := hw.h.sc.Decode(sessionCookieName, cookie.Value, &sessionID)
 		require.NoError(t, err)
 		assert.Equal(t, []byte("sessionID"), sessionID)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestLogout(t *testing.T) {
-	dbQuery := "delete from session where session_id = $1"
-
 	t.Run("invalid or no session cookie provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -336,14 +327,14 @@ func TestLogout(t *testing.T) {
 	t.Run("valid session cookie provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
-			dbResponse  interface{}
+			err         interface{}
 		}{
 			{
-				"session deleted successfully from database",
+				"session deleted successfully",
 				nil,
 			},
 			{
-				"error deleting session from database",
+				"error deleting session",
 				tests.ErrFakeDatabaseFailure,
 			},
 		}
@@ -351,7 +342,7 @@ func TestLogout(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("Exec", dbQuery, mock.Anything).Return(tc.dbResponse)
+				hw.um.On("DeleteSession", mock.Anything, mock.Anything).Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
@@ -369,15 +360,13 @@ func TestLogout(t *testing.T) {
 				cookie := resp.Cookies()[0]
 				assert.Equal(t, sessionCookieName, cookie.Name)
 				assert.True(t, cookie.Expires.Before(time.Now().Add(-24*time.Hour)))
-				hw.db.AssertExpectations(t)
+				hw.um.AssertExpectations(t)
 			})
 		}
 	})
 }
 
 func TestRegisterUser(t *testing.T) {
-	dbQuery := "select register_user($1::jsonb)"
-
 	t.Run("no user provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -440,17 +429,17 @@ func TestRegisterUser(t *testing.T) {
 		`
 		testCases := []struct {
 			description        string
-			dbResponse         []interface{}
+			err                error
 			expectedStatusCode int
 		}{
 			{
 				"registration succeeded",
-				[]interface{}{"", nil},
+				nil,
 				http.StatusOK,
 			},
 			{
-				"database error",
-				[]interface{}{"", tests.ErrFakeDatabaseFailure},
+				"registration failed",
+				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
 		}
@@ -458,8 +447,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("QueryRow", dbQuery, mock.Anything).Return(tc.dbResponse...)
-				hw.es.On("SendEmail", mock.Anything).Return(nil)
+				hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
@@ -468,18 +456,13 @@ func TestRegisterUser(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.db.AssertExpectations(t)
+				hw.um.AssertExpectations(t)
 			})
 		}
 	})
 }
 
 func TestRequireLogin(t *testing.T) {
-	dbQuery := `
-	select user_id, floor(extract(epoch from created_at))
-	from session where session_id = $1
-	`
-
 	t.Run("session cookie not provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -510,7 +493,8 @@ func TestRequireLogin(t *testing.T) {
 
 	t.Run("error checking session", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -524,12 +508,13 @@ func TestRequireLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("invalid session provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{"userID", int64(1)}, nil)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -543,15 +528,13 @@ func TestRequireLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("require login succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]interface{}{
-			"userID",
-			time.Now().Unix(),
-		}, nil)
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -565,15 +548,11 @@ func TestRequireLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestUpdatePassword(t *testing.T) {
-	getPasswordDBQuery := `select password from "user" where user_id = $1`
-	updatePasswordDBQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
-	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
-
 	t.Run("no old password provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -602,7 +581,8 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("invalid old password provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
+		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
+			Return(user.ErrInvalidPassword)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=invalid&new=new"))
@@ -613,13 +593,12 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("database error updating password", func(t *testing.T) {
+	t.Run("error updating password", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
-		hw.db.On("Exec", updatePasswordDBQuery, mock.Anything, mock.Anything, mock.Anything).
+		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
 			Return(tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
@@ -631,13 +610,12 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("password updated successfully", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", getPasswordDBQuery, mock.Anything).Return(string(oldHashed), nil)
-		hw.db.On("Exec", updatePasswordDBQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
@@ -648,12 +626,11 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestUpdateProfile(t *testing.T) {
-	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
 	userJSON := `{"first_name": "firstname", "last_name": "lastname"}`
 
 	t.Run("no user provided", func(t *testing.T) {
@@ -680,9 +657,9 @@ func TestUpdateProfile(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error updating profile", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
@@ -692,12 +669,12 @@ func TestUpdateProfile(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("user profile updated successfully", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
+		hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
@@ -707,13 +684,11 @@ func TestUpdateProfile(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.um.AssertExpectations(t)
 	})
 }
 
 func TestVerifyEmail(t *testing.T) {
-	dbQuery := "select verify_email($1::uuid)"
-
 	t.Run("no code provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -729,7 +704,7 @@ func TestVerifyEmail(t *testing.T) {
 	t.Run("code provided", func(t *testing.T) {
 		testCases := []struct {
 			description        string
-			dbResponse         []interface{}
+			response           []interface{}
 			expectedStatusCode int
 		}{
 			{
@@ -752,7 +727,7 @@ func TestVerifyEmail(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("QueryRow", dbQuery, mock.Anything).Return(tc.dbResponse...)
+				hw.um.On("VerifyEmail", mock.Anything, mock.Anything).Return(tc.response...)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
@@ -762,7 +737,7 @@ func TestVerifyEmail(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.db.AssertExpectations(t)
+				hw.um.AssertExpectations(t)
 			})
 		}
 	})
@@ -772,21 +747,17 @@ func testsOK(w http.ResponseWriter, r *http.Request) {}
 
 type handlersWrapper struct {
 	cfg *viper.Viper
-	db  *tests.DBMock
-	es  *tests.EmailSenderMock
+	um  *user.ManagerMock
 	h   *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
-	db := &tests.DBMock{}
-	es := &tests.EmailSenderMock{}
-	hubAPI := api.New(db, es)
+	um := &user.ManagerMock{}
 
 	return &handlersWrapper{
 		cfg: cfg,
-		db:  db,
-		es:  es,
-		h:   NewHandlers(hubAPI, cfg),
+		um:  um,
+		h:   NewHandlers(um, cfg),
 	}
 }

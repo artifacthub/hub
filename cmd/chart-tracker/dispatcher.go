@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
@@ -26,19 +25,23 @@ type job struct {
 // dispatcher is in charge of generating jobs and dispatching them among the
 // available workers.
 type dispatcher struct {
-	ctx    context.Context
-	ec     *errorsCollector
-	hubAPI *api.API
-	Queue  chan *job
+	ctx              context.Context
+	ec               *errorsCollector
+	chartRepoManager hub.ChartRepositoryManager
+	Queue            chan *job
 }
 
 // newDispatcher creates a new dispatcher instance.
-func newDispatcher(ctx context.Context, ec *errorsCollector, hubAPI *api.API) *dispatcher {
+func newDispatcher(
+	ctx context.Context,
+	ec *errorsCollector,
+	chartRepoManager hub.ChartRepositoryManager,
+) *dispatcher {
 	return &dispatcher{
-		ctx:    ctx,
-		hubAPI: hubAPI,
-		Queue:  make(chan *job),
-		ec:     ec,
+		ctx:              ctx,
+		chartRepoManager: chartRepoManager,
+		Queue:            make(chan *job),
+		ec:               ec,
 	}
 }
 
@@ -77,7 +80,7 @@ func (d *dispatcher) trackRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepos
 		return
 	}
 	log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
-	packagesDigest, err := d.hubAPI.ChartRepositories.GetPackagesDigest(d.ctx, r.ChartRepositoryID)
+	packagesDigest, err := d.chartRepoManager.GetPackagesDigest(d.ctx, r.ChartRepositoryID)
 	if err != nil {
 		log.Error().Err(err).Str("repo", r.Name).Msg("Error getting repository packages digest")
 		return

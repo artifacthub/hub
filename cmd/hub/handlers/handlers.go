@@ -11,7 +11,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
-	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -20,33 +20,42 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Services is a wrapper around several internal services used by the handlers.
+type Services struct {
+	OrganizationManager    hub.OrganizationManager
+	UserManager            hub.UserManager
+	PackageManager         hub.PackageManager
+	ChartRepositoryManager hub.ChartRepositoryManager
+	ImageStore             img.Store
+}
+
 // Handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type Handlers struct {
 	cfg    *viper.Viper
-	hubAPI *api.API
+	svc    *Services
 	logger zerolog.Logger
 	Router http.Handler
 
 	Organizations     *org.Handlers
-	User              *user.Handlers
+	Users             *user.Handlers
 	Packages          *pkg.Handlers
 	ChartRepositories *chartrepo.Handlers
 	Static            *static.Handlers
 }
 
 // Setup creates a new Handlers instance.
-func Setup(cfg *viper.Viper, hubAPI *api.API, imageStore img.Store) *Handlers {
+func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 	h := &Handlers{
 		cfg:    cfg,
-		hubAPI: hubAPI,
+		svc:    svc,
 		logger: log.With().Str("handlers", "root").Logger(),
 
-		Organizations:     org.NewHandlers(hubAPI),
-		User:              user.NewHandlers(hubAPI, cfg),
-		Packages:          pkg.NewHandlers(hubAPI),
-		ChartRepositories: chartrepo.NewHandlers(hubAPI),
-		Static:            static.NewHandlers(cfg, imageStore),
+		Organizations:     org.NewHandlers(svc.OrganizationManager),
+		Users:             user.NewHandlers(svc.UserManager, cfg),
+		Packages:          pkg.NewHandlers(svc.PackageManager),
+		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
+		Static:            static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
 	return h
@@ -62,7 +71,7 @@ func (h *Handlers) setupRouter() {
 	r.Use(Logger)
 	r.Use(middleware.Recoverer)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
-		r.Use(h.User.BasicAuth)
+		r.Use(h.Users.BasicAuth)
 	}
 	r.NotFound(h.Static.ServeIndex)
 
@@ -72,30 +81,30 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/updates", h.Packages.GetUpdates)
 			r.Get("/search", h.Packages.Search)
-			r.With(h.User.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
+			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 		})
 		r.Route("/package", func(r chi.Router) {
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
-				r.Use(h.User.InjectUserID)
+				r.Use(h.Users.InjectUserID)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
-				r.Use(h.User.InjectUserID)
+				r.Use(h.Users.InjectUserID)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{packageID}", func(r chi.Router) {
-				r.With(h.User.RequireLogin).Put("/", h.Packages.ToggleStar)
+				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 		})
-		r.Post("/users", h.User.RegisterUser)
+		r.Post("/users", h.Users.RegisterUser)
 		r.Route("/user", func(r chi.Router) {
-			r.Use(h.User.RequireLogin)
-			r.Get("/", h.User.GetProfile)
+			r.Use(h.Users.RequireLogin)
+			r.Get("/", h.Users.GetProfile)
 			r.Get("/orgs", h.Organizations.GetByUser)
-			r.Put("/password", h.User.UpdatePassword)
-			r.Put("/profile", h.User.UpdateProfile)
+			r.Put("/password", h.Users.UpdatePassword)
+			r.Put("/profile", h.Users.UpdateProfile)
 			r.Route("/chart-repositories", func(r chi.Router) {
 				r.Get("/", h.ChartRepositories.GetOwnedByUser)
 				r.Post("/", h.ChartRepositories.Add)
@@ -105,9 +114,9 @@ func (h *Handlers) setupRouter() {
 				r.Delete("/", h.ChartRepositories.Delete)
 			})
 		})
-		r.With(h.User.RequireLogin).Post("/orgs", h.Organizations.Add)
+		r.With(h.Users.RequireLogin).Post("/orgs", h.Organizations.Add)
 		r.Route("/org/{orgName}", func(r chi.Router) {
-			r.Use(h.User.RequireLogin)
+			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.Organizations.Get)
 			r.Put("/", h.Organizations.Update)
 			r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
@@ -125,11 +134,11 @@ func (h *Handlers) setupRouter() {
 				r.Delete("/", h.ChartRepositories.Delete)
 			})
 		})
-		r.Post("/verify-email", h.User.VerifyEmail)
-		r.Post("/login", h.User.Login)
-		r.With(h.User.RequireLogin).Get("/logout", h.User.Logout)
-		r.Head("/check-availability/{resourceKind}", h.CheckAvailability)
-		r.With(h.User.RequireLogin).Post("/images", h.Static.SaveImage)
+		r.Post("/verify-email", h.Users.VerifyEmail)
+		r.Post("/login", h.Users.Login)
+		r.With(h.Users.RequireLogin).Get("/logout", h.Users.Logout)
+		r.Head("/check-availability/{resourceKind}", h.ChartRepositories.CheckAvailability)
+		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
 	})
 
 	// Static files and index
@@ -139,48 +148,6 @@ func (h *Handlers) setupRouter() {
 	r.Get("/", h.Static.ServeIndex)
 
 	h.Router = r
-}
-
-// CheckAvailability is a middleware that checks the availability of a given
-// value for the provided resource kind.
-func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
-	resourceKind := chi.URLParam(r, "resourceKind")
-	value := r.FormValue("v")
-
-	// Check if resource kind and value received are valid
-	validResourceKinds := []string{
-		"userAlias",
-		"chartRepositoryName",
-		"chartRepositoryURL",
-		"organizationName",
-	}
-	isResourceKindValid := func(resourceKind string) bool {
-		for _, k := range validResourceKinds {
-			if resourceKind == k {
-				return true
-			}
-		}
-		return false
-	}
-	if !isResourceKindValid(resourceKind) {
-		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
-		return
-	}
-	if value == "" {
-		http.Error(w, "invalid value provided", http.StatusBadRequest)
-		return
-	}
-
-	// Check availability in database
-	available, err := h.hubAPI.CheckAvailability(r.Context(), resourceKind, value)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		http.Error(w, "", http.StatusInternalServerError)
-		return
-	}
-	if available {
-		w.WriteHeader(http.StatusNotFound)
-	}
 }
 
 // Logger is an http middleware that logs some information about requests

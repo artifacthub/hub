@@ -26,7 +26,7 @@ func NewManager(db hub.DB) *Manager {
 
 // GetJSON returns the package identified by the input provided as a json
 // object. The json object is built by the database.
-func (m *Manager) GetJSON(ctx context.Context, input *GetInput) ([]byte, error) {
+func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	query := "select get_package($1::uuid, $2::jsonb)"
 	userID := getUserID(ctx)
 	inputJSON, _ := json.Marshal(input)
@@ -69,7 +69,7 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 
 // SearchJSON returns a json object with the search results produced by the
 // input provided. The json object is built by the database.
-func (m *Manager) SearchJSON(ctx context.Context, input *SearchInput) ([]byte, error) {
+func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) ([]byte, error) {
 	inputJSON, _ := json.Marshal(input)
 	return m.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
 }
@@ -89,26 +89,6 @@ func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interfa
 		return nil, err
 	}
 	return dataJSON, nil
-}
-
-// GetInput represents the input used to get a specific package.
-type GetInput struct {
-	ChartRepositoryName string `json:"chart_repository_name"`
-	PackageName         string `json:"package_name"`
-	Version             string `json:"version"`
-}
-
-// SearchInput represents the query input when searching for packages.
-type SearchInput struct {
-	Limit             int               `json:"limit,omitempty"`
-	Offset            int               `json:"offset,omitempty"`
-	Facets            bool              `json:"facets"`
-	Text              string            `json:"text"`
-	PackageKinds      []hub.PackageKind `json:"package_kinds,omitempty"`
-	Users             []string          `json:"users,omitempty"`
-	Orgs              []string          `json:"orgs,omitempty"`
-	ChartRepositories []string          `json:"chart_repositories,omitempty"`
-	Deprecated        bool              `json:"deprecated"`
 }
 
 // getUserID returns the user id from the context provided when available.

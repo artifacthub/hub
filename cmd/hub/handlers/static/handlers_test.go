@@ -1,7 +1,6 @@
 package static
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/img"
-	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
@@ -126,7 +124,7 @@ func TestSaveImage(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte(`{"image_id": "imageID"}`), data)
 		hw.is.AssertExpectations(t)
 	})
@@ -172,43 +170,25 @@ func TestServeStaticFile(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, tests.BuildCacheControlHeader(helpers.StaticCacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.StaticCacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("testCssData\n"), data)
 	})
 }
 
 type handlersWrapper struct {
 	cfg *viper.Viper
-	is  *imageStoreMock
+	is  *img.StoreMock
 	h   *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.webBuildPath", "testdata")
-	is := &imageStoreMock{}
+	is := &img.StoreMock{}
 
 	return &handlersWrapper{
 		cfg: cfg,
 		is:  is,
 		h:   NewHandlers(cfg, is),
 	}
-}
-
-type imageStoreMock struct {
-	mock.Mock
-}
-
-func (m *imageStoreMock) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
-	args := m.Called(ctx, imageID, version)
-	data := args.Get(0)
-	if data != nil {
-		return data.([]byte), args.Error(1)
-	}
-	return nil, args.Error(1)
-}
-
-func (m *imageStoreMock) SaveImage(ctx context.Context, data []byte) (string, error) {
-	args := m.Called(ctx, data)
-	return args.String(0), args.Error(1)
 }

@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tests"
@@ -24,11 +23,9 @@ func TestMain(m *testing.M) {
 }
 
 func TestGet(t *testing.T) {
-	dbQuery := "select get_package($1::uuid, $2::jsonb)"
-
 	t.Run("non existing package", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, pkg.ErrNotFound)
+		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, pkg.ErrNotFound)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -38,12 +35,12 @@ func TestGet(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("existing package", func(t *testing.T) {
+	t.Run("get package succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -56,14 +53,14 @@ func TestGet(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting package", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -73,16 +70,14 @@ func TestGet(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 func TestGetStarredByUser(t *testing.T) {
-	dbQuery := "select get_packages_starred_by_user($1::uuid)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get packages starred by user succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetStarredByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -95,14 +90,14 @@ func TestGetStarredByUser(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting packages starred by user", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetStarredByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -112,16 +107,14 @@ func TestGetStarredByUser(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 func TestGetStats(t *testing.T) {
-	dbQuery := "select get_packages_stats()"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get stats succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetStatsJSON", mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -133,14 +126,14 @@ func TestGetStats(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting stats", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetStatsJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -149,16 +142,14 @@ func TestGetStats(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 func TestGetUpdates(t *testing.T) {
-	dbQuery := "select get_packages_updates()"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get updates succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetUpdatesJSON", mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -170,14 +161,14 @@ func TestGetUpdates(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting updates", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetUpdatesJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -186,13 +177,11 @@ func TestGetUpdates(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 func TestSearch(t *testing.T) {
-	dbQuery := "select search_packages($1::jsonb)"
-
 	t.Run("invalid requests", func(t *testing.T) {
 		hw := newHandlersWrapper()
 
@@ -222,12 +211,11 @@ func TestSearch(t *testing.T) {
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 			})
 		}
-		hw.db.AssertExpectations(t)
 	})
 
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("valid request, search succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -239,14 +227,14 @@ func TestSearch(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error searching packages", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -255,16 +243,14 @@ func TestSearch(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 func TestToggleStar(t *testing.T) {
-	dbQuery := "select toggle_star($1::uuid, $2::uuid)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("toggle star succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(nil)
+		hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
@@ -274,12 +260,12 @@ func TestToggleStar(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error toggling star", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
@@ -289,21 +275,20 @@ func TestToggleStar(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.pm.AssertExpectations(t)
 	})
 }
 
 type handlersWrapper struct {
-	db *tests.DBMock
+	pm *pkg.ManagerMock
 	h  *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
-	db := &tests.DBMock{}
-	hubAPI := api.New(db, nil)
+	pm := &pkg.ManagerMock{}
 
 	return &handlersWrapper{
-		db: db,
-		h:  NewHandlers(hubAPI),
+		pm: pm,
+		h:  NewHandlers(pm),
 	}
 }

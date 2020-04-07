@@ -6,7 +6,6 @@ import (
 	"regexp"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -19,15 +18,15 @@ var chartRepositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
 // Handlers represents a group of http handlers in charge of handling chart
 // repositories operations.
 type Handlers struct {
-	hubAPI *api.API
-	logger zerolog.Logger
+	chartRepoManager hub.ChartRepositoryManager
+	logger           zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(hubAPI *api.API) *Handlers {
+func NewHandlers(chartRepoManager hub.ChartRepositoryManager) *Handlers {
 	return &Handlers{
-		hubAPI: hubAPI,
-		logger: log.With().Str("handlers", "chartrepo").Logger(),
+		chartRepoManager: chartRepoManager,
+		logger:           log.With().Str("handlers", "chartrepo").Logger(),
 	}
 }
 
@@ -49,10 +48,52 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
 		return
 	}
-	if err := h.hubAPI.ChartRepositories.Add(r.Context(), orgName, repo); err != nil {
+	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
+	}
+}
+
+// CheckAvailability is a middleware that checks the availability of a given
+// value for the provided resource kind.
+func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
+	resourceKind := chi.URLParam(r, "resourceKind")
+	value := r.FormValue("v")
+
+	// Check if resource kind and value received are valid
+	validResourceKinds := []string{
+		"chartRepositoryName",
+		"chartRepositoryURL",
+		"organizationName",
+		"userAlias",
+	}
+	isResourceKindValid := func(resourceKind string) bool {
+		for _, k := range validResourceKinds {
+			if resourceKind == k {
+				return true
+			}
+		}
+		return false
+	}
+	if !isResourceKindValid(resourceKind) {
+		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
+		return
+	}
+	if value == "" {
+		http.Error(w, "invalid value provided", http.StatusBadRequest)
+		return
+	}
+
+	// Check availability in database
+	available, err := h.chartRepoManager.CheckAvailability(r.Context(), resourceKind, value)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	if available {
+		w.WriteHeader(http.StatusNotFound)
 	}
 }
 
@@ -60,7 +101,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 // the database.
 func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	repoName := chi.URLParam(r, "repoName")
-	if err := h.hubAPI.ChartRepositories.Delete(r.Context(), repoName); err != nil {
+	if err := h.chartRepoManager.Delete(r.Context(), repoName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -72,7 +113,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 // organization.
 func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.hubAPI.ChartRepositories.GetOwnedByOrgJSON(r.Context(), orgName)
+	dataJSON, err := h.chartRepoManager.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -84,7 +125,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 // GetOwnedByUser is an http handler that returns the chart repositories owned
 // by the user doing the request.
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.ChartRepositories.GetOwnedByUserJSON(r.Context())
+	dataJSON, err := h.chartRepoManager.GetOwnedByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -103,7 +144,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	repo.Name = chi.URLParam(r, "repoName")
-	if err := h.hubAPI.ChartRepositories.Update(r.Context(), repo); err != nil {
+	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
 		log.Error().Err(err).Str("method", "Update").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return

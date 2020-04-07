@@ -9,8 +9,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
@@ -23,8 +24,6 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
-	dbQuery := "select add_organization($1::uuid, $2::jsonb)"
-
 	t.Run("invalid organization provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -82,16 +81,16 @@ func TestAdd(t *testing.T) {
 		`
 		testCases := []struct {
 			description        string
-			dbResponse         interface{}
+			err                error
 			expectedStatusCode int
 		}{
 			{
-				"success",
+				"add organization succeeded",
 				nil,
 				http.StatusOK,
 			},
 			{
-				"database error",
+				"error adding organization",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -100,7 +99,7 @@ func TestAdd(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tc.dbResponse)
+				hw.om.On("Add", mock.Anything, mock.Anything).Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(orgJSON))
@@ -110,29 +109,26 @@ func TestAdd(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.db.AssertExpectations(t)
+				hw.om.AssertExpectations(t)
 			})
 		}
 	})
 }
 
 func TestAddMember(t *testing.T) {
-	dbQueryAddMember := `select add_organization_member($1::uuid, $2::text, $3::text)`
-	dbQueryGetUserEmail := `select email from "user" where alias = $1`
-
 	t.Run("valid member provided", func(t *testing.T) {
 		testCases := []struct {
 			description        string
-			dbResponse         interface{}
+			err                error
 			expectedStatusCode int
 		}{
 			{
-				"success",
+				"add member succeeded",
 				nil,
 				http.StatusOK,
 			},
 			{
-				"database error",
+				"error adding member",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -141,13 +137,8 @@ func TestAddMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("Exec", dbQueryAddMember, mock.Anything, mock.Anything, mock.Anything).
-					Return(tc.dbResponse)
-				if tc.dbResponse == nil {
-					hw.db.On("QueryRow", dbQueryGetUserEmail, mock.Anything).Return("email", nil)
-					hw.es.On("SendEmail", mock.Anything).Return(nil)
-					defer hw.es.AssertExpectations(t)
-				}
+				hw.om.On("AddMember", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+					Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader("member=userAlias"))
@@ -158,18 +149,16 @@ func TestAddMember(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.db.AssertExpectations(t)
+				hw.om.AssertExpectations(t)
 			})
 		}
 	})
 }
 
 func TestConfirmMembership(t *testing.T) {
-	dbQuery := "select confirm_organization_membership($1::uuid, $2::text)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("confirm membership succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+		hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
@@ -179,13 +168,12 @@ func TestConfirmMembership(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error confirming membership", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).
-			Return(tests.ErrFakeDatabaseFailure)
+		hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
@@ -195,16 +183,14 @@ func TestConfirmMembership(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 }
 
 func TestDeleteMember(t *testing.T) {
-	dbQuery := "select delete_organization_member($1::uuid, $2::text, $3::text)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("delete member succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+		hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
@@ -214,12 +200,12 @@ func TestDeleteMember(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error deleting member", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything, mock.Anything).
+		hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).
 			Return(tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
@@ -230,16 +216,14 @@ func TestDeleteMember(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 }
 
 func TestGet(t *testing.T) {
-	dbQuery := "select get_organization($1::uuid, $2::text)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get organization succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.om.On("GetJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -252,14 +236,14 @@ func TestGet(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting organization", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.om.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -269,16 +253,14 @@ func TestGet(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 }
 
 func TestGetByUser(t *testing.T) {
-	dbQuery := "select get_user_organizations($1::uuid)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get user organizations succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.om.On("GetByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -291,14 +273,14 @@ func TestGetByUser(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting user organizations", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.om.On("GetByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -308,16 +290,14 @@ func TestGetByUser(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 }
 
 func TestGetMembers(t *testing.T) {
-	dbQuery := "select get_organization_members($1::uuid, $2::text)"
-
-	t.Run("valid request", func(t *testing.T) {
+	t.Run("get organization members succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -330,14 +310,14 @@ func TestGetMembers(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("database error", func(t *testing.T) {
+	t.Run("error getting organization members", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
@@ -347,13 +327,11 @@ func TestGetMembers(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.db.AssertExpectations(t)
+		hw.om.AssertExpectations(t)
 	})
 }
 
 func TestUpdate(t *testing.T) {
-	dbQuery := "select update_organization($1::uuid, $2::jsonb)"
-
 	t.Run("invalid organization provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -395,16 +373,16 @@ func TestUpdate(t *testing.T) {
 		`
 		testCases := []struct {
 			description        string
-			dbResponse         interface{}
+			err                error
 			expectedStatusCode int
 		}{
 			{
-				"success",
+				"organization update succeeded",
 				nil,
 				http.StatusOK,
 			},
 			{
-				"database error",
+				"error updating organization",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -413,7 +391,7 @@ func TestUpdate(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.db.On("Exec", dbQuery, mock.Anything, mock.Anything).Return(tc.dbResponse)
+				hw.om.On("Update", mock.Anything, mock.Anything).Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(orgJSON))
@@ -423,26 +401,22 @@ func TestUpdate(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.db.AssertExpectations(t)
+				hw.om.AssertExpectations(t)
 			})
 		}
 	})
 }
 
 type handlersWrapper struct {
-	db *tests.DBMock
-	es *tests.EmailSenderMock
+	om *org.ManagerMock
 	h  *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
-	db := &tests.DBMock{}
-	es := &tests.EmailSenderMock{}
-	hubAPI := api.New(db, es)
+	om := &org.ManagerMock{}
 
 	return &handlersWrapper{
-		db: db,
-		es: es,
-		h:  NewHandlers(hubAPI),
+		om: om,
+		h:  NewHandlers(om),
 	}
 }

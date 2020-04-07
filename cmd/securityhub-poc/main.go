@@ -12,9 +12,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/yaml.v2"
@@ -40,14 +40,14 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := api.New(db, nil)
+	pkgManager := pkg.NewManager(db)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
 	}
 	r := &SecurityHubRegistrar{
 		ctx:        context.Background(),
-		hubAPI:     hubAPI,
+		pkgManager: pkgManager,
 		imageStore: imageStore,
 	}
 
@@ -91,7 +91,7 @@ type Policy struct {
 
 type SecurityHubRegistrar struct {
 	ctx        context.Context
-	hubAPI     *api.API
+	pkgManager hub.PackageManager
 	imageStore img.Store
 }
 
@@ -156,7 +156,7 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, basePath, pkgPath string) 
 		p.Data = map[string]interface{}{"policies": e.Policies}
 	}
 
-	return r.hubAPI.Packages.Register(r.ctx, p)
+	return r.pkgManager.Register(r.ctx, p)
 }
 
 func downloadImage(u string) ([]byte, error) {

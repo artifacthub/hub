@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/jackc/pgx/v4"
@@ -235,7 +236,7 @@ func TestRegisterUser(t *testing.T) {
 			},
 			{
 				"error sending email verification code",
-				tests.ErrFakeEmailSenderFailure,
+				email.ErrFakeSenderFailure,
 			},
 		}
 		for _, tc := range testCases {
@@ -243,7 +244,7 @@ func TestRegisterUser(t *testing.T) {
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("QueryRow", dbQuery, mock.Anything).Return("emailVerificationCode", nil)
-				es := &tests.EmailSenderMock{}
+				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
 

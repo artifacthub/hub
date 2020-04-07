@@ -19,7 +19,7 @@ func TestGetJSON(t *testing.T) {
 		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(ctx, &GetInput{})
+		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{})
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -30,7 +30,7 @@ func TestGetJSON(t *testing.T) {
 		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(context.Background(), &GetInput{})
+		dataJSON, err := m.GetJSON(context.Background(), &hub.GetPackageInput{})
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -181,7 +181,7 @@ func TestRegister(t *testing.T) {
 
 func TestSearchJSON(t *testing.T) {
 	dbQuery := "select search_packages($1::jsonb)"
-	input := &SearchInput{Text: "kw1"}
+	input := &hub.SearchPackageInput{Text: "kw1"}
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}

@@ -8,7 +8,6 @@ import (
 	"strconv"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/go-chi/chi"
@@ -19,21 +18,21 @@ import (
 // Handlers represents a group of http handlers in charge of handling packages
 // operations.
 type Handlers struct {
-	hubAPI *api.API
-	logger zerolog.Logger
+	pkgManager hub.PackageManager
+	logger     zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(hubAPI *api.API) *Handlers {
+func NewHandlers(pkgManager hub.PackageManager) *Handlers {
 	return &Handlers{
-		hubAPI: hubAPI,
-		logger: log.With().Str("handlers", "pkg").Logger(),
+		pkgManager: pkgManager,
+		logger:     log.With().Str("handlers", "pkg").Logger(),
 	}
 }
 
 // Get is an http handler used to get a package details.
 func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
-	input := &pkg.GetInput{
+	input := &hub.GetPackageInput{
 		PackageName: chi.URLParam(r, "packageName"),
 		Version:     chi.URLParam(r, "version"),
 	}
@@ -41,7 +40,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	if chartRepositoryName != "" {
 		input.ChartRepositoryName = chartRepositoryName
 	}
-	dataJSON, err := h.hubAPI.Packages.GetJSON(r.Context(), input)
+	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
 		if errors.Is(err, pkg.ErrNotFound) {
 			http.NotFound(w, r)
@@ -57,7 +56,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 // GetStarredByUser is an http handler used to get the packages starred by the
 // user doing the request.
 func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.Packages.GetStarredByUserJSON(r.Context())
+	dataJSON, err := h.pkgManager.GetStarredByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStarredByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -69,7 +68,7 @@ func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
 // GetStats is an http handler used to get some stats about packages registered
 // in the hub database.
 func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.Packages.GetStatsJSON(r.Context())
+	dataJSON, err := h.pkgManager.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -81,7 +80,7 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 // GetUpdates is an http handler used to get the last packages updates in the
 // hub database.
 func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.hubAPI.Packages.GetUpdatesJSON(r.Context())
+	dataJSON, err := h.pkgManager.GetUpdatesJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetUpdates").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -99,7 +98,7 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	dataJSON, err := h.hubAPI.Packages.SearchJSON(r.Context(), input)
+	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -111,7 +110,7 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 // ToggleStar is an http handler used to toggle the star on a given package.
 func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 	packageID := chi.URLParam(r, "packageID")
-	err := h.hubAPI.Packages.ToggleStar(r.Context(), packageID)
+	err := h.pkgManager.ToggleStar(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
 		http.Error(w, "", http.StatusInternalServerError)
@@ -121,7 +120,7 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 
 // buildSearchInput builds a packages search query from a map of query string
 // values, validating them as they are extracted.
-func buildSearchInput(qs url.Values) (*pkg.SearchInput, error) {
+func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	// Limit
 	var limit int
 	if qs.Get("limit") != "" {
@@ -199,7 +198,7 @@ func buildSearchInput(qs url.Values) (*pkg.SearchInput, error) {
 		}
 	}
 
-	return &pkg.SearchInput{
+	return &hub.SearchPackageInput{
 		Limit:             limit,
 		Offset:            offset,
 		Facets:            facets,

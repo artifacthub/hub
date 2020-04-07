@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
@@ -65,7 +66,7 @@ func TestAddMember(t *testing.T) {
 			},
 			{
 				"error sending organization invitation email",
-				tests.ErrFakeEmailSenderFailure,
+				email.ErrFakeSenderFailure,
 			},
 		}
 		for _, tc := range testCases {
@@ -74,7 +75,7 @@ func TestAddMember(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", dbQueryAddMember, "userID", "orgName", "userAlias").Return(nil)
 				db.On("QueryRow", dbQueryGetUserEmail, mock.Anything).Return("email", nil)
-				es := &tests.EmailSenderMock{}
+				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
 

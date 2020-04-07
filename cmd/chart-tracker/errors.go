@@ -5,7 +5,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
 )
@@ -20,19 +19,23 @@ const (
 // repositories are being processed. Once all the processing is done, the
 // collected errors can be flushed, which will store them in the database.
 type errorsCollector struct {
-	ctx    context.Context
-	hubAPI *api.API
+	ctx              context.Context
+	chartRepoManager hub.ChartRepositoryManager
 
 	mu     sync.Mutex
 	errors map[string][]error // K: chart repository id
 }
 
 // newErrorsCollector creates a new errorsCollector instance.
-func newErrorsCollector(ctx context.Context, hubAPI *api.API, repos []*hub.ChartRepository) *errorsCollector {
+func newErrorsCollector(
+	ctx context.Context,
+	chartRepoManager hub.ChartRepositoryManager,
+	repos []*hub.ChartRepository,
+) *errorsCollector {
 	ec := &errorsCollector{
-		ctx:    ctx,
-		hubAPI: hubAPI,
-		errors: make(map[string][]error),
+		ctx:              ctx,
+		chartRepoManager: chartRepoManager,
+		errors:           make(map[string][]error),
 	}
 	for _, r := range repos {
 		ec.errors[r.ChartRepositoryID] = nil
@@ -59,7 +62,7 @@ func (c *errorsCollector) flush() {
 			errStr.WriteString(err.Error())
 			errStr.WriteString("\n")
 		}
-		err := c.hubAPI.ChartRepositories.SetLastTrackingResults(c.ctx, chartRepositoryID, errStr.String())
+		err := c.chartRepoManager.SetLastTrackingResults(c.ctx, chartRepositoryID, errStr.String())
 		if err != nil {
 			log.Error().Err(err).Str("repoID", chartRepositoryID).Send()
 		}
