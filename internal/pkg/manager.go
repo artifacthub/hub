@@ -84,11 +84,11 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var jsonData []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&jsonData); err != nil {
+	var dataJSON []byte
+	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
-	return jsonData, nil
+	return dataJSON, nil
 }
 
 // GetInput represents the input used to get a specific package.

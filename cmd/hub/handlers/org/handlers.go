@@ -93,38 +93,38 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 // Get is an http handler that returns the organization requested.
 func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	jsonData, err := h.hubAPI.Organizations.Get(r.Context(), orgName)
+	dataJSON, err := h.hubAPI.Organizations.GetJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // GetByUser is an http handler that returns the organizations the user doing
 // the request belongs to.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.Organizations.GetByUserJSON(r.Context())
+	dataJSON, err := h.hubAPI.Organizations.GetByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // GetMembers is an http handler that returns the members of the provided
 // organization.
 func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	jsonData, err := h.hubAPI.Organizations.GetMembersJSON(r.Context(), orgName)
+	dataJSON, err := h.hubAPI.Organizations.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // Update is an http handler that updates the provided organization in the

@@ -102,21 +102,21 @@ func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var jsonData []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&jsonData); err != nil {
+	var dataJSON []byte
+	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
-	return jsonData, nil
+	return dataJSON, nil
 }
 
 // dbQueryUnmarshal is a helper that executes the query provided and unmarshals
 // the json data returned from the database into the value (v) provided.
 func (m *Manager) dbQueryUnmarshal(ctx context.Context, v interface{}, query string, args ...interface{}) error {
-	jsonData, err := m.dbQueryJSON(ctx, query, args...)
+	dataJSON, err := m.dbQueryJSON(ctx, query, args...)
 	if err != nil {
 		return err
 	}
-	if err := json.Unmarshal(jsonData, &v); err != nil {
+	if err := json.Unmarshal(dataJSON, &v); err != nil {
 		return err
 	}
 	return nil

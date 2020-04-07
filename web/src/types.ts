@@ -112,8 +112,11 @@ export interface UserLogin {
   password: string;
 }
 
-export interface Alias {
+export interface Profile {
   alias: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface User extends UserLogin {

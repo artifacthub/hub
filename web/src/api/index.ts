@@ -4,12 +4,12 @@ import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
 import {
-  Alias,
   ChartRepository,
   CheckAvailabilityProps,
   Organization,
   Package,
   PackagesUpdatesList,
+  Profile,
   SearchQuery,
   SearchResults,
   Stats,
@@ -192,8 +192,8 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/logout`);
   },
 
-  getUserAlias: (): Promise<Alias> => {
-    return apiFetch(`${API_BASE_URL}/user/alias`);
+  getUserProfile: (): Promise<Profile> => {
+    return apiFetch(`${API_BASE_URL}/user`);
   },
 
   getChartRepositories: (fromOrgName?: string): Promise<ChartRepository[]> => {

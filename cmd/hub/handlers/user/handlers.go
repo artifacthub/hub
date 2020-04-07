@@ -74,16 +74,15 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 	})
 }
 
-// GetAlias is an http handler used to get a logged in user alias.
-func (h *Handlers) GetAlias(w http.ResponseWriter, r *http.Request) {
-	alias, err := h.hubAPI.User.GetAlias(r.Context())
+// GetProfile is an http handler used to get a logged in user profile.
+func (h *Handlers) GetProfile(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.hubAPI.User.GetProfileJSON(r.Context())
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetAlias").Send()
+		h.logger.Error().Err(err).Str("method", "GetProfile").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	jsonData := []byte(fmt.Sprintf(`{"alias": "%s"}`, alias))
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // InjectUserID is a middleware that injects the id of the user doing the

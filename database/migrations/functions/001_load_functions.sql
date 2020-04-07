@@ -8,6 +8,7 @@
 {{ template "organizations/update_organization.sql" }}
 {{ template "organizations/user_belongs_to_organization.sql" }}
 
+{{ template "users/get_user_profile.sql" }}
 {{ template "users/register_session.sql" }}
 {{ template "users/register_user.sql" }}
 {{ template "users/update_user_password.sql" }}

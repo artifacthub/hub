@@ -91,8 +91,8 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 	return err
 }
 
-// Get returns the organization requested as a json object.
-func (m *Manager) Get(ctx context.Context, orgName string) ([]byte, error) {
+// GetJSON returns the organization requested as a json object.
+func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 	query := "select get_organization($1::uuid, $2::text)"
 	userID := ctx.Value(hub.UserIDKey).(string)
 	return m.dbQueryJSON(ctx, query, userID, orgName)
@@ -126,9 +126,9 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var jsonData []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&jsonData); err != nil {
+	var dataJSON []byte
+	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
-	return jsonData, nil
+	return dataJSON, nil
 }

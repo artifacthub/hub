@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { API } from '../api';
-import { Alias } from '../types';
+import { Profile } from '../types';
 import history from '../utils/history';
 
 interface OrgCtx {
@@ -116,8 +116,8 @@ function AppCtxProvider(props: Props) {
   useEffect(() => {
     async function isUserAuth() {
       try {
-        const user: Alias = await API.getUserAlias();
-        dispatch({ type: 'signIn', alias: user.alias });
+        const profile: Profile = await API.getUserProfile();
+        dispatch({ type: 'signIn', alias: profile.alias });
       } catch {
         dispatch({ type: 'signOut' });
       }
