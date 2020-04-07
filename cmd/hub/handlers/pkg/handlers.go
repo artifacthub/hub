@@ -41,7 +41,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	if chartRepositoryName != "" {
 		input.ChartRepositoryName = chartRepositoryName
 	}
-	jsonData, err := h.hubAPI.Packages.GetJSON(r.Context(), input)
+	dataJSON, err := h.hubAPI.Packages.GetJSON(r.Context(), input)
 	if err != nil {
 		if errors.Is(err, pkg.ErrNotFound) {
 			http.NotFound(w, r)
@@ -51,43 +51,43 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // GetStarredByUser is an http handler used to get the packages starred by the
 // user doing the request.
 func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.Packages.GetStarredByUserJSON(r.Context())
+	dataJSON, err := h.hubAPI.Packages.GetStarredByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStarredByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // GetStats is an http handler used to get some stats about packages registered
 // in the hub database.
 func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.Packages.GetStatsJSON(r.Context())
+	dataJSON, err := h.hubAPI.Packages.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
 }
 
 // GetUpdates is an http handler used to get the last packages updates in the
 // hub database.
 func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.Packages.GetUpdatesJSON(r.Context())
+	dataJSON, err := h.hubAPI.Packages.GetUpdatesJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetUpdates").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // Search is an http handler used to searchPackages for packages in the hub
@@ -99,13 +99,13 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	jsonData, err := h.hubAPI.Packages.SearchJSON(r.Context(), input)
+	dataJSON, err := h.hubAPI.Packages.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // ToggleStar is an http handler used to toggle the star on a given package.

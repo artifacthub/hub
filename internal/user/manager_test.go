@@ -155,29 +155,36 @@ func TestDeleteSession(t *testing.T) {
 	})
 }
 
-func TestGetAlias(t *testing.T) {
-	dbQuery := `select alias from "user" where user_id = $1`
+func TestGetProfileJSON(t *testing.T) {
+	dbQuery := "select get_user_profile($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_, _ = m.GetProfileJSON(context.Background())
+		})
+	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return("alias", nil)
+		db.On("QueryRow", dbQuery, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
-		alias, err := m.GetAlias(ctx)
+		data, err := m.GetProfileJSON(ctx)
 		assert.NoError(t, err)
-		assert.Equal(t, "alias", alias)
+		assert.Equal(t, []byte("dataJSON"), data)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		alias, err := m.GetAlias(ctx)
+		data, err := m.GetProfileJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		assert.Empty(t, alias)
+		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})
 }

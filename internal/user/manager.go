@@ -98,12 +98,12 @@ func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
 	return err
 }
 
-// GetAlias returns the alias of the user doing the request.
-func (m *Manager) GetAlias(ctx context.Context) (string, error) {
+// GetProfileJSON returns the profile of the user doing the request.
+func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	var alias string
-	err := m.db.QueryRow(ctx, `select alias from "user" where user_id = $1`, userID).Scan(&alias)
-	return alias, err
+	var profile []byte
+	err := m.db.QueryRow(ctx, "select get_user_profile($1::uuid)", userID).Scan(&profile)
+	return profile, err
 }
 
 // RegisterSession registers a user session in the database.

@@ -92,7 +92,7 @@ func (h *Handlers) setupRouter() {
 		r.Post("/users", h.User.RegisterUser)
 		r.Route("/user", func(r chi.Router) {
 			r.Use(h.User.RequireLogin)
-			r.Get("/alias", h.User.GetAlias)
+			r.Get("/", h.User.GetProfile)
 			r.Get("/orgs", h.Organizations.GetByUser)
 			r.Put("/password", h.User.UpdatePassword)
 			r.Put("/profile", h.User.UpdateProfile)

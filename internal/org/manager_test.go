@@ -162,14 +162,14 @@ func TestDeleteMember(t *testing.T) {
 	})
 }
 
-func TestGet(t *testing.T) {
+func TestGetJSON(t *testing.T) {
 	dbQuery := `select get_organization($1::uuid, $2::text)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		assert.Panics(t, func() {
-			_, _ = m.Get(context.Background(), "orgName")
+			_, _ = m.GetJSON(context.Background(), "orgName")
 		})
 	})
 
@@ -178,7 +178,7 @@ func TestGet(t *testing.T) {
 		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
-		dataJSON, err := m.Get(ctx, "orgName")
+		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -189,7 +189,7 @@ func TestGet(t *testing.T) {
 		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		dataJSON, err := m.Get(ctx, "orgName")
+		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

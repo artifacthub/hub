@@ -72,25 +72,25 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 // organization.
 func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	jsonData, err := h.hubAPI.ChartRepositories.GetOwnedByOrgJSON(r.Context(), orgName)
+	dataJSON, err := h.hubAPI.ChartRepositories.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // GetOwnedByUser is an http handler that returns the chart repositories owned
 // by the user doing the request.
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	jsonData, err := h.hubAPI.ChartRepositories.GetOwnedByUserJSON(r.Context())
+	dataJSON, err := h.hubAPI.ChartRepositories.GetOwnedByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, jsonData, 0)
+	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // Update is an http handler that updates the provided chart repository in the

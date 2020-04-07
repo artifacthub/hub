@@ -55,16 +55,16 @@ func TestBasicAuth(t *testing.T) {
 }
 
 func TestGetAlias(t *testing.T) {
-	dbQuery := `select alias from "user" where user_id = $1`
+	dbQuery := "select get_user_profile($1::uuid)"
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return("alias", nil)
+		hw.db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.GetAlias(w, r)
+		hw.h.GetProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header
@@ -73,18 +73,18 @@ func TestGetAlias(t *testing.T) {
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, tests.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		assert.Equal(t, []byte(`{"alias": "alias"}`), data)
+		assert.Equal(t, []byte("dataJSON"), data)
 		hw.db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.db.On("QueryRow", dbQuery, mock.Anything).Return("", tests.ErrFakeDatabaseFailure)
+		hw.db.On("QueryRow", dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.GetAlias(w, r)
+		hw.h.GetProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 
