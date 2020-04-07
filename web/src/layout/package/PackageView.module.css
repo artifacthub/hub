@@ -39,10 +39,6 @@
 }
 
 /* Installation Modal */
-.modalInstallationWrapper {
-  margin-top: 35px;
-}
-
 .modalInstallationWrapper code {
   word-wrap: normal !important;
   white-space: pre !important;
@@ -86,5 +82,11 @@
   .readme {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .modalInstallationWrapper {
+    margin-top: 35px;
   }
 }

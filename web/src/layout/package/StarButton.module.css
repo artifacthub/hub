@@ -4,6 +4,11 @@
   border-bottom-left-radius: 50rem !important;
 }
 
+.starBtnContent {
+  height: 21px;
+  line-height: 1.15rem;
+}
+
 .starBtn.disabled,
 .starBtn:disabled {
   opacity: 1 !important;

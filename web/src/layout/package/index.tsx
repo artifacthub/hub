@@ -317,7 +317,7 @@ const PackageView = (props: Props) => {
                       </div>
                     </div>
 
-                    <div className="ml-auto position-relative">
+                    <div className="d-none d-md-inline ml-auto position-relative">
                       {!isUndefined(detail.stars) && !isNull(detail.stars) && (
                         <StarButton
                           stars={detail.stars}
@@ -331,28 +331,42 @@ const PackageView = (props: Props) => {
 
                   <p className="mb-0">{detail.description}</p>
 
-                  <div className="d-block d-md-none">
-                    <div className="d-inline-block mr-2">
-                      <Modal
-                        buttonType="btn-outline-secondary mt-4"
-                        buttonContent={
-                          <>
-                            <FiPlus className="mr-2" />
-                            <span>Info</span>
-                          </>
-                        }
-                        header={<ModalHeader package={detail} />}
-                        className={styles.wrapper}
-                      >
-                        <Details
-                          package={detail}
-                          searchUrlReferer={props.searchUrlReferer}
-                          fromStarredPage={props.fromStarredPage}
-                        />
-                      </Modal>
+                  <div className="d-flex align-items-center justify-content-between flex-wrap d-md-none">
+                    <div className="d-flex mt-3">
+                      <div className="mr-2">
+                        <Modal
+                          buttonType="btn-outline-secondary"
+                          buttonContent={
+                            <>
+                              <FiPlus className="mr-2" />
+                              <span>Info</span>
+                            </>
+                          }
+                          header={<ModalHeader package={detail} />}
+                          className={styles.wrapper}
+                        >
+                          <Details
+                            package={detail}
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </Modal>
+                      </div>
+
+                      <div>{InstallationModal(true, 'btn-outline-secondary')}</div>
                     </div>
 
-                    <div className="d-inline-block">{InstallationModal(true, 'btn-outline-secondary')}</div>
+                    <div className="mt-3 position-relative">
+                      {!isUndefined(detail.stars) && !isNull(detail.stars) && (
+                        <StarButton
+                          stars={detail.stars}
+                          starredByUser={detail.starredByUser}
+                          packageId={detail.packageId}
+                          onSuccess={fetchPackageDetail}
+                          mobileVersion
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
