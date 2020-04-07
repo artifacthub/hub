@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaStar } from 'react-icons/fa';
+import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
@@ -14,6 +14,7 @@ interface Props {
   stars: number;
   starredByUser?: boolean;
   onSuccess: () => void;
+  mobileVersion?: boolean;
 }
 
 const StarButton = (props: Props) => {
@@ -59,8 +60,22 @@ const StarButton = (props: Props) => {
         onClick={handleToggleStar}
       >
         <div className="d-flex align-items-center">
-          <FaStar className="mr-2" />
-          {!isLoggedIn || (isLoggedIn && !isUndefined(props.starredByUser) && !props.starredByUser) ? 'Star' : 'Unstar'}
+          {!isUndefined(props.mobileVersion) && props.mobileVersion ? (
+            <div className={styles.starBtnContent}>
+              {!isLoggedIn || (isLoggedIn && !isUndefined(props.starredByUser) && !props.starredByUser) ? (
+                <FaStar />
+              ) : (
+                <FaRegStar />
+              )}
+            </div>
+          ) : (
+            <>
+              <FaStar className="mr-2" />
+              {!isLoggedIn || (isLoggedIn && !isUndefined(props.starredByUser) && !props.starredByUser)
+                ? 'Star'
+                : 'Unstar'}
+            </>
+          )}
         </div>
       </button>
 
