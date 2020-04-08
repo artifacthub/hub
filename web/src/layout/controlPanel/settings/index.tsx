@@ -13,7 +13,7 @@ const SettingsSection = (props: Props) => (
     {(() => {
       switch (props.context) {
         case 'user':
-          return <UserSettings />;
+          return <UserSettings {...props} />;
         case 'org':
           return <OrganizationSettings {...props} />;
         default:

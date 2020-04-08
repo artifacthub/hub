@@ -16,13 +16,13 @@ interface Props {
   organizationName: string;
   organizationDisplayName?: string | null;
   deprecated: null | boolean;
+  labelClassName?: string;
 }
 
 const OrganizationInfo = (props: Props) => {
   const history = useHistory();
   const ref = useRef(null);
   const [organization, setOrganization] = useState<Organization | null | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState(false);
   const [openStatus, setOpenStatus] = useState(false);
   const [onLinkHover, setOnLinkHover] = useState(false);
   const [onDropdownHover, setOnDropdownHover] = useState(false);
@@ -30,11 +30,8 @@ const OrganizationInfo = (props: Props) => {
 
   async function fetchOrganization() {
     try {
-      setIsLoading(true);
       setOrganization(await API.getOrganization(props.organizationName));
-      setIsLoading(false);
     } catch (err) {
-      setIsLoading(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setOrganization(null);
       }
@@ -106,7 +103,7 @@ const OrganizationInfo = (props: Props) => {
         </div>
       </div>
 
-      <span className="text-muted text-uppercase mr-1">Org:</span>
+      <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>
       <button
         data-testid="orgLink"
         className={`p-0 border-0 pr-2 ${styles.link}`}
@@ -140,9 +137,6 @@ const OrganizationInfo = (props: Props) => {
           )}
         </u>
       </button>
-      {isLoading && (
-        <span className="spinner-grow spinner-grow-sm text-primary ml-1" role="status" aria-hidden="true" />
-      )}
     </div>
   );
 };

@@ -112,11 +112,14 @@ export interface UserLogin {
   password: string;
 }
 
-export interface Profile {
-  alias: string;
-  email: string;
+export interface UserFullName {
   firstName?: string;
   lastName?: string;
+}
+
+export interface Profile extends UserFullName {
+  alias: string;
+  email: string;
 }
 
 export interface User extends UserLogin {
@@ -158,6 +161,7 @@ export interface Organization {
 
 export interface RefInputField {
   checkIsValid: () => Promise<boolean>;
+  reset: () => void;
 }
 
 export interface Alert {
