@@ -1,6 +1,5 @@
--- get_organization returns the organization requested as a json object if the
--- user id provided belongs to the organization.
-create or replace function get_organization(p_user_id uuid, p_org_name text)
+-- get_organization returns the organization requested as a json object.
+create or replace function get_organization(p_org_name text)
 returns setof json as $$
     select json_build_object(
         'name', o.name,
@@ -10,8 +9,5 @@ returns setof json as $$
         'logo_image_id', o.logo_image_id
     )
     from organization o
-    join user__organization uo using (organization_id)
-    where o.name = p_org_name
-    and uo.user_id = p_user_id
-    and uo.confirmed = true;
+    where o.name = p_org_name;
 $$ language sql;
