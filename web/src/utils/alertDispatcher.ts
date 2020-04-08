@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { Alert } from '../types';
 
-const DEFUALT_TIME = 4 * 1000; //4s
+const DEFUALT_TIME = 5 * 1000; //5s
 
 export interface AlertUpdatesHandler {
   updateAlertWrapper(alert: Alert | null): void;

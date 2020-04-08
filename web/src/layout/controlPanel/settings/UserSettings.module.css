@@ -1,0 +1,10 @@
+.separator {
+  height: 3px;
+  width: 100px;
+  background-color: var(--color-1-700);
+}
+
+.formWrapper {
+  max-width: 40%;
+  width: 400px;
+}

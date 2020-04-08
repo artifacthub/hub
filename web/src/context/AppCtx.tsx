@@ -1,8 +1,9 @@
 import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { API } from '../api';
-import { Profile } from '../types';
+import { Profile, UserFullName } from '../types';
 import history from '../utils/history';
 
 interface OrgCtx {
@@ -11,14 +12,10 @@ interface OrgCtx {
 }
 
 interface AppState {
-  user:
-    | {
-        alias: string;
-      }
-    | null
-    | undefined;
+  user: Profile | null | undefined;
   org: OrgCtx | null;
   requestSignIn: boolean;
+  redirect?: string;
 }
 
 interface Props {
@@ -32,10 +29,11 @@ const initialState: AppState = {
 };
 
 type Action =
-  | { type: 'requestSignIn' }
-  | { type: 'signIn'; alias: string }
+  | { type: 'requestSignIn'; redirect?: string }
+  | { type: 'signIn'; profile: Profile }
   | { type: 'signOut' }
   | { type: 'unselectOrg' }
+  | { type: 'updateUser'; user: UserFullName }
   | { type: 'updateOrg'; name: string; displayName?: string };
 
 export const AppCtx = createContext<{
@@ -46,8 +44,8 @@ export const AppCtx = createContext<{
   dispatch: () => null,
 });
 
-export function requestSignIn() {
-  return { type: 'requestSignIn' };
+export function requestSignIn(redirect?: string) {
+  return { type: 'requestSignIn', redirect };
 }
 
 export function signOut() {
@@ -62,6 +60,10 @@ export function updateOrg(name: string, displayName?: string) {
   return { type: 'updateOrg', name, displayName };
 }
 
+export function updateUser(user: UserFullName) {
+  return { type: 'updateUser', user };
+}
+
 function redirectToControlPanel() {
   if (history.location.pathname.startsWith('/control-panel')) {
     history.push('/control-panel/packages');
@@ -74,6 +76,7 @@ export function appReducer(state: AppState, action: Action) {
       return {
         ...state,
         requestSignIn: true,
+        redirect: action.redirect,
       };
     case 'signIn':
       const orgCtx = window.localStorage.getItem('orgCtx');
@@ -82,9 +85,7 @@ export function appReducer(state: AppState, action: Action) {
         org = JSON.parse(orgCtx);
       }
       return {
-        user: {
-          alias: action.alias,
-        },
+        user: action.profile,
         org: org,
         requestSignIn: false,
       };
@@ -105,6 +106,14 @@ export function appReducer(state: AppState, action: Action) {
         ...state,
         org: orgToSave,
       };
+    case 'updateUser':
+      return {
+        ...state,
+        user: {
+          ...state.user!,
+          ...action.user,
+        },
+      };
     default:
       return { ...state };
   }
@@ -117,7 +126,11 @@ function AppCtxProvider(props: Props) {
     async function isUserAuth() {
       try {
         const profile: Profile = await API.getUserProfile();
-        dispatch({ type: 'signIn', alias: profile.alias });
+        dispatch({ type: 'signIn', profile });
+        if (!isUndefined(ctx.redirect)) {
+          // Redirect to correct route when neccessary
+          history.push({ pathname: ctx.redirect });
+        }
       } catch {
         dispatch({ type: 'signOut' });
       }
@@ -125,7 +138,7 @@ function AppCtxProvider(props: Props) {
     if (ctx.requestSignIn) {
       isUserAuth();
     }
-  }, [ctx.requestSignIn]);
+  }, [ctx.requestSignIn, ctx.redirect]);
 
   return <AppCtx.Provider value={{ ctx, dispatch }}>{props.children}</AppCtx.Provider>;
 }

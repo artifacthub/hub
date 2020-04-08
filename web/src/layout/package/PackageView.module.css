@@ -38,6 +38,14 @@
   width: 230px;
 }
 
+.labelOrg {
+  font-size: 80%;
+}
+
+.subtitle {
+  line-height: 1rem;
+}
+
 /* Installation Modal */
 .modalInstallationWrapper code {
   word-wrap: normal !important;

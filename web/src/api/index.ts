@@ -14,10 +14,10 @@ import {
   SearchResults,
   Stats,
   User,
+  UserFullName,
   UserLogin,
 } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
-import history from '../utils/history';
 import renameKeysInObject from '../utils/renameKeysInObject';
 
 interface PackageRequest {
@@ -55,8 +55,7 @@ const toCamelCase = (r: any): Result => {
 };
 
 const handleUnauthorizedRequests = async (res: any) => {
-  if (res.status === 401 && !res.url.includes('/user/alias')) {
-    history.push(`/login?redirect=${history.location.pathname}`);
+  if (res.status === 401) {
     return Promise.reject({
       status: res.status,
       statusText: 'ErrLoginRedirect',
@@ -300,5 +299,26 @@ export const API = {
 
   getStarredByUser: (): Promise<Package[]> => {
     return apiFetch(`${API_BASE_URL}/packages/starred`);
+  },
+
+  updateUserProfile: (profile: UserFullName): Promise<null | string> => {
+    const updatedProfile = renameKeysInObject(profile, { firstName: 'first_name', lastName: 'last_name' });
+    return apiFetch(`${API_BASE_URL}/user/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedProfile),
+    });
+  },
+
+  updatePassword: (oldPassword: string, newPassword: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/user/password`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `old=${oldPassword}&new=${newPassword}`,
+    });
   },
 };

@@ -16,6 +16,7 @@ import Image from '../common/Image';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
+import OrganizationInfo from '../common/OrganizationInfo';
 import SubNavbar from '../navigation/SubNavbar';
 import ChartInstall from './ChartInstall';
 import Details from './Details';
@@ -215,7 +216,7 @@ const PackageView = (props: Props) => {
             {!isNull(detail) && (
               <div className={`jumbotron ${styles.jumbotron}`}>
                 <div className="container">
-                  <div className="d-flex align-items-start mb-3">
+                  <div className="d-flex align-items-start w-100 mb-3">
                     <div className="d-flex align-items-center">
                       <div
                         className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
@@ -237,83 +238,68 @@ const PackageView = (props: Props) => {
                           )}
                         </div>
 
-                        {!isUndefined(detail.organizationName) && detail.organizationName && (
-                          <span className="mr-2">
-                            <small className="mr-1 text-uppercase text-muted">Org: </small>
-                            <Link
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    org: [detail.organizationName],
-                                  },
-                                  deprecated: detail.deprecated || false,
-                                }),
-                              }}
-                            >
-                              <u className="text-dark">
-                                {!isUndefined(detail.organizationDisplayName) && detail.organizationDisplayName ? (
-                                  <>{detail.organizationDisplayName}</>
-                                ) : (
-                                  <>{detail.organizationName}</>
-                                )}
-                              </u>
-                            </Link>
-                          </span>
-                        )}
+                        <div className={`d-flex flex-row mt-1 ${styles.subtitle}`}>
+                          {!isUndefined(detail.organizationName) && detail.organizationName && (
+                            <OrganizationInfo
+                              labelClassName={styles.labelOrg}
+                              organizationName={detail.organizationName}
+                              organizationDisplayName={detail.organizationDisplayName}
+                              deprecated={detail.deprecated}
+                            />
+                          )}
 
-                        {!isNull(detail.userAlias) && (
-                          <span className="mr-2">
-                            <small className="mr-1 text-uppercase text-muted">User: </small>
+                          {!isNull(detail.userAlias) && (
+                            <div className="mr-2 text-truncate">
+                              <small className="mr-1 text-uppercase text-muted">User: </small>
 
-                            <Link
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    user: [detail.userAlias],
-                                  },
-                                  deprecated: detail.deprecated || false,
-                                }),
-                              }}
-                            >
-                              <u className="text-dark">{detail.userAlias}</u>
-                            </Link>
-                          </span>
-                        )}
+                              <Link
+                                to={{
+                                  pathname: '/packages/search',
+                                  search: prepareQueryString({
+                                    pageNumber: 1,
+                                    filters: {
+                                      user: [detail.userAlias],
+                                    },
+                                    deprecated: detail.deprecated || false,
+                                  }),
+                                }}
+                              >
+                                <u className="text-dark">{detail.userAlias}</u>
+                              </Link>
+                            </div>
+                          )}
 
-                        {(() => {
-                          switch (detail.kind) {
-                            case PackageKind.Chart:
-                              return (
-                                <>
-                                  <small className="mr-1 text-muted text-uppercase">Repo: </small>
-                                  <Link
-                                    data-testid="repoLink"
-                                    to={{
-                                      pathname: '/packages/search',
-                                      search: prepareQueryString({
-                                        pageNumber: 1,
-                                        filters: {
-                                          repo: [detail.chartRepository!.name],
-                                        },
-                                        deprecated: false,
-                                      }),
-                                    }}
-                                  >
-                                    <u className="text-dark">
-                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                    </u>
-                                  </Link>
-                                </>
-                              );
+                          {(() => {
+                            switch (detail.kind) {
+                              case PackageKind.Chart:
+                                return (
+                                  <div className="text-truncate">
+                                    <small className="mr-1 text-muted text-uppercase">Repo: </small>
+                                    <Link
+                                      data-testid="repoLink"
+                                      to={{
+                                        pathname: '/packages/search',
+                                        search: prepareQueryString({
+                                          pageNumber: 1,
+                                          filters: {
+                                            repo: [detail.chartRepository!.name],
+                                          },
+                                          deprecated: false,
+                                        }),
+                                      }}
+                                    >
+                                      <u className="text-dark">
+                                        {detail.chartRepository!.displayName || detail.chartRepository!.name}
+                                      </u>
+                                    </Link>
+                                  </div>
+                                );
 
-                            default:
-                              return null;
-                          }
-                        })()}
+                              default:
+                                return null;
+                            }
+                          })()}
+                        </div>
                       </div>
                     </div>
 

@@ -17,7 +17,6 @@ interface FormValidation {
 }
 
 interface Props {
-  onSuccess?: () => void;
   openLogIn: boolean;
   setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
   redirect?: string;
@@ -52,17 +51,9 @@ const LogIn = (props: Props) => {
   async function loginUser(user: UserLogin) {
     try {
       await API.login(user);
-      if (!isUndefined(props.onSuccess)) {
-        props.onSuccess();
-      }
       setIsLoggingIn(false);
-      dispatch(requestSignIn());
       props.setOpenLogIn(false);
-      if (!isUndefined(props.redirect)) {
-        history.push({
-          pathname: props.redirect,
-        });
-      }
+      dispatch(requestSignIn(props.redirect));
     } catch (err) {
       let error = 'An error occurred, please try again later';
       switch (err.status) {

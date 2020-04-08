@@ -9,6 +9,7 @@ import { MdBusiness, MdSettings } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import { AppCtx, signOut } from '../../context/AppCtx';
+import alertDispatcher from '../../utils/alertDispatcher';
 import styles from './ControlPanelView.module.css';
 import MembersSection from './members';
 import OrganizationsSection from './organizations';
@@ -44,8 +45,8 @@ const navSections: NavSection = {
     },
     {
       name: 'settings',
-      displayName: 'My profile', //TODO
-      disabled: true,
+      displayName: 'Settings',
+      disabled: false,
       icon: <MdSettings />,
     },
   ],
@@ -87,7 +88,11 @@ const ControlPanelView = (props: Props) => {
 
   const onAuthError = (): void => {
     dispatch(signOut());
-    history.push(`/login?redirect=/control-panel`);
+    history.push(`/login?redirect=/control-panel/${activeSection}`);
+    alertDispatcher.postAlert({
+      type: 'danger',
+      message: 'Sorry, you are not authorized to complete this action, please make sure you are signed in',
+    });
   };
 
   const onMenuItemClick = (name: string) => {

@@ -21,7 +21,7 @@ const AlertController = () => {
     <div className="position-relative">
       <div
         className={classnames(
-          `alert alert-dismissible position-absolute`,
+          `alert alert-dismissible position-fixed`,
           `alert-${!isNull(alert) && alert.type ? alert.type : 'warning'}`,
           styles.alert,
           { show: !isNull(alert) },
