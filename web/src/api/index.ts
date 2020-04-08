@@ -6,6 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import {
   ChartRepository,
   CheckAvailabilityProps,
+  LogoImage,
   Organization,
   Package,
   PackagesUpdatesList,
@@ -250,7 +251,7 @@ export const API = {
   addOrganization: (organization: Organization): Promise<null | string> => {
     const org = renameKeysInObject(organization, {
       displayName: 'display_name',
-      logoUrl: 'logo_url',
+      logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
     return apiFetch(`${API_BASE_URL}/orgs`, {
@@ -265,7 +266,7 @@ export const API = {
   updateOrganization: (organization: Organization): Promise<null | string> => {
     const org = renameKeysInObject(organization, {
       displayName: 'display_name',
-      logoUrl: 'logo_url',
+      logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
     return apiFetch(`${API_BASE_URL}/org/${org.name}`, {
@@ -319,6 +320,13 @@ export const API = {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: `old=${oldPassword}&new=${newPassword}`,
+    });
+  },
+
+  saveImage: (data: string | ArrayBuffer): Promise<LogoImage> => {
+    return apiFetch(`${API_BASE_URL}/images`, {
+      method: 'POST',
+      body: data,
     });
   },
 };

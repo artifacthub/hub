@@ -8,6 +8,7 @@ import { API } from '../../../api';
 import { AppCtx, updateOrg } from '../../../context/AppCtx';
 import { Organization, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
+import InputFileField from '../../common/InputFileField';
 
 interface FormValidation {
   isValid: boolean;
@@ -24,6 +25,9 @@ interface Props {
 
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
   const { ctx, dispatch } = useContext(AppCtx);
+  const [imageId, setImageId] = useState<string | undefined>(
+    !isUndefined(props.organization) ? props.organization.logoImageId : undefined
+  );
   const nameInput = useRef<RefInputField>(null);
   const homeUrlInput = useRef<RefInputField>(null);
   const [isValidated, setIsValidated] = useState(false);
@@ -96,6 +100,10 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           homeUrl: formData.get('homeUrl') as string,
           description: formData.get('description') as string,
         };
+
+        if (!isUndefined(imageId)) {
+          organization.logoImageId = imageId;
+        }
       }
       setIsValidated(true);
       return { isValid, organization };
@@ -119,6 +127,14 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       onSubmit={(e: React.FormEvent<HTMLFormElement>) => submitForm(e)}
       noValidate
     >
+      <InputFileField
+        name="logoUrl"
+        label="Logo Url"
+        value={imageId}
+        onImageChange={(imageId: string) => setImageId(imageId)}
+        onAuthError={props.onAuthError}
+      />
+
       <InputField
         ref={nameInput}
         type="text"
