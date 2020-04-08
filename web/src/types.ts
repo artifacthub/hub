@@ -153,7 +153,7 @@ export interface Organization {
   name: string;
   displayName?: string;
   homeUrl?: string;
-  logoUrl?: string;
+  logoImageId?: string;
   description?: string;
   membersCount?: number | null;
   confirmed?: boolean | null;
@@ -168,4 +168,8 @@ export interface Alert {
   type: 'success' | 'danger' | 'warning';
   message: string;
   dismissOn?: number;
+}
+
+export interface LogoImage {
+  imageId: string;
 }

@@ -24,7 +24,7 @@ const AlertController = () => {
           `alert alert-dismissible position-fixed`,
           `alert-${!isNull(alert) && alert.type ? alert.type : 'warning'}`,
           styles.alert,
-          { show: !isNull(alert) },
+          { [`show ${styles.active}`]: !isNull(alert) },
           { fade: isNull(alert) }
         )}
         role="alert"

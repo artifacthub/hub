@@ -12,6 +12,7 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { Organization } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ExternalLink from '../../common/ExternalLink';
+import Image from '../../common/Image';
 import styles from './Card.module.css';
 
 interface ModalStatus {
@@ -88,10 +89,10 @@ const OrganizationCard = (props: Props) => {
           <div
             className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper}`}
           >
-            {!isUndefined(props.organization.logoUrl) ? (
-              <img
+            {!isUndefined(props.organization.logoImageId) ? (
+              <Image
                 alt={props.organization.displayName || props.organization.name}
-                src={props.organization.logoUrl}
+                imageId={props.organization.logoImageId}
                 className={styles.image}
               />
             ) : (

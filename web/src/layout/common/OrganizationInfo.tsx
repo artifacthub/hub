@@ -10,6 +10,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import { Organization } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import ExternalLink from './ExternalLink';
+import Image from './Image';
 import styles from './OrganizationInfo.module.css';
 
 interface Props {
@@ -70,10 +71,10 @@ const OrganizationInfo = (props: Props) => {
                 <div
                   className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper}`}
                 >
-                  {!isUndefined(organization.logoUrl) ? (
-                    <img
+                  {!isUndefined(organization.logoImageId) ? (
+                    <Image
                       alt={organization.displayName || organization.name}
-                      src={organization.logoUrl}
+                      imageId={organization.logoImageId}
                       className={styles.image}
                     />
                   ) : (
