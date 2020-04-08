@@ -88,7 +88,7 @@ const InputFileField = (props: Props) => {
             onClick={onClick}
           >
             {!isUndefined(props.value) ? (
-              <Image imageId={props.value} className={styles.image} alt="Logo url" />
+              <Image imageId={props.value} className={styles.image} alt="Logo" />
             ) : (
               <MdBusiness />
             )}

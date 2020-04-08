@@ -128,8 +128,8 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       noValidate
     >
       <InputFileField
-        name="logoUrl"
-        label="Logo Url"
+        name="logo"
+        label="Logo"
         value={imageId}
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
