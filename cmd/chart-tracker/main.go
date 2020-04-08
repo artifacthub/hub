@@ -7,8 +7,9 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 )
@@ -37,12 +38,13 @@ func main() {
 		log.Info().Msg("Chart tracker shutting down..")
 	}()
 
-	// Setup hub api and image store instances
+	// Setup internal services required
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
 	}
-	hubAPI := api.New(db, nil)
+	chartRepoManager := chartrepo.NewManager(db)
+	pkgManager := pkg.NewManager(db)
 	imageStore, err := util.SetupImageStore(cfg, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("ImageStore setup failed")
@@ -53,7 +55,7 @@ func main() {
 	var repos []*hub.ChartRepository
 	if len(reposNames) > 0 {
 		for _, name := range reposNames {
-			repo, err := hubAPI.ChartRepositories.GetByName(context.Background(), name)
+			repo, err := chartRepoManager.GetByName(context.Background(), name)
 			if err != nil {
 				log.Error().Err(err).Str("name", name).Msg("Error getting chart repository")
 				continue
@@ -62,7 +64,7 @@ func main() {
 		}
 	} else {
 		var err error
-		repos, err = hubAPI.ChartRepositories.GetAll(context.Background())
+		repos, err = chartRepoManager.GetAll(context.Background())
 		if err != nil {
 			log.Fatal().Err(err).Msg("Error getting chart repositories")
 		}
@@ -70,12 +72,12 @@ func main() {
 
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
-	ec := newErrorsCollector(ctx, hubAPI, repos)
-	dispatcher := newDispatcher(ctx, ec, hubAPI)
+	ec := newErrorsCollector(ctx, chartRepoManager, repos)
+	dispatcher := newDispatcher(ctx, ec, chartRepoManager)
 	wg.Add(1)
 	go dispatcher.run(&wg, repos)
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := newWorker(ctx, i, ec, hubAPI, imageStore)
+		w := newWorker(ctx, i, ec, pkgManager, imageStore)
 		wg.Add(1)
 		go w.run(&wg, dispatcher.Queue)
 	}

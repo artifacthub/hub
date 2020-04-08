@@ -36,14 +36,14 @@ func (m *Manager) CheckCredentials(
 	ctx context.Context,
 	email,
 	password string,
-) (*CheckCredentialsOutput, error) {
+) (*hub.CheckCredentialsOutput, error) {
 	// Get password for email provided from database
 	var userID, hashedPassword string
 	query := `select user_id, password from "user" where email = $1`
 	err := m.db.QueryRow(ctx, query, email).Scan(&userID, &hashedPassword)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return &CheckCredentialsOutput{Valid: false}, nil
+			return &hub.CheckCredentialsOutput{Valid: false}, nil
 		}
 		return nil, err
 	}
@@ -51,10 +51,10 @@ func (m *Manager) CheckCredentials(
 	// Check if the password provided is valid
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		return &CheckCredentialsOutput{Valid: false}, nil
+		return &hub.CheckCredentialsOutput{Valid: false}, nil
 	}
 
-	return &CheckCredentialsOutput{
+	return &hub.CheckCredentialsOutput{
 		Valid:  true,
 		UserID: userID,
 	}, err
@@ -65,7 +65,7 @@ func (m *Manager) CheckSession(
 	ctx context.Context,
 	sessionID []byte,
 	duration time.Duration,
-) (*CheckSessionOutput, error) {
+) (*hub.CheckSessionOutput, error) {
 	// Get session details from database
 	var userID string
 	var createdAt int64
@@ -76,17 +76,17 @@ func (m *Manager) CheckSession(
 	err := m.db.QueryRow(ctx, query, sessionID).Scan(&userID, &createdAt)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return &CheckSessionOutput{Valid: false}, nil
+			return &hub.CheckSessionOutput{Valid: false}, nil
 		}
 		return nil, err
 	}
 
 	// Check if the session has expired
 	if time.Unix(createdAt, 0).Add(duration).Before(time.Now()) {
-		return &CheckSessionOutput{Valid: false}, nil
+		return &hub.CheckSessionOutput{Valid: false}, nil
 	}
 
-	return &CheckSessionOutput{
+	return &hub.CheckSessionOutput{
 		Valid:  true,
 		UserID: userID,
 	}, nil
@@ -199,17 +199,4 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	var verified bool
 	err := m.db.QueryRow(ctx, "select verify_email($1::uuid)", code).Scan(&verified)
 	return verified, err
-}
-
-// CheckCredentialsOutput represents the output returned by the
-// CheckCredentials method.
-type CheckCredentialsOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
-}
-
-// CheckSessionOutput represents the output returned by the CheckSession method.
-type CheckSessionOutput struct {
-	Valid  bool   `json:"valid"`
-	UserID string `json:"user_id"`
 }

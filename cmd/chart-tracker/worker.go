@@ -13,7 +13,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/artifacthub/hub/internal/api"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/rs/zerolog"
@@ -27,19 +26,25 @@ type worker struct {
 	ctx        context.Context
 	id         int
 	ec         *errorsCollector
-	hubAPI     *api.API
+	pkgManager hub.PackageManager
 	imageStore img.Store
 	logger     zerolog.Logger
 	httpClient *http.Client
 }
 
 // newWorker creates a new worker instance.
-func newWorker(ctx context.Context, id int, ec *errorsCollector, hubAPI *api.API, imageStore img.Store) *worker {
+func newWorker(
+	ctx context.Context,
+	id int,
+	ec *errorsCollector,
+	pkgManager hub.PackageManager,
+	imageStore img.Store,
+) *worker {
 	return &worker{
 		ctx:        ctx,
 		id:         id,
 		ec:         ec,
-		hubAPI:     hubAPI,
+		pkgManager: pkgManager,
 		imageStore: imageStore,
 		logger:     log.With().Int("worker", id).Logger(),
 		httpClient: &http.Client{
@@ -171,7 +176,7 @@ func (w *worker) handleJob(j *job) error {
 	}
 
 	// Register package
-	err = w.hubAPI.Packages.Register(w.ctx, p)
+	err = w.pkgManager.Register(w.ctx, p)
 	if err != nil {
 		w.ec.append(
 			j.repo.ChartRepositoryID,

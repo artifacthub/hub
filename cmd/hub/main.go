@@ -9,10 +9,13 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers"
-	"github.com/artifacthub/hub/internal/api"
+	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
+	"github.com/artifacthub/hub/internal/org"
+	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/user"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 )
@@ -28,7 +31,7 @@ func main() {
 		log.Fatal().Err(err).Msg("Logger setup failed")
 	}
 
-	// Setup hub api and image store instances
+	// Setup services required by the handlers to operate
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Database setup failed")
@@ -37,8 +40,13 @@ func main() {
 	if s := email.NewSender(cfg); s != nil {
 		es = s
 	}
-	hubAPI := api.New(db, es)
-	imageStore := pg.NewImageStore(db)
+	svc := &handlers.Services{
+		OrganizationManager:    org.NewManager(db, es),
+		UserManager:            user.NewManager(db, es),
+		PackageManager:         pkg.NewManager(db),
+		ChartRepositoryManager: chartrepo.NewManager(db),
+		ImageStore:             pg.NewImageStore(db),
+	}
 
 	// Setup and launch server
 	addr := cfg.GetString("server.addr")
@@ -47,7 +55,7 @@ func main() {
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
 		IdleTimeout:  1 * time.Minute,
-		Handler:      handlers.Setup(cfg, hubAPI, imageStore).Router,
+		Handler:      handlers.Setup(cfg, svc).Router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {

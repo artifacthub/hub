@@ -3,6 +3,8 @@ package chartrepo
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 
 	"github.com/artifacthub/hub/internal/hub"
 )
@@ -26,6 +28,31 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.ChartRepositor
 	rJSON, _ := json.Marshal(r)
 	_, err := m.db.Exec(ctx, query, userID, orgName, rJSON)
 	return err
+}
+
+// CheckAvailability checks the availability of a given value for the provided
+// resource kind.
+// TODO (sergio): only chart repositories checks here, add method to other packages
+func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
+	var available bool
+	var query string
+
+	switch resourceKind {
+	case "chartRepositoryName":
+		query = `select chart_repository_id from chart_repository where name = $1`
+	case "chartRepositoryURL":
+		query = `select chart_repository_id from chart_repository where url = $1`
+	case "organizationName":
+		query = `select organization_id from organization where name = $1`
+	case "userAlias":
+		query = `select user_id from "user" where alias = $1`
+	default:
+		return false, errors.New("resource kind not supported")
+	}
+
+	query = fmt.Sprintf("select not exists (%s)", query)
+	err := m.db.QueryRow(ctx, query, value).Scan(&available)
+	return available, err
 }
 
 // Delete deletes the provided chart repository from the database.
