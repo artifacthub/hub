@@ -116,22 +116,24 @@ func (h *Handlers) setupRouter() {
 		})
 		r.With(h.Users.RequireLogin).Post("/orgs", h.Organizations.Add)
 		r.Route("/org/{orgName}", func(r chi.Router) {
-			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.Organizations.Get)
-			r.Put("/", h.Organizations.Update)
-			r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
-			r.Get("/members", h.Organizations.GetMembers)
-			r.Route("/member/{userAlias}", func(r chi.Router) {
-				r.Post("/", h.Organizations.AddMember)
-				r.Delete("/", h.Organizations.DeleteMember)
-			})
-			r.Route("/chart-repositories", func(r chi.Router) {
-				r.Get("/", h.ChartRepositories.GetOwnedByOrg)
-				r.Post("/", h.ChartRepositories.Add)
-			})
-			r.Route("/chart-repository/{repoName}", func(r chi.Router) {
-				r.Put("/", h.ChartRepositories.Update)
-				r.Delete("/", h.ChartRepositories.Delete)
+			r.Group(func(r chi.Router) {
+				r.Use(h.Users.RequireLogin)
+				r.Put("/", h.Organizations.Update)
+				r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
+				r.Get("/members", h.Organizations.GetMembers)
+				r.Route("/member/{userAlias}", func(r chi.Router) {
+					r.Post("/", h.Organizations.AddMember)
+					r.Delete("/", h.Organizations.DeleteMember)
+				})
+				r.Route("/chart-repositories", func(r chi.Router) {
+					r.Get("/", h.ChartRepositories.GetOwnedByOrg)
+					r.Post("/", h.ChartRepositories.Add)
+				})
+				r.Route("/chart-repository/{repoName}", func(r chi.Router) {
+					r.Put("/", h.ChartRepositories.Update)
+					r.Delete("/", h.ChartRepositories.Delete)
+				})
 			})
 		})
 		r.Post("/verify-email", h.Users.VerifyEmail)
