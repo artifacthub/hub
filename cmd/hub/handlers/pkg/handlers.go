@@ -86,7 +86,7 @@ func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
 }
 
 // Search is an http handler used to searchPackages for packages in the hub
@@ -104,7 +104,7 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "", http.StatusInternalServerError)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
 }
 
 // ToggleStar is an http handler used to toggle the star on a given package.

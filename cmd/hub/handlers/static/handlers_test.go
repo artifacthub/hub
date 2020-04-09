@@ -85,7 +85,7 @@ func TestImage(t *testing.T) {
 
 				assert.Equal(t, http.StatusOK, resp.StatusCode)
 				assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
-				assert.Equal(t, "public, max-age=31536000", h.Get("Cache-Control"))
+				assert.Equal(t, helpers.BuildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
 				assert.Equal(t, imgData, data)
 				hw.is.AssertExpectations(t)
 			})
@@ -142,7 +142,7 @@ func TestServeIndex(t *testing.T) {
 	data, _ := ioutil.ReadAll(resp.Body)
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assert.Equal(t, "no-store, no-cache, must-revalidate", h.Get("Cache-Control"))
+	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
 	assert.Equal(t, []byte("indexHtmlData\n"), data)
 }
 
@@ -170,7 +170,7 @@ func TestServeStaticFile(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.StaticCacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("testCssData\n"), data)
 	})
 }

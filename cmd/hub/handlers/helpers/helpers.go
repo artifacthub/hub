@@ -7,7 +7,6 @@ import (
 )
 
 const (
-	StaticCacheMaxAge     = 365 * 24 * time.Hour
 	DefaultAPICacheMaxAge = 5 * time.Minute
 )
 
