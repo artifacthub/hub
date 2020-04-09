@@ -56,7 +56,11 @@ const MembersSection = (props: Props) => {
             <div className="h3 pb-0">Members</div>
 
             <div>
-              <button className="btn btn-secondary btn-sm text-uppercase" onClick={() => setModalMemberOpen(true)}>
+              <button
+                className="btn btn-secondary btn-sm text-uppercase"
+                onClick={() => setModalMemberOpen(true)}
+                data-testid="addMemberBtn"
+              >
                 <div className="d-flex flex-row align-items-center justify-content-center">
                   <MdAdd className="d-inline d-md-none" />
                   <MdAddCircle className="d-none d-md-inline mr-2" />
@@ -77,7 +81,12 @@ const MembersSection = (props: Props) => {
                   <>
                     <p className="h6 my-4">Do you want to add a member?</p>
 
-                    <button type="button" className="btn btn-secondary" onClick={() => setModalMemberOpen(true)}>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setModalMemberOpen(true)}
+                      data-testid="addFirstMemberBtn"
+                    >
                       <div className="d-flex flex-row align-items-center">
                         <MdAddCircle className="mr-2" />
                         <span>Add member</span>

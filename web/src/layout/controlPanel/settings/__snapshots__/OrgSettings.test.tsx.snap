@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Organization settings index creates snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    role="main"
+  >
+    <div
+      class="flex-grow-1 position-relative"
+    >
+      <div
+        class="h3 pb-0 text-center"
+      >
+        Organization details
+      </div>
+      <div
+        class="mx-auto mt-5 form"
+      >
+        <div
+          class="text-center p-5 wrapper undefined"
+        >
+          <div
+            class="spinner-border text-primary spinner undefined"
+            role="status"
+          >
+            <span
+              class="sr-only"
+            >
+              Loading...
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

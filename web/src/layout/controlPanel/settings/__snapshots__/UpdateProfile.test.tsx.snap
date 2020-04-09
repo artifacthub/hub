@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update profile - user settings creates snapshot 1`] = `
+<DocumentFragment>
+  <form
+    autocomplete="on"
+    class="w-100 needs-validation"
+    data-testid="updateProfileForm"
+    novalidate=""
+  >
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="alias"
+      >
+        Alias
+      </label>
+      <input
+        class="form-control"
+        data-testid="aliasInput"
+        name="alias"
+        readonly=""
+        type="text"
+        value="userAlias"
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="email"
+      >
+        Email address
+      </label>
+      <input
+        class="form-control"
+        data-testid="emailInput"
+        name="email"
+        readonly=""
+        type="email"
+        value="jsmith@email.com"
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="firstName"
+      >
+        First Name
+      </label>
+      <input
+        autocomplete="given-name"
+        class="form-control"
+        data-testid="firstNameInput"
+        name="firstName"
+        type="text"
+        value="John"
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="lastName"
+      >
+        Last Name
+      </label>
+      <input
+        autocomplete="family-name"
+        class="form-control"
+        data-testid="lastNameInput"
+        name="lastName"
+        type="text"
+        value="Smith"
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="text-right mt-4"
+    >
+      <button
+        class="btn btn-secondary"
+        data-testid="updateProfileBtn"
+        type="button"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

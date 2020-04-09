@@ -88,6 +88,7 @@ const UpdateProfile = (props: Props) => {
 
   return (
     <form
+      data-testid="updateProfileForm"
       ref={form}
       className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
       autoComplete="on"
@@ -126,7 +127,13 @@ const UpdateProfile = (props: Props) => {
       />
 
       <div className="text-right mt-4">
-        <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+        <button
+          className="btn btn-secondary"
+          type="button"
+          disabled={isSending}
+          onClick={submitForm}
+          data-testid="updateProfileBtn"
+        >
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />

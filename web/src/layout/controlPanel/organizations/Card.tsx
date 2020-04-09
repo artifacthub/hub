@@ -36,11 +36,6 @@ const OrganizationCard = (props: Props) => {
   const isMember =
     !isUndefined(props.organization.confirmed) && !isNull(props.organization.confirmed) && props.organization.confirmed;
 
-  const handleLeave = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    leaveOrganization();
-  };
-
   const closeDropdown = () => {
     setOpenDropdownStatus(false);
   };
@@ -83,7 +78,7 @@ const OrganizationCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item list-group-item-action ${styles.listItem}`}>
+    <li className={`list-group-item list-group-item-action ${styles.listItem}`} data-testid="organizationCard">
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
         <div className="d-flex flex-row align-items-center">
           <div
@@ -121,6 +116,7 @@ const OrganizationCard = (props: Props) => {
           props.organization.confirmed ? (
             <>
               <button
+                data-testid="editOrgBtn"
                 className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
@@ -141,6 +137,7 @@ const OrganizationCard = (props: Props) => {
                   <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
 
                   <button
+                    data-testid="leaveOrgDropdownBtn"
                     className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
                     onClick={() => setOpenDropdownStatus(true)}
                   >
@@ -172,7 +169,15 @@ const OrganizationCard = (props: Props) => {
                     </div>
                   </button>
 
-                  <button className="btn btn-sm btn-danger" onClick={handleLeave} disabled={isLeaving}>
+                  <button
+                    data-testid="leaveOrgBtn"
+                    className="btn btn-sm btn-danger"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      leaveOrganization();
+                    }}
+                    disabled={isLeaving}
+                  >
                     <div className="d-flex flex-row align-items-center text-uppercase">
                       {isLeaving ? (
                         <>
@@ -193,6 +198,7 @@ const OrganizationCard = (props: Props) => {
           ) : (
             <div>
               <button
+                data-testid="acceptInvitationBtn"
                 className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
                 onClick={confirmOrganizationMembership}
                 disabled={isAccepting}

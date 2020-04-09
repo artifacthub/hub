@@ -68,7 +68,13 @@ const OrganizationSettings = (props: Props) => {
                   />
 
                   <div className="text-right mt-4">
-                    <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+                    <button
+                      className="btn btn-secondary"
+                      type="button"
+                      disabled={isSending}
+                      onClick={submitForm}
+                      data-testid="updateOrgBtn"
+                    >
                       {isSending ? (
                         <>
                           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
