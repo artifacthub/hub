@@ -8,6 +8,7 @@ import (
 	"path"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/img"
@@ -16,6 +17,11 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+)
+
+const (
+	indexCacheMaxAge  = 5 * time.Minute
+	staticCacheMaxAge = 365 * 24 * time.Hour
 )
 
 // Handlers represents a group of http handlers in charge of handling
@@ -77,7 +83,7 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Set headers and write image data to response writer
-	w.Header().Set("Cache-Control", "public, max-age=31536000")
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(staticCacheMaxAge))
 	if svg.Is(data) {
 		w.Header().Set("Content-Type", "image/svg+xml")
 	} else {
@@ -104,7 +110,7 @@ func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 
 // ServeIndex is an http handler that serves the index.html file.
 func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate")
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(indexCacheMaxAge))
 	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
 }
 
@@ -120,7 +126,7 @@ func FileServer(r chi.Router, path string, fs http.FileSystem) {
 	path += "*"
 
 	r.Get(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", fmt.Sprintf("max-age=%d", int64(helpers.StaticCacheMaxAge.Seconds())))
+		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(staticCacheMaxAge))
 		fsHandler.ServeHTTP(w, r)
 	}))
 }
