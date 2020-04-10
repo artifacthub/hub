@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filters creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="form-inline flex-nowrap align-items-center"
+  >
+    <label
+      class="mr-2 mb-0"
+    >
+      Show:
+    </label>
+    <select
+      aria-label="pagination-limit"
+      class="custom-select custom-select-sm select"
+    >
+      <option
+        value="15"
+      >
+        15
+      </option>
+      <option
+        value="25"
+      >
+        25
+      </option>
+      <option
+        value="50"
+      >
+        50
+      </option>
+      ;
+    </select>
+  </div>
+</DocumentFragment>
+`;
