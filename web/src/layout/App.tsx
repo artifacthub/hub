@@ -1,6 +1,6 @@
 import './App.css';
 import '../themes/default.scss';
-import '../themes/theme2.scss';
+import '../themes/theme.scss';
 
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
