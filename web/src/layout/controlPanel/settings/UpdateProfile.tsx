@@ -96,7 +96,7 @@ const UpdateProfile = (props: Props) => {
     >
       <InputField
         type="text"
-        label="Alias"
+        label="Username"
         name="alias"
         value={!isUndefined(profile) && !isNull(profile) ? profile.alias : ''}
         readOnly

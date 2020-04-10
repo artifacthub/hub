@@ -14,8 +14,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// ErrInvalidPassword indicates that the password provided is not valid.
-var ErrInvalidPassword = errors.New("invalid password")
+var (
+	// ErrInvalidPassword indicates that the password provided is not valid.
+	ErrInvalidPassword = errors.New("invalid password")
+
+	// ErrNotFound indicates that the user does not exist.
+	ErrNotFound = errors.New("user not found")
+)
 
 // Manager provides an API to manage users.
 type Manager struct {
@@ -106,6 +111,20 @@ func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	return profile, err
 }
 
+// GetUserID returns the id of the user with the email provided.
+func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
+	var userID string
+	query := `select user_id from "user" where email = $1`
+	err := m.db.QueryRow(ctx, query, email).Scan(&userID)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return "", ErrNotFound
+		}
+		return "", err
+	}
+	return userID, nil
+}
+
 // RegisterSession registers a user session in the database.
 func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
 	sessionJSON, _ := json.Marshal(session)
@@ -135,7 +154,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	}
 
 	// Send email verification code
-	if m.es != nil {
+	if !user.EmailVerified && m.es != nil {
 		templateData := map[string]string{
 			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, code),
 		}

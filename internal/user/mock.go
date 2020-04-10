@@ -48,6 +48,12 @@ func (m *ManagerMock) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	return data, args.Error(1)
 }
 
+// GetUserID implements the UserManager interface.
+func (m *ManagerMock) GetUserID(ctx context.Context, email string) (string, error) {
+	args := m.Called(ctx)
+	return args.String(0), args.Error(1)
+}
+
 // RegisterSession implements the UserManager interface.
 func (m *ManagerMock) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
 	args := m.Called(ctx, session)

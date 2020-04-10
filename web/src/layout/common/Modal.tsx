@@ -22,6 +22,7 @@ interface Props {
   onClose?: () => void;
   error?: string | null;
   cleanError?: () => void;
+  noFooter?: boolean;
 }
 
 const Modal = (props: Props) => {

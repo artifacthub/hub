@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"path"
+	"strings"
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/chartrepo"
@@ -142,6 +144,18 @@ func (h *Handlers) setupRouter() {
 		r.Head("/check-availability/{resourceKind}", h.ChartRepositories.CheckAvailability)
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
 	})
+
+	// Oauth
+	providers := make([]string, 0, len(h.cfg.GetStringMap("server.oauth")))
+	for provider := range h.cfg.GetStringMap("server.oauth") {
+		providers = append(providers, fmt.Sprintf("^%s$", provider))
+	}
+	if len(providers) > 0 {
+		r.Route(fmt.Sprintf("/oauth/{provider:%s}", strings.Join(providers, "|")), func(r chi.Router) {
+			r.Get("/", h.Users.OauthRedirect)
+			r.Get("/callback", h.Users.OauthCallback)
+		})
+	}
 
 	// Static files and index
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")

@@ -39,6 +39,21 @@ hub:
     cookie:
       hashKey: default-unsafe-key
       secure: false
+    oauth:
+      github:
+        clientID: ""
+        clientSecret: ""
+        redirectURL: ""
+        scopes:
+          - read:user
+          - user:email
+      google:
+        clientID: ""
+        clientSecret: ""
+        redirectURL: ""
+        scopes:
+          - https://www.googleapis.com/auth/userinfo.email
+          - https://www.googleapis.com/auth/userinfo.profile
   email:
     fromName: ""
     from: ""

@@ -9,6 +9,7 @@ select register_user('
     "first_name": "first_name",
     "last_name": "last_name",
     "email": "email",
+    "email_verified": true,
     "password": "password"
 }
 ') as code \gset
@@ -21,6 +22,7 @@ select results_eq(
             first_name,
             last_name,
             email,
+            email_verified,
             password
         from "user"
         where alias = 'alias'
@@ -31,6 +33,7 @@ select results_eq(
             'first_name',
             'last_name',
             'email',
+            true,
             'password'
         )
     $$,
@@ -54,6 +57,7 @@ select throws_ok(
             "first_name": "first_name",
             "last_name": "last_name",
             "email": "email",
+            "email_verified": true,
             "password": "password"
         }
         ')
@@ -77,6 +81,7 @@ select lives_ok(
             "first_name": "first_name",
             "last_name": "last_name",
             "email": "email",
+            "email_verified": true,
             "password": "password"
         }
         ')
