@@ -118,6 +118,7 @@ const Filters = (props: Props) => {
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
               <button
+                data-testid="resetFiltersBtn"
                 className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
                 onClick={props.onResetFilters}
               >

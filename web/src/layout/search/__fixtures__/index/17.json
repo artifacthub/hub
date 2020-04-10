@@ -102,37 +102,74 @@
     ],
     "facets": [
       {
+        "title": "Organization",
+        "filterKey": "org",
+        "options": [
+          {
+            "id": "helmOrg",
+            "name": "Helm org",
+            "total": 256
+          },
+          {
+            "id": "falco",
+            "name": "Falco",
+            "total": 22
+          }
+        ]
+      },
+      {
+        "title": "User",
+        "filterKey": "user",
+        "options": [
+          {
+            "id": "testUser",
+            "name": "testUser",
+            "total": 1
+          }
+        ]
+      },
+      {
         "title": "Kind",
         "filterKey": "kind",
         "options": [
           {
             "id": 0,
-            "name": "Chart",
-            "total": 7
+            "name": "Helm charts",
+            "total": 256
+          },
+          {
+            "id": 1,
+            "name": "Falco rules",
+            "total": 21
+          },
+          {
+            "id": 2,
+            "name": "OPA policies",
+            "total": 1
           }
         ]
       },
       {
-        "title": "Repository",
+        "title": "Chart Repository",
         "filterKey": "repo",
         "options": [
           {
-            "id": "43898497-a9d0-41eb-9dc7-5c4de0cd0433",
+            "id": "stable",
             "name": "Stable",
-            "total": 4
+            "total": 203
           },
           {
-            "id": "dd9337b4-300c-4b40-b4d4-78f47ede6fcf",
+            "id": "incubator",
             "name": "Incubator",
-            "total": 2
+            "total": 53
           }
         ]
       }
     ]
   },
   "metadata": {
-    "limit": 50,
+    "limit": 15,
     "offset": 0,
-    "total": 7
+    "total": 37
   }
 }

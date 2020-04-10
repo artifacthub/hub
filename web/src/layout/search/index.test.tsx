@@ -180,9 +180,8 @@ describe('Search index', () => {
         </Router>
       );
 
-      const options = await waitForElement(() => screen.getAllByTestId('checkbox'));
-      // Check first facet: kind 0
-      fireEvent.click(options[0]);
+      const opt = await waitForElement(() => screen.getByLabelText(/Chart/g));
+      fireEvent.click(opt);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -339,6 +338,181 @@ describe('Search index', () => {
           deprecated: false,
         }),
       });
+
+      await wait();
+    });
+  });
+
+  describe('Filtering logic', () => {
+    it('calls history push with proper filters when package kind filter different to Chart is checked', async () => {
+      const mockSearchResults = getMockSearchResults('15');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      const opt = await waitForElement(() => screen.getByLabelText(/Falco rules/g));
+      fireEvent.click(opt);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          text: 'test',
+          pageNumber: 1,
+          filters: { kind: ['1'] },
+          deprecated: false,
+        }),
+      });
+
+      await wait();
+    });
+
+    it('calls history push with proper filters when package kind Chart is checked', async () => {
+      const mockSearchResults = getMockSearchResults('16');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      const opt = await waitForElement(() => screen.getByLabelText(/Helm charts/g));
+      fireEvent.click(opt);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          text: 'test',
+          pageNumber: 1,
+          filters: { repo: ['stable'], kind: ['0'] },
+          deprecated: false,
+        }),
+      });
+
+      await wait();
+    });
+
+    it('calls history push with proper filters when package kind filter different to Chart is checked', async () => {
+      const mockSearchResults = getMockSearchResults('16');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      const opt = await waitForElement(() => screen.getByLabelText(/Helm charts/g));
+      fireEvent.click(opt);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          text: 'test',
+          pageNumber: 1,
+          filters: { repo: ['stable'], kind: ['0'] },
+          deprecated: false,
+        }),
+      });
+
+      await wait();
+    });
+
+    it('calls history push with proper filters when a org is checked', async () => {
+      const mockSearchResults = getMockSearchResults('17');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ user: ['testUser'] }} />
+        </Router>
+      );
+
+      const opt = await waitForElement(() => screen.getByLabelText(/Helm org/g));
+      fireEvent.click(opt);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          text: 'test',
+          pageNumber: 1,
+          filters: { org: ['helmOrg'] },
+          deprecated: false,
+        }),
+      });
+
+      await wait();
+    });
+
+    it('calls history push with proper filters when a user is checked', async () => {
+      const mockSearchResults = getMockSearchResults('17');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ org: ['helmOrg'] }} />
+        </Router>
+      );
+
+      const opt = await waitForElement(() => screen.getByLabelText(/testUser/g));
+      fireEvent.click(opt);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          text: 'test',
+          pageNumber: 1,
+          filters: { user: ['testUser'] },
+          deprecated: false,
+        }),
+      });
+
+      await wait();
+    });
+
+    it('renders Chart repositories facets when Helm Chart package kind is selected or when no package kind filter is being applied', async () => {
+      const mockSearchResults = getMockSearchResults('18');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitForElement(() => screen.queryByRole('main'));
+
+      expect(screen.getAllByRole('menuitem')).toHaveLength(2 * 4);
+      expect(screen.getByLabelText(/Stable/g)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Incubator/g)).toBeInTheDocument();
+
+      await wait();
+    });
+
+    it('does not render Chart repositories facets when package kind filter different to Chart is active', async () => {
+      const mockSearchResults = getMockSearchResults('19');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ kind: ['1'] }} />
+        </Router>
+      );
+
+      await waitForElement(() => screen.queryByRole('main'));
+
+      expect(screen.getAllByRole('menuitem')).toHaveLength(2 * 3);
+      expect(screen.queryByLabelText(/Stable/g)).toBeNull();
+      expect(screen.queryByLabelText(/Incubator/g)).toBeNull();
 
       await wait();
     });

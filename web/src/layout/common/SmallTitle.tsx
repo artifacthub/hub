@@ -5,7 +5,7 @@ interface Props {
 }
 
 const SmallTitle = (props: Props) => (
-  <div className="mt-2 mb-1">
+  <div className="mt-2 mb-1" data-testid="smallTitle">
     <small className="card-title text-muted text-uppercase">{props.text}</small>
   </div>
 );
