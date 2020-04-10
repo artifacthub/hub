@@ -1,65 +1,41 @@
 @font-face {
   font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-Regular.ttf') format('truetype');
-  font-weight: normal;
   font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url('/static/fonts/Lato/lato-300.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-300.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-Italic.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-Bold.ttf') format('truetype');
-  font-weight: bold;
   font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url('/static/fonts/Lato/lato-700.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-700.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-BoldItalic.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-Black.ttf') format('truetype');
-  font-weight: bolder;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-BlackItalic.ttf') format('truetype');
-  font-weight: bolder;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-Light.ttf') format('truetype');
-  font-weight: lighter;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/static/fonts/Lato/Lato-LightItalic.ttf') format('truetype');
-  font-weight: lighter;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Archivo Black';
-  src: url('/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf') format('truetype');
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url('/static/fonts/Lato/lato-regular.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-regular.woff') format('woff');
 }
 
 @font-face {
   font-family: 'Roboto Mono';
-  src: url('/static/fonts/Roboto_Mono/RobotoMono-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Mono'), local('RobotoMono-Regular'),
+    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff2') format('woff2'),
+    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Archivo Black Regular'), local('ArchivoBlack-Regular'),
+    url('/static/fonts/Archivo_Black/archivo-black-regular.woff2') format('woff2'),
+    url('/static/fonts/Archivo_Black/archivo-black-regular.woff') format('woff');
 }
