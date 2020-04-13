@@ -44,7 +44,7 @@ func (m *Manager) CheckCredentials(
 ) (*hub.CheckCredentialsOutput, error) {
 	// Get password for email provided from database
 	var userID, hashedPassword string
-	query := `select user_id, password from "user" where email = $1`
+	query := `select user_id, password from "user" where email = $1 and password is not null`
 	err := m.db.QueryRow(ctx, query, email).Scan(&userID, &hashedPassword)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -139,16 +139,18 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]
 // click to complete the verification.
 func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
 	// Hash password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
+	if user.Password != "" {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.Password = string(hashedPassword)
 	}
-	user.Password = string(hashedPassword)
 
 	// Register user in database
 	userJSON, _ := json.Marshal(user)
 	var code string
-	err = m.db.QueryRow(ctx, "select register_user($1::jsonb)", userJSON).Scan(&code)
+	err := m.db.QueryRow(ctx, "select register_user($1::jsonb)", userJSON).Scan(&code)
 	if err != nil {
 		return err
 	}
@@ -181,7 +183,7 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 
 	// Validate old password
 	var oldHashed string
-	getPasswordQuery := `select password from "user" where user_id = $1`
+	getPasswordQuery := `select password from "user" where user_id = $1 and password is not null`
 	err := m.db.QueryRow(ctx, getPasswordQuery, userID).Scan(&oldHashed)
 	if err != nil {
 		return err

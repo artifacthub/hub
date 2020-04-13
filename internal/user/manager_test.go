@@ -15,7 +15,7 @@ import (
 )
 
 func TestCheckCredentials(t *testing.T) {
-	dbQuery := `select user_id, password from "user" where email = $1`
+	dbQuery := `select user_id, password from "user" where email = $1 and password is not null`
 
 	t.Run("credentials provided not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
@@ -302,7 +302,7 @@ func TestRegisterUser(t *testing.T) {
 }
 
 func TestUpdatePassword(t *testing.T) {
-	getPasswordDBQuery := `select password from "user" where user_id = $1`
+	getPasswordDBQuery := `select password from "user" where user_id = $1 and password is not null`
 	updatePasswordDBQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
