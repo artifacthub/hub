@@ -44,7 +44,7 @@ exports[`User settings index creates snapshot 1`] = `
               <label
                 for="alias"
               >
-                Alias
+                Username
               </label>
               <input
                 class="form-control"

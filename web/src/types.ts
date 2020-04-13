@@ -171,6 +171,7 @@ export interface Alert {
   type: 'success' | 'danger' | 'warning';
   message: string;
   dismissOn?: number;
+  autoClose?: boolean;
 }
 
 export interface LogoImage {

@@ -23,13 +23,15 @@ begin
         first_name,
         last_name,
         email,
+        email_verified,
         password
     ) values (
         p_user->>'alias',
         nullif(p_user->>'first_name', ''),
         nullif(p_user->>'last_name', ''),
         p_user->>'email',
-        p_user->>'password'
+        (p_user->>'email_verified')::boolean,
+        nullif(p_user->>'password', '')
     ) returning user_id into v_user_id;
 
     -- Register email verification code

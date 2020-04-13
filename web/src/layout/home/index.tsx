@@ -1,10 +1,12 @@
 import isNull from 'lodash/isNull';
 import React, { useEffect, useState } from 'react';
 import { FaGithub, FaSlack } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import logo from '../../images/cncf.svg';
 import { PackageKind, Stats } from '../../types';
+import alertDispatcher from '../../utils/alertDispatcher';
 import ExternalLink from '../common/ExternalLink';
 import PackageIcon from '../common/PackageIcon';
 import SearchBar from '../common/SearchBar';
@@ -18,9 +20,11 @@ interface Props {
   isSearching: boolean;
   emailCode?: string;
   orgToConfirm?: string;
+  onOauthFailed: boolean;
 }
 
 const HomeView = (props: Props) => {
+  const history = useHistory();
   const [isLoadingStats, setIsLoadingStats] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
 
@@ -37,6 +41,20 @@ const HomeView = (props: Props) => {
     }
     fetchStats();
   }, []);
+
+  useEffect(() => {
+    if (props.onOauthFailed) {
+      history.replace({
+        pathname: '/',
+        search: '',
+      });
+      alertDispatcher.postAlert({
+        type: 'danger',
+        message: 'Authentication process failed. Please try again later.',
+        autoClose: false,
+      });
+    }
+  }, [props.onOauthFailed, history]);
 
   return (
     <div className={`d-flex flex-column flex-grow-1 ${styles.home}`}>

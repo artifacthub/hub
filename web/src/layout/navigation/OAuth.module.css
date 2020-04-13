@@ -1,0 +1,26 @@
+.separator {
+  z-index: 1;
+}
+
+.divider {
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-1-20);
+  z-index: -1;
+}
+
+.separatorContent {
+  background-color: var(--white);
+}
+
+.logo {
+  height: 1rem;
+  line-height: 1.5;
+}
+
+.btn:hover .logo {
+  filter: brightness(0) invert(1);
+}

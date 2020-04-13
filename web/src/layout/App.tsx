@@ -44,7 +44,7 @@ export default function App() {
           <AlertController />
           <Switch>
             <Route
-              path={['/', '/verify-email', '/login', '/accept-invitation']}
+              path={['/', '/verify-email', '/login', '/accept-invitation', '/oauth-failed']}
               exact
               render={({ location }) => (
                 <div className="d-flex flex-column flex-grow-1">
@@ -57,6 +57,7 @@ export default function App() {
                     isSearching={isSearching}
                     emailCode={getQueryParam(location.search, 'code')}
                     orgToConfirm={getQueryParam(location.search, 'org')}
+                    onOauthFailed={location.pathname === '/oauth-failed'}
                   />
                 </div>
               )}

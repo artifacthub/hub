@@ -28,7 +28,7 @@ export class AlertDispatcher {
 
   private dismissAlert() {
     this.clearTimeout();
-    if (!isNull(this.visibleAlert)) {
+    if (!isNull(this.visibleAlert) && (isUndefined(this.visibleAlert.autoClose) || this.visibleAlert.autoClose)) {
       this.timeout = setTimeout(
         () => {
           this.postAlert(null);

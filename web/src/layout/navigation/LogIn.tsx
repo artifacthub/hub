@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
@@ -6,10 +7,11 @@ import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import { AppCtx, requestSignIn, signOut } from '../../context/AppCtx';
-import { UserLogin } from '../../types';
+import { RefInputField, UserLogin } from '../../types';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './LogIn.module.css';
+import OAuth from './OAuth';
 
 interface FormValidation {
   isValid: boolean;
@@ -26,15 +28,22 @@ const LogIn = (props: Props) => {
   const { dispatch } = useContext(AppCtx);
   const history = useHistory();
   const loginForm = useRef<HTMLFormElement>(null);
+  const emailInput = useRef<RefInputField>(null);
+  const passwordInput = useRef<RefInputField>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
+  };
+
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const onCloseModal = () => {
@@ -74,29 +83,38 @@ const LogIn = (props: Props) => {
     cleanApiError();
     setIsLoggingIn(true);
     if (loginForm.current) {
-      const { isValid, user } = validateForm(loginForm.current);
-      if (isValid && !isNull(user)) {
-        loginUser(user);
-      } else {
-        setIsLoggingIn(false);
-      }
+      validateForm(loginForm.current).then((validation: FormValidation) => {
+        if (validation.isValid && !isNull(validation.user)) {
+          loginUser(validation.user);
+        } else {
+          setIsLoggingIn(false);
+        }
+      });
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let isValid = form.checkValidity();
+  const validateForm = (form: HTMLFormElement): Promise<FormValidation> => {
     let user: UserLogin | null = null;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      user = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-      };
-    } else {
+    return validateAllFields().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        user = {
+          email: formData.get('email') as string,
+          password: formData.get('password') as string,
+        };
+      }
       setIsValidated(true);
-    }
-    return { isValid, user };
+      return { isValid, user };
+    });
+  };
+
+  const validateAllFields = async (): Promise<boolean> => {
+    return Promise.all([emailInput.current!.checkIsValid(), passwordInput.current!.checkIsValid()]).then(
+      (res: boolean[]) => {
+        return every(res, (isValid: boolean) => isValid);
+      }
+    );
   };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -109,24 +127,12 @@ const LogIn = (props: Props) => {
     <Modal
       header={<div className="h3 m-2">Sign in</div>}
       modalClassName={styles.modal}
-      closeButton={
-        <button className="btn btn-secondary" type="button" disabled={isLoggingIn} onClick={submitForm}>
-          {isLoggingIn ? (
-            <>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Singing in...</span>
-            </>
-          ) : (
-            <>Sign in</>
-          )}
-        </button>
-      }
       open={props.openLogIn}
       onClose={onCloseModal}
       error={apiError}
       cleanError={cleanApiError}
     >
-      <div className="d-flex align-items-center flex-grow-1">
+      <>
         <form
           ref={loginForm}
           className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
@@ -135,6 +141,7 @@ const LogIn = (props: Props) => {
           noValidate
         >
           <InputField
+            ref={emailInput}
             type="email"
             label="Email address"
             name="email"
@@ -143,12 +150,14 @@ const LogIn = (props: Props) => {
               default: 'This field is required',
               typeMismatch: 'Please enter a valid email address',
             }}
-            validateOnBlur
             autoComplete="email"
+            onChange={onEmailChange}
+            validateOnBlur={email !== ''}
             required
           />
 
           <InputField
+            ref={passwordInput}
             type="password"
             label="Password"
             name="password"
@@ -161,8 +170,23 @@ const LogIn = (props: Props) => {
             autoComplete="current-password"
             required
           />
+
+          <div className="text-right">
+            <button className="btn btn-secondary" type="button" disabled={isLoggingIn} onClick={submitForm}>
+              {isLoggingIn ? (
+                <>
+                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                  <span className="ml-2">Singing in...</span>
+                </>
+              ) : (
+                <>Sign in</>
+              )}
+            </button>
+          </div>
         </form>
-      </div>
+      </>
+
+      <OAuth />
     </Modal>
   );
 };

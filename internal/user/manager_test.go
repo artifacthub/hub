@@ -190,6 +190,32 @@ func TestGetProfileJSON(t *testing.T) {
 	})
 }
 
+func TestGetUserID(t *testing.T) {
+	dbQuery := `select user_id from "user" where email = $1`
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "email").Return("userID", nil)
+		m := NewManager(db, nil)
+
+		userID, err := m.GetUserID(context.Background(), "email")
+		assert.NoError(t, err)
+		assert.Equal(t, "userID", userID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "email").Return("", tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		userID, err := m.GetUserID(context.Background(), "email")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Empty(t, userID)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestRegisterSession(t *testing.T) {
 	dbQuery := "select register_session($1::jsonb)"
 

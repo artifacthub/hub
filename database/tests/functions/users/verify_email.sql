@@ -9,6 +9,7 @@ select register_user('
     "first_name": "first_name",
     "last_name": "last_name",
     "email": "email",
+    "email_verified": false,
     "password": "password"
 }
 ') as code \gset
@@ -48,6 +49,7 @@ select register_user('
     "first_name": "first_name",
     "last_name": "last_name",
     "email": "email2",
+    "email_verified": false,
     "password": "password"
 }
 ') as code2 \gset

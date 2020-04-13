@@ -33,6 +33,7 @@ export interface Props {
   readOnly?: boolean;
   additionalInfo?: string | JSX.Element;
   setValidationStatus?: (status: boolean) => void;
+  autoFocus?: boolean;
 }
 
 const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
@@ -99,16 +100,16 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
 
       if (!isUndefined(props.checkAvailability)) {
         setIsCheckingAvailability(true);
-        // await API.checkAvailability({
-        //   resourceKind: props.checkAvailability!,
-        //   value: value,
-        // })
-        //   .then(() => {
-        //     input.current!.setCustomValidity('Already taken');
-        //   })
-        //   .catch(() => {
-        //     input.current!.setCustomValidity('');
-        //   });
+        await API.checkAvailability({
+          resourceKind: props.checkAvailability!,
+          value: value,
+        })
+          .then(() => {
+            input.current!.setCustomValidity('Already taken');
+          })
+          .catch(() => {
+            input.current!.setCustomValidity('');
+          });
         setIsCheckingAvailability(false);
       }
     }
@@ -155,6 +156,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         onChange={handleOnChange}
         onBlur={handleOnBlur}
         onKeyDown={props.onKeyDown}
+        autoFocus={props.autoFocus}
       />
 
       {(isCheckingAvailability || isValidatingResource) && (

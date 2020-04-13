@@ -83,7 +83,7 @@ const InputFileField = (props: Props) => {
 
         <div className="position-relative">
           <button
-            className={classnames('btn p-0', styles.btn, { [styles.isLoading]: isSending })}
+            className={classnames('btn p-0 overflow-hidden', styles.btn, { [styles.isLoading]: isSending })}
             type="button"
             onClick={onClick}
           >
