@@ -1,4 +1,6 @@
-export default (num: number, digits: number = 2): string | number => {
+const DEFAULT_DIGITS = 2;
+
+export default (num: number, digits?: number): string | number => {
   if (num < 1000) {
     return num;
   }
@@ -19,5 +21,5 @@ export default (num: number, digits: number = 2): string | number => {
       break;
     }
   }
-  return (num / si[i].value).toFixed(digits).replace(rx, '$1') + si[i].symbol;
+  return (num / si[i].value).toFixed(digits || DEFAULT_DIGITS).replace(rx, '$1') + si[i].symbol;
 };

@@ -1,0 +1,9 @@
+{
+  "packageId": "id",
+  "kind": 2,
+  "name": "test",
+  "normalizedName": "test",
+  "displayName": "Pretty name",
+  "description": "desc",
+  "logoImageId": null
+}

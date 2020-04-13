@@ -26,4 +26,30 @@ describe('buildPackageURL', () => {
       );
     });
   });
+
+  describe('Others kinds', () => {
+    it('renders Falco rules', () => {
+      const mockPackage = getMockPackage('4');
+      expect(buildPackageURL(mockPackage, true)).toBe(`/package/falco/${mockPackage.normalizedName}`);
+    });
+
+    it('renders Falco rules with version', () => {
+      const mockPackage = getMockPackage('5');
+      expect(buildPackageURL(mockPackage, true)).toBe(
+        `/package/falco/${mockPackage.normalizedName}/${mockPackage.version}`
+      );
+    });
+
+    it('renders OPA policies', () => {
+      const mockPackage = getMockPackage('6');
+      expect(buildPackageURL(mockPackage, true)).toBe(`/package/opa/${mockPackage.normalizedName}`);
+    });
+
+    it('renders OPA policies with version', () => {
+      const mockPackage = getMockPackage('7');
+      expect(buildPackageURL(mockPackage, true)).toBe(
+        `/package/opa/${mockPackage.normalizedName}/${mockPackage.version}`
+      );
+    });
+  });
 });
