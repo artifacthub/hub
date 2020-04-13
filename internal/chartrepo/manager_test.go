@@ -73,16 +73,6 @@ func TestCheckAvailability(t *testing.T) {
 				`select chart_repository_id from chart_repository where url = $1`,
 				false,
 			},
-			{
-				"organizationName",
-				`select organization_id from organization where name = $1`,
-				false,
-			},
-			{
-				"userAlias",
-				`select user_id from "user" where alias = $1`,
-				true,
-			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -102,11 +92,11 @@ func TestCheckAvailability(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		dbQuery := `select not exists (select user_id from "user" where alias = $1)`
+		dbQuery := `select not exists (select chart_repository_id from chart_repository where name = $1)`
 		db.On("QueryRow", dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		available, err := m.CheckAvailability(context.Background(), "userAlias", "value")
+		available, err := m.CheckAvailability(context.Background(), "chartRepositoryName", "value")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)

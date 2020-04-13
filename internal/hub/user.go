@@ -44,6 +44,7 @@ var UserIDKey = userIDKey{}
 
 // UserManager describes the methods a UserManager implementation must provide.
 type UserManager interface {
+	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	CheckCredentials(ctx context.Context, email, password string) (*CheckCredentialsOutput, error)
 	CheckSession(ctx context.Context, sessionID []byte, duration time.Duration) (*CheckSessionOutput, error)
 	DeleteSession(ctx context.Context, sessionID []byte) error

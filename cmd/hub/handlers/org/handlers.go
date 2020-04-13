@@ -66,6 +66,45 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// CheckAvailability is a middleware that checks the availability of a given
+// value for the provided resource kind.
+func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
+	resourceKind := chi.URLParam(r, "resourceKind")
+	value := r.FormValue("v")
+
+	// Check if resource kind and value received are valid
+	validResourceKinds := []string{
+		"organizationName",
+	}
+	isResourceKindValid := func(resourceKind string) bool {
+		for _, k := range validResourceKinds {
+			if resourceKind == k {
+				return true
+			}
+		}
+		return false
+	}
+	if !isResourceKindValid(resourceKind) {
+		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
+		return
+	}
+	if value == "" {
+		http.Error(w, "invalid value provided", http.StatusBadRequest)
+		return
+	}
+
+	// Check availability in database
+	available, err := h.orgManager.CheckAvailability(r.Context(), resourceKind, value)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
+		http.Error(w, "", http.StatusInternalServerError)
+		return
+	}
+	if available {
+		w.WriteHeader(http.StatusNotFound)
+	}
+}
+
 // ConfirmMembership is an http handler used to confirm a user's membership to
 // an organization.
 func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {

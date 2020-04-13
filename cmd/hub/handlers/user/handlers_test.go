@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -14,6 +15,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/user"
+	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
@@ -51,6 +53,110 @@ func TestBasicAuth(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+}
+
+func TestCheckAvailability(t *testing.T) {
+	t.Run("invalid resource kind", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+		rctx := &chi.Context{
+			URLParams: chi.RouteParams{
+				Keys:   []string{"resourceKind"},
+				Values: []string{"invalidKind"},
+			},
+		}
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+		hw.h.CheckAvailability(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid value", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("HEAD", "/", nil)
+		rctx := &chi.Context{
+			URLParams: chi.RouteParams{
+				Keys:   []string{"resourceKind"},
+				Values: []string{"userAlias"},
+			},
+		}
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+		hw.h.CheckAvailability(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("valid resource kind", func(t *testing.T) {
+		t.Run("check availability succeeded", func(t *testing.T) {
+			testCases := []struct {
+				resourceKind string
+				available    bool
+			}{
+				{
+					"userAlias",
+					true,
+				},
+			}
+			for _, tc := range testCases {
+				tc := tc
+				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+					hw := newHandlersWrapper()
+					hw.um.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
+						Return(tc.available, nil)
+
+					w := httptest.NewRecorder()
+					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+					rctx := &chi.Context{
+						URLParams: chi.RouteParams{
+							Keys:   []string{"resourceKind"},
+							Values: []string{tc.resourceKind},
+						},
+					}
+					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+					hw.h.CheckAvailability(w, r)
+					resp := w.Result()
+					defer resp.Body.Close()
+
+					if tc.available {
+						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
+					} else {
+						assert.Equal(t, http.StatusOK, resp.StatusCode)
+					}
+					hw.um.AssertExpectations(t)
+				})
+			}
+		})
+
+		t.Run("check availability failed", func(t *testing.T) {
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
+				Return(false, tests.ErrFakeDatabaseFailure)
+
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
+			rctx := &chi.Context{
+				URLParams: chi.RouteParams{
+					Keys:   []string{"resourceKind"},
+					Values: []string{"userAlias"},
+				},
+			}
+			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+			hw.h.CheckAvailability(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
 	})
 }
 

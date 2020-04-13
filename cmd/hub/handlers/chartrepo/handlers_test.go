@@ -174,10 +174,6 @@ func TestCheckAvailability(t *testing.T) {
 					"chartRepositoryURL",
 					false,
 				},
-				{
-					"userAlias",
-					true,
-				},
 			}
 			for _, tc := range testCases {
 				tc := tc
@@ -219,7 +215,7 @@ func TestCheckAvailability(t *testing.T) {
 			rctx := &chi.Context{
 				URLParams: chi.RouteParams{
 					Keys:   []string{"resourceKind"},
-					Values: []string{"userAlias"},
+					Values: []string{"chartRepositoryName"},
 				},
 			}
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))

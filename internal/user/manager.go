@@ -36,6 +36,24 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 	}
 }
 
+// CheckAvailability checks the availability of a given value for the provided
+// resource kind.
+func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
+	var available bool
+	var query string
+
+	switch resourceKind {
+	case "userAlias":
+		query = `select user_id from "user" where alias = $1`
+	default:
+		return false, errors.New("resource kind not supported")
+	}
+
+	query = fmt.Sprintf("select not exists (%s)", query)
+	err := m.db.QueryRow(ctx, query, value).Scan(&available)
+	return available, err
+}
+
 // CheckCredentials checks if the credentials provided are valid.
 func (m *Manager) CheckCredentials(
 	ctx context.Context,
