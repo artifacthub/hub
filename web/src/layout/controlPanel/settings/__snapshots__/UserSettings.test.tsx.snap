@@ -42,26 +42,6 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
-                for="alias"
-              >
-                Username
-              </label>
-              <input
-                class="form-control"
-                data-testid="aliasInput"
-                name="alias"
-                readonly=""
-                type="text"
-                value="userAlias"
-              />
-              <div
-                class="invalid-feedback mt-0 inputFeedback"
-              />
-            </div>
-            <div
-              class="form-group mb-4 position-relative undefined"
-            >
-              <label
                 for="email"
               >
                 Email address
@@ -77,6 +57,34 @@ exports[`User settings index creates snapshot 1`] = `
               <div
                 class="invalid-feedback mt-0 inputFeedback"
               />
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="alias"
+              >
+                Username
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (Required)
+                </small>
+              </label>
+              <input
+                autocomplete="username"
+                class="form-control"
+                data-testid="aliasInput"
+                name="alias"
+                required=""
+                type="text"
+                value="userAlias"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
             </div>
             <div
               class="form-group mb-4 position-relative undefined"

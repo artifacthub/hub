@@ -1,11 +1,12 @@
 import classnames from 'classnames';
+import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx, updateUser } from '../../../context/AppCtx';
-import { Profile, UserFullName } from '../../../types';
+import { Profile, RefInputField, ResourceKind, UserFullName } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import InputField from '../../common/InputField';
 
@@ -15,18 +16,20 @@ interface Props {
 }
 
 interface User {
+  alias: string;
   firstName?: string;
   lastName?: string;
 }
 
 interface FormValidation {
   isValid: boolean;
-  user: User;
+  user: User | null;
 }
 
 const UpdateProfile = (props: Props) => {
   const { dispatch } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
+  const usernameInput = useRef<RefInputField>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [profile, setProfile] = useState<Profile | null | undefined>(props.profile);
@@ -58,32 +61,42 @@ const UpdateProfile = (props: Props) => {
   const submitForm = () => {
     setIsSending(true);
     if (form.current) {
-      const { isValid, user } = validateForm(form.current);
-      if (isValid) {
-        updateProfile(user);
-      } else {
-        setIsSending(false);
-      }
+      validateForm(form.current).then((validation: FormValidation) => {
+        if (validation.isValid && !isNull(validation.user)) {
+          updateProfile(validation.user);
+        } else {
+          setIsSending(false);
+        }
+      });
     }
   };
 
-  const validateForm = (form: HTMLFormElement): FormValidation => {
-    let user: User = {};
-    const isValid = form.checkValidity();
+  const validateForm = (form: HTMLFormElement): Promise<FormValidation> => {
+    let user: User | null = null;
 
-    if (isValid) {
-      const formData = new FormData(form);
-      if (formData.get('firstName') !== '') {
-        user['firstName'] = formData.get('firstName') as string;
+    return validateAllFields().then((isValid: boolean) => {
+      if (isValid) {
+        const formData = new FormData(form);
+        user = {
+          alias: formData.get('alias') as string,
+        };
+        if (formData.get('firstName') !== '') {
+          user['firstName'] = formData.get('firstName') as string;
+        }
+
+        if (formData.get('lastName') !== '') {
+          user['lastName'] = formData.get('lastName') as string;
+        }
       }
+      setIsValidated(true);
+      return { isValid, user };
+    });
+  };
 
-      if (formData.get('lastName') !== '') {
-        user['lastName'] = formData.get('lastName') as string;
-      }
-    }
-
-    setIsValidated(true);
-    return { isValid, user };
+  const validateAllFields = async (): Promise<boolean> => {
+    return Promise.all([usernameInput.current!.checkIsValid()]).then((res: boolean[]) => {
+      return every(res, (isValid: boolean) => isValid);
+    });
   };
 
   return (
@@ -95,19 +108,28 @@ const UpdateProfile = (props: Props) => {
       noValidate
     >
       <InputField
-        type="text"
-        label="Username"
-        name="alias"
-        value={!isUndefined(profile) && !isNull(profile) ? profile.alias : ''}
-        readOnly
-      />
-
-      <InputField
         type="email"
         label="Email address"
         name="email"
         value={!isUndefined(profile) && !isNull(profile) ? profile.email : ''}
         readOnly
+      />
+
+      <InputField
+        ref={usernameInput}
+        type="text"
+        label="Username"
+        labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+        name="alias"
+        value={!isUndefined(profile) && !isNull(profile) ? profile.alias : ''}
+        invalidText={{
+          default: 'This field is required',
+          customError: 'Username not available',
+        }}
+        checkAvailability={ResourceKind.userAlias}
+        validateOnBlur
+        autoComplete="username"
+        required
       />
 
       <InputField
