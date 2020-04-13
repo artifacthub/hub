@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/artifacthub/hub/internal/email"
@@ -71,6 +72,24 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	}
 
 	return nil
+}
+
+// CheckAvailability checks the availability of a given value for the provided
+// resource kind.
+func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
+	var available bool
+	var query string
+
+	switch resourceKind {
+	case "organizationName":
+		query = `select organization_id from organization where name = $1`
+	default:
+		return false, errors.New("resource kind not supported")
+	}
+
+	query = fmt.Sprintf("select not exists (%s)", query)
+	err := m.db.QueryRow(ctx, query, value).Scan(&available)
+	return available, err
 }
 
 // ConfirmMembership confirms the user doing the request membership to the

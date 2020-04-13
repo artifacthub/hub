@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -13,6 +14,54 @@ import (
 	"github.com/stretchr/testify/mock"
 	"golang.org/x/crypto/bcrypt"
 )
+
+func TestCheckAvailability(t *testing.T) {
+	t.Run("resource kind not supported", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		_, err := m.CheckAvailability(context.Background(), "invalidKind", "value")
+		assert.Error(t, err)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		testCases := []struct {
+			resourceKind string
+			dbQuery      string
+			available    bool
+		}{
+			{
+				"userAlias",
+				`select user_id from "user" where alias = $1`,
+				true,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
+				db := &tests.DBMock{}
+				db.On("QueryRow", tc.dbQuery, "value").Return(tc.available, nil)
+				m := NewManager(db, nil)
+
+				available, err := m.CheckAvailability(context.Background(), tc.resourceKind, "value")
+				assert.NoError(t, err)
+				assert.Equal(t, tc.available, available)
+				db.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		dbQuery := `select not exists (select user_id from "user" where alias = $1)`
+		db.On("QueryRow", dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		available, err := m.CheckAvailability(context.Background(), "userAlias", "value")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.False(t, available)
+		db.AssertExpectations(t)
+	})
+}
 
 func TestCheckCredentials(t *testing.T) {
 	dbQuery := `select user_id, password from "user" where email = $1 and password is not null`

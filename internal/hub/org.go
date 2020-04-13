@@ -18,6 +18,7 @@ type Organization struct {
 type OrganizationManager interface {
 	Add(ctx context.Context, org *Organization) error
 	AddMember(ctx context.Context, orgName, userAlias, baseURL string) error
+	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	ConfirmMembership(ctx context.Context, orgName string) error
 	DeleteMember(ctx context.Context, orgName, userAlias string) error
 	GetJSON(ctx context.Context, orgName string) ([]byte, error)

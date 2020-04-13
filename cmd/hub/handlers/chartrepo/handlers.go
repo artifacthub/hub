@@ -65,8 +65,6 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	validResourceKinds := []string{
 		"chartRepositoryName",
 		"chartRepositoryURL",
-		"organizationName",
-		"userAlias",
 	}
 	isResourceKindValid := func(resourceKind string) bool {
 		for _, k := range validResourceKinds {

@@ -138,10 +138,14 @@ func (h *Handlers) setupRouter() {
 				})
 			})
 		})
+		r.Route("/check-availability", func(r chi.Router) {
+			r.Head("/{resourceKind:^chartRepositoryName$|^chartRepositoryURL$}", h.ChartRepositories.CheckAvailability)
+			r.Head("/{resourceKind:^organizationName$}", h.Organizations.CheckAvailability)
+			r.Head("/{resourceKind:^userAlias$}", h.Users.CheckAvailability)
+		})
 		r.Post("/verify-email", h.Users.VerifyEmail)
 		r.Post("/login", h.Users.Login)
 		r.With(h.Users.RequireLogin).Get("/logout", h.Users.Logout)
-		r.Head("/check-availability/{resourceKind}", h.ChartRepositories.CheckAvailability)
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
 	})
 
