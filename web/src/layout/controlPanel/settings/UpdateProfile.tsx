@@ -33,6 +33,13 @@ const UpdateProfile = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [profile, setProfile] = useState<Profile | null | undefined>(props.profile);
+  const [newUsername, setNewUsername] = useState(
+    !isUndefined(props.profile) && !isNull(props.profile) ? props.profile.alias : ''
+  );
+
+  const onAliasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewUsername(e.target.value);
+  };
 
   useEffect(() => {
     setProfile(props.profile);
@@ -126,9 +133,14 @@ const UpdateProfile = (props: Props) => {
           default: 'This field is required',
           customError: 'Username not available',
         }}
-        checkAvailability={ResourceKind.userAlias}
+        checkAvailability={
+          !isUndefined(profile) && !isNull(profile) && newUsername !== profile.alias
+            ? ResourceKind.userAlias
+            : undefined
+        }
         validateOnBlur
         autoComplete="username"
+        onChange={onAliasChange}
         required
       />
 
