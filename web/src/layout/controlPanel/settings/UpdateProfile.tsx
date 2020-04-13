@@ -116,7 +116,7 @@ const UpdateProfile = (props: Props) => {
     >
       <InputField
         type="email"
-        label="Email address"
+        label="Email"
         name="email"
         value={!isUndefined(profile) && !isNull(profile) ? profile.email : ''}
         readOnly

@@ -7,8 +7,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -48,6 +50,8 @@ type Handlers struct {
 
 // NewHandlers creates a new Handlers instance.
 func NewHandlers(userManager hub.UserManager, cfg *viper.Viper) *Handlers {
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	// Setup secure cookie instance
 	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
 	sc.MaxAge(int(sessionDuration.Seconds()))
@@ -281,6 +285,102 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, cookie)
 }
 
+// newUserFromGithubProfile builds a new hub.User instance from the user's
+// Github profile.
+func (h *Handlers) newUserFromGithubProfile(
+	ctx context.Context,
+	oauthToken *oauth2.Token,
+) (*hub.User, error) {
+	// Get user profile and emails
+	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(oauthToken))
+	githubClient := github.NewClient(httpClient)
+	profile, _, err := githubClient.Users.Get(ctx, "")
+	if err != nil {
+		return nil, err
+	}
+	emails, _, err := githubClient.Users.ListEmails(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// Prepare user alias
+	alias := profile.GetLogin()
+	available, err := h.userManager.CheckAvailability(ctx, "userAlias", alias)
+	if err != nil {
+		return nil, err
+	}
+	if !available {
+		alias += strconv.Itoa(rand.Intn(1000))
+	}
+
+	// Get user's primary email and check if it has been verified
+	var email string
+	for _, entry := range emails {
+		if entry.GetPrimary() && entry.GetVerified() {
+			email = entry.GetEmail()
+		}
+	}
+	if email == "" {
+		return nil, errors.New("no valid email available for use")
+	}
+
+	return &hub.User{
+		Alias:     alias,
+		Email:     email,
+		FirstName: profile.GetName(),
+	}, nil
+}
+
+// newUserFromGoogleProfile builds a new hub.User instance from the user's
+// Google profile.
+func (h *Handlers) newUserFromGoogleProfile(
+	ctx context.Context,
+	providerConfig *oauth2.Config,
+	oauthToken *oauth2.Token,
+) (*hub.User, error) {
+	// Get user profile
+	opt := option.WithTokenSource(providerConfig.TokenSource(ctx, oauthToken))
+	peopleService, err := people.NewService(ctx, opt)
+	if err != nil {
+		return nil, err
+	}
+	profile, err := peopleService.People.
+		Get("people/me").
+		PersonFields("names,emailAddresses").
+		Do()
+	if err != nil {
+		return nil, err
+	}
+
+	// Get user's primary email and check if it has been verified
+	var email string
+	for _, entry := range profile.EmailAddresses {
+		if entry.Metadata.Primary && entry.Metadata.Verified {
+			email = entry.Value
+		}
+	}
+	if email == "" {
+		return nil, errors.New("no valid email available for use")
+	}
+
+	// Prepare user alias
+	alias := strings.Split(email, "@")[0]
+	available, err := h.userManager.CheckAvailability(ctx, "userAlias", alias)
+	if err != nil {
+		return nil, err
+	}
+	if !available {
+		alias += strconv.Itoa(rand.Intn(1000))
+	}
+
+	return &hub.User{
+		Alias:     alias,
+		Email:     email,
+		FirstName: profile.Names[0].GivenName,
+		LastName:  profile.Names[0].FamilyName,
+	}, nil
+}
+
 // OauthCallback is an http handler in charge of completing the oauth
 // authentication process, registering the user if needed.
 func (h *Handlers) OauthCallback(w http.ResponseWriter, r *http.Request) {
@@ -436,9 +536,9 @@ func (h *Handlers) registerUserWithOauth(
 	var err error
 	switch provider {
 	case "github":
-		u, err = newUserFromGithubProfile(ctx, oauthToken)
+		u, err = h.newUserFromGithubProfile(ctx, oauthToken)
 	case "google":
-		u, err = newUserFromGoogleProfile(ctx, providerConfig, oauthToken)
+		u, err = h.newUserFromGoogleProfile(ctx, providerConfig, oauthToken)
 	}
 	if err != nil {
 		return "", err
@@ -558,78 +658,6 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	if !verified {
 		w.WriteHeader(http.StatusGone)
 	}
-}
-
-// newUserFromGithubProfile builds a new hub.User instance from the user's
-// Github profile.
-func newUserFromGithubProfile(
-	ctx context.Context,
-	oauthToken *oauth2.Token,
-) (*hub.User, error) {
-	httpClient := oauth2.NewClient(ctx, oauth2.StaticTokenSource(oauthToken))
-	githubClient := github.NewClient(httpClient)
-	profile, _, err := githubClient.Users.Get(ctx, "")
-	if err != nil {
-		return nil, err
-	}
-	emails, _, err := githubClient.Users.ListEmails(ctx, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	var primaryEmail string
-	for _, entry := range emails {
-		if entry.GetPrimary() && entry.GetVerified() {
-			primaryEmail = entry.GetEmail()
-		}
-	}
-
-	return &hub.User{
-		Alias:     profile.GetLogin(),
-		FirstName: profile.GetName(),
-		Email:     primaryEmail,
-	}, nil
-}
-
-// newUserFromGoogleProfile builds a new hub.User instance from the user's
-// Google profile.
-func newUserFromGoogleProfile(
-	ctx context.Context,
-	providerConfig *oauth2.Config,
-	oauthToken *oauth2.Token,
-) (*hub.User, error) {
-	opt := option.WithTokenSource(providerConfig.TokenSource(ctx, oauthToken))
-	peopleService, err := people.NewService(ctx, opt)
-	if err != nil {
-		return nil, err
-	}
-	profile, err := peopleService.People.
-		Get("people/me").
-		PersonFields("names,emailAddresses").
-		Do()
-	if err != nil {
-		return nil, err
-	}
-
-	var email string
-	for _, entry := range profile.EmailAddresses {
-		if entry.Metadata.Primary && entry.Metadata.Verified {
-			email = entry.Value
-		}
-	}
-	var alias string
-	if strings.HasSuffix(email, "@gmail.com") || strings.HasSuffix(email, "@googlemail.com") {
-		alias = strings.Split(email, "@")[0]
-	} else {
-		alias = uuid.NewV4().String()
-	}
-
-	return &hub.User{
-		Alias:     alias,
-		FirstName: profile.Names[0].GivenName,
-		LastName:  profile.Names[0].FamilyName,
-		Email:     email,
-	}, nil
 }
 
 // validateUser validates a user instance before we attempt to register it in

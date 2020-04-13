@@ -14,7 +14,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       <label
         for="email"
       >
-        Email address
+        Email
       </label>
       <input
         class="form-control"
