@@ -3,6 +3,7 @@
 create or replace function update_user_profile(p_requesting_user_id uuid, p_user jsonb)
 returns void as $$
     update "user" set
+        alias = p_user->>'alias',
         first_name = nullif(p_user->>'first_name', ''),
         last_name = nullif(p_user->>'last_name', '')
     where user_id = p_requesting_user_id;

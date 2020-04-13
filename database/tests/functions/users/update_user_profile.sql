@@ -25,6 +25,7 @@ insert into "user" (
 -- Update user profile
 select update_user_profile(:'user1ID', '
 {
+    "alias": "user1 updated",
     "first_name": "firstname updated",
     "last_name": "lastname updated"
 }
@@ -43,7 +44,7 @@ select results_eq(
     $$,
     $$
         values (
-            'user1',
+            'user1 updated',
             'firstname updated',
             'lastname updated',
             'user1@email.com',

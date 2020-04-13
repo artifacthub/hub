@@ -1,7 +1,6 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 
-import { API } from '../../../api';
 import { Profile } from '../../../types';
 import UpdateProfile from './UpdateProfile';
 jest.mock('../../../api');
@@ -39,25 +38,6 @@ describe('Update profile - user settings', () => {
       expect(getByDisplayValue(profile.email)).toBeInTheDocument();
       expect(getByDisplayValue(profile.firstName!)).toBeInTheDocument();
       expect(getByDisplayValue(profile.lastName!)).toBeInTheDocument();
-    });
-
-    it('updates firstName and calls updateProfile', () => {
-      const { getByDisplayValue, getByTestId } = render(<UpdateProfile {...defaultProps} />);
-
-      const input = getByDisplayValue(profile.firstName!) as HTMLInputElement;
-      fireEvent.change(input, { target: { value: 'testing' } });
-
-      const btn = getByTestId('updateProfileBtn');
-      expect(btn).toBeInTheDocument();
-      fireEvent.click(btn);
-
-      wait();
-
-      expect(API.updateUserProfile).toBeCalledTimes(1);
-      expect(API.updateUserProfile).toHaveBeenCalledWith({
-        firstName: 'testing',
-        lastName: profile.lastName,
-      });
     });
   });
 });
