@@ -112,6 +112,10 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
           });
         setIsCheckingAvailability(false);
       }
+
+      if (isUndefined(props.isValidResource) && isUndefined(props.checkAvailability)) {
+        input.current!.setCustomValidity('');
+      }
     }
 
     return checkValidity();
