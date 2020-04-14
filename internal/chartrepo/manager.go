@@ -9,20 +9,40 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 )
 
+// ErrInvalidURL indicates that the chart repository url provided is not valid.
+var ErrInvalidURL = errors.New("invalid chart repository url")
+
 // Manager provides an API to manage chart repositories.
 type Manager struct {
 	db hub.DB
+	l  hub.IndexLoader
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(db hub.DB) *Manager {
-	return &Manager{
+func NewManager(db hub.DB, opts ...func(m *Manager)) *Manager {
+	m := &Manager{
 		db: db,
+		l:  &IndexLoader{},
+	}
+	for _, o := range opts {
+		o(m)
+	}
+	return m
+}
+
+// WithIndexLoader allows providing a specific IndexLoader implementation for
+// a Manager instance.
+func WithIndexLoader(l hub.IndexLoader) func(m *Manager) {
+	return func(m *Manager) {
+		m.l = l
 	}
 }
 
 // Add adds the provided chart repository to the database.
 func (m *Manager) Add(ctx context.Context, orgName string, r *hub.ChartRepository) error {
+	if err := m.l.LoadIndexFile(r); err != nil {
+		return fmt.Errorf("%w: %s", ErrInvalidURL, err.Error())
+	}
 	query := "select add_chart_repository($1::uuid, $2::text, $3::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
 	rJSON, _ := json.Marshal(r)
@@ -114,6 +134,9 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, chartRepositoryID,
 
 // Update updates the provided chart repository in the database.
 func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
+	if err := m.l.LoadIndexFile(r); err != nil {
+		return fmt.Errorf("%w: %s", ErrInvalidURL, err.Error())
+	}
 	query := "select update_chart_repository($1::uuid, $2::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
 	rJSON, _ := json.Marshal(r)

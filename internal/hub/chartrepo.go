@@ -25,3 +25,8 @@ type ChartRepositoryManager interface {
 	SetLastTrackingResults(ctx context.Context, chartRepositoryID, errs string) error
 	Update(ctx context.Context, r *ChartRepository) error
 }
+
+// IndexLoader describes the methods an IndexLoader implementation must provide.
+type IndexLoader interface {
+	LoadIndexFile(r *ChartRepository) error
+}

@@ -96,6 +96,11 @@ func TestAdd(t *testing.T) {
 				http.StatusOK,
 			},
 			{
+				"invalid chart repository url",
+				chartrepo.ErrInvalidURL,
+				http.StatusBadRequest,
+			},
+			{
 				"error adding chart repository",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
@@ -383,6 +388,11 @@ func TestUpdate(t *testing.T) {
 				"chart repository update succeeded",
 				nil,
 				http.StatusOK,
+			},
+			{
+				"invalid chart repository url",
+				chartrepo.ErrInvalidURL,
+				http.StatusBadRequest,
 			},
 			{
 				"error updating chart repository",

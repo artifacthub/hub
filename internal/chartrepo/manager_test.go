@@ -23,7 +23,9 @@ func TestAdd(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(nil, WithIndexLoader(l))
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), "orgName", r)
 		})
@@ -32,7 +34,9 @@ func TestAdd(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -42,7 +46,9 @@ func TestAdd(t *testing.T) {
 	t.Run("add chart repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(nil)
-		m := NewManager(db)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
 		assert.NoError(t, err)
@@ -353,7 +359,9 @@ func TestUpdate(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(nil, WithIndexLoader(l))
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), r)
 		})
@@ -362,7 +370,9 @@ func TestUpdate(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -372,7 +382,9 @@ func TestUpdate(t *testing.T) {
 	t.Run("update chart repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
-		m := NewManager(db)
+		l := &IndexLoaderMock{}
+		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)
 		assert.NoError(t, err)

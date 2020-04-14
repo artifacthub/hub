@@ -78,7 +78,6 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
       if (e.currentTarget) {
         validateForm(e.currentTarget).then((validation: FormValidation) => {
           if (validation.isValid && !isNull(validation.user)) {
-            console.log(validation);
             registerUser(validation.user);
           } else {
             props.setIsLoading({ status: false });
