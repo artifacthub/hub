@@ -41,9 +41,17 @@ const ResetPassword = () => {
     } catch (err) {
       setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
+        let error = 'An error occurred updating your password';
+        switch (err.status) {
+          case 400:
+            error += `: ${err.statusText}`;
+            break;
+          default:
+            error += ', please try again later';
+        }
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred updating your password, please try again later',
+          message: error,
         });
       } else {
         alertDispatcher.postAlert({

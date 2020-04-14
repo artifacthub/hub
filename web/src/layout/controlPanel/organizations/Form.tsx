@@ -65,7 +65,14 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
     } catch (err) {
       props.setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        const error = 'An error occurred adding the organization, please try again later';
+        let error = `An error occurred ${isUndefined(props.organization) ? 'adding' : 'updating'} the organization`;
+        switch (err.status) {
+          case 400:
+            error += `: ${err.statusText}`;
+            break;
+          default:
+            error += ', please try again later';
+        }
         setApiError(error);
         if (!isUndefined(setApiError)) {
           setApiError(error);

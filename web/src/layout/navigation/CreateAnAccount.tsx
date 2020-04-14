@@ -57,11 +57,13 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
       props.setSuccess(true);
       props.setIsLoading({ status: false });
     } catch (err) {
-      let error = 'An error occurred, please try again later';
+      let error = 'An error occurred registering the user';
       switch (err.status) {
         case 400:
-          error = `Error: ${err.statusText}`;
+          error += `: ${err.statusText}`;
           break;
+        default:
+          error += ', please try again later';
       }
       props.setApiError(error);
       props.setIsLoading({ status: false });
