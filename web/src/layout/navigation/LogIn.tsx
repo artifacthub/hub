@@ -69,14 +69,16 @@ const LogIn = (props: Props) => {
       props.setOpenLogIn(false);
       dispatch(requestSignIn(props.redirect));
     } catch (err) {
-      let error = 'An error occurred, please try again later';
+      let error = 'An error occurred signing in';
       switch (err.status) {
         case 400:
-          error = `Error: ${err.statusText}`;
+          error += `: ${err.statusText}`;
           break;
         case 401:
           error = 'Authentication failed. Please check your credentials';
           break;
+        default:
+          error += ', please try again later';
       }
       setApiError(error);
       setIsLoading({ status: false });
