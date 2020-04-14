@@ -34,6 +34,8 @@ const ChartRepositoryModal = (props: Props) => {
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
+  const [newRepoName, setNewRepoName] = useState(!isUndefined(props.chartRepository) ? props.chartRepository.name : '');
+  const [newRepoUrl, setNewRepoUrl] = useState(!isUndefined(props.chartRepository) ? props.chartRepository.url : '');
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -44,6 +46,14 @@ const ChartRepositoryModal = (props: Props) => {
 
   const onCloseModal = () => {
     props.onClose();
+  };
+
+  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewRepoName(e.target.value);
+  };
+
+  const onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewRepoUrl(e.target.value);
   };
 
   async function handleChartRepository(chartRepository: ChartRepository) {
@@ -175,7 +185,13 @@ const ChartRepositoryModal = (props: Props) => {
               customError: 'There is another repository with this name',
             }}
             validateOnBlur
-            checkAvailability={ResourceKind.chartRepositoryName}
+            checkAvailability={
+              isUndefined(props.chartRepository) ||
+              (!isUndefined(props.chartRepository) && newRepoName !== props.chartRepository.name)
+                ? ResourceKind.chartRepositoryName
+                : undefined
+            }
+            onChange={onNameChange}
             pattern="[a-z][a-z0-9-]*"
             autoComplete="off"
             required
@@ -206,7 +222,13 @@ const ChartRepositoryModal = (props: Props) => {
             }}
             onKeyDown={handleOnReturnKeyDown}
             validateOnBlur
-            checkAvailability={ResourceKind.chartRepositoryURL}
+            onChange={onUrlChange}
+            checkAvailability={
+              isUndefined(props.chartRepository) ||
+              (!isUndefined(props.chartRepository) && newRepoUrl !== props.chartRepository.url)
+                ? ResourceKind.chartRepositoryURL
+                : undefined
+            }
             additionalInfo={
               <small className="text-muted text-break mt-1">
                 <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
