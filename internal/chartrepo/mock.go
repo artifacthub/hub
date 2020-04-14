@@ -79,3 +79,14 @@ func (m *ManagerMock) Update(ctx context.Context, r *hub.ChartRepository) error 
 	args := m.Called(ctx, r)
 	return args.Error(0)
 }
+
+// IndexLoaderMock is a mock implementation of the IndexLoader interface.
+type IndexLoaderMock struct {
+	mock.Mock
+}
+
+// LoadIndexFile implements the IndexLoader interface.
+func (m *IndexLoaderMock) LoadIndexFile(r *hub.ChartRepository) error {
+	args := m.Called(r)
+	return args.Error(0)
+}

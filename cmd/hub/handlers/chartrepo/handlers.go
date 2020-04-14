@@ -2,10 +2,12 @@ package chartrepo
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"regexp"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -49,6 +51,11 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
+		if errors.Is(err, chartrepo.ErrInvalidURL) {
+			h.logger.Error().Err(err).Str("method", "Add").Send()
+			http.Error(w, chartrepo.ErrInvalidURL.Error(), http.StatusBadRequest)
+			return
+		}
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return
@@ -143,6 +150,11 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	}
 	repo.Name = chi.URLParam(r, "repoName")
 	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
+		if errors.Is(err, chartrepo.ErrInvalidURL) {
+			h.logger.Error().Err(err).Str("method", "Update").Send()
+			http.Error(w, chartrepo.ErrInvalidURL.Error(), http.StatusBadRequest)
+			return
+		}
 		log.Error().Err(err).Str("method", "Update").Send()
 		http.Error(w, "", http.StatusInternalServerError)
 		return

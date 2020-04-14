@@ -61,7 +61,15 @@ const ChartRepositoryModal = (props: Props) => {
     } catch (err) {
       setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred adding the chart repository, please try again later');
+        let error = 'An error occurred adding the chart repository';
+        switch (err.status) {
+          case 400:
+            error += `: ${err.statusText}`;
+            break;
+          default:
+            error += ', please try again later';
+        }
+        setApiError(error);
       } else {
         props.onAuthError();
       }
@@ -226,12 +234,6 @@ const ChartRepositoryModal = (props: Props) => {
             }
             required
           />
-
-          {!isNull(apiError) && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {apiError}
-            </div>
-          )}
         </form>
       </div>
     </Modal>
