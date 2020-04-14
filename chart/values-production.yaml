@@ -52,11 +52,11 @@ hub:
     type: NodePort
     port: 80
   deploy:
-    replicaCount: 2
+    replicaCount: 3
     resources:
       requests:
-        cpu: 1
-        memory: 1000Mi
+        cpu: 2
+        memory: 8000Mi
   server:
     oauth:
       github:
@@ -69,7 +69,7 @@ chartTracker:
     resources:
       requests:
         cpu: 2
-        memory: 2000Mi
+        memory: 8000Mi
   numWorkers: 50
   repositories: []
   imageStore: pg
