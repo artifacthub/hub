@@ -59,6 +59,7 @@ const Modal = (props: Props) => {
     <div className={props.className}>
       {!isUndefined(props.buttonContent) && (
         <button
+          data-testid="openModalBtn"
           type="button"
           className={classnames(
             'font-weight-bold text-uppercase position-relative btn btn-block',
@@ -74,7 +75,7 @@ const Modal = (props: Props) => {
         </button>
       )}
 
-      {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} />}
+      {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} data-testid="modalBackdrop" />}
 
       <div className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })} role="dialog">
         <div
@@ -86,6 +87,7 @@ const Modal = (props: Props) => {
               {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
 
               <button
+                data-testid="closeModalBtn"
                 type="button"
                 className="close"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -105,6 +107,7 @@ const Modal = (props: Props) => {
                   <div className="d-flex flex-row align-items-center justify-content-between">
                     <div>{props.error}</div>
                     <button
+                      data-testid="closeModalErrorBtn"
                       type="button"
                       className="close"
                       onClick={() => {
@@ -123,6 +126,7 @@ const Modal = (props: Props) => {
             <div className="modal-footer p-3">
               {isUndefined(props.closeButton) ? (
                 <button
+                  data-testid="closeModalFooterBtn"
                   type="button"
                   className="btn btn-secondary"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {

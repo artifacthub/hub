@@ -5,6 +5,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
   <div>
     <div
       class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
     />
     <div
       class="modal modal active d-block"
@@ -26,6 +27,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
             </div>
             <button
               class="close"
+              data-testid="closeModalBtn"
               type="button"
             >
               <span

@@ -56,9 +56,10 @@ const OrganizationInfo = (props: Props) => {
 
   return (
     <div className="mr-2 text-truncate">
-      <div className="position-absolute" style={{ backgroundColor: 'red' }}>
+      <div className="position-absolute">
         <div
           ref={ref}
+          data-testid="orgInfoDropdown"
           className={classnames('dropdown-menu dropdown-menu-left', styles.dropdown, {
             show: openStatus,
           })}

@@ -8,7 +8,7 @@ import prepareQuerystring from '../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
-  return require(`./__fixtures__/packageCard/${fixtureId}.json`) as Package;
+  return require(`./__fixtures__/PackageCard/${fixtureId}.json`) as Package;
 };
 
 const mockHistoryPush = jest.fn();

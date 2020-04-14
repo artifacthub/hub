@@ -46,6 +46,7 @@ const Sidebar = (props: Props) => {
   return (
     <div role="complementary" className={props.className}>
       <button
+        data-testid="openSidebarBtn"
         type="button"
         className={classnames(
           'font-weight-bold text-uppercase position-relative btn',
@@ -62,14 +63,23 @@ const Sidebar = (props: Props) => {
 
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} />}
 
-      <div ref={ref} className={classnames(styles.sidebar, styles[direction], { [styles.active]: openStatus })}>
+      <div
+        data-testid="sidebarContent"
+        ref={ref}
+        className={classnames(styles.sidebar, styles[direction], { [styles.active]: openStatus })}
+      >
         <div className="d-flex flex-column h-100">
           <div className="border-bottom p-4 pb-3">
             <div className="d-flex align-items-center justify-content-between">
               <div>{props.header}</div>
 
               <div>
-                <button type="button" className="close" onClick={() => openStatusChange(false)}>
+                <button
+                  data-testid="closeSidebarBtn"
+                  type="button"
+                  className="close"
+                  onClick={() => openStatusChange(false)}
+                >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -84,6 +94,7 @@ const Sidebar = (props: Props) => {
             <div className="d-flex align-items-center justify-content-between">
               {!isUndefined(props.leftButton) && <>{props.leftButton}</>}
               <button
+                data-testid="closeSidebarFooterBtn"
                 type="button"
                 className="ml-auto btn btn-sm btn-secondary"
                 onClick={() => openStatusChange(false)}

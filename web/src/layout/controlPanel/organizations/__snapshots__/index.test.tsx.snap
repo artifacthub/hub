@@ -100,6 +100,7 @@ exports[`Organizations section index creates snapshot 1`] = `
               </div>
               <button
                 class="close"
+                data-testid="closeModalBtn"
                 type="button"
               >
                 <span
