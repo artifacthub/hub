@@ -165,6 +165,7 @@ export interface Organization {
 export interface RefInputField {
   checkIsValid: () => Promise<boolean>;
   reset: () => void;
+  getValue: () => string;
 }
 
 export interface Alert {

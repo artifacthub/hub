@@ -8,6 +8,10 @@ import { API } from '../../api';
 import { RefInputField, ResourceKind, User } from '../../types';
 import InputField from '../common/InputField';
 
+interface Loading {
+  status: boolean;
+  type?: 'log' | 'google' | 'github';
+}
 interface FormValidation {
   isValid: boolean;
   user: null | User;
@@ -23,8 +27,8 @@ interface Props {
   setApiError: React.Dispatch<React.SetStateAction<string | null>>;
   success: boolean;
   setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading: Loading;
+  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
 }
 
 const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
@@ -51,7 +55,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
     try {
       await API.register(user);
       props.setSuccess(true);
-      props.setIsLoading(false);
+      props.setIsLoading({ status: false });
     } catch (err) {
       let error = 'An error occurred, please try again later';
       switch (err.status) {
@@ -60,7 +64,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
           break;
       }
       props.setApiError(error);
-      props.setIsLoading(false);
+      props.setIsLoading({ status: false });
     }
   }
 
@@ -70,13 +74,14 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
 
     if (!isValidatingField) {
       cleanApiError();
-      props.setIsLoading(true);
+      props.setIsLoading({ type: 'log', status: true });
       if (e.currentTarget) {
         validateForm(e.currentTarget).then((validation: FormValidation) => {
           if (validation.isValid && !isNull(validation.user)) {
+            console.log(validation);
             registerUser(validation.user);
           } else {
-            props.setIsLoading(false);
+            props.setIsLoading({ status: false });
           }
         });
       }
@@ -144,6 +149,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
             className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
             onFocus={cleanApiError}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => submitForm(e)}
+            autoComplete="on"
             noValidate
           >
             <InputField

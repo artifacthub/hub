@@ -34,6 +34,7 @@ export interface Props {
   additionalInfo?: string | JSX.Element;
   setValidationStatus?: (status: boolean) => void;
   autoFocus?: boolean;
+  disabled?: boolean;
 }
 
 const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
@@ -50,6 +51,9 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
     },
     reset: () => {
       setInputValue('');
+    },
+    getValue(): string {
+      return inputValue;
     },
   }));
 
@@ -161,6 +165,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         onBlur={handleOnBlur}
         onKeyDown={props.onKeyDown}
         autoFocus={props.autoFocus}
+        disabled={props.disabled}
       />
 
       {(isCheckingAvailability || isValidatingResource) && (

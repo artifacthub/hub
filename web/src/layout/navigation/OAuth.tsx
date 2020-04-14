@@ -5,12 +5,20 @@ import googleLogo from '../../images/google.svg';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 import styles from './OAuth.module.css';
 
+interface Loading {
+  status: boolean;
+  type?: 'log' | 'google' | 'github';
+}
+
 interface Props {
   separatorClassName?: string;
+  isLoading: Loading;
+  setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
 }
 
 const OAuth = (props: Props) => {
-  const goToOAuthPage = (name: string) => {
+  const goToOAuthPage = (name: 'google' | 'github') => {
+    props.setIsLoading({ type: name, status: true });
     window.location.href = `${getHubBaseURL()}/oauth/${name}`;
     return;
   };
@@ -28,6 +36,7 @@ const OAuth = (props: Props) => {
             type="button"
             onClick={() => goToOAuthPage('github')}
             className={`btn btn-outline-secondary mb-3 btn-block ${styles.btn}`}
+            disabled={props.isLoading.status}
           >
             <div className="d-flex align-items-center">
               <img alt="Github Logo" src={githubLogo} className={styles.logo} />
@@ -38,6 +47,7 @@ const OAuth = (props: Props) => {
             type="button"
             onClick={() => goToOAuthPage('google')}
             className={`btn btn-outline-secondary mb-3 btn-block ${styles.btn}`}
+            disabled={props.isLoading.status}
           >
             <div className="d-flex align-items-center">
               <img alt="Google Logo" src={googleLogo} className={styles.logo} />
