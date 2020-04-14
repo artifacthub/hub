@@ -18,6 +18,11 @@ interface FormValidation {
   user: null | UserLogin;
 }
 
+interface Loading {
+  status: boolean;
+  type?: 'log' | 'google' | 'github';
+}
+
 interface Props {
   openLogIn: boolean;
   setOpenLogIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +35,7 @@ const LogIn = (props: Props) => {
   const loginForm = useRef<HTMLFormElement>(null);
   const emailInput = useRef<RefInputField>(null);
   const passwordInput = useRef<RefInputField>(null);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isLoading, setIsLoading] = useState<Loading>({ status: false });
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [email, setEmail] = useState('');
@@ -60,7 +65,7 @@ const LogIn = (props: Props) => {
   async function loginUser(user: UserLogin) {
     try {
       await API.login(user);
-      setIsLoggingIn(false);
+      setIsLoading({ status: false });
       props.setOpenLogIn(false);
       dispatch(requestSignIn(props.redirect));
     } catch (err) {
@@ -74,20 +79,20 @@ const LogIn = (props: Props) => {
           break;
       }
       setApiError(error);
-      setIsLoggingIn(false);
+      setIsLoading({ status: false });
       dispatch(signOut());
     }
   }
 
   const submitForm = () => {
     cleanApiError();
-    setIsLoggingIn(true);
+    setIsLoading({ type: 'log', status: true });
     if (loginForm.current) {
       validateForm(loginForm.current).then((validation: FormValidation) => {
         if (validation.isValid && !isNull(validation.user)) {
           loginUser(validation.user);
         } else {
-          setIsLoggingIn(false);
+          setIsLoading({ status: false });
         }
       });
     }
@@ -172,8 +177,8 @@ const LogIn = (props: Props) => {
           />
 
           <div className="text-right">
-            <button className="btn btn-secondary" type="button" disabled={isLoggingIn} onClick={submitForm}>
-              {isLoggingIn ? (
+            <button className="btn btn-secondary" type="button" disabled={isLoading.status} onClick={submitForm}>
+              {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
                 <>
                   <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
                   <span className="ml-2">Singing in...</span>
@@ -186,7 +191,7 @@ const LogIn = (props: Props) => {
         </form>
       </>
 
-      <OAuth />
+      <OAuth isLoading={isLoading} setIsLoading={setIsLoading} />
     </Modal>
   );
 };
