@@ -143,6 +143,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check availability in database
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(0))
 	available, err := h.userManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
