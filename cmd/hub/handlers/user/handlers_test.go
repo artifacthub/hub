@@ -125,12 +125,14 @@ func TestCheckAvailability(t *testing.T) {
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
+					h := resp.Header
 
 					if tc.available {
 						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 					} else {
 						assert.Equal(t, http.StatusOK, resp.StatusCode)
 					}
+					assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 					hw.um.AssertExpectations(t)
 				})
 			}
