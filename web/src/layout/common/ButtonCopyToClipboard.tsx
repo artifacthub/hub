@@ -39,6 +39,7 @@ const ButtonCopyToClipboard = (props: Props) => {
       )}
 
       <button
+        data-testid="ctcBtn"
         type="button"
         className="btn btn-primary btn-sm rounded-circle"
         onClick={() => setCopyStatus(copyToClipboard(props.text))}

@@ -14,6 +14,7 @@ const ExternalLink = (props: Props) => (
   <>
     {!isUndefined(props.btnType) && props.btnType ? (
       <button
+        data-testid="externalBtn"
         type="button"
         className={`btn p-0 ${styles.link} ${props.className}`}
         onClick={(e) => {

@@ -97,7 +97,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
             input.current!.setCustomValidity('');
           })
           .catch(() => {
-            input.current!.setCustomValidity('Is not a valid resource');
+            input.current!.setCustomValidity('Resource is not valid');
           });
         setIsValidatingResource(false);
       }

@@ -14,7 +14,12 @@ const Disclaimer = () => {
       role="alert"
     >
       This is <strong>pre-alpha</strong> software and not for production use
-      <button type="button" className={`close position-absolute ${styles.close}`} onClick={() => setOpenStatus(false)}>
+      <button
+        data-testid="disclaimerCloseBtn"
+        type="button"
+        className={`close position-absolute ${styles.close}`}
+        onClick={() => setOpenStatus(false)}
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

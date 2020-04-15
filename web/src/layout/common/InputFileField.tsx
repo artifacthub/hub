@@ -83,6 +83,7 @@ const InputFileField = (props: Props) => {
 
         <div className="position-relative">
           <button
+            data-testid="inputFileBtn"
             className={classnames('btn p-0 overflow-hidden', styles.btn, { [styles.isLoading]: isSending })}
             type="button"
             onClick={onClick}
@@ -99,7 +100,15 @@ const InputFileField = (props: Props) => {
         </div>
       </div>
 
-      <input type="file" name={props.name} ref={fileInput} className="d-none" onChange={onChange} />
+      <input
+        data-testid="inputFile"
+        type="file"
+        id={props.name}
+        name={props.name}
+        ref={fileInput}
+        className="d-none"
+        onChange={onChange}
+      />
     </div>
   );
 };
