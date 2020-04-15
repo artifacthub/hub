@@ -17,6 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -31,13 +32,20 @@ type Services struct {
 	ImageStore             img.Store
 }
 
+// Metrics groups some metrics collected from a Handlers instance.
+type Metrics struct {
+	requests *prometheus.CounterVec
+	duration *prometheus.HistogramVec
+}
+
 // Handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type Handlers struct {
-	cfg    *viper.Viper
-	svc    *Services
-	logger zerolog.Logger
-	Router http.Handler
+	cfg     *viper.Viper
+	svc     *Services
+	metrics *Metrics
+	logger  zerolog.Logger
+	Router  http.Handler
 
 	Organizations     *org.Handlers
 	Users             *user.Handlers
@@ -49,9 +57,10 @@ type Handlers struct {
 // Setup creates a new Handlers instance.
 func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 	h := &Handlers{
-		cfg:    cfg,
-		svc:    svc,
-		logger: log.With().Str("handlers", "root").Logger(),
+		cfg:     cfg,
+		svc:     svc,
+		metrics: setupMetrics(),
+		logger:  log.With().Str("handlers", "root").Logger(),
 
 		Organizations:     org.NewHandlers(svc.OrganizationManager),
 		Users:             user.NewHandlers(svc.UserManager, cfg),
@@ -63,12 +72,39 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 	return h
 }
 
+// setupMetrics creates and registers some metrics
+func setupMetrics() *Metrics {
+	// Number of requests
+	requests := prometheus.NewCounterVec(prometheus.CounterOpts{
+		Name: "http_requests_total",
+		Help: "Number of http requests processed.",
+	},
+		[]string{"status", "method", "path"},
+	)
+	prometheus.MustRegister(requests)
+
+	// Requests duration
+	duration := prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Name: "http_request_duration",
+		Help: "Duration of the http requests processed.",
+	},
+		[]string{"status", "method", "path"},
+	)
+	prometheus.MustRegister(duration)
+
+	return &Metrics{
+		requests: requests,
+		duration: duration,
+	}
+}
+
 // setupRouter initializes the handlers router, defining all routes used within
 // the hub, as well as some essential middleware to handle panics, logging, etc.
 func (h *Handlers) setupRouter() {
 	r := chi.NewRouter()
 
 	// Setup middleware and special handlers
+	r.Use(h.MetricsCollector)
 	r.Use(middleware.RealIP)
 	r.Use(Logger)
 	r.Use(middleware.Recoverer)
@@ -168,6 +204,29 @@ func (h *Handlers) setupRouter() {
 	r.Get("/", h.Static.ServeIndex)
 
 	h.Router = r
+}
+
+// MetricsCollector is an http middleware that collects some metrics about
+// requests processed.
+func (h *Handlers) MetricsCollector(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
+		defer func() {
+			rctx := chi.RouteContext(r.Context())
+			h.metrics.requests.WithLabelValues(
+				http.StatusText(ww.Status()),
+				r.Method,
+				rctx.RoutePattern(),
+			).Inc()
+			h.metrics.duration.WithLabelValues(
+				http.StatusText(ww.Status()),
+				r.Method,
+				rctx.RoutePattern(),
+			).Observe(time.Since(start).Seconds())
+		}()
+		next.ServeHTTP(ww, r)
+	})
 }
 
 // Logger is an http middleware that logs some information about requests

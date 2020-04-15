@@ -22,6 +22,7 @@ require (
 	github.com/jackc/pgconn v1.3.2
 	github.com/jackc/pgx/v4 v4.4.1
 	github.com/pelletier/go-toml v1.6.0 // indirect
+	github.com/prometheus/client_golang v1.5.1
 	github.com/rs/zerolog v1.18.0
 	github.com/satori/uuid v1.2.0
 	github.com/spf13/cast v1.3.1 // indirect

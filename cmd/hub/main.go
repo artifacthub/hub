@@ -17,6 +17,7 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
 )
 
@@ -63,6 +64,15 @@ func main() {
 		}
 	}()
 	log.Info().Str("addr", addr).Int("pid", os.Getpid()).Msg("Hub server running!")
+
+	// Setup and launch metrics server
+	go func() {
+		http.Handle("/metrics", promhttp.Handler())
+		err := http.ListenAndServe(cfg.GetString("server.metricsAddr"), nil)
+		if err != nil {
+			log.Fatal().Err(err).Msg("Metrics server ListenAndServe failed")
+		}
+	}()
 
 	// Shutdown server gracefully when SIGINT or SIGTERM signal is received
 	shutdown := make(chan os.Signal, 1)
