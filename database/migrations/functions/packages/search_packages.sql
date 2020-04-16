@@ -121,7 +121,7 @@ begin
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
                                         'id', organization_name,
-                                        'name', organization_display_name,
+                                        'name', coalesce(organization_display_name, organization_name),
                                         'total', total
                                     )), '[]')
                                     from (
