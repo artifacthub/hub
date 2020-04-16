@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 import { API } from '../../api';
-import { RefInputField, ResourceKind } from '../../types';
+import { AvailabilityInfo, RefInputField } from '../../types';
 import styles from './InputField.module.css';
 
 export interface Props {
@@ -27,8 +27,7 @@ export interface Props {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   validateOnBlur?: boolean;
-  checkAvailability?: ResourceKind;
-  isValidResource?: ResourceKind;
+  checkAvailability?: AvailabilityInfo;
   autoComplete?: string;
   readOnly?: boolean;
   additionalInfo?: string | JSX.Element;
@@ -43,7 +42,6 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const [inputValue, setInputValue] = useState(props.value || '');
   const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
-  const [isValidatingResource, setIsValidatingResource] = useState(false);
 
   useImperativeHandle(ref, () => ({
     checkIsValid(): Promise<boolean> {
@@ -87,37 +85,20 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const isValidField = async (): Promise<boolean> => {
     const value = input.current!.value;
     if (value !== '') {
-      if (!isUndefined(props.isValidResource)) {
-        setIsValidatingResource(true);
-        await API.checkAvailability({
-          resourceKind: props.isValidResource!,
-          value: value,
-        })
-          .then(() => {
-            input.current!.setCustomValidity('');
-          })
-          .catch(() => {
-            input.current!.setCustomValidity('Resource is not valid');
-          });
-        setIsValidatingResource(false);
-      }
-
-      if (!isUndefined(props.checkAvailability)) {
+      if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
         setIsCheckingAvailability(true);
         await API.checkAvailability({
-          resourceKind: props.checkAvailability!,
+          resourceKind: props.checkAvailability.resourceKind,
           value: value,
         })
           .then(() => {
-            input.current!.setCustomValidity('Already taken');
+            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
           })
           .catch(() => {
-            input.current!.setCustomValidity('');
+            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
           });
         setIsCheckingAvailability(false);
-      }
-
-      if (isUndefined(props.isValidResource) && isUndefined(props.checkAvailability)) {
+      } else {
         input.current!.setCustomValidity('');
       }
     }
@@ -168,7 +149,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         disabled={props.disabled}
       />
 
-      {(isCheckingAvailability || isValidatingResource) && (
+      {isCheckingAvailability && (
         <div className={`position-absolute ${styles.spinner}`}>
           <span className="spinner-border spinner-border-sm text-primary" />
         </div>

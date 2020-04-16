@@ -32,11 +32,6 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
   const homeUrlInput = useRef<RefInputField>(null);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const [newOrgName, setNewOrgName] = useState(!isUndefined(props.organization) ? props.organization.name : '');
-
-  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewOrgName(e.target.value);
-  };
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
@@ -162,13 +157,11 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           customError: 'There is another organization with this name',
         }}
         validateOnBlur
-        checkAvailability={
-          isUndefined(props.organization) ||
-          (!isUndefined(props.organization) && newOrgName !== props.organization.name)
-            ? ResourceKind.organizationName
-            : undefined
-        }
-        onChange={onNameChange}
+        checkAvailability={{
+          isAvailable: true,
+          resourceKind: ResourceKind.organizationName,
+          excluded: !isUndefined(props.organization) ? [props.organization.name] : [],
+        }}
         pattern="[a-z0-9-]+"
         autoComplete="off"
         required

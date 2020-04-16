@@ -133,7 +133,11 @@ const MemberModal = (props: Props) => {
               default: 'This field is required',
               customError: 'User not found',
             }}
-            isValidResource={ResourceKind.userAlias}
+            checkAvailability={{
+              isAvailable: false,
+              resourceKind: ResourceKind.userAlias,
+              excluded: [],
+            }}
             autoComplete="off"
             onKeyDown={handleOnReturnKeyDown}
             additionalInfo={

@@ -87,7 +87,11 @@ describe('InputField', () => {
           type="text"
           value="userAlias"
           validateOnBlur
-          checkAvailability={ResourceKind.userAlias}
+          checkAvailability={{
+            isAvailable: true,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
           autoFocus
         />
       );
@@ -107,7 +111,11 @@ describe('InputField', () => {
           type="text"
           value="userAlias"
           validateOnBlur
-          checkAvailability={ResourceKind.userAlias}
+          checkAvailability={{
+            isAvailable: true,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
           autoFocus
         />
       );
@@ -133,7 +141,11 @@ describe('InputField', () => {
           type="text"
           value="userAlias"
           validateOnBlur
-          isValidResource={ResourceKind.userAlias}
+          checkAvailability={{
+            isAvailable: false,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
           autoFocus
         />
       );
@@ -153,7 +165,11 @@ describe('InputField', () => {
           type="text"
           value="userAlias"
           validateOnBlur
-          isValidResource={ResourceKind.userAlias}
+          checkAvailability={{
+            isAvailable: false,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
           autoFocus
         />
       );

@@ -178,3 +178,9 @@ export interface Alert {
 export interface LogoImage {
   imageId: string;
 }
+
+export interface AvailabilityInfo {
+  isAvailable: boolean;
+  resourceKind: ResourceKind;
+  excluded: string[];
+}
