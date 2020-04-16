@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -40,8 +40,9 @@ describe('Members section index', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -56,26 +57,10 @@ describe('Members section index', () => {
           </Router>
         </AppCtx.Provider>
       );
-      expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
-      await wait();
-    });
 
-    it('removes loading spinner after getting members', async () => {
-      const mockMembers = getMembers('3');
-      mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
-
-      render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <MembersSection {...defaultProps} />
-          </Router>
-        </AppCtx.Provider>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {
+        expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('displays no data component when no members', async () => {
@@ -90,13 +75,13 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(screen.getByText('Do you want to add a member?')).toBeInTheDocument();
       expect(screen.getByTestId('addFirstMemberBtn')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders 2 members card', async () => {
@@ -111,10 +96,10 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const cards = await waitForElement(() => screen.getAllByTestId('memberCard'));
+      const cards = await waitFor(() => screen.getAllByTestId('memberCard'));
       expect(cards).toHaveLength(2);
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -129,7 +114,7 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const addBtn = await waitForElement(() => screen.getByTestId('addMemberBtn'));
+      const addBtn = await waitFor(() => screen.getByTestId('addMemberBtn'));
       expect(addBtn).toBeInTheDocument();
 
       expect(screen.queryByText('Username')).not.toBeInTheDocument();
@@ -137,7 +122,7 @@ describe('Members section index', () => {
       fireEvent.click(addBtn);
       expect(screen.queryByText('Username')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -152,14 +137,14 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const firstBtn = await waitForElement(() => screen.getByTestId('addFirstMemberBtn'));
+      const firstBtn = await waitFor(() => screen.getByTestId('addFirstMemberBtn'));
       expect(screen.queryByText('Username')).not.toBeInTheDocument();
       expect(firstBtn).toBeInTheDocument();
 
       fireEvent.click(firstBtn);
       expect(screen.queryByText('Username')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -31,8 +31,9 @@ describe('Organizations section index', () => {
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -45,24 +46,10 @@ describe('Organizations section index', () => {
           <OrganizationsSection {...defaultProps} />
         </Router>
       );
-      expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
-      await wait();
-    });
 
-    it('removes loading spinner after getting user organizations', async () => {
-      const mockOrganizations = getMockOrganizations('3');
-      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
-
-      render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {
+        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('displays no data component when no organizations', async () => {
@@ -75,13 +62,13 @@ describe('Organizations section index', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(screen.getByText('Do you need to create a organization?')).toBeInTheDocument();
       expect(screen.getByTestId('addFirstOrgBtn')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders organization form when add first org button is clicked', async () => {
@@ -94,7 +81,7 @@ describe('Organizations section index', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
       expect(noData).toBeInTheDocument();
 
       expect(screen.queryByText('Name')).not.toBeInTheDocument();
@@ -109,7 +96,7 @@ describe('Organizations section index', () => {
       expect(screen.queryByText('Home URL')).toBeInTheDocument();
       expect(screen.queryByText('Description')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders organization form when add org button is clicked', async () => {
@@ -122,7 +109,7 @@ describe('Organizations section index', () => {
         </Router>
       );
 
-      const addBtn = await waitForElement(() => screen.getByTestId('addOrgButton'));
+      const addBtn = await waitFor(() => screen.getByTestId('addOrgButton'));
       expect(addBtn).toBeInTheDocument();
 
       expect(screen.queryByText('Name')).not.toBeInTheDocument();
@@ -136,7 +123,7 @@ describe('Organizations section index', () => {
       expect(screen.queryByText('Home URL')).toBeInTheDocument();
       expect(screen.queryByText('Description')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -150,8 +137,8 @@ describe('Organizations section index', () => {
       </Router>
     );
 
-    const cards = await waitForElement(() => screen.getAllByTestId('organizationCard'));
+    const cards = await waitFor(() => screen.getAllByTestId('organizationCard'));
     expect(cards).toHaveLength(2);
-    await wait();
+    await waitFor(() => {});
   });
 });

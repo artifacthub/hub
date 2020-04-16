@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -31,8 +31,9 @@ describe('Chart repository index', () => {
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -45,8 +46,10 @@ describe('Chart repository index', () => {
           <ChartRepository {...defaultProps} />
         </Router>
       );
-      expect(API.getChartRepositories).toHaveBeenCalledTimes(1);
-      await wait();
+
+      await waitFor(() => {
+        expect(API.getChartRepositories).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('removes loading spinner after getting chart repositories', async () => {
@@ -62,7 +65,7 @@ describe('Chart repository index', () => {
       const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays no data component when no chart repositories', async () => {
@@ -75,13 +78,13 @@ describe('Chart repository index', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(screen.getByText('Add your first chart repository!')).toBeInTheDocument();
       expect(screen.getByTestId('addFirstRepoBtn')).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders list with 3 chart repositories', async () => {
@@ -94,12 +97,12 @@ describe('Chart repository index', () => {
         </Router>
       );
 
-      const list = await waitForElement(() => screen.getByTestId('chartRepoList'));
+      const list = await waitFor(() => screen.getByTestId('chartRepoList'));
 
       expect(list).toBeInTheDocument();
       expect(screen.getAllByTestId('chartRepoCard')).toHaveLength(3);
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls getChartRepositories to click Refresh button', async () => {
@@ -112,12 +115,12 @@ describe('Chart repository index', () => {
         </Router>
       );
 
-      const refreshBtn = await waitForElement(() => screen.getByTestId('refreshRepoBtn'));
+      const refreshBtn = await waitFor(() => screen.getByTestId('refreshRepoBtn'));
       expect(refreshBtn).toBeInTheDocument();
       fireEvent.click(refreshBtn);
       expect(API.getChartRepositories).toHaveBeenCalledTimes(2);
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -27,8 +27,9 @@ describe('Package index', () => {
       </Router>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -41,24 +42,10 @@ describe('Package index', () => {
           <PackagesUpdates />
         </Router>
       );
-      expect(API.getPackagesUpdates).toHaveBeenCalledTimes(1);
-      await wait();
-    });
 
-    it('removes loading spinner after getting package', async () => {
-      const mockPackagesUpdates = getMockPackagesUpdates('3');
-      mocked(API).getPackagesUpdates.mockResolvedValue(mockPackagesUpdates);
-
-      render(
-        <Router>
-          <PackagesUpdates />
-        </Router>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {
+        expect(API.getPackagesUpdates).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('renders only latest packages list when recently updated packages list is empty', async () => {
@@ -71,11 +58,11 @@ describe('Package index', () => {
         </Router>
       );
 
-      const latest = await waitForElement(() => screen.getByTestId('latestPackagesList'));
+      const latest = await waitFor(() => screen.getByTestId('latestPackagesList'));
 
       expect(latest).toBeInTheDocument();
       expect(screen.queryByTestId('recentlyUpdatedPackagesList')).toBeNull();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders only recently updated packages list when latest packages list is empty', async () => {
@@ -88,11 +75,11 @@ describe('Package index', () => {
         </Router>
       );
 
-      const recentlyUpdated = await waitForElement(() => screen.getByTestId('recentlyUpdatedPackagesList'));
+      const recentlyUpdated = await waitFor(() => screen.getByTestId('recentlyUpdatedPackagesList'));
 
       expect(screen.queryByTestId('latestPackagesList')).toBeNull();
       expect(recentlyUpdated).toBeInTheDocument();
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

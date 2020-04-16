@@ -256,3 +256,246 @@ exports[`User settings index creates snapshot 1`] = `
   </main>
 </DocumentFragment>
 `;
+
+exports[`User settings index creates snapshot 2`] = `
+<DocumentFragment>
+  <main
+    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    role="main"
+  >
+    <div
+      class="flex-grow-1 position-relative"
+    >
+      <div>
+        <div
+          class="h3 mb-4 text-center"
+        >
+          Profile information
+        </div>
+        <div
+          class="mx-auto mt-5 formWrapper"
+        >
+          <form
+            autocomplete="on"
+            class="w-100 needs-validation"
+            data-testid="updateProfileForm"
+            novalidate=""
+          >
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                class="form-control"
+                data-testid="emailInput"
+                name="email"
+                readonly=""
+                type="email"
+                value="jsmith@email.com"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              />
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="alias"
+              >
+                Username
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (Required)
+                </small>
+              </label>
+              <input
+                autocomplete="username"
+                class="form-control"
+                data-testid="aliasInput"
+                name="alias"
+                required=""
+                type="text"
+                value="userAlias"
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="firstName"
+              >
+                First Name
+              </label>
+              <input
+                autocomplete="given-name"
+                class="form-control"
+                data-testid="firstNameInput"
+                name="firstName"
+                type="text"
+                value=""
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              />
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                autocomplete="family-name"
+                class="form-control"
+                data-testid="lastNameInput"
+                name="lastName"
+                type="text"
+                value=""
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              />
+            </div>
+            <div
+              class="text-right mt-4"
+            >
+              <button
+                class="btn btn-secondary"
+                data-testid="updateProfileBtn"
+                type="button"
+              >
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div
+        class="mt-5"
+      >
+        <div
+          class="h3 mb-4 text-center"
+        >
+          Change password
+        </div>
+        <div
+          class="mx-auto mt-5 formWrapper"
+        >
+          <form
+            autocomplete="on"
+            class="w-100 needs-validation"
+            data-testid="resetPasswordForm"
+            novalidate=""
+          >
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="oldPassword"
+              >
+                Old password
+              </label>
+              <input
+                autocomplete="password"
+                class="form-control"
+                data-testid="oldPasswordInput"
+                name="oldPassword"
+                required=""
+                type="password"
+                value=""
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="password"
+              >
+                New password
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (6 characters min.)
+                </small>
+              </label>
+              <input
+                autocomplete="new-password"
+                class="form-control"
+                data-testid="passwordInput"
+                minlength="6"
+                name="password"
+                required=""
+                type="password"
+                value=""
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+            <div
+              class="form-group mb-4 position-relative undefined"
+            >
+              <label
+                for="confirmPassword"
+              >
+                Confirm new password
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (Required)
+                </small>
+              </label>
+              <input
+                autocomplete="new-password"
+                class="form-control"
+                data-testid="confirmPasswordInput"
+                name="confirmPassword"
+                pattern=""
+                required=""
+                type="password"
+                value=""
+              />
+              <div
+                class="invalid-feedback mt-0 inputFeedback"
+              >
+                This field is required
+              </div>
+            </div>
+            <div
+              class="text-right mt-4 mb-2"
+            >
+              <button
+                class="btn btn-secondary"
+                data-testid="updatePasswordBtn"
+                type="button"
+              >
+                Change
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

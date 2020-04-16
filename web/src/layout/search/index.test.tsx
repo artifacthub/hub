@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -53,8 +53,10 @@ describe('Search index', () => {
         <SearchView {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -67,8 +69,10 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      expect(API.searchPackages).toHaveBeenCalledTimes(1);
-      await wait();
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('displays loading spinner', async () => {
@@ -85,10 +89,10 @@ describe('Search index', () => {
         </Router>
       );
 
-      const spinner = await waitForElement(() => screen.getByRole('status'));
+      const spinner = await waitFor(() => screen.getByRole('status'));
 
       expect(spinner).toBeInTheDocument();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays correct search results text', async () => {
@@ -101,11 +105,11 @@ describe('Search index', () => {
         </Router>
       );
 
-      const results = await waitForElement(() => screen.getByTestId('resultsText'));
+      const results = await waitFor(() => screen.getByTestId('resultsText'));
 
       expect(results).toBeInTheDocument();
       expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -119,10 +123,10 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      const packages = await waitForElement(() => screen.getAllByRole('listitem'));
+      const packages = await waitFor(() => screen.getAllByRole('listitem'));
 
       expect(packages).toHaveLength(7);
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays no data component when no packages', async () => {
@@ -135,14 +139,14 @@ describe('Search index', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -157,7 +161,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const [facets, options, deprecated] = await waitForElement(() => [
+      const [facets, options, deprecated] = await waitFor(() => [
         screen.getAllByRole('menuitem'),
         screen.getAllByTestId('checkbox'),
         screen.getAllByTestId('deprecatedCheckbox'),
@@ -167,7 +171,7 @@ describe('Search index', () => {
       expect(facets).toHaveLength(2 * 2 + 2);
       expect(options).toHaveLength(4 * 2);
       expect(deprecated).toHaveLength(1 * 2);
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push on filters change', async () => {
@@ -180,7 +184,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/Chart/g));
+      const opt = await waitFor(() => screen.getByLabelText(/Chart/g));
       fireEvent.click(opt);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -193,7 +197,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('does not render filters', async () => {
@@ -206,14 +210,14 @@ describe('Search index', () => {
         </Router>
       );
 
-      const [facets, sidebar] = await waitForElement(() => [
+      const [facets, sidebar] = await waitFor(() => [
         screen.queryAllByTestId('facetBlock'),
         screen.queryByRole('complementary'),
       ]);
 
       expect(facets).toHaveLength(0);
       expect(sidebar).toBeNull();
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -227,11 +231,11 @@ describe('Search index', () => {
           <SearchView {...defaultProps} />
         </Router>
       );
-      await waitForElement(() => screen.queryByRole('main'));
+      await waitFor(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
       expect(pagination).toBeNull();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders pagination', async () => {
@@ -245,12 +249,12 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.queryByRole('main'));
+      await waitFor(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
 
       expect(pagination).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push on page change keeping current active filters', async () => {
@@ -268,7 +272,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.queryByRole('main'));
+      await waitFor(() => screen.queryByRole('main'));
       const pagination = screen.queryByLabelText('pagination');
 
       expect(pagination).toBeInTheDocument();
@@ -286,7 +290,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -301,9 +305,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const paginationLimit = await waitForElement(
-        () => screen.getByLabelText('pagination-limit') as HTMLSelectElement
-      );
+      const paginationLimit = await waitFor(() => screen.getByLabelText('pagination-limit') as HTMLSelectElement);
       expect(paginationLimit.value).toBe('15');
     });
 
@@ -321,9 +323,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const paginationLimit = await waitForElement(
-        () => screen.getByLabelText('pagination-limit') as HTMLSelectElement
-      );
+      const paginationLimit = await waitFor(() => screen.getByLabelText('pagination-limit') as HTMLSelectElement);
       expect(paginationLimit.value).toBe('15');
 
       fireEvent.change(paginationLimit, { target: { value: '25' } });
@@ -339,7 +339,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -354,7 +354,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/Falco rules/g));
+      const opt = await waitFor(() => screen.getByLabelText(/Falco rules/g));
       fireEvent.click(opt);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -368,7 +368,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when package kind Chart is checked', async () => {
@@ -381,7 +381,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/Helm charts/g));
+      const opt = await waitFor(() => screen.getByLabelText(/Helm charts/g));
       fireEvent.click(opt);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -395,7 +395,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when package kind filter different to Chart is checked', async () => {
@@ -408,7 +408,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/Helm charts/g));
+      const opt = await waitFor(() => screen.getByLabelText(/Helm charts/g));
       fireEvent.click(opt);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -422,7 +422,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when a org is checked', async () => {
@@ -435,7 +435,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/Helm org/g));
+      const opt = await waitFor(() => screen.getByLabelText(/Helm org/g));
       fireEvent.click(opt);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -449,7 +449,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push with proper filters when a user is checked', async () => {
@@ -462,7 +462,7 @@ describe('Search index', () => {
         </Router>
       );
 
-      const opt = await waitForElement(() => screen.getByLabelText(/testUser/g));
+      const opt = await waitFor(() => screen.getByLabelText(/testUser/g));
       fireEvent.click(opt);
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
@@ -476,7 +476,7 @@ describe('Search index', () => {
         }),
       });
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders Chart repositories facets when Helm Chart package kind is selected or when no package kind filter is being applied', async () => {
@@ -489,13 +489,13 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.queryByRole('main'));
+      await waitFor(() => screen.queryByRole('main'));
 
       expect(screen.getAllByRole('menuitem')).toHaveLength(2 * 4);
       expect(screen.getByLabelText(/Stable/g)).toBeInTheDocument();
       expect(screen.getByLabelText(/Incubator/g)).toBeInTheDocument();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('does not render Chart repositories facets when package kind filter different to Chart is active', async () => {
@@ -508,13 +508,13 @@ describe('Search index', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.queryByRole('main'));
+      await waitFor(() => screen.queryByRole('main'));
 
       expect(screen.getAllByRole('menuitem')).toHaveLength(2 * 3);
       expect(screen.queryByLabelText(/Stable/g)).toBeNull();
       expect(screen.queryByLabelText(/Incubator/g)).toBeNull();
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

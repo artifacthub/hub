@@ -8,3 +8,507 @@ exports[`Package index creates snapshot 1`] = `
   />
 </DocumentFragment>
 `;
+
+exports[`Package index creates snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="position-relative flex-grow-1"
+    data-testid="mainPackage"
+  >
+    <div
+      class="jumbotron jumbotron"
+    >
+      <div
+        class="container"
+      >
+        <div
+          class="d-flex align-items-start w-100 mb-3"
+        >
+          <div
+            class="d-flex align-items-center"
+          >
+            <div
+              class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
+            >
+              <img
+                alt="Pretty name"
+                class="image"
+                src="/image/imageId"
+                srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+              />
+            </div>
+            <div
+              class="ml-3"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="h3 mb-0"
+                >
+                  Pretty name
+                </div>
+              </div>
+              <div
+                class="d-flex flex-row mt-1 subtitle"
+              >
+                <div
+                  class="mr-2 text-truncate"
+                >
+                  <small
+                    class="mr-1 text-uppercase text-muted"
+                  >
+                    User: 
+                  </small>
+                  <a
+                    href="/packages/search?page=1&user=undefined"
+                  >
+                    <u
+                      class="text-dark"
+                    />
+                  </a>
+                </div>
+                <div
+                  class="text-truncate"
+                >
+                  <small
+                    class="mr-1 text-muted text-uppercase"
+                  >
+                    Repo: 
+                  </small>
+                  <a
+                    data-testid="repoLink"
+                    href="/packages/search?page=1&repo=stable"
+                  >
+                    <u
+                      class="text-dark"
+                    >
+                      stable
+                    </u>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-none d-md-inline ml-auto position-relative"
+          />
+        </div>
+        <p
+          class="mb-0"
+        >
+          desc
+        </p>
+        <div
+          class="d-flex align-items-center justify-content-between flex-wrap d-md-none"
+        >
+          <div
+            class="d-flex mt-3"
+          >
+            <div
+              class="mr-2"
+            >
+              <div
+                class="wrapper"
+              >
+                <button
+                  class="font-weight-bold text-uppercase position-relative btn btn-block btn-outline-secondary"
+                  data-testid="openModalBtn"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-center"
+                  >
+                    <svg
+                      class="mr-2"
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <line
+                        x1="12"
+                        x2="12"
+                        y1="5"
+                        y2="19"
+                      />
+                      <line
+                        x1="5"
+                        x2="19"
+                        y1="12"
+                        y2="12"
+                      />
+                    </svg>
+                    <span>
+                      Info
+                    </span>
+                  </div>
+                </button>
+                <div
+                  class="modal modal"
+                  role="dialog"
+                >
+                  <div
+                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+                  >
+                    <div
+                      class="modal-content content undefined"
+                    >
+                      <div
+                        class="modal-header header"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <div
+                            class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
+                          >
+                            <img
+                              alt="Pretty name"
+                              class="image"
+                              src="/image/imageId"
+                              srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+                            />
+                          </div>
+                          <div
+                            class="ml-3"
+                          >
+                            <div
+                              class="h5 mb-0"
+                            >
+                              Pretty name
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="close"
+                          data-testid="closeModalBtn"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body p-4 h-100 d-flex flex-column"
+                      />
+                      <div
+                        class="modal-footer p-3"
+                      >
+                        <button
+                          class="btn btn-secondary"
+                          data-testid="closeModalFooterBtn"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="modalInstallationWrapper"
+              >
+                <button
+                  class="font-weight-bold text-uppercase position-relative btn btn-block btn-outline-secondary"
+                  data-testid="openModalBtn"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center justify-content-center"
+                  >
+                    <svg
+                      class="mr-2"
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                      />
+                      <polyline
+                        points="7 10 12 15 17 10"
+                      />
+                      <line
+                        x1="12"
+                        x2="12"
+                        y1="15"
+                        y2="3"
+                      />
+                    </svg>
+                    <span>
+                      Install
+                    </span>
+                  </div>
+                </button>
+                <div
+                  class="modal modal"
+                  role="dialog"
+                >
+                  <div
+                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+                  >
+                    <div
+                      class="modal-content content undefined"
+                    >
+                      <div
+                        class="modal-header header"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <div
+                            class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
+                          >
+                            <img
+                              alt="Pretty name"
+                              class="image"
+                              src="/image/imageId"
+                              srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+                            />
+                          </div>
+                          <div
+                            class="ml-3"
+                          >
+                            <div
+                              class="h5 mb-0"
+                            >
+                              Pretty name
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          class="close"
+                          data-testid="closeModalBtn"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body p-4 h-100 d-flex flex-column"
+                      />
+                      <div
+                        class="modal-footer p-3"
+                      >
+                        <button
+                          class="btn btn-secondary"
+                          data-testid="closeModalFooterBtn"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-3 position-relative"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="mainContent"
+        >
+          <div
+            class="alert alert-primary ml-auto mr-auto my-5 w-75 text-center p-4 p-sm-5 border"
+            data-testid="noData"
+          >
+            <div
+              class="h4"
+            >
+              No README file available for this package
+            </div>
+          </div>
+        </div>
+        <div
+          class="col col-auto pl-5 pb-4 d-none d-md-block"
+        >
+          <div
+            class="modalInstallationWrapper"
+          >
+            <button
+              class="font-weight-bold text-uppercase position-relative btn btn-block btn-primary"
+              data-testid="openModalBtn"
+              type="button"
+            >
+              <div
+                class="d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  Install
+                </span>
+              </div>
+            </button>
+            <div
+              class="modal modal"
+              role="dialog"
+            >
+              <div
+                class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+              >
+                <div
+                  class="modal-content content undefined"
+                >
+                  <div
+                    class="modal-header header"
+                  >
+                    <div
+                      class="d-flex align-items-center"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
+                      >
+                        <img
+                          alt="Pretty name"
+                          class="image"
+                          src="/image/imageId"
+                          srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+                        />
+                      </div>
+                      <div
+                        class="ml-3"
+                      >
+                        <div
+                          class="h5 mb-0"
+                        >
+                          Pretty name
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      class="close"
+                      data-testid="closeModalBtn"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body p-4 h-100 d-flex flex-column"
+                  />
+                  <div
+                    class="modal-footer p-3"
+                  >
+                    <button
+                      class="btn btn-secondary"
+                      data-testid="closeModalFooterBtn"
+                      type="button"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card shadow-sm position-relative info"
+          >
+            <div
+              class="card-body"
+            >
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Application version
+                </small>
+              </div>
+              <p
+                class="text-truncate"
+                data-testid="appVersion"
+              >
+                1.0.0
+              </p>
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Chart Versions
+                </small>
+              </div>
+              <p
+                data-testid="chartVersions"
+              >
+                -
+              </p>
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Maintainers
+                </small>
+              </div>
+              <p
+                data-testid="maintainers"
+              >
+                -
+              </p>
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Keywords
+                </small>
+              </div>
+              <p
+                data-testid="keywords"
+              >
+                -
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

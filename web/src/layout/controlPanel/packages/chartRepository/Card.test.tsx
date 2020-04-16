@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import moment from 'moment';
 import React from 'react';
 
@@ -70,7 +70,7 @@ describe('Chart Repository Card - packages section', () => {
       const btn = getByTestId('deleteChartRepoBtn');
       fireEvent.click(btn);
 
-      await wait();
+      await waitFor(() => {});
 
       expect(API.deleteChartRepository).toHaveBeenCalledTimes(1);
     });

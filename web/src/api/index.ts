@@ -174,7 +174,7 @@ export const API = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `code=${code}`,
+      body: `code=${encodeURIComponent(code)}`,
     });
   },
 
@@ -184,7 +184,7 @@ export const API = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `email=${user.email}&password=${user.password}`,
+      body: `email=${encodeURIComponent(user.email)}&password=${encodeURIComponent(user.password)}`,
     });
   },
 
@@ -319,7 +319,7 @@ export const API = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `old=${oldPassword}&new=${newPassword}`,
+      body: `old=${encodeURIComponent(oldPassword)}&new=${encodeURIComponent(newPassword)}`,
     });
   },
 

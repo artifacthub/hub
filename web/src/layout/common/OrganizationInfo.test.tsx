@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -62,7 +62,7 @@ describe('OrganizationInfo', () => {
     fireEvent.mouseEnter(getByTestId('orgLink'));
 
     expect(API.getOrganization).toHaveBeenCalledTimes(1);
-    await wait();
+    await waitFor(() => {});
 
     expect(getByTestId('externalBtn')).toBeInTheDocument();
     expect(getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
