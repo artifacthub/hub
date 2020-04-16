@@ -31,7 +31,7 @@ const defaultProps = {
   setIsLoadingPackage: mockIsLoading,
   repoName: 'repoName',
   packageName: 'packageName',
-  searchUrlReferer: null,
+  searchUrlReferer: undefined,
 };
 
 describe('Package index', () => {
@@ -173,7 +173,7 @@ describe('Package index', () => {
 
       const noData = screen.getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(noData.textContent).toBe('No README file available for this package');
+      expect(noData).toHaveTextContent('No README file available for this package');
       expect(screen.queryByTestId('readme')).toBeNull();
 
       await wait();
@@ -192,7 +192,7 @@ describe('Package index', () => {
       const readme = await waitForElement(() => screen.queryByTestId('readme'));
 
       expect(readme).toBeInTheDocument();
-      expect(readme?.textContent).toBe(mockPackage.readme);
+      expect(readme).toHaveTextContent(mockPackage.readme!);
 
       await wait();
     });

@@ -1,0 +1,96 @@
+[
+  {
+    "packageId": "5882defb-5581-44ac-81a0-8d509ee5a0d8",
+    "kind": 0,
+    "name": "airflow",
+    "normalizedName": "airflow",
+    "displayName": null,
+    "description": "Airflow is a platform to programmatically author, schedule and monitor workflows",
+    "logoImageId": "48066829-7617-43ca-a37f-78d1e7ad1e31",
+    "deprecated": false,
+    "stars": 1,
+    "version": "6.6.0",
+    "appVersion": "1.10.4",
+    "userAlias": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "chartRepository": {
+      "name": "stable",
+      "displayName": "Stable"
+    }
+  },
+  {
+    "packageId": "b699e3fd-a91f-49e1-aab3-9e915e199195",
+    "kind": 0,
+    "name": "cassandra",
+    "normalizedName": "cassandra",
+    "displayName": null,
+    "description": "Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.",
+    "logoImageId": "4bb9e777-3772-4ee5-a6a8-9e8aa1421c49",
+    "deprecated": false,
+    "stars": 1,
+    "version": "0.15.0",
+    "appVersion": "3.11.6",
+    "userAlias": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "chartRepository": {
+      "name": "incubator",
+      "displayName": "Incubator"
+    }
+  },
+  {
+    "packageId": "d58d7886-7d41-45a8-afd4-1bd59b7814ff",
+    "kind": 0,
+    "name": "prometheus",
+    "normalizedName": "prometheus",
+    "displayName": null,
+    "description": "Prometheus is a monitoring system and time series database.",
+    "logoImageId": "97c12b63-0aba-4510-b648-e37c4f5cf15b",
+    "deprecated": false,
+    "stars": 2,
+    "version": "11.1.0",
+    "appVersion": "2.16.0",
+    "userAlias": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "chartRepository": {
+      "name": "stable",
+      "displayName": "Stable"
+    }
+  },
+  {
+    "packageId": "96441d5e-03f1-4063-b3a7-0a9ce9545499",
+    "kind": 1,
+    "name": "Traefik",
+    "normalizedName": "traefik",
+    "displayName": null,
+    "description": "Falco rules for securing Traefik",
+    "logoImageId": "e9b2caa9-d6ce-446d-abaa-64be6b063f54",
+    "deprecated": false,
+    "stars": 2,
+    "version": "1.0.0",
+    "appVersion": null,
+    "userAlias": null,
+    "organizationName": "falco",
+    "organizationDisplayName": "Falco",
+    "chartRepository": null
+  },
+  {
+    "packageId": "39d9fb76-b64d-4ac4-b12a-a3e5a068c10d",
+    "kind": 2,
+    "name": "Trusted Registry Images",
+    "normalizedName": "trusted-registry-images",
+    "displayName": null,
+    "description": "Open Policy Agent policy for running only images from a trusted repository",
+    "logoImageId": "0a54a7b4-2151-4eb7-af8d-55debc351c35",
+    "deprecated": false,
+    "stars": 2,
+    "version": "0.1.0",
+    "appVersion": null,
+    "userAlias": null,
+    "organizationName": "falco",
+    "organizationDisplayName": "Falco",
+    "chartRepository": null
+  }
+]

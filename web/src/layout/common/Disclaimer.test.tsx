@@ -11,7 +11,7 @@ describe('Disclaimer', () => {
 
   it('renders proper content', () => {
     const { getByRole } = render(<Disclaimer />);
-    expect(getByRole('alert').textContent).toBe('This is pre-alpha software and not for production use×');
+    expect(getByRole('alert')).toHaveTextContent('This is pre-alpha software and not for production use×');
   });
 
   it('hides disclaimer to click close button', () => {

@@ -43,7 +43,7 @@ describe('Checkbox', () => {
     expect(checkbox).toBeChecked();
     const label = getByTestId('checkboxLabel');
     expect(label).toBeInTheDocument();
-    expect(label.textContent).toBe(`${props.label}(${props.legend})`);
+    expect(label).toHaveTextContent(`${props.label}(${props.legend})`);
   });
 
   it('calls onChange to click checkbox label', () => {

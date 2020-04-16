@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StarredPackagesView renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-column flex-grow-1 position-relative"
+  >
+    <div
+      class="text-center p-5 wrapper undefined"
+    >
+      <div
+        class="spinner-border text-primary spinner undefined"
+        role="status"
+      >
+        <span
+          class="sr-only"
+        >
+          Loading...
+        </span>
+      </div>
+    </div>
+    <main
+      class="container py-5"
+      role="main"
+    >
+      <div
+        class="flex-grow-1 position-relative"
+      >
+        <div
+          class="h4 pb-0"
+        >
+          <div
+            class="d-flex align-items-center justify-content-center"
+          >
+            <div>
+              Your starred packages
+            </div>
+          </div>
+        </div>
+        <div
+          class="mx-auto mt-4 wrapper"
+        />
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;
