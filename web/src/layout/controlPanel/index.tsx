@@ -121,10 +121,10 @@ const ControlPanelView = (props: Props) => {
       <div className={`pt-3 position-relative ${styles.navWrapper}`}>
         <div className="container">
           <div className="d-flex flex-row justify-content-between align-items-end">
-            <ul className="nav nav-tabs">
+            <ul className="nav nav-tabs" role="tablist">
               {navSections[context].map((section: Section) => {
                 return (
-                  <li key={`section_${section.name}`} className="nav-item mx-1">
+                  <li key={`section_${section.name}`} className="nav-item mx-1" role="tab">
                     <button
                       type="button"
                       className={classnames(

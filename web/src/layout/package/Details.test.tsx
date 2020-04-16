@@ -52,7 +52,7 @@ describe('Details', () => {
 
       const appVersion = queryByTestId('appVersion');
       expect(appVersion).toBeInTheDocument();
-      expect(appVersion?.textContent).toBe('-');
+      expect(appVersion).toHaveTextContent('-');
     });
   });
 
@@ -63,7 +63,7 @@ describe('Details', () => {
 
       const keywords = queryByTestId('keywords');
       expect(keywords?.children).toHaveLength(mockPackage.keywords!.length);
-      expect(keywords?.children[0].textContent).toBe(mockPackage.keywords![0]);
+      expect(keywords?.children[0]).toHaveTextContent(mockPackage.keywords![0]);
     });
 
     it('renders placeholder when no keywords', () => {
@@ -72,7 +72,7 @@ describe('Details', () => {
 
       const keywords = queryByTestId('keywords');
       expect(keywords).toBeInTheDocument();
-      expect(keywords?.textContent).toBe('-');
+      expect(keywords).toHaveTextContent('-');
     });
 
     it('calls history push on keyword click', () => {
@@ -113,7 +113,7 @@ describe('Details', () => {
 
       const maintainers = queryByTestId('maintainers');
       expect(maintainers).toBeInTheDocument();
-      expect(maintainers?.textContent).toBe('-');
+      expect(maintainers).toHaveTextContent('-');
     });
   });
 
@@ -144,7 +144,7 @@ describe('Details', () => {
 
       const chartVersions = queryByTestId('chartVersions');
       expect(chartVersions).toBeInTheDocument();
-      expect(chartVersions?.textContent).toBe('-');
+      expect(chartVersions).toHaveTextContent('-');
     });
   });
 });

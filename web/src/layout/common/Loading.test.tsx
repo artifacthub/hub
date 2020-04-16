@@ -13,6 +13,6 @@ describe('Loading', () => {
     const { getByRole } = render(<Loading spinnerClassName="test" />);
     expect(getByRole('status')).toBeInTheDocument();
     expect(getByRole('status')).toHaveClass('test');
-    expect(getByRole('status').textContent).toBe('Loading...');
+    expect(getByRole('status')).toHaveTextContent('Loading...');
   });
 });

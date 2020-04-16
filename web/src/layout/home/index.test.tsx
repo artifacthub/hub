@@ -16,6 +16,7 @@ const getMockStats = (fixtureId: string): Stats => {
 
 const defaultProps = {
   isSearching: true,
+  onOauthFailed: false,
 };
 
 describe('Package index', () => {
@@ -120,7 +121,7 @@ describe('Package index', () => {
       const CNCFInfo = await waitForElement(() => screen.getByTestId('CNCFInfo'));
 
       expect(CNCFInfo).toBeInTheDocument();
-      expect(CNCFInfo.textContent).toBe(
+      expect(CNCFInfo).toHaveTextContent(
         'Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.'
       );
       await wait();

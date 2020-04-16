@@ -104,7 +104,7 @@ describe('Search index', () => {
       const results = await waitForElement(() => screen.getByTestId('resultsText'));
 
       expect(results).toBeInTheDocument();
-      expect(results.textContent).toBe('1 - 7 of 7 results for "test"');
+      expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
       await wait();
     });
   });
@@ -138,7 +138,7 @@ describe('Search index', () => {
       const noData = await waitForElement(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(noData.textContent).toBe(
+      expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
 
