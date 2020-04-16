@@ -163,7 +163,11 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
                 default: 'This field is required',
                 customError: 'Username not available',
               }}
-              checkAvailability={ResourceKind.userAlias}
+              checkAvailability={{
+                isAvailable: true,
+                resourceKind: ResourceKind.userAlias,
+                excluded: [],
+              }}
               setValidationStatus={setIsValidatingField}
               validateOnBlur
               autoComplete="username"
