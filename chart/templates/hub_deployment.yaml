@@ -13,6 +13,10 @@ spec:
       {{- include "chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8001"
       labels:
         app.kubernetes.io/component: hub
         {{- include "chart.selectorLabels" . | nindent 8 }}
