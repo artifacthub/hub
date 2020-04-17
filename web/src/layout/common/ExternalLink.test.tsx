@@ -11,7 +11,7 @@ const defaultProps = {
 const openMock = jest.fn();
 window.open = openMock;
 
-describe('Disclaimer', () => {
+describe('External link', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
