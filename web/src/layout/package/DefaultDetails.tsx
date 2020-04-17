@@ -27,7 +27,7 @@ const DefaultDetails = (props: Props) => {
       <Links links={props.package.links} />
 
       <SmallTitle text="Keywords" />
-      <Keywords keywords={props.package.keywords} />
+      <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
     </>
   );
 };

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Keywords creates snapshot 1`] = `
+<DocumentFragment>
+  <span
+    data-testid="keywords"
+  >
+    <button
+      class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+      data-testid="keywordBtn"
+    >
+      key1
+    </button>
+    <button
+      class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+      data-testid="keywordBtn"
+    >
+      key2
+    </button>
+    <button
+      class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+      data-testid="keywordBtn"
+    >
+      key3
+    </button>
+  </span>
+</DocumentFragment>
+`;

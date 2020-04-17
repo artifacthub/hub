@@ -27,14 +27,6 @@ const ICONS: IconTypeList = {
 };
 
 const Links = (props: Props) => {
-  const linksList = props.links || [];
-  if (!isUndefined(props.homeUrl) && !isNull(props.homeUrl)) {
-    linksList.push({
-      name: 'Homepage',
-      url: props.homeUrl,
-    });
-  }
-
   const getIconLink = (name: string): JSX.Element => {
     let Icon = ICONS.default;
     if (!isUndefined(name) && name.toLowerCase() in ICONS) {
@@ -43,27 +35,46 @@ const Links = (props: Props) => {
     return <Icon className="text-muted mr-2" />;
   };
 
-  if (linksList.length === 0) return null;
+  if (
+    (isUndefined(props.links) || isNull(props.links) || props.links.length === 0) &&
+    (isNull(props.homeUrl) || isUndefined(props.homeUrl))
+  )
+    return null;
 
   return (
     <>
       <SmallTitle text="Links" />
-      {linksList.map((link: PackageLink) => (
-        <ExternalLink
-          key={`link_${link.name}`}
-          data-testid="homeUrl"
-          href={link.url}
-          className="text-primary d-flex align-items-center mb-3 text-capitalize"
-        >
+      {props.homeUrl && (
+        <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-center mb-3 text-capitalize">
           <>
-            {getIconLink(link.name)}
-            {link.name}
+            {getIconLink('homepage')}
+            Homepage
             <span className={styles.smallIcon}>
               <FiExternalLink className="ml-1" />
             </span>
           </>
         </ExternalLink>
-      ))}
+      )}
+
+      {!isNull(props.links) && !isUndefined(props.links) && (
+        <>
+          {props.links.map((link: PackageLink) => (
+            <ExternalLink
+              key={`link_${link.name}`}
+              href={link.url}
+              className="text-primary d-flex align-items-center mb-3 text-capitalize"
+            >
+              <>
+                {getIconLink(link.name)}
+                {link.name}
+                <span className={styles.smallIcon}>
+                  <FiExternalLink className="ml-1" />
+                </span>
+              </>
+            </ExternalLink>
+          ))}
+        </>
+      )}
     </>
   );
 };

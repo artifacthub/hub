@@ -44,7 +44,7 @@ const Version = (props: Props) => {
         >
           {props.version}
 
-          {isLoading && <span className="spinner-border spinner-border-sm ml-2" />}
+          {isLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" />}
         </button>
       )}
     </div>
