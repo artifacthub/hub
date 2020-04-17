@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -34,7 +34,7 @@ describe('Package index', () => {
       </Router>
     );
     expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {});
   });
 
   describe('Render', () => {
@@ -48,7 +48,7 @@ describe('Package index', () => {
         </Router>
       );
       expect(API.getStats).toHaveBeenCalledTimes(1);
-      await wait();
+      await waitFor(() => {});
     });
 
     it('removes loading spinner after getting package', async () => {
@@ -68,7 +68,7 @@ describe('Package index', () => {
       const spinner = await waitForElementToBeRemoved(() => screen.getAllByRole('status'));
 
       expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders dash symbol when results are 0', async () => {
@@ -85,10 +85,10 @@ describe('Package index', () => {
         </Router>
       );
 
-      const emptyStats = await waitForElement(() => screen.getAllByText('-'));
+      const emptyStats = await waitFor(() => screen.getAllByText('-'));
 
       expect(emptyStats).toHaveLength(2);
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders project definition', async () => {
@@ -101,11 +101,11 @@ describe('Package index', () => {
         </Router>
       );
 
-      const heading = await waitForElement(() => screen.getByRole('heading'));
+      const heading = await waitFor(() => screen.getByRole('heading'));
 
       expect(heading).toBeInTheDocument();
       expect(heading.innerHTML).toBe('Find, install and publish<br>Kubernetes packages');
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders CNCF info', async () => {
@@ -118,13 +118,13 @@ describe('Package index', () => {
         </Router>
       );
 
-      const CNCFInfo = await waitForElement(() => screen.getByTestId('CNCFInfo'));
+      const CNCFInfo = await waitFor(() => screen.getByTestId('CNCFInfo'));
 
       expect(CNCFInfo).toBeInTheDocument();
       expect(CNCFInfo).toHaveTextContent(
         'Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.'
       );
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

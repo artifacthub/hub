@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -40,8 +40,9 @@ describe('Organization settings index', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -56,8 +57,10 @@ describe('Organization settings index', () => {
           </Router>
         </AppCtx.Provider>
       );
-      expect(API.getOrganization).toHaveBeenCalledTimes(1);
-      await wait();
+
+      await waitFor(() => {
+        expect(API.getOrganization).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('removes loading spinner after getting organization details', async () => {
@@ -75,7 +78,7 @@ describe('Organization settings index', () => {
       const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays no data component when no organization details', async () => {
@@ -90,12 +93,12 @@ describe('Organization settings index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      await waitFor(() => {
+        const noData = screen.getByTestId('noData');
 
-      expect(noData).toBeInTheDocument();
-      expect(screen.getByText('Sorry, the information for this organization is missing.')).toBeInTheDocument();
-
-      await wait();
+        expect(noData).toBeInTheDocument();
+        expect(screen.getByText('Sorry, the information for this organization is missing.')).toBeInTheDocument();
+      });
     });
 
     it('renders organization details in form', async () => {
@@ -110,16 +113,18 @@ describe('Organization settings index', () => {
         </AppCtx.Provider>
       );
 
-      const form = await waitForElement(() => screen.getByTestId('organizationForm'));
+      await waitFor(() => {
+        const form = screen.getByTestId('organizationForm');
 
-      expect(form).toBeInTheDocument();
-      expect(screen.getByAltText('Logo')).toBeInTheDocument();
-      expect(screen.getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
-      expect(screen.getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
-      expect(screen.getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
-      expect(screen.getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+        expect(form).toBeInTheDocument();
+        expect(screen.getByAltText('Logo')).toBeInTheDocument();
+        expect(screen.getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
+        expect(screen.getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
+        expect(screen.getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
+        expect(screen.getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+      });
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

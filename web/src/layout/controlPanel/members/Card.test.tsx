@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { API } from '../../../api';
@@ -87,7 +87,7 @@ describe('Member Card - members section', () => {
       const btn = getByTestId('leaveOrRemoveBtn');
       fireEvent.click(btn);
 
-      await wait();
+      await waitFor(() => {});
       expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
       expect(API.deleteOrganizationMember).toHaveBeenCalledWith(mockCtx.org.name, memberMock.alias);
     });
@@ -115,7 +115,7 @@ describe('Member Card - members section', () => {
       const btn = getByTestId('leaveOrRemoveBtn');
       fireEvent.click(btn);
 
-      await wait();
+      await waitFor(() => {});
       expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
       expect(API.deleteOrganizationMember).toHaveBeenCalledWith(mockCtx.org.name, mockCtx.user.alias);
     });

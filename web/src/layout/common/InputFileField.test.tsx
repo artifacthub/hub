@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -44,7 +44,7 @@ describe('InputFileField', () => {
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
 
-    await wait(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
     expect(onImageChangeMock).toHaveBeenCalledTimes(1);
     expect(onImageChangeMock).toHaveBeenCalledWith('16782');
@@ -57,7 +57,7 @@ describe('InputFileField', () => {
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
 
-    await wait(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
     expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
     expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
@@ -73,7 +73,7 @@ describe('InputFileField', () => {
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
     fireEvent.change(input, { target: { files: [file] } });
 
-    await wait(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(API.saveImage).toHaveBeenCalledTimes(1));
 
     expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
   });
@@ -85,7 +85,7 @@ describe('InputFileField', () => {
     const file = new File(['(text)'], 'text.txt', { type: 'text/text' });
     fireEvent.change(input, { target: { files: [file] } });
 
-    await wait(() => expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1));
     expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
       type: 'danger',
       message: 'Sorry, only images are accepted',

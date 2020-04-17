@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -99,7 +99,7 @@ describe('InputField', () => {
       input.blur();
       expect(API.checkAvailability).toBeCalledTimes(1);
       expect(input).toBeValid();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('value is taken', async () => {
@@ -125,7 +125,7 @@ describe('InputField', () => {
 
       expect(API.checkAvailability).toBeCalledTimes(1);
 
-      const invalidText = await waitForElement(() => screen.getByText(defaultProps.invalidText.customError));
+      const invalidText = await waitFor(() => screen.getByText(defaultProps.invalidText.customError));
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
@@ -153,7 +153,7 @@ describe('InputField', () => {
       input.blur();
       expect(API.checkAvailability).toBeCalledTimes(1);
       expect(input).toBeValid();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('resource is not valid', async () => {
@@ -179,7 +179,7 @@ describe('InputField', () => {
 
       expect(API.checkAvailability).toBeCalledTimes(1);
 
-      const invalidText = await waitForElement(() => screen.getByText(defaultProps.invalidText.customError));
+      const invalidText = await waitFor(() => screen.getByText(defaultProps.invalidText.customError));
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });

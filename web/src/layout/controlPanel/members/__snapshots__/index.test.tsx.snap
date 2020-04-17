@@ -85,3 +85,380 @@ exports[`Members section index creates snapshot 1`] = `
   </main>
 </DocumentFragment>
 `;
+
+exports[`Members section index creates snapshot 2`] = `
+<DocumentFragment>
+  <main
+    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    role="main"
+  >
+    <div
+      class="flex-grow-1 position-relative"
+    >
+      <div>
+        <div
+          class="d-flex flex-row align-items-center justify-content-between"
+        >
+          <div
+            class="h3 pb-0"
+          >
+            Members
+          </div>
+          <div>
+            <button
+              class="btn btn-secondary btn-sm text-uppercase"
+              data-testid="addMemberBtn"
+            >
+              <div
+                class="d-flex flex-row align-items-center justify-content-center"
+              >
+                <svg
+                  class="d-inline d-md-none"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <svg
+                  class="d-none d-md-inline mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                  />
+                </svg>
+                <span
+                  class="d-none d-md-inline"
+                >
+                  Invite
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-4"
+      >
+        <div
+          class="list-group mt-4"
+        >
+          <li
+            class="list-group-item list-group-item-action listItem"
+            data-testid="memberCard"
+          >
+            <div
+              class="d-flex flex-row w-100 justify-content-between align-items-start"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper"
+                >
+                  <svg
+                    class="image"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h5
+                    class="mb-1"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-start"
+                    >
+                      Test 1
+                    </div>
+                  </h5>
+                  <div
+                    class="h6 text-muted mr-1 font-italic"
+                  >
+                    test
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-nowrap position-relative buttons"
+              >
+                <button
+                  class="btn btn-sm btn-link text-secondary text-center btnAction"
+                  data-testid="leaveOrRemoveDropdownBtn"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center"
+                  >
+                    <svg
+                      class="mr-sm-2 btnIcon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                      />
+                    </svg>
+                    <span
+                      class="d-none d-sm-inline"
+                    >
+                      Leave
+                    </span>
+                  </div>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-right p-0 dropdown"
+                >
+                  <div
+                    class="arrow arrow"
+                  />
+                  <p
+                    class="p-3 text-center mb-0"
+                  >
+                    Are you sure you want to leave this organization?
+                  </p>
+                  <div
+                    class="dropdown-divider m-0"
+                  />
+                  <div
+                    class="d-flex flex-row justify-content-between p-3"
+                  >
+                    <button
+                      class="btn btn-sm btn-light text-uppercase btnLight"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="mr-2"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"
+                          />
+                        </svg>
+                        <span>
+                          Cancel
+                        </span>
+                      </div>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      data-testid="leaveOrRemoveBtn"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center text-uppercase"
+                      >
+                        <svg
+                          class="mr-2 btnLeaveIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                          />
+                        </svg>
+                        <span>
+                          Leave
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            class="list-group-item list-group-item-action listItem"
+            data-testid="memberCard"
+          >
+            <div
+              class="d-flex flex-row w-100 justify-content-between align-items-start"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper"
+                >
+                  <svg
+                    class="image"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h5
+                    class="mb-1"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-start"
+                    >
+                      Test 2
+                    </div>
+                  </h5>
+                  <div
+                    class="h6 text-muted mr-1 font-italic"
+                  >
+                    test1
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex flex-nowrap position-relative buttons"
+              >
+                <button
+                  class="btn btn-sm btn-link text-secondary text-center btnAction"
+                  data-testid="leaveOrRemoveDropdownBtn"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center"
+                  >
+                    <svg
+                      baseProfile="tiny"
+                      class="mr-sm-2 btnIcon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      version="1.2"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 4c-4.419 0-8 3.582-8 8s3.581 8 8 8 8-3.582 8-8-3.581-8-8-8zm3.707 10.293c.391.391.391 1.023 0 1.414-.195.195-.451.293-.707.293s-.512-.098-.707-.293l-2.293-2.293-2.293 2.293c-.195.195-.451.293-.707.293s-.512-.098-.707-.293c-.391-.391-.391-1.023 0-1.414l2.293-2.293-2.293-2.293c-.391-.391-.391-1.023 0-1.414s1.023-.391 1.414 0l2.293 2.293 2.293-2.293c.391-.391 1.023-.391 1.414 0s.391 1.023 0 1.414l-2.293 2.293 2.293 2.293z"
+                      />
+                    </svg>
+                    <span
+                      class="d-none d-sm-inline"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-right p-0 dropdown"
+                >
+                  <div
+                    class="arrow arrow"
+                  />
+                  <p
+                    class="p-3 text-center mb-0"
+                  >
+                    Are you sure you want to remove this member from this organization?
+                  </p>
+                  <div
+                    class="dropdown-divider m-0"
+                  />
+                  <div
+                    class="d-flex flex-row justify-content-between p-3"
+                  >
+                    <button
+                      class="btn btn-sm btn-light text-uppercase btnLight"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="mr-2"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"
+                          />
+                        </svg>
+                        <span>
+                          Cancel
+                        </span>
+                      </div>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-danger"
+                      data-testid="leaveOrRemoveBtn"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center text-uppercase"
+                      >
+                        <svg
+                          class="mr-2 btnLeaveIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                          />
+                        </svg>
+                        <span>
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

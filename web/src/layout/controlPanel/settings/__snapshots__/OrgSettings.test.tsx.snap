@@ -36,3 +36,166 @@ exports[`Organization settings index creates snapshot 1`] = `
   </main>
 </DocumentFragment>
 `;
+
+exports[`Organization settings index creates snapshot 2`] = `
+<DocumentFragment>
+  <main
+    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    role="main"
+  >
+    <div
+      class="flex-grow-1 position-relative"
+    >
+      <div
+        class="h3 pb-0 text-center"
+      >
+        Organization details
+      </div>
+      <div
+        class="mx-auto mt-5 form"
+      >
+        <form
+          autocomplete="on"
+          class="w-100 needs-validation"
+          data-testid="organizationForm"
+          novalidate=""
+        >
+          <div
+            class="form-group mb-4 undefined"
+          >
+            <div
+              class="d-flex flex-column"
+            >
+              <label
+                for="logo"
+              >
+                Logo
+              </label>
+              <div
+                class="position-relative"
+              >
+                <button
+                  class="btn p-0 overflow-hidden btn"
+                  data-testid="inputFileBtn"
+                  type="button"
+                >
+                  <img
+                    alt="Logo"
+                    class="image"
+                    src="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2"
+                    srcset="/image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@1x 1x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@2x 2x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@3x 3x, /image/f0552fa9-e03d-47cf-90cd-b9b0b6ba19e2@4x 4x"
+                  />
+                </button>
+              </div>
+            </div>
+            <input
+              class="d-none"
+              data-testid="inputFile"
+              id="logo"
+              name="logo"
+              type="file"
+            />
+          </div>
+          <div
+            class="form-group mb-4 position-relative undefined"
+          >
+            <label
+              for="name"
+            >
+              Name
+              <small
+                class="ml-1 font-italic"
+              >
+                (Required)
+              </small>
+            </label>
+            <input
+              autocomplete="off"
+              class="form-control"
+              data-testid="nameInput"
+              name="name"
+              pattern="[a-z0-9-]+"
+              readonly=""
+              required=""
+              type="text"
+              value="test"
+            />
+            <div
+              class="invalid-feedback mt-0 inputFeedback"
+            >
+              This field is required
+            </div>
+          </div>
+          <div
+            class="form-group mb-4 position-relative undefined"
+          >
+            <label
+              for="displayName"
+            >
+              Display name
+            </label>
+            <input
+              class="form-control"
+              data-testid="displayNameInput"
+              name="displayName"
+              type="text"
+              value="Test"
+            />
+            <div
+              class="invalid-feedback mt-0 inputFeedback"
+            />
+          </div>
+          <div
+            class="form-group mb-4 position-relative undefined"
+          >
+            <label
+              for="homeUrl"
+            >
+              Home URL
+            </label>
+            <input
+              class="form-control"
+              data-testid="homeUrlInput"
+              name="homeUrl"
+              type="url"
+              value="https://test.org"
+            />
+            <div
+              class="invalid-feedback mt-0 inputFeedback"
+            >
+              Please enter a valid url
+            </div>
+          </div>
+          <div
+            class="form-group"
+          >
+            <label
+              for="description"
+            >
+              Description
+            </label>
+            <textarea
+              class="form-control"
+              id="description"
+              name="description"
+            >
+              Lorem ipsum...
+            </textarea>
+          </div>
+        </form>
+        <div
+          class="text-right mt-4"
+        >
+          <button
+            class="btn btn-secondary"
+            data-testid="updateOrgBtn"
+            type="button"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

@@ -114,3 +114,268 @@ exports[`Chart repository index creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`Chart repository index creates snapshot 2`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="d-flex flex-row align-items-center justify-content-between"
+    >
+      <div
+        class="h3 pb-0"
+      >
+        Chart repositories
+      </div>
+      <div>
+        <button
+          class="btn btn-secondary btn-sm text-uppercase mr-2 btnAction"
+          data-testid="refreshRepoBtn"
+        >
+          <div
+            class="d-flex flex-row align-items-center justify-content-center"
+          >
+            <svg
+              class="d-inline d-md-none"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 388c-72.597 0-132-59.405-132-132 0-72.601 59.403-132 132-132 36.3 0 69.299 15.4 92.406 39.601L278 234h154V80l-51.698 51.702C348.406 99.798 304.406 80 256 80c-96.797 0-176 79.203-176 176s78.094 176 176 176c81.045 0 148.287-54.134 169.401-128H378.85c-18.745 49.561-67.138 84-122.85 84z"
+              />
+            </svg>
+            <svg
+              class="d-none d-md-inline mr-2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 48C141.6 48 48 141.6 48 256s93.6 208 208 208 208-93.6 208-208S370.4 48 256 48zm112 194h-98l44.8-44.8C300.1 181.8 279.1 172 256 172c-46.2 0-84 37.8-84 84s37.8 84 84 84c34.9 0 65.3-21.2 77.6-52h29.8c-13.9 46.3-56.3 80-107.4 80-62.3 0-112-50.4-112-112s50.4-112 112-112c30.8 0 58.8 12.6 79.1 32.9L368 144v98z"
+              />
+            </svg>
+            <span
+              class="d-none d-md-inline"
+            >
+              Refresh
+            </span>
+          </div>
+        </button>
+        <button
+          class="btn btn-secondary btn-sm text-uppercase btnAction"
+        >
+          <div
+            class="d-flex flex-row align-items-center justify-content-center"
+          >
+            <svg
+              class="d-inline d-md-none"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            <svg
+              class="d-none d-md-inline mr-2"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+              />
+            </svg>
+            <span
+              class="d-none d-md-inline"
+            >
+              Add
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="list-group my-4"
+    data-testid="chartRepoList"
+  >
+    <li
+      class="list-group-item list-group-item-action listItem"
+      data-testid="chartRepoCard"
+    >
+      <div
+        class="d-flex flex-row w-100 justify-content-between"
+      >
+        <h5
+          class="mb-1"
+        >
+          test
+        </h5>
+        <div
+          class="d-flex flex-nowrap position-relative buttons"
+        >
+          <button
+            class="btn btn-sm btn-link text-secondary text-center btnAction"
+            data-testid="updateChartRepoBtn"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                class="mr-sm-2 btnIcon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                />
+              </svg>
+              <span
+                class="d-none d-sm-inline"
+              >
+                Edit
+              </span>
+            </div>
+          </button>
+          <div
+            class="mx-2 my-auto d-none d-sm-inline separator"
+          />
+          <button
+            class="btn btn-sm btn-link text-secondary text-center btnAction"
+            data-testid="deleteChartRepoDropdownBtn"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
+            >
+              <svg
+                class="mr-sm-2 btnIcon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                />
+              </svg>
+              <span
+                class="d-none d-sm-inline"
+              >
+                Delete
+              </span>
+            </div>
+          </button>
+          <div
+            class="dropdown-menu dropdown-menu-right p-0 dropdown"
+          >
+            <div
+              class="arrow arrow"
+            />
+            <p
+              class="p-3 text-center mb-0"
+            >
+              If you delete this chart repository all packages belonging to it will be deleted
+            </p>
+            <div
+              class="dropdown-divider m-0"
+            />
+            <div
+              class="d-flex flex-row justify-content-between p-3"
+            >
+              <button
+                class="btn btn-sm btn-light text-uppercase btnLight"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"
+                    />
+                  </svg>
+                  <span>
+                    Cancel
+                  </span>
+                </div>
+              </button>
+              <button
+                class="btn btn-sm btn-danger"
+                data-testid="deleteChartRepoBtn"
+              >
+                <div
+                  class="d-flex flex-row align-items-center text-uppercase"
+                >
+                  <svg
+                    class="mr-2 btnDeleteIcon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                    />
+                  </svg>
+                  <span>
+                    Delete
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-2 text-truncate"
+      >
+        <small
+          class="text-muted text-uppercase mr-1"
+        >
+          Url: 
+        </small>
+        <small>
+          http://test.com
+        </small>
+      </div>
+    </li>
+  </div>
+</DocumentFragment>
+`;

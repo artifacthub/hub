@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -41,7 +41,7 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
     expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {});
   });
 
   it('calls history replace when section is undefined', async () => {
@@ -54,11 +54,11 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitForElement(() => screen.getAllByRole('main'));
+    await waitFor(() => screen.getAllByRole('main'));
     expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
     expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/packages');
 
-    await wait();
+    await waitFor(() => {});
   });
 
   it('renders 3 sections on user context', async () => {
@@ -71,14 +71,14 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitForElement(() => screen.getAllByRole('main'));
+    await waitFor(() => screen.getAllByRole('main'));
     const tabs = screen.getAllByRole('tab');
     expect(screen.getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
     expect(tabs[0]).toHaveTextContent('Packages');
     expect(tabs[1]).toHaveTextContent('Organizations');
     expect(tabs[2]).toHaveTextContent('Settings');
-    await wait();
+    await waitFor(() => {});
   });
 
   it('renders 3 sections on org context', async () => {
@@ -91,13 +91,13 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitForElement(() => screen.getAllByRole('main'));
+    await waitFor(() => screen.getAllByRole('main'));
     const tabs = screen.getAllByRole('tab');
     expect(screen.getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
     expect(tabs[0]).toHaveTextContent('Packages');
     expect(tabs[1]).toHaveTextContent('Members');
     expect(tabs[2]).toHaveTextContent('Settings');
-    await wait();
+    await waitFor(() => {});
   });
 });

@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -35,8 +35,10 @@ describe('StarredPackagesView', () => {
         <StarredPackagesView />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -49,25 +51,11 @@ describe('StarredPackagesView', () => {
           <StarredPackagesView />
         </Router>
       );
-      expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
+
+      await waitFor(() => {
+        expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
+      });
       expect(screen.getByText('Your starred packages')).toBeInTheDocument();
-      await wait();
-    });
-
-    it('removes loading spinner after getting package', async () => {
-      const mockPackages = getMockStarredPackages('3');
-      mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
-
-      render(
-        <Router>
-          <StarredPackagesView />
-        </Router>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => screen.getAllByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await wait();
     });
   });
 
@@ -81,10 +69,10 @@ describe('StarredPackagesView', () => {
           <StarredPackagesView />
         </Router>
       );
-      const packages = await waitForElement(() => screen.getAllByRole('listitem'));
+      const packages = await waitFor(() => screen.getAllByRole('listitem'));
 
       expect(packages).toHaveLength(5);
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays no data component when no packages', async () => {
@@ -97,12 +85,12 @@ describe('StarredPackagesView', () => {
         </Router>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('You have not starred any package yet');
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
@@ -114,11 +102,11 @@ describe('StarredPackagesView', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.getByRole('main'));
+      await waitFor(() => screen.getByRole('main'));
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/user/packages/starred');
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

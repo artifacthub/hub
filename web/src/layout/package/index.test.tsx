@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, wait, waitForElement } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -48,8 +48,10 @@ describe('Package index', () => {
         <PackageView {...defaultProps} />
       </Router>
     );
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -62,8 +64,10 @@ describe('Package index', () => {
           <PackageView {...defaultProps} />
         </Router>
       );
-      expect(API.getPackage).toHaveBeenCalledTimes(1);
-      await wait();
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('displays loading spinner', async () => {
@@ -80,10 +84,10 @@ describe('Package index', () => {
         </Router>
       );
 
-      const spinner = await waitForElement(() => screen.getByRole('status'));
+      const spinner = await waitFor(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -104,7 +108,7 @@ describe('Package index', () => {
         </Router>
       );
 
-      const goBack = await waitForElement(() => screen.getByTestId('goBack'));
+      const goBack = await waitFor(() => screen.getByTestId('goBack'));
 
       expect(goBack).toBeInTheDocument();
       fireEvent.click(goBack);
@@ -115,7 +119,7 @@ describe('Package index', () => {
         state: { fromDetail: true },
       });
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -129,13 +133,13 @@ describe('Package index', () => {
           <PackageView {...defaultProps} />
         </Router>
       );
-      const link = await waitForElement(() => screen.getByTestId('repoLink'));
+      const link = await waitFor(() => screen.getByTestId('repoLink'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe('/packages/search');
       expect(window.location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -150,11 +154,11 @@ describe('Package index', () => {
         </Router>
       );
 
-      const dialogs = await waitForElement(() => screen.getAllByRole('dialog'));
+      const dialogs = await waitFor(() => screen.getAllByRole('dialog'));
 
       expect(dialogs).toHaveLength(3);
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 
@@ -169,14 +173,14 @@ describe('Package index', () => {
         </Router>
       );
 
-      await waitForElement(() => screen.getByTestId('mainPackage'));
+      await waitFor(() => screen.getByTestId('mainPackage'));
 
       const noData = screen.getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('No README file available for this package');
       expect(screen.queryByTestId('readme')).toBeNull();
 
-      await wait();
+      await waitFor(() => {});
     });
 
     it('renders ir correctly', async () => {
@@ -189,12 +193,13 @@ describe('Package index', () => {
         </Router>
       );
 
-      const readme = await waitForElement(() => screen.queryByTestId('readme'));
+      await waitFor(() => screen.getByTestId('mainPackage'));
 
+      const readme = screen.queryByTestId('readme');
       expect(readme).toBeInTheDocument();
       expect(readme).toHaveTextContent(mockPackage.readme!);
 
-      await wait();
+      await waitFor(() => {});
     });
   });
 });

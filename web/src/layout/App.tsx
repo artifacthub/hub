@@ -78,7 +78,7 @@ export default function App() {
                         setIsSearching={setIsSearching}
                         scrollPosition={scrollPosition}
                         setScrollPosition={setScrollPosition}
-                        fromDetail={location.state ? location.state.emailKey : undefined}
+                        fromDetail={location.state ? location.state.hasOwnProperty('fromDetail') : false}
                       />
                     </div>
                   </>

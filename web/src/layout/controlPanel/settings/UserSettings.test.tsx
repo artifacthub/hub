@@ -1,4 +1,4 @@
-import { render, screen, wait, waitForElement, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -40,8 +40,9 @@ describe('User settings index', () => {
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
-    await wait();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
@@ -56,8 +57,10 @@ describe('User settings index', () => {
           </Router>
         </AppCtx.Provider>
       );
-      expect(API.getUserProfile).toHaveBeenCalledTimes(1);
-      await wait();
+
+      await waitFor(() => {
+        expect(API.getUserProfile).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('removes loading spinner after getting user profile', async () => {
@@ -75,7 +78,7 @@ describe('User settings index', () => {
       const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
 
       expect(spinner).toBeTruthy();
-      await wait();
+      await waitFor(() => {});
     });
 
     it('displays no data component when no organization details', async () => {
@@ -90,14 +93,14 @@ describe('User settings index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitForElement(() => screen.getByTestId('noData'));
+      await waitFor(() => {
+        const noData = screen.getByTestId('noData');
 
-      expect(noData).toBeInTheDocument();
-      expect(
-        screen.getByText('Sorry, an error occurred fetching your profile, please try again later.')
-      ).toBeInTheDocument();
-
-      await wait();
+        expect(noData).toBeInTheDocument();
+        expect(
+          screen.getByText('Sorry, an error occurred fetching your profile, please try again later.')
+        ).toBeInTheDocument();
+      });
     });
   });
 });

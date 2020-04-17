@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { API } from '../../../api';
@@ -42,7 +42,7 @@ describe('Reset password - user settings', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await wait();
+      await waitFor(() => {});
 
       expect(API.updatePassword).toBeCalledTimes(1);
       expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
@@ -63,7 +63,7 @@ describe('Reset password - user settings', () => {
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
-      await wait();
+      await waitFor(() => {});
 
       expect(API.updatePassword).toBeCalledTimes(0);
     });

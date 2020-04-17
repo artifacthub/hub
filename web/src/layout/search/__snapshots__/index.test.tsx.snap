@@ -76,3 +76,816 @@ exports[`Search index creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`Search index creates snapshot 2`] = `
+<DocumentFragment>
+  <nav
+    class="navbar navbar-expand-sm navbar"
+  >
+    <div
+      class="container d-flex justify-content-between flex-nowrap"
+    >
+      <div
+        class="d-flex align-items-center text-truncate"
+      >
+        <div
+          class="d-inline-block d-md-none mr-2"
+          role="complementary"
+        >
+          <button
+            class="font-weight-bold text-uppercase position-relative btn btn-sm rounded-circle position-relative btnMobileFilters"
+            data-testid="openSidebarBtn"
+            type="button"
+          >
+            <div
+              class="d-flex align-items-center justify-content-center"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+                />
+              </svg>
+            </div>
+          </button>
+          <div
+            class="sidebar left"
+            data-testid="sidebarContent"
+          >
+            <div
+              class="d-flex flex-column h-100"
+            >
+              <div
+                class="border-bottom p-4 pb-3"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-between"
+                >
+                  <div>
+                    <div
+                      class="h6 text-uppercase mb-0"
+                    >
+                      Filters
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      class="close"
+                      data-testid="closeSidebarBtn"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex-grow-1 d-flex contentWrapper px-4"
+              >
+                <div
+                  class="overflow-auto mh-100 w-100 py-3"
+                >
+                  <div
+                    class="filters"
+                  >
+                    <div
+                      class="facet mt-4 pt-2 "
+                      role="menuitem"
+                    >
+                      <div
+                        class="mt-2 mb-1"
+                        data-testid="smallTitle"
+                      >
+                        <small
+                          class="card-title text-muted text-uppercase"
+                        >
+                          Kind
+                        </small>
+                      </div>
+                      <div
+                        class="mt-3"
+                      >
+                        <div
+                          class="custom-control custom-checkbox mr-sm-2 mb-2"
+                        >
+                          <input
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="kind-0"
+                            name="kind"
+                            type="checkbox"
+                            value="0"
+                          />
+                          <label
+                            class="custom-control-label w-100"
+                            data-testid="checkboxLabel"
+                            for="kind-0"
+                          >
+                            <div
+                              class="d-flex align-items-center mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Chart
+                              </span>
+                              <small
+                                class="pl-1"
+                              >
+                                (7)
+                              </small>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="facet mt-4 pt-2 "
+                      role="menuitem"
+                    >
+                      <div
+                        class="mt-2 mb-1"
+                        data-testid="smallTitle"
+                      >
+                        <small
+                          class="card-title text-muted text-uppercase"
+                        >
+                          Repository
+                        </small>
+                      </div>
+                      <div
+                        class="mt-3"
+                      >
+                        <div
+                          class="custom-control custom-checkbox mr-sm-2 mb-2"
+                        >
+                          <input
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                            name="repo"
+                            type="checkbox"
+                            value="43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                          />
+                          <label
+                            class="custom-control-label w-100"
+                            data-testid="checkboxLabel"
+                            for="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                          >
+                            <div
+                              class="d-flex align-items-center mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Stable
+                              </span>
+                              <small
+                                class="pl-1"
+                              >
+                                (4)
+                              </small>
+                            </div>
+                          </label>
+                        </div>
+                        <div
+                          class="custom-control custom-checkbox mr-sm-2 mb-2"
+                        >
+                          <input
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                            name="repo"
+                            type="checkbox"
+                            value="dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                          />
+                          <label
+                            class="custom-control-label w-100"
+                            data-testid="checkboxLabel"
+                            for="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                          >
+                            <div
+                              class="d-flex align-items-center mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Incubator
+                              </span>
+                              <small
+                                class="pl-1"
+                              >
+                                (2)
+                              </small>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mt-4 pt-2 facet"
+                      role="menuitem"
+                    >
+                      <div
+                        class="mt-2 mb-1"
+                        data-testid="smallTitle"
+                      >
+                        <small
+                          class="card-title text-muted text-uppercase"
+                        >
+                          Others
+                        </small>
+                      </div>
+                      <div
+                        class="mt-3"
+                      >
+                        <div
+                          class="custom-control custom-checkbox"
+                        >
+                          <input
+                            class="custom-control-input"
+                            data-testid="deprecatedCheckbox"
+                            id="deprecated"
+                            name="deprecated"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label w-100"
+                            for="deprecated"
+                          >
+                            Include deprecated
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mt-auto p-4"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-between"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                  >
+                    <svg
+                      class="text-secondary resetBtnDecorator"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 90c44.3 0 86 17.3 117.4 48.6C404.7 170 422 211.7 422 256s-17.3 86-48.6 117.4C342 404.7 300.3 422 256 422s-86-17.3-117.4-48.6C107.3 342 90 300.3 90 256s17.3-86 48.6-117.4C170 107.3 211.7 90 256 90m0-42C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48z"
+                      />
+                      <path
+                        d="M360 330.9L330.9 360 256 285.1 181.1 360 152 330.9l74.9-74.9-74.9-74.9 29.1-29.1 74.9 74.9 74.9-74.9 29.1 29.1-74.9 74.9z"
+                      />
+                    </svg>
+                    <button
+                      class="btn btn-link btn-sm p-0 pl-1 text-secondary resetBtn"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <button
+                    class="ml-auto btn btn-sm btn-secondary"
+                    data-testid="closeSidebarFooterBtn"
+                    type="button"
+                  >
+                    See 7 results
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-truncate"
+          data-testid="resultsText"
+        >
+          <span
+            class="pr-1"
+          >
+            1 - 7 of 
+          </span>
+          7
+          <span
+            class="d-none d-sm-inline pl-1"
+          >
+             results 
+          </span>
+          <span
+            class="pl-1"
+          >
+            for "
+            <span
+              class="font-weight-bold"
+            >
+              test
+            </span>
+            "
+          </span>
+        </div>
+      </div>
+      <div
+        class="ml-3"
+      >
+        <div
+          class="form-inline flex-nowrap align-items-center"
+        >
+          <label
+            class="mr-2 mb-0"
+          >
+            Show:
+          </label>
+          <select
+            aria-label="pagination-limit"
+            class="custom-select custom-select-sm select"
+          >
+            <option
+              value="15"
+            >
+              15
+            </option>
+            <option
+              value="25"
+            >
+              25
+            </option>
+            <option
+              value="50"
+            >
+              50
+            </option>
+            ;
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    class="d-flex position-relative pt-3 pb-3 flex-grow-1"
+  >
+    <main
+      class="container d-flex flex-row justify-content-between"
+      role="main"
+    >
+      <nav
+        class="d-none d-md-block sidebar"
+      >
+        <div
+          class="mr-5"
+        >
+          <div
+            class="filters pt-2 mt-3"
+          >
+            <div
+              class="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom"
+            >
+              <div
+                class="h6 text-uppercase mb-0 title"
+              >
+                Filters
+              </div>
+            </div>
+            <div
+              class="facet mt-4 pt-2 "
+              role="menuitem"
+            >
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Kind
+                </small>
+              </div>
+              <div
+                class="mt-3"
+              >
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2"
+                >
+                  <input
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="kind-0"
+                    name="kind"
+                    type="checkbox"
+                    value="0"
+                  />
+                  <label
+                    class="custom-control-label w-100"
+                    data-testid="checkboxLabel"
+                    for="kind-0"
+                  >
+                    <div
+                      class="d-flex align-items-center mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Chart
+                      </span>
+                      <small
+                        class="pl-1"
+                      >
+                        (7)
+                      </small>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="facet mt-4 pt-2 "
+              role="menuitem"
+            >
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Repository
+                </small>
+              </div>
+              <div
+                class="mt-3"
+              >
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2"
+                >
+                  <input
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                    name="repo"
+                    type="checkbox"
+                    value="43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                  />
+                  <label
+                    class="custom-control-label w-100"
+                    data-testid="checkboxLabel"
+                    for="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                  >
+                    <div
+                      class="d-flex align-items-center mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Stable
+                      </span>
+                      <small
+                        class="pl-1"
+                      >
+                        (4)
+                      </small>
+                    </div>
+                  </label>
+                </div>
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2"
+                >
+                  <input
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                    name="repo"
+                    type="checkbox"
+                    value="dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                  />
+                  <label
+                    class="custom-control-label w-100"
+                    data-testid="checkboxLabel"
+                    for="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                  >
+                    <div
+                      class="d-flex align-items-center mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Incubator
+                      </span>
+                      <small
+                        class="pl-1"
+                      >
+                        (2)
+                      </small>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mt-4 pt-2 facet"
+              role="menuitem"
+            >
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  Others
+                </small>
+              </div>
+              <div
+                class="mt-3"
+              >
+                <div
+                  class="custom-control custom-checkbox"
+                >
+                  <input
+                    class="custom-control-input"
+                    data-testid="deprecatedCheckbox"
+                    id="deprecated"
+                    name="deprecated"
+                    type="checkbox"
+                  />
+                  <label
+                    class="custom-control-label w-100"
+                    for="deprecated"
+                  >
+                    Include deprecated
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div
+        class="flex-grow-1 mw-100"
+      >
+        <div
+          class="row no-gutters mb-2"
+        >
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
+            <div
+              class="card h-100 card"
+            >
+              <a
+                class="text-decoration-none link"
+                data-testid="link"
+                href="/package/chart/stable/undefined"
+              >
+                <div
+                  class="card-body position-relative body"
+                >
+                  <div
+                    class="d-flex align-items-start justify-content-between mb-3"
+                  >
+                    <div
+                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                      >
+                        <img
+                          alt="Logo centrifugo"
+                          class="image"
+                          src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
+                          srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
+                        />
+                      </div>
+                      <div
+                        class="ml-3 flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="card-title font-weight-bolder mb-2 title"
+                        >
+                          <div
+                            class="h5 d-flex flex-row align-items-center"
+                          >
+                            centrifugo
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                        >
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User:
+                            </span>
+                            <button
+                              class="p-0 border-0 link"
+                              data-testid="userLink"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo:
+                            </span>
+                            <button
+                              class="p-0 border-0 link"
+                              data-testid="repoLink"
+                            >
+                              <u>
+                                stable
+                              </u>
+                            </button>
+                          </div>
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Version: 
+                            </span>
+                            -
+                          </div>
+                          <div
+                            class="text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              App version: 
+                            </span>
+                            2.1.0
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex align-items-center text-uppercase kind"
+                    >
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="helm.svg"
+                      />
+                    </div>
+                  </div>
+                  <p
+                    class="mb-0 card-text overflow-hidden description"
+                  >
+                    Centrifugo is a real-time messaging server.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
+            <div
+              class="card h-100 card"
+            >
+              <a
+                class="text-decoration-none link"
+                data-testid="link"
+                href="/package/chart/incubator/undefined"
+              >
+                <div
+                  class="card-body position-relative body"
+                >
+                  <div
+                    class="d-flex align-items-start justify-content-between mb-3"
+                  >
+                    <div
+                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                      >
+                        <img
+                          alt="Logo kafka"
+                          class="image"
+                          src="kubernetes_grey.svg"
+                        />
+                      </div>
+                      <div
+                        class="ml-3 flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="card-title font-weight-bolder mb-2 title"
+                        >
+                          <div
+                            class="h5 d-flex flex-row align-items-center"
+                          >
+                            kafka
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                        >
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User:
+                            </span>
+                            <button
+                              class="p-0 border-0 link"
+                              data-testid="userLink"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo:
+                            </span>
+                            <button
+                              class="p-0 border-0 link"
+                              data-testid="repoLink"
+                            >
+                              <u>
+                                incubator
+                              </u>
+                            </button>
+                          </div>
+                          <div
+                            class="mr-2 text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Version: 
+                            </span>
+                            -
+                          </div>
+                          <div
+                            class="text-truncate"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              App version: 
+                            </span>
+                            5.0.1
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="d-flex align-items-center text-uppercase kind"
+                    >
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="helm.svg"
+                      />
+                    </div>
+                  </div>
+                  <p
+                    class="mb-0 card-text overflow-hidden description"
+                  >
+                    Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</DocumentFragment>
+`;

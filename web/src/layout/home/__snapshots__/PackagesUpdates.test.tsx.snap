@@ -30,3 +30,1007 @@ exports[`Package index creates snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`Package index creates snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="position-relative wrapper"
+  >
+    <div
+      class="container mb-5 mt-5"
+    >
+      <div
+        class="d-flex flex-wrap justify-content-center"
+      >
+        <div
+          class="m-sm-4 m-0 mb-4 mw-100"
+          data-testid="latestPackagesList"
+        >
+          <div
+            class="h5 text-center text-muted mb-4"
+          >
+            Latest packages added
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/halkeye/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo mosquitto"
+                        class="image"
+                        src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
+                        srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          mosquitto
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              halkeye
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/halkeye/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo pihole"
+                        class="image"
+                        src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
+                        srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          pihole
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              halkeye
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/gabibbo97/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo fcgi-nginx-frontend"
+                        class="image"
+                        src="kubernetes_grey.svg"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          fcgi-nginx-frontend
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              gabibbo97
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/halkeye/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo sevendaysdie"
+                        class="image"
+                        src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
+                        srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          sevendaysdie
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              halkeye
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/billimek/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo digitalocean-dyndns"
+                        class="image"
+                        src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
+                        srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          digitalocean-dyndns
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              billimek
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div
+          class="m-sm-4 m-0 mw-100"
+          data-testid="recentlyUpdatedPackagesList"
+        >
+          <div
+            class="h5 text-center text-muted mb-4"
+          >
+            Packages recently updated
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/stable/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo jenkins"
+                        class="image"
+                        src="/image/b8a744f8-5bdc-4b2c-9bc7-295fe0d6b449"
+                        srcset="/image/b8a744f8-5bdc-4b2c-9bc7-295fe0d6b449@1x 1x, /image/b8a744f8-5bdc-4b2c-9bc7-295fe0d6b449@2x 2x, /image/b8a744f8-5bdc-4b2c-9bc7-295fe0d6b449@3x 3x, /image/b8a744f8-5bdc-4b2c-9bc7-295fe0d6b449@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          jenkins
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              stable
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/stable/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo airflow"
+                        class="image"
+                        src="/image/af1bf4f3-e422-4de5-a023-ca5ad911e228"
+                        srcset="/image/af1bf4f3-e422-4de5-a023-ca5ad911e228@1x 1x, /image/af1bf4f3-e422-4de5-a023-ca5ad911e228@2x 2x, /image/af1bf4f3-e422-4de5-a023-ca5ad911e228@3x 3x, /image/af1bf4f3-e422-4de5-a023-ca5ad911e228@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          airflow
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              stable
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/stable/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo bookstack"
+                        class="image"
+                        src="kubernetes_grey.svg"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          bookstack
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              stable
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/stable/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo cluster-autoscaler"
+                        class="image"
+                        src="kubernetes_grey.svg"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          cluster-autoscaler
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              stable
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div
+            class="card mb-3 mw-100 card"
+          >
+            <a
+              class="text-decoration-none link"
+              href="/package/chart/stable/undefined"
+            >
+              <div
+                class="card-body d-flex body"
+              >
+                <div
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                >
+                  <div
+                    class="d-flex align-items-center flex-grow-1 h-100 truncateWrapper"
+                  >
+                    <div
+                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                    >
+                      <img
+                        alt="Logo kafka-manager"
+                        class="image"
+                        src="/image/61c68f47-1ec8-42fe-a108-959644f148b0"
+                        srcset="/image/61c68f47-1ec8-42fe-a108-959644f148b0@1x 1x, /image/61c68f47-1ec8-42fe-a108-959644f148b0@2x 2x, /image/61c68f47-1ec8-42fe-a108-959644f148b0@3x 3x, /image/61c68f47-1ec8-42fe-a108-959644f148b0@4x 4x"
+                      />
+                    </div>
+                    <div
+                      class="ml-3 flex-grow-1 truncateWrapper"
+                    >
+                      <div
+                        class="card-title font-weight-bolder title"
+                      >
+                        <div
+                          class="h6 text-truncate"
+                        >
+                          kafka-manager
+                        </div>
+                      </div>
+                      <div
+                        class="card-subtitle align-items-center subtitle"
+                      >
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            User:
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u />
+                          </button>
+                        </div>
+                        <div
+                          class="mr-2 text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Repo: 
+                          </span>
+                          <button
+                            class="p-0 border-0 link"
+                          >
+                            <u>
+                              stable
+                            </u>
+                          </button>
+                        </div>
+                        <div
+                          class="text-truncate"
+                        >
+                          <span
+                            class="text-muted text-uppercase mr-1"
+                          >
+                            Version: 
+                          </span>
+                          -
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center text-uppercase ml-2 kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="helm.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
