@@ -34,7 +34,6 @@ type Services struct {
 
 // Metrics groups some metrics collected from a Handlers instance.
 type Metrics struct {
-	requests *prometheus.CounterVec
 	duration *prometheus.HistogramVec
 }
 
@@ -74,15 +73,6 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 
 // setupMetrics creates and registers some metrics
 func setupMetrics() *Metrics {
-	// Number of requests
-	requests := prometheus.NewCounterVec(prometheus.CounterOpts{
-		Name: "http_requests_total",
-		Help: "Number of http requests processed.",
-	},
-		[]string{"status", "method", "path"},
-	)
-	prometheus.MustRegister(requests)
-
 	// Requests duration
 	duration := prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name: "http_request_duration",
@@ -93,7 +83,6 @@ func setupMetrics() *Metrics {
 	prometheus.MustRegister(duration)
 
 	return &Metrics{
-		requests: requests,
 		duration: duration,
 	}
 }
@@ -214,11 +203,6 @@ func (h *Handlers) MetricsCollector(next http.Handler) http.Handler {
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		defer func() {
 			rctx := chi.RouteContext(r.Context())
-			h.metrics.requests.WithLabelValues(
-				http.StatusText(ww.Status()),
-				r.Method,
-				rctx.RoutePattern(),
-			).Inc()
 			h.metrics.duration.WithLabelValues(
 				http.StatusText(ww.Status()),
 				r.Method,
