@@ -115,6 +115,7 @@ const MembersSection = (props: Props) => {
       {modalMemberOpen && (
         <MemberModal
           open={modalMemberOpen}
+          membersList={members}
           onSuccess={fetchMembers}
           onAuthError={props.onAuthError}
           onClose={() => setModalMemberOpen(false)}

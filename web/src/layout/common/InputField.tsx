@@ -34,6 +34,7 @@ export interface Props {
   setValidationStatus?: (status: boolean) => void;
   autoFocus?: boolean;
   disabled?: boolean;
+  excludedValues?: string[];
 }
 
 const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
@@ -70,7 +71,11 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         } else if (validityState.typeMismatch && !isUndefined(props.invalidText.typeMismatch)) {
           errorTxt = props.invalidText.typeMismatch;
         } else if (validityState.customError && !isUndefined(props.invalidText.customError)) {
-          errorTxt = props.invalidText.customError;
+          if (!isUndefined(props.excludedValues) && props.excludedValues.includes(input.current!.value)) {
+            errorTxt = props.invalidText.excluded;
+          } else {
+            errorTxt = props.invalidText.customError;
+          }
         }
       }
       setInvalidText(errorTxt);
@@ -85,7 +90,9 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const isValidField = async (): Promise<boolean> => {
     const value = input.current!.value;
     if (value !== '') {
-      if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
+      if (!isUndefined(props.excludedValues) && props.excludedValues.includes(value)) {
+        input.current!.setCustomValidity('Value is excluded');
+      } else if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
         setIsCheckingAvailability(true);
         await API.checkAvailability({
           resourceKind: props.checkAvailability.resourceKind,
@@ -163,7 +170,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>{invalidText}</div>
       )}
 
-      {!isUndefined(props.additionalInfo) && <div className="alert alert-ligth p-0 mt-3">{props.additionalInfo}</div>}
+      {!isUndefined(props.additionalInfo) && <div className="alert alert-ligth p-0 mt-4">{props.additionalInfo}</div>}
     </div>
   );
 });

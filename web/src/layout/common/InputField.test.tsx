@@ -17,6 +17,7 @@ const defaultProps = {
   invalidText: {
     default: 'invalid text',
     customError: 'custom error',
+    excluded: 'excluded error',
   },
   placeholder: 'placeholder',
   autoComplete: 'on',
@@ -180,6 +181,21 @@ describe('InputField', () => {
       expect(API.checkAvailability).toBeCalledTimes(1);
 
       const invalidText = await waitFor(() => screen.getByText(defaultProps.invalidText.customError));
+      expect(invalidText).toBeInTheDocument();
+      expect(input).toBeInvalid();
+    });
+
+    it('value is part of the excluded list', () => {
+      mocked(API).checkAvailability.mockRejectedValue('');
+
+      render(
+        <InputField {...defaultProps} type="text" value="user1" validateOnBlur excludedValues={['user1']} autoFocus />
+      );
+      const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
+      input.blur();
+
+      const invalidText = screen.getByText(defaultProps.invalidText.excluded);
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });

@@ -3,7 +3,7 @@
 exports[`Chart Repository Card - packages section creates snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="list-group-item list-group-item-action listItem"
+    class="list-group-item listItem"
     data-testid="chartRepoCard"
   >
     <div
