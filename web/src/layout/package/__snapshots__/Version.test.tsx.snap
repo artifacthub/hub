@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Version creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="py-1 py-sm-0"
+  >
+    <button
+      class="btn btn-link pl-0 pt-0 pb-0 text-truncate d-block"
+      data-testid="version"
+    >
+      1.0.1
+    </button>
+  </div>
+</DocumentFragment>
+`;

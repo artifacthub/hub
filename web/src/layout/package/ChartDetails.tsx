@@ -55,7 +55,7 @@ const ChartDetails = (props: Props) => {
       )}
 
       <SmallTitle text="Keywords" />
-      <Keywords keywords={props.package.keywords} />
+      <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
     </>
   );
 };

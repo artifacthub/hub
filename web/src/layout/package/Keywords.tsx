@@ -8,6 +8,7 @@ import styles from './Keywords.module.css';
 
 interface Props {
   keywords?: string[] | null;
+  deprecated: boolean | null;
 }
 
 const Keywords = (props: Props) => {
@@ -21,6 +22,7 @@ const Keywords = (props: Props) => {
         <span data-testid="keywords">
           {props.keywords.map((keyword: string) => (
             <button
+              data-testid="keywordBtn"
               className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 ${styles.badge}`}
               key={keyword}
               onClick={() => {
@@ -30,7 +32,7 @@ const Keywords = (props: Props) => {
                     text: keyword,
                     pageNumber: 1,
                     filters: {},
-                    deprecated: false,
+                    deprecated: !isNull(props.deprecated) ? props.deprecated : false,
                   }),
                 });
               }}

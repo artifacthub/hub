@@ -9,6 +9,27 @@ const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/details/${fixtureId}.json`) as Package;
 };
 
+const testsOrder = [
+  { versions: [], sortedVersions: [] },
+  {
+    versions: ['0.10.0', '0.11.0', '0.12.0', '0.13.0', '0.14.0'],
+    sortedVersions: ['0.14.0', '0.13.0', '0.12.0', '0.11.0', '0.10.0'],
+  },
+  {
+    versions: ['1.3.1', '1.3.10', '1.3.3', '1.3.5', '1.3.6'],
+    sortedVersions: ['1.3.10', '1.3.6', '1.3.5', '1.3.3', '1.3.1'],
+  },
+  {
+    versions: ['1.8.2', '1.9.0', '1.9.1', '2.0.0-rc1', '2.0.0-rc2'],
+    sortedVersions: ['2.0.0-rc2', '2.0.0-rc1', '1.9.1', '1.9.0', '1.8.2'],
+  },
+  {
+    versions: ['0.4.0', '0.5', '0.5.1', '0.6', '0.6.1'],
+    sortedVersions: ['0.6.1', '0.5.1', '0.4.0', '0.5', '0.6'],
+  },
+  { versions: ['0.1.0', '0.1.1', '0.1.2', '1.1.1'], sortedVersions: ['1.1.1', '0.1.2', '0.1.1', '0.1.0'] },
+];
+
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -127,7 +148,7 @@ describe('Details', () => {
     });
   });
 
-  describe('Chart versions', () => {
+  describe('Package versions', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('11');
       const { queryByTestId, queryAllByTestId } = render(<Details package={mockPackage} />);
@@ -138,13 +159,49 @@ describe('Details', () => {
       expect(versions).toHaveLength(4);
     });
 
-    it('renders placeholder when no home url', () => {
+    it('renders placeholder when no versions', () => {
       const mockPackage = getMockPackage('12');
       const { queryByTestId } = render(<Details package={mockPackage} />);
 
-      const chartVersions = queryByTestId('chartVersions');
-      expect(chartVersions).toBeInTheDocument();
-      expect(chartVersions).toHaveTextContent('-');
+      const versions = queryByTestId('versions');
+      expect(versions).toBeInTheDocument();
+      expect(versions).toHaveTextContent('-');
+    });
+  });
+
+  describe('Versions order', () => {
+    const mockPackage = getMockPackage('13');
+    for (let i = 0; i < testsOrder.length; i++) {
+      it('renders proper order', () => {
+        const { queryAllByTestId } = render(
+          <Details
+            package={{
+              ...mockPackage,
+              availableVersions: testsOrder[i].versions,
+            }}
+          />
+        );
+
+        const versions = queryAllByTestId('version');
+        expect(versions).toHaveLength(testsOrder[i].sortedVersions.length);
+        for (let v = 0; v < testsOrder[i].sortedVersions.length; v++) {
+          expect(versions[v]).toHaveTextContent(testsOrder[i].sortedVersions[v]);
+        }
+      });
+    }
+  });
+
+  describe('Not chart package renders', () => {
+    it('renders correctly', () => {
+      const mockPackage = getMockPackage('14');
+      const { getByText, getAllByText } = render(<Details package={mockPackage} />);
+
+      expect(getByText('Versions')).toBeInTheDocument();
+      expect(getByText('Keywords')).toBeInTheDocument();
+
+      expect(getByText('key1')).toBeInTheDocument();
+      expect(getByText('key2')).toBeInTheDocument();
+      expect(getAllByText('-')).toHaveLength(1);
     });
   });
 });

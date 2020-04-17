@@ -54,6 +54,7 @@ const StarButton = (props: Props) => {
   return (
     <div className={`d-flex flex-row align-items-center ${styles.wrapper}`}>
       <button
+        data-testid="toggleStarBtn"
         className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
         type="button"
         disabled={!isLoggedIn}
@@ -89,7 +90,7 @@ const StarButton = (props: Props) => {
       )}
 
       {isSending && (
-        <div className={`position-absolute ${styles.spinner}`}>
+        <div className={`position-absolute ${styles.spinner}`} role="status">
           <span className="spinner-border spinner-border-sm text-primary" />
         </div>
       )}
