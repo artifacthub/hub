@@ -218,7 +218,7 @@ exports[`Chart repository index creates snapshot 2`] = `
     data-testid="chartRepoList"
   >
     <li
-      class="list-group-item list-group-item-action listItem"
+      class="list-group-item listItem"
       data-testid="chartRepoCard"
     >
       <div

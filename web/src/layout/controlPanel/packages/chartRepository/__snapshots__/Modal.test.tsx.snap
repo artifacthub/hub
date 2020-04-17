@@ -124,7 +124,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                     This field is required
                   </div>
                   <div
-                    class="alert alert-ligth p-0 mt-3"
+                    class="alert alert-ligth p-0 mt-4"
                   >
                     <small
                       class="text-muted text-break mt-1"

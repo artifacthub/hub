@@ -5,7 +5,7 @@ import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { RefInputField, ResourceKind } from '../../../types';
+import { Member, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
@@ -17,6 +17,7 @@ interface FormValidation {
 
 interface Props {
   open: boolean;
+  membersList: Member[] | undefined;
   onSuccess?: () => void;
   onClose: () => void;
   onAuthError: () => void;
@@ -93,6 +94,14 @@ const MemberModal = (props: Props) => {
     }
   };
 
+  const getMembers = (): string[] => {
+    let members: string[] = [];
+    if (!isUndefined(props.membersList)) {
+      members = props.membersList.map((member: Member) => member.alias);
+    }
+    return members;
+  };
+
   return (
     <Modal
       header={<div className="h3 m-2">Add member</div>}
@@ -132,12 +141,14 @@ const MemberModal = (props: Props) => {
             invalidText={{
               default: 'This field is required',
               customError: 'User not found',
+              excluded: 'This user is already a member of the organization',
             }}
             checkAvailability={{
               isAvailable: false,
               resourceKind: ResourceKind.userAlias,
               excluded: [],
             }}
+            excludedValues={getMembers()}
             autoComplete="off"
             onKeyDown={handleOnReturnKeyDown}
             additionalInfo={

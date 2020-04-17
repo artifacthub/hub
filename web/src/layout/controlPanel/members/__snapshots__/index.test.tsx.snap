@@ -157,7 +157,7 @@ exports[`Members section index creates snapshot 2`] = `
           class="list-group mt-4"
         >
           <li
-            class="list-group-item list-group-item-action listItem"
+            class="list-group-item listItem"
             data-testid="memberCard"
           >
             <div
@@ -306,7 +306,7 @@ exports[`Members section index creates snapshot 2`] = `
             </div>
           </li>
           <li
-            class="list-group-item list-group-item-action listItem"
+            class="list-group-item listItem"
             data-testid="memberCard"
           >
             <div

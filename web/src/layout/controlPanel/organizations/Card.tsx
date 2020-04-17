@@ -78,7 +78,7 @@ const OrganizationCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item list-group-item-action ${styles.listItem}`} data-testid="organizationCard">
+    <li className={`list-group-item ${styles.listItem}`} data-testid="organizationCard">
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
         <div className="d-flex flex-row align-items-center">
           <div

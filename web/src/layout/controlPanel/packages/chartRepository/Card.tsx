@@ -107,7 +107,7 @@ const ChartRepositoryCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item list-group-item-action ${styles.listItem}`} data-testid="chartRepoCard">
+    <li className={`list-group-item ${styles.listItem}`} data-testid="chartRepoCard">
       <div className="d-flex flex-row w-100 justify-content-between">
         <h5 className="mb-1">{props.chartRepository.displayName || props.chartRepository.name}</h5>
 
