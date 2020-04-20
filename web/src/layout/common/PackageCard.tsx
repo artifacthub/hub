@@ -68,9 +68,11 @@ const PackageCard = (props: Props) => {
                   <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
                     {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                       <OrganizationInfo
+                        className="mr-2"
                         organizationName={props.package.organizationName}
                         organizationDisplayName={props.package.organizationDisplayName}
                         deprecated={props.package.deprecated}
+                        visibleLegend
                       />
                     )}
 

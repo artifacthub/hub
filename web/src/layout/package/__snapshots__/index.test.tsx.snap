@@ -112,7 +112,7 @@ exports[`Package index creates snapshot 2`] = `
                 class="wrapper"
               >
                 <button
-                  class="font-weight-bold text-uppercase position-relative btn btn-block btn-outline-secondary"
+                  class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-outline-secondary"
                   data-testid="openModalBtn"
                   type="button"
                 >
@@ -221,7 +221,7 @@ exports[`Package index creates snapshot 2`] = `
                 class="modalInstallationWrapper"
               >
                 <button
-                  class="font-weight-bold text-uppercase position-relative btn btn-block btn-outline-secondary"
+                  class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-outline-secondary"
                   data-testid="openModalBtn"
                   type="button"
                 >
@@ -359,7 +359,7 @@ exports[`Package index creates snapshot 2`] = `
             class="modalInstallationWrapper"
           >
             <button
-              class="font-weight-bold text-uppercase position-relative btn btn-block btn-primary"
+              class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-primary"
               data-testid="openModalBtn"
               type="button"
             >

@@ -18,11 +18,16 @@
   top: 80%;
 }
 
+.ctxWrapper {
+  padding-bottom: 1.25rem;
+}
+
 .legendCtx {
   font-size: 70%;
+  margin-bottom: 0.15rem;
 }
 
 .caret {
-  bottom: 22px;
+  bottom: 25px;
   right: 5px;
 }

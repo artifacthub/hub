@@ -19,7 +19,7 @@ interface Props {
 const OAuth = (props: Props) => {
   const goToOAuthPage = (name: 'google' | 'github') => {
     props.setIsLoading({ type: name, status: true });
-    window.location.href = `${getHubBaseURL()}/oauth/${name}`;
+    window.location.href = `${getHubBaseURL()}/oauth/${name}?redirect_url=${window.location.pathname}`;
     return;
   };
 

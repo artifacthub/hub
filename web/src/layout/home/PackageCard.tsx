@@ -47,45 +47,48 @@ const PackageCard = (props: Props) => {
                 </div>
 
                 <div className={`card-subtitle align-items-center ${styles.subtitle}`}>
-                  {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                    <OrganizationInfo
-                      organizationName={props.package.organizationName}
-                      organizationDisplayName={props.package.organizationDisplayName}
-                      deprecated={props.package.deprecated}
-                    />
-                  )}
-
-                  {!isNull(props.package.userAlias) && (
-                    <div className="mr-2 text-truncate">
-                      <span className="text-muted text-uppercase mr-1">User:</span>
-                      <button
-                        className={`p-0 border-0 ${styles.link}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          history.push({
-                            pathname: '/packages/search',
-                            search: prepareQueryString({
-                              pageNumber: 1,
-                              filters: {
-                                user: [props.package.userAlias!],
-                              },
-                              deprecated: false,
-                            }),
-                          });
-                        }}
-                      >
-                        <u>{props.package.userAlias}</u>
-                      </button>
-                    </div>
-                  )}
-
                   {(() => {
                     switch (props.package.kind) {
                       case PackageKind.Chart:
                         return (
                           <>
-                            <div className="mr-2 text-truncate">
+                            <div className="mr-2 text-truncate text-wrap">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
+                              {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                                <OrganizationInfo
+                                  className="d-inline-block mr-0"
+                                  organizationName={props.package.organizationName}
+                                  organizationDisplayName={props.package.organizationDisplayName}
+                                  deprecated={props.package.deprecated}
+                                  visibleLegend={false}
+                                />
+                              )}
+
+                              {!isNull(props.package.userAlias) && (
+                                <div className="d-inline-block">
+                                  <button
+                                    className={`p-0 border-0 ${styles.link}`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      history.push({
+                                        pathname: '/packages/search',
+                                        search: prepareQueryString({
+                                          pageNumber: 1,
+                                          filters: {
+                                            user: [props.package.userAlias!],
+                                          },
+                                          deprecated: false,
+                                        }),
+                                      });
+                                    }}
+                                  >
+                                    <u>{props.package.userAlias}</u>
+                                  </button>
+                                </div>
+                              )}
+
+                              <span className="px-1">/</span>
+
                               <button
                                 className={`p-0 border-0 ${styles.link}`}
                                 onClick={(e) => {
@@ -118,10 +121,44 @@ const PackageCard = (props: Props) => {
                       case PackageKind.Falco:
                       case PackageKind.Opa:
                         return (
-                          <div className="text-truncate">
-                            <span className="text-muted text-uppercase mr-1">Version: </span>
-                            {props.package.version || '-'}
-                          </div>
+                          <>
+                            {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                              <OrganizationInfo
+                                organizationName={props.package.organizationName}
+                                organizationDisplayName={props.package.organizationDisplayName}
+                                deprecated={props.package.deprecated}
+                                visibleLegend
+                              />
+                            )}
+
+                            {!isNull(props.package.userAlias) && (
+                              <div className="mr-2 text-truncate">
+                                <span className="text-muted text-uppercase mr-1">User:</span>
+                                <button
+                                  className={`p-0 border-0 ${styles.link}`}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    history.push({
+                                      pathname: '/packages/search',
+                                      search: prepareQueryString({
+                                        pageNumber: 1,
+                                        filters: {
+                                          user: [props.package.userAlias!],
+                                        },
+                                        deprecated: false,
+                                      }),
+                                    });
+                                  }}
+                                >
+                                  <u>{props.package.userAlias}</u>
+                                </button>
+                              </div>
+                            )}
+                            <div className="text-truncate">
+                              <span className="text-muted text-uppercase mr-1">Version: </span>
+                              {props.package.version || '-'}
+                            </div>
+                          </>
                         );
 
                       default:

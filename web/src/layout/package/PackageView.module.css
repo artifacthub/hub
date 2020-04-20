@@ -74,6 +74,7 @@
 @media only screen and (max-width: 768px) {
   .mainContent {
     max-width: 100%;
+    flex-basis: 100%;
   }
 
   .imageWrapper {
