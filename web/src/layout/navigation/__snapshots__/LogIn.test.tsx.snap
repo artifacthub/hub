@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogIn creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+      >
+        <div
+          class="modal-content content modal"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Sign in
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <form
+              autocomplete="on"
+              class="w-100 needs-validation"
+              data-testid="loginForm"
+              novalidate=""
+            >
+              <div
+                class="form-group mb-4 position-relative undefined"
+              >
+                <label
+                  for="email"
+                >
+                  Email
+                </label>
+                <input
+                  autocomplete="email"
+                  class="form-control"
+                  data-testid="emailInput"
+                  name="email"
+                  required=""
+                  type="email"
+                  value=""
+                />
+                <div
+                  class="invalid-feedback mt-0 inputFeedback"
+                >
+                  This field is required
+                </div>
+              </div>
+              <div
+                class="form-group mb-4 position-relative undefined"
+              >
+                <label
+                  for="password"
+                >
+                  Password
+                </label>
+                <input
+                  autocomplete="current-password"
+                  class="form-control"
+                  data-testid="passwordInput"
+                  name="password"
+                  required=""
+                  type="password"
+                  value=""
+                />
+                <div
+                  class="invalid-feedback mt-0 inputFeedback"
+                >
+                  This field is required
+                </div>
+              </div>
+              <div
+                class="text-right"
+              >
+                <button
+                  class="btn btn-secondary"
+                  data-testid="logInBtn"
+                  type="button"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
+            <div
+              class="undefined my-4 position-relative text-center separator"
+            >
+              <span
+                class="p-3 m-auto separatorContent"
+              >
+                or sign in with
+              </span>
+              <div
+                class="divider"
+              />
+            </div>
+            <div>
+              <div
+                class="d-flex flex-column mb-1"
+              >
+                <button
+                  class="btn btn-outline-secondary mb-3 btn-block btn"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                  >
+                    <img
+                      alt="Github Logo"
+                      class="logo"
+                      src="github-mark.svg"
+                    />
+                    <div
+                      class="flex-grow-1 text-center"
+                    >
+                      Github
+                    </div>
+                  </div>
+                </button>
+                <button
+                  class="btn btn-outline-secondary mb-3 btn-block btn"
+                  type="button"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                  >
+                    <img
+                      alt="Google Logo"
+                      class="logo"
+                      src="google.svg"
+                    />
+                    <div
+                      class="flex-grow-1 text-center"
+                    >
+                      Google
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

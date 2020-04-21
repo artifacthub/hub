@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateAnAccount creates snapshot 1`] = `
+<DocumentFragment>
+  <form
+    autocomplete="on"
+    class="w-100 needs-validation"
+    data-testid="createAnAccountForm"
+    novalidate=""
+  >
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="alias"
+      >
+        Username
+        <small
+          class="ml-1 font-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="username"
+        class="form-control"
+        data-testid="aliasInput"
+        name="alias"
+        required=""
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="email"
+      >
+        Email
+        <small
+          class="ml-1 font-italic"
+        >
+          (Required)
+        </small>
+      </label>
+      <input
+        autocomplete="email"
+        class="form-control"
+        data-testid="emailInput"
+        name="email"
+        required=""
+        type="email"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      >
+        This field is required
+      </div>
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="firstName"
+      >
+        First Name
+      </label>
+      <input
+        autocomplete="given-name"
+        class="form-control"
+        data-testid="firstNameInput"
+        name="firstName"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="form-group mb-4 position-relative undefined"
+    >
+      <label
+        for="lastName"
+      >
+        Last Name
+      </label>
+      <input
+        autocomplete="family-name"
+        class="form-control"
+        data-testid="lastNameInput"
+        name="lastName"
+        type="text"
+        value=""
+      />
+      <div
+        class="invalid-feedback mt-0 inputFeedback"
+      />
+    </div>
+    <div
+      class="form-row"
+    >
+      <div
+        class="form-group mb-4 position-relative col-sm-12 col-md-6"
+      >
+        <label
+          for="password"
+        >
+          Password
+          <small
+            class="ml-1 font-italic"
+          >
+            (6 characters min.)
+          </small>
+        </label>
+        <input
+          autocomplete="new-password"
+          class="form-control"
+          data-testid="passwordInput"
+          minlength="6"
+          name="password"
+          required=""
+          type="password"
+          value=""
+        />
+        <div
+          class="invalid-feedback mt-0 inputFeedback"
+        >
+          This field is required
+        </div>
+      </div>
+      <div
+        class="form-group mb-4 position-relative col-sm-12 col-md-6"
+      >
+        <label
+          for="confirmPassword"
+        >
+          Confirm password
+          <small
+            class="ml-1 font-italic"
+          >
+            (Required)
+          </small>
+        </label>
+        <input
+          autocomplete="new-password"
+          class="form-control"
+          data-testid="confirmPasswordInput"
+          name="confirmPassword"
+          pattern=""
+          required=""
+          type="password"
+          value=""
+        />
+        <div
+          class="invalid-feedback mt-0 inputFeedback"
+        >
+          This field is required
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

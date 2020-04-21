@@ -60,6 +60,7 @@ const MobileSettings = (props: Props) => {
                 {!isNull(ctx.user) ? (
                   <>
                     <Link
+                      data-testid="starredPackagesLink"
                       className="dropdown-item my-2"
                       to={{
                         pathname: '/user/packages/starred',

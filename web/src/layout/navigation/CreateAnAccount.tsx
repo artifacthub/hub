@@ -147,6 +147,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
         <>
           <form
             ref={ref}
+            data-testid="createAnAccountForm"
             className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
             onFocus={cleanApiError}
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => submitForm(e)}
