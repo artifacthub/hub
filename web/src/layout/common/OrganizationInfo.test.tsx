@@ -11,6 +11,7 @@ jest.mock('../../api');
 const defaultProps = {
   organizationName: 'orgname',
   deprecated: false,
+  visibleLegend: false,
 };
 
 const mockHistoryPush = jest.fn();
@@ -27,7 +28,7 @@ const getMockOrganization = (fixtureId: string): Organization => {
 };
 
 describe('OrganizationInfo', () => {
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<OrganizationInfo {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

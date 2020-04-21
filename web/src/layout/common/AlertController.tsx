@@ -20,6 +20,7 @@ const AlertController = () => {
   return (
     <div className="position-relative">
       <div
+        data-testid="alertController"
         className={classnames(
           `alert alert-dismissible position-fixed`,
           `alert-${!isNull(alert) && alert.type ? alert.type : 'warning'}`,

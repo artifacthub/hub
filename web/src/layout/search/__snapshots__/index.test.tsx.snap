@@ -454,7 +454,7 @@ exports[`Search index creates snapshot 2`] = `
           class="mr-5"
         >
           <div
-            class="filters pt-2 mt-3"
+            class="filters pt-2 mt-3 mb-5"
           >
             <div
               class="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom"

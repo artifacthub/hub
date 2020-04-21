@@ -20,7 +20,7 @@ describe('SearchBar', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<SearchBar text="test" size="big" isSearching={false} />);
     expect(asFragment).toMatchSnapshot();
   });

@@ -18,7 +18,11 @@ const ExpandableList = (props: Props) => {
       {list}
 
       {props.items.length > numVisibleItems && (
-        <button className="btn btn-link btn-sm pl-0" onClick={() => setOpenStatus(!open)}>
+        <button
+          data-testid="expandableListBtn"
+          className="btn btn-link btn-sm pl-0"
+          onClick={() => setOpenStatus(!open)}
+        >
           {open ? (
             <div className="d-flex align-items-center">
               <FaCaretUp className="mr-1" />

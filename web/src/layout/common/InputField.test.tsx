@@ -30,7 +30,7 @@ describe('InputField', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<InputField {...defaultProps} type="text" />);
     expect(asFragment).toMatchSnapshot();
   });

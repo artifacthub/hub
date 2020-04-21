@@ -11,13 +11,11 @@ export default (query: SearchFiltersURL): string => {
   if (query.deprecated) {
     p.set('deprecated', 'true');
   }
-  if (!isUndefined(query.filters)) {
-    Object.keys(query.filters).forEach((filterId: string) => {
-      return query.filters[filterId].forEach((id: string) => {
-        p.append(filterId, id);
-      });
+  Object.keys(query.filters).forEach((filterId: string) => {
+    return query.filters[filterId].forEach((id: string) => {
+      p.append(filterId, id);
     });
-  }
+  });
   const result = p.toString();
-  return result === '' ? '' : `?${result}`;
+  return `?${result}`;
 };

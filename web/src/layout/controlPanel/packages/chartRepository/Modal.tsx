@@ -139,9 +139,7 @@ const ChartRepositoryModal = (props: Props) => {
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">
-                {isUndefined(props.chartRepository) ? <>Adding chart repository</> : <>Updating chart repository</>}
-              </span>
+              <span className="ml-2">Validating chart repository...</span>
             </>
           ) : (
             <>{isUndefined(props.chartRepository) ? <>Add</> : <>Update</>}</>

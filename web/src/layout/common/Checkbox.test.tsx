@@ -18,7 +18,7 @@ describe('Checkbox', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Checkbox {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

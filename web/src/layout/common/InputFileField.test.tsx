@@ -23,7 +23,7 @@ describe('InputFileField', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<InputFileField {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

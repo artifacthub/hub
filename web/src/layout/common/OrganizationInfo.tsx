@@ -19,6 +19,7 @@ interface Props {
   deprecated: null | boolean;
   className?: string;
   labelClassName?: string;
+  btnClassName?: string;
   visibleLegend: boolean;
 }
 
@@ -111,7 +112,7 @@ const OrganizationInfo = (props: Props) => {
 
       <button
         data-testid="orgLink"
-        className={`p-0 border-0 ${styles.link}`}
+        className={`p-0 border-0 ${styles.link} ${props.btnClassName}`}
         onClick={(e) => {
           e.preventDefault();
           history.push({
@@ -134,7 +135,7 @@ const OrganizationInfo = (props: Props) => {
           setOnLinkHover(false);
         }}
       >
-        <u>
+        <u className="text-truncate">
           {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
             <>{props.organizationDisplayName}</>
           ) : (

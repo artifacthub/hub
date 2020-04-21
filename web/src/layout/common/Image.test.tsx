@@ -9,7 +9,7 @@ const defaultProps = {
 };
 
 describe('Image', () => {
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Image {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

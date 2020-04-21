@@ -58,6 +58,10 @@
   color: var(--color-1-700);
 }
 
+.md pre code {
+  color: var(--black);
+}
+
 .md p code {
   white-space: normal;
 }

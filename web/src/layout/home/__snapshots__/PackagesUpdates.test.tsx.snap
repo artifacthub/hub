@@ -56,6 +56,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/halkeye/undefined"
             >
               <div
@@ -78,46 +79,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          mosquitto
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              mosquitto
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               halkeye
                             </u>
                           </button>
@@ -135,15 +154,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -153,6 +163,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/halkeye/undefined"
             >
               <div
@@ -175,46 +186,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          pihole
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              pihole
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               halkeye
                             </u>
                           </button>
@@ -232,15 +261,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -250,6 +270,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/gabibbo97/undefined"
             >
               <div
@@ -271,46 +292,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          fcgi-nginx-frontend
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              fcgi-nginx-frontend
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               gabibbo97
                             </u>
                           </button>
@@ -328,15 +367,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -346,6 +376,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/halkeye/undefined"
             >
               <div
@@ -368,46 +399,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          sevendaysdie
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              sevendaysdie
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               halkeye
                             </u>
                           </button>
@@ -425,15 +474,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -443,6 +483,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/billimek/undefined"
             >
               <div
@@ -465,46 +506,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          digitalocean-dyndns
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              digitalocean-dyndns
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               billimek
                             </u>
                           </button>
@@ -521,15 +580,6 @@ exports[`Package index creates snapshot 2`] = `
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
                   </div>
                 </div>
               </div>
@@ -550,6 +600,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/stable/undefined"
             >
               <div
@@ -572,46 +623,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          jenkins
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              jenkins
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               stable
                             </u>
                           </button>
@@ -629,15 +698,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -647,6 +707,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/stable/undefined"
             >
               <div
@@ -669,46 +730,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          airflow
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              airflow
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               stable
                             </u>
                           </button>
@@ -726,15 +805,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -744,6 +814,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/stable/undefined"
             >
               <div
@@ -765,46 +836,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          bookstack
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              bookstack
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               stable
                             </u>
                           </button>
@@ -822,15 +911,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -840,6 +920,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/stable/undefined"
             >
               <div
@@ -861,46 +942,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          cluster-autoscaler
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              cluster-autoscaler
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               stable
                             </u>
                           </button>
@@ -918,15 +1017,6 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
-                  </div>
                 </div>
               </div>
             </a>
@@ -936,6 +1026,7 @@ exports[`Package index creates snapshot 2`] = `
           >
             <a
               class="text-decoration-none link"
+              data-testid="packageLink"
               href="/package/chart/stable/undefined"
             >
               <div
@@ -958,46 +1049,64 @@ exports[`Package index creates snapshot 2`] = `
                       />
                     </div>
                     <div
-                      class="ml-3 flex-grow-1 truncateWrapper"
+                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
                     >
                       <div
-                        class="card-title font-weight-bolder title"
+                        class="h-50"
                       >
                         <div
-                          class="h6 text-truncate"
+                          class="h-100 d-flex flex-row justify-content-between"
                         >
-                          kafka-manager
+                          <div
+                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                          >
+                            <div
+                              class="h6 text-truncate mr-2"
+                            >
+                              kafka-manager
+                            </div>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="helm.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div
-                        class="card-subtitle align-items-center subtitle"
+                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate text-wrap"
+                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
                           </span>
-                          <div
-                            class="d-inline-block"
+                          <button
+                            class="p-0 border-0 text-truncate mx50 link"
                           >
-                            <button
-                              class="p-0 border-0 link"
-                            >
-                              <u />
-                            </button>
-                          </div>
+                            <u
+                              class="text-truncate"
+                            />
+                          </button>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
                           <button
-                            class="p-0 border-0 link"
+                            class="text-truncate p-0 border-0 mx50 link"
+                            data-testid="repoLink"
                           >
-                            <u>
+                            <u
+                              class="text-truncate"
+                            >
                               stable
                             </u>
                           </button>
@@ -1014,15 +1123,6 @@ exports[`Package index creates snapshot 2`] = `
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex align-items-center text-uppercase ml-2 kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon"
-                      src="helm.svg"
-                    />
                   </div>
                 </div>
               </div>

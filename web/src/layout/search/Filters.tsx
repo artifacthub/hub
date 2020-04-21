@@ -110,7 +110,7 @@ const Filters = (props: Props) => {
   };
 
   return (
-    <div className={classnames(styles.filters, { 'pt-2 mt-3': props.visibleTitle })}>
+    <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': props.visibleTitle })}>
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>

@@ -8,8 +8,8 @@ const defaultProps = {
   header: 'title',
 };
 
-describe('Loading', () => {
-  it('renders correctly', () => {
+describe('Sidebar', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Sidebar {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

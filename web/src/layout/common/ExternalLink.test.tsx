@@ -16,7 +16,7 @@ describe('External link', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<ExternalLink {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });
