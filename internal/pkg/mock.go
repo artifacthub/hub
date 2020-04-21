@@ -58,3 +58,9 @@ func (m *ManagerMock) ToggleStar(ctx context.Context, packageID string) error {
 	args := m.Called(ctx, packageID)
 	return args.Error(0)
 }
+
+// Unregister implements the PackageManager interface.
+func (m *ManagerMock) Unregister(ctx context.Context, pkg *hub.Package) error {
+	args := m.Called(ctx, pkg)
+	return args.Error(0)
+}

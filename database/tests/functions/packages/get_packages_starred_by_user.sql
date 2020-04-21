@@ -19,20 +19,16 @@ values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com'
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    logo_image_id,
     latest_version,
+    logo_image_id,
     stars,
     package_kind_id,
     organization_id
 ) values (
     :'package1ID',
     'package1',
-    'Package 1',
-    'description',
-    :'image1ID',
     '1.0.0',
+    :'image1ID',
     10,
     1,
     :'org1ID'
@@ -40,6 +36,8 @@ insert into package (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
     app_version,
     digest,
     readme,
@@ -47,6 +45,8 @@ insert into snapshot (
 ) values (
     :'package1ID',
     '1.0.0',
+    'Package 1',
+    'description',
     '12.1.0',
     'digest-package1-1.0.0',
     'readme',
@@ -55,6 +55,8 @@ insert into snapshot (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
     app_version,
     digest,
     readme,
@@ -62,6 +64,8 @@ insert into snapshot (
 ) values (
     :'package1ID',
     '0.0.9',
+    'Package 1',
+    'description',
     '12.0.0',
     'digest-package1-0.0.9',
     'readme',
@@ -70,22 +74,16 @@ insert into snapshot (
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    logo_image_id,
-    deprecated,
     latest_version,
+    logo_image_id,
     stars,
     package_kind_id,
     organization_id
 ) values (
     :'package2ID',
     'package2',
-    'Package 2',
-    'description',
-    :'image2ID',
-    true,
     '1.0.0',
+    :'image2ID',
     11,
     1,
     :'org1ID'
@@ -93,17 +91,23 @@ insert into package (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
     app_version,
     digest,
     readme,
-    links
+    links,
+    deprecated
 ) values (
     :'package2ID',
     '1.0.0',
+    'Package 2',
+    'description',
     '12.1.0',
     'digest-package2-1.0.0',
     'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    '{"link1": "https://link1", "link2": "https://link2"}',
+    true
 );
 insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package1ID');
 
@@ -111,17 +115,17 @@ insert into user_starred_package (user_id, package_id) values (:'user1ID', :'pac
 select is(
     get_packages_starred_by_user(:'user1ID')::jsonb,
     '[{
+        "package_id": "00000000-0000-0000-0000-000000000001",
         "kind": 1,
         "name": "package1",
         "normalized_name": "package1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "package_id": "00000000-0000-0000-0000-000000000001",
+        "stars": 10,
+        "display_name": "Package 1",
+        "description": "description",
         "version": "1.0.0",
         "app_version": "12.1.0",
-        "description": "description",
-        "display_name": "Package 1",
         "deprecated": null,
-        "stars": 10,
         "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",

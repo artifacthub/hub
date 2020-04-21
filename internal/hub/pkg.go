@@ -27,13 +27,12 @@ type Package struct {
 	PackageID         string                 `json:"package_id"`
 	Kind              PackageKind            `json:"kind"`
 	Name              string                 `json:"name"`
-	DisplayName       string                 `json:"display_name"`
-	Description       string                 `json:"description"`
-	HomeURL           string                 `json:"home_url"`
 	LogoURL           string                 `json:"logo_url"`
 	LogoImageID       string                 `json:"logo_image_id"`
+	DisplayName       string                 `json:"display_name"`
+	Description       string                 `json:"description"`
 	Keywords          []string               `json:"keywords"`
-	Deprecated        bool                   `json:"deprecated"`
+	HomeURL           string                 `json:"home_url"`
 	Readme            string                 `json:"readme"`
 	Links             []*Link                `json:"links"`
 	Version           string                 `json:"version"`
@@ -41,6 +40,7 @@ type Package struct {
 	AppVersion        string                 `json:"app_version"`
 	Digest            string                 `json:"digest"`
 	Data              map[string]interface{} `json:"data"`
+	Deprecated        bool                   `json:"deprecated"`
 	Maintainers       []*Maintainer          `json:"maintainers"`
 	UserID            string                 `json:"user_id"`
 	OrganizationID    string                 `json:"organization_id"`
@@ -71,6 +71,7 @@ type PackageManager interface {
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
 	ToggleStar(ctx context.Context, packageID string) error
+	Unregister(ctx context.Context, pkg *Package) error
 }
 
 // SearchPackageInput represents the query input when searching for packages.

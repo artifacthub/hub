@@ -237,3 +237,36 @@ func TestToggleStar(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 }
+
+func TestUnregister(t *testing.T) {
+	dbQuery := "select unregister_package($1::jsonb)"
+
+	p := &hub.Package{
+		Kind:    hub.Chart,
+		Name:    "package1",
+		Version: "1.0.0",
+		ChartRepository: &hub.ChartRepository{
+			ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
+		},
+	}
+
+	t.Run("successful package unregistration", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		m := NewManager(db)
+
+		err := m.Unregister(context.Background(), p)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		err := m.Unregister(context.Background(), p)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+}

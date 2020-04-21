@@ -7,6 +7,12 @@ create or replace function register_package(p_pkg jsonb)
 returns void as $$
 declare
     v_package_id uuid;
+    v_name text := p_pkg->>'name';
+    v_display_name text := nullif(p_pkg->>'display_name', '');
+    v_description text := nullif(p_pkg->>'description', '');
+    v_keywords text[] := (
+        select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]
+    );
     v_chart_repository_id text := (p_pkg->'chart_repository')->>'chart_repository_id';
     v_package_latest_version_needs_update boolean := false;
     v_maintainer jsonb;
@@ -15,27 +21,19 @@ begin
     -- Package
     insert into package (
         name,
-        display_name,
-        description,
-        home_url,
         logo_url,
         logo_image_id,
-        keywords,
-        deprecated,
         latest_version,
+        tsdoc,
         package_kind_id,
         organization_id,
         chart_repository_id
     ) values (
-        p_pkg->>'name',
-        nullif(p_pkg->>'display_name', ''),
-        nullif(p_pkg->>'description', ''),
-        nullif(p_pkg->>'home_url', ''),
+        v_name,
         nullif(p_pkg->>'logo_url', ''),
         nullif(p_pkg->>'logo_image_id', '')::uuid,
-        (select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]),
-        (p_pkg->>'deprecated')::boolean,
         p_pkg->>'version',
+        generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
         (p_pkg->>'kind')::int,
         nullif(p_pkg->>'organization_id', '')::uuid,
         nullif(v_chart_repository_id, '')::uuid
@@ -43,14 +41,10 @@ begin
     on conflict (package_kind_id, chart_repository_id, name) do update
     set
         name = excluded.name,
-        display_name = excluded.display_name,
-        description = excluded.description,
-        home_url = excluded.home_url,
         logo_url = excluded.logo_url,
         logo_image_id = excluded.logo_image_id,
-        keywords = excluded.keywords,
-        deprecated = excluded.deprecated,
         latest_version = excluded.latest_version,
+        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
         updated_at = current_timestamp
     where semver_gte(p_pkg->>'version', package.latest_version) = true
     returning package_id into v_package_id;
@@ -96,32 +90,47 @@ begin
         select package_id into v_package_id
         from package
         where chart_repository_id = v_chart_repository_id::uuid
-        and name = p_pkg->>'name';
+        and name = v_name;
     end if;
 
     -- Package snapshot
     insert into snapshot (
         package_id,
         version,
+        display_name,
+        description,
+        keywords,
+        home_url,
         app_version,
         digest,
         readme,
         links,
-        data
+        data,
+        deprecated
     ) values (
         v_package_id,
         p_pkg->>'version',
+        v_display_name,
+        v_description,
+        v_keywords,
+        nullif(p_pkg->>'home_url', ''),
         nullif(p_pkg->>'app_version', ''),
         nullif(p_pkg->>'digest', ''),
         nullif(p_pkg->>'readme', ''),
         p_pkg->'links',
-        p_pkg->'data'
+        p_pkg->'data',
+        (p_pkg->>'deprecated')::boolean
     )
     on conflict (package_id, version) do update
     set
+        display_name = excluded.display_name,
+        description = excluded.description,
+        keywords = excluded.keywords,
+        home_url = excluded.home_url,
         app_version = excluded.app_version,
         digest = excluded.digest,
         readme = excluded.readme,
-        links = excluded.links;
+        links = excluded.links,
+        deprecated = excluded.deprecated;
 end
 $$ language plpgsql;

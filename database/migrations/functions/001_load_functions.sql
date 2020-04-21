@@ -15,6 +15,7 @@
 {{ template "users/update_user_profile.sql" }}
 {{ template "users/verify_email.sql" }}
 
+{{ template "packages/generate_package_tsdoc.sql" }}
 {{ template "packages/get_package.sql" }}
 {{ template "packages/get_packages_starred_by_user.sql" }}
 {{ template "packages/get_packages_stats.sql" }}
@@ -23,6 +24,7 @@
 {{ template "packages/search_packages.sql" }}
 {{ template "packages/semver_gte.sql" }}
 {{ template "packages/toggle_star.sql" }}
+{{ template "packages/unregister_package.sql" }}
 
 {{ template "chart_repositories/add_chart_repository.sql" }}
 {{ template "chart_repositories/delete_chart_repository.sql" }}

@@ -27,13 +27,13 @@ begin
             pk.name as package_kind_name,
             p.name,
             p.normalized_name,
-            p.display_name,
-            p.description,
             p.logo_image_id,
-            p.deprecated,
             p.stars,
+            s.display_name,
+            s.description,
             s.version,
             s.app_version,
+            s.deprecated,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name,
@@ -55,7 +55,7 @@ begin
             case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
                 true
             else
-                (deprecated is null or deprecated = false)
+                (s.deprecated is null or s.deprecated = false)
             end
     ), packages_applying_all_filters as (
         select * from packages_applying_text_and_deprecated_filters
@@ -87,13 +87,13 @@ begin
                         'kind', package_kind_id,
                         'name', name,
                         'normalized_name', normalized_name,
+                        'logo_image_id', logo_image_id,
+                        'stars', stars,
                         'display_name', display_name,
                         'description', description,
-                        'logo_image_id', logo_image_id,
-                        'deprecated', deprecated,
-                        'stars', stars,
                         'version', version,
                         'app_version', app_version,
+                        'deprecated', deprecated,
                         'user_alias', user_alias,
                         'organization_name', organization_name,
                         'organization_display_name', organization_display_name,

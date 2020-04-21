@@ -54,7 +54,7 @@ func main() {
 	srv := &http.Server{
 		Addr:         addr,
 		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 5 * time.Second,
+		WriteTimeout: 30 * time.Second,
 		IdleTimeout:  1 * time.Minute,
 		Handler:      handlers.Setup(cfg, svc).Router,
 	}

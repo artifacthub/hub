@@ -123,9 +123,9 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, basePath, pkgPath string) 
 	// Build package to register
 	p := &hub.Package{
 		Name:           e.Name,
-		Description:    e.ShortDescription,
 		LogoURL:        logoURL,
 		LogoImageID:    logoImageID,
+		Description:    e.ShortDescription,
 		Keywords:       e.Keywords,
 		Version:        e.Version,
 		Readme:         e.Description,

@@ -14,18 +14,12 @@ values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    home_url,
     latest_version,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package1ID',
     'Package 1',
-    'Package 1',
-    'description',
-    'home_url',
     '1.0.0',
     0,
     :'repo1ID'

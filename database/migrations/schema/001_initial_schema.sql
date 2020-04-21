@@ -67,39 +67,17 @@ insert into package_kind values (0, 'Helm charts');
 insert into package_kind values (1, 'Falco rules');
 insert into package_kind values (2, 'OPA policies');
 
-create or replace function generate_package_tsdoc(
-    p_name text,
-    p_display_name text,
-    p_description text,
-    p_keywords text[]
-) returns tsvector as $$
-    select
-        setweight(to_tsvector(p_name), 'A') ||
-        setweight(to_tsvector(coalesce(p_display_name, '')), 'A') ||
-        setweight(to_tsvector(coalesce(p_description, '')), 'B') ||
-        setweight(to_tsvector(array_to_string(coalesce(p_keywords, '{}'), ' ')), 'C');
-$$ language sql immutable;
-
 create table if not exists package (
     package_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> ''),
-    normalized_name text generated always as (
-        replace(lower(name), ' ', '-')
-    ) stored,
-    display_name text check (display_name <> ''),
-    description text check (description <> ''),
-    home_url text check (home_url <> ''),
+    normalized_name text generated always as (replace(lower(name), ' ', '-')) stored,
+    latest_version text not null check (latest_version <> ''),
     logo_url text check (logo_url <> ''),
     logo_image_id uuid,
-    keywords text[],
-    deprecated boolean,
-    latest_version text not null check (latest_version <> ''),
+    stars integer not null default 0,
+    tsdoc tsvector,
     created_at timestamptz default current_timestamp not null,
     updated_at timestamptz default current_timestamp not null,
-    stars integer not null default 0,
-    tsdoc tsvector generated always as (
-        generate_package_tsdoc(name, display_name, description, keywords)
-    ) stored,
     package_kind_id integer not null references package_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,
@@ -111,24 +89,28 @@ create table if not exists package (
     unique (package_kind_id, chart_repository_id, name)
 );
 
-create index package_deprecated_idx on package (deprecated);
+create index package_stars_idx on package (stars);
 create index package_tsdoc_idx on package using gin (tsdoc);
-create index package_package_kind_id_idx on package (package_kind_id);
-create index package_chart_repository_id_idx on package (chart_repository_id);
 create index package_created_at_idx on package (created_at);
 create index package_updated_at_idx on package (updated_at);
-create index package_stars_idx on package (stars);
+create index package_package_kind_id_idx on package (package_kind_id);
 create index package_user_id_idx on package (user_id);
 create index package_organization_id_idx on package (organization_id);
+create index package_chart_repository_id_idx on package (chart_repository_id);
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,
     version text not null check (version <> ''),
+    display_name text check (display_name <> ''),
+    description text check (description <> ''),
+    keywords text[],
+    home_url text check (home_url <> ''),
     app_version text check (app_version <> ''),
     digest text check (digest <> '') unique,
     readme text check (readme <> ''),
     links jsonb,
     data jsonb,
+    deprecated boolean,
     primary key (package_id, version)
 );
 

@@ -17,13 +17,12 @@ select register_package('
 {
     "kind": 0,
     "name": "package1",
-    "display_name": "Package 1",
-    "description": "description",
-    "home_url": "home_url",
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
+    "display_name": "Package 1",
+    "description": "description",
     "keywords": ["kw1", "kw2"],
-    "deprecated": false,
+    "home_url": "home_url",
     "readme": "readme-version-1.0.0",
     "links": {
         "link1": "https://link1",
@@ -35,6 +34,7 @@ select register_package('
     "version": "1.0.0",
     "app_version": "12.1.0",
     "digest": "digest-package1-1.0.0",
+    "deprecated": false,
     "maintainers": [
         {
             "name": "name1",
@@ -56,14 +56,9 @@ select results_eq(
     $$
         select
             name,
-            display_name,
-            description,
-            home_url,
+            latest_version,
             logo_url,
             logo_image_id,
-            keywords,
-            deprecated,
-            latest_version,
             package_kind_id,
             chart_repository_id
         from package
@@ -72,14 +67,9 @@ select results_eq(
     $$
         values (
             'package1',
-            'Package 1',
-            'description',
-            'home_url',
+            '1.0.0',
             'logo_url',
             '00000000-0000-0000-0000-000000000001'::uuid,
-            '{kw1,kw2}'::text[],
-            false,
-            '1.0.0',
             0,
             '00000000-0000-0000-0000-000000000001'::uuid
         )
@@ -90,11 +80,16 @@ select results_eq(
     $$
         select
             s.version,
+            s.display_name,
+            s.description,
+            s.keywords,
+            s.home_url,
             s.app_version,
             s.digest,
             s.readme,
             s.links,
-            s.data
+            s.data,
+            s.deprecated
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -103,11 +98,16 @@ select results_eq(
     $$
         values (
             '1.0.0',
+            'Package 1',
+            'description',
+            '{kw1,kw2}'::text[],
+            'home_url',
             '12.1.0',
             'digest-package1-1.0.0',
             'readme-version-1.0.0',
             '{"link1": "https://link1", "link2": "https://link2"}'::jsonb,
-            '{"key": "value"}'::jsonb
+            '{"key": "value"}'::jsonb,
+            false
         )
     $$,
     'Snapshot should exist'
@@ -136,17 +136,17 @@ select register_package('
 {
     "kind": 0,
     "name": "package1",
+    "logo_url": "logo_url updated",
+    "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "display_name": "Package 1 v2",
     "description": "description v2",
-    "home_url": "home_url",
-    "logo_url": "logo_url",
-    "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "keywords": ["kw1", "kw2"],
-    "deprecated": true,
+    "home_url": "home_url",
     "readme": "readme-version-2.0.0",
     "version": "2.0.0",
     "app_version": "13.0.0",
     "digest": "digest-package1-2.0.0",
+    "deprecated": true,
     "maintainers": [
         {
             "name": "name1",
@@ -161,18 +161,27 @@ select register_package('
 
 -- Check if package registration succeeded
 select results_eq(
-    $$ select display_name, description, deprecated from package where name='package1' $$,
-    $$ values ('Package 1 v2', 'description v2', true) $$,
-    'Package display name, description and deprecated should have been updated'
+    $$
+        select logo_url from package where name = 'package1'
+    $$,
+    $$
+        values ('logo_url updated')
+    $$,
+    'Package logo url should have been updated'
 );
 select results_eq(
     $$
         select
             s.version,
+            s.display_name,
+            s.description,
+            s.keywords,
+            s.home_url,
             s.app_version,
             s.digest,
             s.readme,
-            s.links
+            s.links,
+            s.deprecated
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -181,10 +190,15 @@ select results_eq(
     $$
         values (
             '2.0.0',
+            'Package 1 v2',
+            'description v2',
+            '{kw1,kw2}'::text[],
+            'home_url',
             '13.0.0',
             'digest-package1-2.0.0',
             'readme-version-2.0.0',
-            null::jsonb
+            null::jsonb,
+            true
         )
     $$,
     'New snapshot should exist'
@@ -225,11 +239,11 @@ select register_package('
     "home_url": "home_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
     "keywords": ["kw1", "kw2"],
-    "deprecated": true,
     "readme": "readme-version-0.0.9",
     "version": "0.0.9",
     "app_version": "11.0.0",
     "digest": "digest-package1-0.0.9",
+    "deprecated": true,
     "maintainers": [
         {
             "name": "name1",
@@ -248,18 +262,27 @@ select register_package('
 
 -- Check if package registration succeeded
 select results_eq(
-    $$ select display_name, description from package where name='package1' $$,
-    $$ values ('Package 1 v2', 'description v2') $$,
-    'Package display name and description should not have been updated'
+    $$
+        select logo_url from package where name = 'package1'
+    $$,
+    $$
+        values ('logo_url updated')
+    $$,
+    'Package logo url should not have been updated'
 );
 select results_eq(
     $$
         select
             s.version,
+            s.display_name,
+            s.description,
+            s.keywords,
+            s.home_url,
             s.app_version,
             s.digest,
             s.readme,
-            s.links
+            s.links,
+            s.deprecated
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -268,10 +291,15 @@ select results_eq(
     $$
         values (
             '0.0.9',
+            'Package 1',
+            'description',
+            '{kw1,kw2}'::text[],
+            'home_url',
             '11.0.0',
             'digest-package1-0.0.9',
             'readme-version-0.0.9',
-            null::jsonb
+            null::jsonb,
+            true
         )
     $$,
     'New snapshot should exist'
@@ -306,8 +334,6 @@ select results_eq(
     $$
         select
             name,
-            display_name,
-            description,
             latest_version,
             package_kind_id,
             organization_id,
@@ -318,8 +344,6 @@ select results_eq(
     $$
         values (
             'package3',
-            'Package 3',
-            'description',
             '1.0.0',
             1,
             '00000000-0000-0000-0000-000000000001'::uuid,
