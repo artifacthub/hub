@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+      >
+        <div
+          class="modal-content content modal"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Sign up
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="my-auto"
+            >
+              <div
+                class="h5 mb-5 text-center"
+              >
+                Create your account using your email
+              </div>
+              <button
+                class="btn btn-outline-secondary btn-block"
+                data-testid="signUpBtn"
+                type="button"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"
+                    />
+                  </svg>
+                  <div
+                    class="flex-grow-1 text-center"
+                  >
+                    Sign up
+                  </div>
+                </div>
+              </button>
+              <div
+                class="my-5 my-4 position-relative text-center separator"
+              >
+                <span
+                  class="p-3 m-auto separatorContent"
+                >
+                  or sign in with
+                </span>
+                <div
+                  class="divider"
+                />
+              </div>
+              <div>
+                <div
+                  class="d-flex flex-column mb-1"
+                >
+                  <button
+                    class="btn btn-outline-secondary mb-3 btn-block btn"
+                    type="button"
+                  >
+                    <div
+                      class="d-flex align-items-center"
+                    >
+                      <img
+                        alt="Github Logo"
+                        class="logo"
+                        src="github-mark.svg"
+                      />
+                      <div
+                        class="flex-grow-1 text-center"
+                      >
+                        Github
+                      </div>
+                    </div>
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary mb-3 btn-block btn"
+                    type="button"
+                  >
+                    <div
+                      class="d-flex align-items-center"
+                    >
+                      <img
+                        alt="Google Logo"
+                        class="logo"
+                        src="google.svg"
+                      />
+                      <div
+                        class="flex-grow-1 text-center"
+                      >
+                        Google
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

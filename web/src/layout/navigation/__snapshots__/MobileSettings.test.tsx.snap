@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileSettings creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="btn-group navbar-toggler pr-0 navbarToggler"
+  >
+    <div
+      class="d-inline-block d-md-none"
+      role="complementary"
+    >
+      <button
+        class="font-weight-bold text-uppercase position-relative btn position-relative btn text-secondary pr-0 pl-3"
+        data-testid="openSidebarBtn"
+        type="button"
+      >
+        <div
+          class="d-flex align-items-center justify-content-center"
+        >
+          <div
+            class="rounded-circle d-flex align-items-center justify-content-center iconWrapper"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 496 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"
+              />
+            </svg>
+          </div>
+        </div>
+      </button>
+      <div
+        class="sidebar right"
+        data-testid="sidebarContent"
+      >
+        <div
+          class="d-flex flex-column h-100"
+        >
+          <div
+            class="border-bottom p-4 pb-3"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+            >
+              <div>
+                <div
+                  class="h6 mb-0 text-dark"
+                >
+                  Signed in as 
+                  <span
+                    class="font-weight-bold"
+                  >
+                    test
+                  </span>
+                </div>
+              </div>
+              <div>
+                <button
+                  class="close"
+                  data-testid="closeSidebarBtn"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex-grow-1 d-flex contentWrapper undefined"
+          >
+            <div
+              class="overflow-auto mh-100 w-100 py-3"
+            >
+              <a
+                class="dropdown-item my-2"
+                data-testid="starredPackagesLink"
+                href="/user/packages/starred"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 576 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                    />
+                  </svg>
+                  <div>
+                    Starred packages
+                  </div>
+                </div>
+              </a>
+              <button
+                class="dropdown-item my-2"
+                data-testid="logOutBtn"
+              >
+                <div
+                  class="d-flex align-items-center"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"
+                    />
+                  </svg>
+                  <div>
+                    Sign out
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="mt-auto p-4"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+            >
+              <button
+                class="ml-auto btn btn-sm btn-secondary"
+                data-testid="closeSidebarFooterBtn"
+                type="button"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

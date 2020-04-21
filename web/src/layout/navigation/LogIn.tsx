@@ -142,6 +142,7 @@ const LogIn = (props: Props) => {
       <>
         <form
           ref={loginForm}
+          data-testid="loginForm"
           className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           onFocus={cleanApiError}
           autoComplete="on"
@@ -150,7 +151,7 @@ const LogIn = (props: Props) => {
           <InputField
             ref={emailInput}
             type="email"
-            label="Email address"
+            label="Email"
             name="email"
             value=""
             invalidText={{
@@ -179,7 +180,13 @@ const LogIn = (props: Props) => {
           />
 
           <div className="text-right">
-            <button className="btn btn-secondary" type="button" disabled={isLoading.status} onClick={submitForm}>
+            <button
+              data-testid="logInBtn"
+              className="btn btn-secondary"
+              type="button"
+              disabled={isLoading.status}
+              onClick={submitForm}
+            >
               {!isUndefined(isLoading.type) && isLoading.type === 'log' ? (
                 <>
                   <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />

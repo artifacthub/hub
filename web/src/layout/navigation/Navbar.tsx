@@ -39,7 +39,7 @@ const Navbar = (props: Props) => {
       })}
     >
       <div className="container">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
+        <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
           <FiHexagon className="mr-2" />
           <div className="d-flex align-items-start">
             <div className="d-flex align-items-baseline">

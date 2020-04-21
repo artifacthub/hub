@@ -47,7 +47,7 @@ const LogOut = (props: Props) => {
 
   return (
     <>
-      <button className={`dropdown-item ${props.className}`} onClick={logoutUser}>
+      <button data-testid="logOutBtn" className={`dropdown-item ${props.className}`} onClick={logoutUser}>
         {isLoggingOut ? (
           <>
             <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
