@@ -8,7 +8,7 @@ const defaultProps = {
 };
 
 describe('NoData', () => {
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<NoData {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

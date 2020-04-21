@@ -46,6 +46,10 @@
   color: inherit;
 }
 
+.mx50 {
+  max-width: 100%;
+}
+
 .title {
   line-height: 1rem;
 }

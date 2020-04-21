@@ -20,23 +20,16 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const mockSaveScrollPosition = jest.fn();
-
-const defaultProps = {
-  saveScrollPosition: mockSaveScrollPosition,
-  searchUrlReferer: undefined,
-};
-
 describe('PackageCard', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('renders correctly', () => {
     const mockPackage = getMockPackage('1');
     const { asFragment } = render(
       <Router>
-        <PackageCard {...defaultProps} package={mockPackage} />
+        <PackageCard package={mockPackage} />
       </Router>
     );
     expect(asFragment).toMatchSnapshot();
@@ -47,7 +40,7 @@ describe('PackageCard', () => {
       const mockPackage = getMockPackage('2');
       const { queryByAltText } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
@@ -59,7 +52,7 @@ describe('PackageCard', () => {
 
       const { queryByAltText } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
@@ -74,7 +67,7 @@ describe('PackageCard', () => {
 
       const { queryByText } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const title = queryByText(mockPackage.displayName!);
@@ -86,7 +79,7 @@ describe('PackageCard', () => {
 
       const { queryByText } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const title = queryByText(mockPackage.name!);
@@ -100,7 +93,7 @@ describe('PackageCard', () => {
 
       const { queryByTestId, queryByAltText } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const button = queryByTestId('repoLink');
@@ -127,7 +120,7 @@ describe('PackageCard', () => {
 
       const { queryByTestId } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
       const button = queryByTestId('repoLink');
@@ -138,21 +131,14 @@ describe('PackageCard', () => {
   describe('Detail', () => {
     it('opens detail page', () => {
       const mockPackage = getMockPackage('8');
-      const urlReferer = {
-        text: 'test',
-        filters: {},
-        pageNumber: 1,
-        deprecated: false,
-      };
-      const { queryByTestId } = render(
+      const { getByTestId } = render(
         <Router>
-          <PackageCard {...defaultProps} package={mockPackage} searchUrlReferer={urlReferer} />
+          <PackageCard package={mockPackage} />
         </Router>
       );
-      const link = queryByTestId('link');
+      const link = getByTestId('packageLink');
       expect(link).toBeInTheDocument();
-      fireEvent.click(link!);
-      expect(mockSaveScrollPosition).toHaveBeenCalledTimes(1);
+      fireEvent.click(link);
       expect(window.location.pathname).toBe(buildPackageURL(mockPackage));
     });
   });

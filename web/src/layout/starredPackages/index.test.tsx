@@ -93,6 +93,23 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {});
     });
 
+    it('renders empty packages list when error is different to not signed in user', async () => {
+      mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'another error' });
+
+      render(
+        <Router>
+          <StarredPackagesView />
+        </Router>
+      );
+
+      const noData = await waitFor(() => screen.getByTestId('noData'));
+
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent('You have not starred any package yet');
+
+      await waitFor(() => {});
+    });
+
     it('calls history push to load login modal when user is not signed in', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
 

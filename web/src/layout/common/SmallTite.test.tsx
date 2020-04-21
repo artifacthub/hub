@@ -7,8 +7,8 @@ const defaultProps = {
   text: 'title',
 };
 
-describe('NoData', () => {
-  it('renders correctly', () => {
+describe('SmallTitle', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<SmallTitle {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

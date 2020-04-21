@@ -17,8 +17,8 @@ const defaultProps = {
   open: true,
 };
 
-describe('Loading', () => {
-  it('renders correctly', () => {
+describe('Modal', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Modal {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
   });

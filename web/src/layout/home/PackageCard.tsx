@@ -23,6 +23,7 @@ const PackageCard = (props: Props) => {
   return (
     <div className={`card mb-3 mw-100 ${styles.card}`}>
       <Link
+        data-testid="packageLink"
         className={`text-decoration-none ${styles.link}`}
         to={{
           pathname: buildPackageURL(props.package),
@@ -41,22 +42,39 @@ const PackageCard = (props: Props) => {
                 />
               </div>
 
-              <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>
-                <div className={`card-title font-weight-bolder ${styles.title}`}>
-                  <div className="h6 text-truncate">{props.package.displayName || props.package.name}</div>
+              <div className={`ml-3 h-100 flex-grow-1 ${styles.truncateWrapper}`}>
+                <div className="h-50">
+                  <div className="h-100 d-flex flex-row justify-content-between">
+                    <div className={`align-self-end text-truncate card-title mb-0 font-weight-bolder ${styles.title}`}>
+                      <div className="h6 text-truncate mr-2">{props.package.displayName || props.package.name}</div>
+                    </div>
+
+                    <div className={`align-self-start d-flex align-items-center text-uppercase ${styles.kind}`}>
+                      {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
+                        <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
+                          <div className="d-flex align-items-center">
+                            <FaStar className="mr-1" />
+                            <div>{prettifyNumber(props.package.stars)}</div>
+                          </div>
+                        </span>
+                      )}
+                      <PackageIcon className={styles.icon} kind={props.package.kind} />
+                    </div>
+                  </div>
                 </div>
 
-                <div className={`card-subtitle align-items-center ${styles.subtitle}`}>
+                <div className={`card-subtitle text-truncate h-50 align-items-center ${styles.subtitle}`}>
                   {(() => {
                     switch (props.package.kind) {
                       case PackageKind.Chart:
                         return (
                           <>
-                            <div className="mr-2 text-truncate text-wrap">
+                            <div className="d-flex flex-row align-items-baseline mr-2 text-truncate">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
                               {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                                 <OrganizationInfo
                                   className="d-inline-block mr-0"
+                                  btnClassName={`text-truncate ${styles.mx50}`}
                                   organizationName={props.package.organizationName}
                                   organizationDisplayName={props.package.organizationDisplayName}
                                   deprecated={props.package.deprecated}
@@ -65,32 +83,31 @@ const PackageCard = (props: Props) => {
                               )}
 
                               {!isNull(props.package.userAlias) && (
-                                <div className="d-inline-block">
-                                  <button
-                                    className={`p-0 border-0 ${styles.link}`}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      history.push({
-                                        pathname: '/packages/search',
-                                        search: prepareQueryString({
-                                          pageNumber: 1,
-                                          filters: {
-                                            user: [props.package.userAlias!],
-                                          },
-                                          deprecated: false,
-                                        }),
-                                      });
-                                    }}
-                                  >
-                                    <u>{props.package.userAlias}</u>
-                                  </button>
-                                </div>
+                                <button
+                                  className={`p-0 border-0 text-truncate ${styles.mx50} ${styles.link}`}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    history.push({
+                                      pathname: '/packages/search',
+                                      search: prepareQueryString({
+                                        pageNumber: 1,
+                                        filters: {
+                                          user: [props.package.userAlias!],
+                                        },
+                                        deprecated: false,
+                                      }),
+                                    });
+                                  }}
+                                >
+                                  <u className="text-truncate">{props.package.userAlias}</u>
+                                </button>
                               )}
 
                               <span className="px-1">/</span>
 
                               <button
-                                className={`p-0 border-0 ${styles.link}`}
+                                data-testid="repoLink"
+                                className={`text-truncate p-0 border-0 ${styles.mx50} ${styles.link}`}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   history.push({
@@ -105,7 +122,7 @@ const PackageCard = (props: Props) => {
                                   });
                                 }}
                               >
-                                <u>
+                                <u className="text-truncate">
                                   {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
                                 </u>
                               </button>
@@ -124,6 +141,8 @@ const PackageCard = (props: Props) => {
                           <>
                             {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                               <OrganizationInfo
+                                className="d-inline-block mr-0"
+                                btnClassName={`text-truncate ${styles.mx50}`}
                                 organizationName={props.package.organizationName}
                                 organizationDisplayName={props.package.organizationDisplayName}
                                 deprecated={props.package.deprecated}
@@ -135,7 +154,7 @@ const PackageCard = (props: Props) => {
                               <div className="mr-2 text-truncate">
                                 <span className="text-muted text-uppercase mr-1">User:</span>
                                 <button
-                                  className={`p-0 border-0 ${styles.link}`}
+                                  className={`p-0 border-0 text-truncate ${styles.mx50} ${styles.link}`}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     history.push({
@@ -150,7 +169,7 @@ const PackageCard = (props: Props) => {
                                     });
                                   }}
                                 >
-                                  <u>{props.package.userAlias}</u>
+                                  <u className="text-truncate">{props.package.userAlias}</u>
                                 </button>
                               </div>
                             )}
@@ -167,18 +186,6 @@ const PackageCard = (props: Props) => {
                   })()}
                 </div>
               </div>
-            </div>
-
-            <div className={`d-flex align-items-center text-uppercase ml-2 ${styles.kind}`}>
-              {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
-                <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
-                  <div className="d-flex align-items-center">
-                    <FaStar className="mr-1" />
-                    <div>{prettifyNumber(props.package.stars)}</div>
-                  </div>
-                </span>
-              )}
-              <PackageIcon className={styles.icon} kind={props.package.kind} />
             </div>
           </div>
         </div>

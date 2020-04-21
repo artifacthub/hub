@@ -5,7 +5,7 @@ import { PackageKind } from '../../types';
 import PackageIcon from './PackageIcon';
 
 describe('PackageIcon', () => {
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<PackageIcon kind={PackageKind.Chart} />);
     expect(asFragment).toMatchSnapshot();
   });

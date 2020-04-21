@@ -10,7 +10,7 @@ describe('Pagination', () => {
     jest.resetAllMocks();
   });
 
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Pagination limit={15} total={45} offset={0} active={1} onChange={mockOnChange} />);
     expect(asFragment).toMatchSnapshot();
   });

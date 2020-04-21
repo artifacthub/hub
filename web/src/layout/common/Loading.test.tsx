@@ -4,7 +4,7 @@ import React from 'react';
 import Loading from './Loading';
 
 describe('Loading', () => {
-  it('renders correctly', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<Loading />);
     expect(asFragment).toMatchSnapshot();
   });
