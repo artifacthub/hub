@@ -7,7 +7,7 @@ import { API } from '../../api';
 import { Stats } from '../../types';
 import HomeView from './index';
 jest.mock('../../api');
-
+jest.mock('./SearchTip', () => () => <div />);
 jest.mock('./PackagesUpdates', () => () => <div />);
 
 const getMockStats = (fixtureId: string): Stats => {

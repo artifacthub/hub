@@ -117,7 +117,7 @@ exports[`ControlPanelView renders correctly 1`] = `
             </li>
           </ul>
           <div
-            class="position-relative pb-3"
+            class="position-relative ctxWrapper"
           >
             <div
               class="d-flex flex-column"

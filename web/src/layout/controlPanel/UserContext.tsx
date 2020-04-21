@@ -50,7 +50,7 @@ const UserContext = () => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className="position-relative pb-3">
+    <div className={`position-relative ${styles.ctxWrapper}`}>
       <div className="d-flex flex-column">
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">

@@ -241,10 +241,12 @@ const PackageView = (props: Props) => {
                         <div className={`d-flex flex-row mt-1 ${styles.subtitle}`}>
                           {!isUndefined(detail.organizationName) && detail.organizationName && (
                             <OrganizationInfo
+                              className="mr-2"
                               labelClassName={styles.labelOrg}
                               organizationName={detail.organizationName}
                               organizationDisplayName={detail.organizationDisplayName}
                               deprecated={detail.deprecated}
+                              visibleLegend
                             />
                           )}
 

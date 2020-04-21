@@ -63,6 +63,7 @@ const Modal = (props: Props) => {
           type="button"
           className={classnames(
             'font-weight-bold text-uppercase position-relative btn btn-block',
+            styles.btn,
             { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
             { 'btn-primary': isUndefined(props.buttonType) }
           )}

@@ -14,6 +14,7 @@ import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
 import PackagesUpdates from './PackagesUpdates';
+import SearchTip from './SearchTip';
 import UserConfirmation from './UserConfirmation';
 
 interface Props {
@@ -67,6 +68,7 @@ const HomeView = (props: Props) => {
 
         <div className="mt-5 text-center">
           <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
+          <SearchTip />
         </div>
 
         <div className="d-flex align-items-center justify-content-center mt-5">

@@ -93,26 +93,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -190,26 +190,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -286,26 +286,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -383,26 +383,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -480,26 +480,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -587,26 +587,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -684,26 +684,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -780,26 +780,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -876,26 +876,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"
@@ -973,26 +973,26 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle align-items-center subtitle"
                       >
                         <div
-                          class="mr-2 text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User:
-                          </span>
-                          <button
-                            class="p-0 border-0 link"
-                          >
-                            <u />
-                          </button>
-                        </div>
-                        <div
-                          class="mr-2 text-truncate"
+                          class="mr-2 text-truncate text-wrap"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
                           >
                             Repo: 
+                          </span>
+                          <div
+                            class="d-inline-block"
+                          >
+                            <button
+                              class="p-0 border-0 link"
+                            >
+                              <u />
+                            </button>
+                          </div>
+                          <span
+                            class="px-1"
+                          >
+                            /
                           </span>
                           <button
                             class="p-0 border-0 link"

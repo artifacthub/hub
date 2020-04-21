@@ -55,6 +55,7 @@
 .md code {
   word-wrap: normal;
   white-space: pre;
+  color: var(--color-1-700);
 }
 
 .md p code {

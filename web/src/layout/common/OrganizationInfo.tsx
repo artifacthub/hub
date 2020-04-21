@@ -17,7 +17,9 @@ interface Props {
   organizationName: string;
   organizationDisplayName?: string | null;
   deprecated: null | boolean;
+  className?: string;
   labelClassName?: string;
+  visibleLegend: boolean;
 }
 
 const OrganizationInfo = (props: Props) => {
@@ -55,7 +57,7 @@ const OrganizationInfo = (props: Props) => {
   }, [onLinkHover, onDropdownHover, organization, openStatus]);
 
   return (
-    <div className="mr-2 text-truncate">
+    <div className={`text-truncate ${props.className}`}>
       <div className="position-absolute">
         <div
           ref={ref}
@@ -105,10 +107,11 @@ const OrganizationInfo = (props: Props) => {
         </div>
       </div>
 
-      <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>
+      {props.visibleLegend && <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>}
+
       <button
         data-testid="orgLink"
-        className={`p-0 border-0 pr-2 ${styles.link}`}
+        className={`p-0 border-0 ${styles.link}`}
         onClick={(e) => {
           e.preventDefault();
           history.push({
