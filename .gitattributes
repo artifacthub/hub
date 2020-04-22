@@ -1,3 +1,5 @@
 web/build/** linguist-generated
+*.snap linguist-generated
+__fixtures__/** linguist-generated
 *.sql linguist-detectable=true
 *.sql linguist-language=sql

@@ -3,6 +3,7 @@
 exports[`ControlPanelView renders correctly 1`] = `
 <DocumentFragment>
   <main
+    class="d-flex flex-column flex-grow-1 position-relative"
     role="main"
   >
     <div
@@ -239,9 +240,13 @@ exports[`ControlPanelView renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="container py-4 flex-grow-1"
+      class="py-4 flex-grow-1 position-relative"
     >
-      <div />
+      <div
+        class="container"
+      >
+        <div />
+      </div>
     </div>
   </main>
 </DocumentFragment>

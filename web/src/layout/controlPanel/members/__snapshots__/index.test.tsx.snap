@@ -7,7 +7,7 @@ exports[`Members section index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div>
         <div
@@ -93,7 +93,7 @@ exports[`Members section index creates snapshot 2`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div>
         <div

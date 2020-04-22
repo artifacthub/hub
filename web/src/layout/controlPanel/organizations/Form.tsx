@@ -138,6 +138,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       <InputFileField
         name="logo"
         label="Logo"
+        labelLegend={<small className="ml-1 font-italic">(Click on the image to update)</small>}
         value={imageId}
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
