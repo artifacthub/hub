@@ -7,7 +7,7 @@ exports[`Organization settings index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div
         class="h3 pb-0 text-center"
@@ -44,7 +44,7 @@ exports[`Organization settings index creates snapshot 2`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div
         class="h3 pb-0 text-center"
@@ -70,6 +70,11 @@ exports[`Organization settings index creates snapshot 2`] = `
                 for="logo"
               >
                 Logo
+                <small
+                  class="ml-1 font-italic"
+                >
+                  (Click on the image to update)
+                </small>
               </label>
               <div
                 class="position-relative"

@@ -48,7 +48,7 @@ const OrganizationSettings = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <div className="flex-grow-1 position-relative">
+      <div className="flex-grow-1">
         <div className="h3 pb-0 text-center">Organization details</div>
 
         <div className={`mx-auto mt-5 ${styles.form}`}>

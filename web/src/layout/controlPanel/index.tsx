@@ -117,7 +117,7 @@ const ControlPanelView = (props: Props) => {
   }
 
   return (
-    <main role="main">
+    <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
       <div className={`pt-3 position-relative ${styles.navWrapper}`}>
         <div className="container">
           <div className="d-flex flex-row justify-content-between align-items-end">
@@ -151,21 +151,23 @@ const ControlPanelView = (props: Props) => {
       </div>
 
       {isLoggedIn && (
-        <div className="container py-4 flex-grow-1">
-          {(() => {
-            switch (activeSection) {
-              case 'packages':
-                return <PackagesSection {...props} onAuthError={onAuthError} />;
-              case 'organizations':
-                return <OrganizationsSection {...props} onAuthError={onAuthError} />;
-              case 'members':
-                return <MembersSection {...props} onAuthError={onAuthError} />;
-              case 'settings':
-                return <SettingsSection {...props} context={context} onAuthError={onAuthError} />;
-              default:
-                return null;
-            }
-          })()}
+        <div className="py-4 flex-grow-1 position-relative">
+          <div className="container">
+            {(() => {
+              switch (activeSection) {
+                case 'packages':
+                  return <PackagesSection {...props} onAuthError={onAuthError} />;
+                case 'organizations':
+                  return <OrganizationsSection {...props} onAuthError={onAuthError} />;
+                case 'members':
+                  return <MembersSection {...props} onAuthError={onAuthError} />;
+                case 'settings':
+                  return <SettingsSection {...props} context={context} onAuthError={onAuthError} />;
+                default:
+                  return null;
+              }
+            })()}
+          </div>
         </div>
       )}
     </main>

@@ -7,7 +7,7 @@ exports[`User settings index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div
         class="text-center p-5 wrapper undefined"
@@ -264,7 +264,7 @@ exports[`User settings index creates snapshot 2`] = `
     role="main"
   >
     <div
-      class="flex-grow-1 position-relative"
+      class="flex-grow-1"
     >
       <div>
         <div

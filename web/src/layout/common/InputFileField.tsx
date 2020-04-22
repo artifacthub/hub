@@ -13,6 +13,7 @@ import styles from './InputFileField.module.css';
 interface Props {
   name: string;
   label: string;
+  labelLegend?: JSX.Element;
   value?: string;
   className?: string;
   onImageChange?: (imageId: string) => void;
@@ -79,7 +80,10 @@ const InputFileField = (props: Props) => {
   return (
     <div className={`form-group mb-4 ${props.className}`}>
       <div className="d-flex flex-column">
-        <label htmlFor={props.name}>{props.label}</label>
+        <label htmlFor={props.name}>
+          {props.label}
+          {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
+        </label>
 
         <div className="position-relative">
           <button

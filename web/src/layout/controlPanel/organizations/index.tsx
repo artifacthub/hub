@@ -46,7 +46,7 @@ const OrganizationsSection = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <div className="flex-grow-1 position-relative">
+      <div className="flex-grow-1">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between">
             <div className="h3 pb-0">Organizations</div>
