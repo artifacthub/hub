@@ -81,6 +81,13 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 	return err
 }
 
+// Unregister unregisters the package provided from the database.
+func (m *Manager) Unregister(ctx context.Context, pkg *hub.Package) error {
+	pkgJSON, _ := json.Marshal(pkg)
+	_, err := m.db.Exec(ctx, "select unregister_package($1::jsonb)", pkgJSON)
+	return err
+}
+
 // dbQueryJSON is a helper that executes the query provided and returns a bytes
 // slice containing the json data returned from the database.
 func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {

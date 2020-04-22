@@ -25,29 +25,24 @@ values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    home_url,
-    logo_image_id,
-    keywords,
     latest_version,
+    logo_image_id,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package1ID',
     'package1',
-    'Package 1',
-    'description',
-    'home_url',
-    :'image1ID',
-    '{"kw1", "kw2"}',
     '1.0.0',
+    :'image1ID',
     0,
     :'repo1ID'
 );
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    home_url,
     app_version,
     digest,
     readme,
@@ -55,6 +50,9 @@ insert into snapshot (
 ) values (
     :'package1ID',
     '1.0.0',
+    'Package 1',
+    'description',
+    'home_url',
     '12.1.0',
     'digest-package1-1.0.0',
     'readme',
@@ -63,6 +61,9 @@ insert into snapshot (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    home_url,
     app_version,
     digest,
     readme,
@@ -70,6 +71,9 @@ insert into snapshot (
 ) values (
     :'package1ID',
     '0.0.9',
+    'Package 1',
+    'description',
+    'home_url',
     '12.0.0',
     'digest-package1-0.0.9',
     'readme',
@@ -78,29 +82,24 @@ insert into snapshot (
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    home_url,
-    logo_image_id,
-    keywords,
     latest_version,
+    logo_image_id,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package2ID',
     'package2',
-    'Package 2',
-    'description',
-    'home_url',
-    :'image2ID',
-    '{"kw1", "kw2"}',
     '1.0.0',
+    :'image2ID',
     0,
     :'repo1ID'
 );
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    home_url,
     app_version,
     digest,
     readme,
@@ -108,6 +107,9 @@ insert into snapshot (
 ) values (
     :'package2ID',
     '1.0.0',
+    'Package 2',
+    'description',
+    'home_url',
     '12.1.0',
     'digest-package2-1.0.0',
     'readme',
@@ -116,6 +118,9 @@ insert into snapshot (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    home_url,
     app_version,
     digest,
     readme,
@@ -123,6 +128,9 @@ insert into snapshot (
 ) values (
     :'package2ID',
     '0.0.9',
+    'Package 2',
+    'description',
+    'home_url',
     '12.0.0',
     'digest-package2-0.0.9',
     'readme',

@@ -9,9 +9,9 @@ returns setof json as $$
                 'kind', package_kind_id,
                 'name', name,
                 'normalized_name', normalized_name,
-                'display_name', display_name,
                 'logo_image_id', logo_image_id,
                 'stars', stars,
+                'display_name', display_name,
                 'version', version,
                 'app_version', app_version,
                 'user_alias', user_alias,
@@ -32,9 +32,9 @@ returns setof json as $$
                     p.package_kind_id,
                     p.name,
                     p.normalized_name,
-                    p.display_name,
                     p.logo_image_id,
                     p.stars,
+                    s.display_name,
                     s.version,
                     s.app_version,
                     u.alias as user_alias,
@@ -50,7 +50,7 @@ returns setof json as $$
                 left join organization o
                     on p.organization_id = o.organization_id or r.organization_id = o.organization_id
                 where s.version = p.latest_version
-                and (p.deprecated is null or p.deprecated = false)
+                and (s.deprecated is null or s.deprecated = false)
                 order by p.created_at desc limit 5
             ) as lpa
         ),
@@ -60,9 +60,9 @@ returns setof json as $$
                 'kind', package_kind_id,
                 'name', name,
                 'normalized_name', normalized_name,
-                'display_name', display_name,
                 'logo_image_id', logo_image_id,
                 'stars', stars,
+                'display_name', display_name,
                 'version', version,
                 'app_version', app_version,
                 'user_alias', user_alias,
@@ -83,9 +83,9 @@ returns setof json as $$
                     p.package_kind_id,
                     p.name,
                     p.normalized_name,
-                    p.display_name,
                     p.logo_image_id,
                     p.stars,
+                    s.display_name,
                     s.version,
                     s.app_version,
                     u.alias as user_alias,
@@ -101,7 +101,7 @@ returns setof json as $$
                 left join organization o
                     on p.organization_id = o.organization_id or r.organization_id = o.organization_id
                 where s.version = p.latest_version
-                and (p.deprecated is null or p.deprecated = false)
+                and (s.deprecated is null or s.deprecated = false)
                 order by updated_at desc limit 5
             ) as pru
         )

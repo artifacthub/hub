@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(60);
+select plan(61);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -75,18 +75,13 @@ select columns_are('package', array[
     'package_id',
     'name',
     'normalized_name',
-    'display_name',
-    'description',
-    'home_url',
+    'latest_version',
     'logo_url',
     'logo_image_id',
-    'keywords',
-    'deprecated',
-    'latest_version',
-    'created_at',
-    'updated_at',
     'stars',
     'tsdoc',
+    'created_at',
+    'updated_at',
     'package_kind_id',
     'user_id',
     'organization_id',
@@ -110,11 +105,16 @@ select columns_are('session', array[
 select columns_are('snapshot', array[
     'package_id',
     'version',
+    'display_name',
+    'description',
+    'keywords',
+    'home_url',
     'app_version',
     'digest',
     'readme',
     'links',
-    'data'
+    'data',
+    'deprecated'
 ]);
 select columns_are('user', array[
     'user_id',
@@ -154,7 +154,6 @@ select indexes_are('maintainer', array[
 ]);
 select indexes_are('package', array[
     'package_pkey',
-    'package_deprecated_idx',
     'package_package_kind_id_chart_repository_id_name_key',
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
@@ -177,8 +176,6 @@ select indexes_are('snapshot', array[
 ]);
 
 -- Check expected functions exist
-select has_function('generate_package_tsdoc');
-
 select has_function('add_organization');
 select has_function('add_organization_member');
 select has_function('confirm_organization_membership');
@@ -196,6 +193,7 @@ select has_function('update_user_password');
 select has_function('update_user_profile');
 select has_function('verify_email');
 
+select has_function('generate_package_tsdoc');
 select has_function('get_package');
 select has_function('get_packages_starred_by_user');
 select has_function('get_packages_stats');
@@ -204,6 +202,7 @@ select has_function('register_package');
 select has_function('search_packages');
 select has_function('semver_gte');
 select has_function('toggle_star');
+select has_function('unregister_package');
 
 select has_function('add_chart_repository');
 select has_function('delete_chart_repository');

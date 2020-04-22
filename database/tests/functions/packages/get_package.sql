@@ -56,26 +56,16 @@ values (:'maintainer2ID', 'name2', 'email2');
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    home_url,
-    logo_image_id,
-    keywords,
-    deprecated,
     latest_version,
+    logo_image_id,
     stars,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package1ID',
     'Package 1',
-    'Package 1',
-    'description',
-    'home_url',
-    :'image1ID',
-    '{"kw1", "kw2"}',
-    true,
     '1.0.0',
+    :'image1ID',
     10,
     0,
     :'repo1ID'
@@ -87,23 +77,37 @@ values (:'package1ID', :'maintainer2ID');
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    keywords,
+    home_url,
     app_version,
     digest,
     readme,
     links,
-    data
+    data,
+    deprecated
 ) values (
     :'package1ID',
     '1.0.0',
+    'Package 1',
+    'description',
+    '{"kw1", "kw2"}',
+    'home_url',
     '12.1.0',
     'digest-package1-1.0.0',
     'readme-version-1.0.0',
     '{"link1": "https://link1", "link2": "https://link2"}',
-    '{"key": "value"}'
+    '{"key": "value"}',
+    true
 );
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    keywords,
+    home_url,
     app_version,
     digest,
     readme,
@@ -112,6 +116,10 @@ insert into snapshot (
 ) values (
     :'package1ID',
     '0.0.9',
+    'Package 1 (older)',
+    'description (older)',
+    '{"kw1", "kw2", "older"}',
+    'home_url (older)',
     '12.0.0',
     'digest-package1-0.0.9',
     'readme-version-0.0.9',
@@ -121,22 +129,16 @@ insert into snapshot (
 insert into package (
     package_id,
     name,
-    display_name,
-    description,
-    logo_image_id,
-    keywords,
     latest_version,
+    logo_image_id,
     stars,
     package_kind_id,
     organization_id
 ) values (
     :'package2ID',
     'package2',
-    'Package 2',
-    'description',
-    :'image2ID',
-    '{"kw1", "kw2"}',
     '1.0.0',
+    :'image2ID',
     5,
     1,
     :'org1ID'
@@ -144,11 +146,17 @@ insert into package (
 insert into snapshot (
     package_id,
     version,
+    display_name,
+    description,
+    keywords,
     readme,
     data
 ) values (
     :'package2ID',
     '1.0.0',
+    'Package 2',
+    'description',
+    '{"kw1", "kw2"}',
     'readme-version-1.0.0',
     '{"key": "value"}'
 );
@@ -165,14 +173,13 @@ select is(
         "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
-        "display_name": "Package 1",
-        "description": "description",
-        "home_url": "home_url",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "keywords": ["kw1", "kw2"],
-        "deprecated": true,
         "stars": 10,
         "starred_by_user": false,
+        "display_name": "Package 1",
+        "description": "description",
+        "keywords": ["kw1", "kw2"],
+        "home_url": "home_url",
         "readme": "readme-version-1.0.0",
         "links": {
             "link1": "https://link1",
@@ -185,6 +192,7 @@ select is(
         "available_versions": ["0.0.9", "1.0.0"],
         "app_version": "12.1.0",
         "digest": "digest-package1-1.0.0",
+        "deprecated": true,
         "maintainers": [
             {
                 "name": "name1",
@@ -218,14 +226,13 @@ select is(
         "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
-        "display_name": "Package 1",
-        "description": "description",
-        "home_url": "home_url",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "keywords": ["kw1", "kw2"],
-        "deprecated": true,
         "stars": 10,
         "starred_by_user": false,
+        "display_name": "Package 1 (older)",
+        "description": "description (older)",
+        "keywords": ["kw1", "kw2", "older"],
+        "home_url": "home_url (older)",
         "readme": "readme-version-0.0.9",
         "links": {
             "link1": "https://link1",
@@ -238,6 +245,7 @@ select is(
         "available_versions": ["0.0.9", "1.0.0"],
         "app_version": "12.0.0",
         "digest": "digest-package1-0.0.9",
+        "deprecated": null,
         "maintainers": [
             {
                 "name": "name1",
@@ -269,20 +277,20 @@ select is(
         "kind": 1,
         "name": "package2",
         "normalized_name": "package2",
-        "display_name": "Package 2",
-        "description": "description",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "home_url": null,
-        "keywords": ["kw1", "kw2"],
-        "deprecated": null,
         "stars": 5,
         "starred_by_user": true,
+        "display_name": "Package 2",
+        "description": "description",
+        "keywords": ["kw1", "kw2"],
+        "home_url": null,
         "readme": "readme-version-1.0.0",
         "links": null,
         "digest": null,
         "data": {
             "key": "value"
         },
+        "deprecated": null,
         "version": "1.0.0",
         "app_version": null,
         "available_versions": ["1.0.0"],

@@ -30,12 +30,7 @@ begin
         'kind', p.package_kind_id,
         'name', p.name,
         'normalized_name', p.normalized_name,
-        'display_name', p.display_name,
-        'description', p.description,
-        'home_url', p.home_url,
         'logo_image_id', p.logo_image_id,
-        'keywords', p.keywords,
-        'deprecated', p.deprecated,
         'stars', p.stars,
         'starred_by_user', (
             select exists (
@@ -44,6 +39,10 @@ begin
                 and user_id = p_user_id
             )
         ),
+        'display_name', s.display_name,
+        'description', s.description,
+        'keywords', s.keywords,
+        'home_url', s.home_url,
         'readme', s.readme,
         'links', s.links,
         'data', s.data,
@@ -55,6 +54,7 @@ begin
         ),
         'app_version', s.app_version,
         'digest', s.digest,
+        'deprecated', s.deprecated,
         'maintainers', (
             select json_agg(json_build_object(
                 'name', m.name,
