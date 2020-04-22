@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/MakeNowJust/heredoc v1.0.0 // indirect
+	github.com/Masterminds/semver/v3 v3.1.0
 	github.com/disintegration/imaging v1.6.2
 	github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c // indirect
 	github.com/domodwyer/mailyak v3.1.1+incompatible
