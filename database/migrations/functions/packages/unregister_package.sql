@@ -43,7 +43,8 @@ begin
                     (regexp_match(version, v_semver_regexp))[1:3]::int[] desc,
                     (regexp_match(version, v_semver_regexp))[4] desc nulls first
                 limit 1
-            ) as nlv;
+            ) as nlv
+            where package_id = v_package_id;
         end if;
 
         -- Delete version snapshot
