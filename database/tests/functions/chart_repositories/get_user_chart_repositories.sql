@@ -59,7 +59,7 @@ insert into chart_repository (
     'https://repo3.com'
 );
 
--- Some repositories have just been seeded
+-- Run some tests
 select is(
     get_user_chart_repositories(:'user1ID')::jsonb,
     '[{

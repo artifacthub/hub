@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -73,20 +73,6 @@ select results_eq(
         )
     $$,
     'Chart repository should exist and be owned by organization'
-);
-
--- An owning user or organization must be provided
-select throws_ok(
-    $$
-        select add_chart_repository(null, null, '
-        {
-            "name": "repo3",
-            "display_name": "Repository 3",
-            "url": "repo3_url"
-        }
-        '::jsonb)
-    $$,
-    'owner user or organization must be provided'
 );
 
 -- Add chart repository owned by organization, but user does not belong to it
