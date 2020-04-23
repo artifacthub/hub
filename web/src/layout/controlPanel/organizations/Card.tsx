@@ -49,7 +49,10 @@ const OrganizationCard = (props: Props) => {
       setIsLeaving(false);
       closeDropdown();
       props.onSuccess();
-      if (!isNull(ctx.org) && ctx.org.name === props.organization.name) {
+      if (
+        !isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
+        ctx.prefs.controlPanel.selectedOrg === props.organization.name
+      ) {
         dispatch(unselectOrg());
       }
     } catch (err) {

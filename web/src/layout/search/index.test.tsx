@@ -239,7 +239,6 @@ describe('Search index', () => {
     });
 
     it('renders pagination', async () => {
-      localStorage.setItem('limit', '15');
       const mockSearchResults = getMockSearchResults('11');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
@@ -258,7 +257,6 @@ describe('Search index', () => {
     });
 
     it('calls history push on page change keeping current active filters', async () => {
-      localStorage.setItem('limit', '15');
       const mockSearchResults = getMockSearchResults('12');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
@@ -327,7 +325,7 @@ describe('Search index', () => {
       expect(paginationLimit.value).toBe('15');
 
       fireEvent.change(paginationLimit, { target: { value: '25' } });
-      expect(paginationLimit.value).toBe('25');
+
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
         pathname: '/packages/search',

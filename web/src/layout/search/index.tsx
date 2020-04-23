@@ -3,13 +3,13 @@ import every from 'lodash/every';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, PackageKind, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
@@ -39,11 +39,9 @@ interface Props {
   fromDetail: boolean;
 }
 
-const DEFAULT_LIMIT = 15;
-
 const SearchView = (props: Props) => {
+  const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
-  const [limit, setLimit] = useLocalStorage('limit', DEFAULT_LIMIT.toString());
   const [searchResults, setSearchResults] = useState<SearchResults>({
     data: {
       facets: null,
@@ -52,7 +50,7 @@ const SearchView = (props: Props) => {
     metadata: {
       offset: 0,
       total: 0,
-      limit: limit,
+      limit: ctx.prefs.search.limit,
     },
   });
   const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
@@ -177,7 +175,7 @@ const SearchView = (props: Props) => {
     });
     setScrollPosition(0);
     updateWindowScrollPosition(0);
-    setLimit(newLimit);
+    dispatch(updateLimit(newLimit));
   };
 
   useEffect(() => {
@@ -186,8 +184,8 @@ const SearchView = (props: Props) => {
       const query = {
         text: props.text,
         filters: props.filters,
-        offset: (props.pageNumber - 1) * parseInt(limit),
-        limit: parseInt(limit),
+        offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
+        limit: ctx.prefs.search.limit,
         deprecated: props.deprecated,
       };
 
@@ -196,10 +194,10 @@ const SearchView = (props: Props) => {
         setSearchResults({ ...searchResults });
 
         // Preload next page if required
-        if (total > limit + offset) {
+        if (total > ctx.prefs.search.limit + offset) {
           API.searchPackages({
             ...query,
-            offset: props.pageNumber * limit,
+            offset: props.pageNumber * ctx.prefs.search.limit,
           });
         }
       } catch {
@@ -241,7 +239,7 @@ const SearchView = (props: Props) => {
     props.pageNumber,
     JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
     props.deprecated,
-    limit,
+    ctx.prefs.search.limit,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -308,7 +306,11 @@ const SearchView = (props: Props) => {
                 <div data-testid="resultsText" className="text-truncate">
                   {total > 0 && (
                     <span className="pr-1">
-                      {offset + 1} - {total < limit * props.pageNumber ? total : limit * props.pageNumber} of{' '}
+                      {offset + 1} -{' '}
+                      {total < ctx.prefs.search.limit * props.pageNumber
+                        ? total
+                        : ctx.prefs.search.limit * props.pageNumber}{' '}
+                      of{' '}
                     </span>
                   )}
                   {total}
@@ -326,7 +328,7 @@ const SearchView = (props: Props) => {
 
         <div className="ml-3">
           <PaginationLimit
-            limit={limit}
+            limit={ctx.prefs.search.limit}
             updateLimit={onPaginationLimitChange}
             disabled={isNull(searchResults.data.packages) || searchResults.data.packages.length === 0}
           />
@@ -389,7 +391,7 @@ const SearchView = (props: Props) => {
                     </div>
 
                     <Pagination
-                      limit={limit}
+                      limit={ctx.prefs.search.limit}
                       offset={offset}
                       total={total}
                       active={props.pageNumber}

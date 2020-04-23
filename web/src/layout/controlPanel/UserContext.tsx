@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaCaretDown, FaUser } from 'react-icons/fa';
 import { GoCheck } from 'react-icons/go';
@@ -25,7 +26,7 @@ const UserContext = () => {
     if (isString(value)) {
       dispatch(unselectOrg());
     } else {
-      dispatch(updateOrg(value.name, value.displayName));
+      dispatch(updateOrg(value.name));
     }
     setOpenStatus(false);
   };
@@ -63,12 +64,12 @@ const UserContext = () => {
             }}
           >
             <div className="d-flex flex-row align-items-center">
-              {!isNull(ctx.org) ? (
+              {!isUndefined(ctx.prefs.controlPanel.selectedOrg) ? (
                 <>
                   <div className={`badge badge-light badge-pill mr-2 p-0 ${styles.badgeIcon}`}>
                     <MdBusiness />
                   </div>
-                  <div className="flex-grow-1 text-left text-truncate">{ctx.org!.name}</div>
+                  <div className="flex-grow-1 text-left text-truncate">{ctx.prefs.controlPanel.selectedOrg}</div>
                 </>
               ) : (
                 <>
@@ -99,7 +100,7 @@ const UserContext = () => {
           <div className="d-flex flex-row align-items-center">
             <FaUser className="mr-2" />
             <span>{alias}</span>
-            {isNull(ctx.org) && <GoCheck className="ml-2 text-success" />}
+            {isUndefined(ctx.prefs.controlPanel.selectedOrg) && <GoCheck className="ml-2 text-success" />}
           </div>
         </button>
         {!isNull(organizations) && (
@@ -109,7 +110,8 @@ const UserContext = () => {
                 <div className="d-flex flex-row align-items-center">
                   <MdBusiness className="mr-2" />
                   <span>{org.name}</span>
-                  {!isNull(ctx.org) && org.name === ctx.org.name && <GoCheck className="ml-2 text-success" />}
+                  {!isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
+                    org.name === ctx.prefs.controlPanel.selectedOrg && <GoCheck className="ml-2 text-success" />}
                 </div>
               </button>
             ))}

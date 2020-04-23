@@ -33,7 +33,7 @@ const ChartRepositoryCard = (props: Props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
   const dropdown = useRef(null);
-  const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
+  const organizationName = ctx.prefs.controlPanel.selectedOrg;
   const hasErrors =
     !isUndefined(props.chartRepository.lastTrackingErrors) && !isNull(props.chartRepository.lastTrackingErrors);
 

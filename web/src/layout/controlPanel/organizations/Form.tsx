@@ -48,8 +48,11 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       if (isUndefined(props.organization)) {
         await API.addOrganization(organization);
       } else {
-        if (!isNull(ctx.org) && ctx.org.name === organization.name) {
-          dispatch(updateOrg(organization.name, organization.displayName));
+        if (
+          !isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
+          ctx.prefs.controlPanel.selectedOrg === organization.name
+        ) {
+          dispatch(updateOrg(organization.name));
         }
         await API.updateOrganization(organization);
       }

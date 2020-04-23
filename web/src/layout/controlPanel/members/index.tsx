@@ -20,7 +20,6 @@ const MembersSection = (props: Props) => {
   const [members, setMembers] = useState<Member[] | undefined>(undefined);
   const [modalMemberOpen, setModalMemberOpen] = useState(false);
   const [confirmedMembersNumber, setConfirmedMembersNumber] = useState<number>(0);
-  const organization = ctx.org!;
 
   const getConfirmedMembersNumber = (members: Member[]): number => {
     const confirmedMembers = members.filter((member: Member) => member.confirmed);
@@ -30,7 +29,7 @@ const MembersSection = (props: Props) => {
   async function fetchMembers() {
     try {
       setIsGettingMembers(true);
-      const membersList = await API.getOrganizationMembers(organization.name);
+      const membersList = await API.getOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
       setMembers(membersList);
       setConfirmedMembersNumber(getConfirmedMembersNumber(membersList));
       setIsGettingMembers(false);

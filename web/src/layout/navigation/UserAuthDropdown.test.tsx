@@ -7,8 +7,10 @@ import UserAuthDropdown from './UserAuthDropdown';
 
 const mockCtxLoggedIn = {
   user: { alias: 'test', email: 'test@test.com' },
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
 };
 
 describe('UserAuthDropdown', () => {

@@ -19,8 +19,12 @@ const defaultProps = {
 
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com' },
-  org: { name: 'orgTest' },
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {
+      selectedOrg: 'orgTest',
+    },
+    search: { limit: 25 },
+  },
 };
 
 describe('Members section index', () => {

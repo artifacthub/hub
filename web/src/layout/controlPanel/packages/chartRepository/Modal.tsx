@@ -33,7 +33,7 @@ const ChartRepositoryModal = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
-  const organizationName = isNull(ctx.org) ? undefined : ctx.org.name;
+  const organizationName = ctx.prefs.controlPanel.selectedOrg;
 
   // Clean API error when form is focused after validation
   const cleanApiError = () => {

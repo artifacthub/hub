@@ -83,7 +83,7 @@ const ControlPanelView = (props: Props) => {
   const history = useHistory();
   const { ctx, dispatch } = useContext(AppCtx);
   const [activeSection, setActiveSection] = useState<string>(DEFAULT_SECTION);
-  const context = isNull(ctx.org) ? 'user' : 'org';
+  const context = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
 
   const onAuthError = (): void => {
