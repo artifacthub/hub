@@ -10,7 +10,7 @@ require (
 	github.com/domodwyer/mailyak v3.1.1+incompatible
 	github.com/emicklei/go-restful v2.12.0+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/go-chi/chi v4.1.0+incompatible
+	github.com/go-chi/chi v4.1.1+incompatible
 	github.com/go-openapi/spec v0.19.7 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
@@ -31,21 +31,20 @@ require (
 	github.com/prometheus/client_golang v1.5.1
 	github.com/rs/zerolog v1.18.0
 	github.com/satori/uuid v1.2.0
-	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/viper v1.6.3
 	github.com/stretchr/testify v1.5.1
-	golang.org/x/crypto v0.0.0-20200414173820-0848c9571904
+	golang.org/x/crypto v0.0.0-20200422194213-44a606286825
 	golang.org/x/image v0.0.0-20200119044424-58c23975cae1 // indirect
-	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect
+	golang.org/x/net v0.0.0-20200421231249-e086a090c8fd // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
-	golang.org/x/sys v0.0.0-20200413165638-669c56c373c4 // indirect
-	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
-	google.golang.org/api v0.21.0
-	google.golang.org/appengine v1.6.5 // indirect
+	golang.org/x/sys v0.0.0-20200420163511-1957bb5e6d1f // indirect
+	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1
+	google.golang.org/api v0.22.0
+	google.golang.org/appengine v1.6.6 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8
-	helm.sh/helm/v3 v3.1.2
+	helm.sh/helm/v3 v3.2.0
 )
 
 replace github.com/docker/docker => github.com/moby/moby v0.7.3-0.20190826074503-38ab9da00309
