@@ -2,6 +2,7 @@ package chartrepo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"testing"
 
@@ -23,12 +24,87 @@ func TestAdd(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
-		m := NewManager(nil, WithIndexLoader(l))
+		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), "orgName", r)
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc    string
+			orgName string
+			r       *hub.ChartRepository
+			lErr    error
+		}{
+			{
+				"missing name",
+				"org1",
+				&hub.ChartRepository{
+					Name: "",
+				},
+				nil,
+			},
+			{
+				"missing url",
+				"org1",
+				&hub.ChartRepository{
+					Name: "repo1",
+					URL:  "",
+				},
+				nil,
+			},
+			{
+				"invalid name (starts with number)",
+				"org1",
+				&hub.ChartRepository{
+					Name: "1repo",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid name (uses underscore)",
+				"org1",
+				&hub.ChartRepository{
+					Name: "repo_underscore",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid name (uppercase)",
+				"org1",
+				&hub.ChartRepository{
+					Name: "REPO_UPPERCASE",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				"org1",
+				&hub.ChartRepository{
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				errors.New("invalid url"),
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				l := &IndexLoaderMock{}
+				if tc.lErr != nil {
+					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)
+				}
+				m := NewManager(nil, WithIndexLoader(l))
+
+				err := m.Add(ctx, tc.orgName, tc.r)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				l.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -41,6 +117,7 @@ func TestAdd(t *testing.T) {
 		err := m.Add(ctx, "orgName", r)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
+		l.AssertExpectations(t)
 	})
 
 	t.Run("add chart repository succeeded", func(t *testing.T) {
@@ -53,14 +130,36 @@ func TestAdd(t *testing.T) {
 		err := m.Add(ctx, "orgName", r)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
+		l.AssertExpectations(t)
 	})
 }
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("resource kind not supported", func(t *testing.T) {
-		m := NewManager(nil)
-		_, err := m.CheckAvailability(context.Background(), "invalidKind", "value")
-		assert.Error(t, err)
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc         string
+			resourceKind string
+			value        string
+		}{
+			{
+				"invalid resource kind",
+				"invalid",
+				"value",
+			},
+			{
+				"invalid value",
+				"chartRepositoryName",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				m := NewManager(nil)
+				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+			})
+		}
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -118,6 +217,12 @@ func TestDelete(t *testing.T) {
 		assert.Panics(t, func() {
 			_ = m.Delete(context.Background(), "repo1")
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		err := m.Delete(ctx, "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -185,6 +290,12 @@ func TestGetAll(t *testing.T) {
 func TestGetByName(t *testing.T) {
 	dbQuery := "select get_chart_repository_by_name($1::text)"
 
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		_, err := m.GetByName(context.Background(), "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
 	t.Run("get existing repository by name", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery, "repo1").Return([]byte(`
@@ -230,26 +341,34 @@ func TestGetByName(t *testing.T) {
 }
 
 func TestGetPackagesDigest(t *testing.T) {
-	dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
-	db := &tests.DBMock{}
-	db.On("QueryRow", dbQuery, "00000000-0000-0000-0000-000000000001").Return([]byte(`
-	{
-        "package1@1.0.0": "digest-package1-1.0.0",
-        "package1@0.0.9": "digest-package1-0.0.9",
-        "package2@1.0.0": "digest-package2-1.0.0",
-        "package2@0.0.9": "digest-package2-0.0.9"
-    }
-	`), nil)
-	m := NewManager(db)
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		_, err := m.GetPackagesDigest(context.Background(), "invalid")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
 
-	pd, err := m.GetPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
-	require.NoError(t, err)
-	assert.Len(t, pd, 4)
-	assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
-	assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
-	assert.Equal(t, "digest-package2-1.0.0", pd["package2@1.0.0"])
-	assert.Equal(t, "digest-package2-0.0.9", pd["package2@0.0.9"])
-	db.AssertExpectations(t)
+	t.Run("database query succeeded", func(t *testing.T) {
+		dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "00000000-0000-0000-0000-000000000001").Return([]byte(`
+		{
+			"package1@1.0.0": "digest-package1-1.0.0",
+			"package1@0.0.9": "digest-package1-0.0.9",
+			"package2@1.0.0": "digest-package2-1.0.0",
+			"package2@0.0.9": "digest-package2-0.0.9"
+		}
+		`), nil)
+		m := NewManager(db)
+
+		pd, err := m.GetPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
+		require.NoError(t, err)
+		assert.Len(t, pd, 4)
+		assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
+		assert.Equal(t, "digest-package1-0.0.9", pd["package1@0.0.9"])
+		assert.Equal(t, "digest-package2-1.0.0", pd["package2@1.0.0"])
+		assert.Equal(t, "digest-package2-0.0.9", pd["package2@0.0.9"])
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetOwnedByOrgJSON(t *testing.T) {
@@ -261,6 +380,12 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName")
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		_, err := m.GetOwnedByOrgJSON(ctx, "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -321,28 +446,35 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 }
 
 func TestSetLastTrackingResults(t *testing.T) {
+	repoID := "00000000-0000-0000-0000-000000000001"
 	dbQuery := `
 	update chart_repository set
 		last_tracking_ts = current_timestamp,
 		last_tracking_errors = nullif($2, '')
 	where chart_repository_id = $1`
 
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		err := m.SetLastTrackingResults(context.Background(), "invalid", "errors")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
 	t.Run("database update succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "repoID", "errors").Return(nil)
+		db.On("Exec", dbQuery, repoID, "errors").Return(nil)
 		m := NewManager(db)
 
-		err := m.SetLastTrackingResults(context.Background(), "repoID", "errors")
+		err := m.SetLastTrackingResults(context.Background(), repoID, "errors")
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "repoID", "errors").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", dbQuery, repoID, "errors").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		err := m.SetLastTrackingResults(context.Background(), "repoID", "errors")
+		err := m.SetLastTrackingResults(context.Background(), repoID, "errors")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
@@ -359,12 +491,56 @@ func TestUpdate(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
-		m := NewManager(nil, WithIndexLoader(l))
+		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), r)
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc string
+			r    *hub.ChartRepository
+			lErr error
+		}{
+			{
+				"missing name",
+				&hub.ChartRepository{
+					Name: "",
+				},
+				nil,
+			},
+			{
+				"missing url",
+				&hub.ChartRepository{
+					Name: "repo1",
+					URL:  "",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				&hub.ChartRepository{
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				errors.New("invalid url"),
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				l := &IndexLoaderMock{}
+				if tc.lErr != nil {
+					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)
+				}
+				m := NewManager(nil, WithIndexLoader(l))
+
+				err := m.Update(ctx, tc.r)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				l.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -377,6 +553,7 @@ func TestUpdate(t *testing.T) {
 		err := m.Update(ctx, r)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
+		l.AssertExpectations(t)
 	})
 
 	t.Run("update chart repository succeeded", func(t *testing.T) {
@@ -389,5 +566,6 @@ func TestUpdate(t *testing.T) {
 		err := m.Update(ctx, r)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
+		l.AssertExpectations(t)
 	})
 }

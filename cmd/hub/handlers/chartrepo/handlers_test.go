@@ -26,53 +26,52 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
-	t.Run("invalid chart repository provided", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			description string
 			repoJSON    string
+			rmErr       error
 		}{
 			{
 				"no chart repository provided",
 				"",
+				nil,
 			},
 			{
 				"invalid json",
 				"-",
+				nil,
 			},
 			{
 				"missing name",
 				`{"url": "https://repo1.url"}`,
-			},
-			{
-				"missing url",
-				`{"name": "repo1"}`,
-			},
-			{
-				"invalid name",
-				`{"name": "1repo"}`,
-			},
-			{
-				"invalid name",
-				`{"name": "repo_underscore"}`,
-			},
-			{
-				"invalid name",
-				`{"name": "REPO_UPPERCASE"}`,
+				chartrepo.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
+				if tc.rmErr != nil {
+					hw.rm.On("Add", mock.Anything, "org1", mock.Anything).Return(tc.rmErr)
+				}
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"orgName"},
+						Values: []string{"org1"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
 			})
 		}
 	})
@@ -96,11 +95,6 @@ func TestAdd(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"invalid chart repository url",
-				chartrepo.ErrInvalidURL,
-				http.StatusBadRequest,
-			},
-			{
 				"error adding chart repository",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
@@ -110,11 +104,18 @@ func TestAdd(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.rm.On("Add", mock.Anything, mock.Anything, mock.Anything).Return(tc.err)
+				hw.rm.On("Add", mock.Anything, "org1", mock.Anything).Return(tc.err)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"orgName"},
+						Values: []string{"org1"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -127,42 +128,28 @@ func TestAdd(t *testing.T) {
 }
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("invalid resource kind", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
 		hw := newHandlersWrapper()
+		hw.rm.On("CheckAvailability", mock.Anything, "invalid", "value").
+			Return(false, chartrepo.ErrInvalidInput)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
 			URLParams: chi.RouteParams{
 				Keys:   []string{"resourceKind"},
-				Values: []string{"invalidKind"},
+				Values: []string{"invalid"},
 			},
 		}
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
+		h := resp.Header
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
-
-	t.Run("invalid value", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("HEAD", "/", nil)
-		rctx := &chi.Context{
-			URLParams: chi.RouteParams{
-				Keys:   []string{"resourceKind"},
-				Values: []string{"userAlias"},
-			},
-		}
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-		hw.h.CheckAvailability(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		hw.rm.AssertExpectations(t)
 	})
 
 	t.Run("valid resource kind", func(t *testing.T) {
@@ -184,7 +171,7 @@ func TestCheckAvailability(t *testing.T) {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 					hw := newHandlersWrapper()
-					hw.rm.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
+					hw.rm.On("CheckAvailability", mock.Anything, tc.resourceKind, "value").
 						Return(tc.available, nil)
 
 					w := httptest.NewRecorder()
@@ -214,7 +201,7 @@ func TestCheckAvailability(t *testing.T) {
 
 		t.Run("check availability failed", func(t *testing.T) {
 			hw := newHandlersWrapper()
-			hw.rm.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
+			hw.rm.On("CheckAvailability", mock.Anything, "chartRepositoryName", "value").
 				Return(false, tests.ErrFakeDatabaseFailure)
 
 			w := httptest.NewRecorder()
@@ -237,13 +224,21 @@ func TestCheckAvailability(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"repoName"},
+			Values: []string{"repo1"},
+		},
+	}
+
 	t.Run("delete chart repository succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.rm.On("Delete", mock.Anything, mock.Anything).Return(nil)
+		hw.rm.On("Delete", mock.Anything, "repo1").Return(nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 		hw.h.Delete(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -253,29 +248,56 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("error deleting chart repository", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.rm.On("Delete", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		testCases := []struct {
+			rmErr              error
+			expectedStatusCode int
+		}{
+			{
+				chartrepo.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.rmErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.rm.On("Delete", mock.Anything, "repo1").Return(tc.rmErr)
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("DELETE", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.Delete(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("DELETE", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+				hw.h.Delete(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.rm.AssertExpectations(t)
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
+			})
+		}
 	})
 }
 
 func TestGetOwnedByOrg(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
 	t.Run("get chart repositories owned by organization succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByOrgJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.rm.On("GetOwnedByOrgJSON", mock.Anything, "org1").Return([]byte("dataJSON"), nil)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 		hw.h.GetOwnedByOrg(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -290,18 +312,37 @@ func TestGetOwnedByOrg(t *testing.T) {
 	})
 
 	t.Run("error getting chart repositories owned by organization", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByOrgJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		testCases := []struct {
+			rmErr              error
+			expectedStatusCode int
+		}{
+			{
+				chartrepo.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.rmErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.rm.On("GetOwnedByOrgJSON", mock.Anything, "org1").Return(nil, tc.rmErr)
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.GetOwnedByOrg(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+				hw.h.GetOwnedByOrg(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.rm.AssertExpectations(t)
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -343,24 +384,35 @@ func TestGetOwnedByUser(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	t.Run("invalid chart repository provided", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			description string
 			repoJSON    string
+			rmErr       error
 		}{
 			{
 				"no chart repository provided",
 				"",
+				nil,
 			},
 			{
 				"invalid json",
 				"-",
+				nil,
+			},
+			{
+				"missing name",
+				`{"url": "https://repo1.url"}`,
+				chartrepo.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
+				if tc.rmErr != nil {
+					hw.rm.On("Update", mock.Anything, mock.Anything).Return(tc.rmErr)
+				}
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
@@ -370,6 +422,7 @@ func TestUpdate(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
 			})
 		}
 	})
@@ -390,11 +443,6 @@ func TestUpdate(t *testing.T) {
 				"chart repository update succeeded",
 				nil,
 				http.StatusOK,
-			},
-			{
-				"invalid chart repository url",
-				chartrepo.ErrInvalidURL,
-				http.StatusBadRequest,
 			},
 			{
 				"error updating chart repository",

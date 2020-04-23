@@ -17,7 +17,7 @@ values ('00000000-0000-0000-0000-000000000002', 'repo2', 'Repo 2', 'https://repo
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values ('00000000-0000-0000-0000-000000000003', 'repo3', 'Repo 3', 'https://repo3.com');
 
--- Some repositories have just been seeded
+-- Run some tests
 select is(
     get_chart_repositories()::jsonb,
     '[{

@@ -23,115 +23,63 @@ insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
-    :'image1ID',
     0,
     :'repo1ID'
 );
 insert into snapshot (
     package_id,
     version,
-    display_name,
-    description,
-    home_url,
-    app_version,
-    digest,
-    readme,
-    links
+    digest
 ) values (
     :'package1ID',
     '1.0.0',
-    'Package 1',
-    'description',
-    'home_url',
-    '12.1.0',
-    'digest-package1-1.0.0',
-    'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    'digest-package1-1.0.0'
 );
 insert into snapshot (
     package_id,
     version,
-    display_name,
-    description,
-    home_url,
-    app_version,
-    digest,
-    readme,
-    links
+    digest
 ) values (
     :'package1ID',
     '0.0.9',
-    'Package 1',
-    'description',
-    'home_url',
-    '12.0.0',
-    'digest-package1-0.0.9',
-    'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    'digest-package1-0.0.9'
 );
 insert into package (
     package_id,
     name,
     latest_version,
-    logo_image_id,
     package_kind_id,
     chart_repository_id
 ) values (
     :'package2ID',
     'package2',
     '1.0.0',
-    :'image2ID',
     0,
     :'repo1ID'
 );
 insert into snapshot (
     package_id,
     version,
-    display_name,
-    description,
-    home_url,
-    app_version,
-    digest,
-    readme,
-    links
+    digest
 ) values (
     :'package2ID',
     '1.0.0',
-    'Package 2',
-    'description',
-    'home_url',
-    '12.1.0',
-    'digest-package2-1.0.0',
-    'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    'digest-package2-1.0.0'
 );
 insert into snapshot (
     package_id,
     version,
-    display_name,
-    description,
-    home_url,
-    app_version,
-    digest,
-    readme,
-    links
+    digest
 ) values (
     :'package2ID',
     '0.0.9',
-    'Package 2',
-    'description',
-    'home_url',
-    '12.0.0',
-    'digest-package2-0.0.9',
-    'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    'digest-package2-0.0.9'
 );
 
 -- Some packages have just been seeded

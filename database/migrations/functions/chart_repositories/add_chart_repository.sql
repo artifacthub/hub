@@ -8,15 +8,13 @@ declare
     v_owner_user_id uuid;
     v_owner_organization_id uuid;
 begin
-    if p_org_name is not null and p_org_name <> '' then
+    if p_org_name <> '' then
         if not user_belongs_to_organization(p_user_id, p_org_name) then
             raise insufficient_privilege;
         end if;
         v_owner_organization_id = (select organization_id from organization where name = p_org_name);
-    elsif p_user_id is not null then
-        v_owner_user_id = p_user_id;
     else
-        raise 'owner user or organization must be provided';
+        v_owner_user_id = p_user_id;
     end if;
 
     insert into chart_repository (
