@@ -22,8 +22,18 @@ jest.mock('react-router-dom', () => ({
 
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com' },
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
+};
+
+const mockCtxOrgSelected = {
+  user: { alias: 'test', email: 'test@test.com' },
+  prefs: {
+    controlPanel: { selectedOrg: 'orgTest' },
+    search: { limit: 25 },
+  },
 };
 
 describe('ControlPanelView', () => {
@@ -84,7 +94,7 @@ describe('ControlPanelView', () => {
   it('renders 3 sections on org context', async () => {
     mocked(API).getChartRepositories.mockResolvedValue([]);
     render(
-      <AppCtx.Provider value={{ ctx: { ...mockCtx, org: { name: 'org' } }, dispatch: jest.fn() }}>
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: jest.fn() }}>
         <Router>
           <ControlPanelView section="packages" />
         </Router>

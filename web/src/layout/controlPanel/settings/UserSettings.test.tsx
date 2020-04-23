@@ -19,8 +19,10 @@ const defaultProps = {
 
 const mockCtx = {
   user: { alias: 'userAlias', email: 'jsmith@email.com' },
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
 };
 
 describe('User settings index', () => {

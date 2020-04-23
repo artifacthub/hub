@@ -40,7 +40,7 @@ const MemberCard = (props: Props) => {
   async function deleteMember() {
     try {
       setIsDeletingMember(true);
-      await API.deleteOrganizationMember(ctx.org!.name, props.member.alias);
+      await API.deleteOrganizationMember(ctx.prefs.controlPanel.selectedOrg!, props.member.alias);
       setIsDeletingMember(false);
       closeDropdown();
       if (props.member.alias === ctx.user!.alias) {

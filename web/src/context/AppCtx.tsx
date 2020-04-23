@@ -3,19 +3,13 @@ import isUndefined from 'lodash/isUndefined';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { API } from '../api';
-import { Profile, UserFullName } from '../types';
+import { Prefs, Profile, UserFullName } from '../types';
 import history from '../utils/history';
-
-interface OrgCtx {
-  name: string;
-  displayName?: string;
-}
+import lsStorage from '../utils/localStoragePreferences';
 
 interface AppState {
   user: Profile | null | undefined;
-  org: OrgCtx | null;
-  requestSignIn: boolean;
-  redirect?: string;
+  prefs: Prefs;
 }
 
 interface Props {
@@ -24,17 +18,16 @@ interface Props {
 
 const initialState: AppState = {
   user: undefined,
-  org: null,
-  requestSignIn: true,
+  prefs: lsStorage.getPrefs(),
 };
 
 type Action =
-  | { type: 'requestSignIn'; redirect?: string }
   | { type: 'signIn'; profile: Profile }
   | { type: 'signOut' }
   | { type: 'unselectOrg' }
   | { type: 'updateUser'; user: UserFullName }
-  | { type: 'updateOrg'; name: string; displayName?: string };
+  | { type: 'updateOrg'; name: string }
+  | { type: 'updateLimit'; limit: number };
 
 export const AppCtx = createContext<{
   ctx: AppState;
@@ -44,10 +37,6 @@ export const AppCtx = createContext<{
   dispatch: () => null,
 });
 
-export function requestSignIn(redirect?: string) {
-  return { type: 'requestSignIn', redirect };
-}
-
 export function signOut() {
   return { type: 'signOut' };
 }
@@ -56,12 +45,29 @@ export function unselectOrg() {
   return { type: 'unselectOrg' };
 }
 
-export function updateOrg(name: string, displayName?: string) {
-  return { type: 'updateOrg', name, displayName };
+export function updateOrg(name: string) {
+  return { type: 'updateOrg', name };
 }
 
 export function updateUser(user: UserFullName) {
   return { type: 'updateUser', user };
+}
+
+export function updateLimit(limit: number) {
+  return { type: 'updateLimit', limit };
+}
+
+export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirectUrl?: string) {
+  try {
+    const profile: Profile = await API.getUserProfile();
+    dispatch({ type: 'signIn', profile });
+    if (!isUndefined(redirectUrl)) {
+      // Redirect to correct route when neccessary
+      history.push({ pathname: redirectUrl });
+    }
+  } catch {
+    dispatch({ type: 'signOut' });
+  }
 }
 
 function redirectToControlPanel() {
@@ -70,43 +76,58 @@ function redirectToControlPanel() {
   }
 }
 
+function updateSelectedOrg(currentPrefs: Prefs, name?: string): Prefs {
+  return {
+    ...currentPrefs,
+    controlPanel: {
+      ...currentPrefs.controlPanel,
+      selectedOrg: name,
+    },
+  };
+}
+
 export function appReducer(state: AppState, action: Action) {
   switch (action.type) {
-    case 'requestSignIn':
-      return {
-        ...state,
-        requestSignIn: true,
-        redirect: action.redirect,
-      };
     case 'signIn':
-      const orgCtx = window.localStorage.getItem('orgCtx');
-      let org: OrgCtx | null = null;
-      if (!isNull(orgCtx)) {
-        org = JSON.parse(orgCtx);
-      }
       return {
         user: action.profile,
-        org: org,
-        requestSignIn: false,
+        prefs: lsStorage.getPrefs(action.profile.alias),
       };
     case 'unselectOrg':
-      window.localStorage.removeItem('orgCtx');
+      const unselectedOrgPrefs = updateSelectedOrg(state.prefs);
+      lsStorage.setPrefs(unselectedOrgPrefs, state.user!.alias);
       redirectToControlPanel();
-      return { ...state, org: null };
+      return {
+        ...state,
+        prefs: unselectedOrgPrefs,
+      };
     case 'signOut':
-      window.localStorage.removeItem('orgCtx');
-      return { user: null, org: null, requestSignIn: false };
+      return { user: null, prefs: lsStorage.getPrefs() };
     case 'updateOrg':
-      let orgToSave = { name: action.name, displayName: action.displayName };
-      window.localStorage.setItem('orgCtx', JSON.stringify(orgToSave));
-      if (isNull(state.org) || (!isNull(state.org) && action.name !== state.org.name)) {
+      const newPrefs = updateSelectedOrg(state.prefs, action.name);
+      lsStorage.setPrefs(newPrefs, state.user!.alias);
+      if (isUndefined(state.prefs.controlPanel.selectedOrg) || action.name !== state.prefs.controlPanel.selectedOrg) {
         redirectToControlPanel();
       }
       return {
         ...state,
-        org: orgToSave,
+        prefs: newPrefs,
+      };
+    case 'updateLimit':
+      const updatedPrefs = {
+        ...state.prefs,
+        search: {
+          ...state.prefs.search,
+          limit: action.limit,
+        },
+      };
+      lsStorage.setPrefs(updatedPrefs, !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined);
+      return {
+        ...state,
+        prefs: updatedPrefs,
       };
     case 'updateUser':
+      lsStorage.updateAlias(state.user!.alias, action.user.alias);
       return {
         ...state,
         user: {
@@ -123,22 +144,8 @@ function AppCtxProvider(props: Props) {
   const [ctx, dispatch] = useReducer(appReducer, initialState);
 
   useEffect(() => {
-    async function isUserAuth() {
-      try {
-        const profile: Profile = await API.getUserProfile();
-        dispatch({ type: 'signIn', profile });
-        if (!isUndefined(ctx.redirect)) {
-          // Redirect to correct route when neccessary
-          history.push({ pathname: ctx.redirect });
-        }
-      } catch {
-        dispatch({ type: 'signOut' });
-      }
-    }
-    if (ctx.requestSignIn) {
-      isUserAuth();
-    }
-  }, [ctx.requestSignIn, ctx.redirect]);
+    refreshUserProfile(dispatch);
+  }, []);
 
   return <AppCtx.Provider value={{ ctx, dispatch }}>{props.children}</AppCtx.Provider>;
 }

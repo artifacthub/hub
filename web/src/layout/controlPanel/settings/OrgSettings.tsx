@@ -20,7 +20,7 @@ const OrganizationSettings = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [organization, setOrganization] = useState<Organization | null | undefined>(undefined);
-  const selectedOrg = ctx.org!;
+  const selectedOrg = ctx.prefs.controlPanel.selectedOrg!;
 
   const submitForm = () => {
     if (form.current) {
@@ -32,7 +32,7 @@ const OrganizationSettings = (props: Props) => {
     async function fetchOrganization() {
       try {
         setIsLoading(true);
-        setOrganization(await API.getOrganization(selectedOrg.name));
+        setOrganization(await API.getOrganization(selectedOrg));
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
@@ -44,7 +44,7 @@ const OrganizationSettings = (props: Props) => {
       }
     }
     fetchOrganization();
-  }, [props, selectedOrg.name]);
+  }, [props, selectedOrg]);
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">

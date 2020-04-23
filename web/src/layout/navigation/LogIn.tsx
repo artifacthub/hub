@@ -6,7 +6,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import { AppCtx, requestSignIn, signOut } from '../../context/AppCtx';
+import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
 import { RefInputField, UserLogin } from '../../types';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
@@ -67,7 +67,7 @@ const LogIn = (props: Props) => {
       await API.login(user);
       setIsLoading({ status: false });
       props.setOpenLogIn(false);
-      dispatch(requestSignIn(props.redirect));
+      dispatch(refreshUserProfile(dispatch, props.redirect));
     } catch (err) {
       let error = 'An error occurred signing in';
       switch (err.status) {

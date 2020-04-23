@@ -44,7 +44,7 @@ const MemberModal = (props: Props) => {
 
   async function handleOrganizationMember(alias: string) {
     try {
-      await API.addOrganizationMember(ctx.org!.name, alias);
+      await API.addOrganizationMember(ctx.prefs.controlPanel.selectedOrg!, alias);
       if (!isUndefined(props.onSuccess)) {
         props.onSuccess();
       }

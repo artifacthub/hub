@@ -113,12 +113,12 @@ export interface UserLogin {
 }
 
 export interface UserFullName {
+  alias: string;
   firstName?: string;
   lastName?: string;
 }
 
 export interface Profile extends UserFullName {
-  alias: string;
   email: string;
 }
 
@@ -183,4 +183,13 @@ export interface AvailabilityInfo {
   isAvailable: boolean;
   resourceKind: ResourceKind;
   excluded: string[];
+}
+
+export interface Prefs {
+  controlPanel: {
+    selectedOrg?: string;
+  };
+  search: {
+    limit: number;
+  };
 }

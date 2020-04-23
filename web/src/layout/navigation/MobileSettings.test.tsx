@@ -16,20 +16,26 @@ const defaultProps = {
 
 const mockCtxLoggedIn = {
   user: { alias: 'test', email: 'test@test.com' },
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
 };
 
 const mockCtxNotLoggedIn = {
   user: null,
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
 };
 
 const mockUndefinedUser = {
   user: undefined,
-  org: null,
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+  },
 };
 
 describe('MobileSettings', () => {

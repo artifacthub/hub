@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
@@ -29,7 +28,7 @@ const ChartRepository = (props: Props) => {
     open: false,
   });
   const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | undefined>(undefined);
-  const selectedOrg = isNull(ctx.org) ? undefined : ctx.org.name;
+  const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [activeOrg, setActiveOrg] = useState(selectedOrg);
 
   async function fetchCharts() {

@@ -16,8 +16,12 @@ const memberMock: Member = {
 
 const mockCtx = {
   user: { alias: 'userAlias', email: 'jsmith@email.com' },
-  org: { name: 'orgTest' },
-  requestSignIn: false,
+  prefs: {
+    controlPanel: {
+      selectedOrg: 'orgTest',
+    },
+    search: { limit: 25 },
+  },
 };
 
 const defaultProps = {
@@ -89,7 +93,10 @@ describe('Member Card - members section', () => {
 
       await waitFor(() => {});
       expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
-      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(mockCtx.org.name, memberMock.alias);
+      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
+        mockCtx.prefs.controlPanel.selectedOrg,
+        memberMock.alias
+      );
     });
 
     it('calls deleteOrganizationMember to remove yourself from the organization', async () => {
@@ -117,7 +124,10 @@ describe('Member Card - members section', () => {
 
       await waitFor(() => {});
       expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
-      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(mockCtx.org.name, mockCtx.user.alias);
+      expect(API.deleteOrganizationMember).toHaveBeenCalledWith(
+        mockCtx.prefs.controlPanel.selectedOrg,
+        mockCtx.user.alias
+      );
     });
   });
 });
