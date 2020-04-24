@@ -143,7 +143,7 @@ func TestServeIndex(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("indexHtmlData\n"), data)
+	assert.Equal(t, []byte("indexHtmlData gaTrackingID:1234\n"), data)
 }
 
 func TestServeStaticFile(t *testing.T) {
@@ -184,6 +184,7 @@ type handlersWrapper struct {
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.webBuildPath", "testdata")
+	cfg.Set("analytics.gaTrackingID", "1234")
 	is := &img.StoreMock{}
 
 	return &handlersWrapper{

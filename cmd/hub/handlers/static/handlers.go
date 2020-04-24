@@ -1,8 +1,10 @@
 package static
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"net/http"
 	"path"
@@ -30,6 +32,7 @@ type Handlers struct {
 	cfg        *viper.Viper
 	imageStore img.Store
 	logger     zerolog.Logger
+	indexBytes []byte
 
 	mu          sync.RWMutex
 	imagesCache map[string][]byte
@@ -37,12 +40,38 @@ type Handlers struct {
 
 // NewHandlers creates a new Handlers instance.
 func NewHandlers(cfg *viper.Viper, imageStore img.Store) *Handlers {
-	return &Handlers{
+	h := &Handlers{
 		cfg:         cfg,
 		imageStore:  imageStore,
 		imagesCache: make(map[string][]byte),
 		logger:      log.With().Str("handlers", "static").Logger(),
 	}
+	h.prepareIndex()
+	return h
+}
+
+// prepareIndex executes the index.html template and stores the resulting bytes
+// that will be served by the ServeIndex handler.
+func (h *Handlers) prepareIndex() {
+	// Setup template
+	path := path.Join(h.cfg.GetString("server.webBuildPath"), "index.html")
+	text, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Panic().Err(err).Msg("error reading index.html template")
+	}
+	tmpl := template.Must(template.New("").Parse(string(text)))
+
+	// Execute template
+	var index bytes.Buffer
+	data := map[string]string{
+		"gaTrackingID": h.cfg.GetString("analytics.gaTrackingID"),
+	}
+	err = tmpl.Execute(&index, data)
+	if err != nil {
+		log.Panic().Err(err).Msg("error executing index.html template")
+	}
+
+	h.indexBytes = index.Bytes()
 }
 
 // Image is an http handler that serves images stored in the database.
@@ -111,7 +140,7 @@ func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 // ServeIndex is an http handler that serves the index.html file.
 func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(indexCacheMaxAge))
-	http.ServeFile(w, r, path.Join(h.cfg.GetString("server.webBuildPath"), "index.html"))
+	_, _ = w.Write(h.indexBytes)
 }
 
 // FileServer sets up a http.FileServer handler to serve static files from a

@@ -63,7 +63,8 @@ hub:
       port: 587
       username: ""
       password: ""
-
+  analytics:
+    gaTrackingID: ""
 
 chartTracker:
   cronjob:
