@@ -7,10 +7,6 @@ declare
     v_package_name text := p_input->>'package_name';
     v_chart_repository_name text := p_input->>'chart_repository_name';
 begin
-    if v_package_name is null or v_package_name = '' then
-        raise 'a valid package name must be provided';
-    end if;
-
     if v_chart_repository_name <> '' then
         select p.package_id into v_package_id
         from package p

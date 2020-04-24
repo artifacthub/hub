@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(6);
+select plan(4);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -12,25 +12,6 @@ select plan(6);
 \set maintainer2ID '00000000-0000-0000-0000-000000000002'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
-
--- Some invalid queries
-select throws_ok(
-    $$
-        select get_package(null, '{
-            "chart_repository_name": "repo1"
-        }')
-    $$,
-    'a valid package name must be provided'
-);
-select throws_ok(
-    $$
-        select get_package(null, '{
-            "package_name": "",
-            "chart_repository_name": "repo1"
-        }')
-    $$,
-    'a valid package name must be provided'
-);
 
 -- No packages at this point
 select is_empty(
@@ -162,7 +143,7 @@ insert into snapshot (
 );
 insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package2ID');
 
--- Packages have just been seeded
+-- Run some tests
 select is(
     get_package(null, '{
         "package_name": "package-1",

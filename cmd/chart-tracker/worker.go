@@ -13,7 +13,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/rs/zerolog"
@@ -110,18 +109,6 @@ func (w *worker) handleRegisterJob(j *job) error {
 		return nil
 	}
 	md := chart.Metadata
-
-	// Validate chart version
-	if _, err := semver.StrictNewVersion(md.Version); err != nil {
-		w.ec.append(j.repo.ChartRepositoryID, fmt.Errorf("invalid chart version %s: %w", md.Version, err))
-		w.logger.Error().
-			Str("repo", j.repo.Name).
-			Str("chart", md.Name).
-			Str("version", md.Version).
-			Err(err).
-			Msg("Invalid chart version")
-		return err
-	}
 
 	// Store chart logo when available if requested
 	var logoURL, logoImageID string

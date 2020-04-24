@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -23,19 +24,41 @@ func TestMain(m *testing.M) {
 }
 
 func TestGet(t *testing.T) {
-	t.Run("non existing package", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, pkg.ErrNotFound)
+	t.Run("get package failed", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				pkg.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				pkg.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.pmErr)
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.Get(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.Get(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("get package succeeded", func(t *testing.T) {
@@ -55,21 +78,6 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
-	})
-
-	t.Run("error getting package", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.Get(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 		hw.pm.AssertExpectations(t)
 	})
 }
@@ -182,10 +190,8 @@ func TestGetUpdates(t *testing.T) {
 }
 
 func TestSearch(t *testing.T) {
-	t.Run("invalid requests", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
-		badRequests := []struct {
+	t.Run("invalid request params", func(t *testing.T) {
+		testCases := []struct {
 			desc   string
 			params string
 		}{
@@ -194,14 +200,13 @@ func TestSearch(t *testing.T) {
 			{"invalid facets", "facets=z"},
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
-			{"invalid user", "user="},
-			{"invalid organization", "org="},
-			{"invalid repo", "repo="},
 			{"invalid deprecated", "deprecated=z"},
 		}
-		for _, tc := range badRequests {
+		for _, tc := range testCases {
 			tc := tc
-			t.Run("bad request: "+tc.desc, func(t *testing.T) {
+			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
+				hw := newHandlersWrapper()
+
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
 				hw.h.Search(w, r)
@@ -211,6 +216,19 @@ func TestSearch(t *testing.T) {
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 			})
 		}
+	})
+
+	t.Run("invalid search input", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return(nil, pkg.ErrInvalidInput)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		hw.h.Search(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
 	t.Run("valid request, search succeeded", func(t *testing.T) {

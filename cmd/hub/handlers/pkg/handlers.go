@@ -42,10 +42,12 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
-		if errors.Is(err, pkg.ErrNotFound) {
+		h.logger.Error().Err(err).Interface("input", input).Str("method", "Get").Send()
+		if errors.Is(err, pkg.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else if errors.Is(err, pkg.ErrNotFound) {
 			http.NotFound(w, r)
 		} else {
-			h.logger.Error().Err(err).Interface("input", input).Str("method", "Get").Send()
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 		return
@@ -101,7 +103,11 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, pkg.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
@@ -151,9 +157,6 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		}
 	}
 
-	// Text
-	text := qs.Get("text")
-
 	// Kinds
 	kinds := make([]hub.PackageKind, 0, len(qs["kind"]))
 	for _, kindStr := range qs["kind"] {
@@ -162,30 +165,6 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 			return nil, fmt.Errorf("invalid kind: %s", kindStr)
 		}
 		kinds = append(kinds, hub.PackageKind(kind))
-	}
-
-	// Users
-	users := qs["user"]
-	for _, user := range users {
-		if user == "" {
-			return nil, errors.New("user alias cannot be empty")
-		}
-	}
-
-	// Organizations
-	orgs := qs["org"]
-	for _, org := range orgs {
-		if org == "" {
-			return nil, errors.New("organization name cannot be empty")
-		}
-	}
-
-	// Repos
-	repos := qs["repo"]
-	for _, repo := range repos {
-		if repo == "" {
-			return nil, errors.New("repo name cannot be empty")
-		}
 	}
 
 	// Include deprecated packages
@@ -202,11 +181,11 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Limit:             limit,
 		Offset:            offset,
 		Facets:            facets,
-		Text:              text,
+		Text:              qs.Get("text"),
 		PackageKinds:      kinds,
-		Users:             users,
-		Orgs:              orgs,
-		ChartRepositories: repos,
+		Users:             qs["user"],
+		Orgs:              qs["org"],
+		ChartRepositories: qs["repo"],
 		Deprecated:        deprecated,
 	}, nil
 }
