@@ -5,14 +5,16 @@
     <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/static/media/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Artifact Hub"
-    />
+    <meta name="description" content="Artifact Hub" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/static/media/logo192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/static/media/logo512.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Artifact Hub</title>
+    <script type="text/javascript">
+      window.analyticsConfig = {
+        gaTrackingID: '{{ .gaTrackingID }}',
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
