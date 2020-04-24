@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@analytics/google-analytics": "^0.3.1",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",
     "@testing-library/react-hooks": "^3.2.1",
@@ -20,6 +21,7 @@
     "@types/react-router-dom": "^5.1.4",
     "@types/react-syntax-highlighter": "^11.0.4",
     "@types/semver": "^7.1.0",
+    "analytics": "^0.3.5",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
     "eslint-config-prettier": "^6.10.1",

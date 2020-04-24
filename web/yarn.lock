@@ -2,6 +2,25 @@
 # yarn lockfile v1
 
 
+"@analytics/cookie-utils@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@analytics/cookie-utils/-/cookie-utils-0.2.3.tgz#e6ab923f88d89f7b02da0cfab585ff193977052f"
+  integrity sha512-RiMAVpSluRbWb2hlT9wMJ0r2l+MUZzScYjY+w2iWRzjOr9Zzzs4tYzJT6Sd94PDz3LzCuf4aGOwS6pkKXTEBLw==
+
+"@analytics/google-analytics@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@analytics/google-analytics/-/google-analytics-0.3.1.tgz#1a49c181e995580fe72c6b7fc781b1711842121d"
+  integrity sha512-4cSRdrZ0UKeVdI0BbBcLy9n0XAQnb/68SCss8mfoCCUms7Ce6BrxYdnwe2CLKN0cIQr5VaEPCyfjtAvxeJkqTg==
+  dependencies:
+    universal-analytics "^0.4.20"
+
+"@analytics/storage-utils@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@analytics/storage-utils/-/storage-utils-0.2.3.tgz#944a575cb54b0291d2a1abbdefde82254c74f929"
+  integrity sha512-hk2ZU5aAuap2L94UdsT5z5xHcmDPGker4DK+OxYnJVQyj2NdqkVMVRFUOUqHxdMP3c9d6oLunQJeYblH5NDNWQ==
+  dependencies:
+    "@analytics/cookie-utils" "^0.2.3"
+
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -1992,6 +2011,21 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+analytics-utils@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/analytics-utils/-/analytics-utils-0.2.1.tgz#ecd255e7d23102a9fcd5705b1287fbb23bc88e67"
+  integrity sha512-cwaH/VsKARvixb1kcaigZLpcIe4O0L64scbHixDIsnf6gJoFOK8803erS2e0RzI/pXE92U5BOVDVNJuskqEWsQ==
+  dependencies:
+    "@analytics/storage-utils" "^0.2.3"
+    dlv "^1.1.3"
+
+analytics@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/analytics/-/analytics-0.3.5.tgz#1c2da1912ec9f89c5bd07e9a7a195c5630bfe1c5"
+  integrity sha512-ydKT6ukiuoruA3iUWW5x0fzKjjiP2F+YS/T6V4bf/ct6hEK8vv/RrLB98h3uafZRpvU4MmtMv94H+au8ohY5/Q==
+  dependencies:
+    analytics-utils "^0.2.1"
+
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
@@ -3932,6 +3966,11 @@ dir-glob@2.0.0:
   dependencies:
     arrify "^1.0.1"
     path-type "^3.0.0"
+
+dlv@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/dlv/-/dlv-1.1.3.tgz#5c198a8a11453596e751494d49874bc7732f2e79"
+  integrity sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==
 
 dns-equal@^1.0.0:
   version "1.0.0"
@@ -11482,6 +11521,15 @@ unist-util-visit@^1.1.0, unist-util-visit@^1.3.0:
   dependencies:
     unist-util-visit-parents "^2.0.0"
 
+universal-analytics@^0.4.20:
+  version "0.4.20"
+  resolved "https://registry.yarnpkg.com/universal-analytics/-/universal-analytics-0.4.20.tgz#d6b64e5312bf74f7c368e3024a922135dbf24b03"
+  integrity sha512-gE91dtMvNkjO+kWsPstHRtSwHXz0l2axqptGYp5ceg4MsuurloM0PU3pdOfpb5zBXUvyjT4PwhWK2m39uczZuw==
+  dependencies:
+    debug "^3.0.0"
+    request "^2.88.0"
+    uuid "^3.0.0"
+
 universalify@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
@@ -11599,7 +11647,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.0.1, uuid@^3.3.2:
+uuid@^3.0.0, uuid@^3.0.1, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
