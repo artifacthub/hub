@@ -32,13 +32,13 @@ func TestAdd(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			desc    string
+			errMsg  string
 			orgName string
 			r       *hub.ChartRepository
 			lErr    error
 		}{
 			{
-				"missing name",
+				"name not provided",
 				"org1",
 				&hub.ChartRepository{
 					Name: "",
@@ -46,7 +46,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"missing url",
+				"url not provided",
 				"org1",
 				&hub.ChartRepository{
 					Name: "repo1",
@@ -55,7 +55,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"invalid name (starts with number)",
+				"invalid name",
 				"org1",
 				&hub.ChartRepository{
 					Name: "1repo",
@@ -64,7 +64,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"invalid name (uses underscore)",
+				"invalid name",
 				"org1",
 				&hub.ChartRepository{
 					Name: "repo_underscore",
@@ -73,7 +73,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"invalid name (uppercase)",
+				"invalid name",
 				"org1",
 				&hub.ChartRepository{
 					Name: "REPO_UPPERCASE",
@@ -93,7 +93,7 @@ func TestAdd(t *testing.T) {
 		}
 		for _, tc := range testCases {
 			tc := tc
-			t.Run(tc.desc, func(t *testing.T) {
+			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &IndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)
@@ -102,6 +102,7 @@ func TestAdd(t *testing.T) {
 
 				err := m.Add(ctx, tc.orgName, tc.r)
 				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
 				l.AssertExpectations(t)
 			})
 		}
@@ -137,7 +138,7 @@ func TestAdd(t *testing.T) {
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			desc         string
+			errMsg       string
 			resourceKind string
 			value        string
 		}{
@@ -154,10 +155,11 @@ func TestCheckAvailability(t *testing.T) {
 		}
 		for _, tc := range testCases {
 			tc := tc
-			t.Run(tc.desc, func(t *testing.T) {
+			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
 				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
 	})
@@ -499,19 +501,19 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			desc string
-			r    *hub.ChartRepository
-			lErr error
+			errMsg string
+			r      *hub.ChartRepository
+			lErr   error
 		}{
 			{
-				"missing name",
+				"name not provided",
 				&hub.ChartRepository{
 					Name: "",
 				},
 				nil,
 			},
 			{
-				"missing url",
+				"url not provided",
 				&hub.ChartRepository{
 					Name: "repo1",
 					URL:  "",
@@ -529,7 +531,7 @@ func TestUpdate(t *testing.T) {
 		}
 		for _, tc := range testCases {
 			tc := tc
-			t.Run(tc.desc, func(t *testing.T) {
+			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &IndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)

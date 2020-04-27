@@ -30,36 +30,36 @@ func TestAdd(t *testing.T) {
 		testCases := []struct {
 			description string
 			repoJSON    string
+			omErr       error
 		}{
 			{
 				"no organization provided",
 				"",
+				nil,
 			},
 			{
 				"invalid json",
 				"-",
+				nil,
 			},
 			{
 				"missing name",
 				`{"display_name": "Display Name"}`,
+				org.ErrInvalidInput,
 			},
 			{
 				"invalid name",
 				`{"name": "_org"}`,
-			},
-			{
-				"invalid name",
-				`{"name": " org"}`,
-			},
-			{
-				"invalid name",
-				`{"name": "ORG"}`,
+				org.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
+				if tc.omErr != nil {
+					hw.om.On("Add", mock.Anything, mock.Anything).Return(tc.omErr)
+				}
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
@@ -69,6 +69,7 @@ func TestAdd(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.om.AssertExpectations(t)
 			})
 		}
 	})
@@ -118,85 +119,74 @@ func TestAdd(t *testing.T) {
 }
 
 func TestAddMember(t *testing.T) {
-	t.Run("valid member provided", func(t *testing.T) {
-		testCases := []struct {
-			description        string
-			err                error
-			expectedStatusCode int
-		}{
-			{
-				"add member succeeded",
-				nil,
-				http.StatusOK,
-			},
-			{
-				"error adding member",
-				tests.ErrFakeDatabaseFailure,
-				http.StatusInternalServerError,
-			},
+	testCases := []struct {
+		omErr              error
+		expectedStatusCode int
+	}{
+		{
+			nil,
+			http.StatusOK,
+		},
+		{
+			org.ErrInvalidInput,
+			http.StatusBadRequest,
+		},
+		{
+			tests.ErrFakeDatabaseFailure,
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		var desc string
+		if tc.omErr != nil {
+			desc = tc.omErr.Error()
 		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.om.On("AddMember", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-					Return(tc.err)
+		t.Run(desc, func(t *testing.T) {
+			hw := newHandlersWrapper()
+			hw.om.On("AddMember", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+				Return(tc.omErr)
 
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("POST", "/", strings.NewReader("member=userAlias"))
-				r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				hw.h.AddMember(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("POST", "/", strings.NewReader("member=userAlias"))
+			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+			hw.h.AddMember(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
 
-				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.om.AssertExpectations(t)
-			})
-		}
-	})
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.om.AssertExpectations(t)
+		})
+	}
 }
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("invalid resource kind", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
 		hw := newHandlersWrapper()
+		hw.om.On("CheckAvailability", mock.Anything, "invalid", "value").
+			Return(false, org.ErrInvalidInput)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
 			URLParams: chi.RouteParams{
 				Keys:   []string{"resourceKind"},
-				Values: []string{"invalidKind"},
+				Values: []string{"invalid"},
 			},
 		}
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
+		h := resp.Header
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		hw.om.AssertExpectations(t)
 	})
 
-	t.Run("invalid value", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("HEAD", "/", nil)
-		rctx := &chi.Context{
-			URLParams: chi.RouteParams{
-				Keys:   []string{"resourceKind"},
-				Values: []string{"userAlias"},
-			},
-		}
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-		hw.h.CheckAvailability(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
-
-	t.Run("valid resource kind", func(t *testing.T) {
+	t.Run("valid input", func(t *testing.T) {
 		t.Run("check availability succeeded", func(t *testing.T) {
 			testCases := []struct {
 				resourceKind string
@@ -264,71 +254,121 @@ func TestCheckAvailability(t *testing.T) {
 }
 
 func TestConfirmMembership(t *testing.T) {
-	t.Run("confirm membership succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(nil)
+	testCases := []struct {
+		omErr              error
+		expectedStatusCode int
+	}{
+		{
+			nil,
+			http.StatusOK,
+		},
+		{
+			org.ErrInvalidInput,
+			http.StatusBadRequest,
+		},
+		{
+			tests.ErrFakeDatabaseFailure,
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		var desc string
+		if tc.omErr != nil {
+			desc = tc.omErr.Error()
+		}
+		t.Run(desc, func(t *testing.T) {
+			hw := newHandlersWrapper()
+			hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(tc.omErr)
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.ConfirmMembership(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("PUT", "/", nil)
+			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+			hw.h.ConfirmMembership(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.om.AssertExpectations(t)
-	})
-
-	t.Run("error confirming membership", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.ConfirmMembership(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.om.AssertExpectations(t)
-	})
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.om.AssertExpectations(t)
+		})
+	}
 }
 
 func TestDeleteMember(t *testing.T) {
-	t.Run("delete member succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	testCases := []struct {
+		omErr              error
+		expectedStatusCode int
+	}{
+		{
+			nil,
+			http.StatusOK,
+		},
+		{
+			org.ErrInvalidInput,
+			http.StatusBadRequest,
+		},
+		{
+			tests.ErrFakeDatabaseFailure,
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		var desc string
+		if tc.omErr != nil {
+			desc = tc.omErr.Error()
+		}
+		t.Run(desc, func(t *testing.T) {
+			hw := newHandlersWrapper()
+			hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).Return(tc.omErr)
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("DELETE", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.DeleteMember(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("DELETE", "/", nil)
+			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+			hw.h.DeleteMember(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.om.AssertExpectations(t)
-	})
-
-	t.Run("error deleting member", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).
-			Return(tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("DELETE", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.DeleteMember(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.om.AssertExpectations(t)
-	})
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.om.AssertExpectations(t)
+		})
+	}
 }
 
 func TestGet(t *testing.T) {
+	t.Run("error getting organization", func(t *testing.T) {
+		testCases := []struct {
+			omErr              error
+			expectedStatusCode int
+		}{
+			{
+				org.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.om.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.omErr)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.Get(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.om.AssertExpectations(t)
+			})
+		}
+	})
+
 	t.Run("get organization succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.om.On("GetJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
@@ -346,21 +386,6 @@ func TestGet(t *testing.T) {
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
-		hw.om.AssertExpectations(t)
-	})
-
-	t.Run("error getting organization", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.Get(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 		hw.om.AssertExpectations(t)
 	})
 }
@@ -403,6 +428,39 @@ func TestGetByUser(t *testing.T) {
 }
 
 func TestGetMembers(t *testing.T) {
+	t.Run("error getting organization members", func(t *testing.T) {
+		testCases := []struct {
+			omErr              error
+			expectedStatusCode int
+		}{
+			{
+				org.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return(nil, tc.omErr)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.GetMembers(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.om.AssertExpectations(t)
+			})
+		}
+	})
+
 	t.Run("get organization members succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
@@ -422,21 +480,6 @@ func TestGetMembers(t *testing.T) {
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.om.AssertExpectations(t)
 	})
-
-	t.Run("error getting organization members", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.GetMembers(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.om.AssertExpectations(t)
-	})
 }
 
 func TestUpdate(t *testing.T) {
@@ -444,20 +487,31 @@ func TestUpdate(t *testing.T) {
 		testCases := []struct {
 			description string
 			repoJSON    string
+			omErr       error
 		}{
 			{
 				"no organization provided",
 				"",
+				nil,
 			},
 			{
 				"invalid json",
 				"-",
+				nil,
+			},
+			{
+				"invalid logo image id",
+				`{"name": "org1", "logo_image_id": "invalid"}`,
+				org.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
+				if tc.omErr != nil {
+					hw.om.On("Update", mock.Anything, mock.Anything).Return(tc.omErr)
+				}
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
@@ -467,6 +521,7 @@ func TestUpdate(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.om.AssertExpectations(t)
 			})
 		}
 	})

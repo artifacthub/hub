@@ -2,6 +2,7 @@ package org
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"testing"
 
@@ -23,12 +24,54 @@ func TestAdd(t *testing.T) {
 		})
 	})
 
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			org    *hub.Organization
+		}{
+			{
+				"name not provided",
+				&hub.Organization{
+					Name: "",
+				},
+			},
+			{
+				"invalid name",
+				&hub.Organization{
+					Name: "_org1",
+				},
+			},
+			{
+				"invalid name",
+				&hub.Organization{
+					Name: "UPPERCASE",
+				},
+			},
+			{
+				"invalid logo image id",
+				&hub.Organization{
+					Name:        "org1",
+					LogoImageID: "invalid",
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.Add(ctx, tc.org)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
-		err := m.Add(ctx, &hub.Organization{})
+		err := m.Add(ctx, &hub.Organization{Name: "org1"})
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -38,7 +81,7 @@ func TestAdd(t *testing.T) {
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		err := m.Add(ctx, &hub.Organization{})
+		err := m.Add(ctx, &hub.Organization{Name: "org1"})
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
@@ -54,6 +97,49 @@ func TestAddMember(t *testing.T) {
 		assert.Panics(t, func() {
 			_ = m.AddMember(context.Background(), "orgName", "userAlias", "")
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			orgName   string
+			userAlias string
+			baseURL   string
+		}{
+			{
+				"organization name not provided",
+				"",
+				"user1",
+				"https://baseurl.com",
+			},
+			{
+				"user alias not provided",
+				"org1",
+				"",
+				"https://baseurl.com",
+			},
+			{
+				"base url not provided",
+				"org1",
+				"user1",
+				"",
+			},
+			{
+				"invalid base url",
+				"org1",
+				"user1",
+				"/invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.AddMember(ctx, tc.orgName, tc.userAlias, tc.baseURL)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -80,7 +166,7 @@ func TestAddMember(t *testing.T) {
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
 
-				err := m.AddMember(ctx, "orgName", "userAlias", "")
+				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
 				db.AssertExpectations(t)
 				es.AssertExpectations(t)
@@ -94,17 +180,39 @@ func TestAddMember(t *testing.T) {
 			Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		err := m.AddMember(ctx, "orgName", "userAlias", "")
+		err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("resource kind not supported", func(t *testing.T) {
-		m := NewManager(nil, nil)
-		_, err := m.CheckAvailability(context.Background(), "invalidKind", "value")
-		assert.Error(t, err)
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg       string
+			resourceKind string
+			value        string
+		}{
+			{
+				"invalid resource kind",
+				"invalid",
+				"value",
+			},
+			{
+				"invalid value",
+				"organizationName",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -159,6 +267,12 @@ func TestConfirmMembership(t *testing.T) {
 		})
 	})
 
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		err := m.ConfirmMembership(ctx, "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName").Return(nil)
@@ -191,6 +305,34 @@ func TestDeleteMember(t *testing.T) {
 		})
 	})
 
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			orgName   string
+			userAlias string
+		}{
+			{
+				"organization name not provided",
+				"",
+				"user1",
+			},
+			{
+				"user alias not provided",
+				"org1",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.DeleteMember(ctx, tc.orgName, tc.userAlias)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName", "userAlias").Return(nil)
@@ -214,6 +356,12 @@ func TestDeleteMember(t *testing.T) {
 
 func TestGetJSON(t *testing.T) {
 	dbQuery := `select get_organization($1::text)`
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		_, err := m.GetJSON(context.Background(), "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
@@ -283,6 +431,12 @@ func TestGetMembersJSON(t *testing.T) {
 		})
 	})
 
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		_, err := m.GetMembersJSON(ctx, "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
@@ -315,6 +469,30 @@ func TestUpdate(t *testing.T) {
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), &hub.Organization{})
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			org    *hub.Organization
+		}{
+			{
+				"invalid logo image id",
+				&hub.Organization{
+					Name:        "org1",
+					LogoImageID: "invalid",
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.Update(ctx, tc.org)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {

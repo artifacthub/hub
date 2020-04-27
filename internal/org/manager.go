@@ -6,9 +6,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
+	"regexp"
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/satori/uuid"
+)
+
+var (
+	// organizationNameRE is a regexp used to validate an organization name.
+	organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
+
+	// ErrInvalidInput indicates that the input provided is not valid.
+	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage organizations.
@@ -27,8 +38,23 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 
 // Add adds the provided organization to the database.
 func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
-	query := "select add_organization($1::uuid, $2::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if org.Name == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+	}
+	if !organizationNameRE.MatchString(org.Name) {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid name")
+	}
+	if org.LogoImageID != "" {
+		if _, err := uuid.FromString(org.LogoImageID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid logo image id")
+		}
+	}
+
+	// Add org to database
+	query := "select add_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
 	_, err := m.db.Exec(ctx, query, userID, orgJSON)
 	return err
@@ -39,9 +65,26 @@ func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
 // willingness to join the organization. The user doing the request must be a
 // member of the organization.
 func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL string) error {
-	query := "select add_organization_member($1::uuid, $2::text, $3::text)"
 	userID := ctx.Value(hub.UserIDKey).(string)
-	_, err := m.db.Exec(ctx, query, userID, orgName, userAlias)
+
+	// Validate input
+	if orgName == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+	}
+	if userAlias == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "user alias not provided")
+	}
+	if baseURL == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "base url not provided")
+	}
+	u, err := url.Parse(baseURL)
+	if err != nil || u.Scheme == "" || u.Host == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid base url")
+	}
+
+	// Add organization member to database
+	query := "select add_organization_member($1::uuid, $2::text, $3::text)"
+	_, err = m.db.Exec(ctx, query, userID, orgName, userAlias)
 	if err != nil {
 		return err
 	}
@@ -80,13 +123,30 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	var available bool
 	var query string
 
+	// Validate input
+	validResourceKinds := []string{
+		"organizationName",
+	}
+	isResourceKindValid := func(resourceKind string) bool {
+		for _, k := range validResourceKinds {
+			if resourceKind == k {
+				return true
+			}
+		}
+		return false
+	}
+	if !isResourceKindValid(resourceKind) {
+		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid resource kind")
+	}
+	if value == "" {
+		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid value")
+	}
+
+	// Check availability in database
 	switch resourceKind {
 	case "organizationName":
 		query = `select organization_id from organization where name = $1`
-	default:
-		return false, errors.New("resource kind not supported")
 	}
-
 	query = fmt.Sprintf("select not exists (%s)", query)
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
 	return available, err
@@ -95,8 +155,15 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 // ConfirmMembership confirms the user doing the request membership to the
 // provided organization.
 func (m *Manager) ConfirmMembership(ctx context.Context, orgName string) error {
-	query := "select confirm_organization_membership($1::uuid, $2::text)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+	}
+
+	// Confirm organization membership in database
+	query := "select confirm_organization_membership($1::uuid, $2::text)"
 	_, err := m.db.Exec(ctx, query, userID, orgName)
 	return err
 }
@@ -104,14 +171,30 @@ func (m *Manager) ConfirmMembership(ctx context.Context, orgName string) error {
 // DeleteMember removes a member from the provided organization. The user doing
 // the request must be a member of the organization.
 func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) error {
-	query := "select delete_organization_member($1::uuid, $2::text, $3::text)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+	}
+	if userAlias == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "user alias not provided")
+	}
+
+	// Delete organization member from database
+	query := "select delete_organization_member($1::uuid, $2::text, $3::text)"
 	_, err := m.db.Exec(ctx, query, userID, orgName, userAlias)
 	return err
 }
 
 // GetJSON returns the organization requested as a json object.
 func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
+	// Validate input
+	if orgName == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+	}
+
+	// Get organization from database
 	query := "select get_organization($1::text)"
 	return m.dbQueryJSON(ctx, query, orgName)
 }
@@ -127,15 +210,31 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 // GetMembersJSON returns the members of the provided organization as a json
 // object.
 func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, error) {
-	query := "select get_organization_members($1::uuid, $2::text)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+	}
+
+	// Get organization members from database
+	query := "select get_organization_members($1::uuid, $2::text)"
 	return m.dbQueryJSON(ctx, query, userID, orgName)
 }
 
 // Update updates the provided organization in the database.
 func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
-	query := "select update_organization($1::uuid, $2::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if org.LogoImageID != "" {
+		if _, err := uuid.FromString(org.LogoImageID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid logo image id")
+		}
+	}
+
+	// Update organization in database
+	query := "select update_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
 	_, err := m.db.Exec(ctx, query, userID, orgJSON)
 	return err
