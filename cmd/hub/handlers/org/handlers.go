@@ -2,18 +2,16 @@ package org
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
-	"regexp"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/org"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
-
-// organizationNameRE is a regexp used to validate an organization name.
-var organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
 
 // Handlers represents a group of http handlers in charge of handling
 // organizations operations.
@@ -32,23 +30,19 @@ func NewHandlers(orgManager hub.OrganizationManager) *Handlers {
 
 // Add is an http handler that adds the provided organization to the database.
 func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
-	org := &hub.Organization{}
-	if err := json.NewDecoder(r.Body).Decode(&org); err != nil {
+	o := &hub.Organization{}
+	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg("invalid organization")
 		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
 		return
 	}
-	if org.Name == "" {
-		http.Error(w, "organization name must be provided", http.StatusBadRequest)
-		return
-	}
-	if !organizationNameRE.MatchString(org.Name) {
-		http.Error(w, "invalid chart repository name", http.StatusBadRequest)
-		return
-	}
-	if err := h.orgManager.Add(r.Context(), org); err != nil {
+	if err := h.orgManager.Add(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 }
@@ -61,7 +55,11 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 }
@@ -69,36 +67,17 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 // CheckAvailability is a middleware that checks the availability of a given
 // value for the provided resource kind.
 func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(0))
 	resourceKind := chi.URLParam(r, "resourceKind")
 	value := r.FormValue("v")
-
-	// Check if resource kind and value received are valid
-	validResourceKinds := []string{
-		"organizationName",
-	}
-	isResourceKindValid := func(resourceKind string) bool {
-		for _, k := range validResourceKinds {
-			if resourceKind == k {
-				return true
-			}
-		}
-		return false
-	}
-	if !isResourceKindValid(resourceKind) {
-		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
-		return
-	}
-	if value == "" {
-		http.Error(w, "invalid value provided", http.StatusBadRequest)
-		return
-	}
-
-	// Check availability in database
-	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(0))
 	available, err := h.orgManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	if available {
@@ -112,7 +91,11 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	if err := h.orgManager.ConfirmMembership(r.Context(), orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 }
@@ -124,7 +107,11 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	userAlias := chi.URLParam(r, "userAlias")
 	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 }
@@ -135,7 +122,11 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -160,7 +151,11 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -169,16 +164,20 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 // Update is an http handler that updates the provided organization in the
 // database.
 func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
-	org := &hub.Organization{}
-	if err := json.NewDecoder(r.Body).Decode(&org); err != nil {
+	o := &hub.Organization{}
+	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Msg("invalid organization")
 		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
 		return
 	}
-	org.Name = chi.URLParam(r, "orgName")
-	if err := h.orgManager.Update(r.Context(), org); err != nil {
+	o.Name = chi.URLParam(r, "orgName")
+	if err := h.orgManager.Update(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, org.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 }

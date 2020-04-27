@@ -152,7 +152,7 @@ func TestCheckAvailability(t *testing.T) {
 		hw.rm.AssertExpectations(t)
 	})
 
-	t.Run("valid resource kind", func(t *testing.T) {
+	t.Run("valid input", func(t *testing.T) {
 		t.Run("check availability succeeded", func(t *testing.T) {
 			testCases := []struct {
 				resourceKind string
