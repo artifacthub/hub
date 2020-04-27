@@ -58,7 +58,7 @@ const OrganizationInfo = (props: Props) => {
   }, [onLinkHover, onDropdownHover, organization, openStatus]);
 
   return (
-    <div className={`text-truncate ${props.className}`}>
+    <div className={props.className}>
       <div className="position-absolute">
         <div
           ref={ref}

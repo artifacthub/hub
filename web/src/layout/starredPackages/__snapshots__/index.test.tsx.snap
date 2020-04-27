@@ -119,7 +119,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                         >
                           <div
-                            class="text-truncate mr-2"
+                            class="mr-2"
                           >
                             <div
                               class="position-absolute"
@@ -278,7 +278,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                         >
                           <div
-                            class="text-truncate mr-2"
+                            class="mr-2"
                           >
                             <div
                               class="position-absolute"
@@ -437,7 +437,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                         >
                           <div
-                            class="text-truncate mr-2"
+                            class="mr-2"
                           >
                             <div
                               class="position-absolute"
@@ -596,7 +596,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                         >
                           <div
-                            class="text-truncate mr-2"
+                            class="mr-2"
                           >
                             <div
                               class="position-absolute"
@@ -728,7 +728,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                         >
                           <div
-                            class="text-truncate mr-2"
+                            class="mr-2"
                           >
                             <div
                               class="position-absolute"
