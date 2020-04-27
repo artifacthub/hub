@@ -52,6 +52,10 @@
   border-radius: 3px;
 }
 
+.md ul {
+  overflow-x: auto;
+}
+
 .md code {
   word-wrap: normal;
   white-space: pre;
