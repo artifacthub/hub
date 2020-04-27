@@ -11,8 +11,8 @@ import (
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/gofrs/uuid"
 	"github.com/jackc/pgx/v4"
+	"github.com/satori/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
