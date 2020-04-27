@@ -120,34 +120,15 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	resourceKind := chi.URLParam(r, "resourceKind")
 	value := r.FormValue("v")
-
-	// Check if resource kind and value received are valid
-	validResourceKinds := []string{
-		"userAlias",
-	}
-	isResourceKindValid := func(resourceKind string) bool {
-		for _, k := range validResourceKinds {
-			if resourceKind == k {
-				return true
-			}
-		}
-		return false
-	}
-	if !isResourceKindValid(resourceKind) {
-		http.Error(w, "invalid resource kind provided", http.StatusBadRequest)
-		return
-	}
-	if value == "" {
-		http.Error(w, "invalid value provided", http.StatusBadRequest)
-		return
-	}
-
-	// Check availability in database
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(0))
 	available, err := h.userManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, user.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	if available {
@@ -503,23 +484,28 @@ func (h *Handlers) OauthRedirect(w http.ResponseWriter, r *http.Request) {
 
 // RegisterUser is an http handler used to register a user in the hub database.
 func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	user := &hub.User{}
-	err := json.NewDecoder(r.Body).Decode(&user)
+	u := &hub.User{}
+	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Msg("invalid user")
 		http.Error(w, "user provided is not valid", http.StatusBadRequest)
 		return
 	}
-	user.EmailVerified = false
-	if err := validateUser(user); err != nil {
-		log.Error().Err(err).Msg("invalid user")
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	u.EmailVerified = false
+	if u.Password == "" {
+		errMsg := "password not provided"
+		h.logger.Error().Err(err).Str("method", "RegisterUser").Msg(errMsg)
+		http.Error(w, errMsg, http.StatusBadRequest)
 		return
 	}
-	err = h.userManager.RegisterUser(r.Context(), user, helpers.GetBaseURL(r))
+	err = h.userManager.RegisterUser(r.Context(), u, helpers.GetBaseURL(r))
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, user.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 	}
 }
 
@@ -605,19 +591,13 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 // database.
 func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	old := r.FormValue("old")
-	if old == "" {
-		http.Error(w, "old password not provided", http.StatusBadRequest)
-		return
-	}
 	new := r.FormValue("new")
-	if new == "" {
-		http.Error(w, "new password not provided", http.StatusBadRequest)
-		return
-	}
 	err := h.userManager.UpdatePassword(r.Context(), old, new)
 	if err != nil {
 		if errors.Is(err, user.ErrInvalidPassword) {
 			http.Error(w, "", http.StatusUnauthorized)
+		} else if errors.Is(err, user.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
 			http.Error(w, "", http.StatusInternalServerError)
@@ -627,53 +607,40 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 
 // UpdateProfile is an http handler used to update the user in the hub database.
 func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
-	user := &hub.User{}
-	err := json.NewDecoder(r.Body).Decode(&user)
+	u := &hub.User{}
+	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Msg("invalid user")
 		http.Error(w, "user provided is not valid", http.StatusBadRequest)
 		return
 	}
-	err = h.userManager.UpdateProfile(r.Context(), user)
+	err = h.userManager.UpdateProfile(r.Context(), u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, user.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 	}
 }
 
 // VerifyEmail is an http handler used to verify a user's email address.
 func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	code := r.FormValue("code")
-	if code == "" {
-		errMsg := "email verification code not provided"
-		h.logger.Error().Str("method", "VerifyEmail").Msg(errMsg)
-		http.Error(w, errMsg, http.StatusBadRequest)
-		return
-	}
 	verified, err := h.userManager.VerifyEmail(r.Context(), code)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyEmail").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		if errors.Is(err, user.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
 		return
 	}
 	if !verified {
 		w.WriteHeader(http.StatusGone)
 	}
-}
-
-// validateUser validates a user instance before we attempt to register it in
-// the database.
-func validateUser(user *hub.User) error {
-	if user.Alias == "" {
-		return fmt.Errorf("alias not provided")
-	}
-	if user.Email == "" {
-		return fmt.Errorf("email not provided")
-	}
-	if user.Password == "" {
-		return fmt.Errorf("password not provided")
-	}
-	return nil
 }
 
 // OauthState represents the state of an oauth authorization session, used to

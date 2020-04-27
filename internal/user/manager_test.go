@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"testing"
 	"time"
@@ -16,10 +17,32 @@ import (
 )
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("resource kind not supported", func(t *testing.T) {
-		m := NewManager(nil, nil)
-		_, err := m.CheckAvailability(context.Background(), "invalidKind", "value")
-		assert.Error(t, err)
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg       string
+			resourceKind string
+			value        string
+		}{
+			{
+				"invalid resource kind",
+				"invalid",
+				"value",
+			},
+			{
+				"invalid value",
+				"userAlias",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -65,6 +88,34 @@ func TestCheckAvailability(t *testing.T) {
 
 func TestCheckCredentials(t *testing.T) {
 	dbQuery := `select user_id, password from "user" where email = $1 and password is not null`
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg   string
+			email    string
+			password string
+		}{
+			{
+				"email not provided",
+				"",
+				"password",
+			},
+			{
+				"password not provided",
+				"email",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				_, err := m.CheckCredentials(context.Background(), tc.email, tc.password)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
 
 	t.Run("credentials provided not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
@@ -122,6 +173,39 @@ func TestCheckSession(t *testing.T) {
 	from session where session_id = $1
 	`
 
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			sessionID []byte
+			duration  time.Duration
+		}{
+			{
+				"session id not provided",
+				nil,
+				10,
+			},
+			{
+				"session id not provided",
+				[]byte(""),
+				10,
+			},
+			{
+				"duration not provided",
+				[]byte("sessionID"),
+				0,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				_, err := m.CheckSession(context.Background(), tc.sessionID, tc.duration)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
 	t.Run("session not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery, []byte("sessionID")).Return(nil, pgx.ErrNoRows)
@@ -176,7 +260,35 @@ func TestCheckSession(t *testing.T) {
 func TestDeleteSession(t *testing.T) {
 	dbQuery := "delete from session where session_id = $1"
 
-	t.Run("delete session", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			sessionID []byte
+			duration  time.Duration
+		}{
+			{
+				"session id not provided",
+				nil,
+				10,
+			},
+			{
+				"session id not provided",
+				[]byte(""),
+				10,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.DeleteSession(context.Background(), tc.sessionID)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("valid input", func(t *testing.T) {
 		testCases := []struct {
 			description string
 			dbResponse  interface{}
@@ -242,6 +354,12 @@ func TestGetProfileJSON(t *testing.T) {
 func TestGetUserID(t *testing.T) {
 	dbQuery := `select user_id from "user" where email = $1`
 
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		_, err := m.GetUserID(context.Background(), "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery, "email").Return("userID", nil)
@@ -274,6 +392,32 @@ func TestRegisterSession(t *testing.T) {
 		UserAgent: "Safari 13.0.5",
 	}
 
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			userID string
+		}{
+			{
+				"user id not provided",
+				"",
+			},
+			{
+				"invalid user id",
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				s := &hub.Session{UserID: tc.userID}
+				_, err := m.RegisterSession(context.Background(), s)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
 	t.Run("successful session registration", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", dbQuery, mock.Anything).Return([]byte("sessionID"), nil)
@@ -299,6 +443,42 @@ func TestRegisterSession(t *testing.T) {
 
 func TestRegisterUser(t *testing.T) {
 	dbQuery := "select register_user($1::jsonb)"
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg  string
+			user    *hub.User
+			baseURL string
+		}{
+			{
+				"alias not provided",
+				&hub.User{},
+				"http://baseurl.com",
+			},
+			{
+				"email not provided",
+				&hub.User{Alias: "user1"},
+				"http://baseurl.com",
+			},
+			{
+				"invalid base url",
+				&hub.User{Alias: "user1", Email: "email"},
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				es := &email.SenderMock{}
+				es.On("SendEmail", mock.Anything).Return(nil)
+				m := NewManager(nil, es)
+
+				err := m.RegisterUser(context.Background(), tc.user, tc.baseURL)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
 
 	t.Run("successful user registration in database", func(t *testing.T) {
 		testCases := []struct {
@@ -330,7 +510,7 @@ func TestRegisterUser(t *testing.T) {
 					Email:     "email@email.com",
 					Password:  "password",
 				}
-				err := m.RegisterUser(context.Background(), u, "")
+				err := m.RegisterUser(context.Background(), u, "http://baseurl.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
 				assert.NoError(t, bcrypt.CompareHashAndPassword([]byte(u.Password), []byte("password")))
 				db.AssertExpectations(t)
@@ -344,7 +524,11 @@ func TestRegisterUser(t *testing.T) {
 		db.On("QueryRow", dbQuery, mock.Anything).Return("", tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		err := m.RegisterUser(context.Background(), &hub.User{}, "")
+		u := &hub.User{
+			Alias: "alias",
+			Email: "email@email.com",
+		}
+		err := m.RegisterUser(context.Background(), u, "http://baseurl.com")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
@@ -361,6 +545,34 @@ func TestUpdatePassword(t *testing.T) {
 		assert.Panics(t, func() {
 			_ = m.UpdatePassword(context.Background(), "old", "new")
 		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			old    string
+			new    string
+		}{
+			{
+				"old password not provided",
+				"",
+				"new",
+			},
+			{
+				"new password not provided",
+				"old",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.UpdatePassword(ctx, tc.old, tc.new)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
 	})
 
 	t.Run("database error getting user password", func(t *testing.T) {
@@ -418,12 +630,33 @@ func TestUpdateProfile(t *testing.T) {
 		})
 	})
 
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			user   *hub.User
+		}{
+			{
+				"alias not provided",
+				&hub.User{},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				err := m.UpdateProfile(ctx, tc.user)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
-		err := m.UpdateProfile(ctx, &hub.User{})
+		err := m.UpdateProfile(ctx, &hub.User{Alias: "user1"})
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -433,7 +666,7 @@ func TestUpdateProfile(t *testing.T) {
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		err := m.UpdateProfile(ctx, &hub.User{})
+		err := m.UpdateProfile(ctx, &hub.User{Alias: "user1"})
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
@@ -441,6 +674,12 @@ func TestUpdateProfile(t *testing.T) {
 
 func TestVerifyEmail(t *testing.T) {
 	dbQuery := "select verify_email($1::uuid)"
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		_, err := m.VerifyEmail(context.Background(), "")
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
 
 	t.Run("successful email verification", func(t *testing.T) {
 		db := &tests.DBMock{}

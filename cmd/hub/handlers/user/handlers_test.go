@@ -57,45 +57,31 @@ func TestBasicAuth(t *testing.T) {
 }
 
 func TestCheckAvailability(t *testing.T) {
-	t.Run("invalid resource kind", func(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
 		hw := newHandlersWrapper()
+		hw.um.On("CheckAvailability", mock.Anything, "invalid", "value").
+			Return(false, user.ErrInvalidInput)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
 			URLParams: chi.RouteParams{
 				Keys:   []string{"resourceKind"},
-				Values: []string{"invalidKind"},
+				Values: []string{"invalid"},
 			},
 		}
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
+		h := resp.Header
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		hw.um.AssertExpectations(t)
 	})
 
-	t.Run("invalid value", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("HEAD", "/", nil)
-		rctx := &chi.Context{
-			URLParams: chi.RouteParams{
-				Keys:   []string{"resourceKind"},
-				Values: []string{"userAlias"},
-			},
-		}
-		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
-		hw.h.CheckAvailability(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
-
-	t.Run("valid resource kind", func(t *testing.T) {
+	t.Run("valid input", func(t *testing.T) {
 		t.Run("check availability succeeded", func(t *testing.T) {
 			testCases := []struct {
 				resourceKind string
@@ -491,28 +477,36 @@ func TestRegisterUser(t *testing.T) {
 		testCases := []struct {
 			description string
 			userJSON    string
+			umErr       error
 		}{
 			{
 				"invalid json",
 				"-",
-			},
-			{
-				"missing alias",
-				`{"email": "email", "password": "password"}`,
-			},
-			{
-				"missing email",
-				`{"alias": "alias", "password": "password"}`,
+				nil,
 			},
 			{
 				"missing password",
 				`{"alias": "alias", "email": "email"}`,
+				nil,
+			},
+			{
+				"missing alias",
+				`{"email": "email", "password": "password"}`,
+				user.ErrInvalidInput,
+			},
+			{
+				"missing email",
+				`{"alias": "alias", "password": "password"}`,
+				user.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
+				if tc.umErr != nil {
+					hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.umErr)
+				}
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.userJSON))
@@ -521,6 +515,7 @@ func TestRegisterUser(t *testing.T) {
 				defer resp.Body.Close()
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.um.AssertExpectations(t)
 			})
 		}
 	})
@@ -537,7 +532,7 @@ func TestRegisterUser(t *testing.T) {
 		`
 		testCases := []struct {
 			description        string
-			err                error
+			umErr              error
 			expectedStatusCode int
 		}{
 			{
@@ -555,7 +550,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				hw := newHandlersWrapper()
-				hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.err)
+				hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.umErr)
 
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
@@ -663,6 +658,8 @@ func TestRequireLogin(t *testing.T) {
 func TestUpdatePassword(t *testing.T) {
 	t.Run("no old password provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
+			Return(user.ErrInvalidInput)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("new=new"))
@@ -672,10 +669,13 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("no new password provided", func(t *testing.T) {
 		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
+			Return(user.ErrInvalidInput)
 
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old"))
@@ -685,6 +685,7 @@ func TestUpdatePassword(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.um.AssertExpectations(t)
 	})
 
 	t.Run("invalid old password provided", func(t *testing.T) {
@@ -741,28 +742,46 @@ func TestUpdatePassword(t *testing.T) {
 func TestUpdateProfile(t *testing.T) {
 	userJSON := `{"first_name": "firstname", "last_name": "lastname"}`
 
-	t.Run("no user provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			desc     string
+			userJSON string
+			umErr    error
+		}{
+			{
+				"no user provided",
+				"",
+				nil,
+			},
+			{
+				"invalid user json",
+				"{invalid json",
+				nil,
+			},
+			{
+				"alias not provided",
+				"{}",
+				user.ErrInvalidInput,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.desc, func(t *testing.T) {
+				hw := newHandlersWrapper()
+				if tc.umErr != nil {
+					hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(tc.umErr)
+				}
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader(""))
-		hw.h.UpdateProfile(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.userJSON))
+				hw.h.UpdateProfile(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
-
-	t.Run("invalid user provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("{invalid json"))
-		hw.h.UpdateProfile(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.um.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("error updating profile", func(t *testing.T) {
@@ -797,58 +816,50 @@ func TestUpdateProfile(t *testing.T) {
 }
 
 func TestVerifyEmail(t *testing.T) {
-	t.Run("no code provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
 
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
-		hw.h.VerifyEmail(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
+	testCases := []struct {
+		description        string
+		response           []interface{}
+		expectedStatusCode int
+	}{
+		{
+			"code not provided",
+			[]interface{}{false, user.ErrInvalidInput},
+			http.StatusBadRequest,
+		},
+		{
+			"code not verified",
+			[]interface{}{false, nil},
+			http.StatusGone,
+		},
+		{
+			"code verified",
+			[]interface{}{true, nil},
+			http.StatusOK,
+		},
+		{
+			"database error",
+			[]interface{}{false, tests.ErrFakeDatabaseFailure},
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.description, func(t *testing.T) {
+			hw := newHandlersWrapper()
+			hw.um.On("VerifyEmail", mock.Anything, mock.Anything).Return(tc.response...)
 
-		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-	})
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
+			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+			hw.h.VerifyEmail(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
 
-	t.Run("code provided", func(t *testing.T) {
-		testCases := []struct {
-			description        string
-			response           []interface{}
-			expectedStatusCode int
-		}{
-			{
-				"code not verified",
-				[]interface{}{false, nil},
-				http.StatusGone,
-			},
-			{
-				"code verified",
-				[]interface{}{true, nil},
-				http.StatusOK,
-			},
-			{
-				"database error",
-				[]interface{}{false, tests.ErrFakeDatabaseFailure},
-				http.StatusInternalServerError,
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.um.On("VerifyEmail", mock.Anything, mock.Anything).Return(tc.response...)
-
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
-				r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-				hw.h.VerifyEmail(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
-
-				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.um.AssertExpectations(t)
-			})
-		}
-	})
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+	}
 }
 
 func testsOK(w http.ResponseWriter, r *http.Request) {}
