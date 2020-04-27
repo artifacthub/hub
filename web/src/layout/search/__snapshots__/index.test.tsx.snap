@@ -387,12 +387,12 @@ exports[`Search index creates snapshot 2`] = `
           </span>
           7
           <span
-            class="d-none d-sm-inline pl-1"
+            class="pl-1"
           >
              results 
           </span>
           <span
-            class="pl-1"
+            class="d-none d-sm-inline pl-1"
           >
             for "
             <span

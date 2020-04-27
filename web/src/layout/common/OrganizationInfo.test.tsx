@@ -28,6 +28,14 @@ const getMockOrganization = (fixtureId: string): Organization => {
 };
 
 describe('OrganizationInfo', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<OrganizationInfo {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
@@ -62,8 +70,9 @@ describe('OrganizationInfo', () => {
     const { getByTestId, getByAltText, getByText } = render(<OrganizationInfo {...defaultProps} />);
     fireEvent.mouseEnter(getByTestId('orgLink'));
 
-    expect(API.getOrganization).toHaveBeenCalledTimes(1);
-    await waitFor(() => {});
+    await waitFor(() => {
+      expect(API.getOrganization).toHaveBeenCalledTimes(1);
+    });
 
     expect(getByTestId('externalBtn')).toBeInTheDocument();
     expect(getByAltText(mockOrganization.displayName!)).toBeInTheDocument();
@@ -72,9 +81,14 @@ describe('OrganizationInfo', () => {
       `http://localhost/image/${mockOrganization.logoImageId!}`
     );
     expect(getByText(mockOrganization.description!)).toBeInTheDocument();
-    expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+
+    await waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+    });
 
     fireEvent.mouseLeave(getByTestId('orgLink'));
-    expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    });
   });
 });
