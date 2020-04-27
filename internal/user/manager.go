@@ -6,10 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/gofrs/uuid"
 	"github.com/jackc/pgx/v4"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -20,6 +22,9 @@ var (
 
 	// ErrNotFound indicates that the user does not exist.
 	ErrNotFound = errors.New("user not found")
+
+	// ErrInvalidInput indicates that the input provided is not valid.
+	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage users.
@@ -42,13 +47,30 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	var available bool
 	var query string
 
+	// Validate input
+	validResourceKinds := []string{
+		"userAlias",
+	}
+	isResourceKindValid := func(resourceKind string) bool {
+		for _, k := range validResourceKinds {
+			if resourceKind == k {
+				return true
+			}
+		}
+		return false
+	}
+	if !isResourceKindValid(resourceKind) {
+		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid resource kind")
+	}
+	if value == "" {
+		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid value")
+	}
+
+	// Check availability in database
 	switch resourceKind {
 	case "userAlias":
 		query = `select user_id from "user" where alias = $1`
-	default:
-		return false, errors.New("resource kind not supported")
 	}
-
 	query = fmt.Sprintf("select not exists (%s)", query)
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
 	return available, err
@@ -60,6 +82,14 @@ func (m *Manager) CheckCredentials(
 	email,
 	password string,
 ) (*hub.CheckCredentialsOutput, error) {
+	// Validate input
+	if email == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+	}
+	if password == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "password not provided")
+	}
+
 	// Get password for email provided from database
 	var userID, hashedPassword string
 	query := `select user_id, password from "user" where email = $1 and password is not null`
@@ -89,6 +119,14 @@ func (m *Manager) CheckSession(
 	sessionID []byte,
 	duration time.Duration,
 ) (*hub.CheckSessionOutput, error) {
+	// Validate input
+	if len(sessionID) == 0 {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "session id not provided")
+	}
+	if duration == 0 {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "duration not provided")
+	}
+
 	// Get session details from database
 	var userID string
 	var createdAt int64
@@ -117,6 +155,12 @@ func (m *Manager) CheckSession(
 
 // DeleteSession deletes a user session from the database.
 func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
+	// Validate input
+	if len(sessionID) == 0 {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "session id not provided")
+	}
+
+	// Delete session from database
 	_, err := m.db.Exec(ctx, "delete from session where session_id = $1", sessionID)
 	return err
 }
@@ -131,6 +175,12 @@ func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 
 // GetUserID returns the id of the user with the email provided.
 func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
+	// Validate input
+	if email == "" {
+		return "", fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+	}
+
+	// Get user id from database
 	var userID string
 	query := `select user_id from "user" where email = $1`
 	err := m.db.QueryRow(ctx, query, email).Scan(&userID)
@@ -145,6 +195,15 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 
 // RegisterSession registers a user session in the database.
 func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
+	// Validate input
+	if session.UserID == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "user id not provided")
+	}
+	if _, err := uuid.FromString(session.UserID); err != nil {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user id")
+	}
+
+	// Register session in database
 	sessionJSON, _ := json.Marshal(session)
 	var sessionID []byte
 	err := m.db.QueryRow(ctx, "select register_session($1::jsonb)", sessionJSON).Scan(&sessionID)
@@ -156,6 +215,20 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]
 // The base url provided will be used to build the url the user will need to
 // click to complete the verification.
 func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
+	// Validate input
+	if user.Alias == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "alias not provided")
+	}
+	if user.Email == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+	}
+	if !user.EmailVerified && m.es != nil {
+		u, err := url.Parse(baseURL)
+		if err != nil || u.Scheme == "" || u.Host == "" {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid base url")
+		}
+	}
+
 	// Hash password
 	if user.Password != "" {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
@@ -199,6 +272,14 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
+	// Validate input
+	if old == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "old password not provided")
+	}
+	if new == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "new password not provided")
+	}
+
 	// Validate old password
 	var oldHashed string
 	getPasswordQuery := `select password from "user" where user_id = $1 and password is not null`
@@ -225,8 +306,15 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 
 // UpdateProfile updates the user profile in the database.
 func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
-	query := "select update_user_profile($1::uuid, $2::jsonb)"
 	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if user.Alias == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "alias not provided")
+	}
+
+	// Update user profile in database
+	query := "select update_user_profile($1::uuid, $2::jsonb)"
 	userJSON, _ := json.Marshal(user)
 	_, err := m.db.Exec(ctx, query, userID, userJSON)
 	return err
@@ -236,6 +324,13 @@ func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 // provided.
 func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	var verified bool
+
+	// Validate input
+	if code == "" {
+		return verified, fmt.Errorf("%w: %s", ErrInvalidInput, "code not provided")
+	}
+
+	// Verify email in database
 	err := m.db.QueryRow(ctx, "select verify_email($1::uuid)", code).Scan(&verified)
 	return verified, err
 }
