@@ -111,7 +111,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -218,7 +218,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -324,7 +324,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -431,7 +431,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -538,7 +538,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -655,7 +655,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -762,7 +762,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -868,7 +868,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -974,7 +974,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -1081,7 +1081,7 @@ exports[`Package index creates snapshot 2`] = `
                         class="card-subtitle text-truncate h-50 align-items-center subtitle"
                       >
                         <div
-                          class="d-flex flex-row align-items-baseline mr-2 text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"

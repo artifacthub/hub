@@ -69,12 +69,12 @@ const PackageCard = (props: Props) => {
                       case PackageKind.Chart:
                         return (
                           <>
-                            <div className="d-flex flex-row align-items-baseline mr-2 text-truncate">
+                            <div className="d-flex flex-row align-items-baseline text-truncate">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
                               {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                                 <OrganizationInfo
-                                  className="d-inline-block mr-0"
-                                  btnClassName={`text-truncate ${styles.mx50}`}
+                                  className={`d-inline-block mr-0 ${styles.mx50}`}
+                                  btnClassName="text-truncate mw-100"
                                   organizationName={props.package.organizationName}
                                   organizationDisplayName={props.package.organizationDisplayName}
                                   deprecated={props.package.deprecated}

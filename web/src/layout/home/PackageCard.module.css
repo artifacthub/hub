@@ -47,7 +47,9 @@
 }
 
 .mx50 {
-  max-width: 100%;
+  max-width: 50%;
+  text-align: left;
+  width: auto;
 }
 
 .title {
