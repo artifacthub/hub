@@ -48,7 +48,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// CheckAvailability is a middleware that checks the availability of a given
+// CheckAvailability is an http handler that checks the availability of a given
 // value for the provided resource kind.
 func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(0))

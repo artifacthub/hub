@@ -19,7 +19,7 @@ const defaultProps = {
   onOauthFailed: false,
 };
 
-describe('Package index', () => {
+describe('Home index', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

@@ -2,14 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" type="image/png" href="%PUBLIC_URL%/static/media/logo.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ .baseURL }}/static/media/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Artifact Hub" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/static/media/logo192.png" />
-    <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/static/media/logo512.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Artifact Hub</title>
+    <link rel="apple-touch-icon" href="{{ .baseURL }}/static/media/logo192.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ .baseURL }}/static/media/logo512.png" />
+    <link rel="manifest" href="{{ .baseURL }}/manifest.json" />
+    <title>{{ .title }}</title>
+    <meta name="description" content="{{ .description }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ .title }}" />
+    <meta property="og:description" content="{{ .description }}" />
+    <meta property="og:image" content="{{ .baseURL }}/static/media/artifactHub.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ .title }}" />
+    <meta name="twitter:description" content="{{ .description }}" />
+    <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub.png" />
     <script type="text/javascript">
       window.analyticsConfig = {
         gaTrackingID: '{{ .gaTrackingID }}',

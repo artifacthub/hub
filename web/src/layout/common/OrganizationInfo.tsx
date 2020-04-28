@@ -56,7 +56,7 @@ const OrganizationInfo = (props: Props) => {
       setTimeout(() => {
         // Delay to hide the dropdown to avoid hide it if user changes from link to dropdown
         setOpenStatus(false);
-      }, 250);
+      }, 200);
     }
   }, [onLinkHover, onDropdownHover, organization, openStatus]);
 

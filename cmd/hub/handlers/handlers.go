@@ -40,11 +40,12 @@ type Metrics struct {
 // Handlers groups all the http handlers defined for the hub, including the
 // router in charge of sending requests to the right handler.
 type Handlers struct {
-	cfg     *viper.Viper
-	svc     *Services
-	metrics *Metrics
-	logger  zerolog.Logger
-	Router  http.Handler
+	cfg       *viper.Viper
+	svc       *Services
+	metrics   *Metrics
+	logger    zerolog.Logger
+	Router    http.Handler
+	BotRouter http.Handler
 
 	Organizations     *org.Handlers
 	Users             *user.Handlers
@@ -68,6 +69,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		Static:            static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
+	h.setupBotRouter()
 	return h
 }
 
@@ -186,6 +188,20 @@ func (h *Handlers) setupRouter() {
 		})
 	}
 
+	// Index special entry points
+	r.Route("/package", func(r chi.Router) {
+		r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
+			r.Use(h.Packages.InjectIndexMeta)
+			r.Get("/{version}", h.Static.ServeIndex)
+			r.Get("/", h.Static.ServeIndex)
+		})
+	})
+	r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+		r.Use(h.Packages.InjectIndexMeta)
+		r.Get("/{version}", h.Static.ServeIndex)
+		r.Get("/", h.Static.ServeIndex)
+	})
+
 	// Static files and index
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
 	static.FileServer(r, "/static", http.Dir(staticFilesPath))
@@ -193,6 +209,26 @@ func (h *Handlers) setupRouter() {
 	r.Get("/", h.Static.ServeIndex)
 
 	h.Router = r
+}
+
+// setupBotRouter initializes the handlers bot router, defining all routes used
+// to serve requests coming from bots.
+func (h *Handlers) setupBotRouter() {
+	r := chi.NewRouter()
+
+	r.Route("/package", func(r chi.Router) {
+		r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
+			r.Get("/{version}", h.Packages.Get)
+			r.Get("/", h.Packages.Get)
+		})
+	})
+	r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+		r.Get("/{version}", h.Packages.Get)
+		r.Get("/", h.Packages.Get)
+	})
+	r.NotFound(h.Static.ServeIndex)
+
+	h.BotRouter = r
 }
 
 // MetricsCollector is an http middleware that collects some metrics about

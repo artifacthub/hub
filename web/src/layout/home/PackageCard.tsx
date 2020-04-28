@@ -141,7 +141,7 @@ const PackageCard = (props: Props) => {
                           <>
                             {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                               <OrganizationInfo
-                                className="d-inline-block mr-0"
+                                className="d-inline-block mr-0 w-100"
                                 btnClassName={`text-truncate ${styles.mx50}`}
                                 organizationName={props.package.organizationName}
                                 organizationDisplayName={props.package.organizationDisplayName}

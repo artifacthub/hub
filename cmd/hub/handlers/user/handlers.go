@@ -115,7 +115,7 @@ func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 	})
 }
 
-// CheckAvailability is a middleware that checks the availability of a given
+// CheckAvailability is an http handler that checks the availability of a given
 // value for the provided resource kind.
 func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	resourceKind := chi.URLParam(r, "resourceKind")
