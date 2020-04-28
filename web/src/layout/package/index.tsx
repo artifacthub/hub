@@ -12,6 +12,7 @@ import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
+import updateMetaIndex from '../../utils/updateMetaIndex';
 import Image from '../common/Image';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
@@ -60,14 +61,18 @@ const PackageView = (props: Props) => {
 
   async function fetchPackageDetail() {
     try {
-      setDetail(
-        await API.getPackage({
-          repoName: repoName,
-          packageName: packageName,
-          version: version,
-          packageKind: packageKind,
-        })
-      );
+      const detail = await API.getPackage({
+        repoName: repoName,
+        packageName: packageName,
+        version: version,
+        packageKind: packageKind,
+      });
+      let metaTitle = `${detail.normalizedName} ${detail.version} · ${detail.userAlias || detail.organizationName}`;
+      if (detail.chartRepository) {
+        metaTitle += `/${detail.chartRepository.name}`;
+      }
+      updateMetaIndex(metaTitle, detail.description);
+      setDetail(detail);
       setIsLoadingPackage(false);
     } catch {
       setDetail(null);

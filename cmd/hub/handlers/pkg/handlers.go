@@ -1,6 +1,8 @@
 package pkg
 
 import (
+	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -89,6 +91,54 @@ func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
+}
+
+// InjectIndexMeta is a middleware that injects the some index metadata related
+// to a given package,
+func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Prepare index metadata from package details
+		input := &hub.GetPackageInput{
+			PackageName: chi.URLParam(r, "packageName"),
+			Version:     chi.URLParam(r, "version"),
+		}
+		chartRepositoryName := chi.URLParam(r, "repoName")
+		if chartRepositoryName != "" {
+			input.ChartRepositoryName = chartRepositoryName
+		}
+		dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
+		if err != nil {
+			h.logger.Error().Err(err).Interface("input", input).Str("method", "InjectIndexMeta").Send()
+			if errors.Is(err, pkg.ErrInvalidInput) {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+			} else if errors.Is(err, pkg.ErrNotFound) {
+				http.NotFound(w, r)
+			} else {
+				http.Error(w, "", http.StatusInternalServerError)
+			}
+			return
+		}
+		p := &hub.Package{}
+		if err := json.Unmarshal(dataJSON, p); err != nil {
+			http.Error(w, "", http.StatusInternalServerError)
+			return
+		}
+		publisher := p.OrganizationName
+		if publisher == "" {
+			publisher = p.UserAlias
+		}
+		repo := ""
+		if p.ChartRepository != nil {
+			repo = "/" + p.ChartRepository.Name
+		}
+		title := fmt.Sprintf("%s %s · %s%s", p.NormalizedName, p.Version, publisher, repo)
+		description := p.Description
+
+		// Inject index metadata in context and call next handler
+		ctx := context.WithValue(r.Context(), hub.IndexMetaTitleKey, title)
+		ctx = context.WithValue(ctx, hub.IndexMetaDescriptionKey, description)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 // Search is an http handler used to searchPackages for packages in the hub

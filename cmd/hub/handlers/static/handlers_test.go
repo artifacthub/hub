@@ -143,7 +143,7 @@ func TestServeIndex(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
 	assert.Equal(t, helpers.BuildCacheControlHeader(indexCacheMaxAge), h.Get("Cache-Control"))
-	assert.Equal(t, []byte("indexHtmlData gaTrackingID:1234\n"), data)
+	assert.Equal(t, []byte("title:Artifact Hub\ndescription:Find, install and publish Kubernetes packages\ngaTrackingID:1234\n"), data)
 }
 
 func TestServeStaticFile(t *testing.T) {

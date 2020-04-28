@@ -8,6 +8,7 @@ import { Package } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import PackageView from './index';
 jest.mock('../../api');
+jest.mock('../../utils/updateMetaIndex');
 
 const getMockPackage = (fixtureId: string): Package => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package;

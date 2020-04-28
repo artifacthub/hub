@@ -27,23 +27,27 @@ type Package struct {
 	PackageID         string                 `json:"package_id"`
 	Kind              PackageKind            `json:"kind"`
 	Name              string                 `json:"name"`
+	NormalizedName    string                 `json:"normalized_name"`
 	LogoURL           string                 `json:"logo_url"`
 	LogoImageID       string                 `json:"logo_image_id"`
+	Stars             int                    `json:"stars"`
 	DisplayName       string                 `json:"display_name"`
 	Description       string                 `json:"description"`
 	Keywords          []string               `json:"keywords"`
 	HomeURL           string                 `json:"home_url"`
 	Readme            string                 `json:"readme"`
 	Links             []*Link                `json:"links"`
+	Data              map[string]interface{} `json:"data"`
 	Version           string                 `json:"version"`
 	AvailableVersions []string               `json:"available_versions"`
 	AppVersion        string                 `json:"app_version"`
 	Digest            string                 `json:"digest"`
-	Data              map[string]interface{} `json:"data"`
 	Deprecated        bool                   `json:"deprecated"`
 	Maintainers       []*Maintainer          `json:"maintainers"`
 	UserID            string                 `json:"user_id"`
+	UserAlias         string                 `json:"user_alias"`
 	OrganizationID    string                 `json:"organization_id"`
+	OrganizationName  string                 `json:"organization_name"`
 	ChartRepository   *ChartRepository       `json:"chart_repository"`
 }
 
