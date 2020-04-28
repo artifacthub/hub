@@ -191,14 +191,12 @@ func (h *Handlers) setupRouter() {
 	// Index special entry points
 	r.Route("/package", func(r chi.Router) {
 		r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
-			r.Use(h.Packages.InjectIndexMeta)
-			r.Get("/{version}", h.Static.ServeIndex)
-			r.Get("/", h.Static.ServeIndex)
+			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
+			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
 		})
 		r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
-			r.Use(h.Packages.InjectIndexMeta)
-			r.Get("/{version}", h.Static.ServeIndex)
-			r.Get("/", h.Static.ServeIndex)
+			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
+			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
 		})
 	})
 
