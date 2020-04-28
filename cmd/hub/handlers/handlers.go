@@ -195,11 +195,11 @@ func (h *Handlers) setupRouter() {
 			r.Get("/{version}", h.Static.ServeIndex)
 			r.Get("/", h.Static.ServeIndex)
 		})
-	})
-	r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
-		r.Use(h.Packages.InjectIndexMeta)
-		r.Get("/{version}", h.Static.ServeIndex)
-		r.Get("/", h.Static.ServeIndex)
+		r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+			r.Use(h.Packages.InjectIndexMeta)
+			r.Get("/{version}", h.Static.ServeIndex)
+			r.Get("/", h.Static.ServeIndex)
+		})
 	})
 
 	// Static files and index
