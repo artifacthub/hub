@@ -5,11 +5,6 @@
   padding-left: 15px;
 }
 
-.mainContent code {
-  word-wrap: normal !important;
-  white-space: pre !important;
-}
-
 .jumbotron {
   background-color: var(--color-1-10) !important;
   padding: 2rem 1rem !important;

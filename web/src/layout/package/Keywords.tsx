@@ -1,5 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import uniq from 'lodash/uniq';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -14,13 +15,23 @@ interface Props {
 const Keywords = (props: Props) => {
   const history = useHistory();
 
+  const cleanKeywords = (): string[] => {
+    let keywords: string[] = [];
+
+    if (!isUndefined(props.keywords) && !isNull(props.keywords)) {
+      keywords = uniq(props.keywords);
+    }
+
+    return keywords;
+  };
+
   return (
     <>
       {isUndefined(props.keywords) || isNull(props.keywords) || props.keywords.length === 0 ? (
         <p data-testid="keywords">-</p>
       ) : (
         <span data-testid="keywords">
-          {props.keywords.map((keyword: string) => (
+          {cleanKeywords().map((keyword: string) => (
             <button
               data-testid="keywordBtn"
               className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 ${styles.badge}`}

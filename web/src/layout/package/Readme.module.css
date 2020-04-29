@@ -4,6 +4,11 @@
   hyphens: auto;
 }
 
+.md p code {
+  hyphens: none;
+  word-break: break-word;
+}
+
 .md h1,
 .md h2,
 .md h3,
@@ -82,7 +87,7 @@
 }
 
 .md a {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .md img {
