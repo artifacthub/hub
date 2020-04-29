@@ -46,6 +46,18 @@ describe('Keywords', () => {
       expect(keywords).toHaveLength(defaultProps.keywords!.length);
     });
 
+    it('renders only uniq keywords', () => {
+      const { getByTestId, getAllByTestId } = render(
+        <Router>
+          <Keywords keywords={['key1', 'key2', 'key3', 'key1']} deprecated={false} />
+        </Router>
+      );
+
+      expect(getByTestId('keywords')).toBeInTheDocument();
+      const keywords = getAllByTestId('keywordBtn');
+      expect(keywords).toHaveLength(3);
+    });
+
     it('renders placeholder if keywords prop is null', () => {
       const { getByTestId } = render(
         <Router>
