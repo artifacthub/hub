@@ -189,6 +189,119 @@ func TestGetUpdates(t *testing.T) {
 	})
 }
 
+func TestInjectIndexMeta(t *testing.T) {
+	t.Run("get package failed", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				pkg.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				pkg.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.pmErr)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				hw.h.InjectIndexMeta(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("get package succeeded", func(t *testing.T) {
+		checkIndexMeta := func(expectedTitle, expectedDescription interface{}) http.HandlerFunc {
+			return func(w http.ResponseWriter, r *http.Request) {
+				assert.Equal(t, expectedTitle, r.Context().Value(hub.IndexMetaTitleKey).(string))
+				assert.Equal(t, expectedDescription, r.Context().Value(hub.IndexMetaDescriptionKey).(string))
+			}
+		}
+		testCases := []struct {
+			dataJSON            string
+			expectedTitle       string
+			expectedDescription string
+			expectedStatusCode  int
+		}{
+			{
+				"{invalidJSON",
+				"",
+				"",
+				http.StatusInternalServerError,
+			},
+			{
+				`{
+					"normalized_name": "pkg1",
+					"version": "1.0.0",
+					"description": "description",
+					"organization_name": "org1",
+					"chart_repository": {
+						"name": "repo1"
+					}
+				}`,
+				"pkg1 1.0.0 · org1/repo1",
+				"description",
+				http.StatusOK,
+			},
+			{
+				`{
+					"normalized_name": "pkg1",
+					"version": "1.0.0",
+					"user_alias": "user1",
+					"chart_repository": {
+						"name": "repo1"
+					}
+				}`,
+				"pkg1 1.0.0 · user1/repo1",
+				"",
+				http.StatusOK,
+			},
+			{
+				`{
+					"normalized_name": "pkg1",
+					"version": "1.0.0",
+					"user_alias": "user1"
+				}`,
+				"pkg1 1.0.0 · user1",
+				"",
+				http.StatusOK,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dataJSON, func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return([]byte(tc.dataJSON), nil)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				hw.h.InjectIndexMeta(checkIndexMeta(tc.expectedTitle, tc.expectedDescription)).ServeHTTP(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestSearch(t *testing.T) {
 	t.Run("invalid request params", func(t *testing.T) {
 		testCases := []struct {
@@ -296,6 +409,8 @@ func TestToggleStar(t *testing.T) {
 		hw.pm.AssertExpectations(t)
 	})
 }
+
+func testsOK(w http.ResponseWriter, r *http.Request) {}
 
 type handlersWrapper struct {
 	pm *pkg.ManagerMock
