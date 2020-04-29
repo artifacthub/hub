@@ -1,6 +1,10 @@
 package hub
 
-import "context"
+import (
+	"context"
+
+	"helm.sh/helm/v3/pkg/repo"
+)
 
 // ChartRepository represents a Helm chart repository.
 type ChartRepository struct {
@@ -26,7 +30,8 @@ type ChartRepositoryManager interface {
 	Update(ctx context.Context, r *ChartRepository) error
 }
 
-// IndexLoader describes the methods an IndexLoader implementation must provide.
-type IndexLoader interface {
-	LoadIndexFile(r *ChartRepository) error
+// ChartRepositoryIndexLoader interface defines the methods a chart repository
+// index loader implementation should provide.
+type ChartRepositoryIndexLoader interface {
+	LoadIndex(r *ChartRepository) (*repo.IndexFile, error)
 }

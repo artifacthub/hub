@@ -5,6 +5,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/stretchr/testify/mock"
+	"helm.sh/helm/v3/pkg/repo"
 )
 
 // ManagerMock is a mock implementation of the ChartRepositoryManager interface.
@@ -85,8 +86,9 @@ type IndexLoaderMock struct {
 	mock.Mock
 }
 
-// LoadIndexFile implements the IndexLoader interface.
-func (m *IndexLoaderMock) LoadIndexFile(r *hub.ChartRepository) error {
+// LoadIndex implements the IndexLoader interface.
+func (m *IndexLoaderMock) LoadIndex(r *hub.ChartRepository) (*repo.IndexFile, error) {
 	args := m.Called(r)
-	return args.Error(0)
+	indexFile, _ := args.Get(0).(*repo.IndexFile)
+	return indexFile, args.Error(1)
 }

@@ -10,58 +10,59 @@ import (
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/cli"
-	"helm.sh/helm/v3/pkg/getter"
 	"helm.sh/helm/v3/pkg/repo"
 )
 
-// jobKind represents the kind of a job, which can be register or unregister.
-type jobKind int
+// JobKind represents the kind of a job, which can be register or unregister.
+type JobKind int
 
 const (
-	// register represents a job to register a new chart release in the hub.
-	register jobKind = iota
+	// Register represents a job to Register a new chart release in the hub.
+	Register JobKind = iota
 
-	// unregister represents a job to unregister an existing chart release from
+	// Unregister represents a job to Unregister an existing chart release from
 	// the hub.
-	unregister
+	Unregister
 )
 
-// job represents a job for registering or unregistering a given chart release
+// Job represents a Job for registering or unregistering a given chart release
 // available in the provided chart repository. Jobs are created by the
 // dispatcher and will eventually be handled by a worker.
-type job struct {
-	kind         jobKind
-	repo         *hub.ChartRepository
-	chartVersion *repo.ChartVersion
-	downloadLogo bool
+type Job struct {
+	Kind         JobKind
+	Repo         *hub.ChartRepository
+	ChartVersion *repo.ChartVersion
+	DownloadLogo bool
 }
 
-// dispatcher is in charge of generating jobs to register or unregister charts
+// Dispatcher is in charge of generating jobs to register or unregister charts
 // releases and dispatching them among the available workers.
-type dispatcher struct {
-	ctx              context.Context
-	ec               *errorsCollector
-	chartRepoManager hub.ChartRepositoryManager
-	Queue            chan *job
+type Dispatcher struct {
+	ctx   context.Context
+	il    hub.ChartRepositoryIndexLoader
+	rm    hub.ChartRepositoryManager
+	ec    ErrorsCollector
+	Queue chan *Job
 }
 
-// newDispatcher creates a new dispatcher instance.
-func newDispatcher(
+// NewDispatcher creates a new dispatcher instance.
+func NewDispatcher(
 	ctx context.Context,
-	ec *errorsCollector,
-	chartRepoManager hub.ChartRepositoryManager,
-) *dispatcher {
-	return &dispatcher{
-		ctx:              ctx,
-		chartRepoManager: chartRepoManager,
-		Queue:            make(chan *job),
-		ec:               ec,
+	il hub.ChartRepositoryIndexLoader,
+	rm hub.ChartRepositoryManager,
+	ec ErrorsCollector,
+) *Dispatcher {
+	return &Dispatcher{
+		ctx:   ctx,
+		il:    il,
+		rm:    rm,
+		ec:    ec,
+		Queue: make(chan *Job),
 	}
 }
 
-// run instructs the dispatcher to start processing the repositories provided.
-func (d *dispatcher) run(wg *sync.WaitGroup, repos []*hub.ChartRepository) {
+// Run instructs the dispatcher to start processing the repositories provided.
+func (d *Dispatcher) Run(wg *sync.WaitGroup, repos []*hub.ChartRepository) {
 	defer wg.Done()
 	defer close(d.Queue)
 
@@ -69,35 +70,34 @@ func (d *dispatcher) run(wg *sync.WaitGroup, repos []*hub.ChartRepository) {
 	limiter := rate.NewLimiter(25, 25)
 	for _, r := range repos {
 		if err := limiter.Wait(d.ctx); err != nil {
-			log.Error().Err(err).Msg("Error waiting for limiter")
+			log.Error().Err(err).Msg("error waiting for limiter")
 			return
 		}
 		wgRepos.Add(1)
-		go d.syncRepositoryCharts(&wgRepos, r)
+		go d.generateSyncJobs(&wgRepos, r)
 	}
 
 	wgRepos.Wait()
 }
 
-// syncRepositoryCharts synchronizes the charts available in the chart
-// repository provided with the hub, generating jobs to register or unregister
-// charts releases as needed.
-func (d *dispatcher) syncRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartRepository) {
+// generateSyncJobs generates the jobs to register or unregister chart releases
+// as needed to keep them in sync.
+func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository) {
 	defer wg.Done()
 
-	log.Info().Str("repo", r.Name).Msg("Loading chart repository index file")
-	indexFile, err := loadIndexFile(r)
+	log.Info().Str("repo", r.Name).Msg("loading chart repository index file")
+	indexFile, err := d.il.LoadIndex(r)
 	if err != nil {
-		msg := "Error loading repository index file"
-		d.ec.append(r.ChartRepositoryID, fmt.Errorf("%s: %w", msg, err))
+		msg := "error loading repository index file"
+		d.ec.Append(r.ChartRepositoryID, fmt.Errorf("%s: %w", msg, err))
 		log.Error().Err(err).Str("repo", r.Name).Msg(msg)
 		return
 	}
 
-	log.Info().Str("repo", r.Name).Msg("Loading registered packages digest")
-	registeredPackagesDigest, err := d.chartRepoManager.GetPackagesDigest(d.ctx, r.ChartRepositoryID)
+	log.Info().Str("repo", r.Name).Msg("loading registered packages digest")
+	registeredPackagesDigest, err := d.rm.GetPackagesDigest(d.ctx, r.ChartRepositoryID)
 	if err != nil {
-		log.Error().Err(err).Str("repo", r.Name).Msg("Error getting repository packages digest")
+		log.Error().Err(err).Str("repo", r.Name).Msg("error getting repository packages digest")
 		return
 	}
 
@@ -112,11 +112,11 @@ func (d *dispatcher) syncRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartReposi
 			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
 			chartsAvailable[key] = struct{}{}
 			if chartVersion.Digest != registeredPackagesDigest[key] {
-				d.Queue <- &job{
-					kind:         register,
-					repo:         r,
-					chartVersion: chartVersion,
-					downloadLogo: downloadLogo,
+				d.Queue <- &Job{
+					Kind:         Register,
+					Repo:         r,
+					ChartVersion: chartVersion,
+					DownloadLogo: downloadLogo,
 				}
 			}
 			select {
@@ -133,10 +133,10 @@ func (d *dispatcher) syncRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartReposi
 			p := strings.Split(key, "@")
 			name := p[0]
 			version := p[1]
-			d.Queue <- &job{
-				kind: unregister,
-				repo: r,
-				chartVersion: &repo.ChartVersion{
+			d.Queue <- &Job{
+				Kind: Unregister,
+				Repo: r,
+				ChartVersion: &repo.ChartVersion{
 					Metadata: &chart.Metadata{
 						Name:    name,
 						Version: version,
@@ -150,26 +150,4 @@ func (d *dispatcher) syncRepositoryCharts(wg *sync.WaitGroup, r *hub.ChartReposi
 		default:
 		}
 	}
-}
-
-// loadIndexFile downloads and parses the index file of the provided repository.
-func loadIndexFile(r *hub.ChartRepository) (*repo.IndexFile, error) {
-	repoConfig := &repo.Entry{
-		Name: r.Name,
-		URL:  r.URL,
-	}
-	getters := getter.All(&cli.EnvSettings{})
-	chartRepository, err := repo.NewChartRepository(repoConfig, getters)
-	if err != nil {
-		return nil, err
-	}
-	path, err := chartRepository.DownloadIndexFile()
-	if err != nil {
-		return nil, err
-	}
-	indexFile, err := repo.LoadIndexFile(path)
-	if err != nil {
-		return nil, err
-	}
-	return indexFile, nil
 }

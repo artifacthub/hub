@@ -11,8 +11,8 @@ import (
 // verifying it is valid.
 type IndexLoader struct{}
 
-// LoadIndexFile downloads and parses the index file of the provided repository.
-func (l *IndexLoader) LoadIndexFile(r *hub.ChartRepository) error {
+// LoadIndex downloads and parses the index file of the provided repository.
+func (l *IndexLoader) LoadIndex(r *hub.ChartRepository) (*repo.IndexFile, error) {
 	repoConfig := &repo.Entry{
 		Name: r.Name,
 		URL:  r.URL,
@@ -20,12 +20,15 @@ func (l *IndexLoader) LoadIndexFile(r *hub.ChartRepository) error {
 	getters := getter.All(&cli.EnvSettings{})
 	chartRepository, err := repo.NewChartRepository(repoConfig, getters)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	path, err := chartRepository.DownloadIndexFile()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, err = repo.LoadIndexFile(path)
-	return err
+	indexFile, err := repo.LoadIndexFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return indexFile, nil
 }
