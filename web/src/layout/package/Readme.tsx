@@ -1,8 +1,11 @@
-import React from 'react';
+import isNull from 'lodash/isNull';
+import React, { useLayoutEffect } from 'react';
+import { GoLink } from 'react-icons/go';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
+import history from '../../utils/history';
 import styles from './Readme.module.css';
 
 interface Props {
@@ -48,15 +51,27 @@ const Image: React.ElementType = (props: ImageProps) => {
   return /^https?:/.test(props.src) ? <img src={props.src} alt={props.alt} /> : null;
 };
 
-// TODO - get only absolute links
+// Only for external links and anchors
 const Link: React.ElementType = (props: LinkProps) => {
-  return /^https?:/.test(props.href) ? (
-    <a href={props.href} target={props.target}>
-      {props.children}
-    </a>
-  ) : (
-    <>{props.children}</>
-  );
+  if (/^https?:/.test(props.href)) {
+    return (
+      <a href={props.href} target={props.target}>
+        {props.children}
+      </a>
+    );
+    // We only displays anchors when title is on the Readme
+  } else if (props.href.startsWith('#') && isElementInView(props.href)) {
+    return (
+      <button
+        className={`btn btn-link d-inline-block border-0 p-0 ${styles.btnLink}`}
+        onClick={() => scrollIntoView(props.href)}
+      >
+        {props.children}
+      </button>
+    );
+  } else {
+    return <>{props.children}</>;
+  }
 };
 
 const Table: React.ElementType = (props: TableProps) => (
@@ -65,21 +80,79 @@ const Table: React.ElementType = (props: TableProps) => (
   </div>
 );
 
-const Info = (props: Props) => (
-  <span data-testid="readme">
-    <ReactMarkdown
-      className={`mt-3 mb-5 ${styles.md}`}
-      source={props.markdownContent}
-      linkTarget="_blank"
-      escapeHtml={false}
-      renderers={{
-        code: Code,
-        image: Image,
-        link: Link,
-        table: Table,
-      }}
-    />
-  </span>
-);
+const Heading: React.ElementType = (props) => {
+  const value = props.children[0].props.value;
 
-export default Info;
+  const anchor = value
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\- ]+/g, ' ')
+    .replace(/\s+/g, '-')
+    .replace(/-+$/, '');
+
+  const Tag = `h${props.level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+  return (
+    <Tag id={anchor} className={`position-relative ${styles.headingWrapper}`}>
+      <a
+        href={`${history.location.pathname}#${anchor}`}
+        onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+          e.preventDefault();
+          e.stopPropagation();
+          scrollIntoView(`#${anchor}`);
+        }}
+        className={`text-reset text-center ${styles.headingLink}`}
+      >
+        <GoLink />
+      </a>
+      {props.children}
+    </Tag>
+  );
+};
+
+const scrollIntoView = (id?: string) => {
+  const elId = id || history.location.hash;
+  if (!elId) return null;
+
+  const element = document.querySelector(elId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+
+    if (id) {
+      history.replace({
+        pathname: history.location.pathname,
+        hash: elId,
+      });
+    }
+  }
+};
+
+const isElementInView = (id: string) => {
+  return !isNull(document.querySelector(id));
+};
+
+const Readme = (props: Props) => {
+  useLayoutEffect(() => {
+    scrollIntoView();
+  }, []);
+
+  return (
+    <span data-testid="readme">
+      <ReactMarkdown
+        className={`mt-3 mb-5 ${styles.md}`}
+        source={props.markdownContent}
+        linkTarget="_blank"
+        escapeHtml={false}
+        renderers={{
+          code: Code,
+          image: Image,
+          link: Link,
+          table: Table,
+          heading: Heading,
+        }}
+      />
+    </span>
+  );
+};
+
+export default Readme;
