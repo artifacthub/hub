@@ -96,7 +96,7 @@ func TestAdd(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &IndexLoaderMock{}
 				if tc.lErr != nil {
-					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)
+					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
 				m := NewManager(nil, WithIndexLoader(l))
 
@@ -112,7 +112,7 @@ func TestAdd(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		l.On("LoadIndex", mock.Anything).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
@@ -125,7 +125,7 @@ func TestAdd(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(nil)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		l.On("LoadIndex", mock.Anything).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
@@ -534,7 +534,7 @@ func TestUpdate(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &IndexLoaderMock{}
 				if tc.lErr != nil {
-					l.On("LoadIndexFile", mock.Anything).Return(tc.lErr)
+					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
 				m := NewManager(nil, WithIndexLoader(l))
 
@@ -549,7 +549,7 @@ func TestUpdate(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		l.On("LoadIndex", mock.Anything).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)
@@ -562,7 +562,7 @@ func TestUpdate(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndexFile", mock.Anything).Return(nil)
+		l.On("LoadIndex", mock.Anything).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)

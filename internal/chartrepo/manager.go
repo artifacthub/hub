@@ -22,14 +22,14 @@ var (
 // Manager provides an API to manage chart repositories.
 type Manager struct {
 	db hub.DB
-	l  hub.IndexLoader
+	il hub.ChartRepositoryIndexLoader
 }
 
 // NewManager creates a new Manager instance.
 func NewManager(db hub.DB, opts ...func(m *Manager)) *Manager {
 	m := &Manager{
 		db: db,
-		l:  &IndexLoader{},
+		il: &IndexLoader{},
 	}
 	for _, o := range opts {
 		o(m)
@@ -39,9 +39,9 @@ func NewManager(db hub.DB, opts ...func(m *Manager)) *Manager {
 
 // WithIndexLoader allows providing a specific IndexLoader implementation for
 // a Manager instance.
-func WithIndexLoader(l hub.IndexLoader) func(m *Manager) {
+func WithIndexLoader(l hub.ChartRepositoryIndexLoader) func(m *Manager) {
 	return func(m *Manager) {
-		m.l = l
+		m.il = l
 	}
 }
 
@@ -59,7 +59,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.ChartRepositor
 	if !chartRepositoryNameRE.MatchString(r.Name) {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid name")
 	}
-	if err := m.l.LoadIndexFile(r); err != nil {
+	if _, err := m.il.LoadIndex(r); err != nil {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
 	}
 
@@ -213,7 +213,7 @@ func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
 	if r.URL == "" {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "url not provided")
 	}
-	if err := m.l.LoadIndexFile(r); err != nil {
+	if _, err := m.il.LoadIndex(r); err != nil {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
 	}
 
