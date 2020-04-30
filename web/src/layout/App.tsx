@@ -92,6 +92,7 @@ export default function App() {
                   <Navbar isSearching={isSearching} />
                   <div className="d-flex flex-column flex-grow-1">
                     <PackageView
+                      hash={location.hash}
                       isLoadingPackage={isLoadingPackage}
                       setIsLoadingPackage={setIsLoadingPackage}
                       {...location.state}

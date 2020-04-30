@@ -13,6 +13,7 @@ import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Package, PackageKind, SearchFiltersURL } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import updateMetaIndex from '../../utils/updateMetaIndex';
+import AnchorHeader from '../common/AnchorHeader';
 import Image from '../common/Image';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
@@ -36,6 +37,7 @@ interface Props {
   packageName: string;
   version?: string;
   packageKind?: string;
+  hash?: string;
 }
 
 const PackageView = (props: Props) => {
@@ -156,6 +158,23 @@ const PackageView = (props: Props) => {
       policies = map(detail.data.policies, 'raw').join(' ');
     }
     return policies;
+  };
+
+  const scrollIntoView = (id?: string) => {
+    const elId = id || props.hash;
+    if (!elId) return null;
+
+    const element = document.querySelector(elId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+
+      if (id) {
+        history.replace({
+          pathname: history.location.pathname,
+          hash: elId,
+        });
+      }
+    }
   };
 
   return (
@@ -376,7 +395,7 @@ const PackageView = (props: Props) => {
                         {isNull(detail.readme) || isUndefined(detail.readme) ? (
                           <NoData>No README file available for this package</NoData>
                         ) : (
-                          <Readme markdownContent={detail.readme} />
+                          <Readme markdownContent={detail.readme} scrollIntoView={scrollIntoView} />
                         )}
 
                         {(() => {
@@ -387,7 +406,7 @@ const PackageView = (props: Props) => {
                                 <>
                                   {!isUndefined(rules) && (
                                     <div className="mb-5">
-                                      <div className="h2 mb-4">Rules</div>
+                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
                                       <SyntaxHighlighter
                                         language="yaml"
                                         style={tomorrowNightBright}
@@ -406,7 +425,7 @@ const PackageView = (props: Props) => {
                                 <>
                                   {!isUndefined(policies) && (
                                     <div className="mb-5">
-                                      <div className="h2 mb-4">Policies</div>
+                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies" />
                                       <SyntaxHighlighter
                                         language="rego"
                                         style={tomorrowNightBright}

@@ -14,7 +14,7 @@ describe('ButtonCopyToClipboard', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshoty', () => {
+  it('creates snapshot', () => {
     const { asFragment } = render(<ButtonCopyToClipboard text="Text to copy" />);
     expect(asFragment).toMatchSnapshot();
   });
