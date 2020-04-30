@@ -9,40 +9,6 @@
   word-break: break-word;
 }
 
-.md h1,
-.md h2,
-.md h3,
-.md h4,
-.md h5,
-.md h6 {
-  line-height: 1.5;
-  margin: 25px 0 15px 0;
-}
-
-.md h1 {
-  font-size: 1.85rem;
-}
-
-.md h2 {
-  font-size: 1.6rem;
-}
-
-.md h3 {
-  font-size: 1.45rem;
-}
-
-.md h4 {
-  font-size: 1.3rem;
-}
-
-.md h5 {
-  font-size: 1.15rem;
-}
-
-.md h6 {
-  font-size: 1rem;
-}
-
 .md hr {
   height: 0.25em;
   padding: 0;
@@ -98,62 +64,8 @@
   margin-top: -3px;
 }
 
-.headingLink {
-  float: left;
-  margin-left: -35px;
-  width: 35px;
-  opacity: 0;
-  transition: all 0.15s ease-in-out;
-  line-height: 1;
-  padding-top: 4px;
-}
-
-.headingLink svg {
-  width: 16px;
-  height: 16px;
-}
-
-.headingWrapper:hover .headingLink {
-  opacity: 1;
-}
-
 @media only screen and (max-width: 576px) {
   .md {
     margin-left: 15px;
-  }
-
-  .headingLink {
-    opacity: 1;
-    margin-left: -25px;
-    width: 25px;
-  }
-
-  .headingLink svg {
-    width: 13px;
-    height: 13px;
-  }
-
-  .md h1 {
-    font-size: 1.65rem;
-  }
-
-  .md h2 {
-    font-size: 1.4rem;
-  }
-
-  .md h3 {
-    font-size: 1.3rem;
-  }
-
-  .md h4 {
-    font-size: 1.15rem;
-  }
-
-  .md h5 {
-    font-size: 1.05rem;
-  }
-
-  .md h6 {
-    font-size: 1rem;
   }
 }
