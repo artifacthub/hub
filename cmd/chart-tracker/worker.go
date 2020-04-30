@@ -10,12 +10,14 @@ import (
 	"net/url"
 	"path"
 	"runtime/debug"
+	"strings"
 	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/vincent-petithory/dataurl"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 )
@@ -96,8 +98,19 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 	}
 }
 
-// downloadImage downloads the image located at the url provided.
-func (w *Worker) downloadImage(u string) ([]byte, error) {
+// getImage gets the image located at the url provided. If it's a data url the
+// image is extracted from it. Otherwise it's downloaded using the url.
+func (w *Worker) getImage(u string) ([]byte, error) {
+	// Image in data url
+	if strings.HasPrefix(u, "data:") {
+		dataURL, err := dataurl.DecodeString(u)
+		if err != nil {
+			return nil, err
+		}
+		return dataURL.Data, nil
+	}
+
+	// Download image using url provided
 	resp, err := w.hg.Get(u)
 	if err != nil {
 		return nil, err
@@ -154,13 +167,13 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 
 	// Store chart logo when available if requested
 	var logoURL, logoImageID string
-	if j.DownloadLogo {
+	if j.GetLogo {
 		if md.Icon != "" {
 			logoURL = md.Icon
-			data, err := w.downloadImage(md.Icon)
+			data, err := w.getImage(md.Icon)
 			if err != nil {
-				w.ec.Append(j.Repo.ChartRepositoryID, fmt.Errorf("error dowloading logo %s: %w", md.Icon, err))
-				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("image download failed")
+				w.ec.Append(j.Repo.ChartRepositoryID, fmt.Errorf("error getting logo image %s: %w", md.Icon, err))
+				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("get image failed")
 			} else {
 				logoImageID, err = w.is.SaveImage(w.ctx, data)
 				if err != nil && !errors.Is(err, image.ErrFormat) {

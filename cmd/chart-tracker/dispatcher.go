@@ -32,7 +32,7 @@ type Job struct {
 	Kind         JobKind
 	Repo         *hub.ChartRepository
 	ChartVersion *repo.ChartVersion
-	DownloadLogo bool
+	GetLogo      bool
 }
 
 // Dispatcher is in charge of generating jobs to register or unregister charts
@@ -105,9 +105,9 @@ func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository
 	chartsAvailable := make(map[string]struct{})
 	for _, chartVersions := range indexFile.Entries {
 		for i, chartVersion := range chartVersions {
-			var downloadLogo bool
+			var getLogo bool
 			if i == 0 {
-				downloadLogo = true
+				getLogo = true
 			}
 			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
 			chartsAvailable[key] = struct{}{}
@@ -116,7 +116,7 @@ func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository
 					Kind:         Register,
 					Repo:         r,
 					ChartVersion: chartVersion,
-					DownloadLogo: downloadLogo,
+					GetLogo:      getLogo,
 				}
 			}
 			select {
