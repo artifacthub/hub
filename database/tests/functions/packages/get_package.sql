@@ -39,7 +39,6 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-    stars,
     package_kind_id,
     chart_repository_id
 ) values (
@@ -47,7 +46,6 @@ insert into package (
     'Package 1',
     '1.0.0',
     :'image1ID',
-    10,
     0,
     :'repo1ID'
 );
@@ -112,7 +110,6 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-    stars,
     package_kind_id,
     organization_id
 ) values (
@@ -120,7 +117,6 @@ insert into package (
     'package2',
     '1.0.0',
     :'image2ID',
-    5,
     1,
     :'org1ID'
 );
@@ -154,7 +150,6 @@ select is(
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "stars": 10,
         "display_name": "Package 1",
         "description": "description",
         "keywords": ["kw1", "kw2"],
@@ -206,7 +201,6 @@ select is(
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "stars": 10,
         "display_name": "Package 1 (older)",
         "description": "description (older)",
         "keywords": ["kw1", "kw2", "older"],
@@ -256,7 +250,6 @@ select is(
         "name": "package2",
         "normalized_name": "package2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "stars": 5,
         "display_name": "Package 2",
         "description": "description",
         "keywords": ["kw1", "kw2"],

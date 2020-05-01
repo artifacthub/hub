@@ -5,39 +5,37 @@ import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
-import { StarredByUser } from '../../types';
+import { PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
 import styles from './StarButton.module.css';
 
 interface Props {
   packageId: string;
-  stars: number;
   mobileVersion?: boolean;
 }
 
 const StarButton = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const [starredByUser, setStarredByUser] = useState<boolean | null | undefined>(undefined);
+  const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!isUndefined(ctx.user) && !isNull(ctx.user));
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
 
-  async function fetchStarredByUser() {
+  async function getPackageStars() {
     try {
       setIsGettingIfStarred(true);
-      const starredPackageByUser: StarredByUser = await API.starredByUser(props.packageId);
-      setStarredByUser(starredPackageByUser.starred);
+      setPackageStars(await API.getStars(props.packageId));
       setIsGettingIfStarred(false);
     } catch {
-      setStarredByUser(null);
+      setPackageStars(null);
       setIsGettingIfStarred(false);
     }
   }
 
   useEffect(() => {
-    if (isLoggedIn && isUndefined(starredByUser)) {
-      fetchStarredByUser();
+    if (!isUndefined(ctx.user) && isUndefined(packageStars)) {
+      getPackageStars();
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
@@ -46,58 +44,60 @@ const StarButton = (props: Props) => {
     if (isLoggedIn !== newLoggedInStatus) {
       setIsLoggedIn(newLoggedInStatus);
       if (newLoggedInStatus) {
-        fetchStarredByUser();
+        getPackageStars();
       }
     }
   }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const notStarred =
+    !isLoggedIn || (isLoggedIn && !isUndefined(packageStars) && !isNull(packageStars) && !packageStars.starredByUser);
 
   async function handleToggleStar() {
     try {
       setIsSending(true);
       await API.toggleStar(props.packageId);
-      fetchStarredByUser();
+      getPackageStars();
       setIsSending(false);
     } catch {
       setIsSending(false);
       alertDispatcher.postAlert({
         type: 'danger',
-        message: `An error occurred ${
-          !isLoggedIn || (isLoggedIn && !isUndefined(starredByUser) && !starredByUser) ? 'staring' : 'unstaring'
-        } the package, please try again later`,
+        message: `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later`,
       });
     }
   }
-
   return (
     <div className={`d-flex flex-row align-items-center ${styles.wrapper}`}>
-      <button
-        data-testid="toggleStarBtn"
-        className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
-        type="button"
-        disabled={isUndefined(ctx.user) || !isLoggedIn || isGettingIfStarred || isNull(starredByUser)}
-        onClick={handleToggleStar}
-      >
-        <div className="d-flex align-items-center">
-          {isGettingIfStarred || isUndefined(ctx.user) ? (
-            <span className="spinner-border spinner-border-sm text-ligth" role="status" />
-          ) : (
-            <>
-              {!isLoggedIn || (isLoggedIn && !isUndefined(starredByUser) && !starredByUser) ? (
-                <FaStar />
+      {!isUndefined(packageStars) ? (
+        <>
+          <button
+            data-testid="toggleStarBtn"
+            className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
+            type="button"
+            disabled={isUndefined(ctx.user) || !isLoggedIn || isGettingIfStarred || isNull(packageStars)}
+            onClick={handleToggleStar}
+          >
+            <div className="d-flex align-items-center">
+              {isGettingIfStarred || isUndefined(ctx.user) ? (
+                <span className="spinner-border spinner-border-sm text-ligth" role="status" />
               ) : (
-                <FaRegStar />
+                <>
+                  {notStarred || isNull(packageStars) ? <FaStar /> : <FaRegStar />}
+                  {!isNull(packageStars) && (
+                    <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+                  )}
+                </>
               )}
-              {!isNull(starredByUser) && (
-                <span className="d-none d-md-inline ml-2">
-                  {!isLoggedIn || (isLoggedIn && !isUndefined(starredByUser) && !starredByUser) ? 'Star' : 'Unstar'}
-                </span>
-              )}
-            </>
-          )}
-        </div>
-      </button>
+            </div>
+          </button>
 
-      <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>{prettifyNumber(props.stars)}</span>
+          <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
+            {prettifyNumber(isNull(packageStars) ? 0 : packageStars.stars || 0)}
+          </span>
+        </>
+      ) : (
+        <div role="status" className="spinner-grow text-light" />
+      )}
 
       {!isLoggedIn && (
         <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">

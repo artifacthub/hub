@@ -27,7 +27,6 @@ begin
         'name', p.name,
         'normalized_name', p.normalized_name,
         'logo_image_id', p.logo_image_id,
-        'stars', p.stars,
         'display_name', s.display_name,
         'description', s.description,
         'keywords', s.keywords,

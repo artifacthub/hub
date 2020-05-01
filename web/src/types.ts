@@ -193,6 +193,7 @@ export interface Prefs {
   };
 }
 
-export interface StarredByUser {
-  starred: boolean;
+export interface PackageStars {
+  starredByUser: boolean | null;
+  stars: number | null;
 }

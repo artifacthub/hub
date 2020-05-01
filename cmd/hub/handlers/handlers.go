@@ -121,10 +121,9 @@ func (h *Handlers) setupRouter() {
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
-			r.Route("/{packageID}", func(r chi.Router) {
-				r.Use(h.Users.RequireLogin)
-				r.Get("/", h.Packages.StarredByUser)
-				r.Put("/", h.Packages.ToggleStar)
+			r.Route("/{packageID}/stars", func(r chi.Router) {
+				r.With(h.Users.InjectUserID).Get("/", h.Packages.GetStars)
+				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 		})
 		r.Post("/users", h.Users.RegisterUser)

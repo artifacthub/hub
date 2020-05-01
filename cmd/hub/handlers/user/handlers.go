@@ -147,6 +147,45 @@ func (h *Handlers) GetProfile(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 0)
 }
 
+// InjectUserID is a middleware that injects the id of the user doing the
+// request into the request context when a valid session id is provided.
+func (h *Handlers) InjectUserID(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var userID string
+
+		// Inject userID in context if available and call next handler
+		defer func() {
+			if userID != "" {
+				ctx := context.WithValue(r.Context(), hub.UserIDKey, userID)
+				next.ServeHTTP(w, r.WithContext(ctx))
+			} else {
+				next.ServeHTTP(w, r)
+			}
+		}()
+
+		// Extract and validate cookie from request
+		cookie, err := r.Cookie(sessionCookieName)
+		if err != nil {
+			return
+		}
+		var sessionID []byte
+		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
+			return
+		}
+
+		// Check the session provided is valid
+		checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
+		if err != nil {
+			return
+		}
+		if !checkSessionOutput.Valid {
+			return
+		}
+
+		userID = checkSessionOutput.UserID
+	})
+}
+
 // Login is an http handler used to log a user in.
 func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	// Extract credentials from request

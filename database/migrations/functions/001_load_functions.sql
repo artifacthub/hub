@@ -18,6 +18,7 @@
 {{ template "packages/generate_package_tsdoc.sql" }}
 {{ template "packages/get_package.sql" }}
 {{ template "packages/get_packages_starred_by_user.sql" }}
+{{ template "packages/get_package_stars.sql" }}
 {{ template "packages/get_packages_stats.sql" }}
 {{ template "packages/get_packages_updates.sql" }}
 {{ template "packages/register_package.sql" }}

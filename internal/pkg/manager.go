@@ -60,6 +60,23 @@ func (m *Manager) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
 	return m.dbQueryJSON(ctx, "select get_packages_starred_by_user($1::uuid)", userID)
 }
 
+// GetStarsJSON returns the number of stars of the given package, indicating as
+// well if the user doing the request has starred it.
+func (m *Manager) GetStarsJSON(ctx context.Context, packageID string) ([]byte, error) {
+	// Validate input
+	if packageID == "" {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "package id not provided")
+	}
+	if _, err := uuid.FromString(packageID); err != nil {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+	}
+
+	// Get package stars from database
+	query := "select get_package_stars($1::uuid, $2::uuid)"
+	userID := getUserID(ctx)
+	return m.dbQueryJSON(ctx, query, userID, packageID)
+}
+
 // GetStatsJSON returns a json object describing the number of packages and
 // releases available in the database. The json object is built by the database.
 func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {
@@ -171,29 +188,6 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 	return m.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
 }
 
-// StarredByUser checks if the given package has been starred by the user doing
-// the request.
-func (m *Manager) StarredByUser(ctx context.Context, packageID string) (bool, error) {
-	userID := ctx.Value(hub.UserIDKey).(string)
-
-	// Validate input
-	if packageID == "" {
-		return false, fmt.Errorf("%w: %s", ErrInvalidInput, "package id not provided")
-	}
-	if _, err := uuid.FromString(packageID); err != nil {
-		return false, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
-	}
-
-	// Check if package is starred in database
-	var starred bool
-	query := `
-	select exists (
-		select * from user_starred_package where user_id = $1 and package_id = $2
-	)`
-	err := m.db.QueryRow(ctx, query, userID, packageID).Scan(&starred)
-	return starred, err
-}
-
 // ToggleStar stars or unstars a given package for the provided user.
 func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -241,6 +235,16 @@ func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interfa
 		return nil, err
 	}
 	return dataJSON, nil
+}
+
+// getUserID returns the user id from the context provided when available.
+func getUserID(ctx context.Context) *string {
+	var userID *string
+	v, _ := ctx.Value(hub.UserIDKey).(string)
+	if v != "" {
+		userID = &v
+	}
+	return userID
 }
 
 // isValidKind checks if the provided package kind is valid.

@@ -185,6 +185,106 @@ func TestGetProfile(t *testing.T) {
 	})
 }
 
+func TestInjectUserID(t *testing.T) {
+	checkUserID := func(expectedUserID interface{}) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			if expectedUserID == nil {
+				assert.Nil(t, r.Context().Value(hub.UserIDKey))
+			} else {
+				assert.Equal(t, expectedUserID, r.Context().Value(hub.UserIDKey).(string))
+			}
+		}
+	}
+
+	t.Run("session cookie not provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+
+	t.Run("invalid session cookie provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: "invalidValue",
+		})
+		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+
+	t.Run("error checking session", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("invalid session provided", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+
+	t.Run("inject user id succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
+		r.AddCookie(&http.Cookie{
+			Name:  sessionCookieName,
+			Value: encodedSessionID,
+		})
+		hw.h.InjectUserID(checkUserID("userID")).ServeHTTP(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		hw.um.AssertExpectations(t)
+	})
+}
+
 func TestLogin(t *testing.T) {
 	t.Run("credentials not provided", func(t *testing.T) {
 		hw := newHandlersWrapper()

@@ -241,9 +241,7 @@ const PackageView = (props: Props) => {
               <div className={`jumbotron ${styles.jumbotron}`}>
                 <div className="container position-relative">
                   <div className={`position-absolute ${styles.starWrapper}`}>
-                    {!isUndefined(detail.stars) && !isNull(detail.stars) && (
-                      <StarButton stars={detail.stars} packageId={detail.packageId} />
-                    )}
+                    <StarButton packageId={detail.packageId} />
                   </div>
 
                   <div className="d-flex align-items-start w-100 mb-3">

@@ -69,6 +69,22 @@ func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 0)
 }
 
+// GetStars is an http handler used to get the number of stars of the package
+// provided.
+func (h *Handlers) GetStars(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	dataJSON, err := h.pkgManager.GetStarsJSON(r.Context(), packageID)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetStars").Send()
+		if errors.Is(err, pkg.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
+	}
+	helpers.RenderJSON(w, dataJSON, 0)
+}
+
 // GetStats is an http handler used to get some stats about packages registered
 // in the hub database.
 func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
@@ -161,23 +177,6 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
-}
-
-// StarredByUser is an http handler used to check if a user has starred a given
-// package.
-func (h *Handlers) StarredByUser(w http.ResponseWriter, r *http.Request) {
-	packageID := chi.URLParam(r, "packageID")
-	starred, err := h.pkgManager.StarredByUser(r.Context(), packageID)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "StarredByUser").Send()
-		if errors.Is(err, pkg.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
-	}
-	dataJSON := []byte(fmt.Sprintf(`{"starred": %v}`, starred))
-	helpers.RenderJSON(w, dataJSON, 0)
 }
 
 // ToggleStar is an http handler used to toggle the star on a given package.
