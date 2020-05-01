@@ -53,6 +53,12 @@ func (m *ManagerMock) SearchJSON(ctx context.Context, input *hub.SearchPackageIn
 	return data, args.Error(1)
 }
 
+// StarredByUser implements the PackageManager interface.
+func (m *ManagerMock) StarredByUser(ctx context.Context, packageID string) (bool, error) {
+	args := m.Called(ctx, packageID)
+	return args.Bool(0), args.Error(1)
+}
+
 // ToggleStar implements the PackageManager interface.
 func (m *ManagerMock) ToggleStar(ctx context.Context, packageID string) error {
 	args := m.Called(ctx, packageID)

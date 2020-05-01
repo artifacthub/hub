@@ -2,6 +2,7 @@
   border-color: var(--color-1-500);
   border-top-left-radius: 50rem !important;
   border-bottom-left-radius: 50rem !important;
+  height: 31px;
 }
 
 .starBtnContent {

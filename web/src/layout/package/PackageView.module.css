@@ -66,6 +66,15 @@
   display: inline-flex;
 }
 
+.titleWrapper {
+  margin-right: 150px;
+}
+
+.starWrapper {
+  right: 0;
+  padding-right: 15px;
+}
+
 @media only screen and (max-width: 768px) {
   .mainContent {
     max-width: 100%;
@@ -86,6 +95,14 @@
   .readme {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+
+  .titleWrapper {
+    margin-right: 0px;
+  }
+
+  .starWrapper {
+    bottom: 0;
   }
 }
 

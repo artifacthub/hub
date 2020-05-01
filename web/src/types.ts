@@ -44,7 +44,6 @@ export interface Package {
   organizationDisplayName?: string | null;
   links?: PackageLink[];
   stars?: number | null;
-  starredByUser?: boolean;
   userAlias: string | null;
 }
 

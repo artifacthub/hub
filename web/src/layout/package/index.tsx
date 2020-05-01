@@ -239,7 +239,13 @@ const PackageView = (props: Props) => {
           <>
             {!isNull(detail) && (
               <div className={`jumbotron ${styles.jumbotron}`}>
-                <div className="container">
+                <div className="container position-relative">
+                  <div className={`position-absolute ${styles.starWrapper}`}>
+                    {!isUndefined(detail.stars) && !isNull(detail.stars) && (
+                      <StarButton stars={detail.stars} packageId={detail.packageId} onSuccess={fetchPackageDetail} />
+                    )}
+                  </div>
+
                   <div className="d-flex align-items-start w-100 mb-3">
                     <div className="d-flex align-items-center">
                       <div
@@ -254,7 +260,7 @@ const PackageView = (props: Props) => {
 
                       <div className="ml-3">
                         <div className="d-flex flex-row align-items-center">
-                          <div className="h3 mb-0">{detail.displayName || detail.name}</div>
+                          <div className={`h3 mb-0 ${styles.titleWrapper}`}>{detail.displayName || detail.name}</div>
                           {!isNull(detail.deprecated) && detail.deprecated && (
                             <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
                               Deprecated
@@ -328,17 +334,6 @@ const PackageView = (props: Props) => {
                         </div>
                       </div>
                     </div>
-
-                    <div className="d-none d-md-inline ml-auto position-relative">
-                      {!isUndefined(detail.stars) && !isNull(detail.stars) && (
-                        <StarButton
-                          stars={detail.stars}
-                          starredByUser={detail.starredByUser}
-                          packageId={detail.packageId}
-                          onSuccess={fetchPackageDetail}
-                        />
-                      )}
-                    </div>
                   </div>
 
                   <p className="mb-0">{detail.description}</p>
@@ -366,18 +361,6 @@ const PackageView = (props: Props) => {
                       </div>
 
                       <div>{InstallationModal(true, 'btn-outline-secondary')}</div>
-                    </div>
-
-                    <div className="mt-3 position-relative">
-                      {!isUndefined(detail.stars) && !isNull(detail.stars) && (
-                        <StarButton
-                          stars={detail.stars}
-                          starredByUser={detail.starredByUser}
-                          packageId={detail.packageId}
-                          onSuccess={fetchPackageDetail}
-                          mobileVersion
-                        />
-                      )}
                     </div>
                   </div>
                 </div>

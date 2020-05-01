@@ -14,7 +14,6 @@ const onSuccessMock = jest.fn();
 const defaultProps = {
   packageId: 'id',
   stars: 4,
-  starredByUser: false,
   onSuccess: onSuccessMock,
 };
 
@@ -31,28 +30,42 @@ describe('Package index', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <StarButton {...defaultProps} />
       </AppCtx.Provider>
     );
 
-    expect(result.asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(result.asFragment()).toMatchSnapshot();
+    });
   });
 
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders unstarred package', async () => {
+        mocked(API).starredByUser.mockRejectedValue(null);
         mocked(API).toggleStar.mockResolvedValue('');
 
-        const { getByText, getByTestId, getByRole } = render(
+        const { getByText, getByTestId, getByRole, queryByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
+        await waitFor(() => {
+          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+          expect(API.starredByUser).toHaveBeenCalledWith(defaultProps.packageId);
+        });
+
+        waitFor(() => {
+          expect(getByRole('status')).toBeInTheDocument();
+        });
+
         expect(getByText('Star')).toBeInTheDocument();
+        expect(queryByRole('status')).toBeNull();
+
         const btn = getByTestId('toggleStarBtn');
         expect(btn).toBeInTheDocument();
         fireEvent.click(btn);
@@ -65,13 +78,18 @@ describe('Package index', () => {
       });
 
       it('renders starred package', async () => {
+        mocked(API).starredByUser.mockResolvedValue(null);
         mocked(API).toggleStar.mockResolvedValue('');
 
         const { getByText, getByTestId, getByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} starredByUser={true} />
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        await waitFor(() => {
+          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+        });
 
         expect(getByText('Unstar')).toBeInTheDocument();
         const btn = getByTestId('toggleStarBtn');
@@ -88,6 +106,7 @@ describe('Package index', () => {
 
     describe('calls alertDispatcher on error', () => {
       it('when package is not starred', async () => {
+        mocked(API).starredByUser.mockRejectedValue(null);
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(
@@ -95,6 +114,10 @@ describe('Package index', () => {
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        await waitFor(() => {
+          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+        });
 
         const btn = getByTestId('toggleStarBtn');
         expect(btn).toBeInTheDocument();
@@ -110,13 +133,18 @@ describe('Package index', () => {
       });
 
       it('when package is starred', async () => {
+        mocked(API).starredByUser.mockResolvedValue(null);
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} starredByUser={true} />
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        await waitFor(() => {
+          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+        });
 
         const btn = getByTestId('toggleStarBtn');
         expect(btn).toBeInTheDocument();
@@ -132,11 +160,11 @@ describe('Package index', () => {
       });
     });
 
-    describe('when user is signed in', () => {
-      it('displays tooltip', async () => {
+    describe('when user is not signed in', () => {
+      it('displays tooltip', () => {
         const { getByRole } = render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
-            <StarButton {...defaultProps} starredByUser={true} />
+            <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
