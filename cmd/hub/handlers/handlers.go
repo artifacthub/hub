@@ -122,8 +122,9 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{packageID}", func(r chi.Router) {
+				r.Use(h.Users.RequireLogin)
 				r.Get("/", h.Packages.StarredByUser)
-				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
+				r.Put("/", h.Packages.ToggleStar)
 			})
 		})
 		r.Post("/users", h.Users.RegisterUser)

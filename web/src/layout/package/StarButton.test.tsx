@@ -9,12 +9,9 @@ import StarButton from './StarButton';
 jest.mock('../../api');
 jest.mock('../../utils/alertDispatcher');
 
-const onSuccessMock = jest.fn();
-
 const defaultProps = {
   packageId: 'id',
   stars: 4,
-  onSuccess: onSuccessMock,
 };
 
 const mockCtx = {
@@ -45,7 +42,7 @@ describe('Package index', () => {
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders unstarred package', async () => {
-        mocked(API).starredByUser.mockRejectedValue(null);
+        mocked(API).starredByUser.mockResolvedValue({ starred: false });
         mocked(API).toggleStar.mockResolvedValue('');
 
         const { getByText, getByTestId, getByRole, queryByRole } = render(
@@ -78,7 +75,7 @@ describe('Package index', () => {
       });
 
       it('renders starred package', async () => {
-        mocked(API).starredByUser.mockResolvedValue(null);
+        mocked(API).starredByUser.mockResolvedValue({ starred: true });
         mocked(API).toggleStar.mockResolvedValue('');
 
         const { getByText, getByTestId, getByRole } = render(
@@ -106,7 +103,7 @@ describe('Package index', () => {
 
     describe('calls alertDispatcher on error', () => {
       it('when package is not starred', async () => {
-        mocked(API).starredByUser.mockRejectedValue(null);
+        mocked(API).starredByUser.mockResolvedValue({ starred: false });
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(
@@ -133,7 +130,7 @@ describe('Package index', () => {
       });
 
       it('when package is starred', async () => {
-        mocked(API).starredByUser.mockResolvedValue(null);
+        mocked(API).starredByUser.mockResolvedValue({ starred: true });
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(

@@ -242,7 +242,7 @@ const PackageView = (props: Props) => {
                 <div className="container position-relative">
                   <div className={`position-absolute ${styles.starWrapper}`}>
                     {!isUndefined(detail.stars) && !isNull(detail.stars) && (
-                      <StarButton stars={detail.stars} packageId={detail.packageId} onSuccess={fetchPackageDetail} />
+                      <StarButton stars={detail.stars} packageId={detail.packageId} />
                     )}
                   </div>
 
