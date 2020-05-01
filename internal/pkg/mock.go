@@ -26,6 +26,13 @@ func (m *ManagerMock) GetStarredByUserJSON(ctx context.Context) ([]byte, error) 
 	return data, args.Error(1)
 }
 
+// GetStarsJSON implements the PackageManager interface.
+func (m *ManagerMock) GetStarsJSON(ctx context.Context, packageID string) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetStatsJSON implements the PackageManager interface.
 func (m *ManagerMock) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
@@ -51,12 +58,6 @@ func (m *ManagerMock) SearchJSON(ctx context.Context, input *hub.SearchPackageIn
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
-}
-
-// StarredByUser implements the PackageManager interface.
-func (m *ManagerMock) StarredByUser(ctx context.Context, packageID string) (bool, error) {
-	args := m.Called(ctx, packageID)
-	return args.Bool(0), args.Error(1)
 }
 
 // ToggleStar implements the PackageManager interface.

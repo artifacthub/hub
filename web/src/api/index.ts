@@ -9,11 +9,11 @@ import {
   LogoImage,
   Organization,
   Package,
+  PackageStars,
   PackagesUpdatesList,
   Profile,
   SearchQuery,
   SearchResults,
-  StarredByUser,
   Stats,
   User,
   UserFullName,
@@ -124,13 +124,13 @@ export const API = {
   },
 
   toggleStar: (packageId: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/package/${packageId}`, {
+    return apiFetch(`${API_BASE_URL}/package/${packageId}/stars`, {
       method: 'PUT',
     });
   },
 
-  starredByUser: (packageId: string): Promise<StarredByUser> => {
-    return apiFetch(`${API_BASE_URL}/package/${packageId}`);
+  getStars: (packageId: string): Promise<PackageStars> => {
+    return apiFetch(`${API_BASE_URL}/package/${packageId}/stars`);
   },
 
   searchPackages: (query: SearchQuery): Promise<SearchResults> => {

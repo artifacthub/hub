@@ -11,7 +11,6 @@ jest.mock('../../utils/alertDispatcher');
 
 const defaultProps = {
   packageId: 'id',
-  stars: 4,
 };
 
 const mockCtx = {
@@ -42,7 +41,7 @@ describe('Package index', () => {
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders unstarred package', async () => {
-        mocked(API).starredByUser.mockResolvedValue({ starred: false });
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockResolvedValue('');
 
         const { getByText, getByTestId, getByRole, queryByRole } = render(
@@ -52,8 +51,8 @@ describe('Package index', () => {
         );
 
         await waitFor(() => {
-          expect(API.starredByUser).toHaveBeenCalledTimes(1);
-          expect(API.starredByUser).toHaveBeenCalledWith(defaultProps.packageId);
+          expect(API.getStars).toHaveBeenCalledTimes(1);
+          expect(API.getStars).toHaveBeenCalledWith(defaultProps.packageId);
         });
 
         waitFor(() => {
@@ -75,7 +74,7 @@ describe('Package index', () => {
       });
 
       it('renders starred package', async () => {
-        mocked(API).starredByUser.mockResolvedValue({ starred: true });
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
         mocked(API).toggleStar.mockResolvedValue('');
 
         const { getByText, getByTestId, getByRole } = render(
@@ -85,7 +84,7 @@ describe('Package index', () => {
         );
 
         await waitFor(() => {
-          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+          expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
         expect(getByText('Unstar')).toBeInTheDocument();
@@ -103,7 +102,7 @@ describe('Package index', () => {
 
     describe('calls alertDispatcher on error', () => {
       it('when package is not starred', async () => {
-        mocked(API).starredByUser.mockResolvedValue({ starred: false });
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(
@@ -113,7 +112,7 @@ describe('Package index', () => {
         );
 
         await waitFor(() => {
-          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+          expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('toggleStarBtn');
@@ -130,7 +129,7 @@ describe('Package index', () => {
       });
 
       it('when package is starred', async () => {
-        mocked(API).starredByUser.mockResolvedValue({ starred: true });
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: true });
         mocked(API).toggleStar.mockRejectedValue('');
 
         const { getByTestId } = render(
@@ -140,7 +139,7 @@ describe('Package index', () => {
         );
 
         await waitFor(() => {
-          expect(API.starredByUser).toHaveBeenCalledTimes(1);
+          expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
         const btn = getByTestId('toggleStarBtn');
@@ -158,16 +157,41 @@ describe('Package index', () => {
     });
 
     describe('when user is not signed in', () => {
-      it('displays tooltip', () => {
+      it('displays tooltip', async () => {
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: null });
         const { getByRole } = render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
 
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(1);
+        });
+
         const tooltip = getByRole('tooltip');
         expect(tooltip).toBeInTheDocument();
         expect(tooltip).toHaveTextContent('You must be signed in to star a package');
+      });
+    });
+
+    describe('on getStars error', () => {
+      it('renders proper component', async () => {
+        mocked(API).getStars.mockRejectedValue({});
+
+        const { getByTestId, queryByText } = render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+            <StarButton {...defaultProps} />
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(1);
+        });
+
+        const btn = getByTestId('toggleStarBtn');
+        expect(btn).toBeDisabled();
+        expect(queryByText('Star')).toBeNull();
       });
     });
   });

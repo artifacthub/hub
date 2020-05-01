@@ -70,11 +70,11 @@ const (
 type PackageManager interface {
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
+	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
 	GetUpdatesJSON(ctx context.Context) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
-	StarredByUser(ctx context.Context, packageID string) (bool, error)
 	ToggleStar(ctx context.Context, packageID string) error
 	Unregister(ctx context.Context, pkg *Package) error
 }

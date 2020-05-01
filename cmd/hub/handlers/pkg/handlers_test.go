@@ -119,6 +119,61 @@ func TestGetStarredByUser(t *testing.T) {
 	})
 }
 
+func TestGetStars(t *testing.T) {
+	t.Run("get stars failed", func(t *testing.T) {
+		testCases := []struct {
+			err            error
+			expectedStatus int
+		}{
+			{
+				pkg.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.err.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("GetStarsJSON", mock.Anything, mock.Anything).Return(nil, tc.err)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.GetStars(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("get stars succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStarsJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.GetStars(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
 func TestGetStats(t *testing.T) {
 	t.Run("get stats succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
@@ -374,61 +429,6 @@ func TestSearch(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
-	})
-}
-
-func TestStarredByUser(t *testing.T) {
-	t.Run("check failed", func(t *testing.T) {
-		testCases := []struct {
-			err            error
-			expectedStatus int
-		}{
-			{
-				pkg.ErrInvalidInput,
-				http.StatusBadRequest,
-			},
-			{
-				tests.ErrFakeDatabaseFailure,
-				http.StatusInternalServerError,
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("StarredByUser", mock.Anything, mock.Anything).Return(false, tc.err)
-
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
-				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				hw.h.StarredByUser(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
-
-				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
-			})
-		}
-	})
-
-	t.Run("check succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("StarredByUser", mock.Anything, mock.Anything).Return(true, nil)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.StarredByUser(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
-		assert.Equal(t, []byte(`{"starred": true}`), data)
 		hw.pm.AssertExpectations(t)
 	})
 }
