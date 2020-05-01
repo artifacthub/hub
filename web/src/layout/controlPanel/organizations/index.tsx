@@ -1,3 +1,4 @@
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
@@ -24,16 +25,19 @@ const OrganizationsSection = (props: Props) => {
     open: false,
   });
   const [organizations, setOrganizations] = useState<Organization[] | undefined>(undefined);
+  const [apiError, setApiError] = useState<null | string>(null);
 
   async function fetchOrganizations() {
     try {
       setIsLoading(true);
       setOrganizations(await API.getUserOrganizations());
+      setApiError(null);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setOrganizations([]);
+        setApiError('An error occurred getting your organizations, please try again later');
       } else {
         props.onAuthError();
       }
@@ -71,22 +75,26 @@ const OrganizationsSection = (props: Props) => {
           {!isUndefined(organizations) && (
             <>
               {organizations.length === 0 ? (
-                <NoData>
-                  <>
-                    <p className="h6 my-4">Do you need to create a organization?</p>
+                <NoData issuesLinkVisible={!isNull(apiError)}>
+                  {isNull(apiError) ? (
+                    <>
+                      <p className="h6 my-4">Do you need to create a organization?</p>
 
-                    <button
-                      data-testid="addFirstOrgBtn"
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={() => setModalStatus({ open: true })}
-                    >
-                      <div className="d-flex flex-row align-items-center">
-                        <MdAddCircle className="mr-2" />
-                        <span>Add new organization</span>
-                      </div>
-                    </button>
-                  </>
+                      <button
+                        data-testid="addFirstOrgBtn"
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => setModalStatus({ open: true })}
+                      >
+                        <div className="d-flex flex-row align-items-center">
+                          <MdAddCircle className="mr-2" />
+                          <span>Add new organization</span>
+                        </div>
+                      </button>
+                    </>
+                  ) : (
+                    <>{apiError}</>
+                  )}
                 </NoData>
               ) : (
                 <div className="list-group mt-4">

@@ -21,6 +21,7 @@ const OrganizationSettings = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [organization, setOrganization] = useState<Organization | null | undefined>(undefined);
   const selectedOrg = ctx.prefs.controlPanel.selectedOrg!;
+  const [apiError, setApiError] = useState<null | string>(null);
 
   const submitForm = () => {
     if (form.current) {
@@ -33,10 +34,14 @@ const OrganizationSettings = (props: Props) => {
       try {
         setIsLoading(true);
         setOrganization(await API.getOrganization(selectedOrg));
+        setApiError(null);
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
         if (err.statusText !== 'ErrLoginRedirect') {
+          if (err.status === 500) {
+            setApiError('An error occurred getting the organization details, please try again later');
+          }
           setOrganization(null);
         } else {
           props.onAuthError();
@@ -57,7 +62,9 @@ const OrganizationSettings = (props: Props) => {
           {!isUndefined(organization) && (
             <>
               {isNull(organization) ? (
-                <NoData>Sorry, the information for this organization is missing.</NoData>
+                <NoData issuesLinkVisible={!isNull(apiError)}>
+                  {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
+                </NoData>
               ) : (
                 <>
                   <OrganizationForm

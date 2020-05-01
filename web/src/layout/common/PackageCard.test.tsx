@@ -122,8 +122,32 @@ describe('PackageCard', () => {
       });
     });
 
-    it('does not render repository link when chart kind is not Helm Chart', () => {
+    it('renders user link', () => {
       const mockPackage = getMockPackage('7');
+
+      const { getByTestId } = render(
+        <Router>
+          <PackageCard {...defaultProps} package={mockPackage} />
+        </Router>
+      );
+      const button = getByTestId('userLink');
+      expect(button).toBeInTheDocument();
+      fireEvent.click(button);
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          filters: {
+            user: [mockPackage.userAlias!],
+          },
+          deprecated: false,
+        }),
+      });
+    });
+
+    it('does not render repository link when chart kind is not Helm Chart', () => {
+      const mockPackage = getMockPackage('8');
 
       const { queryByTestId } = render(
         <Router>
@@ -137,7 +161,7 @@ describe('PackageCard', () => {
 
   describe('Detail', () => {
     it('opens detail page', () => {
-      const mockPackage = getMockPackage('8');
+      const mockPackage = getMockPackage('9');
       const urlReferer = {
         text: 'test',
         filters: {},

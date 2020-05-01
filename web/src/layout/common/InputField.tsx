@@ -101,8 +101,13 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
           .then(() => {
             input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
           })
-          .catch(() => {
-            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+          .catch((error) => {
+            if (error.status === 404) {
+              input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+              // Validation is ignored when server is not returning ok or error different to 404
+            } else {
+              input.current!.setCustomValidity('');
+            }
           });
         setIsCheckingAvailability(false);
       } else {

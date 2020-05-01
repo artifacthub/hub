@@ -8,6 +8,7 @@ import InputField from './InputField';
 jest.mock('../../api');
 
 const onChangeMock = jest.fn();
+const onSetValidationStatusMock = jest.fn();
 
 const defaultProps = {
   label: 'label',
@@ -23,6 +24,7 @@ const defaultProps = {
   autoComplete: 'on',
   additionalInfo: 'additional info',
   onChange: onChangeMock,
+  setValidationStatus: onSetValidationStatusMock,
 };
 
 describe('InputField', () => {
@@ -65,6 +67,7 @@ describe('InputField', () => {
       expect(input.minLength).toBe(6);
       input.blur();
       expect(input).toBeValid();
+      expect(onSetValidationStatusMock).toHaveBeenCalledTimes(1);
     });
 
     it('invalid field', () => {
@@ -80,7 +83,9 @@ describe('InputField', () => {
 
   describe('calls checkAvailability', () => {
     it('value is available', async () => {
-      mocked(API).checkAvailability.mockRejectedValue('');
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 404,
+      });
 
       const { getByTestId } = render(
         <InputField
@@ -130,11 +135,39 @@ describe('InputField', () => {
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
+
+    it('checkAvailability validation is ignored when error is not 404', async () => {
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 500,
+      });
+
+      const { getByTestId } = render(
+        <InputField
+          {...defaultProps}
+          type="text"
+          value="userAlias"
+          validateOnBlur
+          checkAvailability={{
+            isAvailable: true,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
+          autoFocus
+        />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      input.blur();
+      expect(API.checkAvailability).toBeCalledTimes(1);
+      expect(input).toBeValid();
+      await waitFor(() => {});
+    });
   });
 
   describe('calls isValidResource', () => {
     it('resource is valid', async () => {
-      mocked(API).checkAvailability.mockRejectedValue('');
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 404,
+      });
 
       const { getByTestId } = render(
         <InputField
@@ -158,7 +191,9 @@ describe('InputField', () => {
     });
 
     it('resource is not valid', async () => {
-      mocked(API).checkAvailability.mockRejectedValue('');
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 404,
+      });
 
       render(
         <InputField
@@ -185,8 +220,36 @@ describe('InputField', () => {
       expect(input).toBeInvalid();
     });
 
+    it('checkAvailability validation is ignored when error is not 404', async () => {
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 500,
+      });
+
+      const { getByTestId } = render(
+        <InputField
+          {...defaultProps}
+          type="text"
+          value="userAlias"
+          validateOnBlur
+          checkAvailability={{
+            isAvailable: false,
+            resourceKind: ResourceKind.userAlias,
+            excluded: [],
+          }}
+          autoFocus
+        />
+      );
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      input.blur();
+      expect(API.checkAvailability).toBeCalledTimes(1);
+      expect(input).toBeValid();
+      await waitFor(() => {});
+    });
+
     it('value is part of the excluded list', () => {
-      mocked(API).checkAvailability.mockRejectedValue('');
+      mocked(API).checkAvailability.mockRejectedValue({
+        status: 404,
+      });
 
       render(
         <InputField {...defaultProps} type="text" value="user1" validateOnBlur excludedValues={['user1']} autoFocus />

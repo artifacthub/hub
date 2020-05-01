@@ -1,12 +1,16 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { mocked } from 'ts-jest/utils';
 
+import { API } from '../../api';
 import CreateAnAccount from './CreateAnAccount';
 jest.mock('../../api');
 
+const setApiErrorMock = jest.fn();
+
 const defaultProps = {
   apiError: null,
-  setApiError: jest.fn(),
+  setApiError: setApiErrorMock,
   success: false,
   setSuccess: jest.fn(),
   isLoading: {
@@ -47,6 +51,109 @@ describe('CreateAnAccount', () => {
           'Please click on the link that has just been sent to your email account to verify your email and finish the registration process.'
         )
       ).toBeInTheDocument();
+    });
+
+    it('calls registerUser', async () => {
+      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).register.mockResolvedValue(null);
+
+      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+
+      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
+      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
+      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
+      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
+      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
+      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+
+      const form = getByTestId('createAnAccountForm');
+      fireEvent.submit(form);
+
+      await waitFor(() => {
+        expect(API.register).toHaveBeenCalledTimes(1);
+        expect(API.register).toHaveBeenCalledWith({
+          alias: 'userAlias',
+          firstName: 'John',
+          lastName: 'Smith',
+          email: 'test@email.com',
+          password: '123qwe',
+        });
+      });
+    });
+
+    it('does not call registerUser if alias is not available', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(null);
+      mocked(API).register.mockResolvedValue(null);
+
+      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+
+      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
+      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
+      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
+      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
+      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
+      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+
+      const form = getByTestId('createAnAccountForm');
+      fireEvent.submit(form);
+
+      await waitFor(() => {
+        expect(API.register).toHaveBeenCalledTimes(0);
+      });
+    });
+  });
+
+  describe('when register user fails', () => {
+    it('error 400', async () => {
+      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).register.mockRejectedValue({
+        status: 400,
+        statusText: 'Error 400',
+      });
+
+      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+
+      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
+      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
+      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
+      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
+      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
+      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+
+      const form = getByTestId('createAnAccountForm');
+      fireEvent.submit(form);
+
+      await waitFor(() => {
+        expect(API.register).toHaveBeenCalledTimes(0);
+      });
+      expect(setApiErrorMock).toHaveBeenCalledTimes(1);
+      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user: Error 400');
+    });
+
+    it('default error message', async () => {
+      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).register.mockRejectedValue({
+        status: 500,
+      });
+
+      const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
+
+      fireEvent.change(getByTestId('aliasInput'), { target: { value: 'userAlias' } });
+      fireEvent.change(getByTestId('emailInput'), { target: { value: 'test@email.com' } });
+      fireEvent.change(getByTestId('firstNameInput'), { target: { value: 'John' } });
+      fireEvent.change(getByTestId('lastNameInput'), { target: { value: 'Smith' } });
+      fireEvent.change(getByTestId('passwordInput'), { target: { value: '123qwe' } });
+      fireEvent.change(getByTestId('confirmPasswordInput'), { target: { value: '123qwe' } });
+
+      const form = getByTestId('createAnAccountForm');
+      fireEvent.submit(form);
+
+      await waitFor(() => {
+        expect(API.register).toHaveBeenCalledTimes(0);
+      });
+
+      expect(setApiErrorMock).toHaveBeenCalledTimes(1);
+      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user, please try again later');
     });
   });
 });

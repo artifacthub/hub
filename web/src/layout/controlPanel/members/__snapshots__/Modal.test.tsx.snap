@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Members Modal - members section creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+      >
+        <div
+          class="modal-content content modal"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Add member
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100"
+            >
+              <form
+                autocomplete="on"
+                class="w-100 needs-validation"
+                data-testid="membersForm"
+                novalidate=""
+              >
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="alias"
+                  >
+                    Username
+                    <small
+                      class="ml-1 font-italic"
+                    >
+                      (Required)
+                    </small>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="form-control"
+                    data-testid="aliasInput"
+                    name="alias"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  >
+                    This field is required
+                  </div>
+                  <div
+                    class="alert alert-ligth p-0 mt-4"
+                  >
+                    <small
+                      class="text-muted text-break mt-1"
+                    >
+                      <p>
+                        The user must be previously registered
+                      </p>
+                    </small>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="membersFormBtn"
+              type="button"
+            >
+              Invite
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

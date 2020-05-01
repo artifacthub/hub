@@ -91,6 +91,23 @@ describe('Home index', () => {
       await waitFor(() => {});
     });
 
+    it('renders dash symbol when getStats call fails', async () => {
+      mocked(API).getStats.mockRejectedValue({ status: 500 });
+
+      const props = {
+        ...defaultProps,
+        isSearching: true,
+      };
+      render(
+        <Router>
+          <HomeView {...props} />
+        </Router>
+      );
+
+      await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
+      expect(screen.getAllByText('-')).toHaveLength(2);
+    });
+
     it('renders project definition', async () => {
       const mockStats = getMockStats('5');
       mocked(API).getStats.mockResolvedValue(mockStats);

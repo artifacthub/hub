@@ -12,8 +12,10 @@ const getMockChartRepository = (fixtureId: string): ChartRepo[] => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as ChartRepo[];
 };
 
+const onAuthErrorMock = jest.fn();
+
 const defaultProps = {
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 describe('Chart repository index', () => {
@@ -121,6 +123,42 @@ describe('Chart repository index', () => {
       expect(API.getChartRepositories).toHaveBeenCalledTimes(2);
 
       await waitFor(() => {});
+    });
+  });
+
+  describe('when getChartRepositories fails', () => {
+    it('on 401 error', async () => {
+      mocked(API).getChartRepositories.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+
+      render(
+        <Router>
+          <ChartRepository {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getChartRepositories).toHaveBeenCalledTimes(1);
+      });
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('on error different to 401', async () => {
+      mocked(API).getChartRepositories.mockRejectedValue({ status: 500 });
+
+      render(
+        <Router>
+          <ChartRepository {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getChartRepositories).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent(/An error occurred getting the chart repositories, please try again later/i);
     });
   });
 });

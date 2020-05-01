@@ -92,6 +92,52 @@ describe('Package index', () => {
     });
   });
 
+  describe('when getPackage fails', () => {
+    it('generic error', async () => {
+      mocked(API).getPackage.mockRejectedValue({ status: 500 });
+
+      const props = {
+        ...defaultProps,
+      };
+
+      render(
+        <Router>
+          <PackageView {...props} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later/i);
+    });
+
+    it('error 404', async () => {
+      mocked(API).getPackage.mockRejectedValue({ status: 404 });
+
+      const props = {
+        ...defaultProps,
+      };
+
+      render(
+        <Router>
+          <PackageView {...props} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getPackage).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent('Sorry, the package you requested was not found.');
+    });
+  });
+
   describe('Go back button', () => {
     it('creates snapshot', async () => {
       const searchUrlReferer = {

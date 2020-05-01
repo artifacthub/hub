@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import Modal from './Modal';
@@ -42,6 +42,15 @@ describe('Modal', () => {
     expect(getByRole('dialog')).not.toHaveClass('d-block');
   });
 
+  it('calls onClose to click close button on modal footer', () => {
+    const { getByTestId, getByRole } = render(<Modal {...defaultProps} />);
+    expect(getByRole('dialog')).toHaveClass('d-block');
+
+    fireEvent.click(getByTestId('closeModalFooterBtn'));
+
+    expect(getByRole('dialog')).not.toHaveClass('d-block');
+  });
+
   it('renders error alert if error is defined', () => {
     const { getByTestId, getByRole, getByText } = render(<Modal {...defaultProps} error="api error" />);
     expect(getByRole('alert')).toBeInTheDocument();
@@ -52,5 +61,19 @@ describe('Modal', () => {
 
     fireEvent.click(getByTestId('closeModalErrorBtn'));
     expect(cleanErrorMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('opens Modal to click Open Modal btn', () => {
+    const { getByTestId, getByRole } = render(<Modal {...defaultProps} buttonContent="Open modal" open={false} />);
+
+    const modal = getByRole('dialog');
+    expect(modal).not.toHaveClass('active d-block');
+    const btn = getByTestId('openModalBtn');
+
+    fireEvent.click(btn);
+
+    waitFor(() => {
+      expect(modal).toHaveClass('active d-block');
+    });
   });
 });

@@ -1,11 +1,14 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import moment from 'moment';
 import React from 'react';
+import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../api';
 import { ChartRepository } from '../../../../types';
+import alertDispatcher from '../../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../../api');
+jest.mock('../../../../utils/alertDispatcher');
 
 const chartRepoMock: ChartRepository = {
   name: 'repoTest',
@@ -15,12 +18,13 @@ const chartRepoMock: ChartRepository = {
 };
 
 const setModalStatusMock = jest.fn();
+const onAuthErrorMock = jest.fn();
 
 const defaultProps = {
   chartRepository: chartRepoMock,
   setModalStatus: setModalStatusMock,
   onSuccess: jest.fn(),
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 describe('Chart Repository Card - packages section', () => {
@@ -70,9 +74,9 @@ describe('Chart Repository Card - packages section', () => {
       const btn = getByTestId('deleteChartRepoBtn');
       fireEvent.click(btn);
 
-      await waitFor(() => {});
-
-      expect(API.deleteChartRepository).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(API.deleteChartRepository).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('calls setModalStatus when Edit button is clicked', () => {
@@ -87,6 +91,52 @@ describe('Chart Repository Card - packages section', () => {
         open: true,
         chartRepository: chartRepoMock,
       });
+    });
+  });
+
+  describe('on deleteChartRepositoryError', () => {
+    it('displays generic error', async () => {
+      mocked(API).deleteChartRepository.mockRejectedValue({
+        statusText: 'error',
+      });
+      const { getByTestId } = render(<Card {...defaultProps} />);
+
+      const dropdownBtn = getByTestId('deleteChartRepoDropdownBtn');
+      expect(dropdownBtn).toBeInTheDocument();
+      fireEvent.click(dropdownBtn);
+
+      const btn = getByTestId('deleteChartRepoBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.deleteChartRepository).toHaveBeenCalledTimes(1);
+      });
+
+      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+        type: 'danger',
+        message: 'An error occurred deleting the chart repository, please try again later',
+      });
+    });
+
+    it('calls onAuthError', async () => {
+      mocked(API).deleteChartRepository.mockRejectedValue({
+        statusText: 'ErrLoginRedirect',
+      });
+      const { getByTestId } = render(<Card {...defaultProps} />);
+
+      const dropdownBtn = getByTestId('deleteChartRepoDropdownBtn');
+      expect(dropdownBtn).toBeInTheDocument();
+      fireEvent.click(dropdownBtn);
+
+      const btn = getByTestId('deleteChartRepoBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.deleteChartRepository).toHaveBeenCalledTimes(1);
+      });
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
   });
 });

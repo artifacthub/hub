@@ -108,7 +108,13 @@ const MemberModal = (props: Props) => {
       open={props.open}
       modalClassName={styles.modal}
       closeButton={
-        <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+        <button
+          data-testid="membersFormBtn"
+          className="btn btn-secondary"
+          type="button"
+          disabled={isSending}
+          onClick={submitForm}
+        >
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -125,6 +131,7 @@ const MemberModal = (props: Props) => {
     >
       <div className="w-100">
         <form
+          data-testid="membersForm"
           ref={form}
           className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           onFocus={cleanApiError}

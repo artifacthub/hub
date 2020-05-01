@@ -1,4 +1,4 @@
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -13,8 +13,10 @@ const getMockProfile = (fixtureId: string): Profile => {
   return require(`./__fixtures__/UserSettings/${fixtureId}.json`) as Profile;
 };
 
+const onAuthErrorMock = jest.fn();
+
 const defaultProps = {
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 const mockCtx = {
@@ -63,13 +65,17 @@ describe('User settings index', () => {
       await waitFor(() => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
+
+      expect(screen.getByText('Profile information')).toBeInTheDocument();
+      expect(screen.getByText('Change password')).toBeInTheDocument();
     });
+  });
 
-    it('removes loading spinner after getting user profile', async () => {
-      const mockProfile = getMockProfile('3');
-      mocked(API).getUserProfile.mockResolvedValue(mockProfile);
+  describe('on getUserProfile error', () => {
+    it('does not render profile information section if error is different to 401', async () => {
+      mocked(API).getUserProfile.mockRejectedValue({ status: 500 });
 
-      render(
+      const { queryByText, queryByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <UserSettings {...defaultProps} />
@@ -77,15 +83,17 @@ describe('User settings index', () => {
         </AppCtx.Provider>
       );
 
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
+      await waitFor(() => {
+        expect(API.getUserProfile).toHaveBeenCalledTimes(1);
+      });
 
-      expect(spinner).toBeTruthy();
-      await waitFor(() => {});
+      expect(queryByText('Profile information')).toBeNull();
+      expect(queryByTestId('updateProfileForm')).toBeNull();
+      expect(getByText('Change password')).toBeInTheDocument();
     });
 
-    it('displays no data component when no organization details', async () => {
-      const mockProfile = getMockProfile('4');
-      mocked(API).getUserProfile.mockRejectedValue(mockProfile);
+    it('calls onAuthError if error is 401', async () => {
+      mocked(API).getUserProfile.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -96,13 +104,10 @@ describe('User settings index', () => {
       );
 
       await waitFor(() => {
-        const noData = screen.getByTestId('noData');
-
-        expect(noData).toBeInTheDocument();
-        expect(
-          screen.getByText('Sorry, an error occurred fetching your profile, please try again later.')
-        ).toBeInTheDocument();
+        expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
   });
 });

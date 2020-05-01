@@ -12,8 +12,10 @@ const getMockOrganizations = (fixtureId: string): Organization[] => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Organization[];
 };
 
+const onAuthErrorMock = jest.fn();
+
 const defaultProps = {
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 describe('Organizations section index', () => {
@@ -140,5 +142,43 @@ describe('Organizations section index', () => {
     const cards = await waitFor(() => screen.getAllByTestId('organizationCard'));
     expect(cards).toHaveLength(2);
     await waitFor(() => {});
+  });
+
+  describe('on getUserOrganizations error', () => {
+    it('401 error', async () => {
+      mocked(API).getUserOrganizations.mockRejectedValue({
+        statusText: 'ErrLoginRedirect',
+      });
+
+      render(
+        <Router>
+          <OrganizationsSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('rest API errors - displays generis error message', async () => {
+      mocked(API).getUserOrganizations.mockRejectedValue({ status: 400 });
+
+      render(
+        <Router>
+          <OrganizationsSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
+
+      const noData = screen.getByTestId('noData');
+      expect(noData).toBeInTheDocument();
+      expect(
+        screen.getByText(/An error occurred getting your organizations, please try again later/i)
+      ).toBeInTheDocument();
+
+      await waitFor(() => {});
+    });
   });
 });

@@ -1,10 +1,15 @@
 {
   "packageId": "id",
-  "kind": 1,
+  "kind": 0,
   "name": "test",
+  "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "chartRepository": null
+  "chartRepository": {
+    "name": "stable",
+    "displayName": null,
+    "url": "repoUrl"
+  }
 }

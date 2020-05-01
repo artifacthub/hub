@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrganizationModal - organizations section creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+      >
+        <div
+          class="modal-content content modal"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Update organization
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100"
+            >
+              <form
+                autocomplete="on"
+                class="w-100 needs-validation"
+                data-testid="organizationForm"
+                novalidate=""
+              >
+                <div
+                  class="form-group mb-4 undefined"
+                >
+                  <div
+                    class="d-flex flex-column"
+                  >
+                    <label
+                      for="logo"
+                    >
+                      Logo
+                      <small
+                        class="ml-1 font-italic"
+                      >
+                        (Click on the image to update)
+                      </small>
+                    </label>
+                    <div
+                      class="position-relative"
+                    >
+                      <button
+                        class="btn p-0 overflow-hidden btn"
+                        data-testid="inputFileBtn"
+                        type="button"
+                      >
+                        <img
+                          alt="Logo"
+                          class="image"
+                          src="/image/1234"
+                          srcset="/image/1234@1x 1x, /image/1234@2x 2x, /image/1234@3x 3x, /image/1234@4x 4x"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <input
+                    class="d-none"
+                    data-testid="inputFile"
+                    id="logo"
+                    name="logo"
+                    type="file"
+                  />
+                </div>
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="name"
+                  >
+                    Name
+                    <small
+                      class="ml-1 font-italic"
+                    >
+                      (Required)
+                    </small>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="form-control"
+                    data-testid="nameInput"
+                    name="name"
+                    pattern="[a-z0-9-]+"
+                    readonly=""
+                    required=""
+                    type="text"
+                    value="orgTest"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  >
+                    This field is required
+                  </div>
+                </div>
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="displayName"
+                  >
+                    Display name
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="displayNameInput"
+                    name="displayName"
+                    type="text"
+                    value="Org test"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  />
+                </div>
+                <div
+                  class="form-group mb-4 position-relative undefined"
+                >
+                  <label
+                    for="homeUrl"
+                  >
+                    Home URL
+                  </label>
+                  <input
+                    class="form-control"
+                    data-testid="homeUrlInput"
+                    name="homeUrl"
+                    type="url"
+                    value="http://test.org"
+                  />
+                  <div
+                    class="invalid-feedback mt-0 inputFeedback"
+                  >
+                    Please enter a valid url
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    for="description"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    class="form-control"
+                    data-testid="descriptionTextarea"
+                    id="description"
+                    name="description"
+                  >
+                    Org description
+                  </textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              type="button"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

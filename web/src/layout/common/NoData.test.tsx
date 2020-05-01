@@ -18,4 +18,13 @@ describe('NoData', () => {
     expect(getByTestId('noData')).toBeInTheDocument();
     expect(getByText(defaultProps.children)).toBeInTheDocument();
   });
+
+  it('renders proper content with issues link visible', () => {
+    const { getByRole, getByText } = render(<NoData {...defaultProps} issuesLinkVisible />);
+    expect(getByText(/If this error persists, please create an issue/i)).toBeInTheDocument();
+    const link = getByRole('button');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveTextContent('here');
+    expect(link).toHaveAttribute('href', 'https://github.com/artifacthub/hub/issues');
+  });
 });

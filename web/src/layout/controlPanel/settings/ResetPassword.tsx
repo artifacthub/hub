@@ -57,7 +57,7 @@ const ResetPassword = () => {
         alertDispatcher.postAlert({
           type: 'danger',
           message:
-            'An error occurred updating your password, please make sure you have entered your correct old password',
+            'An error occurred updating your password, please make sure you have entered your old password correctly',
         });
       }
     }
