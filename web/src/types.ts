@@ -192,3 +192,7 @@ export interface Prefs {
     limit: number;
   };
 }
+
+export interface StarredByUser {
+  starred: boolean;
+}

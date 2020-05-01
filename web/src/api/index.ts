@@ -13,6 +13,7 @@ import {
   Profile,
   SearchQuery,
   SearchResults,
+  StarredByUser,
   Stats,
   User,
   UserFullName,
@@ -128,7 +129,7 @@ export const API = {
     });
   },
 
-  starredByUser: (packageId: string): Promise<null | string> => {
+  starredByUser: (packageId: string): Promise<StarredByUser> => {
     return apiFetch(`${API_BASE_URL}/package/${packageId}`);
   },
 
