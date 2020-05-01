@@ -114,16 +114,15 @@ func (h *Handlers) setupRouter() {
 		})
 		r.Route("/package", func(r chi.Router) {
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
-				r.Use(h.Users.InjectUserID)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
-				r.Use(h.Users.InjectUserID)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{packageID}", func(r chi.Router) {
+				r.Get("/", h.Packages.StarredByUser)
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 		})

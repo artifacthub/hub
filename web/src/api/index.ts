@@ -128,6 +128,10 @@ export const API = {
     });
   },
 
+  starredByUser: (packageId: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/package/${packageId}`);
+  },
+
   searchPackages: (query: SearchQuery): Promise<SearchResults> => {
     const q = new URLSearchParams();
     q.set('facets', 'true');

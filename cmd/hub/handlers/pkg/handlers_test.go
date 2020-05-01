@@ -76,7 +76,7 @@ func TestGet(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.pm.AssertExpectations(t)
 	})
@@ -378,7 +378,95 @@ func TestSearch(t *testing.T) {
 	})
 }
 
+func TestStarredByUser(t *testing.T) {
+	t.Run("check failed", func(t *testing.T) {
+		testCases := []struct {
+			err            error
+			expectedStatus int
+		}{
+			{
+				pkg.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.err.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("StarredByUser", mock.Anything, mock.Anything).Return(false, tc.err)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.StarredByUser(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("check succeeded", func(t *testing.T) {
+		hw := newHandlersWrapper()
+		hw.pm.On("StarredByUser", mock.Anything, mock.Anything).Return(true, nil)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		hw.h.StarredByUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte(`{"starred": true}`), data)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
 func TestToggleStar(t *testing.T) {
+	t.Run("error toggling star", func(t *testing.T) {
+		testCases := []struct {
+			err            error
+			expectedStatus int
+		}{
+			{
+				pkg.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.err.Error(), func(t *testing.T) {
+				hw := newHandlersWrapper()
+				hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(tc.err)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				hw.h.ToggleStar(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatus, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+
 	t.Run("toggle star succeeded", func(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(nil)
@@ -391,21 +479,6 @@ func TestToggleStar(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
-	})
-
-	t.Run("error toggling star", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", nil)
-		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		hw.h.ToggleStar(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
 		hw.pm.AssertExpectations(t)
 	})
 }

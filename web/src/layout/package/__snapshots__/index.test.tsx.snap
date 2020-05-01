@@ -19,8 +19,11 @@ exports[`Package index creates snapshot 2`] = `
       class="jumbotron jumbotron"
     >
       <div
-        class="container"
+        class="container position-relative"
       >
+        <div
+          class="position-absolute starWrapper"
+        />
         <div
           class="d-flex align-items-start w-100 mb-3"
         >
@@ -44,7 +47,7 @@ exports[`Package index creates snapshot 2`] = `
                 class="d-flex flex-row align-items-center"
               >
                 <div
-                  class="h3 mb-0"
+                  class="h3 mb-0 titleWrapper"
                 >
                   Pretty name
                 </div>
@@ -90,9 +93,6 @@ exports[`Package index creates snapshot 2`] = `
               </div>
             </div>
           </div>
-          <div
-            class="d-none d-md-inline ml-auto position-relative"
-          />
         </div>
         <p
           class="mb-0"
@@ -326,9 +326,6 @@ exports[`Package index creates snapshot 2`] = `
               </div>
             </div>
           </div>
-          <div
-            class="mt-3 position-relative"
-          />
         </div>
       </div>
     </div>

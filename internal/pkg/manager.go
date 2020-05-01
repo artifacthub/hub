@@ -41,10 +41,9 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	}
 
 	// Get package from database
-	query := "select get_package($1::uuid, $2::jsonb)"
-	userID := getUserID(ctx)
+	query := "select get_package($1::jsonb)"
 	inputJSON, _ := json.Marshal(input)
-	dataJSON, err := m.dbQueryJSON(ctx, query, userID, inputJSON)
+	dataJSON, err := m.dbQueryJSON(ctx, query, inputJSON)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, ErrNotFound
@@ -172,6 +171,29 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 	return m.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
 }
 
+// StarredByUser checks if the given package has been starred by the user doing
+// the request.
+func (m *Manager) StarredByUser(ctx context.Context, packageID string) (bool, error) {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if packageID == "" {
+		return false, fmt.Errorf("%w: %s", ErrInvalidInput, "package id not provided")
+	}
+	if _, err := uuid.FromString(packageID); err != nil {
+		return false, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+	}
+
+	// Check if package is starred in database
+	var starred bool
+	query := `
+	select exists (
+		select * from user_starred_package where user_id = $1 and package_id = $2
+	)`
+	err := m.db.QueryRow(ctx, query, userID, packageID).Scan(&starred)
+	return starred, err
+}
+
 // ToggleStar stars or unstars a given package for the provided user.
 func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -219,16 +241,6 @@ func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interfa
 		return nil, err
 	}
 	return dataJSON, nil
-}
-
-// getUserID returns the user id from the context provided when available.
-func getUserID(ctx context.Context) *string {
-	var userID *string
-	v, _ := ctx.Value(hub.UserIDKey).(string)
-	if v != "" {
-		userID = &v
-	}
-	return userID
 }
 
 // isValidKind checks if the provided package kind is valid.

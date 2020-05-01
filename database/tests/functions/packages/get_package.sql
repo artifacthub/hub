@@ -16,7 +16,7 @@ select plan(4);
 -- No packages at this point
 select is_empty(
     $$
-        select get_package(null, '{
+        select get_package('{
             "package_name": "package1",
             "chart_repository_name": "repo1"
         }')
@@ -141,11 +141,10 @@ insert into snapshot (
     'readme-version-1.0.0',
     '{"key": "value"}'
 );
-insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package2ID');
 
 -- Run some tests
 select is(
-    get_package(null, '{
+    get_package('{
         "package_name": "package-1",
         "chart_repository_name": "repo1"
     }')::jsonb,
@@ -156,7 +155,6 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "stars": 10,
-        "starred_by_user": false,
         "display_name": "Package 1",
         "description": "description",
         "keywords": ["kw1", "kw2"],
@@ -197,7 +195,7 @@ select is(
     'Last package1 version is returned as a json object'
 );
 select is(
-    get_package(null, '{
+    get_package('{
         "package_name": "package-1",
         "chart_repository_name": "repo1",
         "version": "0.0.9"
@@ -209,7 +207,6 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "stars": 10,
-        "starred_by_user": false,
         "display_name": "Package 1 (older)",
         "description": "description (older)",
         "keywords": ["kw1", "kw2", "older"],
@@ -250,7 +247,7 @@ select is(
     'Requested package version is returned as a json object'
 );
 select is(
-    get_package(:'user1ID', '{
+    get_package('{
         "package_name": "package2"
     }')::jsonb,
     '{
@@ -260,7 +257,6 @@ select is(
         "normalized_name": "package2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
         "stars": 5,
-        "starred_by_user": true,
         "display_name": "Package 2",
         "description": "description",
         "keywords": ["kw1", "kw2"],

@@ -1,6 +1,7 @@
 export const API = {
   getPackage: jest.fn(),
   toggleStar: jest.fn(),
+  starredByUser: jest.fn(),
   searchPackages: jest.fn(),
   getStats: jest.fn(),
   getPackagesUpdates: jest.fn(),

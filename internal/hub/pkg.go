@@ -74,6 +74,7 @@ type PackageManager interface {
 	GetUpdatesJSON(ctx context.Context) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
+	StarredByUser(ctx context.Context, packageID string) (bool, error)
 	ToggleStar(ctx context.Context, packageID string) error
 	Unregister(ctx context.Context, pkg *Package) error
 }

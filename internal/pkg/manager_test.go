@@ -3,6 +3,7 @@ package pkg
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -12,12 +13,11 @@ import (
 )
 
 func TestGetJSON(t *testing.T) {
-	dbQuery := "select get_package($1::uuid, $2::jsonb)"
-	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	dbQuery := "select get_package($1::jsonb)"
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
-		_, err := m.GetJSON(ctx, &hub.GetPackageInput{})
+		_, err := m.GetJSON(context.Background(), &hub.GetPackageInput{})
 		assert.True(t, errors.Is(err, ErrInvalidInput))
 	})
 
@@ -26,7 +26,7 @@ func TestGetJSON(t *testing.T) {
 		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
+		dataJSON, err := m.GetJSON(context.Background(), &hub.GetPackageInput{PackageName: "pkg1"})
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -455,6 +455,75 @@ func TestSearchJSON(t *testing.T) {
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
+	})
+}
+
+func TestStarredByUser(t *testing.T) {
+	dbQuery := `
+	select exists (
+		select * from user_starred_package where user_id = $1 and package_id = $2
+	)`
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	pkgID := "00000000-0000-0000-0000-000000000001"
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_, _ = m.StarredByUser(context.Background(), "pkgID")
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg    string
+			packageID string
+		}{
+			{"package id not provided", ""},
+			{"invalid package id", "pkgID"},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil)
+				starred, err := m.StarredByUser(ctx, tc.packageID)
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+				assert.False(t, starred)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, "userID", pkgID).Return(false, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		starred, err := m.StarredByUser(ctx, pkgID)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.False(t, starred)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		testCases := []struct {
+			starred bool
+		}{
+			{false},
+			{true},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(fmt.Sprintf("starred: %v", tc.starred), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("QueryRow", dbQuery, "userID", pkgID).Return(tc.starred, nil)
+				m := NewManager(db)
+
+				starred, err := m.StarredByUser(ctx, pkgID)
+				assert.NoError(t, err)
+				assert.Equal(t, tc.starred, starred)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 }
 
