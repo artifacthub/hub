@@ -78,15 +78,9 @@ const StarButton = (props: Props) => {
             onClick={handleToggleStar}
           >
             <div className="d-flex align-items-center">
-              {isGettingIfStarred || isUndefined(ctx.user) ? (
-                <span className="spinner-border spinner-border-sm text-ligth" role="status" />
-              ) : (
-                <>
-                  {notStarred || isNull(packageStars) ? <FaStar /> : <FaRegStar />}
-                  {!isNull(packageStars) && (
-                    <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
-                  )}
-                </>
+              {notStarred || isNull(packageStars) ? <FaStar /> : <FaRegStar />}
+              {!isNull(packageStars) && (
+                <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
               )}
             </div>
           </button>
@@ -106,7 +100,7 @@ const StarButton = (props: Props) => {
         </div>
       )}
 
-      {isSending && (
+      {(isSending || isGettingIfStarred) && (
         <div className={`position-absolute ${styles.spinner}`} role="status">
           <span className="spinner-border spinner-border-sm text-primary" />
         </div>
