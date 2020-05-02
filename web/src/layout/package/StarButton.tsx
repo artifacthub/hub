@@ -18,7 +18,6 @@ interface Props {
 const StarButton = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!isUndefined(ctx.user) && !isNull(ctx.user));
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
 
@@ -34,23 +33,20 @@ const StarButton = (props: Props) => {
   }
 
   useEffect(() => {
-    if (!isUndefined(ctx.user) && isUndefined(packageStars)) {
+    if (
+      !isUndefined(ctx.user) &&
+      (isUndefined(packageStars) ||
+        (!isNull(ctx.user) && isNull(packageStars!.starredByUser)) ||
+        (isNull(ctx.user) && !isNull(packageStars!.starredByUser)))
+    ) {
       getPackageStars();
-    }
-  }, [ctx.user, packageStars]); /* eslint-disable-line react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    const newLoggedInStatus = !isUndefined(ctx.user) && !isNull(ctx.user);
-    if (isLoggedIn !== newLoggedInStatus) {
-      setIsLoggedIn(newLoggedInStatus);
-      if (newLoggedInStatus) {
-        getPackageStars();
-      }
     }
   }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const notStarred =
-    !isLoggedIn || (isLoggedIn && !isUndefined(packageStars) && !isNull(packageStars) && !packageStars.starredByUser);
+    !isUndefined(ctx.user) &&
+    (isNull(ctx.user) ||
+      (!isNull(ctx.user) && !isUndefined(packageStars) && !isNull(packageStars) && !packageStars.starredByUser));
 
   async function handleToggleStar() {
     try {
@@ -67,7 +63,7 @@ const StarButton = (props: Props) => {
     }
   }
 
-  if (isUndefined(packageStars) || isNull(packageStars)) return null;
+  if (isUndefined(ctx.user) || isUndefined(packageStars) || isNull(packageStars)) return null;
 
   return (
     <div className={`d-flex flex-row align-items-center ${styles.wrapper}`}>
@@ -75,7 +71,7 @@ const StarButton = (props: Props) => {
         data-testid="toggleStarBtn"
         className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
         type="button"
-        disabled={isUndefined(ctx.user) || !isLoggedIn || isGettingIfStarred}
+        disabled={isUndefined(ctx.user) || isNull(ctx.user) || isGettingIfStarred}
         onClick={handleToggleStar}
       >
         <div className="d-flex align-items-center">
@@ -88,7 +84,7 @@ const StarButton = (props: Props) => {
         {isNull(packageStars.stars) ? '-' : prettifyNumber(packageStars.stars)}
       </span>
 
-      {!isLoggedIn && (
+      {isNull(ctx.user) && (
         <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
           <div className={`arrow ${styles.tooltipArrow}`}></div>
           <div className="tooltip-inner">You must be signed in to star a package</div>
