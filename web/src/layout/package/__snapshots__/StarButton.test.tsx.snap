@@ -9,6 +9,27 @@ exports[`Package index creates snapshot 1`] = `
       class="spinner-grow text-light"
       role="status"
     />
+    <div
+      class="position-absolute spinner"
+      role="status"
+    >
+      <span
+        class="spinner-border spinner-border-sm text-primary"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Package index creates snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="d-flex flex-row align-items-center wrapper"
+  >
+    <div
+      class="spinner-grow text-light"
+      role="status"
+    />
   </div>
 </DocumentFragment>
 `;
