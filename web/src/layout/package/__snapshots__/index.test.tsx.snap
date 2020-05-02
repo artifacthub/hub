@@ -23,29 +23,7 @@ exports[`Package index creates snapshot 2`] = `
       >
         <div
           class="position-absolute starWrapper"
-        >
-          <div
-            class="d-flex flex-row align-items-center wrapper"
-          >
-            <div
-              class="spinner-grow text-light"
-              role="status"
-            />
-            <div
-              class="tooltip bs-tooltip-bottom tooltip"
-              role="tooltip"
-            >
-              <div
-                class="arrow tooltipArrow"
-              />
-              <div
-                class="tooltip-inner"
-              >
-                You must be signed in to star a package
-              </div>
-            </div>
-          </div>
-        </div>
+        />
         <div
           class="d-flex align-items-start w-100 mb-3"
         >

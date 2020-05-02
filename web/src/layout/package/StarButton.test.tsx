@@ -60,6 +60,7 @@ describe('Package index', () => {
         });
 
         expect(getByText('Star')).toBeInTheDocument();
+        expect(getByText('4')).toBeInTheDocument();
         expect(queryByRole('status')).toBeNull();
 
         const btn = getByTestId('toggleStarBtn');
@@ -176,10 +177,10 @@ describe('Package index', () => {
     });
 
     describe('on getStars error', () => {
-      it('renders proper component', async () => {
+      it('does not render component', async () => {
         mocked(API).getStars.mockRejectedValue({});
 
-        const { getByTestId, queryByText } = render(
+        const { queryByTestId, queryByText } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
@@ -189,9 +190,24 @@ describe('Package index', () => {
           expect(API.getStars).toHaveBeenCalledTimes(1);
         });
 
-        const btn = getByTestId('toggleStarBtn');
-        expect(btn).toBeDisabled();
+        expect(queryByTestId('toggleStarBtn')).toBeNull();
         expect(queryByText('Star')).toBeNull();
+      });
+    });
+
+    describe('on init', () => {
+      it('does not call getStars if ctx.user is not initialized', async () => {
+        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: null });
+
+        render(
+          <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
+            <StarButton {...defaultProps} />
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(0);
+        });
       });
     });
   });

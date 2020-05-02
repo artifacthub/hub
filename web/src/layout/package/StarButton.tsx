@@ -37,7 +37,7 @@ const StarButton = (props: Props) => {
     if (!isUndefined(ctx.user) && isUndefined(packageStars)) {
       getPackageStars();
     }
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user, packageStars]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     const newLoggedInStatus = !isUndefined(ctx.user) && !isNull(ctx.user);
@@ -66,32 +66,27 @@ const StarButton = (props: Props) => {
       });
     }
   }
+
+  if (isUndefined(packageStars) || isNull(packageStars)) return null;
+
   return (
     <div className={`d-flex flex-row align-items-center ${styles.wrapper}`}>
-      {!isUndefined(packageStars) ? (
-        <>
-          <button
-            data-testid="toggleStarBtn"
-            className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
-            type="button"
-            disabled={isUndefined(ctx.user) || !isLoggedIn || isGettingIfStarred || isNull(packageStars)}
-            onClick={handleToggleStar}
-          >
-            <div className="d-flex align-items-center">
-              {notStarred || isNull(packageStars) ? <FaStar /> : <FaRegStar />}
-              {!isNull(packageStars) && (
-                <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
-              )}
-            </div>
-          </button>
+      <button
+        data-testid="toggleStarBtn"
+        className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
+        type="button"
+        disabled={isUndefined(ctx.user) || !isLoggedIn || isGettingIfStarred}
+        onClick={handleToggleStar}
+      >
+        <div className="d-flex align-items-center">
+          {notStarred ? <FaStar /> : <FaRegStar />}
+          <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+        </div>
+      </button>
 
-          <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
-            {prettifyNumber(isNull(packageStars) ? 0 : packageStars.stars || 0)}
-          </span>
-        </>
-      ) : (
-        <div role="status" className="spinner-grow text-light" />
-      )}
+      <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
+        {isNull(packageStars.stars) ? '-' : prettifyNumber(packageStars.stars)}
+      </span>
 
       {!isLoggedIn && (
         <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
