@@ -63,7 +63,7 @@ describe('OrganizationInfo', () => {
     });
   });
 
-  it('calls history push to click org link', async () => {
+  it('displays org info to enter on link and hides on leave', async () => {
     const mockOrganization = getMockOrganization('1');
     mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
@@ -87,8 +87,45 @@ describe('OrganizationInfo', () => {
     });
 
     fireEvent.mouseLeave(getByTestId('orgLink'));
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 200);
+
     waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    });
+  });
+
+  it('hides org info to leave org dropdown', async () => {
+    const mockOrganization = getMockOrganization('1');
+    mocked(API).getOrganization.mockResolvedValue(mockOrganization);
+
+    const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
+    fireEvent.mouseEnter(getByTestId('orgLink'));
+
+    await waitFor(() => {
+      expect(API.getOrganization).toHaveBeenCalledTimes(1);
+    });
+
+    fireEvent.mouseEnter(getByTestId('orgInfoDropdown'));
+    fireEvent.mouseLeave(getByTestId('orgLink'));
+
+    expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+
+    fireEvent.mouseLeave(getByTestId('orgInfoDropdown'));
+    waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
+    });
+  });
+
+  it('does not render dropdown content when api call fails', async () => {
+    mocked(API).getOrganization.mockRejectedValue('');
+
+    const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
+    fireEvent.mouseEnter(getByTestId('orgLink'));
+
+    expect(API.getOrganization).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).toBeEmpty();
     });
   });
 });

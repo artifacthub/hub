@@ -54,6 +54,7 @@ const SearchView = (props: Props) => {
     },
   });
   const { isSearching, setIsSearching, scrollPosition, setScrollPosition } = props;
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const isEmptyFacets = (): boolean => {
     if (isNull(searchResults.data.facets)) {
@@ -192,6 +193,7 @@ const SearchView = (props: Props) => {
       try {
         const searchResults = await API.searchPackages(query);
         setSearchResults({ ...searchResults });
+        setApiError(null);
 
         // Preload next page if required
         if (total > ctx.prefs.search.limit + offset) {
@@ -213,6 +215,7 @@ const SearchView = (props: Props) => {
             limit: 0,
           },
         });
+        setApiError('An error occurred searching packages, please try again later');
       } finally {
         setIsSearching(false);
         // Update scroll position
@@ -359,18 +362,22 @@ const SearchView = (props: Props) => {
             {!isNull(packages) && (
               <>
                 {packages.length === 0 ? (
-                  <NoData>
-                    <>
-                      We're sorry!
-                      <p className="h6 mb-0 mt-3">
-                        <span> We can't seem to find any packages that match your search </span>
-                        {!isUndefined(props.text) && (
-                          <span className="pl-1">
-                            for "<span className="font-weight-bold">{props.text}</span>"
-                          </span>
-                        )}
-                      </p>
-                    </>
+                  <NoData issuesLinkVisible={!isNull(apiError)}>
+                    {isNull(apiError) ? (
+                      <>
+                        We're sorry!
+                        <p className="h6 mb-0 mt-3">
+                          <span> We can't seem to find any packages that match your search </span>
+                          {!isUndefined(props.text) && (
+                            <span className="pl-1">
+                              for "<span className="font-weight-bold">{props.text}</span>"
+                            </span>
+                          )}
+                        </p>
+                      </>
+                    ) : (
+                      <>{apiError}</>
+                    )}
                   </NoData>
                 ) : (
                   <>

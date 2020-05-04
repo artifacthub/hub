@@ -1,3 +1,4 @@
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +16,7 @@ const StarredPackagesView = () => {
   const { dispatch } = useContext(AppCtx);
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
+  const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
 
   const onAuthError = (): void => {
     dispatch(signOut());
@@ -26,10 +28,12 @@ const StarredPackagesView = () => {
       try {
         setIsLoading(true);
         setPackages(await API.getStarredByUser());
+        setApiError(null);
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
         if (err.statusText !== 'ErrLoginRedirect') {
+          setApiError('An error occurred getting your starred packages, please try again later');
           setPackages([]);
         } else {
           onAuthError();
@@ -55,7 +59,9 @@ const StarredPackagesView = () => {
             {!isUndefined(packages) && (
               <>
                 {packages.length === 0 ? (
-                  <NoData>You have not starred any package yet</NoData>
+                  <NoData issuesLinkVisible={!isNull(apiError)}>
+                    {isNull(apiError) ? <>You have not starred any package yet</> : <>{apiError}</>}
+                  </NoData>
                 ) : (
                   <>
                     {packages.map((item: Package) => (

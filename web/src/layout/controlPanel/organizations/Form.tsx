@@ -199,6 +199,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       <div className="form-group">
         <label htmlFor="description">Description</label>
         <textarea
+          data-testid="descriptionTextarea"
           className="form-control"
           id="description"
           name="description"

@@ -36,9 +36,7 @@ const OrganizationInfo = (props: Props) => {
     try {
       setOrganization(await API.getOrganization(props.organizationName));
     } catch (err) {
-      if (err.statusText !== 'ErrLoginRedirect') {
-        setOrganization(null);
-      }
+      setOrganization(null);
     }
   }
 

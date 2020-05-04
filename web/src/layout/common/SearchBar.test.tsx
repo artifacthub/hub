@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import prepareQueryString from '../../utils/prepareQueryString';
@@ -98,6 +98,17 @@ describe('SearchBar', () => {
       fireEvent.change(input, { target: { value: '' } });
       keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
       expect(mockHistoryPush).not.toHaveBeenCalled();
+    });
+
+    it('forces focus to click search bar icon', () => {
+      const { getByTestId, getByPlaceholderText } = render(<SearchBar size="big" isSearching={false} />);
+
+      const icon = getByTestId('searchBarIcon');
+      fireEvent.click(icon);
+
+      waitFor(() => {
+        expect(getByPlaceholderText('Search packages')).toHaveFocus();
+      });
     });
   });
 });

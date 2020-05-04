@@ -56,6 +56,7 @@ const UserInvitation = (props: Props) => {
 
   return (
     <Modal
+      data-testid="userInvitationModal"
       header={<div className="h6 text-uppercase mb-0">Membership confirmation</div>}
       disabledClose={isAccepting}
       modalClassName={styles.modal}

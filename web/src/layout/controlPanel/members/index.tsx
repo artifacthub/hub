@@ -1,3 +1,4 @@
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
@@ -20,6 +21,7 @@ const MembersSection = (props: Props) => {
   const [members, setMembers] = useState<Member[] | undefined>(undefined);
   const [modalMemberOpen, setModalMemberOpen] = useState(false);
   const [confirmedMembersNumber, setConfirmedMembersNumber] = useState<number>(0);
+  const [apiError, setApiError] = useState<null | string>(null);
 
   const getConfirmedMembersNumber = (members: Member[]): number => {
     const confirmedMembers = members.filter((member: Member) => member.confirmed);
@@ -32,11 +34,13 @@ const MembersSection = (props: Props) => {
       const membersList = await API.getOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
       setMembers(membersList);
       setConfirmedMembersNumber(getConfirmedMembersNumber(membersList));
+      setApiError(null);
       setIsGettingMembers(false);
     } catch (err) {
       setIsGettingMembers(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setMembers([]);
+        setApiError('An error occurred getting the organization members, please try again later');
       } else {
         props.onAuthError();
       }
@@ -76,22 +80,26 @@ const MembersSection = (props: Props) => {
           {!isUndefined(members) && (
             <>
               {members.length === 0 ? (
-                <NoData>
-                  <>
-                    <p className="h6 my-4">Do you want to add a member?</p>
+                <NoData issuesLinkVisible={!isNull(apiError)}>
+                  {isNull(apiError) ? (
+                    <>
+                      <p className="h6 my-4">Do you want to add a member?</p>
 
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={() => setModalMemberOpen(true)}
-                      data-testid="addFirstMemberBtn"
-                    >
-                      <div className="d-flex flex-row align-items-center">
-                        <MdAddCircle className="mr-2" />
-                        <span>Add member</span>
-                      </div>
-                    </button>
-                  </>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => setModalMemberOpen(true)}
+                        data-testid="addFirstMemberBtn"
+                      >
+                        <div className="d-flex flex-row align-items-center">
+                          <MdAddCircle className="mr-2" />
+                          <span>Add member</span>
+                        </div>
+                      </button>
+                    </>
+                  ) : (
+                    <>{apiError}</>
+                  )}
                 </NoData>
               ) : (
                 <div className="list-group mt-4">

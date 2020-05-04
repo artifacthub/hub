@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import ExternalLink from './ExternalLink';
@@ -39,5 +39,9 @@ describe('External link', () => {
     const link = getByTestId('externalBtn');
     expect(link).toBeInTheDocument();
     expect(link).toHaveProperty('type', 'button');
+
+    fireEvent.click(link);
+    expect(openMock).toHaveBeenCalledTimes(1);
+    expect(openMock).toHaveBeenCalledWith('http://test.com', '_blank');
   });
 });

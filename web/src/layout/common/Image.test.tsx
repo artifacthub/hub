@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import Image from './Image';
@@ -29,6 +29,15 @@ describe('Image', () => {
     const { getByAltText } = render(<Image alt={defaultProps.alt} imageId={null} />);
     const image = getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'http://localhost/kubernetes_grey.svg');
+  });
+
+  it('renders placeholder on error', () => {
+    const { getByAltText } = render(<Image {...defaultProps} />);
+    const image = getByAltText(defaultProps.alt);
+    expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
+
+    fireEvent.error(image);
     expect(image).toHaveProperty('src', 'http://localhost/kubernetes_grey.svg');
   });
 });

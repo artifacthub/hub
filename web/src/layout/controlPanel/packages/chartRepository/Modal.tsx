@@ -61,7 +61,9 @@ const ChartRepositoryModal = (props: Props) => {
     } catch (err) {
       setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
-        let error = 'An error occurred adding the chart repository';
+        let error = `An error occurred ${
+          isUndefined(props.chartRepository) ? 'adding' : 'updating'
+        } the chart repository`;
         switch (err.status) {
           case 400:
             error += `: ${err.statusText}`;

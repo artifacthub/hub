@@ -74,7 +74,11 @@ const SearchBar = (props: Props) => {
     <>
       <div className={`position-relative ${props.formClassName}`}>
         <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
-          <div className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`} onClick={forceFocus}>
+          <div
+            data-testid="searchBarIcon"
+            className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
+            onClick={forceFocus}
+          >
             <FiSearch />
           </div>
 

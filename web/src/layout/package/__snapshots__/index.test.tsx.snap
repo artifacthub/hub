@@ -44,10 +44,10 @@ exports[`Package index creates snapshot 2`] = `
               class="ml-3"
             >
               <div
-                class="d-flex flex-row align-items-center"
+                class="d-flex flex-row align-items-center titleWrapper"
               >
                 <div
-                  class="h3 mb-0 titleWrapper"
+                  class="h3 mb-0"
                 >
                   Pretty name
                 </div>

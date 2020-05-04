@@ -93,7 +93,7 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {});
     });
 
-    it('renders empty packages list when error is different to not signed in user', async () => {
+    it('renders error message when getStarredByUser call fails with not 401', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'another error' });
 
       render(
@@ -105,7 +105,7 @@ describe('StarredPackagesView', () => {
       const noData = await waitFor(() => screen.getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent('You have not starred any package yet');
+      expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later/i);
 
       await waitFor(() => {});
     });

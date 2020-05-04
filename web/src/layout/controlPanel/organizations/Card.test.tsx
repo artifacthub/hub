@@ -1,11 +1,14 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { Organization } from '../../../types';
+import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../api');
+jest.mock('../../../utils/alertDispatcher');
 
 const organizationMock: Organization = {
   name: 'test',
@@ -25,12 +28,13 @@ const mockCtx = {
 };
 
 const setEditModalStatusMock = jest.fn();
+const onAuthErrorMock = jest.fn();
 
 const defaultProps = {
   organization: organizationMock,
   setEditModalStatus: setEditModalStatusMock,
   onSuccess: jest.fn(),
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 describe('Organization Card - organization section', () => {
@@ -112,6 +116,60 @@ describe('Organization Card - organization section', () => {
         open: true,
         organization: organizationMock,
       });
+    });
+  });
+
+  describe('on deleteOrganizationMember error', () => {
+    it('displays generic error', async () => {
+      mocked(API).deleteOrganizationMember.mockRejectedValue({
+        statusText: 'error',
+      });
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
+
+      const dropdownBtn = getByTestId('leaveOrgDropdownBtn');
+      expect(dropdownBtn).toBeInTheDocument();
+      fireEvent.click(dropdownBtn);
+
+      const btn = getByTestId('leaveOrgBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
+      });
+
+      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+        type: 'danger',
+        message: 'An error occurred leaving the organization, please try again later',
+      });
+    });
+
+    it('calls onAuthError', async () => {
+      mocked(API).deleteOrganizationMember.mockRejectedValue({
+        statusText: 'ErrLoginRedirect',
+      });
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
+
+      const dropdownBtn = getByTestId('leaveOrgDropdownBtn');
+      expect(dropdownBtn).toBeInTheDocument();
+      fireEvent.click(dropdownBtn);
+
+      const btn = getByTestId('leaveOrgBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
+      });
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
   });
 });

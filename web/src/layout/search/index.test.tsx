@@ -111,6 +111,25 @@ describe('Search index', () => {
       expect(results).toHaveTextContent('1 - 7 of 7 results for "test"');
       await waitFor(() => {});
     });
+
+    it('renders error message when searchPackages call fails', async () => {
+      mocked(API).searchPackages.mockRejectedValue({ status: 500 });
+
+      render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent('An error occurred searching packages, please try again later');
+    });
   });
 
   describe('Packages', () => {

@@ -181,6 +181,7 @@ exports[`Organization settings index creates snapshot 2`] = `
             </label>
             <textarea
               class="form-control"
+              data-testid="descriptionTextarea"
               id="description"
               name="description"
             >

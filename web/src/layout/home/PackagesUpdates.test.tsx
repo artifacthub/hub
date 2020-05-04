@@ -82,4 +82,23 @@ describe('Package index', () => {
       await waitFor(() => {});
     });
   });
+
+  it('does not render component when packages updates lists are empty', async () => {
+    const mockPackagesUpdates = getMockPackagesUpdates('6');
+    mocked(API).getPackagesUpdates.mockResolvedValue(mockPackagesUpdates);
+
+    const { queryByTestId, container } = render(
+      <Router>
+        <PackagesUpdates />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(API.getPackagesUpdates).toHaveBeenCalledTimes(1);
+    });
+
+    expect(queryByTestId('latestPackagesList')).toBeNull();
+    expect(queryByTestId('recentlyUpdatedPackagesList')).toBeNull();
+    expect(container).toBeEmpty();
+  });
 });

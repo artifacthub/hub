@@ -1,3 +1,4 @@
+import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
@@ -30,15 +31,18 @@ const ChartRepository = (props: Props) => {
   const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | undefined>(undefined);
   const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [activeOrg, setActiveOrg] = useState(selectedOrg);
+  const [apiError, setApiError] = useState<null | string>(null);
 
   async function fetchCharts() {
     try {
       setIsLoading(true);
       setChartRepositories(await API.getChartRepositories(activeOrg));
+      setApiError(null);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
       if (err.statusText !== 'ErrLoginRedirect') {
+        setApiError('An error occurred getting the chart repositories, please try again later');
         setChartRepositories([]);
       } else {
         props.onAuthError();
@@ -102,22 +106,26 @@ const ChartRepository = (props: Props) => {
       {!isUndefined(chartRepositories) && (
         <>
           {chartRepositories.length === 0 ? (
-            <NoData>
-              <>
-                <p className="h6 my-4">Add your first chart repository!</p>
+            <NoData issuesLinkVisible={!isNull(apiError)}>
+              {isNull(apiError) ? (
+                <>
+                  <p className="h6 my-4">Add your first chart repository!</p>
 
-                <button
-                  data-testid="addFirstRepoBtn"
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setModalStatus({ open: true })}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    <MdAddCircle className="mr-2" />
-                    <span>Add chart repository</span>
-                  </div>
-                </button>
-              </>
+                  <button
+                    data-testid="addFirstRepoBtn"
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => setModalStatus({ open: true })}
+                  >
+                    <div className="d-flex flex-row align-items-center">
+                      <MdAddCircle className="mr-2" />
+                      <span>Add chart repository</span>
+                    </div>
+                  </button>
+                </>
+              ) : (
+                <>{apiError}</>
+              )}
             </NoData>
           ) : (
             <div className="list-group my-4" data-testid="chartRepoList">

@@ -27,6 +27,7 @@ exports[`Home index creates snapshot 1`] = `
           >
             <div
               class="d-none d-sm-flex align-items-center iconWrapper"
+              data-testid="searchBarIcon"
             >
               <svg
                 fill="none"

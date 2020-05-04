@@ -49,6 +49,7 @@ const PackageView = (props: Props) => {
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
   const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
+  const [apiError, setApiError] = useState<null | string>(null);
 
   useScrollRestorationFix();
 
@@ -75,8 +76,12 @@ const PackageView = (props: Props) => {
       }
       updateMetaIndex(metaTitle, detail.description);
       setDetail(detail);
+      setApiError(null);
       setIsLoadingPackage(false);
-    } catch {
+    } catch (err) {
+      if (err.status !== 404) {
+        setApiError('An error occurred getting this package, please try again later');
+      }
       setDetail(null);
       setIsLoadingPackage(false);
     }
@@ -257,8 +262,8 @@ const PackageView = (props: Props) => {
                       </div>
 
                       <div className="ml-3">
-                        <div className="d-flex flex-row align-items-center">
-                          <div className={`h3 mb-0 ${styles.titleWrapper}`}>{detail.displayName || detail.name}</div>
+                        <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
+                          <div className="h3 mb-0">{detail.displayName || detail.name}</div>
                           {!isNull(detail.deprecated) && detail.deprecated && (
                             <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
                               Deprecated
@@ -367,7 +372,9 @@ const PackageView = (props: Props) => {
 
             <div className="container">
               {isNull(detail) && !isLoadingPackage ? (
-                <NoData>No data available for this package</NoData>
+                <NoData issuesLinkVisible={!isNull(apiError)}>
+                  {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
+                </NoData>
               ) : (
                 <div className="row">
                   {!isNull(detail) && (

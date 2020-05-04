@@ -13,8 +13,10 @@ const getMockOrganization = (fixtureId: string): Organization => {
   return require(`./__fixtures__/OrgSettings/${fixtureId}.json`) as Organization;
 };
 
+const onAuthErrorMock = jest.fn();
+
 const defaultProps = {
-  onAuthError: jest.fn(),
+  onAuthError: onAuthErrorMock,
 };
 
 const mockCtx = {
@@ -85,26 +87,6 @@ describe('Organization settings index', () => {
       await waitFor(() => {});
     });
 
-    it('displays no data component when no organization details', async () => {
-      const mockOrganization = getMockOrganization('4');
-      mocked(API).getOrganization.mockRejectedValue(mockOrganization);
-
-      render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <OrganizationSettings {...defaultProps} />
-          </Router>
-        </AppCtx.Provider>
-      );
-
-      await waitFor(() => {
-        const noData = screen.getByTestId('noData');
-
-        expect(noData).toBeInTheDocument();
-        expect(screen.getByText('Sorry, the information for this organization is missing.')).toBeInTheDocument();
-      });
-    });
-
     it('renders organization details in form', async () => {
       const mockOrganization = getMockOrganization('5');
       mocked(API).getOrganization.mockResolvedValue(mockOrganization);
@@ -129,6 +111,70 @@ describe('Organization settings index', () => {
       });
 
       await waitFor(() => {});
+    });
+  });
+
+  describe('when getPackage call fails', () => {
+    it('generic error', async () => {
+      mocked(API).getOrganization.mockRejectedValue({ status: 400 });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getOrganization).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+
+      expect(noData).toBeInTheDocument();
+      expect(screen.getByText('Sorry, the package you requested was not found.')).toBeInTheDocument();
+    });
+
+    it('error 500', async () => {
+      mocked(API).getOrganization.mockRejectedValue({ status: 500 });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getOrganization).toHaveBeenCalledTimes(1);
+      });
+
+      const noData = screen.getByTestId('noData');
+
+      expect(noData).toBeInTheDocument();
+      expect(
+        screen.getByText(/An error occurred getting the organization details, please try again later/i)
+      ).toBeInTheDocument();
+    });
+
+    it('error 401', async () => {
+      mocked(API).getOrganization.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+
+      render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getOrganization).toHaveBeenCalledTimes(1);
+      });
+
+      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
   });
 });
