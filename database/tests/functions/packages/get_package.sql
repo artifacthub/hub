@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(5);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -76,7 +76,7 @@ insert into snapshot (
     '12.1.0',
     'digest-package1-1.0.0',
     'readme-version-1.0.0',
-    '{"link1": "https://link1", "link2": "https://link2"}',
+    '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}',
     true
 );
@@ -102,7 +102,7 @@ insert into snapshot (
     '12.0.0',
     'digest-package1-0.0.9',
     'readme-version-0.0.9',
-    '{"link1": "https://link1", "link2": "https://link2"}',
+    '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}'
 );
 insert into package (
@@ -141,6 +141,61 @@ insert into snapshot (
 -- Run some tests
 select is(
     get_package('{
+        "package_id": "00000000-0000-0000-0000-000000000001"
+    }')::jsonb,
+    '{
+        "package_id": "00000000-0000-0000-0000-000000000001",
+        "kind": 0,
+        "name": "Package 1",
+        "normalized_name": "package-1",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+        "display_name": "Package 1",
+        "description": "description",
+        "keywords": ["kw1", "kw2"],
+        "home_url": "home_url",
+        "readme": "readme-version-1.0.0",
+        "links": [
+            {
+                "name": "link1",
+                "url": "https://link1"
+            },
+            {
+                "name": "link2",
+                "url": "https://link2"
+            }
+        ],
+        "data": {
+            "key": "value"
+        },
+        "version": "1.0.0",
+        "available_versions": ["0.0.9", "1.0.0"],
+        "app_version": "12.1.0",
+        "digest": "digest-package1-1.0.0",
+        "deprecated": true,
+        "maintainers": [
+            {
+                "name": "name1",
+                "email": "email1"
+            },
+            {
+                "name": "name2",
+                "email": "email2"
+            }
+        ],
+        "user_alias": "user1",
+        "organization_name": null,
+        "organization_display_name": null,
+        "chart_repository": {
+            "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+            "name": "repo1",
+            "display_name": "Repo 1",
+            "url": "https://repo1.com"
+        }
+    }'::jsonb,
+    'Last package1 version is returned as a json object'
+);
+select is(
+    get_package('{
         "package_name": "package-1",
         "chart_repository_name": "repo1"
     }')::jsonb,
@@ -155,10 +210,16 @@ select is(
         "keywords": ["kw1", "kw2"],
         "home_url": "home_url",
         "readme": "readme-version-1.0.0",
-        "links": {
-            "link1": "https://link1",
-            "link2": "https://link2"
-        },
+        "links": [
+            {
+                "name": "link1",
+                "url": "https://link1"
+            },
+            {
+                "name": "link2",
+                "url": "https://link2"
+            }
+        ],
         "data": {
             "key": "value"
         },
@@ -206,10 +267,16 @@ select is(
         "keywords": ["kw1", "kw2", "older"],
         "home_url": "home_url (older)",
         "readme": "readme-version-0.0.9",
-        "links": {
-            "link1": "https://link1",
-            "link2": "https://link2"
-        },
+        "links": [
+            {
+                "name": "link1",
+                "url": "https://link1"
+            },
+            {
+                "name": "link2",
+                "url": "https://link2"
+            }
+        ],
         "data": {
             "key": "value"
         },

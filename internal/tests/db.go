@@ -17,6 +17,19 @@ type DBMock struct {
 	mock.Mock
 }
 
+// Begin implements the DB interface.
+func (m *DBMock) Begin(ctx context.Context) (pgx.Tx, error) {
+	args := m.Called(ctx)
+	tx, _ := args.Get(0).(pgx.Tx)
+	return tx, args.Error(1)
+}
+
+// Exec implements the DB interface.
+func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
+	args := m.Called(append([]interface{}{query}, params...)...)
+	return nil, args.Error(0)
+}
+
 // QueryRow implements the DB interface.
 func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
 	args := m.Called(append([]interface{}{query}, params...)...)
@@ -32,10 +45,89 @@ func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface
 	return rowMock
 }
 
-// Exec implements the DB interface.
-func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
+// TXMock is a mock implementation of the pgx.Tx interface.
+type TXMock struct {
+	mock.Mock
+}
+
+// Begin implements the pgx.Tx interface.
+func (m *TXMock) Begin(ctx context.Context) (pgx.Tx, error) {
+	// NOTE: not used
+	return nil, nil
+}
+
+// Commit implements the pgx.Tx interface.
+func (m *TXMock) Commit(ctx context.Context) error {
+	args := m.Called(ctx)
+	return args.Error(0)
+}
+
+// Conn implements the pgx.Tx interface.
+func (m *TXMock) Conn() *pgx.Conn {
+	// NOTE: not used
+	return nil
+}
+
+// CopyFrom implements the pgx.Tx interface.
+func (m *TXMock) CopyFrom(
+	ctx context.Context,
+	tableName pgx.Identifier,
+	columnNames []string,
+	rowSrc pgx.CopyFromSource,
+) (int64, error) {
+	// NOTE: not used
+	return 0, nil
+}
+
+// Exec implements the pgx.Tx interface.
+func (m *TXMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
+	// NOTE: not used
+	return nil, nil
+}
+
+// LargeObjects implements the pgx.Tx interface.
+func (m *TXMock) LargeObjects() pgx.LargeObjects {
+	// NOTE: not used
+	return pgx.LargeObjects{}
+}
+
+// Prepare implements the pgx.Tx interface.
+func (m *TXMock) Prepare(ctx context.Context, name, sql string) (*pgconn.StatementDescription, error) {
+	// NOTE: not used
+	return nil, nil
+}
+
+// QueryRow implements the pgx.Tx interface.
+func (m *TXMock) Query(ctx context.Context, sql string, args ...interface{}) (pgx.Rows, error) {
+	// NOTE: not used
+	return nil, nil
+}
+
+// QueryRow implements the pgx.Tx interface.
+func (m *TXMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
 	args := m.Called(append([]interface{}{query}, params...)...)
-	return nil, args.Error(0)
+	rowMock := &RowMock{
+		err: args.Error(1),
+	}
+	switch v := args.Get(0).(type) {
+	case []interface{}:
+		rowMock.data = v
+	case interface{}:
+		rowMock.data = []interface{}{args.Get(0)}
+	}
+	return rowMock
+}
+
+// Rollback implements the pgx.Tx interface.
+func (m *TXMock) Rollback(ctx context.Context) error {
+	args := m.Called(ctx)
+	return args.Error(0)
+}
+
+// SendBatch implements the pgx.Tx interface.
+func (m *TXMock) SendBatch(ctx context.Context, b *pgx.Batch) pgx.BatchResults {
+	// NOTE: not used
+	return nil
 }
 
 // RowMock is a mock implementation of the pgx.Row interface.

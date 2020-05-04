@@ -12,6 +12,13 @@ type ManagerMock struct {
 	mock.Mock
 }
 
+// Get implements the PackageManager interface.
+func (m *ManagerMock) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Package, error) {
+	args := m.Called(ctx, input)
+	data, _ := args.Get(0).(*hub.Package)
+	return data, args.Error(1)
+}
+
 // GetJSON implements the PackageManager interface.
 func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	args := m.Called(ctx, input)

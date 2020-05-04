@@ -1,16 +1,18 @@
 -- Start transaction and plan tests
 begin;
-select plan(11);
+select plan(16);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set user1ID '00000000-0000-0000-0000-000000000001'
 
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into chart_repository (chart_repository_id, name, display_name, url)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
+insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 
 -- Register package
 select register_package('
@@ -24,10 +26,16 @@ select register_package('
     "keywords": ["kw1", "kw2"],
     "home_url": "home_url",
     "readme": "readme-version-1.0.0",
-    "links": {
-        "link1": "https://link1",
-        "link2": "https://link2"
-    },
+    "links": [
+        {
+            "name": "link1",
+            "url": "https://link1"
+        },
+        {
+            "name": "link2",
+            "url": "https://link2"
+        }
+    ],
     "data": {
         "key": "value"
     },
@@ -105,7 +113,7 @@ select results_eq(
             '12.1.0',
             'digest-package1-1.0.0',
             'readme-version-1.0.0',
-            '{"link1": "https://link1", "link2": "https://link2"}'::jsonb,
+            '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]'::jsonb,
             '{"key": "value"}'::jsonb,
             false
         )
@@ -130,6 +138,20 @@ select results_eq(
     $$,
     'Maintainers should exist'
 );
+select is_empty(
+    $$
+        select *
+        from notification n
+        join package p using (package_id)
+        where p.name = 'package1'
+    $$,
+    'No new release notifications should exist for first version of package1'
+);
+
+-- Subscribe user1 to package1 new releases notifications
+insert into subscription (user_id, package_id, notification_kind_id)
+select :'user1ID', package_id, 0
+from package where name = 'package1';
 
 -- Register a new version of the package previously registered
 select register_package('
@@ -227,6 +249,16 @@ select is_empty(
     $$,
     'Orphan maintainers were deleted'
 );
+select isnt_empty(
+    $$
+        select *
+        from notification n
+        join package p using (package_id)
+        where p.name = 'package1'
+        and n.package_version = '2.0.0'
+    $$,
+    'New release notification should exist for package1 version 2.0.0'
+);
 
 -- Register an old version of the package previously registered
 select register_package('
@@ -318,6 +350,16 @@ select results_eq(
     $$ values ('name1', 'email1') $$,
     'Package maintainers should not have been updated'
 );
+select is_empty(
+    $$
+        select *
+        from notification n
+        join package p using (package_id)
+        where p.name = 'package1'
+        and n.package_version = '0.0.9'
+    $$,
+    'No new release notifications should exist for package1 version 0.0.9'
+);
 
 -- Register package that belongs to an organization and check it succeeded
 select register_package('
@@ -351,6 +393,38 @@ select results_eq(
         )
     $$,
     'Package that belongs to organization should exist'
+);
+select is_empty(
+    $$
+        select *
+        from notification n
+        join package p using (package_id)
+        where p.name = 'package3'
+        and n.package_version = '1.0.0'
+    $$,
+    'No new release notifications should exist for first version of package3'
+);
+
+-- Register a new version of the package previously registered
+select register_package('
+{
+    "kind": 1,
+    "name": "package3",
+    "display_name": "Package 3",
+    "description": "description",
+    "version": "2.0.0",
+    "organization_id": "00000000-0000-0000-0000-000000000001"
+}
+');
+select is_empty(
+    $$
+        select *
+        from notification n
+        join package p using (package_id)
+        where p.name = 'package3'
+        and n.package_version = '2.0.0'
+    $$,
+    'No new release notifications should exist for new version of package3 (no subscriptors)'
 );
 
 -- Finish tests and rollback transaction

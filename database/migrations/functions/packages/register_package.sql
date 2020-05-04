@@ -6,6 +6,7 @@
 create or replace function register_package(p_pkg jsonb)
 returns void as $$
 declare
+    v_previous_latest_version text;
     v_package_id uuid;
     v_name text := p_pkg->>'name';
     v_display_name text := nullif(p_pkg->>'display_name', '');
@@ -14,10 +15,16 @@ declare
         select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]
     );
     v_chart_repository_id text := (p_pkg->'chart_repository')->>'chart_repository_id';
-    v_package_latest_version_needs_update boolean := false;
     v_maintainer jsonb;
     v_maintainer_id uuid;
 begin
+    -- Get package's latest version before registration, if available
+    select latest_version into v_previous_latest_version
+    from package
+    where package_kind_id = (p_pkg->>'kind')::int
+    and chart_repository_id = nullif(v_chart_repository_id, '')::uuid
+    and name = v_name;
+
     -- Package
     insert into package (
         name,
@@ -131,6 +138,19 @@ begin
         digest = excluded.digest,
         readme = excluded.readme,
         links = excluded.links,
-        deprecated = excluded.deprecated;
+        deprecated = excluded.deprecated,
+        updated_at = current_timestamp;
+
+    -- Register new release notification if package's latest version has been
+    -- updated and there are subscriptors for this package and notification kind
+    if semver_gte(p_pkg->>'version', v_previous_latest_version) then
+        perform * from subscription
+        where notification_kind_id = 0 -- New package release
+        and package_id = v_package_id;
+        if found then
+            insert into notification (package_id, package_version, notification_kind_id)
+            values (v_package_id, p_pkg->>'version', 0);
+        end if;
+    end if;
 end
 $$ language plpgsql;

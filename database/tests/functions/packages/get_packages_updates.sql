@@ -59,7 +59,6 @@ insert into snapshot (
     keywords,
     home_url,
     readme,
-    links,
     deprecated
 ) values (
     :'package1ID',
@@ -69,7 +68,6 @@ insert into snapshot (
     '{"kw1", "kw2"}',
     'home_url',
     'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}',
     false
 );
 insert into package (
@@ -102,8 +100,7 @@ insert into snapshot (
     home_url,
     app_version,
     digest,
-    readme,
-    links
+    readme
 ) values (
     :'package2ID',
     '1.0.0',
@@ -113,8 +110,7 @@ insert into snapshot (
     'home_url',
     '12.1.0',
     'digest-package2-1.0.0',
-    'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}'
+    'readme'
 );
 insert into package (
     package_id,
@@ -146,7 +142,6 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    links,
     deprecated
 ) values (
     :'package3ID',
@@ -158,7 +153,6 @@ insert into snapshot (
     '12.1.0',
     'digest-package3-1.0.0',
     'readme',
-    '{"link1": "https://link1", "link2": "https://link2"}',
     true
 );
 

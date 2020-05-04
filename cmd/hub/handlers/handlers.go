@@ -12,6 +12,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/org"
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
+	"github.com/artifacthub/hub/cmd/hub/handlers/subscription"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
@@ -29,6 +30,7 @@ type Services struct {
 	UserManager            hub.UserManager
 	PackageManager         hub.PackageManager
 	ChartRepositoryManager hub.ChartRepositoryManager
+	SubscriptionManager    hub.SubscriptionManager
 	ImageStore             img.Store
 }
 
@@ -51,6 +53,7 @@ type Handlers struct {
 	Users             *user.Handlers
 	Packages          *pkg.Handlers
 	ChartRepositories *chartrepo.Handlers
+	Subscriptions     *subscription.Handlers
 	Static            *static.Handlers
 }
 
@@ -65,6 +68,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		Organizations:     org.NewHandlers(svc.OrganizationManager),
 		Users:             user.NewHandlers(svc.UserManager, cfg),
 		Packages:          pkg.NewHandlers(svc.PackageManager),
+		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
 		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
 		Static:            static.NewHandlers(cfg, svc.ImageStore),
 	}
@@ -126,11 +130,18 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 		})
+		r.Route("/subscriptions", func(r chi.Router) {
+			r.Use(h.Users.RequireLogin)
+			r.Get("/{packageID}", h.Subscriptions.GetByPackage)
+			r.Post("/", h.Subscriptions.Add)
+			r.Delete("/", h.Subscriptions.Delete)
+		})
 		r.Post("/users", h.Users.RegisterUser)
 		r.Route("/user", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.Users.GetProfile)
 			r.Get("/orgs", h.Organizations.GetByUser)
+			r.Get("/subscriptions", h.Subscriptions.GetByUser)
 			r.Put("/password", h.Users.UpdatePassword)
 			r.Put("/profile", h.Users.UpdateProfile)
 			r.Route("/chart-repositories", func(r chi.Router) {

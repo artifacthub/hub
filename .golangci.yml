@@ -26,6 +26,8 @@ linters:
   fast: false
 
 linters-settings:
+  goconst:
+    min-occurrences: 5
   golint:
     min-confidence: 0
 

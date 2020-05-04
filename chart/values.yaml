@@ -32,6 +32,7 @@ hub:
         cpu: 100m
         memory: 500Mi
   server:
+    baseURL: ""
     basicAuth:
       enabled: false
       username: hub

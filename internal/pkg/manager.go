@@ -32,11 +32,24 @@ func NewManager(db hub.DB) *Manager {
 	}
 }
 
+// Get returns the package identified by the input provided.
+func (m *Manager) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Package, error) {
+	dataJSON, err := m.GetJSON(ctx, input)
+	if err != nil {
+		return nil, err
+	}
+	p := &hub.Package{}
+	if err := json.Unmarshal(dataJSON, &p); err != nil {
+		return nil, err
+	}
+	return p, nil
+}
+
 // GetJSON returns the package identified by the input provided as a json
 // object. The json object is built by the database.
 func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	// Validate input
-	if input.PackageName == "" {
+	if input.PackageID == "" && input.PackageName == "" {
 		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "package name not provided")
 	}
 
