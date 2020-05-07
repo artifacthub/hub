@@ -111,6 +111,8 @@ create table if not exists snapshot (
     links jsonb,
     data jsonb,
     deprecated boolean,
+    created_at timestamptz default current_timestamp not null,
+    updated_at timestamptz default current_timestamp not null,
     primary key (package_id, version)
 );
 
@@ -142,6 +144,34 @@ create table if not exists user_starred_package (
     user_id uuid not null references "user" on delete cascade,
     package_id uuid not null references package on delete cascade,
     primary key (user_id, package_id)
+);
+
+create table if not exists notification_kind (
+    notification_kind_id integer primary key,
+    name text not null check (name <> '')
+);
+
+insert into notification_kind values (0, 'New package release');
+insert into notification_kind values (1, 'Security alert');
+
+create table notification (
+    notification_id uuid primary key default gen_random_uuid(),
+    created_at timestamptz default current_timestamp not null,
+    processed boolean not null default false,
+    processed_at timestamptz,
+    package_version text not null check (package_version <> ''),
+    package_id uuid not null references package on delete cascade,
+    notification_kind_id integer not null references notification_kind on delete restrict,
+    unique (package_id, package_version)
+);
+
+create index notification_not_processed_idx on notification (notification_id) where processed = 'false';
+
+create table if not exists subscription (
+    user_id uuid not null references "user" on delete cascade,
+    package_id uuid not null references package on delete cascade,
+    notification_kind_id integer not null references notification_kind on delete restrict,
+    primary key (user_id, package_id, notification_kind_id)
 );
 
 {{ if eq .loadSampleData "true" }}

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/log/zerologadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -39,4 +40,25 @@ func SetupDB(cfg *viper.Viper) (*pgxpool.Pool, error) {
 	}
 
 	return pool, nil
+}
+
+// DBTransact is a helper function that wraps some database transactions taking
+// care of committing and rolling back when needed.
+func DBTransact(ctx context.Context, db hub.DB, txFunc func(pgx.Tx) error) (err error) {
+	tx, err := db.Begin(ctx)
+	if err != nil {
+		return
+	}
+	defer func() {
+		if p := recover(); p != nil {
+			_ = tx.Rollback(ctx)
+			panic(p)
+		} else if err != nil {
+			_ = tx.Rollback(ctx)
+		} else {
+			err = tx.Commit(ctx)
+		}
+	}()
+	err = txFunc(tx)
+	return err
 }

@@ -38,6 +38,7 @@ hub:
         cpu: 2
         memory: 8000Mi
   server:
+    baseURL: https://artifacthub.io
     oauth:
       github:
         redirectURL: https://artifacthub.io/oauth/github/callback

@@ -187,6 +187,14 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 	return err
 }
 
+// GetByUserJSON returns the organizations the user doing the request belongs
+// to as a json object.
+func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
+	query := "select get_user_organizations($1::uuid)"
+	userID := ctx.Value(hub.UserIDKey).(string)
+	return m.dbQueryJSON(ctx, query, userID)
+}
+
 // GetJSON returns the organization requested as a json object.
 func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 	// Validate input
@@ -197,14 +205,6 @@ func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 	// Get organization from database
 	query := "select get_organization($1::text)"
 	return m.dbQueryJSON(ctx, query, orgName)
-}
-
-// GetByUserJSON returns the organizations the user doing the request belongs
-// to as a json object.
-func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
-	query := "select get_user_organizations($1::uuid)"
-	userID := ctx.Value(hub.UserIDKey).(string)
-	return m.dbQueryJSON(ctx, query, userID)
 }
 
 // GetMembersJSON returns the members of the provided organization as a json

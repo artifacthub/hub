@@ -29,7 +29,7 @@ func TestAdd(t *testing.T) {
 	t.Run("invalid organization provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
-			repoJSON    string
+			orgJSON     string
 			omErr       error
 		}{
 			{
@@ -62,7 +62,7 @@ func TestAdd(t *testing.T) {
 				}
 
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				hw.h.Add(w, r)
 				resp := w.Result()
@@ -486,7 +486,7 @@ func TestUpdate(t *testing.T) {
 	t.Run("invalid organization provided", func(t *testing.T) {
 		testCases := []struct {
 			description string
-			repoJSON    string
+			orgJSON     string
 			omErr       error
 		}{
 			{
@@ -514,7 +514,7 @@ func TestUpdate(t *testing.T) {
 				}
 
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				hw.h.Update(w, r)
 				resp := w.Result()

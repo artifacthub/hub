@@ -11,6 +11,138 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+func TestGet(t *testing.T) {
+	dbQuery := "select get_package($1::jsonb)"
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(nil)
+		_, err := m.Get(context.Background(), &hub.GetPackageInput{})
+		assert.True(t, errors.Is(err, ErrInvalidInput))
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		p, err := m.Get(context.Background(), &hub.GetPackageInput{PackageName: "pkg1"})
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, p)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		expectedPackage := &hub.Package{
+			PackageID:      "00000000-0000-0000-0000-000000000001",
+			Kind:           hub.Chart,
+			Name:           "Package 1",
+			NormalizedName: "package-1",
+			LogoImageID:    "00000000-0000-0000-0000-000000000001",
+			DisplayName:    "Package 1",
+			Description:    "description",
+			Keywords:       []string{"kw1", "kw2"},
+			HomeURL:        "home_url",
+			Readme:         "readme-version-1.0.0",
+			Links: []*hub.Link{
+				{
+					Name: "link1",
+					URL:  "https://link1",
+				},
+				{
+					Name: "link2",
+					URL:  "https://link2",
+				},
+			},
+			Data: map[string]interface{}{
+				"key": "value",
+			},
+			Version:           "1.0.0",
+			AvailableVersions: []string{"0.0.9", "1.0.0"},
+			AppVersion:        "12.1.0",
+			Digest:            "digest-package1-1.0.0",
+			Deprecated:        true,
+			Maintainers: []*hub.Maintainer{
+				{
+					Name:  "name1",
+					Email: "email1",
+				},
+				{
+					Name:  "name2",
+					Email: "email2",
+				},
+			},
+			UserAlias:               "user1",
+			OrganizationName:        "org1",
+			OrganizationDisplayName: "Organization 1",
+			ChartRepository: &hub.ChartRepository{
+				ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
+				Name:              "repo1",
+				DisplayName:       "Repo 1",
+				URL:               "https://repo1.com",
+			},
+		}
+
+		db := &tests.DBMock{}
+		db.On("QueryRow", dbQuery, mock.Anything, mock.Anything).Return([]byte(`
+		{
+			"package_id": "00000000-0000-0000-0000-000000000001",
+			"kind": 0,
+			"name": "Package 1",
+			"normalized_name": "package-1",
+			"logo_image_id": "00000000-0000-0000-0000-000000000001",
+			"display_name": "Package 1",
+			"description": "description",
+			"keywords": ["kw1", "kw2"],
+			"home_url": "home_url",
+			"readme": "readme-version-1.0.0",
+			"links": [
+				{
+					"name": "link1",
+					"url": "https://link1"
+				},
+				{
+					"name": "link2",
+					"url": "https://link2"
+				}
+			],
+			"data": {
+				"key": "value"
+			},
+			"version": "1.0.0",
+			"available_versions": ["0.0.9", "1.0.0"],
+			"app_version": "12.1.0",
+			"digest": "digest-package1-1.0.0",
+			"deprecated": true,
+			"maintainers": [
+				{
+					"name": "name1",
+					"email": "email1"
+				},
+				{
+					"name": "name2",
+					"email": "email2"
+				}
+			],
+			"user_alias": "user1",
+			"organization_name": "org1",
+			"organization_display_name": "Organization 1",
+			"chart_repository": {
+				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
+				"name": "repo1",
+				"display_name": "Repo 1",
+				"url": "https://repo1.com"
+			}
+		}
+		`), nil)
+		m := NewManager(db)
+
+		p, err := m.Get(context.Background(), &hub.GetPackageInput{PackageName: "package-1"})
+		assert.NoError(t, err)
+		assert.Equal(t, expectedPackage, p)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetJSON(t *testing.T) {
 	dbQuery := "select get_package($1::jsonb)"
 

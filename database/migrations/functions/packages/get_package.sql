@@ -7,7 +7,9 @@ declare
     v_package_name text := p_input->>'package_name';
     v_chart_repository_name text := p_input->>'chart_repository_name';
 begin
-    if v_chart_repository_name <> '' then
+    if p_input->>'package_id' <> '' then
+        v_package_id = p_input->>'package_id';
+    elsif v_chart_repository_name <> '' then
         select p.package_id into v_package_id
         from package p
         join chart_repository r using (chart_repository_id)

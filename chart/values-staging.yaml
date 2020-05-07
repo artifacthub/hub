@@ -39,6 +39,7 @@ hub:
         cpu: 1
         memory: 1000Mi
   server:
+    baseURL: https://staging.artifacthub.io
     oauth:
       github:
         redirectURL: https://staging.artifacthub.io/oauth/github/callback

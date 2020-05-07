@@ -10,8 +10,9 @@ import (
 
 // DB defines the methods the database handler must provide.
 type DB interface {
-	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
+	Begin(ctx context.Context) (pgx.Tx, error)
 	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
+	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
 }
 
 // EmailSender defines the methods the email sender must provide.

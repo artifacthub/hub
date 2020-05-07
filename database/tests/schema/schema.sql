@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(62);
+select plan(82);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -19,12 +19,15 @@ select tables_are(array[
     'image',
     'image_version',
     'maintainer',
+    'notification',
+    'notification_kind',
     'organization',
     'package',
     'package__maintainer',
     'package_kind',
     'session',
     'snapshot',
+    'subscription',
     'user',
     'user_starred_package',
     'user__organization',
@@ -61,6 +64,19 @@ select columns_are('maintainer', array[
     'maintainer_id',
     'name',
     'email'
+]);
+select columns_are('notification', array[
+    'notification_id',
+    'created_at',
+    'processed',
+    'processed_at',
+    'package_version',
+    'package_id',
+    'notification_kind_id'
+]);
+select columns_are('notification_kind', array[
+    'notification_kind_id',
+    'name'
 ]);
 select columns_are('organization', array[
     'organization_id',
@@ -114,7 +130,14 @@ select columns_are('snapshot', array[
     'readme',
     'links',
     'data',
-    'deprecated'
+    'deprecated',
+    'created_at',
+    'updated_at'
+]);
+select columns_are('subscription', array[
+    'user_id',
+    'package_id',
+    'notification_kind_id'
 ]);
 select columns_are('user', array[
     'user_id',
@@ -148,9 +171,29 @@ select indexes_are('chart_repository', array[
     'chart_repository_name_key',
     'chart_repository_url_key'
 ]);
+select indexes_are('email_verification_code', array[
+    'email_verification_code_pkey',
+    'email_verification_code_user_id_key'
+]);
+select indexes_are('image', array[
+    'image_pkey',
+    'image_original_hash_key'
+]);
+select indexes_are('image_version', array[
+    'image_version_pkey'
+]);
 select indexes_are('maintainer', array[
     'maintainer_pkey',
     'maintainer_email_key'
+]);
+select indexes_are('notification', array[
+    'notification_pkey',
+    'notification_not_processed_idx',
+    'notification_package_id_package_version_key'
+]);
+select indexes_are('organization', array[
+    'organization_pkey',
+    'organization_name_key'
 ]);
 select indexes_are('package', array[
     'package_pkey',
@@ -170,9 +213,26 @@ select indexes_are('package__maintainer', array[
 select indexes_are('package_kind', array[
     'package_kind_pkey'
 ]);
+select indexes_are('session', array[
+    'session_pkey'
+]);
 select indexes_are('snapshot', array[
     'snapshot_pkey',
     'snapshot_digest_key'
+]);
+select indexes_are('subscription', array[
+    'subscription_pkey'
+]);
+select indexes_are('user', array[
+    'user_pkey',
+    'user_alias_key',
+    'user_email_key'
+]);
+select indexes_are('user__organization', array[
+    'user__organization_pkey'
+]);
+select indexes_are('user_starred_package', array[
+    'user_starred_package_pkey'
 ]);
 
 -- Check expected functions exist
@@ -217,6 +277,14 @@ select has_function('update_chart_repository');
 select has_function('get_image');
 select has_function('register_image');
 
+select has_function('add_subscription');
+select has_function('delete_subscription');
+select has_function('get_package_subscriptions');
+select has_function('get_subscriptors');
+select has_function('get_user_subscriptions');
+
+select has_function('get_pending_notification');
+
 -- Check package kinds exist
 select results_eq(
     'select * from package_kind',
@@ -224,6 +292,16 @@ select results_eq(
         (0, 'Helm charts'),
         (1, 'Falco rules'),
         (2, 'OPA policies')
+    $$,
+    'Package kinds should exist'
+);
+
+-- Check notification kinds exist
+select results_eq(
+    'select * from notification_kind',
+    $$ values
+        (0, 'New package release'),
+        (1, 'Security alert')
     $$,
     'Package kinds should exist'
 );

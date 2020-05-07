@@ -102,7 +102,7 @@ returns setof json as $$
                     on p.organization_id = o.organization_id or r.organization_id = o.organization_id
                 where s.version = p.latest_version
                 and (s.deprecated is null or s.deprecated = false)
-                order by updated_at desc limit 5
+                order by p.updated_at desc limit 5
             ) as pru
         )
     );
