@@ -28,7 +28,7 @@ exports[`OAuth creates snapshot 1`] = `
           <img
             alt="Github Logo"
             class="logo"
-            src="github-mark.svg"
+            src="/static/media/github-mark.svg"
           />
           <div
             class="flex-grow-1 text-center"
@@ -47,7 +47,7 @@ exports[`OAuth creates snapshot 1`] = `
           <img
             alt="Google Logo"
             class="logo"
-            src="google.svg"
+            src="/static/media/google.svg"
           />
           <div
             class="flex-grow-1 text-center"

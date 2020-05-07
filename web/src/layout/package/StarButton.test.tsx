@@ -21,7 +21,7 @@ const mockCtx = {
   },
 };
 
-describe('Package index', () => {
+describe('StarButton', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

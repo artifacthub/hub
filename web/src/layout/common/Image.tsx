@@ -1,7 +1,6 @@
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 
-import placeholder from '../../images/kubernetes_grey.svg';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 
 interface Props {
@@ -9,6 +8,8 @@ interface Props {
   alt: string;
   className?: string;
 }
+
+const PLACEHOLDER_SRC = '/static/media/kubernetes_grey.svg';
 
 const Image = (props: Props) => {
   const [error, setError] = useState(false);
@@ -20,7 +21,7 @@ const Image = (props: Props) => {
   return (
     <>
       {error || isNull(props.imageId) ? (
-        <img alt={props.alt} src={placeholder} className={props.className} />
+        <img alt={props.alt} src={PLACEHOLDER_SRC} className={props.className} />
       ) : (
         <img
           alt={props.alt}

@@ -1,0 +1,12 @@
+{
+  "packageId": "ccd1553a-e9bd-45b5-93a3-9ee127dddcb0",
+  "kind": 1,
+  "name": "SSH connections",
+  "normalizedName": "ssh-connections",
+  "logoImageId": "23baee82-817d-4443-bb12-164913cb631b",
+  "userAlias": null,
+  "organizationName": "falco",
+  "organizationDisplayName": "Falco",
+  "chartRepository": null,
+  "notificationKinds": [0]
+}

@@ -21,6 +21,7 @@ interface Props {
   labelClassName?: string;
   btnClassName?: string;
   visibleLegend: boolean;
+  multiLine?: boolean;
 }
 
 const OrganizationInfo = (props: Props) => {
@@ -136,7 +137,7 @@ const OrganizationInfo = (props: Props) => {
           setOnLinkHover(false);
         }}
       >
-        <u className="text-truncate">
+        <u className={classnames({ 'text-truncate': isUndefined(props.multiLine) || !props.multiLine })}>
           {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
             <>{props.organizationDisplayName}</>
           ) : (

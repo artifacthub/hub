@@ -82,6 +82,21 @@ describe('UserAuthDropdown', () => {
       expect(window.location.pathname).toBe('/user/packages/starred');
     });
 
+    it('loads subscriptions page', () => {
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <UserAuthDropdown />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = getByTestId('subscriptionsLink');
+      expect(link).toBeInTheDocument();
+      fireEvent.click(link);
+      expect(window.location.pathname).toBe('/user/subscriptions');
+    });
+
     it('loads control panel page', () => {
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>

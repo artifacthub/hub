@@ -89,6 +89,21 @@ describe('MobileSettings', () => {
     });
   });
 
+  it('loads subscriptions page', () => {
+    const { getByTestId } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+        <Router>
+          <MobileSettings {...defaultProps} />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    const link = getByTestId('subscriptionsLink');
+    expect(link).toBeInTheDocument();
+    fireEvent.click(link);
+    expect(window.location.pathname).toBe('/user/subscriptions');
+  });
+
   describe('when user is not signed in', () => {
     it('renders component', () => {
       const { getByText } = render(

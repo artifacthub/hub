@@ -29,7 +29,7 @@ describe('Image', () => {
     const { getByAltText } = render(<Image alt={defaultProps.alt} imageId={null} />);
     const image = getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', 'http://localhost/kubernetes_grey.svg');
+    expect(image).toHaveProperty('src', 'http://localhost/static/media/kubernetes_grey.svg');
   });
 
   it('renders placeholder on error', () => {
@@ -38,6 +38,6 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
 
     fireEvent.error(image);
-    expect(image).toHaveProperty('src', 'http://localhost/kubernetes_grey.svg');
+    expect(image).toHaveProperty('src', 'http://localhost/static/media/kubernetes_grey.svg');
   });
 });

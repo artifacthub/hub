@@ -1,12 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
-import falcoWhiteIcon from '../../images/falco-white.svg';
-import falcoIcon from '../../images/falco.svg';
-import chartWhiteIcon from '../../images/helm-white.svg';
-import chartIcon from '../../images/helm.svg';
-import opaWhiteIcon from '../../images/opa-white.svg';
-import opaIcon from '../../images/opa.svg';
 import { PackageKind } from '../../types';
 
 interface Props {
@@ -17,16 +11,16 @@ interface Props {
 
 const ICONS = {
   [PackageKind.Chart]: {
-    default: chartIcon,
-    white: chartWhiteIcon,
+    default: '/static/media/helm.svg',
+    white: '/static/media/helm-white.svg',
   },
   [PackageKind.Falco]: {
-    default: falcoIcon,
-    white: falcoWhiteIcon,
+    default: '/static/media/falco.svg',
+    white: '/static/media/falco-white.svg',
   },
   [PackageKind.Opa]: {
-    default: opaIcon,
-    white: opaWhiteIcon,
+    default: '/static/media/opa.svg',
+    white: '/static/media/opa-white.svg',
   },
 };
 

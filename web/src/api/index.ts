@@ -7,6 +7,7 @@ import {
   ChartRepository,
   CheckAvailabilityProps,
   LogoImage,
+  NotificationKind,
   Organization,
   Package,
   PackageStars,
@@ -15,6 +16,7 @@ import {
   SearchQuery,
   SearchResults,
   Stats,
+  Subscription,
   User,
   UserFullName,
   UserLogin,
@@ -333,5 +335,39 @@ export const API = {
       method: 'POST',
       body: data,
     });
+  },
+
+  getPackageSubscriptions: (packageId: string): Promise<Subscription[]> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions/${packageId}`);
+  },
+
+  addSubscription: (packageId: string, notificationKind: NotificationKind): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        package_id: packageId,
+        notification_kind: notificationKind,
+      }),
+    });
+  },
+
+  deleteSubscription: (packageId: string, notificationKind: NotificationKind): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        package_id: packageId,
+        notification_kind: notificationKind,
+      }),
+    });
+  },
+
+  getUserSubscriptions: (): Promise<Package[]> => {
+    return apiFetch(`${API_BASE_URL}/user/subscriptions`);
   },
 };

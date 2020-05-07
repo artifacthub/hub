@@ -70,7 +70,8 @@
   margin-right: 150px;
 }
 
-.starWrapper {
+.optsWrapper {
+  top: 0;
   right: 0;
   padding-right: 15px;
 }
@@ -101,8 +102,9 @@
     margin-right: 0px;
   }
 
-  .starWrapper {
-    bottom: 0;
+  .optsWrapper {
+    margin-top: 1.5rem;
+    position: relative !important;
   }
 }
 

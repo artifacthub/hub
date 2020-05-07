@@ -102,7 +102,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -209,7 +209,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -288,7 +288,7 @@ exports[`Package index creates snapshot 2`] = `
                       <img
                         alt="Logo fcgi-nginx-frontend"
                         class="image"
-                        src="kubernetes_grey.svg"
+                        src="/static/media/kubernetes_grey.svg"
                       />
                     </div>
                     <div
@@ -315,7 +315,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -422,7 +422,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -529,7 +529,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -646,7 +646,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -753,7 +753,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -832,7 +832,7 @@ exports[`Package index creates snapshot 2`] = `
                       <img
                         alt="Logo bookstack"
                         class="image"
-                        src="kubernetes_grey.svg"
+                        src="/static/media/kubernetes_grey.svg"
                       />
                     </div>
                     <div
@@ -859,7 +859,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -938,7 +938,7 @@ exports[`Package index creates snapshot 2`] = `
                       <img
                         alt="Logo cluster-autoscaler"
                         class="image"
-                        src="kubernetes_grey.svg"
+                        src="/static/media/kubernetes_grey.svg"
                       />
                     </div>
                     <div
@@ -965,7 +965,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>
@@ -1072,7 +1072,7 @@ exports[`Package index creates snapshot 2`] = `
                             <img
                               alt="Icon"
                               class="icon"
-                              src="helm.svg"
+                              src="/static/media/helm.svg"
                             />
                           </div>
                         </div>

@@ -751,7 +751,7 @@ exports[`Search index creates snapshot 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="helm.svg"
+                        src="/static/media/helm.svg"
                       />
                     </div>
                   </div>
@@ -791,7 +791,7 @@ exports[`Search index creates snapshot 2`] = `
                         <img
                           alt="Logo kafka"
                           class="image"
-                          src="kubernetes_grey.svg"
+                          src="/static/media/kubernetes_grey.svg"
                         />
                       </div>
                       <div
@@ -870,7 +870,7 @@ exports[`Search index creates snapshot 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="helm.svg"
+                        src="/static/media/helm.svg"
                       />
                     </div>
                   </div>
