@@ -22,9 +22,6 @@ exports[`Package index creates snapshot 2`] = `
         class="container position-relative"
       >
         <div
-          class="position-absolute starWrapper"
-        />
-        <div
           class="d-flex align-items-start w-100 mb-3"
         >
           <div
@@ -327,6 +324,9 @@ exports[`Package index creates snapshot 2`] = `
             </div>
           </div>
         </div>
+        <div
+          class="position-absolute d-flex flex-row optsWrapper"
+        />
       </div>
     </div>
     <div

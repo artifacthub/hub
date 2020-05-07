@@ -45,6 +45,7 @@ export interface Package {
   links?: PackageLink[];
   stars?: number | null;
   userAlias: string | null;
+  notificationKinds?: NotificationKind[];
 }
 
 export interface PackageData {
@@ -196,4 +197,13 @@ export interface Prefs {
 export interface PackageStars {
   starredByUser: boolean | null;
   stars: number | null;
+}
+
+export enum NotificationKind {
+  NewPackageRelease = 0,
+  SecurityAlert,
+}
+
+export interface Subscription {
+  notificationKind: NotificationKind;
 }

@@ -14,27 +14,27 @@ describe('PackageIcon', () => {
     const { getByAltText } = render(<PackageIcon kind={PackageKind.Chart} />);
     const icon = getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/helm.svg');
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm.svg');
   });
 
   it('renders Falco icon', () => {
     const { getByAltText } = render(<PackageIcon kind={PackageKind.Falco} />);
     const icon = getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/falco.svg');
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/falco.svg');
   });
 
   it('renders OPA icon', () => {
     const { getByAltText } = render(<PackageIcon kind={PackageKind.Opa} />);
     const icon = getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/opa.svg');
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/opa.svg');
   });
 
   it('renders Chart icon - white version', () => {
     const { getByAltText } = render(<PackageIcon kind={PackageKind.Chart} type="white" />);
     const icon = getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/helm-white.svg');
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-white.svg');
   });
 });

@@ -27,6 +27,7 @@ import ModalHeader from './ModalHeader';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
 import StarButton from './StarButton';
+import SubscriptionsButton from './SubscriptionsButton';
 
 interface Props {
   isLoadingPackage: boolean;
@@ -245,10 +246,6 @@ const PackageView = (props: Props) => {
             {!isNull(detail) && (
               <div className={`jumbotron ${styles.jumbotron}`}>
                 <div className="container position-relative">
-                  <div className={`position-absolute ${styles.starWrapper}`}>
-                    <StarButton packageId={detail.packageId} />
-                  </div>
-
                   <div className="d-flex align-items-start w-100 mb-3">
                     <div className="d-flex align-items-center">
                       <div
@@ -365,6 +362,11 @@ const PackageView = (props: Props) => {
 
                       <div>{InstallationModal(true, 'btn-outline-secondary')}</div>
                     </div>
+                  </div>
+
+                  <div className={`position-absolute d-flex flex-row ${styles.optsWrapper}`}>
+                    <StarButton packageId={detail.packageId} />
+                    <SubscriptionsButton packageId={detail.packageId} />
                   </div>
                 </div>
               </div>

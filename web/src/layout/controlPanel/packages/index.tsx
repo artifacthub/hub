@@ -2,37 +2,10 @@ import classnames from 'classnames';
 import React, { useState } from 'react';
 
 import { PackageKind } from '../../../types';
+import { PackageItem, PACKAGES } from '../../../utils/data';
 import PackageIcon from '../../common/PackageIcon';
 import ChartRepository from './chartRepository';
 import styles from './PackagesSection.module.css';
-
-interface PackageItem {
-  kind: PackageKind;
-  name: string;
-  shortName: string;
-  disabled: boolean;
-}
-
-const packages: PackageItem[] = [
-  {
-    kind: PackageKind.Chart,
-    name: 'Chart repositories',
-    shortName: 'Chart',
-    disabled: false,
-  },
-  {
-    kind: PackageKind.Falco,
-    name: 'Falco rules',
-    shortName: 'Falco',
-    disabled: true,
-  },
-  {
-    kind: PackageKind.Opa,
-    name: 'OPA policies',
-    shortName: 'OPA',
-    disabled: true,
-  },
-];
 
 interface Props {
   onAuthError: () => void;
@@ -51,7 +24,7 @@ const PackagesSection = (props: Props) => {
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
       <nav className={styles.sidebar}>
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
-          {packages.map((packageItem: PackageItem) => {
+          {PACKAGES.map((packageItem: PackageItem) => {
             return (
               <button
                 key={`package_${packageItem.kind}`}

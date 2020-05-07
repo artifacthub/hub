@@ -57,7 +57,7 @@ describe('PackageCard', () => {
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/kubernetes_grey.svg');
+      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/kubernetes_grey.svg');
     });
   });
 
@@ -100,7 +100,7 @@ describe('PackageCard', () => {
       expect(button).toBeInTheDocument();
       const icon = queryByAltText('Icon');
       expect(icon).toBeInTheDocument();
-      expect((icon as HTMLImageElement).src).toBe('http://localhost/helm.svg');
+      expect((icon as HTMLImageElement).src).toBe('http://localhost/static/media/helm.svg');
       fireEvent.click(button!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({

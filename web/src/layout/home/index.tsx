@@ -4,7 +4,6 @@ import { FaGithub, FaSlack } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import logo from '../../images/cncf.svg';
 import { PackageKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import ExternalLink from '../common/ExternalLink';
@@ -123,7 +122,7 @@ const HomeView = (props: Props) => {
         className="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1"
       >
         <div>
-          <img className={`${styles.logo} m-3`} src={logo} alt="Logo CNCF" />
+          <img className={`${styles.logo} m-3`} src="/static/media/cncf.svg" alt="Logo CNCF" />
           <div className="h5 px-3 pt-4">
             Artifact Hub aspires to be a{' '}
             <ExternalLink href="https://www.cncf.io/" className="font-weight-bold text-primary">

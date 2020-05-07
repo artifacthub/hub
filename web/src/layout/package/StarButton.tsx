@@ -12,7 +12,6 @@ import styles from './StarButton.module.css';
 
 interface Props {
   packageId: string;
-  mobileVersion?: boolean;
 }
 
 const StarButton = (props: Props) => {
@@ -76,7 +75,7 @@ const StarButton = (props: Props) => {
       >
         <div className="d-flex align-items-center">
           {notStarred ? <FaStar /> : <FaRegStar />}
-          <span className="d-none d-md-inline ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+          <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
         </div>
       </button>
 

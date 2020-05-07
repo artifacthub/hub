@@ -218,7 +218,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="helm.svg"
+                        src="/static/media/helm.svg"
                       />
                     </div>
                   </div>
@@ -377,7 +377,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="helm.svg"
+                        src="/static/media/helm.svg"
                       />
                     </div>
                   </div>
@@ -536,7 +536,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="helm.svg"
+                        src="/static/media/helm.svg"
                       />
                     </div>
                   </div>
@@ -668,7 +668,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="falco.svg"
+                        src="/static/media/falco.svg"
                       />
                     </div>
                   </div>
@@ -800,7 +800,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="opa.svg"
+                        src="/static/media/opa.svg"
                       />
                     </div>
                   </div>

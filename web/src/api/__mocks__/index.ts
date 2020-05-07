@@ -27,4 +27,8 @@ export const API = {
   updateUserProfile: jest.fn(),
   updatePassword: jest.fn(),
   saveImage: jest.fn(),
+  getPackageSubscriptions: jest.fn(),
+  addSubscription: jest.fn(),
+  deleteSubscription: jest.fn(),
+  getUserSubscriptions: jest.fn(),
 };

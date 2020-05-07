@@ -1,7 +1,5 @@
 import React from 'react';
 
-import githubLogo from '../../images/github-mark.svg';
-import googleLogo from '../../images/google.svg';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 import styles from './OAuth.module.css';
 
@@ -15,6 +13,9 @@ interface Props {
   isLoading: Loading;
   setIsLoading: React.Dispatch<React.SetStateAction<Loading>>;
 }
+
+const GITHUB_LOGO = '/static/media/github-mark.svg';
+const GOOGLE_LOGO = '/static/media/google.svg';
 
 const OAuth = (props: Props) => {
   const goToOAuthPage = (name: 'google' | 'github') => {
@@ -39,7 +40,7 @@ const OAuth = (props: Props) => {
             disabled={props.isLoading.status}
           >
             <div className="d-flex align-items-center">
-              <img alt="Github Logo" src={githubLogo} className={styles.logo} />
+              <img alt="Github Logo" src={GITHUB_LOGO} className={styles.logo} />
               <div className="flex-grow-1 text-center">Github</div>
             </div>
           </button>
@@ -50,7 +51,7 @@ const OAuth = (props: Props) => {
             disabled={props.isLoading.status}
           >
             <div className="d-flex align-items-center">
-              <img alt="Google Logo" src={googleLogo} className={styles.logo} />
+              <img alt="Google Logo" src={GOOGLE_LOGO} className={styles.logo} />
               <div className="flex-grow-1 text-center">Google</div>
             </div>
           </button>
