@@ -106,14 +106,15 @@ create table if not exists snapshot (
     keywords text[],
     home_url text check (home_url <> ''),
     app_version text check (app_version <> ''),
-    digest text check (digest <> '') unique,
+    digest text check (digest <> ''),
     readme text check (readme <> ''),
     links jsonb,
     data jsonb,
     deprecated boolean,
     created_at timestamptz default current_timestamp not null,
     updated_at timestamptz default current_timestamp not null,
-    primary key (package_id, version)
+    primary key (package_id, version),
+    unique (package_id, digest)
 );
 
 create table if not exists maintainer (
