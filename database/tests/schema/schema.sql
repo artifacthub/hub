@@ -188,8 +188,7 @@ select indexes_are('maintainer', array[
 ]);
 select indexes_are('notification', array[
     'notification_pkey',
-    'notification_not_processed_idx',
-    'notification_package_id_package_version_key'
+    'notification_not_processed_idx'
 ]);
 select indexes_are('organization', array[
     'organization_pkey',
