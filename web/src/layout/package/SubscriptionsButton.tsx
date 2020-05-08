@@ -59,16 +59,22 @@ const SubscriptionsButton = (props: Props) => {
     return isActive;
   };
 
-  async function getSubscriptions() {
+  async function getSubscriptions(visibleLoading: boolean = false) {
     if (isNull(ctx.user)) {
       setActiveSubscriptions(undefined);
     } else {
       try {
-        setIsLoading(true);
+        if (visibleLoading) {
+          setIsLoading(true);
+        }
         setActiveSubscriptions(await API.getPackageSubscriptions(props.packageId));
-        setIsLoading(false);
+        if (visibleLoading) {
+          setIsLoading(false);
+        }
       } catch (err) {
-        setIsLoading(false);
+        if (visibleLoading) {
+          setIsLoading(false);
+        }
         setActiveSubscriptions(null);
         if (err.statusText !== 'ErrLoginRedirect') {
           alertDispatcher.postAlert({
@@ -98,7 +104,7 @@ const SubscriptionsButton = (props: Props) => {
       } else {
         await API.addSubscription(props.packageId, kind);
       }
-      getSubscriptions();
+      getSubscriptions(true);
     } catch (err) {
       if (err.statusText !== 'ErrLoginRedirect') {
         alertDispatcher.postAlert({
@@ -107,12 +113,14 @@ const SubscriptionsButton = (props: Props) => {
             kind
           )} notification, please try again later`,
         });
-        getSubscriptions(); // Get subscriptions if changeSubscription fails
+        getSubscriptions(true); // Get subscriptions if changeSubscription fails
       }
     }
   }
 
-  if (isUndefined(ctx.user) || isNull(ctx.user) || isNull(activeSubscriptions)) return null;
+  if (isUndefined(ctx.user) || isNull(ctx.user) || isNull(activeSubscriptions) || isUndefined(activeSubscriptions)) {
+    return null;
+  }
 
   return (
     <div className="position-relative ml-3">
