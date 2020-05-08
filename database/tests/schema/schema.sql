@@ -218,7 +218,7 @@ select indexes_are('session', array[
 ]);
 select indexes_are('snapshot', array[
     'snapshot_pkey',
-    'snapshot_digest_key'
+    'snapshot_package_id_digest_key'
 ]);
 select indexes_are('subscription', array[
     'subscription_pkey'
