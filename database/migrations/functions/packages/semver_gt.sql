@@ -1,6 +1,5 @@
--- semver_gte checks if the first semver provided is greater or equal than the
--- second one.
-create or replace function semver_gte(p_v1 text, p_v2 text)
+-- semver_gt checks if the first semver provided is greater than the second one.
+create or replace function semver_gt(p_v1 text, p_v2 text)
 returns boolean as $$
 declare
     semver_regexp text := '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?';
@@ -15,14 +14,14 @@ begin
         return true;
     elsif v1 = v2 then
         if v1_prerelease is null and v2_prerelease is null then
-            return true;
+            return false;
         else
             if v1_prerelease is null then
                 return true;
             elsif v2_prerelease is null then
                 return false;
             else
-                return v1_prerelease >= v2_prerelease;
+                return v1_prerelease > v2_prerelease;
             end if;
         end if;
     else
