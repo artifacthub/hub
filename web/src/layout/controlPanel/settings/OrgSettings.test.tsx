@@ -1,4 +1,4 @@
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -73,7 +73,7 @@ describe('Organization settings index', () => {
       const mockOrganization = getMockOrganization('3');
       mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-      render(
+      const { getByRole } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationSettings {...defaultProps} />
@@ -81,7 +81,7 @@ describe('Organization settings index', () => {
         </AppCtx.Provider>
       );
 
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
+      const spinner = await waitForElementToBeRemoved(() => getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await waitFor(() => {});
@@ -91,7 +91,7 @@ describe('Organization settings index', () => {
       const mockOrganization = getMockOrganization('5');
       mocked(API).getOrganization.mockResolvedValue(mockOrganization);
 
-      render(
+      const { getByTestId, getByAltText, getByDisplayValue } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationSettings {...defaultProps} />
@@ -100,14 +100,14 @@ describe('Organization settings index', () => {
       );
 
       await waitFor(() => {
-        const form = screen.getByTestId('organizationForm');
+        const form = getByTestId('organizationForm');
 
         expect(form).toBeInTheDocument();
-        expect(screen.getByAltText('Logo')).toBeInTheDocument();
-        expect(screen.getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
-        expect(screen.getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
-        expect(screen.getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
-        expect(screen.getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+        expect(getByAltText('Logo')).toBeInTheDocument();
+        expect(getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
+        expect(getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
+        expect(getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
+        expect(getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
       });
 
       await waitFor(() => {});
@@ -118,7 +118,7 @@ describe('Organization settings index', () => {
     it('generic error', async () => {
       mocked(API).getOrganization.mockRejectedValue({ status: 400 });
 
-      render(
+      const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationSettings {...defaultProps} />
@@ -130,16 +130,16 @@ describe('Organization settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
 
       expect(noData).toBeInTheDocument();
-      expect(screen.getByText('Sorry, the package you requested was not found.')).toBeInTheDocument();
+      expect(getByText('Sorry, the package you requested was not found.')).toBeInTheDocument();
     });
 
     it('error 500', async () => {
       mocked(API).getOrganization.mockRejectedValue({ status: 500 });
 
-      render(
+      const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <OrganizationSettings {...defaultProps} />
@@ -151,11 +151,11 @@ describe('Organization settings index', () => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
 
       expect(noData).toBeInTheDocument();
       expect(
-        screen.getByText(/An error occurred getting the organization details, please try again later/i)
+        getByText(/An error occurred getting the organization details, please try again later/i)
       ).toBeInTheDocument();
     });
 

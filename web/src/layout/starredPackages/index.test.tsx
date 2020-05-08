@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -46,7 +46,7 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('2');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      render(
+      const { getByText } = render(
         <Router>
           <StarredPackagesView />
         </Router>
@@ -55,7 +55,7 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {
         expect(API.getStarredByUser).toHaveBeenCalledTimes(1);
       });
-      expect(screen.getByText('Your starred packages')).toBeInTheDocument();
+      expect(getByText('Your starred packages')).toBeInTheDocument();
     });
   });
 
@@ -64,12 +64,12 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('4');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      render(
+      const { getAllByRole } = render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
-      const packages = await waitFor(() => screen.getAllByRole('listitem'));
+      const packages = await waitFor(() => getAllByRole('listitem'));
 
       expect(packages).toHaveLength(5);
       await waitFor(() => {});
@@ -79,13 +79,13 @@ describe('StarredPackagesView', () => {
       const mockPackages = getMockStarredPackages('5');
       mocked(API).getStarredByUser.mockResolvedValue(mockPackages);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('You have not starred any package yet');
@@ -96,13 +96,13 @@ describe('StarredPackagesView', () => {
     it('renders error message when getStarredByUser call fails with not 401', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'another error' });
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later/i);
@@ -113,13 +113,13 @@ describe('StarredPackagesView', () => {
     it('calls history push to load login modal when user is not signed in', async () => {
       mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
 
-      render(
+      const { getByRole } = render(
         <Router>
           <StarredPackagesView />
         </Router>
       );
 
-      await waitFor(() => screen.getByRole('main'));
+      await waitFor(() => getByRole('main'));
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/user/packages/starred');

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -58,17 +58,17 @@ describe('Organizations section index', () => {
       const mockOrganizations = getMockOrganizations('4');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      render(
+      const { getByTestId, getByText } = render(
         <Router>
           <OrganizationsSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(screen.getByText('Do you need to create a organization?')).toBeInTheDocument();
-      expect(screen.getByTestId('addFirstOrgBtn')).toBeInTheDocument();
+      expect(getByText('Do you need to create a organization?')).toBeInTheDocument();
+      expect(getByTestId('addFirstOrgBtn')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -77,26 +77,26 @@ describe('Organizations section index', () => {
       const mockOrganizations = getMockOrganizations('5');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      render(
+      const { getByTestId, queryByText } = render(
         <Router>
           <OrganizationsSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
 
-      expect(screen.queryByText('Name')).not.toBeInTheDocument();
-      expect(screen.queryByText('Display name')).not.toBeInTheDocument();
-      expect(screen.queryByText('Home URL')).not.toBeInTheDocument();
-      expect(screen.queryByText('Description')).not.toBeInTheDocument();
+      expect(queryByText('Name')).toBeNull();
+      expect(queryByText('Display name')).toBeNull();
+      expect(queryByText('Home URL')).toBeNull();
+      expect(queryByText('Description')).toBeNull();
 
-      const addBtn = screen.getByTestId('addFirstOrgBtn');
+      const addBtn = getByTestId('addFirstOrgBtn');
       fireEvent.click(addBtn);
-      expect(screen.queryByText('Name')).toBeInTheDocument();
-      expect(screen.queryByText('Display name')).toBeInTheDocument();
-      expect(screen.queryByText('Home URL')).toBeInTheDocument();
-      expect(screen.queryByText('Description')).toBeInTheDocument();
+      expect(queryByText('Name')).toBeInTheDocument();
+      expect(queryByText('Display name')).toBeInTheDocument();
+      expect(queryByText('Home URL')).toBeInTheDocument();
+      expect(queryByText('Description')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -105,25 +105,25 @@ describe('Organizations section index', () => {
       const mockOrganizations = getMockOrganizations('6');
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-      render(
+      const { getByTestId, queryByText } = render(
         <Router>
           <OrganizationsSection {...defaultProps} />
         </Router>
       );
 
-      const addBtn = await waitFor(() => screen.getByTestId('addOrgButton'));
+      const addBtn = await waitFor(() => getByTestId('addOrgButton'));
       expect(addBtn).toBeInTheDocument();
 
-      expect(screen.queryByText('Name')).not.toBeInTheDocument();
-      expect(screen.queryByText('Display name')).not.toBeInTheDocument();
-      expect(screen.queryByText('Home URL')).not.toBeInTheDocument();
-      expect(screen.queryByText('Description')).not.toBeInTheDocument();
+      expect(queryByText('Name')).toBeNull();
+      expect(queryByText('Display name')).toBeNull();
+      expect(queryByText('Home URL')).toBeNull();
+      expect(queryByText('Description')).toBeNull();
 
       fireEvent.click(addBtn);
-      expect(screen.queryByText('Name')).toBeInTheDocument();
-      expect(screen.queryByText('Display name')).toBeInTheDocument();
-      expect(screen.queryByText('Home URL')).toBeInTheDocument();
-      expect(screen.queryByText('Description')).toBeInTheDocument();
+      expect(queryByText('Name')).toBeInTheDocument();
+      expect(queryByText('Display name')).toBeInTheDocument();
+      expect(queryByText('Home URL')).toBeInTheDocument();
+      expect(queryByText('Description')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -133,13 +133,13 @@ describe('Organizations section index', () => {
     const mockOrganizations = getMockOrganizations('6');
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
-    render(
+    const { getAllByTestId } = render(
       <Router>
         <OrganizationsSection {...defaultProps} />
       </Router>
     );
 
-    const cards = await waitFor(() => screen.getAllByTestId('organizationCard'));
+    const cards = await waitFor(() => getAllByTestId('organizationCard'));
     expect(cards).toHaveLength(2);
     await waitFor(() => {});
   });
@@ -164,7 +164,7 @@ describe('Organizations section index', () => {
     it('rest API errors - displays generis error message', async () => {
       mocked(API).getUserOrganizations.mockRejectedValue({ status: 400 });
 
-      render(
+      const { getByTestId, getByText } = render(
         <Router>
           <OrganizationsSection {...defaultProps} />
         </Router>
@@ -172,11 +172,9 @@ describe('Organizations section index', () => {
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(
-        screen.getByText(/An error occurred getting your organizations, please try again later/i)
-      ).toBeInTheDocument();
+      expect(getByText(/An error occurred getting your organizations, please try again later/i)).toBeInTheDocument();
 
       await waitFor(() => {});
     });

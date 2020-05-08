@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -56,7 +56,7 @@ describe('ControlPanelView', () => {
 
   it('calls history replace when section is undefined', async () => {
     mocked(API).getChartRepositories.mockResolvedValue([]);
-    render(
+    const { getByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <ControlPanelView />
@@ -64,7 +64,7 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => screen.getAllByRole('main'));
+    await waitFor(() => getByRole('main'));
     expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
     expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/packages');
 
@@ -73,7 +73,7 @@ describe('ControlPanelView', () => {
 
   it('renders 3 sections on user context', async () => {
     mocked(API).getChartRepositories.mockResolvedValue([]);
-    render(
+    const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
           <ControlPanelView section="packages" />
@@ -81,9 +81,9 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => screen.getAllByRole('main'));
-    const tabs = screen.getAllByRole('tab');
-    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    await waitFor(() => getByRole('main'));
+    const tabs = getAllByRole('tab');
+    expect(getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
     expect(tabs[0]).toHaveTextContent('Packages');
     expect(tabs[1]).toHaveTextContent('Organizations');
@@ -93,7 +93,7 @@ describe('ControlPanelView', () => {
 
   it('renders 3 sections on org context', async () => {
     mocked(API).getChartRepositories.mockResolvedValue([]);
-    render(
+    const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: jest.fn() }}>
         <Router>
           <ControlPanelView section="packages" />
@@ -101,9 +101,9 @@ describe('ControlPanelView', () => {
       </AppCtx.Provider>
     );
 
-    await waitFor(() => screen.getAllByRole('main'));
-    const tabs = screen.getAllByRole('tab');
-    expect(screen.getByRole('tablist')).toBeInTheDocument();
+    await waitFor(() => getByRole('main'));
+    const tabs = getAllByRole('tab');
+    expect(getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
     expect(tabs[0]).toHaveTextContent('Packages');
     expect(tabs[1]).toHaveTextContent('Members');

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
@@ -111,7 +111,7 @@ describe('InputField', () => {
     it('value is taken', async () => {
       mocked(API).checkAvailability.mockResolvedValue('');
 
-      render(
+      const { getByTestId, getByText } = render(
         <InputField
           {...defaultProps}
           type="text"
@@ -125,13 +125,13 @@ describe('InputField', () => {
           autoFocus
         />
       );
-      const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      expect(getByText(defaultProps.invalidText.default)).toBeInTheDocument();
       input.blur();
 
       expect(API.checkAvailability).toBeCalledTimes(1);
 
-      const invalidText = await waitFor(() => screen.getByText(defaultProps.invalidText.customError));
+      const invalidText = await waitFor(() => getByText(defaultProps.invalidText.customError));
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
@@ -195,7 +195,7 @@ describe('InputField', () => {
         status: 404,
       });
 
-      render(
+      const { getByTestId, getByText } = render(
         <InputField
           {...defaultProps}
           type="text"
@@ -209,13 +209,13 @@ describe('InputField', () => {
           autoFocus
         />
       );
-      const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      expect(getByText(defaultProps.invalidText.default)).toBeInTheDocument();
       input.blur();
 
       expect(API.checkAvailability).toBeCalledTimes(1);
 
-      const invalidText = await waitFor(() => screen.getByText(defaultProps.invalidText.customError));
+      const invalidText = await waitFor(() => getByText(defaultProps.invalidText.customError));
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });
@@ -251,14 +251,14 @@ describe('InputField', () => {
         status: 404,
       });
 
-      render(
+      const { getByTestId, getByText } = render(
         <InputField {...defaultProps} type="text" value="user1" validateOnBlur excludedValues={['user1']} autoFocus />
       );
-      const input = screen.getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      expect(screen.getByText(defaultProps.invalidText.default)).toBeInTheDocument();
+      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
+      expect(getByText(defaultProps.invalidText.default)).toBeInTheDocument();
       input.blur();
 
-      const invalidText = screen.getByText(defaultProps.invalidText.excluded);
+      const invalidText = getByText(defaultProps.invalidText.excluded);
       expect(invalidText).toBeInTheDocument();
       expect(input).toBeInvalid();
     });

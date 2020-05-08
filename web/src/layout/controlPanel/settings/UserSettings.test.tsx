@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -54,7 +54,7 @@ describe('User settings index', () => {
       const mockProfile = getMockProfile('2');
       mocked(API).getUserProfile.mockResolvedValue(mockProfile);
 
-      render(
+      const { getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <UserSettings {...defaultProps} />
@@ -66,8 +66,8 @@ describe('User settings index', () => {
         expect(API.getUserProfile).toHaveBeenCalledTimes(1);
       });
 
-      expect(screen.getByText('Profile information')).toBeInTheDocument();
-      expect(screen.getByText('Change password')).toBeInTheDocument();
+      expect(getByText('Profile information')).toBeInTheDocument();
+      expect(getByText('Change password')).toBeInTheDocument();
     });
   });
 
