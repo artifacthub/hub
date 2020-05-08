@@ -162,8 +162,7 @@ create table notification (
     processed_at timestamptz,
     package_version text not null check (package_version <> ''),
     package_id uuid not null references package on delete cascade,
-    notification_kind_id integer not null references notification_kind on delete restrict,
-    unique (package_id, package_version)
+    notification_kind_id integer not null references notification_kind on delete restrict
 );
 
 create index notification_not_processed_idx on notification (notification_id) where processed = 'false';
