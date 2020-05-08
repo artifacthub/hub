@@ -23,6 +23,7 @@
 {{ template "packages/get_packages_updates.sql" }}
 {{ template "packages/register_package.sql" }}
 {{ template "packages/search_packages.sql" }}
+{{ template "packages/semver_gt.sql" }}
 {{ template "packages/semver_gte.sql" }}
 {{ template "packages/toggle_star.sql" }}
 {{ template "packages/unregister_package.sql" }}

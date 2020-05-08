@@ -143,7 +143,7 @@ begin
 
     -- Register new release notification if package's latest version has been
     -- updated and there are subscriptors for this package and notification kind
-    if p_pkg->>'version' <> v_previous_latest_version and semver_gte(p_pkg->>'version', v_previous_latest_version) then
+    if semver_gt(p_pkg->>'version', v_previous_latest_version) then
         perform * from subscription
         where notification_kind_id = 0 -- New package release
         and package_id = v_package_id;
