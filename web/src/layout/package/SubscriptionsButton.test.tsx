@@ -62,7 +62,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([{ notificationKind: 0 }]);
         mocked(API).deleteSubscription.mockResolvedValue('');
 
-        const { getByText, getByTestId } = render(
+        const { getByText, getByTestId, queryByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <SubscriptionsButton {...defaultProps} />
           </AppCtx.Provider>
@@ -73,7 +73,9 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledWith(defaultProps.packageId);
         });
 
-        await waitFor(() => {});
+        await waitFor(() => {
+          expect(queryByRole('status')).toBeNull();
+        });
 
         expect(getByText('New releases')).toBeInTheDocument();
         expect(getByText('Receive a notification when a new version of this package is released.')).toBeInTheDocument();
