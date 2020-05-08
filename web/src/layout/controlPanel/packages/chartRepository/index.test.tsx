@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -58,13 +58,13 @@ describe('Chart repository index', () => {
       const mockChartRepository = getMockChartRepository('3');
       mocked(API).getChartRepositories.mockResolvedValue(mockChartRepository);
 
-      render(
+      const { getByRole } = render(
         <Router>
           <ChartRepository {...defaultProps} />
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() => screen.getByRole('status'));
+      const spinner = await waitForElementToBeRemoved(() => getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await waitFor(() => {});
@@ -74,17 +74,17 @@ describe('Chart repository index', () => {
       const mockChartRepository = getMockChartRepository('4');
       mocked(API).getChartRepositories.mockResolvedValue(mockChartRepository);
 
-      render(
+      const { getByTestId, getByText } = render(
         <Router>
           <ChartRepository {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(screen.getByText('Add your first chart repository!')).toBeInTheDocument();
-      expect(screen.getByTestId('addFirstRepoBtn')).toBeInTheDocument();
+      expect(getByText('Add your first chart repository!')).toBeInTheDocument();
+      expect(getByTestId('addFirstRepoBtn')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -93,16 +93,16 @@ describe('Chart repository index', () => {
       const mockChartRepository = getMockChartRepository('5');
       mocked(API).getChartRepositories.mockResolvedValue(mockChartRepository);
 
-      render(
+      const { getByTestId, getAllByTestId } = render(
         <Router>
           <ChartRepository {...defaultProps} />
         </Router>
       );
 
-      const list = await waitFor(() => screen.getByTestId('chartRepoList'));
+      const list = await waitFor(() => getByTestId('chartRepoList'));
 
       expect(list).toBeInTheDocument();
-      expect(screen.getAllByTestId('chartRepoCard')).toHaveLength(3);
+      expect(getAllByTestId('chartRepoCard')).toHaveLength(3);
 
       await waitFor(() => {});
     });
@@ -111,13 +111,13 @@ describe('Chart repository index', () => {
       const mockChartRepository = getMockChartRepository('6');
       mocked(API).getChartRepositories.mockResolvedValue(mockChartRepository);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <ChartRepository {...defaultProps} />
         </Router>
       );
 
-      const refreshBtn = await waitFor(() => screen.getByTestId('refreshRepoBtn'));
+      const refreshBtn = await waitFor(() => getByTestId('refreshRepoBtn'));
       expect(refreshBtn).toBeInTheDocument();
       fireEvent.click(refreshBtn);
       expect(API.getChartRepositories).toHaveBeenCalledTimes(2);
@@ -146,7 +146,7 @@ describe('Chart repository index', () => {
     it('on error different to 401', async () => {
       mocked(API).getChartRepositories.mockRejectedValue({ status: 500 });
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <ChartRepository {...defaultProps} />
         </Router>
@@ -156,7 +156,7 @@ describe('Chart repository index', () => {
         expect(API.getChartRepositories).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting the chart repositories, please try again later/i);
     });

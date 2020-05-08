@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -73,7 +73,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('4');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      render(
+      const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -81,11 +81,11 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const noData = await waitFor(() => screen.getByTestId('noData'));
+      const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(screen.getByText('Do you want to add a member?')).toBeInTheDocument();
-      expect(screen.getByTestId('addFirstMemberBtn')).toBeInTheDocument();
+      expect(getByText('Do you want to add a member?')).toBeInTheDocument();
+      expect(getByTestId('addFirstMemberBtn')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -94,7 +94,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('5');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      render(
+      const { getAllByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -102,7 +102,7 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const cards = await waitFor(() => screen.getAllByTestId('memberCard'));
+      const cards = await waitFor(() => getAllByTestId('memberCard'));
       expect(cards).toHaveLength(2);
 
       await waitFor(() => {});
@@ -112,7 +112,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('6');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      render(
+      const { getByTestId, queryByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -120,13 +120,13 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const addBtn = await waitFor(() => screen.getByTestId('addMemberBtn'));
+      const addBtn = await waitFor(() => getByTestId('addMemberBtn'));
       expect(addBtn).toBeInTheDocument();
 
-      expect(screen.queryByText('Username')).not.toBeInTheDocument();
+      expect(queryByText('Username')).toBeNull();
 
       fireEvent.click(addBtn);
-      expect(screen.queryByText('Username')).toBeInTheDocument();
+      expect(queryByText('Username')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -135,7 +135,7 @@ describe('Members section index', () => {
       const mockMembers = getMembers('7');
       mocked(API).getOrganizationMembers.mockResolvedValue(mockMembers);
 
-      render(
+      const { getByTestId, queryByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -143,12 +143,12 @@ describe('Members section index', () => {
         </AppCtx.Provider>
       );
 
-      const firstBtn = await waitFor(() => screen.getByTestId('addFirstMemberBtn'));
-      expect(screen.queryByText('Username')).not.toBeInTheDocument();
+      const firstBtn = await waitFor(() => getByTestId('addFirstMemberBtn'));
+      expect(queryByText('Username')).toBeNull();
       expect(firstBtn).toBeInTheDocument();
 
       fireEvent.click(firstBtn);
-      expect(screen.queryByText('Username')).toBeInTheDocument();
+      expect(queryByText('Username')).toBeInTheDocument();
 
       await waitFor(() => {});
     });
@@ -176,7 +176,7 @@ describe('Members section index', () => {
     it('rest API errors - displays generic error message', async () => {
       mocked(API).getOrganizationMembers.mockRejectedValue({ status: 400 });
 
-      render(
+      const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
             <MembersSection {...defaultProps} />
@@ -186,10 +186,10 @@ describe('Members section index', () => {
 
       await waitFor(() => expect(API.getOrganizationMembers).toHaveBeenCalledTimes(1));
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(
-        screen.getByText(/An error occurred getting the organization members, please try again later/i)
+        getByText(/An error occurred getting the organization members, please try again later/i)
       ).toBeInTheDocument();
 
       await waitFor(() => {});

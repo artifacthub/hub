@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -79,13 +79,14 @@ describe('Package index', () => {
         ...defaultProps,
         isLoadingPackage: true,
       };
-      render(
+
+      const { getByRole } = render(
         <Router>
           <PackageView {...props} />
         </Router>
       );
 
-      const spinner = await waitFor(() => screen.getByRole('status'));
+      const spinner = await waitFor(() => getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await waitFor(() => {});
@@ -100,7 +101,7 @@ describe('Package index', () => {
         ...defaultProps,
       };
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <PackageView {...props} />
         </Router>
@@ -110,7 +111,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later/i);
     });
@@ -122,7 +123,7 @@ describe('Package index', () => {
         ...defaultProps,
       };
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <PackageView {...props} />
         </Router>
@@ -132,7 +133,7 @@ describe('Package index', () => {
         expect(API.getPackage).toHaveBeenCalledTimes(1);
       });
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('Sorry, the package you requested was not found.');
     });
@@ -149,13 +150,13 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('4');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <PackageView {...defaultProps} searchUrlReferer={searchUrlReferer} />
         </Router>
       );
 
-      const goBack = await waitFor(() => screen.getByTestId('goBack'));
+      const goBack = await waitFor(() => getByTestId('goBack'));
 
       expect(goBack).toBeInTheDocument();
       fireEvent.click(goBack);
@@ -175,12 +176,13 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('5');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
-      const link = await waitFor(() => screen.getByTestId('repoLink'));
+
+      const link = await waitFor(() => getByTestId('repoLink'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe('/packages/search');
@@ -195,14 +197,13 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('6');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      render(
+      const { getAllByRole } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      const dialogs = await waitFor(() => screen.getAllByRole('dialog'));
-
+      const dialogs = await waitFor(() => getAllByRole('dialog'));
       expect(dialogs).toHaveLength(3);
 
       await waitFor(() => {});
@@ -214,18 +215,18 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('7');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      render(
+      const { getByTestId, queryByTestId } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => screen.getByTestId('mainPackage'));
+      await waitFor(() => getByTestId('mainPackage'));
 
-      const noData = screen.getByTestId('noData');
+      const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('No README file available for this package');
-      expect(screen.queryByTestId('readme')).toBeNull();
+      expect(queryByTestId('readme')).toBeNull();
 
       await waitFor(() => {});
     });
@@ -234,15 +235,15 @@ describe('Package index', () => {
       const mockPackage = getMockPackage('8');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      render(
+      const { getByTestId, queryByTestId } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => screen.getByTestId('mainPackage'));
+      await waitFor(() => getByTestId('mainPackage'));
 
-      const readme = screen.queryByTestId('readme');
+      const readme = queryByTestId('readme');
       expect(readme).toBeInTheDocument();
       expect(readme).toHaveTextContent(mockPackage.readme!);
 

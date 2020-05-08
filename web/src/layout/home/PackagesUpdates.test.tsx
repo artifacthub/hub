@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -52,16 +52,16 @@ describe('Package index', () => {
       const mockPackagesUpdates = getMockPackagesUpdates('4');
       mocked(API).getPackagesUpdates.mockResolvedValue(mockPackagesUpdates);
 
-      render(
+      const { getByTestId, queryByTestId } = render(
         <Router>
           <PackagesUpdates />
         </Router>
       );
 
-      const latest = await waitFor(() => screen.getByTestId('latestPackagesList'));
+      const latest = await waitFor(() => getByTestId('latestPackagesList'));
 
       expect(latest).toBeInTheDocument();
-      expect(screen.queryByTestId('recentlyUpdatedPackagesList')).toBeNull();
+      expect(queryByTestId('recentlyUpdatedPackagesList')).toBeNull();
       await waitFor(() => {});
     });
 
@@ -69,15 +69,15 @@ describe('Package index', () => {
       const mockPackagesUpdates = getMockPackagesUpdates('5');
       mocked(API).getPackagesUpdates.mockResolvedValue(mockPackagesUpdates);
 
-      render(
+      const { getByTestId, queryByTestId } = render(
         <Router>
           <PackagesUpdates />
         </Router>
       );
 
-      const recentlyUpdated = await waitFor(() => screen.getByTestId('recentlyUpdatedPackagesList'));
+      const recentlyUpdated = await waitFor(() => getByTestId('recentlyUpdatedPackagesList'));
 
-      expect(screen.queryByTestId('latestPackagesList')).toBeNull();
+      expect(queryByTestId('latestPackagesList')).toBeNull();
       expect(recentlyUpdated).toBeInTheDocument();
       await waitFor(() => {});
     });

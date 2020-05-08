@@ -1,4 +1,4 @@
-import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -59,13 +59,14 @@ describe('Home index', () => {
         ...defaultProps,
         isSearching: true,
       };
-      render(
+
+      const { getAllByRole } = render(
         <Router>
           <HomeView {...props} />
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() => screen.getAllByRole('status'));
+      const spinner = await waitForElementToBeRemoved(() => getAllByRole('status'));
 
       expect(spinner).toBeTruthy();
       await waitFor(() => {});
@@ -79,13 +80,14 @@ describe('Home index', () => {
         ...defaultProps,
         isSearching: true,
       };
-      render(
+
+      const { getAllByText } = render(
         <Router>
           <HomeView {...props} />
         </Router>
       );
 
-      const emptyStats = await waitFor(() => screen.getAllByText('-'));
+      const emptyStats = await waitFor(() => getAllByText('-'));
 
       expect(emptyStats).toHaveLength(2);
       await waitFor(() => {});
@@ -98,27 +100,28 @@ describe('Home index', () => {
         ...defaultProps,
         isSearching: true,
       };
-      render(
+
+      const { getAllByText } = render(
         <Router>
           <HomeView {...props} />
         </Router>
       );
 
       await waitFor(() => expect(API.getStats).toHaveBeenCalledTimes(1));
-      expect(screen.getAllByText('-')).toHaveLength(2);
+      expect(getAllByText('-')).toHaveLength(2);
     });
 
     it('renders project definition', async () => {
       const mockStats = getMockStats('5');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      render(
+      const { getByRole } = render(
         <Router>
           <HomeView {...defaultProps} />
         </Router>
       );
 
-      const heading = await waitFor(() => screen.getByRole('heading'));
+      const heading = await waitFor(() => getByRole('heading'));
 
       expect(heading).toBeInTheDocument();
       expect(heading.innerHTML).toBe('Find, install and publish<br>Kubernetes packages');
@@ -129,13 +132,13 @@ describe('Home index', () => {
       const mockStats = getMockStats('6');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <HomeView {...defaultProps} />
         </Router>
       );
 
-      const CNCFInfo = await waitFor(() => screen.getByTestId('CNCFInfo'));
+      const CNCFInfo = await waitFor(() => getByTestId('CNCFInfo'));
 
       expect(CNCFInfo).toBeInTheDocument();
       expect(CNCFInfo).toHaveTextContent(
