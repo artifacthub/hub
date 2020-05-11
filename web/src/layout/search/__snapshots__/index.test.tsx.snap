@@ -699,11 +699,9 @@ exports[`Search index creates snapshot 2`] = `
                               User:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="userLink"
-                            >
-                              <u />
-                            </button>
+                            />
                           </div>
                           <div
                             class="mr-2 text-truncate"
@@ -714,12 +712,10 @@ exports[`Search index creates snapshot 2`] = `
                               Repo:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="repoLink"
                             >
-                              <u>
-                                stable
-                              </u>
+                              stable
                             </button>
                           </div>
                           <div
@@ -818,11 +814,9 @@ exports[`Search index creates snapshot 2`] = `
                               User:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="userLink"
-                            >
-                              <u />
-                            </button>
+                            />
                           </div>
                           <div
                             class="mr-2 text-truncate"
@@ -833,12 +827,10 @@ exports[`Search index creates snapshot 2`] = `
                               Repo:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="repoLink"
                             >
-                              <u>
-                                incubator
-                              </u>
+                              incubator
                             </button>
                           </div>
                           <div

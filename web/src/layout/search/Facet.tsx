@@ -60,8 +60,11 @@ const Facet = (props: Props) => {
 
         return sortBy(options, [(o: FacetOption) => !isChecked(o.id.toString())]);
 
-      default:
+      case 'kind':
         return props.options;
+
+      default:
+        return sortBy(props.options, [(o: FacetOption) => !isChecked(o.id.toString())]);
     }
   };
 

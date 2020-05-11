@@ -1,0 +1,248 @@
+[
+  {
+    "props": {
+      "title": "Organizations",
+      "filterKey": "org",
+      "active": ["falco"],
+      "options": [
+        {
+          "id": "helm",
+          "name": "Helm",
+          "total": 257
+        },
+        {
+          "id": "falco",
+          "name": "Falco",
+          "total": 42
+        },
+        {
+          "id": "opa",
+          "name": "OPA",
+          "total": 1
+        }
+      ]
+    },
+    "checkboxes": ["Falco(42)", "Helm(257)", "OPA(1)"]
+  },
+  {
+    "props": {
+      "title": "Organizations",
+      "filterKey": "org",
+      "active": [],
+      "options": [
+        {
+          "id": "helm",
+          "name": "Helm",
+          "total": 257
+        },
+        {
+          "id": "falco",
+          "name": "Falco",
+          "total": 42
+        },
+        {
+          "id": "opa",
+          "name": "OPA",
+          "total": 1
+        }
+      ]
+    },
+    "checkboxes": ["Helm(257)", "Falco(42)", "OPA(1)"]
+  },
+  {
+    "props": {
+      "title": "Organizations",
+      "filterKey": "org",
+      "active": ["helm", "opa"],
+      "options": [
+        {
+          "id": "helm",
+          "name": "Helm",
+          "total": 257
+        },
+        {
+          "id": "falco",
+          "name": "Falco",
+          "total": 42
+        },
+        {
+          "id": "opa",
+          "name": "OPA",
+          "total": 1
+        }
+      ]
+    },
+    "checkboxes": ["Helm(257)", "OPA(1)", "Falco(42)"]
+  },
+  {
+    "props": {
+      "title": "Chart repository",
+      "filterKey": "repo",
+      "active": [],
+      "options": [
+        {
+          "id": "test",
+          "name": "Test",
+          "total": 6
+        },
+        {
+          "id": "test1",
+          "name": "Test1",
+          "total": 8
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 53
+        },
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 203
+        }
+      ]
+    },
+    "checkboxes": ["Stable(203)", "Incubator(53)", "Test(6)", "Test1(8)"]
+  },
+  {
+    "props": {
+      "title": "Chart repository",
+      "filterKey": "repo",
+      "active": ["test1"],
+      "options": [
+        {
+          "id": "test",
+          "name": "Test",
+          "total": 6
+        },
+        {
+          "id": "test1",
+          "name": "Test1",
+          "total": 8
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 53
+        },
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 203
+        }
+      ]
+    },
+    "checkboxes": ["Test1(8)", "Stable(203)", "Incubator(53)", "Test(6)"]
+  },
+  {
+    "props": {
+      "title": "Chart repository",
+      "filterKey": "repo",
+      "active": ["test1", "stable"],
+      "options": [
+        {
+          "id": "test",
+          "name": "Test",
+          "total": 6
+        },
+        {
+          "id": "test1",
+          "name": "Test1",
+          "total": 8
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 53
+        },
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 203
+        }
+      ]
+    },
+    "checkboxes": ["Stable(203)", "Test1(8)", "Incubator(53)", "Test(6)"]
+  },
+  {
+    "props": {
+      "title": "Kind",
+      "filterKey": "kind",
+      "active": ["0", "2"],
+      "options": [
+        { "id": 0, "name": "Helm charts", "total": 305 },
+        { "id": 1, "name": "Falco rules", "total": 42 },
+        { "id": 2, "name": "OPA policies", "total": 1 }
+      ]
+    },
+    "checkboxes": ["Helm charts(305)", "Falco rules(42)", "OPA policies(1)"]
+  },
+  {
+    "props": {
+      "title": "Kind",
+      "filterKey": "kind",
+      "active": ["1"],
+      "options": [
+        { "id": 0, "name": "Helm charts", "total": 305 },
+        { "id": 1, "name": "Falco rules", "total": 42 },
+        { "id": 2, "name": "OPA policies", "total": 1 }
+      ]
+    },
+    "checkboxes": ["Helm charts(305)", "Falco rules(42)", "OPA policies(1)"]
+  },
+  {
+    "props": {
+      "title": "Kind",
+      "filterKey": "kind",
+      "active": [],
+      "options": [
+        { "id": 0, "name": "Helm charts", "total": 305 },
+        { "id": 1, "name": "Falco rules", "total": 42 },
+        { "id": 2, "name": "OPA policies", "total": 1 }
+      ]
+    },
+    "checkboxes": ["Helm charts(305)", "Falco rules(42)", "OPA policies(1)"]
+  },
+  {
+    "props": {
+      "title": "User",
+      "filterKey": "user",
+      "active": ["jsmith"],
+      "options": [
+        { "id": "atest", "name": "atest", "total": 1 },
+        { "id": "jsmith", "name": "jsmith", "total": 48 },
+        { "id": "lanth", "name": "lanth", "total": 12 },
+        { "id": "jmalcom", "name": "jmalcom", "total": 4 }
+      ]
+    },
+    "checkboxes": ["jsmith", "atest", "lanth", "jmalcom"]
+  },
+  {
+    "props": {
+      "title": "User",
+      "filterKey": "user",
+      "active": [],
+      "options": [
+        { "id": "atest", "name": "atest", "total": 1 },
+        { "id": "jsmith", "name": "jsmith", "total": 48 },
+        { "id": "lanth", "name": "lanth", "total": 12 },
+        { "id": "jmalcom", "name": "jmalcom", "total": 4 }
+      ]
+    },
+    "checkboxes": ["atest", "jsmith", "lanth", "jmalcom"]
+  },
+  {
+    "props": {
+      "title": "User",
+      "filterKey": "user",
+      "active": ["atest", "jmalcom"],
+      "options": [
+        { "id": "atest", "name": "atest", "total": 1 },
+        { "id": "jsmith", "name": "jsmith", "total": 48 },
+        { "id": "lanth", "name": "lanth", "total": 12 },
+        { "id": "jmalcom", "name": "jmalcom", "total": 4 }
+      ]
+    },
+    "checkboxes": ["atest", "jmalcom", "jsmith", "lanth"]
+  }
+]

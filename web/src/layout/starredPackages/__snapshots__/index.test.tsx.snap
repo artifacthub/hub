@@ -135,14 +135,14 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Org:
                             </span>
                             <button
-                              class="p-0 border-0 link undefined"
+                              class="p-0 border-0 text-dark link undefined"
                               data-testid="orgLink"
                             >
-                              <u
+                              <div
                                 class="text-truncate"
                               >
                                 Helm
-                              </u>
+                              </div>
                             </button>
                           </div>
                           <div
@@ -154,12 +154,10 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Repo:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="repoLink"
                             >
-                              <u>
-                                Stable
-                              </u>
+                              Stable
                             </button>
                           </div>
                           <div
@@ -294,14 +292,14 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Org:
                             </span>
                             <button
-                              class="p-0 border-0 link undefined"
+                              class="p-0 border-0 text-dark link undefined"
                               data-testid="orgLink"
                             >
-                              <u
+                              <div
                                 class="text-truncate"
                               >
                                 Helm
-                              </u>
+                              </div>
                             </button>
                           </div>
                           <div
@@ -313,12 +311,10 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Repo:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="repoLink"
                             >
-                              <u>
-                                Incubator
-                              </u>
+                              Incubator
                             </button>
                           </div>
                           <div
@@ -453,14 +449,14 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Org:
                             </span>
                             <button
-                              class="p-0 border-0 link undefined"
+                              class="p-0 border-0 text-dark link undefined"
                               data-testid="orgLink"
                             >
-                              <u
+                              <div
                                 class="text-truncate"
                               >
                                 Helm
-                              </u>
+                              </div>
                             </button>
                           </div>
                           <div
@@ -472,12 +468,10 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Repo:
                             </span>
                             <button
-                              class="p-0 border-0 link"
+                              class="p-0 border-0 text-dark link"
                               data-testid="repoLink"
                             >
-                              <u>
-                                Stable
-                              </u>
+                              Stable
                             </button>
                           </div>
                           <div
@@ -612,14 +606,14 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Org:
                             </span>
                             <button
-                              class="p-0 border-0 link undefined"
+                              class="p-0 border-0 text-dark link undefined"
                               data-testid="orgLink"
                             >
-                              <u
+                              <div
                                 class="text-truncate"
                               >
                                 Falco
-                              </u>
+                              </div>
                             </button>
                           </div>
                           <div
@@ -744,14 +738,14 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Org:
                             </span>
                             <button
-                              class="p-0 border-0 link undefined"
+                              class="p-0 border-0 text-dark link undefined"
                               data-testid="orgLink"
                             >
-                              <u
+                              <div
                                 class="text-truncate"
                               >
                                 Falco
-                              </u>
+                              </div>
                             </button>
                           </div>
                           <div

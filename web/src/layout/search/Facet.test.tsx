@@ -37,6 +37,20 @@ const defaultProps = {
   onChange: onChangeMock,
 };
 
+interface Test {
+  props: {
+    title: string;
+    filterKey: string;
+    active: string[];
+    options: FacetOption[];
+  };
+  checkboxes: string[];
+}
+
+const getSortTests = (fixtureId: string): Test[] => {
+  return require(`./__fixtures__/Facet/${fixtureId}.json`) as Test[];
+};
+
 describe('Filters', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -76,49 +90,25 @@ describe('Filters', () => {
       fireEvent.click(opt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
+  });
 
-    it('renders chart repositories in correct order', () => {
-      const { getAllByTestId } = render(<Facet {...defaultProps} />);
+  describe('Sort facets properly', () => {
+    const tests = getSortTests('1');
 
-      const opts = getAllByTestId('checkboxLabel');
-      expect(opts).toHaveLength(4);
+    for (let i = 0; i < tests.length; i++) {
+      it('renders component', () => {
+        const props = {
+          ...defaultProps,
+          ...tests[i].props,
+        };
+        const { getAllByTestId, getByText } = render(<Facet {...props} />);
 
-      expect(opts[0]).toHaveTextContent('Stable(203)');
-      expect(opts[1]).toHaveTextContent('Incubator(53)');
-      expect(opts[2]).toHaveTextContent('Test(6)');
-      expect(opts[3]).toHaveTextContent('Test1(8)');
-    });
-
-    it('renders chart repositories in correct order when not special repositories are selected', () => {
-      const props = {
-        ...defaultProps,
-        active: ['test1'],
-      };
-      const { getAllByTestId } = render(<Facet {...props} />);
-
-      const opts = getAllByTestId('checkboxLabel');
-      expect(opts).toHaveLength(4);
-
-      expect(opts[0]).toHaveTextContent('Test1(8)');
-      expect(opts[1]).toHaveTextContent('Stable(203)');
-      expect(opts[2]).toHaveTextContent('Incubator(53)');
-      expect(opts[3]).toHaveTextContent('Test(6)');
-    });
-
-    it('renders chart repositories in correct order when a mix of special and not special repositories are selected', () => {
-      const props = {
-        ...defaultProps,
-        active: ['test1', 'stable'],
-      };
-      const { getAllByTestId } = render(<Facet {...props} />);
-
-      const opts = getAllByTestId('checkboxLabel');
-      expect(opts).toHaveLength(4);
-
-      expect(opts[0]).toHaveTextContent('Stable(203)');
-      expect(opts[1]).toHaveTextContent('Test1(8)');
-      expect(opts[2]).toHaveTextContent('Incubator(53)');
-      expect(opts[3]).toHaveTextContent('Test(6)');
-    });
+        expect(getByText(tests[i].props.title)).toBeInTheDocument();
+        const opts = getAllByTestId('checkboxLabel');
+        for (let c = 0; c < tests[i].checkboxes.length; c++) {
+          expect(opts[c]).toHaveTextContent(tests[i].checkboxes[c]);
+        }
+      });
+    }
   });
 });

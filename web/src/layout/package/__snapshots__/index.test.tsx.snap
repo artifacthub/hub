@@ -62,11 +62,7 @@ exports[`Package index creates snapshot 2`] = `
                   </small>
                   <a
                     href="/packages/search?page=1&user=undefined"
-                  >
-                    <u
-                      class="text-dark"
-                    />
-                  </a>
+                  />
                 </div>
                 <div
                   class="text-truncate"
@@ -77,14 +73,11 @@ exports[`Package index creates snapshot 2`] = `
                     Repo: 
                   </small>
                   <a
+                    class="text-dark"
                     data-testid="repoLink"
                     href="/packages/search?page=1&repo=stable"
                   >
-                    <u
-                      class="text-dark"
-                    >
-                      stable
-                    </u>
+                    stable
                   </a>
                 </div>
               </div>

@@ -84,7 +84,7 @@ const PackageCard = (props: Props) => {
 
                               {!isNull(props.package.userAlias) && (
                                 <button
-                                  className={`p-0 border-0 text-truncate ${styles.mx50} ${styles.link}`}
+                                  className={`p-0 border-0 text-truncate text-dark ${styles.mx50} ${styles.link}`}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     history.push({
@@ -99,7 +99,7 @@ const PackageCard = (props: Props) => {
                                     });
                                   }}
                                 >
-                                  <u className="text-truncate">{props.package.userAlias}</u>
+                                  <div className="text-truncate">{props.package.userAlias}</div>
                                 </button>
                               )}
 
@@ -107,7 +107,7 @@ const PackageCard = (props: Props) => {
 
                               <button
                                 data-testid="repoLink"
-                                className={`text-truncate p-0 border-0 ${styles.mx50} ${styles.link}`}
+                                className={`text-truncate p-0 border-0 text-dark ${styles.mx50} ${styles.link}`}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   history.push({
@@ -122,9 +122,9 @@ const PackageCard = (props: Props) => {
                                   });
                                 }}
                               >
-                                <u className="text-truncate">
+                                <div className="text-truncate">
                                   {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                                </u>
+                                </div>
                               </button>
                             </div>
 
@@ -154,7 +154,7 @@ const PackageCard = (props: Props) => {
                               <div className="mr-2 text-truncate">
                                 <span className="text-muted text-uppercase mr-1">User:</span>
                                 <button
-                                  className={`p-0 border-0 text-truncate ${styles.mx50} ${styles.link}`}
+                                  className={`p-0 border-0 text-truncate text-dark ${styles.mx50} ${styles.link}`}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     history.push({
@@ -169,7 +169,7 @@ const PackageCard = (props: Props) => {
                                     });
                                   }}
                                 >
-                                  <u className="text-truncate">{props.package.userAlias}</u>
+                                  <div className="text-truncate">{props.package.userAlias}</div>
                                 </button>
                               </div>
                             )}

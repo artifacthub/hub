@@ -162,7 +162,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/chart/stable/airflow"
                         >
@@ -174,7 +174,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=helm"
                       >
@@ -190,7 +190,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           Repo: 
                         </span>
                         <a
-                          class="text-secondary"
+                          class="text-dark"
                           data-testid="repoLink"
                           href="/packages/search?page=1&repo=stable"
                         >
@@ -248,7 +248,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/chart/stable/cerebro"
                         >
@@ -260,7 +260,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=helm"
                       >
@@ -276,7 +276,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           Repo: 
                         </span>
                         <a
-                          class="text-secondary"
+                          class="text-dark"
                           data-testid="repoLink"
                           href="/packages/search?page=1&repo=stable"
                         >
@@ -334,7 +334,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/chart/stable/elastic-stack"
                         >
@@ -346,7 +346,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=helm"
                       >
@@ -362,7 +362,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           Repo: 
                         </span>
                         <a
-                          class="text-secondary"
+                          class="text-dark"
                           data-testid="repoLink"
                           href="/packages/search?page=1&repo=stable"
                         >
@@ -421,7 +421,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/chart/ibm-charts/ibm-redis"
                         >
@@ -433,7 +433,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="userLink"
                         href="/packages/search?page=1&user=jsmith"
                       >
@@ -449,7 +449,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           Repo: 
                         </span>
                         <a
-                          class="text-secondary"
+                          class="text-dark"
                           data-testid="repoLink"
                           href="/packages/search?page=1&repo=ibm-charts"
                         >
@@ -508,7 +508,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/falco/ssh-connections"
                         >
@@ -520,7 +520,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=falco"
                       >
@@ -577,7 +577,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/falco/traefik"
                         >
@@ -589,7 +589,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=falco"
                       >
@@ -646,7 +646,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/opa/trusted-registry-images"
                         >
@@ -658,7 +658,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=opa"
                       >
@@ -715,7 +715,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           />
                         </div>
                         <a
-                          class="ml-2 text-secondary"
+                          class="ml-2 text-dark"
                           data-testid="packageLink"
                           href="/package/chart/incubator/zookeeper"
                         >
@@ -727,7 +727,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                       class="align-middle position-relative"
                     >
                       <a
-                        class="text-secondary"
+                        class="text-dark"
                         data-testid="orgLink"
                         href="/packages/search?page=1&org=helm"
                       >
@@ -743,7 +743,7 @@ exports[`SubscriptionsView renders correctly 2`] = `
                           Repo: 
                         </span>
                         <a
-                          class="text-secondary"
+                          class="text-dark"
                           data-testid="repoLink"
                           href="/packages/search?page=1&repo=incubator"
                         >
@@ -842,14 +842,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Helm
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                               <div
@@ -861,12 +861,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Repo:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="repoLink"
                                 >
-                                  <u>
-                                    Stable
-                                  </u>
+                                  Stable
                                 </button>
                               </div>
                             </div>
@@ -997,14 +995,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Helm
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                               <div
@@ -1016,12 +1014,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Repo:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="repoLink"
                                 >
-                                  <u>
-                                    Stable
-                                  </u>
+                                  Stable
                                 </button>
                               </div>
                             </div>
@@ -1152,14 +1148,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Helm
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                               <div
@@ -1171,12 +1167,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Repo:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="repoLink"
                                 >
-                                  <u>
-                                    Stable
-                                  </u>
+                                  Stable
                                 </button>
                               </div>
                             </div>
@@ -1300,12 +1294,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   User:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="userLink"
                                 >
-                                  <u>
-                                    jsmith
-                                  </u>
+                                  jsmith
                                 </button>
                               </div>
                               <div
@@ -1317,12 +1309,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Repo:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="repoLink"
                                 >
-                                  <u>
-                                    IBM charts
-                                  </u>
+                                  IBM charts
                                 </button>
                               </div>
                             </div>
@@ -1454,14 +1444,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Falco
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                             </div>
@@ -1593,14 +1583,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Falco
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                             </div>
@@ -1732,14 +1722,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     OPA
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                             </div>
@@ -1871,14 +1861,14 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Org:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link undefined"
+                                  class="p-0 border-0 text-dark link undefined"
                                   data-testid="orgLink"
                                 >
-                                  <u
+                                  <div
                                     class="text-truncate"
                                   >
                                     Helm
-                                  </u>
+                                  </div>
                                 </button>
                               </div>
                               <div
@@ -1890,12 +1880,10 @@ exports[`SubscriptionsView renders correctly 2`] = `
                                   Repo:
                                 </span>
                                 <button
-                                  class="p-0 border-0 link"
+                                  class="p-0 border-0 text-dark link"
                                   data-testid="repoLink"
                                 >
-                                  <u>
-                                    Incubator
-                                  </u>
+                                  Incubator
                                 </button>
                               </div>
                             </div>

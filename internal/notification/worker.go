@@ -117,7 +117,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, n *hub.Notification) (*em
 		if err != nil {
 			return nil, err
 		}
-		subject = fmt.Sprintf("%s version %s released", p.Name, p.Version)
+		subject = fmt.Sprintf("%s version %s released", p.Name, n.PackageVersion)
 		publisher := p.OrganizationName
 		if publisher == "" {
 			publisher = p.UserAlias

@@ -119,3 +119,9 @@
     font-size: 0.95rem;
   }
 }
+
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
