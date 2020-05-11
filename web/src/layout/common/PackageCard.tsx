@@ -81,7 +81,7 @@ const PackageCard = (props: Props) => {
                         <span className="text-muted text-uppercase mr-1">User:</span>
                         <button
                           data-testid="userLink"
-                          className={`p-0 border-0 ${styles.link}`}
+                          className={`p-0 border-0 text-dark ${styles.link}`}
                           onClick={(e) => {
                             e.preventDefault();
                             history.push({
@@ -96,7 +96,7 @@ const PackageCard = (props: Props) => {
                             });
                           }}
                         >
-                          <u>{props.package.userAlias}</u>
+                          {props.package.userAlias}
                         </button>
                       </div>
                     )}
@@ -110,7 +110,7 @@ const PackageCard = (props: Props) => {
                                 <span className="text-muted text-uppercase mr-1">Repo:</span>
                                 <button
                                   data-testid="repoLink"
-                                  className={`p-0 border-0 ${styles.link}`}
+                                  className={`p-0 border-0 text-dark ${styles.link}`}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     history.push({
@@ -125,9 +125,7 @@ const PackageCard = (props: Props) => {
                                     });
                                   }}
                                 >
-                                  <u>
-                                    {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                                  </u>
+                                  {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
                                 </button>
                               </div>
 

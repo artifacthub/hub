@@ -114,7 +114,7 @@ const OrganizationInfo = (props: Props) => {
 
       <button
         data-testid="orgLink"
-        className={`p-0 border-0 ${styles.link} ${props.btnClassName}`}
+        className={`p-0 border-0 text-dark ${styles.link} ${props.btnClassName}`}
         onClick={(e) => {
           e.preventDefault();
           history.push({
@@ -137,13 +137,17 @@ const OrganizationInfo = (props: Props) => {
           setOnLinkHover(false);
         }}
       >
-        <u className={classnames({ 'text-truncate': isUndefined(props.multiLine) || !props.multiLine })}>
+        <div
+          className={classnames({
+            'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
+          })}
+        >
           {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
             <>{props.organizationDisplayName}</>
           ) : (
             <>{props.organizationName}</>
           )}
-        </u>
+        </div>
       </button>
     </div>
   );

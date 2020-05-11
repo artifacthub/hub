@@ -119,9 +119,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -131,14 +131,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               halkeye
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -226,9 +226,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -238,14 +238,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               halkeye
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -332,9 +332,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -344,14 +344,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               gabibbo97
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -439,9 +439,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -451,14 +451,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               halkeye
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -546,9 +546,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -558,14 +558,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               billimek
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -663,9 +663,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -675,14 +675,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               stable
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -770,9 +770,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -782,14 +782,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               stable
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -876,9 +876,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -888,14 +888,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               stable
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -982,9 +982,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -994,14 +994,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               stable
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div
@@ -1089,9 +1089,9 @@ exports[`Package index creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <button
-                            class="p-0 border-0 text-truncate mx50 link"
+                            class="p-0 border-0 text-truncate text-dark mx50 link"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             />
                           </button>
@@ -1101,14 +1101,14 @@ exports[`Package index creates snapshot 2`] = `
                             /
                           </span>
                           <button
-                            class="text-truncate p-0 border-0 mx50 link"
+                            class="text-truncate p-0 border-0 text-dark mx50 link"
                             data-testid="repoLink"
                           >
-                            <u
+                            <div
                               class="text-truncate"
                             >
                               stable
-                            </u>
+                            </div>
                           </button>
                         </div>
                         <div

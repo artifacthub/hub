@@ -1,5 +1,5 @@
 .link {
-  color: var(--gray-dark);
+  /* color: var(--gray-dark); */
   background-color: transparent;
 }
 
@@ -45,5 +45,11 @@
 @media only screen and (max-width: 576px) {
   .dropdown {
     display: none !important;
+  }
+}
+
+@media (hover: hover) {
+  .link:hover {
+    text-decoration: underline;
   }
 }

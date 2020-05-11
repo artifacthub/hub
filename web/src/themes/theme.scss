@@ -91,3 +91,8 @@ $body-color: #38383f;
     border-bottom-color: #fff;
   }
 }
+
+button.text-dark:hover,
+button.text-dark:focus {
+  color: #121416 !important;
+}

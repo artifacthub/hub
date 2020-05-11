@@ -296,7 +296,7 @@ const PackageView = (props: Props) => {
                                   }),
                                 }}
                               >
-                                <u className="text-dark">{detail.userAlias}</u>
+                                {detail.userAlias}
                               </Link>
                             </div>
                           )}
@@ -308,6 +308,7 @@ const PackageView = (props: Props) => {
                                   <div className="text-truncate">
                                     <small className="mr-1 text-muted text-uppercase">Repo: </small>
                                     <Link
+                                      className="text-dark"
                                       data-testid="repoLink"
                                       to={{
                                         pathname: '/packages/search',
@@ -320,9 +321,7 @@ const PackageView = (props: Props) => {
                                         }),
                                       }}
                                     >
-                                      <u className="text-dark">
-                                        {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                      </u>
+                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
                                     </Link>
                                   </div>
                                 );

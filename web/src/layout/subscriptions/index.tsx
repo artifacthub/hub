@@ -168,7 +168,7 @@ const SubscriptionsView = () => {
 
                                   <Link
                                     data-testid="packageLink"
-                                    className="ml-2 text-secondary"
+                                    className="ml-2 text-dark"
                                     to={{
                                       pathname: buildPackageURL(item),
                                     }}
@@ -181,7 +181,7 @@ const SubscriptionsView = () => {
                                 {!isNull(item.userAlias) ? (
                                   <Link
                                     data-testid="userLink"
-                                    className="text-secondary"
+                                    className="text-dark"
                                     to={{
                                       pathname: '/packages/search',
                                       search: prepareQueryString({
@@ -198,7 +198,7 @@ const SubscriptionsView = () => {
                                 ) : (
                                   <Link
                                     data-testid="orgLink"
-                                    className="text-secondary"
+                                    className="text-dark"
                                     to={{
                                       pathname: '/packages/search',
                                       search: prepareQueryString({
@@ -219,7 +219,7 @@ const SubscriptionsView = () => {
                                     (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
                                     <Link
                                       data-testid="repoLink"
-                                      className="text-secondary"
+                                      className="text-dark"
                                       to={{
                                         pathname: '/packages/search',
                                         search: prepareQueryString({
