@@ -50,9 +50,14 @@ exports[`LogIn creates snapshot 1`] = `
                 class="form-group mb-4 position-relative undefined"
               >
                 <label
+                  class="label"
                   for="email"
                 >
-                  Email
+                  <span
+                    class="font-weight-bold"
+                  >
+                    Email
+                  </span>
                 </label>
                 <input
                   autocomplete="email"
@@ -73,9 +78,14 @@ exports[`LogIn creates snapshot 1`] = `
                 class="form-group mb-4 position-relative undefined"
               >
                 <label
+                  class="label"
                   for="password"
                 >
-                  Password
+                  <span
+                    class="font-weight-bold"
+                  >
+                    Password
+                  </span>
                 </label>
                 <input
                   autocomplete="current-password"

@@ -3,7 +3,7 @@
 exports[`User settings index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="container d-flex flex-column flex-md-row justify-content-between p-0"
     role="main"
   >
     <div
@@ -13,12 +13,12 @@ exports[`User settings index creates snapshot 1`] = `
         class="mb-5"
       >
         <div
-          class="h3 mb-4 text-center"
+          class="h3 mb-4 pb-2 border-bottom"
         >
           Profile information
         </div>
         <div
-          class="mx-auto mt-5 formWrapper"
+          class="mt-5 formWrapper"
         >
           <form
             autocomplete="on"
@@ -30,9 +30,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="email"
               >
-                Email
+                <span
+                  class="font-weight-bold"
+                >
+                  Email
+                </span>
               </label>
               <input
                 class="form-control"
@@ -50,9 +55,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="alias"
               >
-                Username
+                <span
+                  class="font-weight-bold"
+                >
+                  Username
+                </span>
                 <small
                   class="ml-1 font-italic"
                 >
@@ -78,9 +88,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="firstName"
               >
-                First Name
+                <span
+                  class="font-weight-bold"
+                >
+                  First Name
+                </span>
               </label>
               <input
                 autocomplete="given-name"
@@ -98,9 +113,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="lastName"
               >
-                Last Name
+                <span
+                  class="font-weight-bold"
+                >
+                  Last Name
+                </span>
               </label>
               <input
                 autocomplete="family-name"
@@ -115,7 +135,7 @@ exports[`User settings index creates snapshot 1`] = `
               />
             </div>
             <div
-              class="text-right mt-4"
+              class="mt-4"
             >
               <button
                 class="btn btn-secondary"
@@ -130,26 +150,31 @@ exports[`User settings index creates snapshot 1`] = `
       </div>
       <div>
         <div
-          class="h3 mb-4 text-center"
+          class="h3 mb-4 pb-2 border-bottom"
         >
           Change password
         </div>
         <div
-          class="mx-auto mt-5 formWrapper"
+          class="mt-5 formWrapper"
         >
           <form
             autocomplete="on"
             class="w-100 needs-validation"
-            data-testid="resetPasswordForm"
+            data-testid="updatePasswordForm"
             novalidate=""
           >
             <div
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="oldPassword"
               >
-                Old password
+                <span
+                  class="font-weight-bold"
+                >
+                  Old password
+                </span>
               </label>
               <input
                 autocomplete="password"
@@ -170,9 +195,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="password"
               >
-                New password
+                <span
+                  class="font-weight-bold"
+                >
+                  New password
+                </span>
                 <small
                   class="ml-1 font-italic"
                 >
@@ -199,9 +229,14 @@ exports[`User settings index creates snapshot 1`] = `
               class="form-group mb-4 position-relative undefined"
             >
               <label
+                class="label"
                 for="confirmPassword"
               >
-                Confirm new password
+                <span
+                  class="font-weight-bold"
+                >
+                  Confirm new password
+                </span>
                 <small
                   class="ml-1 font-italic"
                 >
@@ -225,7 +260,7 @@ exports[`User settings index creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="text-right mt-4 mb-2"
+              class="mt-4 mb-2"
             >
               <button
                 class="btn btn-secondary"

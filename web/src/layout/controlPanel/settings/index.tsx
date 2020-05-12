@@ -1,7 +1,7 @@
 import React from 'react';
 
-import OrganizationSettings from './OrgSettings';
-import UserSettings from './UserSettings';
+import OrganizationSettingsSection from './orgSettings';
+import UserSettingsSection from './userSettings';
 
 interface Props {
   context: 'user' | 'org';
@@ -13,9 +13,9 @@ const SettingsSection = (props: Props) => (
     {(() => {
       switch (props.context) {
         case 'user':
-          return <UserSettings {...props} />;
+          return <UserSettingsSection {...props} />;
         case 'org':
-          return <OrganizationSettings {...props} />;
+          return <OrganizationSettingsSection {...props} />;
         default:
           return null;
       }

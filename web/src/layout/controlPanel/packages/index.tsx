@@ -1,65 +1,46 @@
-import classnames from 'classnames';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { PackageKind } from '../../../types';
-import { PackageItem, PACKAGES } from '../../../utils/data';
+import { SectionItem } from '../../../utils/data';
 import PackageIcon from '../../common/PackageIcon';
+import SectionPanel from '../../common/SectionPanel';
 import ChartRepository from './chartRepository';
-import styles from './PackagesSection.module.css';
 
 interface Props {
   onAuthError: () => void;
 }
 
-const DEFAULT_PACKAGE_KIND = PackageKind.Chart;
+export const PACKAGES: SectionItem[] = [
+  {
+    index: PackageKind.Chart,
+    name: 'Chart repositories',
+    shortName: 'Chart',
+    icon: <PackageIcon kind={PackageKind.Chart} className="mw-100" />,
+    disabled: false,
+  },
+  {
+    index: PackageKind.Falco,
+    name: 'Falco rules',
+    shortName: 'Falco',
+    icon: <PackageIcon kind={PackageKind.Falco} className="mw-100" />,
+    disabled: true,
+  },
+  {
+    index: PackageKind.Opa,
+    name: 'OPA policies',
+    shortName: 'OPA',
+    icon: <PackageIcon kind={PackageKind.Opa} className="mw-100" />,
+    disabled: true,
+  },
+];
 
-const PackagesSection = (props: Props) => {
-  const [activePackageKind, setActivePackageKind] = useState<PackageKind>(DEFAULT_PACKAGE_KIND);
-
-  const onMenuItemClick = (kind: PackageKind) => {
-    setActivePackageKind(kind);
-  };
-
-  return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <nav className={styles.sidebar}>
-        <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
-          {PACKAGES.map((packageItem: PackageItem) => {
-            return (
-              <button
-                key={`package_${packageItem.kind}`}
-                type="button"
-                className={classnames(
-                  'list-group-item list-group-item-action overflow-hidden',
-                  styles.listItem,
-                  { [styles.isActive]: packageItem.kind === activePackageKind },
-                  { disabled: packageItem.disabled }
-                )}
-                onClick={() => onMenuItemClick(packageItem.kind)}
-              >
-                <div className="d-flex flex-row align-items-center">
-                  <PackageIcon className={`mr-md-2 ${styles.icon}`} kind={packageItem.kind} />
-                  <span className="d-none d-md-block">{packageItem.name}</span>
-                  <span className="d-inline d-md-none ml-2">{packageItem.shortName}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
-
-      <div className={`flex-grow-1 ${styles.packagesList}`}>
-        {(() => {
-          switch (activePackageKind) {
-            case PackageKind.Chart:
-              return <ChartRepository {...props} />;
-            default:
-              return null;
-          }
-        })()}
-      </div>
-    </main>
-  );
-};
+const PackagesSection = (props: Props) => (
+  <SectionPanel
+    sections={PACKAGES}
+    content={{
+      0: <ChartRepository {...props} />,
+    }}
+  />
+);
 
 export default PackagesSection;

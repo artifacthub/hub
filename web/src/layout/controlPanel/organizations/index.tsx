@@ -52,7 +52,7 @@ const OrganizationsSection = (props: Props) => {
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
       <div className="flex-grow-1">
         <div>
-          <div className="d-flex flex-row align-items-center justify-content-between">
+          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
             <div className="h3 pb-0">Organizations</div>
 
             <div>
@@ -97,7 +97,7 @@ const OrganizationsSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-4">
+                <div className="list-group mt-5">
                   {organizations.map((org: Organization) => (
                     <OrganizationCard
                       key={`org_${org.name}`}

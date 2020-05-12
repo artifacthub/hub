@@ -2,12 +2,12 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
-import { Profile } from '../../../types';
-import alertDispatcher from '../../../utils/alertDispatcher';
+import { API } from '../../../../../api';
+import { Profile } from '../../../../../types';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdateProfile from './UpdateProfile';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+jest.mock('../../../../../api');
+jest.mock('../../../../../utils/alertDispatcher');
 
 const profile: Profile = {
   alias: 'userAlias',

@@ -3,14 +3,14 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
-import { AppCtx } from '../../../context/AppCtx';
-import { Organization } from '../../../types';
-import OrganizationSettings from './OrgSettings';
-jest.mock('../../../api');
+import { API } from '../../../../../api';
+import { AppCtx } from '../../../../../context/AppCtx';
+import { Organization } from '../../../../../types';
+import DetailsSection from './index';
+jest.mock('../../../../../api');
 
 const getMockOrganization = (fixtureId: string): Organization => {
-  return require(`./__fixtures__/OrgSettings/${fixtureId}.json`) as Organization;
+  return require(`./__fixtures__/index/${fixtureId}.json`) as Organization;
 };
 
 const onAuthErrorMock = jest.fn();
@@ -41,7 +41,7 @@ describe('Organization settings index', () => {
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
-          <OrganizationSettings {...defaultProps} />
+          <DetailsSection {...defaultProps} />
         </Router>
       </AppCtx.Provider>
     );
@@ -59,7 +59,7 @@ describe('Organization settings index', () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -76,7 +76,7 @@ describe('Organization settings index', () => {
       const { getByRole } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -94,7 +94,7 @@ describe('Organization settings index', () => {
       const { getByTestId, getByAltText, getByDisplayValue } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -121,7 +121,7 @@ describe('Organization settings index', () => {
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -142,7 +142,7 @@ describe('Organization settings index', () => {
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );
@@ -165,7 +165,7 @@ describe('Organization settings index', () => {
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Router>
-            <OrganizationSettings {...defaultProps} />
+            <DetailsSection {...defaultProps} />
           </Router>
         </AppCtx.Provider>
       );

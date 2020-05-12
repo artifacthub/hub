@@ -12,9 +12,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="email"
       >
-        Email
+        <span
+          class="font-weight-bold"
+        >
+          Email
+        </span>
       </label>
       <input
         class="form-control"
@@ -32,9 +37,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="alias"
       >
-        Username
+        <span
+          class="font-weight-bold"
+        >
+          Username
+        </span>
         <small
           class="ml-1 font-italic"
         >
@@ -60,9 +70,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="firstName"
       >
-        First Name
+        <span
+          class="font-weight-bold"
+        >
+          First Name
+        </span>
       </label>
       <input
         autocomplete="given-name"
@@ -80,9 +95,14 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="lastName"
       >
-        Last Name
+        <span
+          class="font-weight-bold"
+        >
+          Last Name
+        </span>
       </label>
       <input
         autocomplete="family-name"
@@ -97,7 +117,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       />
     </div>
     <div
-      class="text-right mt-4"
+      class="mt-4"
     >
       <button
         class="btn btn-secondary"

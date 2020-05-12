@@ -3,28 +3,25 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../api';
-import { Package } from '../../types';
-import alertDispatcher from '../../utils/alertDispatcher';
-import buildPackageURL from '../../utils/buildPackageURL';
-import SubscriptionsView from './index';
-jest.mock('../../api');
-jest.mock('../../utils/alertDispatcher');
-
-const mockHistoryPush = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}));
+import { API } from '../../../../../api';
+import { Package } from '../../../../../types';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
+import buildPackageURL from '../../../../../utils/buildPackageURL';
+import SubscriptionsSection from './index';
+jest.mock('../../../../../api');
+jest.mock('../../../../../utils/alertDispatcher');
 
 const getMockSubscriptions = (fixtureId: string): Package[] => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Package[];
 };
 
-describe('SubscriptionsView', () => {
+const mockOnAuthError = jest.fn();
+
+const defaultProps = {
+  onAuthError: mockOnAuthError,
+};
+
+describe('SubscriptionsSection', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -35,7 +32,7 @@ describe('SubscriptionsView', () => {
 
     const result = render(
       <Router>
-        <SubscriptionsView />
+        <SubscriptionsSection {...defaultProps} />
       </Router>
     );
 
@@ -51,7 +48,7 @@ describe('SubscriptionsView', () => {
 
       const { getByText, getAllByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -78,7 +75,7 @@ describe('SubscriptionsView', () => {
 
       const { getAllByTestId, getAllByRole } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -96,7 +93,7 @@ describe('SubscriptionsView', () => {
 
       const { getByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -113,7 +110,7 @@ describe('SubscriptionsView', () => {
 
       const { getByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -129,14 +126,13 @@ describe('SubscriptionsView', () => {
 
       const { getByRole } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
       await waitFor(() => getByRole('main'));
 
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/user/subscriptions');
+      expect(mockOnAuthError).toHaveBeenCalledTimes(1);
       await waitFor(() => {});
     });
   });
@@ -149,7 +145,7 @@ describe('SubscriptionsView', () => {
 
       const { getByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -185,7 +181,7 @@ describe('SubscriptionsView', () => {
 
       const { getByTestId, queryByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -229,7 +225,7 @@ describe('SubscriptionsView', () => {
 
       const { getByTestId, queryByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -250,8 +246,7 @@ describe('SubscriptionsView', () => {
       });
 
       await waitFor(() => {
-        expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-        expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/user/subscriptions');
+        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -263,7 +258,7 @@ describe('SubscriptionsView', () => {
 
       const { queryAllByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -284,7 +279,7 @@ describe('SubscriptionsView', () => {
 
       const { queryAllByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -306,7 +301,7 @@ describe('SubscriptionsView', () => {
 
       const { queryAllByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
@@ -328,7 +323,7 @@ describe('SubscriptionsView', () => {
 
       const { queryAllByTestId } = render(
         <Router>
-          <SubscriptionsView />
+          <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 

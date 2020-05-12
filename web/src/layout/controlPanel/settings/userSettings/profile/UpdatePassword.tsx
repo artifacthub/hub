@@ -2,10 +2,10 @@ import classnames from 'classnames';
 import every from 'lodash/every';
 import React, { useRef, useState } from 'react';
 
-import { API } from '../../../api';
-import { RefInputField } from '../../../types';
-import alertDispatcher from '../../../utils/alertDispatcher';
-import InputField from '../../common/InputField';
+import { API } from '../../../../../api';
+import { RefInputField } from '../../../../../types';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
+import InputField from '../../../../common/InputField';
 
 interface Password {
   value: string;
@@ -18,7 +18,7 @@ interface FormValidation {
   newPassword: string | null;
 }
 
-const ResetPassword = () => {
+const UpdatePassword = () => {
   const form = useRef<HTMLFormElement>(null);
   const oldPasswordInput = useRef<RefInputField>(null);
   const passwordInput = useRef<RefInputField>(null);
@@ -110,7 +110,7 @@ const ResetPassword = () => {
 
   return (
     <form
-      data-testid="resetPasswordForm"
+      data-testid="updatePasswordForm"
       ref={form}
       className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
       autoComplete="on"
@@ -162,7 +162,7 @@ const ResetPassword = () => {
         required
       />
 
-      <div className="text-right mt-4 mb-2">
+      <div className="mt-4 mb-2">
         <button
           data-testid="updatePasswordBtn"
           className="btn btn-secondary"
@@ -184,4 +184,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default UpdatePassword;

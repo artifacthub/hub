@@ -2,28 +2,28 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
-import alertDispatcher from '../../../utils/alertDispatcher';
-import ResetPassword from './ResetPassword';
-jest.mock('../../../api');
-jest.mock('../../../utils/alertDispatcher');
+import { API } from '../../../../../api';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
+import UpdatePassword from './UpdatePassword';
+jest.mock('../../../../../api');
+jest.mock('../../../../../utils/alertDispatcher');
 
-describe('Reset password - user settings', () => {
+describe('Update password - user settings', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   it('creates snapshot', () => {
-    const result = render(<ResetPassword />);
+    const result = render(<UpdatePassword />);
 
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
-      const form = getByTestId('resetPasswordForm');
+      const form = getByTestId('updatePasswordForm');
       expect(form).toBeInTheDocument();
       expect(getByTestId('oldPasswordInput')).toBeInTheDocument();
       expect(getByTestId('passwordInput')).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('Reset password - user settings', () => {
     });
 
     it('updates all fields and calls updatePassword', async () => {
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
       const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
       const newPassword = getByTestId('passwordInput') as HTMLInputElement;
@@ -52,7 +52,7 @@ describe('Reset password - user settings', () => {
     });
 
     it("doesn`t pass form validation when passwords don't match", async () => {
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
       const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
       const newPassword = getByTestId('passwordInput') as HTMLInputElement;
@@ -79,7 +79,7 @@ describe('Reset password - user settings', () => {
         statusText: 'Error 400',
       });
 
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
       fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
       fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });
@@ -105,7 +105,7 @@ describe('Reset password - user settings', () => {
         statusText: 'ErrLoginRedirect',
       });
 
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
       fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
       fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });
@@ -132,7 +132,7 @@ describe('Reset password - user settings', () => {
         status: 500,
       });
 
-      const { getByTestId } = render(<ResetPassword />);
+      const { getByTestId } = render(<UpdatePassword />);
 
       fireEvent.change(getByTestId('oldPasswordInput'), { target: { value: 'oldpass' } });
       fireEvent.change(getByTestId('passwordInput'), { target: { value: 'newpass' } });

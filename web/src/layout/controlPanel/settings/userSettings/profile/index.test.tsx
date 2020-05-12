@@ -3,14 +3,14 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
-import { AppCtx } from '../../../context/AppCtx';
-import { Profile } from '../../../types';
-import UserSettings from './UserSettings';
-jest.mock('../../../api');
+import { API } from '../../../../../api';
+import { AppCtx } from '../../../../../context/AppCtx';
+import { Profile } from '../../../../../types';
+import UserSettings from './index';
+jest.mock('../../../../../api');
 
 const getMockProfile = (fixtureId: string): Profile => {
-  return require(`./__fixtures__/UserSettings/${fixtureId}.json`) as Profile;
+  return require(`./__fixtures__/index/${fixtureId}.json`) as Profile;
 };
 
 const onAuthErrorMock = jest.fn();

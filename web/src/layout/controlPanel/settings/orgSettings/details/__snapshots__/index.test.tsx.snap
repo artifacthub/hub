@@ -3,19 +3,19 @@
 exports[`Organization settings index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="container d-flex flex-column flex-md-row justify-content-between p-0"
     role="main"
   >
     <div
       class="flex-grow-1"
     >
       <div
-        class="h3 pb-0 text-center"
+        class="h3 pb-2 border-bottom"
       >
         Organization details
       </div>
       <div
-        class="mx-auto mt-5 form"
+        class="mt-5 form"
       >
         <div
           class="text-center p-5 wrapper undefined"
@@ -40,19 +40,19 @@ exports[`Organization settings index creates snapshot 1`] = `
 exports[`Organization settings index creates snapshot 2`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="container d-flex flex-column flex-md-row justify-content-between p-0"
     role="main"
   >
     <div
       class="flex-grow-1"
     >
       <div
-        class="h3 pb-0 text-center"
+        class="h3 pb-2 border-bottom"
       >
         Organization details
       </div>
       <div
-        class="mx-auto mt-5 form"
+        class="mt-5 form"
       >
         <form
           autocomplete="on"
@@ -67,9 +67,14 @@ exports[`Organization settings index creates snapshot 2`] = `
               class="d-flex flex-column"
             >
               <label
+                class="label"
                 for="logo"
               >
-                Logo
+                <span
+                  class="font-weight-bold"
+                >
+                  Logo
+                </span>
                 <small
                   class="ml-1 font-italic"
                 >
@@ -105,9 +110,14 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
+              class="label"
               for="name"
             >
-              Name
+              <span
+                class="font-weight-bold"
+              >
+                Name
+              </span>
               <small
                 class="ml-1 font-italic"
               >
@@ -135,9 +145,14 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
+              class="label"
               for="displayName"
             >
-              Display name
+              <span
+                class="font-weight-bold"
+              >
+                Display name
+              </span>
             </label>
             <input
               class="form-control"
@@ -154,9 +169,14 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
+              class="label"
               for="homeUrl"
             >
-              Home URL
+              <span
+                class="font-weight-bold"
+              >
+                Home URL
+              </span>
             </label>
             <input
               class="form-control"
@@ -175,6 +195,7 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group"
           >
             <label
+              class="font-weight-bold label"
               for="description"
             >
               Description
@@ -190,7 +211,7 @@ exports[`Organization settings index creates snapshot 2`] = `
           </div>
         </form>
         <div
-          class="text-right mt-4"
+          class="mt-4"
         >
           <button
             class="btn btn-secondary"

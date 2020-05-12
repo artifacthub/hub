@@ -4,7 +4,6 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
 import { FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
-import { MdNotificationsActive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -71,20 +70,6 @@ const MobileSettings = (props: Props) => {
                       <div className="d-flex align-items-center">
                         <FaStar className="mr-2" />
                         <div>Starred packages</div>
-                      </div>
-                    </Link>
-
-                    <Link
-                      data-testid="subscriptionsLink"
-                      className="dropdown-item my-2"
-                      to={{
-                        pathname: '/user/subscriptions',
-                      }}
-                      onClick={() => setOpenSideBarStatus(false)}
-                    >
-                      <div className="d-flex align-items-center">
-                        <MdNotificationsActive className="mr-2" />
-                        <div>Subscriptions</div>
                       </div>
                     </Link>
 

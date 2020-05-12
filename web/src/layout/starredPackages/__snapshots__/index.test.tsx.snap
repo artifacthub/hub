@@ -27,7 +27,7 @@ exports[`StarredPackagesView renders correctly 1`] = `
         class="flex-grow-1 position-relative"
       >
         <div
-          class="h4 pb-0"
+          class="h3 pb-0"
         >
           <div
             class="d-flex align-items-center justify-content-center"
@@ -59,7 +59,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
         class="flex-grow-1 position-relative"
       >
         <div
-          class="h4 pb-0"
+          class="h3 pb-0"
         >
           <div
             class="d-flex align-items-center justify-content-center"

@@ -12,9 +12,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="alias"
       >
-        Username
+        <span
+          class="font-weight-bold"
+        >
+          Username
+        </span>
         <small
           class="ml-1 font-italic"
         >
@@ -40,9 +45,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="email"
       >
-        Email
+        <span
+          class="font-weight-bold"
+        >
+          Email
+        </span>
         <small
           class="ml-1 font-italic"
         >
@@ -68,9 +78,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="firstName"
       >
-        First Name
+        <span
+          class="font-weight-bold"
+        >
+          First Name
+        </span>
       </label>
       <input
         autocomplete="given-name"
@@ -88,9 +103,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="lastName"
       >
-        Last Name
+        <span
+          class="font-weight-bold"
+        >
+          Last Name
+        </span>
       </label>
       <input
         autocomplete="family-name"
@@ -111,9 +131,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         class="form-group mb-4 position-relative col-sm-12 col-md-6"
       >
         <label
+          class="label"
           for="password"
         >
-          Password
+          <span
+            class="font-weight-bold"
+          >
+            Password
+          </span>
           <small
             class="ml-1 font-italic"
           >
@@ -140,9 +165,14 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         class="form-group mb-4 position-relative col-sm-12 col-md-6"
       >
         <label
+          class="label"
           for="confirmPassword"
         >
-          Confirm password
+          <span
+            class="font-weight-bold"
+          >
+            Confirm password
+          </span>
           <small
             class="ml-1 font-italic"
           >

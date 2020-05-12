@@ -4,11 +4,11 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import { API } from '../../../api';
-import { AppCtx, updateUser } from '../../../context/AppCtx';
-import { Profile, RefInputField, ResourceKind, UserFullName } from '../../../types';
-import alertDispatcher from '../../../utils/alertDispatcher';
-import InputField from '../../common/InputField';
+import { API } from '../../../../../api';
+import { AppCtx, updateUser } from '../../../../../context/AppCtx';
+import { Profile, RefInputField, ResourceKind, UserFullName } from '../../../../../types';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
+import InputField from '../../../../common/InputField';
 
 interface Props {
   onAuthError: () => void;
@@ -160,7 +160,7 @@ const UpdateProfile = (props: Props) => {
         value={!isUndefined(profile) && !isNull(profile) ? profile.lastName : ''}
       />
 
-      <div className="text-right mt-4">
+      <div className="mt-4">
         <button
           className="btn btn-secondary"
           type="button"

@@ -20,7 +20,6 @@ import NotFound from './notFound';
 import PackageView from './package';
 import SearchView from './search';
 import StarredPackagesView from './starredPackages';
-import SubscriptionsView from './subscriptions';
 
 const getQueryParam = (query: string, param: string): string | undefined => {
   let result;
@@ -125,19 +124,6 @@ export default function App() {
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
                     <StarredPackagesView />
-                  </div>
-                </>
-              )}
-            />
-
-            <Route
-              path="/user/subscriptions"
-              exact
-              render={() => (
-                <>
-                  <Navbar isSearching={isSearching} privateRoute />
-                  <div className="d-flex flex-column flex-grow-1">
-                    <SubscriptionsView />
                   </div>
                 </>
               )}

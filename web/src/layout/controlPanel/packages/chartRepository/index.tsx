@@ -61,7 +61,7 @@ const ChartRepository = (props: Props) => {
   return (
     <>
       <div>
-        <div className="d-flex flex-row align-items-center justify-content-between">
+        <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
           <div className="h3 pb-0">Chart repositories</div>
 
           <div>
@@ -128,7 +128,7 @@ const ChartRepository = (props: Props) => {
               )}
             </NoData>
           ) : (
-            <div className="list-group my-4" data-testid="chartRepoList">
+            <div className="list-group mt-5" data-testid="chartRepoList">
               {chartRepositories.map((repo: ChartRepo) => (
                 <ChartRepositoryCard
                   key={repo.name}

@@ -1,33 +1,29 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { API } from '../../api';
-import { AppCtx, signOut } from '../../context/AppCtx';
-import { NotificationKind, Package } from '../../types';
-import alertDispatcher from '../../utils/alertDispatcher';
-import buildPackageURL from '../../utils/buildPackageURL';
-import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../utils/data';
-import prepareQueryString from '../../utils/prepareQueryString';
-import Image from '../common/Image';
-import Loading from '../common/Loading';
-import NoData from '../common/NoData';
-import PackageIcon from '../common/PackageIcon';
+import { API } from '../../../../../api';
+import { NotificationKind, Package } from '../../../../../types';
+import alertDispatcher from '../../../../../utils/alertDispatcher';
+import buildPackageURL from '../../../../../utils/buildPackageURL';
+import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
+import prepareQueryString from '../../../../../utils/prepareQueryString';
+import Image from '../../../../common/Image';
+import Loading from '../../../../common/Loading';
+import NoData from '../../../../common/NoData';
+import PackageIcon from '../../../../common/PackageIcon';
 import PackageCard from './PackageCard';
-import styles from './SubscriptionsView.module.css';
+import styles from './SubscriptionsSection.module.css';
 
-const SubscriptionsView = () => {
-  const history = useHistory();
-  const { dispatch } = useContext(AppCtx);
+interface Props {
+  onAuthError: () => void;
+}
+
+const SubscriptionsSection = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
-
-  const onAuthError = (): void => {
-    dispatch(signOut());
-    history.push('/login?redirect=/user/subscriptions');
-  };
 
   const getNotificationTitle = (kind: NotificationKind): string => {
     let title = '';
@@ -67,7 +63,7 @@ const SubscriptionsView = () => {
         setApiError('An error occurred getting your subscriptions, please try again later');
         setPackages([]);
       } else {
-        onAuthError();
+        props.onAuthError();
       }
     }
   }
@@ -91,7 +87,7 @@ const SubscriptionsView = () => {
         });
         getSubscriptions(); // Get subscriptions if changeSubscription fails
       } else {
-        onAuthError();
+        props.onAuthError();
       }
     }
   }
@@ -101,20 +97,24 @@ const SubscriptionsView = () => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className="d-flex flex-column flex-grow-1 position-relative">
+    <div className="d-flex flex-column flex-grow-1">
       {(isUndefined(packages) || isLoading) && <Loading />}
 
-      <main role="main" className="container py-5">
-        <div className="flex-grow-1 position-relative">
-          <div className="h4 pb-0">
-            <div className="d-flex align-items-center justify-content-center">
-              <div>Your subscriptions</div>
-            </div>
+      <main role="main" className="container">
+        <div className="flex-grow-1">
+          <div className="h3 pb-2 border-bottom">
+            <div>Your subscriptions</div>
           </div>
 
-          <div className={`mx-auto mt-4 ${styles.wrapper}`}>
+          <div className={`mx-auto mt-5 ${styles.wrapper}`}>
+            <p className="m-0">
+              You will receive an email notification when an event that matches any of the subscriptions in the list is
+              fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top
+              right corner.
+            </p>
+
             {!isUndefined(packages) && (
-              <div className="py-sm-3 py-2">
+              <div className="mt-5">
                 {packages.length === 0 ? (
                   <NoData issuesLinkVisible={!isNull(apiError)}>
                     {isNull(apiError) ? <>You have not subscribed to any package yet</> : <>{apiError}</>}
@@ -295,4 +295,4 @@ const SubscriptionsView = () => {
   );
 };
 
-export default SubscriptionsView;
+export default SubscriptionsSection;

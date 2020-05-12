@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubscriptionsView renders correctly 1`] = `
+exports[`SubscriptionsSection renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="d-flex flex-column flex-grow-1 position-relative"
+    class="d-flex flex-column flex-grow-1"
   >
     <div
       class="text-center p-5 wrapper undefined"
@@ -20,60 +20,63 @@ exports[`SubscriptionsView renders correctly 1`] = `
       </div>
     </div>
     <main
-      class="container py-5"
+      class="container"
       role="main"
     >
       <div
-        class="flex-grow-1 position-relative"
+        class="flex-grow-1"
       >
         <div
-          class="h4 pb-0"
+          class="h3 pb-2 border-bottom"
         >
-          <div
-            class="d-flex align-items-center justify-content-center"
-          >
-            <div>
-              Your subscriptions
-            </div>
+          <div>
+            Your subscriptions
           </div>
         </div>
         <div
-          class="mx-auto mt-4 wrapper"
-        />
+          class="mx-auto mt-5 wrapper"
+        >
+          <p
+            class="m-0"
+          >
+            You will receive an email notification when an event that matches any of the subscriptions in the list is fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top right corner.
+          </p>
+        </div>
       </div>
     </main>
   </div>
 </DocumentFragment>
 `;
 
-exports[`SubscriptionsView renders correctly 2`] = `
+exports[`SubscriptionsSection renders correctly 2`] = `
 <DocumentFragment>
   <div
-    class="d-flex flex-column flex-grow-1 position-relative"
+    class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container py-5"
+      class="container"
       role="main"
     >
       <div
-        class="flex-grow-1 position-relative"
+        class="flex-grow-1"
       >
         <div
-          class="h4 pb-0"
+          class="h3 pb-2 border-bottom"
         >
-          <div
-            class="d-flex align-items-center justify-content-center"
-          >
-            <div>
-              Your subscriptions
-            </div>
+          <div>
+            Your subscriptions
           </div>
         </div>
         <div
-          class="mx-auto mt-4 wrapper"
+          class="mx-auto mt-5 wrapper"
         >
+          <p
+            class="m-0"
+          >
+            You will receive an email notification when an event that matches any of the subscriptions in the list is fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top right corner.
+          </p>
           <div
-            class="py-sm-3 py-2"
+            class="mt-5"
           >
             <div
               class="d-none d-sm-inline"

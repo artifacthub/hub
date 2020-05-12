@@ -2,19 +2,19 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import { API } from '../../../api';
-import { AppCtx } from '../../../context/AppCtx';
-import { Organization } from '../../../types';
-import Loading from '../../common/Loading';
-import NoData from '../../common/NoData';
-import OrganizationForm from '../organizations/Form';
-import styles from './OrgSettings.module.css';
+import { API } from '../../../../../api';
+import { AppCtx } from '../../../../../context/AppCtx';
+import { Organization } from '../../../../../types';
+import Loading from '../../../../common/Loading';
+import NoData from '../../../../common/NoData';
+import OrganizationForm from '../../../organizations/Form';
+import styles from './DetailsSection.module.css';
 
 interface Props {
   onAuthError: () => void;
 }
 
-const OrganizationSettings = (props: Props) => {
+const DetailsSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
@@ -52,11 +52,11 @@ const OrganizationSettings = (props: Props) => {
   }, [props, selectedOrg]);
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
+    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between p-0">
       <div className="flex-grow-1">
-        <div className="h3 pb-0 text-center">Organization details</div>
+        <div className="h3 pb-2 border-bottom">Organization details</div>
 
-        <div className={`mx-auto mt-5 ${styles.form}`}>
+        <div className={`mt-5 ${styles.form}`}>
           {(isUndefined(organization) || isLoading) && <Loading />}
 
           {!isUndefined(organization) && (
@@ -74,7 +74,7 @@ const OrganizationSettings = (props: Props) => {
                     setIsSending={setIsSending}
                   />
 
-                  <div className="text-right mt-4">
+                  <div className="mt-4">
                     <button
                       className="btn btn-secondary"
                       type="button"
@@ -102,4 +102,4 @@ const OrganizationSettings = (props: Props) => {
   );
 };
 
-export default OrganizationSettings;
+export default DetailsSection;

@@ -80,8 +80,8 @@ const InputFileField = (props: Props) => {
   return (
     <div className={`form-group mb-4 ${props.className}`}>
       <div className="d-flex flex-column">
-        <label htmlFor={props.name}>
-          {props.label}
+        <label className={styles.label} htmlFor={props.name}>
+          <span className="font-weight-bold">{props.label}</span>
           {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
         </label>
 
