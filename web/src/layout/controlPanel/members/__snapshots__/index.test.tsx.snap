@@ -11,7 +11,7 @@ exports[`Members section index creates snapshot 1`] = `
     >
       <div>
         <div
-          class="d-flex flex-row align-items-center justify-content-between"
+          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
             class="h3 pb-0"
@@ -97,7 +97,7 @@ exports[`Members section index creates snapshot 2`] = `
     >
       <div>
         <div
-          class="d-flex flex-row align-items-center justify-content-between"
+          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
             class="h3 pb-0"
@@ -154,7 +154,7 @@ exports[`Members section index creates snapshot 2`] = `
         class="mt-4"
       >
         <div
-          class="list-group mt-4"
+          class="list-group mt-5"
         >
           <li
             class="list-group-item listItem"

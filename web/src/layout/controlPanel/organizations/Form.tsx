@@ -9,6 +9,7 @@ import { AppCtx, updateOrg } from '../../../context/AppCtx';
 import { Organization, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 import InputFileField from '../../common/InputFileField';
+import styles from './Form.module.css';
 
 interface FormValidation {
   isValid: boolean;
@@ -197,7 +198,9 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       />
 
       <div className="form-group">
-        <label htmlFor="description">Description</label>
+        <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
+          Description
+        </label>
         <textarea
           data-testid="descriptionTextarea"
           className="form-control"

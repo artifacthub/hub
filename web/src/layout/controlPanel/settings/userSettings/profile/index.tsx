@@ -2,18 +2,18 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { API } from '../../../api';
-import { AppCtx } from '../../../context/AppCtx';
-import { Profile } from '../../../types';
-import ResetPassword from './ResetPassword';
+import { API } from '../../../../../api';
+import { AppCtx } from '../../../../../context/AppCtx';
+import { Profile } from '../../../../../types';
+import styles from './ProfileSection.module.css';
+import UpdatePassword from './UpdatePassword';
 import UpdateProfile from './UpdateProfile';
-import styles from './UserSettings.module.css';
 
 interface Props {
   onAuthError: () => void;
 }
 
-const UserSettings = (props: Props) => {
+const ProfileSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [profile, setProfile] = useState<Profile | null | undefined>(
     !isNull(ctx.user) && !isUndefined(ctx.user) ? ctx.user : undefined
@@ -35,23 +35,23 @@ const UserSettings = (props: Props) => {
   }, [props]);
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
+    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between p-0">
       <div className="flex-grow-1">
         {!isNull(profile) && !isUndefined(profile) && (
           <div className="mb-5">
-            <div className="h3 mb-4 text-center">Profile information</div>
+            <div className="h3 mb-4 pb-2 border-bottom">Profile information</div>
 
-            <div className={`mx-auto mt-5 ${styles.formWrapper}`}>
+            <div className={`mt-5 ${styles.formWrapper}`}>
               <UpdateProfile onAuthError={props.onAuthError} profile={profile} />
             </div>
           </div>
         )}
 
         <div>
-          <div className="h3 mb-4 text-center">Change password</div>
+          <div className="h3 mb-4 pb-2 border-bottom">Change password</div>
 
-          <div className={`mx-auto mt-5 ${styles.formWrapper}`}>
-            <ResetPassword />
+          <div className={`mt-5 ${styles.formWrapper}`}>
+            <UpdatePassword />
           </div>
         </div>
       </div>
@@ -59,4 +59,4 @@ const UserSettings = (props: Props) => {
   );
 };
 
-export default UserSettings;
+export default ProfileSection;

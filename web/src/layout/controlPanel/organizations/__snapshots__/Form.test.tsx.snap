@@ -15,9 +15,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         class="d-flex flex-column"
       >
         <label
+          class="label"
           for="logo"
         >
-          Logo
+          <span
+            class="font-weight-bold"
+          >
+            Logo
+          </span>
           <small
             class="ml-1 font-italic"
           >
@@ -60,9 +65,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="name"
       >
-        Name
+        <span
+          class="font-weight-bold"
+        >
+          Name
+        </span>
         <small
           class="ml-1 font-italic"
         >
@@ -89,9 +99,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="displayName"
       >
-        Display name
+        <span
+          class="font-weight-bold"
+        >
+          Display name
+        </span>
       </label>
       <input
         class="form-control"
@@ -108,9 +123,14 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
+        class="label"
         for="homeUrl"
       >
-        Home URL
+        <span
+          class="font-weight-bold"
+        >
+          Home URL
+        </span>
       </label>
       <input
         class="form-control"
@@ -129,6 +149,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group"
     >
       <label
+        class="font-weight-bold label"
         for="description"
       >
         Description

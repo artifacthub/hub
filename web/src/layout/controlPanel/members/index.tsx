@@ -55,7 +55,7 @@ const MembersSection = (props: Props) => {
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
       <div className="flex-grow-1">
         <div>
-          <div className="d-flex flex-row align-items-center justify-content-between">
+          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
             <div className="h3 pb-0">Members</div>
 
             <div>
@@ -102,7 +102,7 @@ const MembersSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-4">
+                <div className="list-group mt-5">
                   {members.map((member: Member) => (
                     <MemberCard
                       key={`member_${member.alias}`}

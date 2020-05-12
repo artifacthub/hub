@@ -4,7 +4,7 @@ exports[`Chart repository index creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="d-flex flex-row align-items-center justify-content-between"
+      class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
     >
       <div
         class="h3 pb-0"
@@ -119,7 +119,7 @@ exports[`Chart repository index creates snapshot 2`] = `
 <DocumentFragment>
   <div>
     <div
-      class="d-flex flex-row align-items-center justify-content-between"
+      class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
     >
       <div
         class="h3 pb-0"
@@ -214,7 +214,7 @@ exports[`Chart repository index creates snapshot 2`] = `
     </div>
   </div>
   <div
-    class="list-group my-4"
+    class="list-group mt-5"
     data-testid="chartRepoList"
   >
     <li

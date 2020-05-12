@@ -4,13 +4,13 @@ import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
-import { NotificationKind, Package, PackageKind } from '../../types';
-import buildPackageURL from '../../utils/buildPackageURL';
-import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../utils/data';
-import prepareQueryString from '../../utils/prepareQueryString';
-import Image from '../common/Image';
-import OrganizationInfo from '../common/OrganizationInfo';
-import PackageIcon from '../common/PackageIcon';
+import { NotificationKind, Package, PackageKind } from '../../../../../types';
+import buildPackageURL from '../../../../../utils/buildPackageURL';
+import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
+import prepareQueryString from '../../../../../utils/prepareQueryString';
+import Image from '../../../../common/Image';
+import OrganizationInfo from '../../../../common/OrganizationInfo';
+import PackageIcon from '../../../../common/PackageIcon';
 import styles from './PackageCard.module.css';
 
 interface Props {

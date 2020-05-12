@@ -6,6 +6,10 @@
   min-width: 0;
 }
 
+.listItem {
+  z-index: 1;
+}
+
 .isActive {
   font-weight: bold;
   background-color: var(--white) !important;
@@ -24,7 +28,8 @@
 
 .icon {
   height: auto;
-  width: 14px;
+  width: 16px;
+  line-height: 1rem;
 }
 
 @media only screen and (min-width: 768px) {

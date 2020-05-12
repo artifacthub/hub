@@ -23,33 +23,13 @@ export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
   },
 ];
 
-export interface PackageItem {
-  kind: PackageKind;
+export interface SectionItem {
+  index: number;
   name: string;
   shortName: string;
   disabled: boolean;
+  icon?: JSX.Element;
 }
-
-export const PACKAGES: PackageItem[] = [
-  {
-    kind: PackageKind.Chart,
-    name: 'Chart repositories',
-    shortName: 'Chart',
-    disabled: false,
-  },
-  {
-    kind: PackageKind.Falco,
-    name: 'Falco rules',
-    shortName: 'Falco',
-    disabled: true,
-  },
-  {
-    kind: PackageKind.Opa,
-    name: 'OPA policies',
-    shortName: 'OPA',
-    disabled: true,
-  },
-];
 
 export interface PackageKindDef {
   kind: PackageKind;

@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import React, { useContext, useRef, useState } from 'react';
 import { FaCaretDown, FaCog, FaStar, FaUser } from 'react-icons/fa';
-import { MdNotificationsActive } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
@@ -59,20 +58,6 @@ const UserAuthDropdown = (props: Props) => {
           <div className="d-flex align-items-center">
             <FaStar className="mr-2" />
             <div>Starred packages</div>
-          </div>
-        </Link>
-
-        <Link
-          data-testid="subscriptionsLink"
-          className="dropdown-item"
-          to={{
-            pathname: '/user/subscriptions',
-          }}
-          onClick={() => setOpenStatus(false)}
-        >
-          <div className="d-flex align-items-center">
-            <MdNotificationsActive className="mr-2" />
-            <div>Subscriptions</div>
           </div>
         </Link>
 

@@ -49,7 +49,7 @@ const StarredPackagesView = () => {
 
       <main role="main" className="container py-5">
         <div className="flex-grow-1 position-relative">
-          <div className="h4 pb-0">
+          <div className="h3 pb-0">
             <div className="d-flex align-items-center justify-content-center">
               <div>Your starred packages</div>
             </div>

@@ -5,6 +5,7 @@
 }
 
 .formWrapper {
-  max-width: 40%;
+  max-width: 100%;
   width: 400px;
+  min-width: 60%;
 }
