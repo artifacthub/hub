@@ -3,31 +3,33 @@ package hub
 import (
 	"context"
 
+	"github.com/artifacthub/hub/internal/email"
 	"github.com/jackc/pgx/v4"
 )
 
-// Notification represents the details of a notification that will be sent to
-// a set of subscribers interested on it.
-type Notification struct {
-	NotificationID   string           `json:"notification_id"`
-	PackageVersion   string           `json:"package_version"`
-	PackageID        string           `json:"package_id"`
-	NotificationKind NotificationKind `json:"notification_kind"`
+// NotificationEmailDataCache describes the methods a NotificationEmailDataCache
+// implementation must provide.
+type NotificationEmailDataCache interface {
+	Get(ctx context.Context, e *Event) (email.Data, error)
 }
 
-// NotificationKind represents the kind of a notification.
-type NotificationKind int64
+// Notification represents the details of a notification pending to be delivered.
+type Notification struct {
+	NotificationID string `json:"notification_id"`
+	Event          *Event `json:"event"`
+	User           *User  `json:"user"`
+}
 
-const (
-	// NewRelease represents a notification for a new package release.
-	NewRelease NotificationKind = 0
-
-	// SecurityAlert represents a notification for a security alert.
-	SecurityAlert NotificationKind = 1
-)
-
-// NotificationManager describes the methods a NotificationManager
+// NotificationManager describes the methods an NotificationManager
 // implementation must provide.
 type NotificationManager interface {
+	Add(ctx context.Context, tx pgx.Tx, eventID, userID string) error
 	GetPending(ctx context.Context, tx pgx.Tx) (*Notification, error)
+	UpdateStatus(
+		ctx context.Context,
+		tx pgx.Tx,
+		notificationID string,
+		delivered bool,
+		deliveryErr error,
+	) error
 }

@@ -26,7 +26,7 @@ select add_subscription('
 {
     "user_id": "00000000-0000-0000-0000-000000000001",
     "package_id": "00000000-0000-0000-0000-000000000001",
-    "notification_kind": 0
+    "event_kind": 0
 }
 '::jsonb);
 
@@ -36,7 +36,7 @@ select results_eq(
         select
             user_id,
             package_id,
-            notification_kind_id
+            event_kind_id
         from subscription
     $$,
     $$

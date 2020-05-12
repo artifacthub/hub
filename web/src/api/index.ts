@@ -6,8 +6,8 @@ import isUndefined from 'lodash/isUndefined';
 import {
   ChartRepository,
   CheckAvailabilityProps,
+  EventKind,
   LogoImage,
-  NotificationKind,
   Organization,
   Package,
   PackageStars,
@@ -341,7 +341,7 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/subscriptions/${packageId}`);
   },
 
-  addSubscription: (packageId: string, notificationKind: NotificationKind): Promise<string | null> => {
+  addSubscription: (packageId: string, eventKind: EventKind): Promise<string | null> => {
     return apiFetch(`${API_BASE_URL}/subscriptions`, {
       method: 'POST',
       headers: {
@@ -349,12 +349,12 @@ export const API = {
       },
       body: JSON.stringify({
         package_id: packageId,
-        notification_kind: notificationKind,
+        event_kind: eventKind,
       }),
     });
   },
 
-  deleteSubscription: (packageId: string, notificationKind: NotificationKind): Promise<string | null> => {
+  deleteSubscription: (packageId: string, eventKind: EventKind): Promise<string | null> => {
     return apiFetch(`${API_BASE_URL}/subscriptions`, {
       method: 'DELETE',
       headers: {
@@ -362,7 +362,7 @@ export const API = {
       },
       body: JSON.stringify({
         package_id: packageId,
-        notification_kind: notificationKind,
+        event_kind: eventKind,
       }),
     });
   },

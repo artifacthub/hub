@@ -18,8 +18,8 @@ returns setof json as $$
             ),
             '{"name": null, "display_name": null}'::jsonb
         )),
-        'notification_kinds', (
-            select json_agg(distinct(notification_kind_id))
+        'event_kinds', (
+            select json_agg(distinct(event_kind_id))
             from subscription
             where package_id = sp.package_id
             and user_id = p_user_id

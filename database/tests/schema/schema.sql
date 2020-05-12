@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(83);
+select plan(87);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -16,11 +16,12 @@ select has_extension('pgcrypto');
 select tables_are(array[
     'chart_repository',
     'email_verification_code',
+    'event',
+    'event_kind',
     'image',
     'image_version',
     'maintainer',
     'notification',
-    'notification_kind',
     'organization',
     'package',
     'package__maintainer',
@@ -51,6 +52,19 @@ select columns_are('email_verification_code', array[
     'user_id',
     'created_at'
 ]);
+select columns_are('event', array[
+    'event_id',
+    'created_at',
+    'processed',
+    'processed_at',
+    'package_version',
+    'package_id',
+    'event_kind_id'
+]);
+select columns_are('event_kind', array[
+    'event_kind_id',
+    'name'
+]);
 select columns_are('image', array[
     'image_id',
     'original_hash'
@@ -70,13 +84,9 @@ select columns_are('notification', array[
     'created_at',
     'processed',
     'processed_at',
-    'package_version',
-    'package_id',
-    'notification_kind_id'
-]);
-select columns_are('notification_kind', array[
-    'notification_kind_id',
-    'name'
+    'error',
+    'event_id',
+    'user_id'
 ]);
 select columns_are('organization', array[
     'organization_id',
@@ -137,7 +147,7 @@ select columns_are('snapshot', array[
 select columns_are('subscription', array[
     'user_id',
     'package_id',
-    'notification_kind_id'
+    'event_kind_id'
 ]);
 select columns_are('user', array[
     'user_id',
@@ -175,6 +185,11 @@ select indexes_are('email_verification_code', array[
     'email_verification_code_pkey',
     'email_verification_code_user_id_key'
 ]);
+select indexes_are('event', array[
+    'event_pkey',
+    'event_not_processed_idx',
+    'event_package_id_package_version_event_kind_id_key'
+]);
 select indexes_are('image', array[
     'image_pkey',
     'image_original_hash_key'
@@ -188,7 +203,8 @@ select indexes_are('maintainer', array[
 ]);
 select indexes_are('notification', array[
     'notification_pkey',
-    'notification_not_processed_idx'
+    'notification_not_processed_idx',
+    'notification_event_id_user_id_key'
 ]);
 select indexes_are('organization', array[
     'organization_pkey',
@@ -283,7 +299,10 @@ select has_function('get_package_subscriptions');
 select has_function('get_subscriptors');
 select has_function('get_user_subscriptions');
 
+select has_function('get_pending_event');
+
 select has_function('get_pending_notification');
+select has_function('update_notification_status');
 
 -- Check package kinds exist
 select results_eq(
@@ -296,14 +315,14 @@ select results_eq(
     'Package kinds should exist'
 );
 
--- Check notification kinds exist
+-- Check event kinds exist
 select results_eq(
-    'select * from notification_kind',
+    'select * from event_kind',
     $$ values
         (0, 'New package release'),
         (1, 'Security alert')
     $$,
-    'Package kinds should exist'
+    'Event kinds should exist'
 );
 
 -- Finish tests and rollback transaction

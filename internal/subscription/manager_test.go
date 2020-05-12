@@ -39,10 +39,10 @@ func TestAdd(t *testing.T) {
 				},
 			},
 			{
-				"invalid notification kind",
+				"invalid event kind",
 				&hub.Subscription{
-					PackageID:        packageID,
-					NotificationKind: hub.NotificationKind(5),
+					PackageID: packageID,
+					EventKind: hub.EventKind(5),
 				},
 			},
 		}
@@ -58,8 +58,8 @@ func TestAdd(t *testing.T) {
 	})
 
 	s := &hub.Subscription{
-		PackageID:        packageID,
-		NotificationKind: hub.NewRelease,
+		PackageID: packageID,
+		EventKind: hub.NewRelease,
 	}
 
 	t.Run("database error", func(t *testing.T) {
@@ -106,10 +106,10 @@ func TestDelete(t *testing.T) {
 				},
 			},
 			{
-				"invalid notification kind",
+				"invalid event kind",
 				&hub.Subscription{
-					PackageID:        packageID,
-					NotificationKind: hub.NotificationKind(5),
+					PackageID: packageID,
+					EventKind: hub.EventKind(5),
 				},
 			},
 		}
@@ -125,8 +125,8 @@ func TestDelete(t *testing.T) {
 	})
 
 	s := &hub.Subscription{
-		PackageID:        packageID,
-		NotificationKind: hub.NewRelease,
+		PackageID: packageID,
+		EventKind: hub.NewRelease,
 	}
 
 	t.Run("database error", func(t *testing.T) {
@@ -230,9 +230,9 @@ func TestGetSubscriptors(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg           string
-			packageID        string
-			notificationKind hub.NotificationKind
+			errMsg    string
+			packageID string
+			eventKind hub.EventKind
 		}{
 			{
 				"invalid package id",
@@ -240,16 +240,16 @@ func TestGetSubscriptors(t *testing.T) {
 				0,
 			},
 			{
-				"invalid notification kind",
+				"invalid event kind",
 				packageID,
-				hub.NotificationKind(5),
+				hub.EventKind(5),
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
-				dataJSON, err := m.GetSubscriptors(context.Background(), tc.packageID, tc.notificationKind)
+				dataJSON, err := m.GetSubscriptors(context.Background(), tc.packageID, tc.eventKind)
 				assert.True(t, errors.Is(err, ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				assert.Nil(t, dataJSON)
@@ -259,7 +259,7 @@ func TestGetSubscriptors(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, packageID, hub.NotificationKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", dbQuery, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		subscriptors, err := m.GetSubscriptors(context.Background(), packageID, hub.NewRelease)
@@ -271,21 +271,21 @@ func TestGetSubscriptors(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		expectedSubscriptors := []*hub.User{
 			{
-				Email: "user1@email.com",
+				UserID: "00000000-0000-0000-0000-000000000001",
 			},
 			{
-				Email: "user2@email.com",
+				UserID: "00000000-0000-0000-0000-000000000002",
 			},
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, packageID, hub.NotificationKind(0)).Return([]byte(`
+		db.On("QueryRow", dbQuery, packageID, hub.EventKind(0)).Return([]byte(`
 		[
 			{
-				"email": "user1@email.com"
+				"user_id": "00000000-0000-0000-0000-000000000001"
 			},
 			{
-				"email": "user2@email.com"
+				"user_id": "00000000-0000-0000-0000-000000000002"
 			}
 		]
 		`), nil)

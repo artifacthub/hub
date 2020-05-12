@@ -8,5 +8,5 @@
   "organizationName": "falco",
   "organizationDisplayName": "Falco",
   "chartRepository": null,
-  "notificationKinds": [0]
+  "eventKinds": [0]
 }

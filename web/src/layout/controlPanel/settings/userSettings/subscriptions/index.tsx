@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { API } from '../../../../../api';
-import { NotificationKind, Package } from '../../../../../types';
+import { EventKind, Package } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
@@ -25,7 +25,7 @@ const SubscriptionsSection = (props: Props) => {
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
 
-  const getNotificationTitle = (kind: NotificationKind): string => {
+  const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
     const notif = SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
     if (!isUndefined(notif)) {
@@ -34,18 +34,16 @@ const SubscriptionsSection = (props: Props) => {
     return title;
   };
 
-  const updateOptimisticallyPackages = (kind: NotificationKind, isActive: boolean, packageId: string) => {
+  const updateOptimisticallyPackages = (kind: EventKind, isActive: boolean, packageId: string) => {
     const packageToUpdate = !isUndefined(packages)
       ? packages.find((item: Package) => item.packageId === packageId)
       : undefined;
-    if (!isUndefined(packageToUpdate) && !isUndefined(packageToUpdate.notificationKinds)) {
+    if (!isUndefined(packageToUpdate) && !isUndefined(packageToUpdate.eventKinds)) {
       const newPackages = packages!.filter((item: Package) => item.packageId !== packageId);
       if (isActive) {
-        packageToUpdate.notificationKinds = packageToUpdate.notificationKinds.filter(
-          (notifKind: number) => notifKind !== kind
-        );
+        packageToUpdate.eventKinds = packageToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
       } else {
-        packageToUpdate.notificationKinds.push(kind);
+        packageToUpdate.eventKinds.push(kind);
       }
       setPackages(newPackages);
     }
@@ -68,7 +66,7 @@ const SubscriptionsSection = (props: Props) => {
     }
   }
 
-  async function changeSubscription(packageId: string, kind: NotificationKind, isActive: boolean, packageName: string) {
+  async function changeSubscription(packageId: string, kind: EventKind, isActive: boolean, packageName: string) {
     updateOptimisticallyPackages(kind, isActive, packageId);
     try {
       if (isActive) {
@@ -238,8 +236,7 @@ const SubscriptionsSection = (props: Props) => {
                                 )}
                               </td>
                               {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-                                const isActive =
-                                  !isUndefined(item.notificationKinds) && item.notificationKinds.includes(subs.kind);
+                                const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);
                                 const id = `subs_${item.packageId}_${subs.kind}`;
 
                                 return (

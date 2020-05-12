@@ -24,16 +24,16 @@ insert into package (
     '1.0.0',
     1
 );
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
 
 -- Run some tests
 select is(
     get_package_subscriptions(:'user1ID', :'package1ID')::jsonb,
     '[{
-        "notification_kind": 0
+        "event_kind": 0
     }]'::jsonb,
-    'A subscription with notification kind 0 should be returned'
+    'A subscription with event kind 0 should be returned'
 );
 select is(
     get_package_subscriptions(:'user2ID', :'package1ID')::jsonb,

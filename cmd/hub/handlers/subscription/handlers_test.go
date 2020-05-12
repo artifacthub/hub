@@ -71,7 +71,7 @@ func TestAdd(t *testing.T) {
 		subscriptionJSON := `
 		{
 			"package_id": "00000000-0000-0000-0000-000000000001",
-			"notification_kind": 0
+			"event_kind": 0
 		}
 		`
 		testCases := []struct {
@@ -158,7 +158,7 @@ func TestDelete(t *testing.T) {
 		subscriptionJSON := `
 		{
 			"package_id": "00000000-0000-0000-0000-000000000001",
-			"notification_kind": 0
+			"event_kind": 0
 		}
 		`
 		testCases := []struct {

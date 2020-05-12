@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(16);
+select plan(15);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -141,17 +141,12 @@ select results_eq(
 select is_empty(
     $$
         select *
-        from notification n
+        from event e
         join package p using (package_id)
         where p.name = 'package1'
     $$,
-    'No new release notifications should exist for first version of package1'
+    'No new release event should exist for first version of package1'
 );
-
--- Subscribe user1 to package1 new releases notifications
-insert into subscription (user_id, package_id, notification_kind_id)
-select :'user1ID', package_id, 0
-from package where name = 'package1';
 
 -- Register a new version of the package previously registered
 select register_package('
@@ -252,12 +247,12 @@ select is_empty(
 select isnt_empty(
     $$
         select *
-        from notification n
+        from event e
         join package p using (package_id)
         where p.name = 'package1'
-        and n.package_version = '2.0.0'
+        and e.package_version = '2.0.0'
     $$,
-    'New release notification should exist for package1 version 2.0.0'
+    'New release event should exist for package1 version 2.0.0'
 );
 
 -- Register an old version of the package previously registered
@@ -353,12 +348,12 @@ select results_eq(
 select is_empty(
     $$
         select *
-        from notification n
+        from event e
         join package p using (package_id)
         where p.name = 'package1'
-        and n.package_version = '0.0.9'
+        and e.package_version = '0.0.9'
     $$,
-    'No new release notifications should exist for package1 version 0.0.9'
+    'No new release event should exist for package1 version 0.0.9'
 );
 
 -- Register package that belongs to an organization and check it succeeded
@@ -392,39 +387,17 @@ select results_eq(
             null::uuid
         )
     $$,
-    'Package that belongs to organization should exist'
+    'Package3 that belongs to organization should exist'
 );
 select is_empty(
     $$
         select *
-        from notification n
+        from event e
         join package p using (package_id)
         where p.name = 'package3'
-        and n.package_version = '1.0.0'
+        and e.package_version = '1.0.0'
     $$,
-    'No new release notifications should exist for first version of package3'
-);
-
--- Register a new version of the package previously registered
-select register_package('
-{
-    "kind": 1,
-    "name": "package3",
-    "display_name": "Package 3",
-    "description": "description",
-    "version": "2.0.0",
-    "organization_id": "00000000-0000-0000-0000-000000000001"
-}
-');
-select is_empty(
-    $$
-        select *
-        from notification n
-        join package p using (package_id)
-        where p.name = 'package3'
-        and n.package_version = '2.0.0'
-    $$,
-    'No new release notifications should exist for new version of package3 (no subscriptors)'
+    'No new release event should exist for first version of package3'
 );
 
 -- Finish tests and rollback transaction

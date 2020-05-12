@@ -12,7 +12,7 @@
       "name": "stable",
       "displayName": "Stable"
     },
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
@@ -27,7 +27,7 @@
       "name": "stable",
       "displayName": "Stable"
     },
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "eedf0ee0-841e-4434-bf0b-4c2a175cb8c8",
@@ -42,7 +42,7 @@
       "name": "stable",
       "displayName": "Stable"
     },
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "cfa55ea2-eb69-4703-8be7-73937c6efc4b",
@@ -57,7 +57,7 @@
       "name": "ibm-charts",
       "displayName": "IBM charts"
     },
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "ccd1553a-e9bd-45b5-93a3-9ee127dddcb0",
@@ -69,7 +69,7 @@
     "organizationName": "falco",
     "organizationDisplayName": "Falco",
     "chartRepository": null,
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "e63b8968-a688-4525-889d-cbbf3df82f9f",
@@ -81,7 +81,7 @@
     "organizationName": "falco",
     "organizationDisplayName": "Falco",
     "chartRepository": null,
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "2052b061-2459-4d9f-8cd3-a5e8dbb4b804",
@@ -93,7 +93,7 @@
     "organizationName": "opa",
     "organizationDisplayName": "OPA",
     "chartRepository": null,
-    "notificationKinds": [0]
+    "eventKinds": [0]
   },
   {
     "packageId": "d3945a69-2aae-4ff9-8fb3-ce3b720d0384",
@@ -108,6 +108,6 @@
       "name": "incubator",
       "displayName": "Incubator"
     },
-    "notificationKinds": [0]
+    "eventKinds": [0]
   }
 ]

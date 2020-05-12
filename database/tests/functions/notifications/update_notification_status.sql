@@ -8,12 +8,6 @@ select plan(2);
 \set event1ID '00000000-0000-0000-0000-000000000001'
 \set notification1ID '00000000-0000-0000-0000-000000000001'
 
--- No pending events available yet
-select is_empty(
-    $$ select get_pending_notification()::jsonb $$,
-    'Should not return a notification'
-);
-
 -- Seed some data
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into package (
@@ -33,21 +27,30 @@ insert into notification (notification_id, event_id, user_id)
 values (:'notification1ID', :'event1ID', :'user1ID');
 
 -- Run some tests
-select is(
-    get_pending_notification()::jsonb,
-    '{
-        "notification_id": "00000000-0000-0000-0000-000000000001",
-        "event": {
-            "event_id": "00000000-0000-0000-0000-000000000001",
-            "event_kind": 0,
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "package_version": "1.0.0"
-        },
-        "user": {
-            "email": "user1@email.com"
-        }
-	}'::jsonb,
-    'A notification should be returned'
+select results_eq(
+    $$
+        select processed, processed_at, error from notification
+        where notification_id = '00000000-0000-0000-0000-000000000001'
+    $$,
+    $$
+        values (false, null::timestamptz, null::text)
+    $$,
+    'Notification has not been processed yet'
+);
+
+-- Update notification status
+select update_notification_status(:'notification1ID', true, 'fake error');
+
+-- Run some tests
+select results_eq(
+    $$
+        select processed, error from notification
+        where notification_id = '00000000-0000-0000-0000-000000000001'
+    $$,
+    $$
+        values (true, 'fake error')
+    $$,
+    'Notification has been processed'
 );
 
 -- Finish tests and rollback transaction
