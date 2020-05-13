@@ -61,6 +61,7 @@ exports[`Package index creates snapshot 2`] = `
                     User: 
                   </small>
                   <a
+                    class="text-dark"
                     href="/packages/search?page=1&user=undefined"
                   />
                 </div>

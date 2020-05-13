@@ -285,6 +285,7 @@ const PackageView = (props: Props) => {
                               <small className="mr-1 text-uppercase text-muted">User: </small>
 
                               <Link
+                                className="text-dark"
                                 to={{
                                   pathname: '/packages/search',
                                   search: prepareQueryString({

@@ -95,7 +95,7 @@ const Readme = (props: Props) => {
         className={`mt-3 mb-5 ${styles.md}`}
         source={props.markdownContent}
         linkTarget="_blank"
-        escapeHtml={false}
+        skipHtml
         renderers={{
           code: Code,
           image: Image,
