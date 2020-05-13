@@ -8,13 +8,13 @@ import { Organization } from '../../../../../types';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
 import OrganizationForm from '../../../organizations/Form';
-import styles from './DetailsSection.module.css';
+import styles from './ProfileSection.module.css';
 
 interface Props {
   onAuthError: () => void;
 }
 
-const DetailsSection = (props: Props) => {
+const ProfileSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
@@ -54,7 +54,7 @@ const DetailsSection = (props: Props) => {
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between p-0">
       <div className="flex-grow-1">
-        <div className="h3 pb-2 border-bottom">Organization details</div>
+        <div className="h3 pb-2 border-bottom">Profile information</div>
 
         <div className={`mt-5 ${styles.form}`}>
           {(isUndefined(organization) || isLoading) && <Loading />}
@@ -102,4 +102,4 @@ const DetailsSection = (props: Props) => {
   );
 };
 
-export default DetailsSection;
+export default ProfileSection;

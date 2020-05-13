@@ -12,7 +12,7 @@ exports[`Organization settings index creates snapshot 1`] = `
       <div
         class="h3 pb-2 border-bottom"
       >
-        Organization details
+        Profile information
       </div>
       <div
         class="mt-5 form"
@@ -49,7 +49,7 @@ exports[`Organization settings index creates snapshot 2`] = `
       <div
         class="h3 pb-2 border-bottom"
       >
-        Organization details
+        Profile information
       </div>
       <div
         class="mt-5 form"
