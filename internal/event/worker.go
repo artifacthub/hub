@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/jackc/pgx/v4"
 	"github.com/rs/zerolog/log"
@@ -71,13 +72,35 @@ func (w *Worker) processEvent(ctx context.Context) error {
 		}
 
 		// Register event notifications
+		// Email notifications
 		users, err := w.svc.SubscriptionManager.GetSubscriptors(ctx, e.PackageID, e.EventKind)
 		if err != nil {
 			log.Error().Err(err).Msg("error getting subscriptors")
 			return err
 		}
 		for _, u := range users {
-			if err := w.svc.NotificationManager.Add(ctx, tx, e.EventID, u.UserID); err != nil {
+			n := &hub.Notification{
+				Event: e,
+				User:  u,
+			}
+			if err := w.svc.NotificationManager.Add(ctx, tx, n); err != nil {
+				log.Error().Err(err).Msg("error adding notification")
+				return err
+			}
+		}
+		// Webhook notifications
+		webhooks, err := w.svc.WebhookManager.GetSubscribedTo(ctx, e.EventKind, e.PackageID)
+		if err != nil {
+			log.Error().Err(err).Msg("error getting webhooks")
+			return err
+		}
+		for _, wh := range webhooks {
+			n := &hub.Notification{
+				Event:   e,
+				Webhook: wh,
+			}
+			err := w.svc.NotificationManager.Add(ctx, tx, n)
+			if err != nil {
 				log.Error().Err(err).Msg("error adding notification")
 				return err
 			}

@@ -10,6 +10,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
@@ -23,52 +24,81 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
-	dbQuery := `insert into notification (event_id, user_id) values ($1, $2)`
+	dbQuery := `select add_notification($1::jsonb)`
+	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg  string
-			eventID string
-			userID  string
+			errMsg string
+			n      *hub.Notification
 		}{
 			{
 				"invalid event id",
-				"invalid",
-				validUUID,
+				&hub.Notification{
+					Event: &hub.Event{EventID: "invalid"},
+				},
+			},
+			{
+				"user or webhook must be provided",
+				&hub.Notification{
+					Event: &hub.Event{EventID: validUUID},
+				},
+			},
+			{
+				"both user and webhook were provided",
+				&hub.Notification{
+					Event:   &hub.Event{EventID: validUUID},
+					User:    &hub.User{UserID: validUUID},
+					Webhook: &hub.Webhook{WebhookID: validUUID},
+				},
 			},
 			{
 				"invalid user id",
-				validUUID,
-				"invalid",
+				&hub.Notification{
+					Event: &hub.Event{EventID: validUUID},
+					User:  &hub.User{UserID: ""},
+				},
+			},
+			{
+				"invalid webhook id",
+				&hub.Notification{
+					Event:   &hub.Event{EventID: validUUID},
+					Webhook: &hub.Webhook{WebhookID: ""},
+				},
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager()
-				err := m.Add(context.Background(), nil, tc.eventID, tc.userID)
+				err := m.Add(context.Background(), nil, tc.n)
 				assert.True(t, errors.Is(err, ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
 	})
 
+	n := &hub.Notification{
+		Event: &hub.Event{EventID: validUUID},
+		User:  &hub.User{UserID: validUUID},
+	}
+
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, validUUID, validUUID).Return(tests.ErrFakeDatabaseFailure)
+		tx.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager()
 
-		err := m.Add(context.Background(), tx, validUUID, validUUID)
+		err := m.Add(ctx, tx, n)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		tx.AssertExpectations(t)
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, validUUID, validUUID).Return(nil)
+		tx.On("Exec", dbQuery, mock.Anything).Return(nil)
 		m := NewManager()
 
-		err := m.Add(context.Background(), tx, validUUID, validUUID)
+		err := m.Add(ctx, tx, n)
 		assert.NoError(t, err)
 		tx.AssertExpectations(t)
 	})
@@ -118,7 +148,7 @@ func TestGetPending(t *testing.T) {
 		`), nil)
 		m := NewManager()
 
-		n, err := m.GetPending(context.Background(), tx)
+		n, err := m.GetPending(ctx, tx)
 		require.NoError(t, err)
 		assert.Equal(t, expectedNotification, n)
 		tx.AssertExpectations(t)

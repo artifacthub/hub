@@ -21,6 +21,7 @@ import (
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"
 )
@@ -53,6 +54,7 @@ func main() {
 		PackageManager:         pkg.NewManager(db),
 		SubscriptionManager:    subscription.NewManager(db),
 		ChartRepositoryManager: chartrepo.NewManager(db),
+		WebhookManager:         webhook.NewManager(db),
 		ImageStore:             pg.NewImageStore(db),
 	}
 	addr := cfg.GetString("server.addr")
@@ -85,8 +87,9 @@ func main() {
 	eSvc := &event.Services{
 		DB:                  db,
 		EventManager:        event.NewManager(),
-		NotificationManager: notification.NewManager(),
 		SubscriptionManager: subscription.NewManager(db),
+		WebhookManager:      webhook.NewManager(db),
+		NotificationManager: notification.NewManager(),
 	}
 	eventsDispatcher := event.NewDispatcher(eSvc)
 	wg.Add(1)

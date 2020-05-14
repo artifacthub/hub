@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(87);
+select plan(102);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -33,7 +33,10 @@ select tables_are(array[
     'user_starred_package',
     'user__organization',
     'version_functions',
-    'version_schema'
+    'version_schema',
+    'webhook',
+    'webhook__event_kind',
+    'webhook__package'
 ]);
 
 -- Check tables have expected columns
@@ -86,7 +89,8 @@ select columns_are('notification', array[
     'processed_at',
     'error',
     'event_id',
-    'user_id'
+    'user_id',
+    'webhook_id'
 ]);
 select columns_are('organization', array[
     'organization_id',
@@ -174,6 +178,28 @@ select columns_are('version_functions', array[
 select columns_are('version_schema', array[
     'version'
 ]);
+select columns_are('webhook', array[
+    'webhook_id',
+    'name',
+    'description',
+    'url',
+    'secret',
+    'content_type',
+    'template',
+    'active',
+    'created_at',
+    'updated_at',
+    'user_id',
+    'organization_id'
+]);
+select columns_are('webhook__event_kind', array[
+    'webhook_id',
+    'event_kind_id'
+]);
+select columns_are('webhook__package', array[
+    'webhook_id',
+    'package_id'
+]);
 
 -- Check tables have expected indexes
 select indexes_are('chart_repository', array[
@@ -204,7 +230,8 @@ select indexes_are('maintainer', array[
 select indexes_are('notification', array[
     'notification_pkey',
     'notification_not_processed_idx',
-    'notification_event_id_user_id_key'
+    'notification_event_id_user_id_key',
+    'notification_event_id_webhook_id_key'
 ]);
 select indexes_are('organization', array[
     'organization_pkey',
@@ -248,6 +275,15 @@ select indexes_are('user__organization', array[
 ]);
 select indexes_are('user_starred_package', array[
     'user_starred_package_pkey'
+]);
+select indexes_are('webhook', array[
+    'webhook_pkey'
+]);
+select indexes_are('webhook__event_kind', array[
+    'webhook__event_kind_pkey'
+]);
+select indexes_are('webhook__package', array[
+    'webhook__package_pkey'
 ]);
 
 -- Check expected functions exist
@@ -301,8 +337,18 @@ select has_function('get_user_subscriptions');
 
 select has_function('get_pending_event');
 
+select has_function('add_notification');
 select has_function('get_pending_notification');
 select has_function('update_notification_status');
+
+select has_function('add_webhook');
+select has_function('delete_webhook');
+select has_function('get_webhook');
+select has_function('get_org_webhooks');
+select has_function('get_user_webhooks');
+select has_function('get_webhooks_subscribed_to');
+select has_function('update_webhook');
+select has_function('user_has_access_to_webhook');
 
 -- Check package kinds exist
 select results_eq(

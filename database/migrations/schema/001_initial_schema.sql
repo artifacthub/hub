@@ -175,6 +175,34 @@ create table if not exists subscription (
     primary key (user_id, package_id, event_kind_id)
 );
 
+create table if not exists webhook (
+    webhook_id uuid primary key default gen_random_uuid(),
+    name text not null check (name <> ''),
+    description text check (description <> ''),
+    url text not null check (url <> ''),
+    secret text check (secret <> ''),
+    content_type text check (content_type <> ''),
+    template text check (template <> ''),
+    active boolean not null default true,
+    created_at timestamptz default current_timestamp not null,
+    updated_at timestamptz default current_timestamp not null,
+    user_id uuid references "user" on delete cascade,
+    organization_id uuid references organization on delete cascade,
+    check (user_id is null or organization_id is null)
+);
+
+create table if not exists webhook__event_kind (
+    webhook_id uuid not null references webhook on delete cascade,
+    event_kind_id integer not null references event_kind on delete restrict,
+    primary key (webhook_id, event_kind_id)
+);
+
+create table if not exists webhook__package (
+    webhook_id uuid not null references webhook on delete cascade,
+    package_id uuid not null references package on delete cascade,
+    primary key (webhook_id, package_id)
+);
+
 create table notification (
     notification_id uuid primary key default gen_random_uuid(),
     created_at timestamptz default current_timestamp not null,
@@ -182,8 +210,11 @@ create table notification (
     processed_at timestamptz,
     error text check (error <> ''),
     event_id uuid not null references event on delete restrict,
-    user_id uuid not null references "user" on delete cascade,
-    unique (event_id, user_id)
+    user_id uuid references "user" on delete cascade,
+    webhook_id uuid references webhook on delete cascade,
+    check (user_id is null or webhook_id is null),
+    unique (event_id, user_id),
+    unique (event_id, webhook_id)
 );
 
 create index notification_not_processed_idx on notification (notification_id) where processed = 'false';

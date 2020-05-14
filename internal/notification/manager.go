@@ -25,15 +25,29 @@ func NewManager() *Manager {
 }
 
 // Add adds the provided notification to the database.
-func (m *Manager) Add(ctx context.Context, tx pgx.Tx, eventID, userID string) error {
-	if _, err := uuid.FromString(eventID); err != nil {
+func (m *Manager) Add(ctx context.Context, tx pgx.Tx, n *hub.Notification) error {
+	if _, err := uuid.FromString(n.Event.EventID); err != nil {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event id")
 	}
-	if _, err := uuid.FromString(userID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user id")
+	if n.User == nil && n.Webhook == nil {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "user or webhook must be provided")
 	}
-	query := `insert into notification (event_id, user_id) values ($1, $2)`
-	_, err := tx.Exec(ctx, query, eventID, userID)
+	if n.User != nil && n.Webhook != nil {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "both user and webhook were provided")
+	}
+	if n.User != nil {
+		if _, err := uuid.FromString(n.User.UserID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user id")
+		}
+	}
+	if n.Webhook != nil {
+		if _, err := uuid.FromString(n.Webhook.WebhookID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid webhook id")
+		}
+	}
+	query := `select add_notification($1::jsonb)`
+	nJSON, _ := json.Marshal(n)
+	_, err := tx.Exec(ctx, query, nJSON)
 	return err
 }
 

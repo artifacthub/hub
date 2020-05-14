@@ -27,6 +27,7 @@ require (
 	github.com/jackc/pgx/v4 v4.6.0
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/prometheus/client_golang v1.5.1
 	github.com/rs/zerolog v1.18.0

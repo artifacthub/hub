@@ -2,14 +2,19 @@ package notification
 
 import (
 	"context"
+	"net/http"
 	"sync"
+	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/patrickmn/go-cache"
 	"github.com/spf13/viper"
 )
 
 const (
-	defaultNumWorkers = 2
+	defaultNumWorkers      = 2
+	cacheDefaultExpiration = 5 * time.Minute
+	cacheCleanupInterval   = 10 * time.Minute
 )
 
 // Services is a wrapper around several internal services used to handle
@@ -30,17 +35,23 @@ type Dispatcher struct {
 
 // NewDispatcher creates a new Dispatcher instance.
 func NewDispatcher(cfg *viper.Viper, svc *Services, opts ...func(d *Dispatcher)) *Dispatcher {
+	// Setup dispatcher
 	d := &Dispatcher{
 		numWorkers: defaultNumWorkers,
 	}
 	for _, o := range opts {
 		o(d)
 	}
-	emailDataCache := NewEmailDataCache(svc.PackageManager, cfg.GetString("server.baseURL"))
+
+	// Setup and launch workers
+	c := cache.New(cacheDefaultExpiration, cacheCleanupInterval)
+	baseURL := cfg.GetString("server.baseURL")
+	httpClient := &http.Client{Timeout: 10 * time.Second}
 	d.workers = make([]*Worker, 0, d.numWorkers)
 	for i := 0; i < d.numWorkers; i++ {
-		d.workers = append(d.workers, NewWorker(svc, emailDataCache))
+		d.workers = append(d.workers, NewWorker(svc, c, baseURL, httpClient))
 	}
+
 	return d
 }
 
