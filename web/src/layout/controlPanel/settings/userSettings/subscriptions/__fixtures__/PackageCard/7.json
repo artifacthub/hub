@@ -11,5 +11,5 @@
     "name": "ibm-charts",
     "displayName": "IBM charts"
   },
-  "notificationKinds": [0]
+  "eventKinds": [0]
 }

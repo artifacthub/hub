@@ -45,7 +45,7 @@ export interface Package {
   links?: PackageLink[];
   stars?: number | null;
   userAlias: string | null;
-  notificationKinds?: NotificationKind[];
+  eventKinds?: EventKind[];
 }
 
 export interface PackageData {
@@ -199,11 +199,11 @@ export interface PackageStars {
   stars: number | null;
 }
 
-export enum NotificationKind {
+export enum EventKind {
   NewPackageRelease = 0,
   SecurityAlert,
 }
 
 export interface Subscription {
-  notificationKind: NotificationKind;
+  eventKind: EventKind;
 }

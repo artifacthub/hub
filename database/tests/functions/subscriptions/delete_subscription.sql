@@ -20,7 +20,7 @@ insert into package (
     '1.0.0',
     1
 );
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
 
 -- Delete subscription
@@ -28,7 +28,7 @@ select delete_subscription('
 {
     "user_id": "00000000-0000-0000-0000-000000000001",
     "package_id": "00000000-0000-0000-0000-000000000001",
-    "notification_kind": 0
+    "event_kind": 0
 }
 '::jsonb);
 
@@ -39,7 +39,7 @@ select is_empty(
         from subscription
         where user_id = '00000000-0000-0000-0000-000000000001'
         and package_id = '00000000-0000-0000-0000-000000000001'
-        and notification_kind_id = 0
+        and event_kind_id = 0
     $$,
     'Subscription should not exist'
 );

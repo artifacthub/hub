@@ -1,12 +1,12 @@
 -- get_subscriptors returns the users subscribed to the package provided for
--- the given notification kind.
-create or replace function get_subscriptors(p_package_id uuid, p_notification_kind int)
+-- the given event kind.
+create or replace function get_subscriptors(p_package_id uuid, p_event_kind int)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
-        'email', u.email
+        'user_id', u.user_id
     )), '[]')
     from subscription s
     join "user" u using (user_id)
     where s.package_id = p_package_id
-    and s.notification_kind_id = p_notification_kind;
+    and s.event_kind_id = p_event_kind;
 $$ language sql;

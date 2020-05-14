@@ -51,11 +51,11 @@ insert into package (
     1,
     :'org1ID'
 );
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 1);
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package2ID', 0);
 
 -- Run some tests
@@ -74,7 +74,7 @@ select is(
             "name": "repo1",
             "display_name": "Repo 1"
         },
-        "notification_kinds": [0, 1]
+        "event_kinds": [0, 1]
     }, {
         "package_id": "00000000-0000-0000-0000-000000000002",
         "kind": 1,
@@ -85,7 +85,7 @@ select is(
         "organization_name": "org1",
         "organization_display_name": "Organization 1",
         "chart_repository": null,
-        "notification_kinds": [0]
+        "event_kinds": [0]
     }]'::jsonb,
     'Two subscriptions should be returned'
 );

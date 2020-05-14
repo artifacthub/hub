@@ -42,9 +42,9 @@ func (m *ManagerMock) GetByUserJSON(ctx context.Context) ([]byte, error) {
 func (m *ManagerMock) GetSubscriptors(
 	ctx context.Context,
 	packageID string,
-	notificationKind hub.NotificationKind,
+	eventKind hub.EventKind,
 ) ([]*hub.User, error) {
-	args := m.Called(ctx, packageID, notificationKind)
+	args := m.Called(ctx, packageID, eventKind)
 	data, _ := args.Get(0).([]*hub.User)
 	return data, args.Error(1)
 }

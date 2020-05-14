@@ -80,23 +80,23 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	return dataJSON, nil
 }
 
-// GetSubscriptors returns the users subscribed to a package to receive certain
-// kind of notifications.
+// GetSubscriptors returns the users subscribed to a package to receive
+// notifications for certain kind of events.
 func (m *Manager) GetSubscriptors(
 	ctx context.Context,
 	packageID string,
-	notificationKind hub.NotificationKind,
+	eventKind hub.EventKind,
 ) ([]*hub.User, error) {
 	if _, err := uuid.FromString(packageID); err != nil {
 		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
 	}
-	if notificationKind != hub.NewRelease {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid notification kind")
+	if eventKind != hub.NewRelease {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event kind")
 	}
 
 	query := "select get_subscriptors($1::uuid, $2::integer)"
 	var dataJSON []byte
-	err := m.db.QueryRow(ctx, query, packageID, notificationKind).Scan(&dataJSON)
+	err := m.db.QueryRow(ctx, query, packageID, eventKind).Scan(&dataJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -113,8 +113,8 @@ func validateSubscription(s *hub.Subscription) error {
 	if _, err := uuid.FromString(s.PackageID); err != nil {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
 	}
-	if s.NotificationKind != hub.NewRelease {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid notification kind")
+	if s.EventKind != hub.NewRelease {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event kind")
 	}
 	return nil
 }

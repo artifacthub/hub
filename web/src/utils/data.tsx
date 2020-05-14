@@ -1,10 +1,10 @@
 import React from 'react';
 import { MdNewReleases } from 'react-icons/md';
 
-import { NotificationKind, PackageKind } from '../types';
+import { EventKind, PackageKind } from '../types';
 
 export interface SubscriptionItem {
-  kind: NotificationKind;
+  kind: EventKind;
   icon: JSX.Element;
   name: string;
   title: string;
@@ -14,7 +14,7 @@ export interface SubscriptionItem {
 
 export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
   {
-    kind: NotificationKind.NewPackageRelease,
+    kind: EventKind.NewPackageRelease,
     icon: <MdNewReleases />,
     name: 'newRelease',
     title: 'New releases',

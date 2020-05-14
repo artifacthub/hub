@@ -43,7 +43,7 @@ describe('SubscriptionsButton', () => {
   });
 
   it('creates snapshot', async () => {
-    mocked(API).getPackageSubscriptions.mockResolvedValue([{ notificationKind: 0 }]);
+    mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
 
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -59,7 +59,7 @@ describe('SubscriptionsButton', () => {
   describe('Render', () => {
     describe('when user is signed in', () => {
       it('renders component with active New releases notification', async () => {
-        mocked(API).getPackageSubscriptions.mockResolvedValue([{ notificationKind: 0 }]);
+        mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
         mocked(API).deleteSubscription.mockResolvedValue('');
 
         const { getByText, getByTestId, queryByRole } = render(
@@ -227,7 +227,7 @@ describe('SubscriptionsButton', () => {
     });
 
     it('to inactivate New release notification', async () => {
-      mocked(API).getPackageSubscriptions.mockResolvedValue([{ notificationKind: 0 }]);
+      mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
       mocked(API).deleteSubscription.mockRejectedValue({ statusText: 'error' });
 
       const { getByText, getByTestId } = render(

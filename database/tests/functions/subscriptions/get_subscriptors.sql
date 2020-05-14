@@ -27,11 +27,11 @@ insert into package (
     '1.0.0',
     1
 );
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user2ID', :'package1ID', 0);
-insert into subscription (user_id, package_id, notification_kind_id)
+insert into subscription (user_id, package_id, event_kind_id)
 values (:'user3ID', :'package1ID', 1);
 
 -- Run some tests
@@ -39,10 +39,10 @@ select is(
     get_subscriptors(:'package1ID', 0)::jsonb,
     '[
         {
-            "email": "user1@email.com"
+            "user_id": "00000000-0000-0000-0000-000000000001"
         },
         {
-            "email": "user2@email.com"
+            "user_id": "00000000-0000-0000-0000-000000000002"
         }
     ]'::jsonb,
     'Two subscriptors expected for package1 and kind new releases'

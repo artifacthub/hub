@@ -1,11 +1,10 @@
-package notification
+package event
 
 import (
 	"context"
 	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/spf13/viper"
 )
 
 const (
@@ -13,33 +12,32 @@ const (
 )
 
 // Services is a wrapper around several internal services used to handle
-// notifications deliveries.
+// events processing.
 type Services struct {
 	DB                  hub.DB
-	ES                  hub.EmailSender
-	NotificationManager hub.NotificationManager
+	EventManager        hub.EventManager
 	SubscriptionManager hub.SubscriptionManager
-	PackageManager      hub.PackageManager
+	NotificationManager hub.NotificationManager
 }
 
-// Dispatcher handles a group of workers in charge of delivering notifications.
+// Dispatcher handles a group of workers in charge of processing events that
+// happen in the Hub.
 type Dispatcher struct {
 	numWorkers int
 	workers    []*Worker
 }
 
 // NewDispatcher creates a new Dispatcher instance.
-func NewDispatcher(cfg *viper.Viper, svc *Services, opts ...func(d *Dispatcher)) *Dispatcher {
+func NewDispatcher(svc *Services, opts ...func(d *Dispatcher)) *Dispatcher {
 	d := &Dispatcher{
 		numWorkers: defaultNumWorkers,
 	}
 	for _, o := range opts {
 		o(d)
 	}
-	emailDataCache := NewEmailDataCache(svc.PackageManager, cfg.GetString("server.baseURL"))
 	d.workers = make([]*Worker, 0, d.numWorkers)
 	for i := 0; i < d.numWorkers; i++ {
-		d.workers = append(d.workers, NewWorker(svc, emailDataCache))
+		d.workers = append(d.workers, NewWorker(svc))
 	}
 	return d
 }

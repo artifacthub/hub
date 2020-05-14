@@ -3,13 +3,13 @@
 create or replace function get_package_subscriptions(p_user_id uuid, p_package_id uuid)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
-        'notification_kind', notification_kind_id
+        'event_kind', event_kind_id
     )), '[]')
     from (
         select *
         from subscription
         where user_id = p_user_id
         and package_id = p_package_id
-        order by notification_kind_id asc
+        order by event_kind_id asc
     ) s;
 $$ language sql;

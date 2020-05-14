@@ -8,7 +8,7 @@ import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { NotificationKind, Subscription } from '../../types';
+import { EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../utils/data';
 import styles from './SubscriptionsButton.module.css';
@@ -26,7 +26,7 @@ const SubscriptionsButton = (props: Props) => {
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
 
-  const getNotificationTitle = (kind: NotificationKind): string => {
+  const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
     const notif = SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
     if (!isUndefined(notif)) {
@@ -35,21 +35,21 @@ const SubscriptionsButton = (props: Props) => {
     return title;
   };
 
-  const updateOptimisticallyActiveSubscriptions = (kind: NotificationKind, isActive: boolean) => {
+  const updateOptimisticallyActiveSubscriptions = (kind: EventKind, isActive: boolean) => {
     if (isActive) {
-      setActiveSubscriptions(activeSubscriptions!.filter((subs) => subs.notificationKind !== kind));
+      setActiveSubscriptions(activeSubscriptions!.filter((subs) => subs.eventKind !== kind));
     } else {
       const newSubs = activeSubscriptions ? [...activeSubscriptions] : [];
-      newSubs.push({ notificationKind: kind });
+      newSubs.push({ eventKind: kind });
       setActiveSubscriptions(newSubs);
     }
   };
 
-  const isActiveNotification = (kind: NotificationKind): boolean => {
+  const isActiveNotification = (kind: EventKind): boolean => {
     let isActive = false;
     if (activeSubscriptions) {
       for (const activeSubs of activeSubscriptions) {
-        if (activeSubs.notificationKind === kind) {
+        if (activeSubs.eventKind === kind) {
           isActive = true;
           break;
         }
@@ -96,7 +96,7 @@ const SubscriptionsButton = (props: Props) => {
     }
   }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-  async function changeSubscription(kind: NotificationKind, isActive: boolean) {
+  async function changeSubscription(kind: EventKind, isActive: boolean) {
     updateOptimisticallyActiveSubscriptions(kind, isActive);
     try {
       if (isActive) {

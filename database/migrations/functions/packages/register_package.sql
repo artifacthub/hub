@@ -141,16 +141,11 @@ begin
         deprecated = excluded.deprecated,
         updated_at = current_timestamp;
 
-    -- Register new release notification if package's latest version has been
-    -- updated and there are subscriptors for this package and notification kind
+    -- Register new release event if package's latest version has been updated
     if semver_gt(p_pkg->>'version', v_previous_latest_version) then
-        perform * from subscription
-        where notification_kind_id = 0 -- New package release
-        and package_id = v_package_id;
-        if found then
-            insert into notification (package_id, package_version, notification_kind_id)
-            values (v_package_id, p_pkg->>'version', 0);
-        end if;
+        insert into event (package_id, package_version, event_kind_id)
+        values (v_package_id, p_pkg->>'version', 0)
+        on conflict do nothing;
     end if;
 end
 $$ language plpgsql;

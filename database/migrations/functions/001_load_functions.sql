@@ -46,7 +46,10 @@
 {{ template "subscriptions/get_subscriptors.sql" }}
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 
+{{ template "events/get_pending_event.sql" }}
+
 {{ template "notifications/get_pending_notification.sql" }}
+{{ template "notifications/update_notification_status.sql" }}
 
 ---- create above / drop below ----
 

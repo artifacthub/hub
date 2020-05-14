@@ -4,5 +4,5 @@ returns void as $$
     delete from subscription
     where user_id = (p_subscription->>'user_id')::uuid
     and package_id = (p_subscription->>'package_id')::uuid
-    and notification_kind_id = (p_subscription->>'notification_kind')::int;
+    and event_kind_id = (p_subscription->>'event_kind')::int;
 $$ language sql;

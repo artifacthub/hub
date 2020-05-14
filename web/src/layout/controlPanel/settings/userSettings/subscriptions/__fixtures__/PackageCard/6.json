@@ -11,5 +11,5 @@
     "name": "stable",
     "displayName": "Stable"
   },
-  "notificationKinds": [0]
+  "eventKinds": [0]
 }

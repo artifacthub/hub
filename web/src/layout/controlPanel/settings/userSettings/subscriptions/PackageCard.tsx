@@ -4,7 +4,7 @@ import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
-import { NotificationKind, Package, PackageKind } from '../../../../../types';
+import { EventKind, Package, PackageKind } from '../../../../../types';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
 import prepareQueryString from '../../../../../utils/prepareQueryString';
@@ -15,7 +15,7 @@ import styles from './PackageCard.module.css';
 
 interface Props {
   package: Package;
-  changeSubscription: (packageId: string, kind: NotificationKind, isActive: boolean, packageName: string) => void;
+  changeSubscription: (packageId: string, kind: EventKind, isActive: boolean, packageName: string) => void;
 }
 
 const PackageCard = (props: Props) => {
@@ -130,8 +130,7 @@ const PackageCard = (props: Props) => {
             </div>
 
             {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-              const isActive =
-                !isUndefined(props.package.notificationKinds) && props.package.notificationKinds.includes(subs.kind);
+              const isActive = !isUndefined(props.package.eventKinds) && props.package.eventKinds.includes(subs.kind);
 
               return (
                 <button

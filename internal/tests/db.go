@@ -81,8 +81,8 @@ func (m *TXMock) CopyFrom(
 
 // Exec implements the pgx.Tx interface.
 func (m *TXMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
-	// NOTE: not used
-	return nil, nil
+	args := m.Called(append([]interface{}{query}, params...)...)
+	return nil, args.Error(0)
 }
 
 // LargeObjects implements the pgx.Tx interface.

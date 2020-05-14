@@ -12,6 +12,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers"
 	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/email"
+	"github.com/artifacthub/hub/internal/event"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img/pg"
 	"github.com/artifacthub/hub/internal/notification"
@@ -45,7 +46,7 @@ func main() {
 		es = s
 	}
 
-	// Setup and launch server
+	// Setup and launch http server
 	hSvc := &handlers.Services{
 		OrganizationManager:    org.NewManager(db, es),
 		UserManager:            user.NewManager(db, es),
@@ -78,6 +79,19 @@ func main() {
 		}
 	}()
 
+	// Setup and launch events dispatcher
+	ctx, stop := context.WithCancel(context.Background())
+	var wg sync.WaitGroup
+	eSvc := &event.Services{
+		DB:                  db,
+		EventManager:        event.NewManager(),
+		NotificationManager: notification.NewManager(),
+		SubscriptionManager: subscription.NewManager(db),
+	}
+	eventsDispatcher := event.NewDispatcher(eSvc)
+	wg.Add(1)
+	go eventsDispatcher.Run(ctx, &wg)
+
 	// Setup and launch notifications dispatcher
 	nSvc := &notification.Services{
 		DB:                  db,
@@ -87,8 +101,6 @@ func main() {
 		PackageManager:      pkg.NewManager(db),
 	}
 	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)
-	ctx, stopNotificationsDispatcher := context.WithCancel(context.Background())
-	var wg sync.WaitGroup
 	wg.Add(1)
 	go notificationsDispatcher.Run(ctx, &wg)
 
@@ -97,7 +109,7 @@ func main() {
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 	<-shutdown
 	log.Info().Msg("Hub server shutting down..")
-	stopNotificationsDispatcher()
+	stop()
 	wg.Wait()
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetDuration("server.shutdownTimeout"))
 	defer cancel()
