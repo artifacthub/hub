@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import React, { useRef, useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
+import { FaSearch } from 'react-icons/fa';
 
 import { API } from '../../api';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -65,38 +65,42 @@ const SearchTypeahead = (props: Props) => {
     }
   };
 
-  const forceFocus = (): void => {
-    if (!isNull(inputEl) && !isNull(inputEl.current)) {
-      inputEl.current.focus();
-    }
-  };
-
   return (
     <div className="position-relative">
-      <div className={`d-flex align-items-strecht overflow-hidden ${styles.inputWrapper}`}>
+      <div className="d-flex flex-row">
         <div
-          data-testid="searchTypeaheadIcon"
-          className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
-          onClick={forceFocus}
+          className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
         >
-          <FiSearch />
+          <input
+            data-testid="searchTypeaheadInput"
+            ref={inputEl}
+            type="text"
+            className={`flex-grow-1 px-3 ${styles.input}`}
+            name="name"
+            autoComplete="off"
+            onKeyDown={handleOnKeyDown}
+            onChange={onChange}
+          />
+
+          {isSearching && (
+            <div className={`position-absolute text-secondary ${styles.loading}`}>
+              <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
+            </div>
+          )}
         </div>
 
-        <input
-          data-testid="searchTypeaheadInput"
-          ref={inputEl}
-          type="text"
-          className={`flex-grow-1 pl-sm-0 pl-3 ${styles.input}`}
-          name="name"
-          onKeyDown={handleOnKeyDown}
-          onChange={onChange}
-        />
-
-        {isSearching && (
-          <div className={`position-absolute text-primary ${styles.loading}`}>
-            <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
-          </div>
-        )}
+        <button
+          data-testid="searchIconBtn"
+          className={`btn btn-secondary ml-3 text-center p-0 ${styles.searchBtn}`}
+          disabled={searchQuery === '' || isSearching}
+          onClick={() => {
+            if (searchQuery !== '') {
+              searchPackages(searchQuery);
+            }
+          }}
+        >
+          <FaSearch />
+        </button>
       </div>
 
       {!isNull(packages) && (
@@ -126,6 +130,7 @@ const SearchTypeahead = (props: Props) => {
 
                     return (
                       <tr
+                        data-testid="packageItem"
                         role="button"
                         className={classnames(
                           { [styles.clickableCell]: !isDisabled },

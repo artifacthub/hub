@@ -27,6 +27,7 @@ const SubscriptionModal = (props: Props) => {
   const [isSending, setIsSending] = useState<boolean>(false);
 
   const onCloseModal = () => {
+    setPackageItem(null);
     props.onClose();
   };
 

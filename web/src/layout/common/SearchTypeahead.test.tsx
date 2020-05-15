@@ -38,6 +38,8 @@ describe('SearchTypeahead', () => {
 
       const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
 
+      expect(getByTestId('searchIconBtn')).toBeInTheDocument();
+
       const input = getByTestId('searchTypeaheadInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
@@ -49,14 +51,14 @@ describe('SearchTypeahead', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(getAllByRole('button')).toHaveLength(2);
+      expect(getAllByRole('button')).toHaveLength(3);
     });
 
     it('selects package', async () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId, getAllByTestId } = render(<SearchTypeahead {...defaultProps} />);
 
       const input = getByTestId('searchTypeaheadInput');
       expect(input).toBeInTheDocument();
@@ -69,7 +71,7 @@ describe('SearchTypeahead', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const packages = getAllByRole('button');
+      const packages = getAllByTestId('packageItem');
       fireEvent.click(packages[0]);
 
       expect(mockOnSelection).toHaveBeenCalledTimes(1);
@@ -103,7 +105,7 @@ describe('SearchTypeahead', () => {
       const mockSearch = getMockSearch('2');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByRole } = render(
+      const { getByTestId, getAllByTestId } = render(
         <SearchTypeahead {...defaultProps} disabledPackages={[mockSearch.data!.packages![0].packageId]} />
       );
 
@@ -118,29 +120,18 @@ describe('SearchTypeahead', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const firstPackage = getAllByRole('button')[0];
+      const firstPackage = getAllByTestId('packageItem')[0];
       expect(firstPackage).toHaveClass('disabledCell');
       fireEvent.click(firstPackage);
 
       expect(mockOnSelection).toHaveBeenCalledTimes(0);
     });
 
-    it('forces focus to click magnifying glass icon', () => {
-      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
-
-      const icon = getByTestId('searchTypeaheadIcon');
-      fireEvent.click(icon);
-
-      waitFor(() => {
-        expect(getByTestId('searchTypeaheadInput')).toHaveFocus();
-      });
-    });
-
     it('cleans packages list after changing filled input', async () => {
       const mockSearch = getMockSearch('3');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId, getAllByTestId } = render(<SearchTypeahead {...defaultProps} />);
 
       const input = getByTestId('searchTypeaheadInput');
       expect(input).toBeInTheDocument();
@@ -153,13 +144,49 @@ describe('SearchTypeahead', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      expect(getAllByRole('button')).toHaveLength(2);
+      expect(getAllByTestId('packageItem')).toHaveLength(2);
 
       fireEvent.change(input, { target: { value: 'testing1' } });
 
       waitFor(() => {
-        expect(getAllByRole('button')).toHaveLength(0);
+        expect(getAllByTestId('packageItem')).toHaveLength(0);
       });
+    });
+  });
+
+  describe('searchIconBtn', () => {
+    it('is disabled when input if empty', () => {
+      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+
+      const btn = getByTestId('searchIconBtn');
+      expect(btn).toBeDisabled();
+    });
+
+    it('works when input is not empty', async () => {
+      const mockSearch = getMockSearch('4');
+      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+
+      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+
+      const btn = getByTestId('searchIconBtn');
+      expect(btn).toBeDisabled();
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+
+      expect(btn).not.toBeDisabled();
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        expect(btn).toBeDisabled();
+      });
+
+      expect(btn).not.toBeDisabled();
     });
   });
 });
