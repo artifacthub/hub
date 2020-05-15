@@ -60,7 +60,7 @@ describe('SubscriptionModal', () => {
       const mockSearch = getMockSearch('3');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByRole, getByTestId } = render(
+      const { getAllByTestId, getByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />
       );
 
@@ -75,23 +75,23 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
-      expect(buttons).toHaveLength(10);
+      const buttons = getAllByTestId('packageItem');
+      expect(buttons).toHaveLength(8);
+      expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
-      expect(buttons[2]).toHaveClass('disabledCell');
+      expect(buttons[2]).toHaveClass('clickableCell');
       expect(buttons[3]).toHaveClass('clickableCell');
       expect(buttons[4]).toHaveClass('clickableCell');
       expect(buttons[5]).toHaveClass('clickableCell');
       expect(buttons[6]).toHaveClass('clickableCell');
       expect(buttons[7]).toHaveClass('clickableCell');
-      expect(buttons[8]).toHaveClass('clickableCell');
     });
 
     it('all enabled', async () => {
       const mockSearch = getMockSearch('4');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByRole, getByTestId } = render(
+      const { getAllByTestId, getByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />
       );
 
@@ -106,16 +106,16 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
+      const buttons = getAllByTestId('packageItem');
+      expect(buttons[0]).toHaveClass('clickableCell');
       expect(buttons[1]).toHaveClass('clickableCell');
-      expect(buttons[2]).toHaveClass('clickableCell');
     });
 
     it('all disabled', async () => {
       const mockSearch = getMockSearch('5');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByRole, getByTestId } = render(
+      const { getAllByTestId, getByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />
       );
 
@@ -130,16 +130,16 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
+      const buttons = getAllByTestId('packageItem');
+      expect(buttons[0]).toHaveClass('disabledCell');
       expect(buttons[1]).toHaveClass('disabledCell');
-      expect(buttons[2]).toHaveClass('disabledCell');
     });
 
     it('one disabled', async () => {
       const mockSearch = getMockSearch('6');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getAllByRole, getByTestId } = render(
+      const { getAllByTestId, getByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />
       );
 
@@ -154,9 +154,9 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
-      expect(buttons[1]).toHaveClass('disabledCell');
-      expect(buttons[2]).toHaveClass('clickableCell');
+      const buttons = getAllByTestId('packageItem');
+      expect(buttons[0]).toHaveClass('disabledCell');
+      expect(buttons[1]).toHaveClass('clickableCell');
     });
   });
 
@@ -166,7 +166,7 @@ describe('SubscriptionModal', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
       mocked(API).addSubscription.mockResolvedValue('');
 
-      const { getAllByRole, getByTestId, queryByTestId } = render(
+      const { getAllByTestId, getByTestId, queryByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />
       );
 
@@ -181,8 +181,8 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
-      fireEvent.click(buttons[1]);
+      const buttons = getAllByTestId('packageItem');
+      fireEvent.click(buttons[0]);
 
       const activePackage = getByTestId('activePackageItem');
 
@@ -214,7 +214,7 @@ describe('SubscriptionModal', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
       mocked(API).addSubscription.mockRejectedValue({});
 
-      const { getAllByRole, getByTestId, queryByTestId } = render(
+      const { getAllByTestId, getByTestId, queryByTestId } = render(
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />
       );
 
@@ -229,8 +229,8 @@ describe('SubscriptionModal', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
 
-      const buttons = getAllByRole('button');
-      fireEvent.click(buttons[1]);
+      const buttons = getAllByTestId('packageItem');
+      fireEvent.click(buttons[0]);
 
       const activePackage = getByTestId('activePackageItem');
 
