@@ -5,14 +5,15 @@ import SectionPanel from './SectionPanel';
 
 const defaultProps = {
   sections: [
-    { index: 0, name: 'Details 0', shortName: 'details_0', disabled: false },
-    { index: 1, name: 'Details 1', shortName: 'details_1', disabled: false },
-    { index: 2, name: 'Details 2', shortName: 'details_2', disabled: true },
+    { index: 0, label: 'opt0', name: 'Details 0', shortName: 'details_0', disabled: false },
+    { index: 1, label: 'opt1', name: 'Details 1', shortName: 'details_1', disabled: false },
+    { index: 2, label: 'opt2', name: 'Details 2', shortName: 'details_2', disabled: true },
   ],
+  defaultSection: 'opt0',
   content: {
-    0: <>Content 0</>,
-    1: <>Content 1</>,
-    2: <>Content 2</>,
+    opt0: <>Content 0</>,
+    opt1: <>Content 1</>,
+    opt2: <>Content 2</>,
   },
 };
 
@@ -46,7 +47,7 @@ describe('SectionPanel', () => {
   });
 
   it('renders with active section', () => {
-    const { getByText } = render(<SectionPanel {...defaultProps} defaultSection={2} />);
+    const { getByText } = render(<SectionPanel {...defaultProps} defaultSection="opt2" />);
 
     expect(getByText('Content 2')).toBeInTheDocument();
   });

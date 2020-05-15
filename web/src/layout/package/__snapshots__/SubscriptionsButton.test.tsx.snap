@@ -54,6 +54,7 @@ exports[`SubscriptionsButton creates snapshot 2`] = `
     </button>
     <div
       class="dropdown-menu dropdown-menu-right p-0 dropdown"
+      data-testid="subsBtnDropdown"
     >
       <div
         class="arrow arrow"

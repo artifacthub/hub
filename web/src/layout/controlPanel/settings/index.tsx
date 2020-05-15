@@ -5,6 +5,8 @@ import UserSettingsSection from './userSettings';
 
 interface Props {
   context: 'user' | 'org';
+  subsection?: string;
+  onSubMenuItemClick: (name: string) => void;
   onAuthError: () => void;
 }
 

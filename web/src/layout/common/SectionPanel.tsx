@@ -6,7 +6,8 @@ import { SectionItem } from '../../utils/data';
 import styles from './SectionPanel.module.css';
 
 interface Props {
-  defaultSection?: number;
+  onSectionChange?: (section: string) => void;
+  defaultSection: string;
   sections: SectionItem[];
   content: {
     [key: string]: JSX.Element;
@@ -14,10 +15,13 @@ interface Props {
 }
 
 const SectionPanel = (props: Props) => {
-  const [activeSection, setActiveSection] = useState<number>(props.defaultSection || 0);
+  const [activeSection, setActiveSection] = useState<string>(props.defaultSection);
 
-  const onMenuItemClick = (section: number) => {
+  const onMenuItemClick = (section: string) => {
     setActiveSection(section);
+    if (!isUndefined(props.onSectionChange)) {
+      props.onSectionChange(section);
+    }
   };
 
   return (
@@ -33,11 +37,11 @@ const SectionPanel = (props: Props) => {
                 className={classnames(
                   'list-group-item list-group-item-action d-flex flex-row align-items-center',
                   styles.listItem,
-                  { [styles.isActive]: section.index === activeSection },
+                  { [styles.isActive]: section.label === activeSection },
                   { disabled: section.disabled }
                 )}
                 disabled={section.disabled}
-                onClick={() => onMenuItemClick(section.index)}
+                onClick={() => onMenuItemClick(section.label)}
               >
                 <div className="d-flex flex-row align-items-center">
                   {!isUndefined(section.icon) && <div className={styles.icon}>{section.icon}</div>}

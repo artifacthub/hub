@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchTypeahead renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative"
+  >
+    <div
+      class="d-flex align-items-strecht overflow-hidden inputWrapper"
+    >
+      <div
+        class="d-none d-sm-flex align-items-center iconWrapper"
+        data-testid="searchTypeaheadIcon"
+      >
+        <svg
+          fill="none"
+          height="1em"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+          <line
+            x1="21"
+            x2="16.65"
+            y1="21"
+            y2="16.65"
+          />
+        </svg>
+      </div>
+      <input
+        class="flex-grow-1 pl-sm-0 pl-3 input"
+        data-testid="searchTypeaheadInput"
+        name="name"
+        type="text"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

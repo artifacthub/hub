@@ -104,7 +104,7 @@ export default function App() {
             />
 
             <Route
-              path="/control-panel/:section?"
+              path="/control-panel/:section?/:subsection?"
               exact
               render={({ match }) => (
                 <>

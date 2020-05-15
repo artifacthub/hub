@@ -1,0 +1,165 @@
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import React from 'react';
+import { mocked } from 'ts-jest/utils';
+
+import { API } from '../../api';
+import { SearchResults } from '../../types';
+import alertDispatcher from '../../utils/alertDispatcher';
+import SearchTypeahead from './SearchTypeahead';
+jest.mock('../../api');
+jest.mock('../../utils/alertDispatcher');
+
+const getMockSearch = (fixtureId: string): SearchResults => {
+  return require(`./__fixtures__/SearchTypeahead/${fixtureId}.json`) as SearchResults;
+};
+
+const mockOnSelection = jest.fn();
+
+const defaultProps = {
+  disabledPackages: [],
+  onSelection: mockOnSelection,
+};
+
+describe('SearchTypeahead', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('renders correctly', () => {
+    const result = render(<SearchTypeahead {...defaultProps} />);
+
+    expect(result.asFragment()).toMatchSnapshot();
+  });
+
+  describe('Render', () => {
+    it('renders component', async () => {
+      const mockSearch = getMockSearch('1');
+      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+
+      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getAllByRole('button')).toHaveLength(2);
+    });
+
+    it('selects package', async () => {
+      const mockSearch = getMockSearch('1');
+      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+
+      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      const packages = getAllByRole('button');
+      fireEvent.click(packages[0]);
+
+      expect(mockOnSelection).toHaveBeenCalledTimes(1);
+      expect(mockOnSelection).toHaveBeenCalledWith(mockSearch.data!.packages![0]);
+    });
+
+    it('when searchPackage fails', async () => {
+      mocked(API).searchPackages.mockRejectedValue('');
+
+      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+        type: 'danger',
+        message: 'An error occurred searching packages, please try again later',
+      });
+    });
+
+    it('renders disabled package', async () => {
+      const mockSearch = getMockSearch('2');
+      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+
+      const { getByTestId, getAllByRole } = render(
+        <SearchTypeahead {...defaultProps} disabledPackages={[mockSearch.data!.packages![0].packageId]} />
+      );
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      const firstPackage = getAllByRole('button')[0];
+      expect(firstPackage).toHaveClass('disabledCell');
+      fireEvent.click(firstPackage);
+
+      expect(mockOnSelection).toHaveBeenCalledTimes(0);
+    });
+
+    it('forces focus to click magnifying glass icon', () => {
+      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+
+      const icon = getByTestId('searchTypeaheadIcon');
+      fireEvent.click(icon);
+
+      waitFor(() => {
+        expect(getByTestId('searchTypeaheadInput')).toHaveFocus();
+      });
+    });
+
+    it('cleans packages list after changing filled input', async () => {
+      const mockSearch = getMockSearch('3');
+      mocked(API).searchPackages.mockResolvedValue(mockSearch);
+
+      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+
+      const input = getByTestId('searchTypeaheadInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.change(input, { target: { value: 'testing' } });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getAllByRole('button')).toHaveLength(2);
+
+      fireEvent.change(input, { target: { value: 'testing1' } });
+
+      waitFor(() => {
+        expect(getAllByRole('button')).toHaveLength(0);
+      });
+    });
+  });
+});

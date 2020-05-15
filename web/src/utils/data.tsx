@@ -25,8 +25,9 @@ export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
 
 export interface SectionItem {
   index: number;
+  label: string;
   name: string;
-  shortName: string;
+  shortName?: string;
   disabled: boolean;
   icon?: JSX.Element;
 }

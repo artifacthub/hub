@@ -23,6 +23,7 @@ interface Props {
   error?: string | null;
   cleanError?: () => void;
   noFooter?: boolean;
+  noScrollable?: boolean;
 }
 
 const Modal = (props: Props) => {
@@ -80,7 +81,11 @@ const Modal = (props: Props) => {
 
       <div className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })} role="dialog">
         <div
-          className={`modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ${props.modalDialogClassName}`}
+          className={classnames(
+            'modal-dialog modal-lg',
+            { 'modal-dialog-centered modal-dialog-scrollable': isUndefined(props.noScrollable) || !props.noScrollable },
+            props.modalDialogClassName
+          )}
           ref={ref}
         >
           <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
