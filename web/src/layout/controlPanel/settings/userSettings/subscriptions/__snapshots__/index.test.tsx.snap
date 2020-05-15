@@ -27,10 +27,56 @@ exports[`SubscriptionsSection renders correctly 1`] = `
         class="flex-grow-1"
       >
         <div
-          class="h3 pb-2 border-bottom"
+          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
-          <div>
+          <div
+            class="h3 pb-0"
+          >
             Your subscriptions
+          </div>
+          <div>
+            <button
+              class="btn btn-secondary btn-sm text-uppercase"
+              data-testid="addSubscriptionsBtn"
+            >
+              <div
+                class="d-flex flex-row align-items-center justify-content-center"
+              >
+                <svg
+                  class="d-inline d-md-none"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <svg
+                  class="d-none d-md-inline mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                  />
+                </svg>
+                <span
+                  class="d-none d-md-inline"
+                >
+                  Add
+                </span>
+              </div>
+            </button>
           </div>
         </div>
         <div
@@ -39,8 +85,58 @@ exports[`SubscriptionsSection renders correctly 1`] = `
           <p
             class="m-0"
           >
-            You will receive an email notification when an event that matches any of the subscriptions in the list is fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top right corner.
+            You will receive an email notification when an event that matches any of the subscriptions in the list is fired.
           </p>
+        </div>
+        <div>
+          <div
+            class="modal modal"
+            role="dialog"
+          >
+            <div
+              class="modal-dialog modal-lg modal"
+            >
+              <div
+                class="modal-content content undefined"
+              >
+                <div
+                  class="modal-header header"
+                >
+                  <div
+                    class="h3 m-2"
+                  >
+                    Add subscription
+                  </div>
+                  <button
+                    class="close"
+                    data-testid="closeModalBtn"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="modal-body p-4 h-100 d-flex flex-column"
+                />
+                <div
+                  class="modal-footer p-3"
+                >
+                  <button
+                    class="btn btn-secondary"
+                    data-testid="addSubsModalBtn"
+                    disabled=""
+                    type="button"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -61,10 +157,56 @@ exports[`SubscriptionsSection renders correctly 2`] = `
         class="flex-grow-1"
       >
         <div
-          class="h3 pb-2 border-bottom"
+          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
-          <div>
+          <div
+            class="h3 pb-0"
+          >
             Your subscriptions
+          </div>
+          <div>
+            <button
+              class="btn btn-secondary btn-sm text-uppercase"
+              data-testid="addSubscriptionsBtn"
+            >
+              <div
+                class="d-flex flex-row align-items-center justify-content-center"
+              >
+                <svg
+                  class="d-inline d-md-none"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <svg
+                  class="d-none d-md-inline mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                  />
+                </svg>
+                <span
+                  class="d-none d-md-inline"
+                >
+                  Add
+                </span>
+              </div>
+            </button>
           </div>
         </div>
         <div
@@ -73,7 +215,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
           <p
             class="m-0"
           >
-            You will receive an email notification when an event that matches any of the subscriptions in the list is fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top right corner.
+            You will receive an email notification when an event that matches any of the subscriptions in the list is fired.
           </p>
           <div
             class="mt-5"
@@ -1953,6 +2095,56 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       </button>
                     </div>
                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="modal modal"
+            role="dialog"
+          >
+            <div
+              class="modal-dialog modal-lg modal"
+            >
+              <div
+                class="modal-content content undefined"
+              >
+                <div
+                  class="modal-header header"
+                >
+                  <div
+                    class="h3 m-2"
+                  >
+                    Add subscription
+                  </div>
+                  <button
+                    class="close"
+                    data-testid="closeModalBtn"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="modal-body p-4 h-100 d-flex flex-column"
+                />
+                <div
+                  class="modal-footer p-3"
+                >
+                  <button
+                    class="btn btn-secondary"
+                    data-testid="addSubsModalBtn"
+                    disabled=""
+                    type="button"
+                  >
+                    Add
+                  </button>
                 </div>
               </div>
             </div>

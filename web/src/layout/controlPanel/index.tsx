@@ -74,6 +74,7 @@ const navSections: NavSection = {
 
 interface Props {
   section?: string;
+  subsection?: string;
   orgToConfirm?: string;
 }
 
@@ -83,12 +84,15 @@ const ControlPanelView = (props: Props) => {
   const history = useHistory();
   const { ctx, dispatch } = useContext(AppCtx);
   const [activeSection, setActiveSection] = useState<string>(DEFAULT_SECTION);
+  const [activeSubsection, setActiveSubsection] = useState<string | null>(null);
   const context = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
 
   const onAuthError = (): void => {
     dispatch(signOut());
-    history.push(`/login?redirect=/control-panel/${activeSection}`);
+    history.push(
+      `/login?redirect=/control-panel/${activeSection}${!isNull(activeSubsection) ? `/${activeSubsection}` : ''}`
+    );
     alertDispatcher.postAlert({
       type: 'danger',
       message: 'Sorry, you are not authorized to complete this action, please make sure you are signed in',
@@ -98,6 +102,12 @@ const ControlPanelView = (props: Props) => {
   const onMenuItemClick = (name: string) => {
     history.replace(`/control-panel/${name}`);
     setActiveSection(name);
+    setActiveSubsection(null);
+  };
+
+  const onSubMenuItemClick = (name: string) => {
+    history.replace(`/control-panel/${activeSection}/${name}`);
+    setActiveSubsection(name);
   };
 
   useEffect(() => {
@@ -107,10 +117,13 @@ const ControlPanelView = (props: Props) => {
 
     if (!isUndefined(props.section) && isSectionAvailable(props.section)) {
       setActiveSection(props.section);
+      if (!isUndefined(props.subsection)) {
+        setActiveSubsection(props.subsection);
+      }
     } else {
       history.replace(`/control-panel/${DEFAULT_SECTION}`);
     }
-  }, [props.section]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.section, props.subsection]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (!isUndefined(ctx.user) && isNull(ctx.user)) {
     history.push('/');
@@ -156,13 +169,22 @@ const ControlPanelView = (props: Props) => {
             {(() => {
               switch (activeSection) {
                 case 'packages':
-                  return <PackagesSection {...props} onAuthError={onAuthError} />;
+                  return (
+                    <PackagesSection {...props} onAuthError={onAuthError} onSubMenuItemClick={onSubMenuItemClick} />
+                  );
                 case 'organizations':
                   return <OrganizationsSection {...props} onAuthError={onAuthError} />;
                 case 'members':
                   return <MembersSection {...props} onAuthError={onAuthError} />;
                 case 'settings':
-                  return <SettingsSection {...props} context={context} onAuthError={onAuthError} />;
+                  return (
+                    <SettingsSection
+                      {...props}
+                      context={context}
+                      onAuthError={onAuthError}
+                      onSubMenuItemClick={onSubMenuItemClick}
+                    />
+                  );
                 default:
                   return null;
               }

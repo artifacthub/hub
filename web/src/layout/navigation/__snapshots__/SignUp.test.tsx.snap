@@ -12,7 +12,7 @@ exports[`SignUp creates snapshot 1`] = `
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
       >
         <div
           class="modal-content content modal"

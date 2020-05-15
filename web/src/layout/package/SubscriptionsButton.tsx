@@ -98,13 +98,16 @@ const SubscriptionsButton = (props: Props) => {
 
   async function changeSubscription(kind: EventKind, isActive: boolean) {
     updateOptimisticallyActiveSubscriptions(kind, isActive);
+
     try {
       if (isActive) {
         await API.deleteSubscription(props.packageId, kind);
       } else {
         await API.addSubscription(props.packageId, kind);
       }
-      getSubscriptions(true);
+      // We don't need to get subscriptions after changing it due to we are closing the dropdown
+      // and we get them again every time we open the dropdown
+      setOpenStatus(false);
     } catch (err) {
       if (err.statusText !== 'ErrLoginRedirect') {
         alertDispatcher.postAlert({
@@ -158,6 +161,7 @@ const SubscriptionsButton = (props: Props) => {
 
       <div
         ref={ref}
+        data-testid="subsBtnDropdown"
         className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, { show: openStatus })}
       >
         <div className={`arrow ${styles.arrow}`} />

@@ -395,7 +395,7 @@ const PackageView = (props: Props) => {
                               return (
                                 <>
                                   {!isUndefined(rules) && (
-                                    <div className="mb-5">
+                                    <div className={`mb-5 ${styles.codeWrapper}`}>
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
                                       <SyntaxHighlighter
                                         language="yaml"
@@ -414,7 +414,7 @@ const PackageView = (props: Props) => {
                               return (
                                 <>
                                   {!isUndefined(policies) && (
-                                    <div className="mb-5">
+                                    <div className={`mb-5 ${styles.codeWrapper}`}>
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies" />
                                       <SyntaxHighlighter
                                         language="rego"

@@ -77,6 +77,7 @@ describe('SubscriptionsButton', () => {
           expect(queryByRole('status')).toBeNull();
         });
 
+        expect(getByTestId('subsBtnDropdown')).toBeInTheDocument();
         expect(getByText('New releases')).toBeInTheDocument();
         expect(getByText('Receive a notification when a new version of this package is released.')).toBeInTheDocument();
 
@@ -95,7 +96,7 @@ describe('SubscriptionsButton', () => {
         });
 
         await waitFor(() => {
-          expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(2);
+          expect(getByTestId('subsBtnDropdown')).not.toHaveClass('show');
         });
       });
 
@@ -103,7 +104,7 @@ describe('SubscriptionsButton', () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
         mocked(API).addSubscription.mockResolvedValue('');
 
-        const { getByTestId, getByRole } = render(
+        const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <SubscriptionsButton {...defaultProps} />
           </AppCtx.Provider>
@@ -124,7 +125,6 @@ describe('SubscriptionsButton', () => {
         await waitFor(() => {
           expect(API.addSubscription).toHaveBeenCalledTimes(1);
           expect(API.addSubscription).toHaveBeenCalledWith(defaultProps.packageId, 0);
-          expect(getByRole('status')).toBeInTheDocument();
         });
       });
     });

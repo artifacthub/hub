@@ -66,6 +66,33 @@ describe('SubscriptionsSection', () => {
       expect(getAllByTestId('orgLink')).toHaveLength(7 * 2);
       expect(getAllByTestId('repoLink')).toHaveLength(5 * 2);
     });
+
+    it('opens Add subscription modal', async () => {
+      const mockSubscriptions = getMockSubscriptions('2');
+      mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
+
+      const { getByTestId, getByRole } = render(
+        <Router>
+          <SubscriptionsSection {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
+      });
+
+      const modal = getByRole('dialog');
+      expect(modal).toBeInTheDocument();
+      expect(modal).not.toHaveClass('active');
+
+      const btn = getByTestId('addSubscriptionsBtn');
+      expect(btn).toBeInTheDocument();
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(modal).toHaveClass('active');
+      });
+    });
   });
 
   describe('Packages', () => {

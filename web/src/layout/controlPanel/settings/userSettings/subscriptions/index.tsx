@@ -1,6 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
+import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { API } from '../../../../../api';
@@ -13,6 +14,7 @@ import Image from '../../../../common/Image';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
 import PackageIcon from '../../../../common/PackageIcon';
+import SubscriptionModal from './Modal';
 import PackageCard from './PackageCard';
 import styles from './SubscriptionsSection.module.css';
 
@@ -24,6 +26,7 @@ const SubscriptionsSection = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [packages, setPackages] = useState<Package[] | undefined>(undefined);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
+  const [modalStatus, setModalStatus] = useState<boolean>(false);
 
   const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
@@ -68,6 +71,7 @@ const SubscriptionsSection = (props: Props) => {
 
   async function changeSubscription(packageId: string, kind: EventKind, isActive: boolean, packageName: string) {
     updateOptimisticallyPackages(kind, isActive, packageId);
+
     try {
       if (isActive) {
         await API.deleteSubscription(packageId, kind);
@@ -100,15 +104,27 @@ const SubscriptionsSection = (props: Props) => {
 
       <main role="main" className="container">
         <div className="flex-grow-1">
-          <div className="h3 pb-2 border-bottom">
-            <div>Your subscriptions</div>
+          <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
+            <div className="h3 pb-0">Your subscriptions</div>
+            <div>
+              <button
+                data-testid="addSubscriptionsBtn"
+                className="btn btn-secondary btn-sm text-uppercase"
+                onClick={() => setModalStatus(true)}
+              >
+                <div className="d-flex flex-row align-items-center justify-content-center">
+                  <MdAdd className="d-inline d-md-none" />
+                  <MdAddCircle className="d-none d-md-inline mr-2" />
+                  <span className="d-none d-md-inline">Add</span>
+                </div>
+              </button>
+            </div>
           </div>
 
           <div className={`mx-auto mt-5 ${styles.wrapper}`}>
             <p className="m-0">
               You will receive an email notification when an event that matches any of the subscriptions in the list is
-              fired. You can add more subscriptions from the packages' detail page, clicking on the bell icon on the top
-              right corner.
+              fired.
             </p>
 
             {!isUndefined(packages) && (
@@ -286,6 +302,13 @@ const SubscriptionsSection = (props: Props) => {
               </div>
             )}
           </div>
+
+          <SubscriptionModal
+            open={modalStatus}
+            subscriptions={packages}
+            onSuccess={getSubscriptions}
+            onClose={() => setModalStatus(false)}
+          />
         </div>
       </main>
     </div>

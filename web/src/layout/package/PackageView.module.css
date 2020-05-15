@@ -41,8 +41,8 @@
   line-height: 1rem;
 }
 
-/* Installation Modal */
-.modalInstallationWrapper code {
+.modalInstallationWrapper code,
+.codeWrapper code {
   word-wrap: normal !important;
   white-space: pre !important;
 }

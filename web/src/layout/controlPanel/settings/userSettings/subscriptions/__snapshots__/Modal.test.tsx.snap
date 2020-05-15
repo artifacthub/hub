@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubscriptionModal renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal"
+      >
+        <div
+          class="modal-content content undefined"
+        >
+          <div
+            class="modal-header header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Add subscription
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="w-100 position-relative"
+            >
+              <form>
+                <label
+                  class="font-weight-bold label"
+                  for="kind"
+                >
+                  Event kind
+                </label>
+                <div
+                  class="form-check mb-3"
+                >
+                  <input
+                    checked=""
+                    class="form-check-input"
+                    data-testid="radio_0"
+                    id="newRelease"
+                    name="kind"
+                    required=""
+                    type="radio"
+                    value="0"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="newRelease"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center ml-2"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                        />
+                      </svg>
+                      <div
+                        class="ml-1"
+                      >
+                        New releases
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </form>
+              <div
+                class="d-flex flex-column mb-3"
+              >
+                <label
+                  class="font-weight-bold label"
+                  for="description"
+                >
+                  Package
+                </label>
+                <small
+                  class="mb-2"
+                >
+                  Select the package you'd like to subscribe to:
+                </small>
+                <div
+                  class="mt-2 searchWrapper"
+                >
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="d-flex align-items-strecht overflow-hidden inputWrapper"
+                    >
+                      <div
+                        class="d-none d-sm-flex align-items-center iconWrapper"
+                        data-testid="searchTypeaheadIcon"
+                      >
+                        <svg
+                          fill="none"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="11"
+                            cy="11"
+                            r="8"
+                          />
+                          <line
+                            x1="21"
+                            x2="16.65"
+                            y1="21"
+                            y2="16.65"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        class="flex-grow-1 pl-sm-0 pl-3 input"
+                        data-testid="searchTypeaheadInput"
+                        name="name"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="addSubsModalBtn"
+              disabled=""
+              type="button"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

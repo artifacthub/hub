@@ -145,7 +145,7 @@ exports[`Package index creates snapshot 2`] = `
                   role="dialog"
                 >
                   <div
-                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                   >
                     <div
                       class="modal-content content undefined"
@@ -254,7 +254,7 @@ exports[`Package index creates snapshot 2`] = `
                   role="dialog"
                 >
                   <div
-                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+                    class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
                   >
                     <div
                       class="modal-content content undefined"
@@ -367,7 +367,7 @@ exports[`Package index creates snapshot 2`] = `
               role="dialog"
             >
               <div
-                class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable undefined"
+                class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
               >
                 <div
                   class="modal-content content undefined"
