@@ -14,6 +14,7 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
 	"github.com/artifacthub/hub/cmd/hub/handlers/subscription"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
+	"github.com/artifacthub/hub/cmd/hub/handlers/webhook"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
@@ -31,6 +32,7 @@ type Services struct {
 	PackageManager         hub.PackageManager
 	ChartRepositoryManager hub.ChartRepositoryManager
 	SubscriptionManager    hub.SubscriptionManager
+	WebhookManager         hub.WebhookManager
 	ImageStore             img.Store
 }
 
@@ -54,6 +56,7 @@ type Handlers struct {
 	Packages          *pkg.Handlers
 	ChartRepositories *chartrepo.Handlers
 	Subscriptions     *subscription.Handlers
+	Webhooks          *webhook.Handlers
 	Static            *static.Handlers
 }
 
@@ -70,6 +73,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		Packages:          pkg.NewHandlers(svc.PackageManager),
 		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
 		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
+		Webhooks:          webhook.NewHandlers(svc.WebhookManager),
 		Static:            static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
@@ -152,6 +156,15 @@ func (h *Handlers) setupRouter() {
 				r.Put("/", h.ChartRepositories.Update)
 				r.Delete("/", h.ChartRepositories.Delete)
 			})
+			r.Route("/webhooks", func(r chi.Router) {
+				r.Get("/", h.Webhooks.GetOwnedByUser)
+				r.Post("/", h.Webhooks.Add)
+				r.Route("/{webhookID}", func(r chi.Router) {
+					r.Get("/", h.Webhooks.Get)
+					r.Put("/", h.Webhooks.Update)
+					r.Delete("/", h.Webhooks.Delete)
+				})
+			})
 		})
 		r.With(h.Users.RequireLogin).Post("/orgs", h.Organizations.Add)
 		r.Route("/org/{orgName}", func(r chi.Router) {
@@ -172,6 +185,15 @@ func (h *Handlers) setupRouter() {
 				r.Route("/chart-repository/{repoName}", func(r chi.Router) {
 					r.Put("/", h.ChartRepositories.Update)
 					r.Delete("/", h.ChartRepositories.Delete)
+				})
+				r.Route("/webhooks", func(r chi.Router) {
+					r.Get("/", h.Webhooks.GetOwnedByOrg)
+					r.Post("/", h.Webhooks.Add)
+					r.Route("/{webhookID}", func(r chi.Router) {
+						r.Get("/", h.Webhooks.Get)
+						r.Put("/", h.Webhooks.Update)
+						r.Delete("/", h.Webhooks.Delete)
+					})
 				})
 			})
 		})

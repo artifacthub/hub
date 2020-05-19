@@ -9,13 +9,27 @@ returns setof json as $$
             'package_id', e.package_id,
             'package_version', e.package_version
         ),
-        'user', json_build_object(
-            'email', u.email
-        )
+        'user', (select nullif(
+            jsonb_build_object(
+                'email', u.email
+            ),
+            '{"email": null}'::jsonb
+        )),
+        'webhook', (select nullif(
+            jsonb_build_object(
+                'name', wh.name,
+                'url', wh.url,
+                'secret', wh.secret,
+                'content_type', wh.content_type,
+                'template', wh.template
+            ),
+            '{"name": null, "url": null, "secret": null, "content_type": null, "template": null}'::jsonb
+        ))
     )
     from notification n
     join event e using (event_id)
-    join "user" u using (user_id)
+    left join "user" u using (user_id)
+    left join webhook wh using (webhook_id)
     where n.processed = false
     for update of n skip locked
     limit 1;

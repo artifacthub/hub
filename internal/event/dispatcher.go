@@ -17,6 +17,7 @@ type Services struct {
 	DB                  hub.DB
 	EventManager        hub.EventManager
 	SubscriptionManager hub.SubscriptionManager
+	WebhookManager      hub.WebhookManager
 	NotificationManager hub.NotificationManager
 }
 

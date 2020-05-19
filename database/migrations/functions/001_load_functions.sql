@@ -48,8 +48,18 @@
 
 {{ template "events/get_pending_event.sql" }}
 
+{{ template "notifications/add_notification.sql" }}
 {{ template "notifications/get_pending_notification.sql" }}
 {{ template "notifications/update_notification_status.sql" }}
+
+{{ template "webhooks/add_webhook.sql" }}
+{{ template "webhooks/delete_webhook.sql" }}
+{{ template "webhooks/get_webhook.sql" }}
+{{ template "webhooks/get_org_webhooks.sql" }}
+{{ template "webhooks/get_user_webhooks.sql" }}
+{{ template "webhooks/get_webhooks_subscribed_to.sql" }}
+{{ template "webhooks/update_webhook.sql" }}
+{{ template "webhooks/user_has_access_to_webhook.sql" }}
 
 ---- create above / drop below ----
 

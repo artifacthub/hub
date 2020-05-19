@@ -10,16 +10,34 @@ import (
 	"github.com/artifacthub/hub/internal/notification"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestWorker(t *testing.T) {
+	e := &hub.Event{
+		EventID:   "eventID",
+		EventKind: hub.NewRelease,
+		PackageID: "packageID",
+	}
+	u1 := &hub.User{
+		UserID: "user1ID",
+	}
+	u2 := &hub.User{
+		UserID: "user2ID",
+	}
+	wh1 := &hub.Webhook{
+		WebhookID: "webhook1ID",
+	}
+	wh2 := &hub.Webhook{
+		WebhookID: "webhook2ID",
+	}
+
 	t.Run("error getting pending event", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(nil, errFake)
-		sw.tx.On("Rollback", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(nil, errFake)
+		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
@@ -28,87 +46,108 @@ func TestWorker(t *testing.T) {
 
 	t.Run("error getting subscriptors", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(&hub.Event{
-			EventKind: hub.NewRelease,
-			PackageID: "packageID",
-		}, nil)
-		sw.sm.On("GetSubscriptors", mock.Anything, "packageID", hub.NewRelease).Return(nil, errFake)
-		sw.tx.On("Rollback", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return(nil, errFake)
+		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
 
-	t.Run("no subscriptors found", func(t *testing.T) {
+	t.Run("no subscriptors nor webhooks found", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(&hub.Event{
-			EventKind: hub.NewRelease,
-			PackageID: "packageID",
-		}, nil)
-		sw.sm.On("GetSubscriptors", mock.Anything, "packageID", hub.NewRelease).Return([]*hub.User{}, nil)
-		sw.tx.On("Commit", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{}, nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{}, nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
 
-	t.Run("error adding notification", func(t *testing.T) {
+	t.Run("error adding email notification", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(&hub.Event{
-			EventID:   "eventID",
-			EventKind: hub.NewRelease,
-			PackageID: "packageID",
-		}, nil)
-		sw.sm.On("GetSubscriptors", mock.Anything, "packageID", hub.NewRelease).Return([]*hub.User{
-			{UserID: "userID"},
-		}, nil)
-		sw.nm.On("Add", mock.Anything, mock.Anything, "eventID", "userID").Return(errFake)
-		sw.tx.On("Rollback", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{u1}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u1}).Return(errFake)
+		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
 
-	t.Run("adding one notification succeeded", func(t *testing.T) {
+	t.Run("adding one email notification succeeded", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(&hub.Event{
-			EventID:   "eventID",
-			EventKind: hub.NewRelease,
-			PackageID: "packageID",
-		}, nil)
-		sw.sm.On("GetSubscriptors", mock.Anything, "packageID", hub.NewRelease).Return([]*hub.User{
-			{UserID: "userID"},
-		}, nil)
-		sw.nm.On("Add", mock.Anything, mock.Anything, "eventID", "userID").Return(nil)
-		sw.tx.On("Commit", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{u1}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u1}).Return(nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{}, nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
 		sw.assertExpectations(t)
 	})
 
-	t.Run("adding two notifications succeeded", func(t *testing.T) {
+	t.Run("adding two email notifications succeeded", func(t *testing.T) {
 		sw := newServicesWrapper()
-		sw.db.On("Begin", mock.Anything).Return(sw.tx, nil)
-		sw.em.On("GetPending", mock.Anything, mock.Anything).Return(&hub.Event{
-			EventID:   "eventID",
-			EventKind: hub.NewRelease,
-			PackageID: "packageID",
-		}, nil)
-		sw.sm.On("GetSubscriptors", mock.Anything, "packageID", hub.NewRelease).Return([]*hub.User{
-			{UserID: "user1ID"},
-			{UserID: "user2ID"},
-		}, nil)
-		sw.nm.On("Add", mock.Anything, mock.Anything, "eventID", "user1ID").Return(nil)
-		sw.nm.On("Add", mock.Anything, mock.Anything, "eventID", "user2ID").Return(nil)
-		sw.tx.On("Commit", mock.Anything).Return(nil)
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{u1, u2}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u1}).Return(nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u2}).Return(nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{}, nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error adding webhook notification", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{}, nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{wh1}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh1}).Return(errFake)
+		sw.tx.On("Rollback", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("adding one webhook notification succeeded", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{}, nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{wh1}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh1}).Return(nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("adding two webhook notifications succeeded", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
+		sw.sm.On("GetSubscriptors", sw.ctx, e.PackageID, hub.NewRelease).Return([]*hub.User{}, nil)
+		sw.wm.On("GetSubscribedTo", sw.ctx, e.EventKind, e.PackageID).Return([]*hub.Webhook{wh1, wh2}, nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh1}).Return(nil)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh2}).Return(nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
 		go w.Run(sw.ctx, sw.wg)
@@ -124,6 +163,7 @@ type servicesWrapper struct {
 	tx         *tests.TXMock
 	em         *ManagerMock
 	sm         *subscription.ManagerMock
+	wm         *webhook.ManagerMock
 	nm         *notification.ManagerMock
 	svc        *Services
 }
@@ -138,6 +178,7 @@ func newServicesWrapper() *servicesWrapper {
 	tx := &tests.TXMock{}
 	em := &ManagerMock{}
 	sm := &subscription.ManagerMock{}
+	wm := &webhook.ManagerMock{}
 	nm := &notification.ManagerMock{}
 
 	return &servicesWrapper{
@@ -148,11 +189,13 @@ func newServicesWrapper() *servicesWrapper {
 		tx:         tx,
 		em:         em,
 		sm:         sm,
+		wm:         wm,
 		nm:         nm,
 		svc: &Services{
 			DB:                  db,
 			EventManager:        em,
 			SubscriptionManager: sm,
+			WebhookManager:      wm,
 			NotificationManager: nm,
 		},
 	}
@@ -169,5 +212,6 @@ func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.tx.AssertExpectations(t)
 	sw.em.AssertExpectations(t)
 	sw.sm.AssertExpectations(t)
+	sw.wm.AssertExpectations(t)
 	sw.nm.AssertExpectations(t)
 }
