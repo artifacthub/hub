@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdNewReleases } from 'react-icons/md';
 
-import { EventKind, PackageKind } from '../types';
+import { EventKind, PackageKind, PayloadKind } from '../types';
 
 export interface SubscriptionItem {
   kind: EventKind;
@@ -10,6 +10,12 @@ export interface SubscriptionItem {
   title: string;
   description: string;
   enabled: boolean;
+}
+
+export interface PayloadKindsItem {
+  kind: PayloadKind;
+  name: string;
+  title: string;
 }
 
 export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
@@ -49,5 +55,18 @@ export const PACKAGE_KINDS: PackageKindDef[] = [
   {
     kind: PackageKind.Opa,
     name: 'OPA policies',
+  },
+];
+
+export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [
+  {
+    kind: PayloadKind.default,
+    name: 'defaultPayload',
+    title: 'Default payload',
+  },
+  {
+    kind: PayloadKind.custom,
+    name: 'customPayload',
+    title: 'Custom payload',
   },
 ];

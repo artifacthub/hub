@@ -121,6 +121,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     pattern="[a-z0-9-]+"
                     readonly=""
                     required=""
+                    spellcheck="false"
                     type="text"
                     value="orgTest"
                   />
@@ -147,6 +148,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     class="form-control"
                     data-testid="displayNameInput"
                     name="displayName"
+                    spellcheck="false"
                     type="text"
                     value="Org test"
                   />
@@ -171,6 +173,7 @@ exports[`OrganizationModal - organizations section creates snapshot 1`] = `
                     class="form-control"
                     data-testid="homeUrlInput"
                     name="homeUrl"
+                    spellcheck="false"
                     type="url"
                     value="http://test.org"
                   />

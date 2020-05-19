@@ -32,6 +32,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         data-testid="aliasInput"
         name="alias"
         required=""
+        spellcheck="false"
         type="text"
         value=""
       />
@@ -65,6 +66,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         data-testid="emailInput"
         name="email"
         required=""
+        spellcheck="false"
         type="email"
         value=""
       />
@@ -92,6 +94,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         class="form-control"
         data-testid="firstNameInput"
         name="firstName"
+        spellcheck="false"
         type="text"
         value=""
       />
@@ -117,6 +120,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
         class="form-control"
         data-testid="lastNameInput"
         name="lastName"
+        spellcheck="false"
         type="text"
         value=""
       />
@@ -152,6 +156,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
           minlength="6"
           name="password"
           required=""
+          spellcheck="false"
           type="password"
           value=""
         />
@@ -186,6 +191,7 @@ exports[`CreateAnAccount creates snapshot 1`] = `
           name="confirmPassword"
           pattern=""
           required=""
+          spellcheck="false"
           type="password"
           value=""
         />

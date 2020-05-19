@@ -2,3 +2,8 @@
 .input + label {
   cursor: pointer;
 }
+
+.input:disabled,
+.input:disabled + label {
+  cursor: auto;
+}

@@ -159,6 +159,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         onKeyDown={props.onKeyDown}
         autoFocus={props.autoFocus}
         disabled={props.disabled}
+        spellCheck="false"
       />
 
       {isCheckingAvailability && (
@@ -175,7 +176,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         <div className={`invalid-feedback mt-0 ${styles.inputFeedback}`}>{invalidText}</div>
       )}
 
-      {!isUndefined(props.additionalInfo) && <div className="alert alert-ligth p-0 mt-4">{props.additionalInfo}</div>}
+      {!isUndefined(props.additionalInfo) && <div className="alert p-0 mt-4">{props.additionalInfo}</div>}
     </div>
   );
 });

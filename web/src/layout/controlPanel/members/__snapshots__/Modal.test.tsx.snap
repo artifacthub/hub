@@ -73,6 +73,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
                     data-testid="aliasInput"
                     name="alias"
                     required=""
+                    spellcheck="false"
                     type="text"
                     value=""
                   />
@@ -82,7 +83,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
                     This field is required
                   </div>
                   <div
-                    class="alert alert-ligth p-0 mt-4"
+                    class="alert p-0 mt-4"
                   >
                     <small
                       class="text-muted text-break mt-1"

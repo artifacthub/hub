@@ -269,7 +269,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           />
                         </svg>
                         <span
-                          class="ml-2"
+                          class="d-none d-lg-inline ml-2"
                         >
                           New releases
                         </span>

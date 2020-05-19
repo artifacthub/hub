@@ -26,6 +26,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         data-testid="emailInput"
         name="email"
         readonly=""
+        spellcheck="false"
         type="email"
         value="jsmith@email.com"
       />
@@ -57,6 +58,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         data-testid="aliasInput"
         name="alias"
         required=""
+        spellcheck="false"
         type="text"
         value="userAlias"
       />
@@ -84,6 +86,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         class="form-control"
         data-testid="firstNameInput"
         name="firstName"
+        spellcheck="false"
         type="text"
         value="John"
       />
@@ -109,6 +112,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
         class="form-control"
         data-testid="lastNameInput"
         name="lastName"
+        spellcheck="false"
         type="text"
         value="Smith"
       />

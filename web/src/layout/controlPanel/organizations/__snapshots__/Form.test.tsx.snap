@@ -86,6 +86,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         name="name"
         pattern="[a-z0-9-]+"
         required=""
+        spellcheck="false"
         type="text"
         value=""
       />
@@ -112,6 +113,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         class="form-control"
         data-testid="displayNameInput"
         name="displayName"
+        spellcheck="false"
         type="text"
         value=""
       />
@@ -136,6 +138,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
         class="form-control"
         data-testid="homeUrlInput"
         name="homeUrl"
+        spellcheck="false"
         type="url"
         value=""
       />

@@ -156,7 +156,7 @@ const SubscriptionsSection = (props: Props) => {
                               >
                                 <div className="d-flex flex-row align-items-center justify-content-center">
                                   {subs.icon}
-                                  <span className="ml-2">{subs.title}</span>
+                                  <span className="d-none d-lg-inline ml-2">{subs.title}</span>
                                 </div>
                               </th>
                             ))}

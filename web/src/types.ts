@@ -207,3 +207,21 @@ export enum EventKind {
 export interface Subscription {
   eventKind: EventKind;
 }
+
+export interface Webhook {
+  webhookId?: string;
+  name: string;
+  description?: string;
+  url: string;
+  secret?: string;
+  contentType?: string | null;
+  template?: string | null;
+  active: boolean;
+  eventKinds: EventKind[];
+  packages: Package[];
+}
+
+export enum PayloadKind {
+  default = 0,
+  custom,
+}

@@ -42,7 +42,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('2')} />
       );
 
-      expect(getByText('Event kind')).toBeInTheDocument();
+      expect(getByText('Events')).toBeInTheDocument();
       expect(getByText('Package')).toBeInTheDocument();
 
       const btn = getByTestId('addSubsModalBtn');
