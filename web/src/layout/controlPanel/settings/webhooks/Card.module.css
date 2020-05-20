@@ -1,0 +1,58 @@
+.card {
+  max-width: 100%;
+  background-color: var(--white) !important;
+  box-shadow: 0px 0px 5px 0px var(--light);
+}
+
+.body {
+  padding: 1.75rem !important;
+}
+
+.title {
+  line-height: 1;
+}
+
+.card:hover .buttons {
+  opacity: 1;
+}
+
+.separator {
+  width: 2px;
+  background-color: var(--color-1-500);
+  height: 15px;
+}
+
+.badge {
+  font-size: 0.5rem;
+}
+
+.inactiveBadge {
+  opacity: 0.5;
+}
+
+@media (hover: hover) {
+  .buttons {
+    opacity: 0;
+  }
+
+  .card:hover {
+    border-color: var(--color-1-700);
+    box-shadow: 0px 0px 5px 0px var(--color-1-900);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .body {
+    padding: 1rem !important;
+  }
+
+  .subtitle {
+    flex-direction: column !important;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .subtitle {
+    font-size: 0.95rem;
+  }
+}

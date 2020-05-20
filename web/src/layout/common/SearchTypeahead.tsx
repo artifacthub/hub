@@ -76,10 +76,11 @@ const SearchTypeahead = (props: Props) => {
             ref={inputEl}
             type="text"
             className={`flex-grow-1 px-3 ${styles.input}`}
-            name="name"
-            autoComplete="off"
+            name="searchInput"
+            autoComplete="new-input"
             onKeyDown={handleOnKeyDown}
             onChange={onChange}
+            spellCheck="false"
           />
 
           {isSearching && (
@@ -104,7 +105,7 @@ const SearchTypeahead = (props: Props) => {
       </div>
 
       {!isNull(packages) && (
-        <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 show ${styles.dropdown}`}>
+        <div ref={dropdownRef} className={`dropdown-menu w-100 p-0 shadow-sm show ${styles.dropdown}`}>
           {packages.length === 0 ? (
             <p className="m-3 text-center">
               We can't seem to find any packages that match your search for{' '}

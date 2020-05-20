@@ -20,6 +20,7 @@ import {
   User,
   UserFullName,
   UserLogin,
+  Webhook,
 } from '../types';
 import getHubBaseURL from '../utils/getHubBaseURL';
 import renameKeysInObject from '../utils/renameKeysInObject';
@@ -99,7 +100,7 @@ const apiFetch = (url: string, opts?: FetchOptions): any => {
     .catch((error) => Promise.reject(error));
 };
 
-const getChartRepositoryUrlContext = (fromOrgName?: string): string => {
+const getUrlContext = (fromOrgName?: string): string => {
   let context = '/user';
   if (!isUndefined(fromOrgName)) {
     context = `/org/${fromOrgName}`;
@@ -204,12 +205,12 @@ export const API = {
   },
 
   getChartRepositories: (fromOrgName?: string): Promise<ChartRepository[]> => {
-    return apiFetch(`${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repositories`);
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories`);
   },
 
   addChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repositories`, {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -219,26 +220,20 @@ export const API = {
   },
 
   deleteChartRepository: (chartRepositoryName: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(
-      `${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repository/${chartRepositoryName}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repository/${chartRepositoryName}`, {
+      method: 'DELETE',
+    });
   },
 
   updateChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(
-      `${API_BASE_URL}${getChartRepositoryUrlContext(fromOrgName)}/chart-repository/${chartRepository.name}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(chartRepo),
-      }
-    );
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repository/${chartRepository.name}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chartRepo),
+    });
   },
 
   checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
@@ -369,5 +364,50 @@ export const API = {
 
   getUserSubscriptions: (): Promise<Package[]> => {
     return apiFetch(`${API_BASE_URL}/user/subscriptions`);
+  },
+
+  getWebhooks: (fromOrgName?: string): Promise<Webhook[]> => {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks`);
+  },
+
+  getWebhook: (webhookId: string, fromOrgName?: string): Promise<Webhook> => {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhookId}`);
+  },
+
+  addWebhook: (webhook: Webhook, fromOrgName?: string): Promise<null | string> => {
+    const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
+    const formattedPackages = webhook.packages.map((packageItem: Package) => ({
+      package_id: packageItem.packageId,
+    }));
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formattedWebhook,
+        packages: formattedPackages,
+      }),
+    });
+  },
+
+  deleteWebhook: (webhookId: string, fromOrgName?: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhookId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  updateWebhook: (webhook: Webhook, fromOrgName?: string): Promise<null | string> => {
+    const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
+    const formattedPackages = webhook.packages.map((packageItem: Package) => ({
+      package_id: packageItem.packageId,
+    }));
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhook.webhookId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...formattedWebhook, packages: formattedPackages }),
+    });
   },
 };

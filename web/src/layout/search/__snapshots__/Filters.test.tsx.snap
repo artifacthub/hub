@@ -31,7 +31,7 @@ exports[`Filters creates snapshot 1`] = `
           class=""
         >
           <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2"
+            class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
           >
             <input
               class="custom-control-input input"
@@ -63,7 +63,7 @@ exports[`Filters creates snapshot 1`] = `
             </label>
           </div>
           <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2"
+            class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
           >
             <input
               class="custom-control-input input"
@@ -109,7 +109,7 @@ exports[`Filters creates snapshot 1`] = `
           class=""
         >
           <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2"
+            class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
           >
             <input
               class="custom-control-input input"
@@ -161,7 +161,7 @@ exports[`Filters creates snapshot 1`] = `
         class="mt-3"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
         >
           <input
             class="custom-control-input input"
@@ -193,7 +193,7 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
         >
           <input
             class="custom-control-input input"
@@ -225,7 +225,7 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
         >
           <input
             class="custom-control-input input"
@@ -276,7 +276,7 @@ exports[`Filters creates snapshot 1`] = `
         class="mt-3"
       >
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
         >
           <input
             class="custom-control-input input"
@@ -308,7 +308,7 @@ exports[`Filters creates snapshot 1`] = `
           </label>
         </div>
         <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2"
+          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
         >
           <input
             class="custom-control-input input"

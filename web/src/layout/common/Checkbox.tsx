@@ -10,18 +10,21 @@ interface Props {
   legend?: string | number;
   checked: boolean;
   disabled?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CheckBox = (props: Props) => {
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e);
+    if (props.onChange) {
+      props.onChange(e);
+    }
   };
 
   const id = `${props.name}-${props.value}`;
 
   return (
-    <div className="custom-control custom-checkbox mr-sm-2 mb-2">
+    <div className={`custom-control custom-checkbox mr-sm-2 mb-2 ${props.className}`}>
       <input
         data-testid="checkbox"
         type="checkbox"

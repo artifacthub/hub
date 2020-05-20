@@ -65,6 +65,7 @@ exports[`LogIn creates snapshot 1`] = `
                   data-testid="emailInput"
                   name="email"
                   required=""
+                  spellcheck="false"
                   type="email"
                   value=""
                 />
@@ -93,6 +94,7 @@ exports[`LogIn creates snapshot 1`] = `
                   data-testid="passwordInput"
                   name="password"
                   required=""
+                  spellcheck="false"
                   type="password"
                   value=""
                 />

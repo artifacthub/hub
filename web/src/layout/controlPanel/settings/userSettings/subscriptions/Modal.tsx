@@ -111,7 +111,7 @@ const SubscriptionModal = (props: Props) => {
       <div className="w-100 position-relative">
         <form>
           <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
-            Event kind
+            Events
           </label>
           {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
             return (

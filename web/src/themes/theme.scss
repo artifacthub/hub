@@ -28,6 +28,8 @@ $body-color: #38383f;
 
   --color-2-10: rgba(176, 206, 224, 0.1);
 
+  --color-3-10: rgba(101, 157, 189, 0.1);
+
   --color-black-5: rgba(0, 0, 0, 0.05);
   --color-black-15: rgba(0, 0, 0, 0.15);
   --color-black-25: rgba(0, 0, 0, 0.25);
@@ -55,6 +57,18 @@ $body-color: #38383f;
   border-color: #ced4da !important;
   background-image: none !important;
   padding-right: 0.75rem !important;
+}
+
+.was-validated .form-check-input:valid ~ .form-check-label,
+.form-check-input.is-valid ~ .form-check-label,
+.was-validated .custom-control-input:valid ~ .custom-control-label,
+.custom-control-input.is-valid ~ .custom-control-label {
+  color: $body-color;
+}
+
+.was-validated .custom-control-input:valid ~ .custom-control-label::before,
+.custom-control-input.is-valid ~ .custom-control-label::before {
+  border-color: #adb5bd;
 }
 
 .dropdown-menu .arrow {
@@ -95,4 +109,11 @@ $body-color: #38383f;
 button.text-dark:hover,
 button.text-dark:focus {
   color: #121416 !important;
+}
+
+label {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

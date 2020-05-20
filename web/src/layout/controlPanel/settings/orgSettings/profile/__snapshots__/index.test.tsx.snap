@@ -132,6 +132,7 @@ exports[`Organization settings index creates snapshot 2`] = `
               pattern="[a-z0-9-]+"
               readonly=""
               required=""
+              spellcheck="false"
               type="text"
               value="test"
             />
@@ -158,6 +159,7 @@ exports[`Organization settings index creates snapshot 2`] = `
               class="form-control"
               data-testid="displayNameInput"
               name="displayName"
+              spellcheck="false"
               type="text"
               value="Test"
             />
@@ -182,6 +184,7 @@ exports[`Organization settings index creates snapshot 2`] = `
               class="form-control"
               data-testid="homeUrlInput"
               name="homeUrl"
+              spellcheck="false"
               type="url"
               value="https://test.org"
             />

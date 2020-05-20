@@ -74,6 +74,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                     name="name"
                     pattern="[a-z][a-z0-9-]*"
                     required=""
+                    spellcheck="false"
                     type="text"
                     value=""
                   />
@@ -100,6 +101,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                     class="form-control"
                     data-testid="displayNameInput"
                     name="displayName"
+                    spellcheck="false"
                     type="text"
                     value=""
                   />
@@ -130,6 +132,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                     data-testid="urlInput"
                     name="url"
                     required=""
+                    spellcheck="false"
                     type="url"
                     value=""
                   />
@@ -139,7 +142,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                     This field is required
                   </div>
                   <div
-                    class="alert alert-ligth p-0 mt-4"
+                    class="alert p-0 mt-4"
                   >
                     <small
                       class="text-muted text-break mt-1"

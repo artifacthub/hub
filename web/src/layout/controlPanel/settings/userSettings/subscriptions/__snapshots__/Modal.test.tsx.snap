@@ -48,7 +48,7 @@ exports[`SubscriptionModal renders correctly 1`] = `
                   class="font-weight-bold label"
                   for="kind"
                 >
-                  Event kind
+                  Events
                 </label>
                 <div
                   class="form-check mb-3"
@@ -119,10 +119,11 @@ exports[`SubscriptionModal renders correctly 1`] = `
                         class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
                       >
                         <input
-                          autocomplete="off"
+                          autocomplete="new-input"
                           class="flex-grow-1 px-3 input"
                           data-testid="searchTypeaheadInput"
-                          name="name"
+                          name="searchInput"
+                          spellcheck="false"
                           type="text"
                         />
                       </div>
