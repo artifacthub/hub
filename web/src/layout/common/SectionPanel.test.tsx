@@ -5,9 +5,9 @@ import SectionPanel from './SectionPanel';
 
 const defaultProps = {
   sections: [
-    { index: 0, label: 'opt0', name: 'Details 0', shortName: 'details_0', disabled: false },
-    { index: 1, label: 'opt1', name: 'Details 1', shortName: 'details_1', disabled: false },
-    { index: 2, label: 'opt2', name: 'Details 2', shortName: 'details_2', disabled: true },
+    { name: 'opt0', displayName: 'Details 0', shortName: 'details_0', disabled: false },
+    { name: 'opt1', displayName: 'Details 1', shortName: 'details_1', disabled: false },
+    { name: 'opt2', displayName: 'Details 2', shortName: 'details_2', disabled: true },
   ],
   defaultSection: 'opt0',
   content: {
@@ -29,9 +29,9 @@ describe('SectionPanel', () => {
     const btns = getAllByTestId('sectionBtn');
 
     expect(btns).toHaveLength(3);
-    expect(btns[0]).toHaveTextContent(defaultProps.sections[0].name);
-    expect(btns[1]).toHaveTextContent(defaultProps.sections[1].name);
-    expect(btns[2]).toHaveTextContent(defaultProps.sections[2].name);
+    expect(btns[0]).toHaveTextContent(defaultProps.sections[0].displayName);
+    expect(btns[1]).toHaveTextContent(defaultProps.sections[1].displayName);
+    expect(btns[2]).toHaveTextContent(defaultProps.sections[2].displayName);
     expect(btns[2]).toBeDisabled();
 
     expect(getByText('Content 0')).toBeInTheDocument();

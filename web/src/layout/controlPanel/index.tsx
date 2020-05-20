@@ -1,76 +1,20 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import some from 'lodash/some';
 import React, { useContext, useEffect, useState } from 'react';
-import { FaUserFriends } from 'react-icons/fa';
-import { GoPackage } from 'react-icons/go';
-import { MdBusiness, MdSettings } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import { AppCtx, signOut } from '../../context/AppCtx';
+import { Section } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import { CONTROL_PANEL_SECTIONS } from '../../utils/data';
+import isControlPanelSectionAvailable from '../../utils/isControlPanelSectionAvailable';
 import styles from './ControlPanelView.module.css';
 import MembersSection from './members';
 import OrganizationsSection from './organizations';
 import PackagesSection from './packages';
 import SettingsSection from './settings';
 import UserContext from './UserContext';
-
-interface Section {
-  name: string;
-  displayName: string;
-  disabled: boolean;
-  icon: JSX.Element;
-}
-
-interface NavSection {
-  user: Section[];
-  org: Section[];
-}
-
-const navSections: NavSection = {
-  user: [
-    {
-      name: 'packages',
-      displayName: 'Packages',
-      disabled: false,
-      icon: <GoPackage />,
-    },
-    {
-      name: 'organizations',
-      displayName: 'Organizations',
-      disabled: false,
-      icon: <MdBusiness />,
-    },
-    {
-      name: 'settings',
-      displayName: 'Settings',
-      disabled: false,
-      icon: <MdSettings />,
-    },
-  ],
-  org: [
-    {
-      name: 'packages',
-      displayName: 'Packages',
-      disabled: false,
-      icon: <GoPackage />,
-    },
-    {
-      name: 'members',
-      displayName: 'Members',
-      disabled: false,
-      icon: <FaUserFriends />,
-    },
-    {
-      name: 'settings',
-      displayName: 'Settings',
-      disabled: false,
-      icon: <MdSettings />,
-    },
-  ],
-};
 
 interface Props {
   section?: string;
@@ -85,7 +29,9 @@ const ControlPanelView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [activeSection, setActiveSection] = useState<string>(DEFAULT_SECTION);
   const [activeSubsection, setActiveSubsection] = useState<string | null>(null);
-  const context = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
+  const [context, setContext] = useState<'user' | 'org'>(
+    isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org'
+  );
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
 
   const onAuthError = (): void => {
@@ -111,12 +57,14 @@ const ControlPanelView = (props: Props) => {
   };
 
   useEffect(() => {
-    const isSectionAvailable = (sectionToCheck: string): boolean => {
-      return some(navSections[context], (sect: Section) => sect.name === sectionToCheck);
-    };
+    setContext(isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org');
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
-    if (!isUndefined(props.section) && isSectionAvailable(props.section)) {
-      setActiveSection(props.section);
+  useEffect(() => {
+    if (isControlPanelSectionAvailable(context, props.section, props.subsection)) {
+      if (!isUndefined(props.section)) {
+        setActiveSection(props.section);
+      }
       if (!isUndefined(props.subsection)) {
         setActiveSubsection(props.subsection);
       }
@@ -135,7 +83,7 @@ const ControlPanelView = (props: Props) => {
         <div className="container">
           <div className="d-flex flex-row justify-content-between align-items-end">
             <ul className="nav nav-tabs" role="tablist">
-              {navSections[context].map((section: Section) => {
+              {CONTROL_PANEL_SECTIONS[context].map((section: Section) => {
                 return (
                   <li key={`section_${section.name}`} className="nav-item mx-1" role="tab">
                     <button

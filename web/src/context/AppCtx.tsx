@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { API } from '../api';
 import { Prefs, Profile, UserFullName } from '../types';
 import history from '../utils/history';
+import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
 import lsStorage from '../utils/localStoragePreferences';
 
 interface AppState {
@@ -70,9 +71,12 @@ export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirect
   }
 }
 
-function redirectToControlPanel() {
+function redirectToControlPanel(context: 'user' | 'org') {
   if (history.location.pathname.startsWith('/control-panel')) {
-    history.push('/control-panel/packages');
+    const sections = history.location.pathname.split('/');
+    if (!isControlPanelSectionAvailable(context, sections[2], sections[3])) {
+      history.push('/control-panel/packages');
+    }
   }
 }
 
@@ -96,7 +100,7 @@ export function appReducer(state: AppState, action: Action) {
     case 'unselectOrg':
       const unselectedOrgPrefs = updateSelectedOrg(state.prefs);
       lsStorage.setPrefs(unselectedOrgPrefs, state.user!.alias);
-      redirectToControlPanel();
+      redirectToControlPanel('user');
       return {
         ...state,
         prefs: unselectedOrgPrefs,
@@ -107,7 +111,7 @@ export function appReducer(state: AppState, action: Action) {
       const newPrefs = updateSelectedOrg(state.prefs, action.name);
       lsStorage.setPrefs(newPrefs, state.user!.alias);
       if (isUndefined(state.prefs.controlPanel.selectedOrg) || action.name !== state.prefs.controlPanel.selectedOrg) {
-        redirectToControlPanel();
+        redirectToControlPanel('org');
       }
       return {
         ...state,

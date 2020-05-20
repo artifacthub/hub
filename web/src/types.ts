@@ -225,3 +225,17 @@ export enum PayloadKind {
   default = 0,
   custom,
 }
+
+export interface Section {
+  name: string;
+  displayName: string;
+  shortName?: string;
+  disabled: boolean;
+  icon?: JSX.Element;
+  subsections?: Section[];
+}
+
+export interface NavSection {
+  user: Section[];
+  org: Section[];
+}
