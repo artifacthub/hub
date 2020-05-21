@@ -43,8 +43,6 @@
     flex-shrink: 0;
     flex-basis: calc(100% - 300px);
     max-width: calc(100% - 300px);
-    padding-right: 15px;
-    padding-left: 15px;
   }
 
   .isActive::before {

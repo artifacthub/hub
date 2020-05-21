@@ -602,6 +602,10 @@ const WebhookForm = (props: Props) => {
                 )}
 
                 <div className="ml-auto">
+                  <button className={`btn btn-light mr-3 text-uppercase ${styles.btnLight}`} onClick={onCloseForm}>
+                    Cancel
+                  </button>
+
                   <button
                     className="btn btn-secondary"
                     type="button"
