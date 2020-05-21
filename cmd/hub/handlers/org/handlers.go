@@ -11,19 +11,22 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 // Handlers represents a group of http handlers in charge of handling
 // organizations operations.
 type Handlers struct {
 	orgManager hub.OrganizationManager
+	cfg        *viper.Viper
 	logger     zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(orgManager hub.OrganizationManager) *Handlers {
+func NewHandlers(orgManager hub.OrganizationManager, cfg *viper.Viper) *Handlers {
 	return &Handlers{
 		orgManager: orgManager,
+		cfg:        cfg,
 		logger:     log.With().Str("handlers", "org").Logger(),
 	}
 }
@@ -51,7 +54,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	userAlias := chi.URLParam(r, "userAlias")
-	baseURL := helpers.GetBaseURL(r)
+	baseURL := h.cfg.GetString("server.baseURL")
 	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()

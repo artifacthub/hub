@@ -24,13 +24,3 @@ func RenderJSON(w http.ResponseWriter, dataJSON []byte, cacheMaxAge time.Duratio
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(dataJSON)
 }
-
-// GetBaseURL is a helper function that builds the base url from the request
-// provided.
-func GetBaseURL(r *http.Request) string {
-	scheme := "http"
-	if r.TLS != nil {
-		scheme = "https"
-	}
-	return fmt.Sprintf("%s://%s", scheme, r.Host)
-}

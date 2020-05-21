@@ -16,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -571,15 +572,18 @@ func TestUpdate(t *testing.T) {
 }
 
 type handlersWrapper struct {
-	om *org.ManagerMock
-	h  *Handlers
+	cfg *viper.Viper
+	om  *org.ManagerMock
+	h   *Handlers
 }
 
 func newHandlersWrapper() *handlersWrapper {
+	cfg := viper.New()
 	om := &org.ManagerMock{}
 
 	return &handlersWrapper{
-		om: om,
-		h:  NewHandlers(om),
+		cfg: cfg,
+		om:  om,
+		h:   NewHandlers(om, cfg),
 	}
 }

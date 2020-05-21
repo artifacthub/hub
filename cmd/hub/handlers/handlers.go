@@ -68,7 +68,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		metrics: setupMetrics(),
 		logger:  log.With().Str("handlers", "root").Logger(),
 
-		Organizations:     org.NewHandlers(svc.OrganizationManager),
+		Organizations:     org.NewHandlers(svc.OrganizationManager, cfg),
 		Users:             user.NewHandlers(svc.UserManager, cfg),
 		Packages:          pkg.NewHandlers(svc.PackageManager),
 		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
