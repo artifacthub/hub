@@ -29,8 +29,7 @@ const ChartRepository = (props: Props) => {
     open: false,
   });
   const [chartRepositories, setChartRepositories] = useState<ChartRepo[] | undefined>(undefined);
-  const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
-  const [activeOrg, setActiveOrg] = useState(selectedOrg);
+  const [activeOrg, setActiveOrg] = useState<undefined | string>(ctx.prefs.controlPanel.selectedOrg);
   const [apiError, setApiError] = useState<null | string>(null);
 
   async function fetchCharts() {
@@ -55,8 +54,8 @@ const ChartRepository = (props: Props) => {
   }, [activeOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    setActiveOrg(selectedOrg);
-  }, [selectedOrg]);
+    setActiveOrg(ctx.prefs.controlPanel.selectedOrg);
+  }, [ctx.prefs.controlPanel.selectedOrg]);
 
   return (
     <>

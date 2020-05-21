@@ -30,7 +30,7 @@ const WebhooksSection = (props: Props) => {
   async function fetchWebhooks() {
     try {
       setIsGettingWebhooks(true);
-      setWebhooks(await API.getWebhooks(ctx.prefs.controlPanel.selectedOrg!));
+      setWebhooks(await API.getWebhooks(ctx.prefs.controlPanel.selectedOrg));
       setApiError(null);
       setIsGettingWebhooks(false);
     } catch (err) {

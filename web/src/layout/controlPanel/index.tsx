@@ -27,10 +27,10 @@ const DEFAULT_SECTION = 'packages';
 const ControlPanelView = (props: Props) => {
   const history = useHistory();
   const { ctx, dispatch } = useContext(AppCtx);
-  const [activeSection, setActiveSection] = useState<string>(DEFAULT_SECTION);
-  const [activeSubsection, setActiveSubsection] = useState<string | null>(null);
-  const [context, setContext] = useState<'user' | 'org'>(
-    isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org'
+  const [activeSection, setActiveSection] = useState<string>(props.section || DEFAULT_SECTION);
+  const [activeSubsection, setActiveSubsection] = useState<string | null>(props.subsection || null);
+  const [context, setContext] = useState<'user' | 'org' | null>(
+    isUndefined(ctx.user) || isNull(ctx.user) ? null : isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org'
   );
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
 
@@ -57,25 +57,31 @@ const ControlPanelView = (props: Props) => {
   };
 
   useEffect(() => {
-    setContext(isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org');
-  }, [ctx.prefs.controlPanel.selectedOrg]);
+    if (!isUndefined(ctx.user) && !isNull(ctx.user)) {
+      setContext(isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org');
+    }
+  }, [ctx]);
 
   useEffect(() => {
-    if (isControlPanelSectionAvailable(context, props.section, props.subsection)) {
-      if (!isUndefined(props.section)) {
-        setActiveSection(props.section);
+    if (!isUndefined(ctx.user) && !isNull(ctx.user) && !isNull(context)) {
+      if (isControlPanelSectionAvailable(context, props.section, props.subsection)) {
+        if (!isUndefined(props.section)) {
+          setActiveSection(props.section);
+        }
+        if (!isUndefined(props.subsection)) {
+          setActiveSubsection(props.subsection);
+        }
+      } else {
+        history.replace(`/control-panel/${DEFAULT_SECTION}`);
       }
-      if (!isUndefined(props.subsection)) {
-        setActiveSubsection(props.subsection);
-      }
-    } else {
-      history.replace(`/control-panel/${DEFAULT_SECTION}`);
     }
-  }, [props.section, props.subsection]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [props.section, props.subsection, context]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   if (!isUndefined(ctx.user) && isNull(ctx.user)) {
     history.push('/');
   }
+
+  if (isNull(context)) return null;
 
   return (
     <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
