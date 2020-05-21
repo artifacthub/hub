@@ -32,16 +32,19 @@ interface FormValidation {
 const DEAFULT_PAYLOAD_KIND: PayloadKind = PayloadKind.default;
 
 export const DEFAULT_PAYLOAD_TEMPLATE = `{
-    "event": {
-        "id": "{{ .Event.id }}",
-        "kind": {{ .Event.kind }}
-    },
-    "package": {
-        "kind": {{ .Package.kind }},
-        "name": "{{ .Package.name }}",
-        "version": "{{ .Package.version }}",
-        "publisher": "{{ .Package.publisher }}",
-        "url": "{{ .Package.url }}"
+    "specversion" : "1.0",
+    "id" : "{{ .Event.id }}",
+    "source" : "https://artifacthub.io/cloudevents",
+    "type" : "io.artifacthub.{{ .Event.kind }}",
+    "datacontenttype" : "application/json",
+    "data" : {
+        "package": {
+            "kind": {{ .Package.kind }},
+            "name": "{{ .Package.name }}",
+            "version": "{{ .Package.version }}",
+            "publisher": "{{ .Package.publisher }}",
+            "url": "{{ .Package.url }}"
+        }
     }
 }`;
 
@@ -487,7 +490,7 @@ const WebhookForm = (props: Props) => {
                   label="Content type"
                   name="contentType"
                   value={contentType}
-                  placeholder={payloadKind === PayloadKind.default ? 'application/json' : ''}
+                  placeholder={payloadKind === PayloadKind.default ? 'application/cloudevents+json' : ''}
                   disabled={payloadKind === PayloadKind.default}
                   required={payloadKind !== PayloadKind.default}
                   invalidText={{
@@ -543,8 +546,8 @@ const WebhookForm = (props: Props) => {
                         <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
                       </th>
                       <td>
-                        Kind of the event triggering notification. At the moment the only possible value is 0, which
-                        corresponds to the release of a new version of a given package.
+                        Kind of the event triggering notification. At the moment the only possible value is{' '}
+                        <span className="font-weight-bold">package.new-release</span>.
                       </td>
                     </tr>
                     <tr>
@@ -552,8 +555,10 @@ const WebhookForm = (props: Props) => {
                         <span className="text-nowrap">{`{{ .Package.kind }}`}</span>
                       </th>
                       <td>
-                        Kind of the package associated with the notification. Possible values are 0 for Helm Charts, 1
-                        for Falco Rules and 2 for OPA policies.
+                        Kind of the package associated with the notification. Possible values are{' '}
+                        <span className="font-weight-bold">helm-chart</span>,{' '}
+                        <span className="font-weight-bold">falco-rules</span> and{' '}
+                        <span className="font-weight-bold">opa-policies</span>.
                       </td>
                     </tr>
                     <tr>

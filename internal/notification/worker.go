@@ -21,7 +21,7 @@ import (
 const (
 	pauseOnEmptyQueue  = 30 * time.Second
 	pauseOnError       = 10 * time.Second
-	defaultContentType = "application/json"
+	defaultContentType = "application/cloudevents+json"
 )
 
 var (
@@ -234,6 +234,11 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 	}
 
 	// Prepare template data
+	var eventKindStr string
+	switch e.EventKind {
+	case hub.NewRelease:
+		eventKindStr = "package.new-release"
+	}
 	publisher := p.OrganizationName
 	if publisher == "" {
 		publisher = p.UserAlias
@@ -241,17 +246,20 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 	if p.ChartRepository != nil {
 		publisher += "/" + p.ChartRepository.Name
 	}
-	var packagePath string
+	var packageKindStr, packagePath string
 	switch p.Kind {
 	case hub.Chart:
+		packageKindStr = "helm-chart"
 		packagePath = fmt.Sprintf("/package/chart/%s/%s/%s",
 			p.ChartRepository.Name,
 			p.NormalizedName,
 			e.PackageVersion,
 		)
 	case hub.Falco:
+		packageKindStr = "falco-rules"
 		packagePath = fmt.Sprintf("/package/falco/%s/%s", p.NormalizedName, e.PackageVersion)
 	case hub.OPA:
+		packageKindStr = "opa-policies"
 		packagePath = fmt.Sprintf("/package/opa/%s/%s", p.NormalizedName, e.PackageVersion)
 	}
 
@@ -259,10 +267,10 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 		BaseURL: w.baseURL,
 		Event: map[string]interface{}{
 			"id":   e.EventID,
-			"kind": e.EventKind,
+			"kind": eventKindStr,
 		},
 		Package: map[string]interface{}{
-			"kind":        p.Kind,
+			"kind":        packageKindStr,
 			"name":        p.Name,
 			"version":     p.Version,
 			"logoImageID": p.LogoImageID,
@@ -276,16 +284,19 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 // the webhook uses the default template.
 var defaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 {
-	"event": {
-		"id": "{{ .Event.id }}",
-		"kind": {{ .Event.kind }}
-	},
-	"package": {
-		"kind": {{ .Package.kind }},
-		"name": "{{ .Package.name }}",
-		"version": "{{ .Package.version }}",
-		"publisher": "{{ .Package.publisher }}",
-		"url": "{{ .Package.url }}"
+	"specversion" : "1.0",
+	"id" : "{{ .Event.id }}",
+	"source" : "https://artifacthub.io/cloudevents",
+	"type" : "io.artifacthub.{{ .Event.kind }}",
+	"datacontenttype" : "application/json",
+	"data" : {
+		"package": {
+			"kind": "{{ .Package.kind }}",
+			"name": "{{ .Package.name }}",
+			"version": "{{ .Package.version }}",
+			"publisher": "{{ .Package.publisher }}",
+			"url": "{{ .Package.url }}"
+		}
 	}
 }
 `))

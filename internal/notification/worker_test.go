@@ -49,6 +49,7 @@ func TestWorker(t *testing.T) {
 		Version:   e.PackageVersion,
 	}
 	p := &hub.Package{
+		Kind:             0,
 		Name:             "package1",
 		NormalizedName:   "package1",
 		Version:          "1.0.0",
@@ -184,16 +185,19 @@ func TestWorker(t *testing.T) {
 				"",
 				[]byte(`
 {
-	"event": {
-		"id": "eventID",
-		"kind": 0
-	},
-	"package": {
-		"kind": 0,
-		"name": "package1",
-		"version": "1.0.0",
-		"publisher": "org1/repo1",
-		"url": "http://baseURL/package/chart/repo1/package1/1.0.0"
+	"specversion" : "1.0",
+	"id" : "eventID",
+	"source" : "https://artifacthub.io/cloudevents",
+	"type" : "io.artifacthub.package.new-release",
+	"datacontenttype" : "application/json",
+	"data" : {
+		"package": {
+			"kind": "helm-chart",
+			"name": "package1",
+			"version": "1.0.0",
+			"publisher": "org1/repo1",
+			"url": "http://baseURL/package/chart/repo1/package1/1.0.0"
+		}
 	}
 }
 `),
