@@ -137,7 +137,7 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 		description = "Find, install and publish Kubernetes packages"
 	}
 	data := map[string]string{
-		"baseURL":      helpers.GetBaseURL(r),
+		"baseURL":      h.cfg.GetString("server.baseURL"),
 		"title":        title,
 		"description":  description,
 		"gaTrackingID": h.cfg.GetString("analytics.gaTrackingID"),

@@ -498,7 +498,7 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, errMsg, http.StatusBadRequest)
 		return
 	}
-	err = h.userManager.RegisterUser(r.Context(), u, helpers.GetBaseURL(r))
+	err = h.userManager.RegisterUser(r.Context(), u, h.cfg.GetString("server.baseURL"))
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		if errors.Is(err, user.ErrInvalidInput) {
