@@ -11,16 +11,16 @@ interface Props {
 
 const ICONS = {
   [PackageKind.Chart]: {
-    default: '/static/media/helm.svg',
-    white: '/static/media/helm-white.svg',
+    default: '/static/media/helm-chart.svg',
+    white: '/static/media/helm-chart-white.svg',
   },
   [PackageKind.Falco]: {
-    default: '/static/media/falco.svg',
-    white: '/static/media/falco-white.svg',
+    default: '/static/media/falco-rules.svg',
+    white: '/static/media/falco-rules-white.svg',
   },
   [PackageKind.Opa]: {
-    default: '/static/media/opa.svg',
-    white: '/static/media/opa-white.svg',
+    default: '/static/media/opa-policies.svg',
+    white: '/static/media/opa-policies-white.svg',
   },
 };
 

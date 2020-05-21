@@ -747,7 +747,7 @@ exports[`Search index creates snapshot 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </div>
                   </div>
@@ -862,7 +862,7 @@ exports[`Search index creates snapshot 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </div>
                   </div>

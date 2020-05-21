@@ -110,7 +110,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center;">
 												<img style="margin: 30px;" height="40px" src="{{ .BaseURL }}{{ if .Package.logoImageID }}/image/{{ .Package.logoImageID }}@3x{{ else }}/static/media/kubernetes_grey.svg{{ end }}">
-												<h2 style="color: #39596c; font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ if eq .Package.kind 1 }}falco{{ else if eq .Package.kind 2 }}opa{{ else }}helm{{ end }}.svg">{{ .Package.name }}</h2>
+												<h2 style="color: #39596c; font-family: sans-serif; margin: 0; Margin-bottom: 15px;"><img style="margin-right: 5px; margin-bottom: -2px;" height="18px" src="{{ .BaseURL }}/static/media/{{ .Package.kind }}.svg">{{ .Package.name }}</h2>
 												<h4 style="color: #1c2c35; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.publisher }} </h4>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.version }}</b> has been released</p>

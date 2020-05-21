@@ -287,7 +287,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </td>
                     <td
@@ -374,7 +374,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </td>
                     <td
@@ -460,7 +460,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </td>
                     <td
@@ -546,7 +546,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </td>
                     <td
@@ -633,7 +633,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/falco.svg"
+                        src="/static/media/falco-rules.svg"
                       />
                     </td>
                     <td
@@ -702,7 +702,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/falco.svg"
+                        src="/static/media/falco-rules.svg"
                       />
                     </td>
                     <td
@@ -771,7 +771,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/opa.svg"
+                        src="/static/media/opa-policies.svg"
                       />
                     </td>
                     <td
@@ -840,7 +840,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <img
                         alt="Icon"
                         class="icon"
-                        src="/static/media/helm.svg"
+                        src="/static/media/helm-chart.svg"
                       />
                     </td>
                     <td
@@ -1021,7 +1021,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/helm.svg"
+                            src="/static/media/helm-chart.svg"
                           />
                         </div>
                       </div>
@@ -1174,7 +1174,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/helm.svg"
+                            src="/static/media/helm-chart.svg"
                           />
                         </div>
                       </div>
@@ -1327,7 +1327,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/helm.svg"
+                            src="/static/media/helm-chart.svg"
                           />
                         </div>
                       </div>
@@ -1469,7 +1469,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/helm.svg"
+                            src="/static/media/helm-chart.svg"
                           />
                         </div>
                       </div>
@@ -1608,7 +1608,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/falco.svg"
+                            src="/static/media/falco-rules.svg"
                           />
                         </div>
                       </div>
@@ -1747,7 +1747,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/falco.svg"
+                            src="/static/media/falco-rules.svg"
                           />
                         </div>
                       </div>
@@ -1886,7 +1886,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/opa.svg"
+                            src="/static/media/opa-policies.svg"
                           />
                         </div>
                       </div>
@@ -2040,7 +2040,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           <img
                             alt="Icon"
                             class="icon"
-                            src="/static/media/helm.svg"
+                            src="/static/media/helm-chart.svg"
                           />
                         </div>
                       </div>

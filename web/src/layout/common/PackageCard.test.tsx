@@ -107,7 +107,7 @@ describe('PackageCard', () => {
       expect(button).toBeInTheDocument();
       const icon = queryByAltText('Icon');
       expect(icon).toBeInTheDocument();
-      expect((icon as HTMLImageElement).src).toBe('http://localhost/static/media/helm.svg');
+      expect((icon as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
       fireEvent.click(button!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
