@@ -53,7 +53,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                   class="form-group mb-4 position-relative undefined"
                 >
                   <label
-                    class="label"
+                    class="font-weight-bold label"
                     for="name"
                   >
                     <span
@@ -88,7 +88,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                   class="form-group mb-4 position-relative undefined"
                 >
                   <label
-                    class="label"
+                    class="font-weight-bold label"
                     for="displayName"
                   >
                     <span
@@ -113,7 +113,7 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
                   class="form-group mb-4 position-relative undefined"
                 >
                   <label
-                    class="label"
+                    class="font-weight-bold label"
                     for="url"
                   >
                     <span

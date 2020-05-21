@@ -11,7 +11,7 @@ import alertDispatcher from '../../../../utils/alertDispatcher';
 import styles from './Card.module.css';
 interface Props {
   webhook: Webhook;
-  onClick: () => void;
+  onEdition: () => void;
   onDeletion: () => void;
   onAuthError: () => void;
 }
@@ -31,7 +31,7 @@ const WebhookCard = (props: Props) => {
   async function deleteWebhook() {
     try {
       setIsDeleting(true);
-      await API.deleteWebhook(props.webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg!);
+      await API.deleteWebhook(props.webhook.webhookId!, ctx.prefs.controlPanel.selectedOrg);
       setIsDeleting(false);
       props.onDeletion();
     } catch (err) {
@@ -79,9 +79,9 @@ const WebhookCard = (props: Props) => {
               })}
             >
               <button
-                data-testid="editOrgBtn"
+                data-testid="editWebhookBtn"
                 className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                onClick={props.onClick}
+                onClick={props.onEdition}
               >
                 <div className="d-flex flex-row align-items-center">
                   <FaPencilAlt className={`mr-sm-2 ${styles.btnIcon}`} />
@@ -104,6 +104,7 @@ const WebhookCard = (props: Props) => {
 
               <div
                 ref={dropdown}
+                data-testid="deleteWebhookDropdown"
                 className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
                   show: openDropdownStatus,
                 })}
@@ -126,7 +127,7 @@ const WebhookCard = (props: Props) => {
                   </button>
 
                   <button
-                    data-testid="leaveOrgBtn"
+                    data-testid="deleteWebhookBtn"
                     className="btn btn-sm btn-danger"
                     onClick={(e) => {
                       e.preventDefault();
@@ -142,7 +143,7 @@ const WebhookCard = (props: Props) => {
                         </>
                       ) : (
                         <>
-                          <FaTrashAlt className={`mr-2 ${styles.btnLeaveIcon}`} />
+                          <FaTrashAlt className="mr-2" />
                           <span>Delete</span>
                         </>
                       )}

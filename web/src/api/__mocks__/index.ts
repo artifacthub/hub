@@ -31,4 +31,9 @@ export const API = {
   addSubscription: jest.fn(),
   deleteSubscription: jest.fn(),
   getUserSubscriptions: jest.fn(),
+  getWebhooks: jest.fn(),
+  getWebhook: jest.fn(),
+  addWebhook: jest.fn(),
+  deleteWebhook: jest.fn(),
+  updateWebhook: jest.fn(),
 };

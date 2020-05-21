@@ -37,6 +37,7 @@ const AutoresizeTextarea = (props: Props) => {
   return (
     <>
       <textarea
+        data-testid={`${props.name}Textarea`}
         className={`form-control ${styles.textarea}`}
         rows={rows}
         id={props.name}

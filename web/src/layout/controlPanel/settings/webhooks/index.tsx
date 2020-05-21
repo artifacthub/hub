@@ -119,7 +119,7 @@ const WebhooksSection = (props: Props) => {
                           <WebhookCard
                             key={`member_${webhook.name}`}
                             webhook={webhook}
-                            onClick={() => setVisibleForm({ visible: true, webhook: webhook })}
+                            onEdition={() => setVisibleForm({ visible: true, webhook: webhook })}
                             onAuthError={props.onAuthError}
                             onDeletion={fetchWebhooks}
                           />
