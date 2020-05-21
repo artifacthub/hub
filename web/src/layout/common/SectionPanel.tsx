@@ -2,13 +2,13 @@ import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useState } from 'react';
 
-import { SectionItem } from '../../utils/data';
+import { Section } from '../../types';
 import styles from './SectionPanel.module.css';
 
 interface Props {
   onSectionChange?: (section: string) => void;
   defaultSection: string;
-  sections: SectionItem[];
+  sections: Section[];
   content: {
     [key: string]: JSX.Element;
   };
@@ -28,24 +28,24 @@ const SectionPanel = (props: Props) => {
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
       <nav className={styles.sidebar}>
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
-          {props.sections.map((section: SectionItem) => {
+          {props.sections.map((section: Section) => {
             return (
               <button
                 data-testid="sectionBtn"
-                key={`package_${section.index}`}
+                key={`package_${section.name}`}
                 type="button"
                 className={classnames(
                   'list-group-item list-group-item-action d-flex flex-row align-items-center',
                   styles.listItem,
-                  { [styles.isActive]: section.label === activeSection },
+                  { [styles.isActive]: section.name === activeSection },
                   { disabled: section.disabled }
                 )}
                 disabled={section.disabled}
-                onClick={() => onMenuItemClick(section.label)}
+                onClick={() => onMenuItemClick(section.name)}
               >
                 <div className="d-flex flex-row align-items-center">
                   {!isUndefined(section.icon) && <div className={styles.icon}>{section.icon}</div>}
-                  <div className="ml-2">{section.name}</div>
+                  <div className="ml-2">{section.displayName}</div>
                 </div>
               </button>
             );

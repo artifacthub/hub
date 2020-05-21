@@ -1,7 +1,11 @@
 import React from 'react';
-import { MdNewReleases } from 'react-icons/md';
+import { FaUserFriends } from 'react-icons/fa';
+import { GoPackage } from 'react-icons/go';
+import { GrConnect } from 'react-icons/gr';
+import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
 
-import { EventKind, PackageKind, PayloadKind } from '../types';
+import PackageIcon from '../layout/common/PackageIcon';
+import { EventKind, NavSection, PackageKind, PayloadKind, Section } from '../types';
 
 export interface SubscriptionItem {
   kind: EventKind;
@@ -28,15 +32,6 @@ export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
     enabled: true,
   },
 ];
-
-export interface SectionItem {
-  index: number;
-  label: string;
-  name: string;
-  shortName?: string;
-  disabled: boolean;
-  icon?: JSX.Element;
-}
 
 export interface PackageKindDef {
   kind: PackageKind;
@@ -70,3 +65,81 @@ export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [
     title: 'Custom payload',
   },
 ];
+
+export const CONTROL_PANEL_PACKAGES_SUBSECTIONS: Section[] = [
+  {
+    name: 'chart',
+    displayName: 'Chart repositories',
+    shortName: 'Chart',
+    icon: <PackageIcon kind={PackageKind.Chart} className="mw-100" />,
+    disabled: false,
+  },
+  {
+    name: 'falco',
+    displayName: 'Falco rules',
+    shortName: 'Falco',
+    icon: <PackageIcon kind={PackageKind.Falco} className="mw-100" />,
+    disabled: true,
+  },
+  {
+    name: 'opa',
+    displayName: 'OPA policies',
+    shortName: 'OPA',
+    icon: <PackageIcon kind={PackageKind.Opa} className="mw-100" />,
+    disabled: true,
+  },
+];
+
+export const CONTROL_PANEL_SECTIONS: NavSection = {
+  user: [
+    {
+      name: 'packages',
+      displayName: 'Packages',
+      disabled: false,
+      icon: <GoPackage />,
+      subsections: CONTROL_PANEL_PACKAGES_SUBSECTIONS,
+    },
+    {
+      name: 'organizations',
+      displayName: 'Organizations',
+      disabled: false,
+      icon: <MdBusiness />,
+    },
+    {
+      name: 'settings',
+      displayName: 'Settings',
+      disabled: false,
+      icon: <MdSettings />,
+      subsections: [
+        { displayName: 'Profile', name: 'profile', icon: <MdBusiness />, disabled: false },
+        { displayName: 'Subscriptions', name: 'subscriptions', icon: <MdNotificationsActive />, disabled: false },
+        { displayName: 'Webhooks', name: 'webhooks', icon: <GrConnect />, disabled: false },
+      ],
+    },
+  ],
+  org: [
+    {
+      name: 'packages',
+      displayName: 'Packages',
+      disabled: false,
+      icon: <GoPackage />,
+      subsections: CONTROL_PANEL_PACKAGES_SUBSECTIONS,
+    },
+    {
+      name: 'members',
+      displayName: 'Members',
+      disabled: false,
+      icon: <FaUserFriends />,
+    },
+    {
+      name: 'settings',
+      displayName: 'Settings',
+      disabled: false,
+      icon: <MdSettings />,
+      subsections: [
+        { displayName: 'Profile', name: 'profile', icon: <MdBusiness />, disabled: false },
+        { displayName: 'Webhooks', name: 'webhooks', icon: <GrConnect />, disabled: false },
+      ],
+    },
+  ],
+};
