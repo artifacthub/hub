@@ -20,7 +20,7 @@ const ProfileSection = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [organization, setOrganization] = useState<Organization | null | undefined>(undefined);
-  const selectedOrg = ctx.prefs.controlPanel.selectedOrg!;
+  const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [apiError, setApiError] = useState<null | string>(null);
 
   const submitForm = () => {
@@ -33,7 +33,7 @@ const ProfileSection = (props: Props) => {
     async function fetchOrganization() {
       try {
         setIsLoading(true);
-        setOrganization(await API.getOrganization(selectedOrg));
+        setOrganization(await API.getOrganization(selectedOrg!));
         setApiError(null);
         setIsLoading(false);
       } catch (err) {
@@ -48,7 +48,9 @@ const ProfileSection = (props: Props) => {
         }
       }
     }
-    fetchOrganization();
+    if (!isUndefined(selectedOrg)) {
+      fetchOrganization();
+    }
   }, [props, selectedOrg]);
 
   return (
@@ -67,12 +69,14 @@ const ProfileSection = (props: Props) => {
                 </NoData>
               ) : (
                 <>
-                  <OrganizationForm
-                    ref={form}
-                    organization={organization}
-                    onAuthError={props.onAuthError}
-                    setIsSending={setIsSending}
-                  />
+                  {!isLoading && (
+                    <OrganizationForm
+                      ref={form}
+                      organization={!isLoading ? organization : undefined}
+                      onAuthError={props.onAuthError}
+                      setIsSending={setIsSending}
+                    />
+                  )}
 
                   <div className="mt-4">
                     <button
