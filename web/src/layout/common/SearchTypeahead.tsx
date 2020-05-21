@@ -48,12 +48,15 @@ const SearchTypeahead = (props: Props) => {
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && searchQuery !== '') {
+      event.preventDefault();
+      event.stopPropagation();
       searchPackages(searchQuery);
     }
   };
 
   const saveSelectedPackage = (item: Package): void => {
     setPackages(null);
+    setSearchQuery('');
     inputEl.current!.value = '';
     props.onSelection(item);
   };
@@ -92,9 +95,12 @@ const SearchTypeahead = (props: Props) => {
 
         <button
           data-testid="searchIconBtn"
+          type="button"
           className={`btn btn-secondary ml-3 text-center p-0 ${styles.searchBtn}`}
           disabled={searchQuery === '' || isSearching}
-          onClick={() => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (searchQuery !== '') {
               searchPackages(searchQuery);
             }

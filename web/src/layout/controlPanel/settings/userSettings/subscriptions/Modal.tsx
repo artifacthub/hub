@@ -64,8 +64,9 @@ const SubscriptionModal = (props: Props) => {
     try {
       setIsSending(true);
       await API.addSubscription(packageItem!.packageId, eventKind);
-      props.onSuccess();
+      setPackageItem(null);
       setIsSending(false);
+      props.onSuccess();
       props.onClose();
     } catch (err) {
       setIsSending(false);

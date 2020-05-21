@@ -131,6 +131,7 @@ exports[`SubscriptionModal renders correctly 1`] = `
                         class="btn btn-secondary ml-3 text-center p-0 searchBtn"
                         data-testid="searchIconBtn"
                         disabled=""
+                        type="button"
                       >
                         <svg
                           fill="currentColor"
