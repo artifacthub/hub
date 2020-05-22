@@ -85,8 +85,7 @@ create table if not exists package (
     check (user_id is null or organization_id is null),
     check (user_id is null or chart_repository_id is null),
     check (organization_id is null or chart_repository_id is null),
-    check (package_kind_id <> 0 or chart_repository_id is not null),
-    unique (package_kind_id, chart_repository_id, name)
+    check (package_kind_id <> 0 or chart_repository_id is not null)
 );
 
 create index package_stars_idx on package (stars);
@@ -97,6 +96,11 @@ create index package_package_kind_id_idx on package (package_kind_id);
 create index package_user_id_idx on package (user_id);
 create index package_organization_id_idx on package (organization_id);
 create index package_chart_repository_id_idx on package (chart_repository_id);
+create unique index package_unique_name_idx on package (
+    coalesce(chart_repository_id, '99999999-9999-9999-9999-999999999999'),
+    package_kind_id,
+    name
+);
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,

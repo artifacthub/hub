@@ -239,7 +239,6 @@ select indexes_are('organization', array[
 ]);
 select indexes_are('package', array[
     'package_pkey',
-    'package_package_kind_id_chart_repository_id_name_key',
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
     'package_tsdoc_idx',
@@ -247,7 +246,8 @@ select indexes_are('package', array[
     'package_updated_at_idx',
     'package_stars_idx',
     'package_user_id_idx',
-    'package_organization_id_idx'
+    'package_organization_id_idx',
+    'package_unique_name_idx'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'
