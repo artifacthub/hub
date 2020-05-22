@@ -65,7 +65,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="name"
       >
         <span
@@ -100,7 +100,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="displayName"
       >
         <span
@@ -125,7 +125,7 @@ exports[`Organization Form - organizations section creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="homeUrl"
       >
         <span

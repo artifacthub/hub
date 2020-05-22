@@ -302,6 +302,7 @@ const WebhookForm = (props: Props) => {
             <div className="mb-3">
               <div className="custom-control custom-switch pl-0">
                 <input
+                  data-testid="activeCheckbox"
                   id="active"
                   type="checkbox"
                   className={`custom-control-input ${styles.checkbox}`}
@@ -378,7 +379,7 @@ const WebhookForm = (props: Props) => {
                   </thead>
                   <tbody>
                     {selectedPackages.map((item: Package) => (
-                      <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
+                      <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
                         <td className="align-middle text-center">
                           <PackageIcon kind={item.kind} className={`${styles.icon} mx-2`} />
                         </td>
@@ -413,9 +414,14 @@ const WebhookForm = (props: Props) => {
 
                         <td>
                           <button
+                            data-testid="deletePackageButton"
                             className={`close text-danger mx-2 ${styles.closeBtn}`}
                             type="button"
-                            onClick={() => deletePackage(item.packageId)}
+                            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              deletePackage(item.packageId);
+                            }}
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -434,11 +440,12 @@ const WebhookForm = (props: Props) => {
                 return (
                   <div className="form-check mr-4" key={`payload_${item.kind}`}>
                     <input
+                      data-testid={`${item.name}Radio`}
                       className="form-check-input"
                       type="radio"
                       id={`payload_${item.kind}`}
                       name="payloadKind"
-                      value="default"
+                      value={item.name}
                       checked={payloadKind === item.kind}
                       onChange={() => {
                         setPayloadKind(item.kind);
@@ -602,7 +609,11 @@ const WebhookForm = (props: Props) => {
                 )}
 
                 <div className="ml-auto">
-                  <button className={`btn btn-light mr-3 text-uppercase ${styles.btnLight}`} onClick={onCloseForm}>
+                  <button
+                    type="button"
+                    className={`btn btn-light mr-3 text-uppercase ${styles.btnLight}`}
+                    onClick={onCloseForm}
+                  >
                     Cancel
                   </button>
 
@@ -611,7 +622,7 @@ const WebhookForm = (props: Props) => {
                     type="button"
                     disabled={isSending}
                     onClick={submitForm}
-                    data-testid="updateProfileBtn"
+                    data-testid="sendWebhookBtn"
                   >
                     {isSending ? (
                       <>

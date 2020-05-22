@@ -53,7 +53,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
                   class="form-group mb-4 position-relative undefined"
                 >
                   <label
-                    class="label"
+                    class="font-weight-bold label"
                     for="alias"
                   >
                     <span

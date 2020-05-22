@@ -110,7 +110,7 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
-              class="label"
+              class="font-weight-bold label"
               for="name"
             >
               <span
@@ -146,7 +146,7 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
-              class="label"
+              class="font-weight-bold label"
               for="displayName"
             >
               <span
@@ -171,7 +171,7 @@ exports[`Organization settings index creates snapshot 2`] = `
             class="form-group mb-4 position-relative undefined"
           >
             <label
-              class="label"
+              class="font-weight-bold label"
               for="homeUrl"
             >
               <span

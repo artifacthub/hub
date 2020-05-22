@@ -12,7 +12,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="email"
       >
         <span
@@ -38,7 +38,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="alias"
       >
         <span
@@ -72,7 +72,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="firstName"
       >
         <span
@@ -98,7 +98,7 @@ exports[`Update profile - user settings creates snapshot 1`] = `
       class="form-group mb-4 position-relative undefined"
     >
       <label
-        class="label"
+        class="font-weight-bold label"
         for="lastName"
       >
         <span

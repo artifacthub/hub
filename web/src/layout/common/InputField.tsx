@@ -134,7 +134,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   return (
     <div className={`form-group mb-4 position-relative ${props.className}`}>
       {!isUndefined(props.label) && (
-        <label htmlFor={props.name} className={styles.label}>
+        <label htmlFor={props.name} className={`font-weight-bold ${styles.label}`}>
           <span className="font-weight-bold">{props.label}</span>
           {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
         </label>
