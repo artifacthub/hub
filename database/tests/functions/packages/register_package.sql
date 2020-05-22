@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(15);
+select plan(20);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -58,8 +58,6 @@ select register_package('
     }
 }
 ');
-
--- Check if package registration succeeded
 select results_eq(
     $$
         select
@@ -175,8 +173,6 @@ select register_package('
     }
 }
 ');
-
--- Check if package registration succeeded
 select results_eq(
     $$
         select logo_url from package where name = 'package1'
@@ -286,8 +282,6 @@ select register_package('
     }
 }
 ');
-
--- Check if package registration succeeded
 select results_eq(
     $$
         select logo_url from package where name = 'package1'
@@ -398,6 +392,101 @@ select is_empty(
         and e.package_version = '1.0.0'
     $$,
     'No new release event should exist for first version of package3'
+);
+
+-- Register a new version of the package previously registered
+select register_package('
+{
+    "kind": 1,
+    "name": "package3",
+    "display_name": "Package 3",
+    "description": "description",
+    "version": "2.0.0",
+    "organization_id": "00000000-0000-0000-0000-000000000001"
+}
+');
+select results_eq(
+    $$
+        select
+            name,
+            latest_version,
+            package_kind_id,
+            organization_id,
+            chart_repository_id
+        from package
+        where name='package3'
+    $$,
+    $$
+        values (
+            'package3',
+            '2.0.0',
+            1,
+            '00000000-0000-0000-0000-000000000001'::uuid,
+            null::uuid
+        )
+    $$,
+    'Package3 latest version should exist and its latest version should be 2.0.0'
+);
+select isnt_empty(
+    $$
+        select *
+        from event e
+        join package p using (package_id)
+        where p.name = 'package3'
+        and e.package_version = '2.0.0'
+    $$,
+    'New release event should exist for new version of package3'
+);
+
+-- Register a package with a name and kind already registered but with a different owner
+select throws_ok(
+    $$
+        select register_package('
+        {
+            "kind": 1,
+            "name": "package3",
+            "display_name": "Package 3",
+            "description": "description",
+            "version": "3.0.0",
+            "organization_id": "00000000-0000-0000-0000-000000000002"
+        }
+        '::jsonb)
+    $$,
+    23505,
+    'unique_violation',
+    'Org2 should not be able to register package3 as it already exists and is owned by org1'
+);
+select throws_ok(
+    $$
+        select register_package('
+        {
+            "kind": 1,
+            "name": "package3",
+            "display_name": "Package 3",
+            "description": "description",
+            "version": "3.0.0",
+            "user_id": "00000000-0000-0000-0000-000000000001"
+        }
+        '::jsonb)
+    $$,
+    23505,
+    'unique_violation',
+    'User1 should not be able to register package3 as it already exists and is owned by org1'
+);
+select lives_ok(
+    $$
+        select register_package('
+        {
+            "kind": 2,
+            "name": "package3",
+            "display_name": "Package 3",
+            "description": "description",
+            "version": "3.0.0",
+            "user_id": "00000000-0000-0000-0000-000000000001"
+        }
+        '::jsonb)
+    $$,
+    'User1 should be able to register package3 now using a different package kind'
 );
 
 -- Finish tests and rollback transaction

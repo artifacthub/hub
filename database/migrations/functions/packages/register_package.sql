@@ -11,19 +11,45 @@ declare
     v_name text := p_pkg->>'name';
     v_display_name text := nullif(p_pkg->>'display_name', '');
     v_description text := nullif(p_pkg->>'description', '');
-    v_keywords text[] := (
-        select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]
-    );
-    v_chart_repository_id text := (p_pkg->'chart_repository')->>'chart_repository_id';
+    v_keywords text[] := (select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]);
+    v_version text := p_pkg->>'version';
+    v_package_kind_id int := (p_pkg->>'kind')::int;
+    v_user_id uuid := nullif(p_pkg->>'user_id', '')::uuid;
+    v_organization_id uuid := nullif(p_pkg->>'organization_id', '')::uuid;
+    v_chart_repository_id uuid := ((p_pkg->'chart_repository')->>'chart_repository_id')::uuid;
     v_maintainer jsonb;
     v_maintainer_id uuid;
 begin
+    -- Check if a package with the same name and kind but a different owner
+    -- already exists.
+    -- NOTE: packages of kind Helm Chart are allowed to have the same name when
+    -- they belong to different repositories as the repo acts as a namespace.
+    perform
+    from package
+    where package_kind_id = v_package_kind_id
+    and name = v_name
+    and chart_repository_id is null
+    and (
+        user_id <> v_user_id
+        or organization_id <> v_organization_id
+        or (user_id is null and v_user_id is not null)
+        or (organization_id is null and v_organization_id is not null)
+    );
+    if found then
+        raise unique_violation;
+    end if;
+
     -- Get package's latest version before registration, if available
     select latest_version into v_previous_latest_version
     from package
-    where package_kind_id = (p_pkg->>'kind')::int
-    and chart_repository_id = nullif(v_chart_repository_id, '')::uuid
-    and name = v_name;
+    where package_kind_id = v_package_kind_id
+    and name = v_name
+    and
+        case when v_chart_repository_id is null then
+            chart_repository_id is null
+        else
+            chart_repository_id = v_chart_repository_id
+        end;
 
     -- Package
     insert into package (
@@ -33,19 +59,26 @@ begin
         latest_version,
         tsdoc,
         package_kind_id,
+        user_id,
         organization_id,
         chart_repository_id
     ) values (
         v_name,
         nullif(p_pkg->>'logo_url', ''),
         nullif(p_pkg->>'logo_image_id', '')::uuid,
-        p_pkg->>'version',
+        v_version,
         generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
-        (p_pkg->>'kind')::int,
-        nullif(p_pkg->>'organization_id', '')::uuid,
-        nullif(v_chart_repository_id, '')::uuid
+        v_package_kind_id,
+        v_user_id,
+        v_organization_id,
+        v_chart_repository_id
     )
-    on conflict (package_kind_id, chart_repository_id, name) do update
+    on conflict (
+        coalesce(chart_repository_id, '99999999-9999-9999-9999-999999999999'),
+        package_kind_id,
+        name
+    )
+    do update
     set
         name = excluded.name,
         logo_url = excluded.logo_url,
@@ -53,9 +86,10 @@ begin
         latest_version = excluded.latest_version,
         tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
         updated_at = current_timestamp
-    where semver_gte(p_pkg->>'version', package.latest_version) = true
+    where semver_gte(v_version, package.latest_version) = true
     returning package_id into v_package_id;
 
+    -- If package record has been created or updated
     if found then
         -- Maintainers
         for v_maintainer in select * from jsonb_array_elements(nullif(p_pkg->'maintainers', 'null'::jsonb))
@@ -94,10 +128,16 @@ begin
             select maintainer_id from package__maintainer
         );
     else
+        -- Package record was not created or updated, get package id to insert snapshot
         select package_id into v_package_id
         from package
-        where chart_repository_id = v_chart_repository_id::uuid
-        and name = v_name;
+        where name = v_name
+        and
+            case when v_chart_repository_id is null then
+                chart_repository_id is null
+            else
+                chart_repository_id = v_chart_repository_id
+            end;
     end if;
 
     -- Package snapshot
@@ -116,7 +156,7 @@ begin
         deprecated
     ) values (
         v_package_id,
-        p_pkg->>'version',
+        v_version,
         v_display_name,
         v_description,
         v_keywords,
@@ -142,9 +182,9 @@ begin
         updated_at = current_timestamp;
 
     -- Register new release event if package's latest version has been updated
-    if semver_gt(p_pkg->>'version', v_previous_latest_version) then
+    if semver_gt(v_version, v_previous_latest_version) then
         insert into event (package_id, package_version, event_kind_id)
-        values (v_package_id, p_pkg->>'version', 0)
+        values (v_package_id, v_version, 0)
         on conflict do nothing;
     end if;
 end
