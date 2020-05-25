@@ -78,6 +78,7 @@ chartTracker:
   numWorkers: 50
   repositories: []
   imageStore: pg
+  bypassDigestCheck: false
 
 dbMigrator:
   job:

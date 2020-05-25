@@ -8,6 +8,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"helm.sh/helm/v3/pkg/chart"
@@ -460,6 +461,7 @@ func TestDispatcher(t *testing.T) {
 }
 
 type dispatcherWrapper struct {
+	cfg        *viper.Viper
 	wg         *sync.WaitGroup
 	il         *chartrepo.IndexLoaderMock
 	rm         *chartrepo.ManagerMock
@@ -470,10 +472,11 @@ type dispatcherWrapper struct {
 
 func newDispatcherWrapper(ctx context.Context) *dispatcherWrapper {
 	// Setup dispatcher
+	cfg := viper.New()
 	il := &chartrepo.IndexLoaderMock{}
 	rm := &chartrepo.ManagerMock{}
 	ec := &ErrorsCollectorMock{}
-	d := NewDispatcher(ctx, il, rm, ec)
+	d := NewDispatcher(ctx, cfg, il, rm, ec)
 
 	// Wait group used for Dispatcher.Run()
 	var wg sync.WaitGroup
@@ -490,6 +493,7 @@ func newDispatcherWrapper(ctx context.Context) *dispatcherWrapper {
 	}()
 
 	return &dispatcherWrapper{
+		cfg:        cfg,
 		wg:         &wg,
 		ec:         ec,
 		il:         il,

@@ -64,7 +64,7 @@ func main() {
 	// Launch dispatcher and workers and wait for them to finish
 	var wg sync.WaitGroup
 	ec := NewDBErrorsCollector(ctx, rm, repos)
-	dispatcher := NewDispatcher(ctx, il, rm, ec)
+	dispatcher := NewDispatcher(ctx, cfg, il, rm, ec)
 	wg.Add(1)
 	go dispatcher.Run(&wg, repos)
 	hc := &http.Client{Timeout: 10 * time.Second}
