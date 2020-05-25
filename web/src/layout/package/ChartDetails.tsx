@@ -8,6 +8,7 @@ import ExpandableList from '../common/ExpandableList';
 import ExternalLink from '../common/ExternalLink';
 import SmallTitle from '../common/SmallTitle';
 import Keywords from './Keywords';
+import License from './License';
 import Links from './Links';
 
 interface Props {
@@ -22,7 +23,6 @@ const ChartDetails = (props: Props) => {
       <p data-testid="appVersion" className="text-truncate">
         {props.package.appVersion || '-'}
       </p>
-
       <SmallTitle text="Chart Versions" />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
         <p data-testid="chartVersions">-</p>
@@ -33,6 +33,8 @@ const ChartDetails = (props: Props) => {
       )}
 
       <Links links={props.package.links} homeUrl={props.package.homeUrl} />
+
+      <License license={props.package.license} />
 
       <SmallTitle text="Maintainers" />
       {isUndefined(props.package.maintainers) ||
@@ -53,7 +55,6 @@ const ChartDetails = (props: Props) => {
           ))}
         </div>
       )}
-
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
     </>

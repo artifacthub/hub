@@ -45,6 +45,7 @@ require (
 	google.golang.org/api v0.22.0
 	google.golang.org/appengine v1.6.6 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
+	gopkg.in/src-d/go-license-detector.v3 v3.1.0
 	gopkg.in/yaml.v2 v2.2.8
 	helm.sh/helm/v3 v3.2.0
 )

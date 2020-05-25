@@ -145,6 +145,7 @@ select columns_are('snapshot', array[
     'links',
     'data',
     'deprecated',
+    'license',
     'created_at',
     'updated_at'
 ]);

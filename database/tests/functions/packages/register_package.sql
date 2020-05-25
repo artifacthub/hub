@@ -43,6 +43,7 @@ select register_package('
     "app_version": "12.1.0",
     "digest": "digest-package1-1.0.0",
     "deprecated": false,
+    "license": "Apache-2.0",
     "maintainers": [
         {
             "name": "name1",
@@ -95,7 +96,8 @@ select results_eq(
             s.readme,
             s.links,
             s.data,
-            s.deprecated
+            s.deprecated,
+            s.license
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -113,7 +115,8 @@ select results_eq(
             'readme-version-1.0.0',
             '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]'::jsonb,
             '{"key": "value"}'::jsonb,
-            false
+            false,
+            'Apache-2.0'
         )
     $$,
     'Snapshot should exist'

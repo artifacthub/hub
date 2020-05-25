@@ -65,7 +65,8 @@ insert into snapshot (
     readme,
     links,
     data,
-    deprecated
+    deprecated,
+    license
 ) values (
     :'package1ID',
     '1.0.0',
@@ -78,7 +79,8 @@ insert into snapshot (
     'readme-version-1.0.0',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}',
-    true
+    true,
+    'Apache-2.0'
 );
 insert into snapshot (
     package_id,
@@ -172,6 +174,7 @@ select is(
         "app_version": "12.1.0",
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
+        "license": "Apache-2.0",
         "maintainers": [
             {
                 "name": "name1",
@@ -228,6 +231,7 @@ select is(
         "app_version": "12.1.0",
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
+        "license": "Apache-2.0",
         "maintainers": [
             {
                 "name": "name1",
@@ -285,6 +289,7 @@ select is(
         "app_version": "12.0.0",
         "digest": "digest-package1-0.0.9",
         "deprecated": null,
+        "license": null,
         "maintainers": [
             {
                 "name": "name1",
@@ -328,6 +333,7 @@ select is(
             "key": "value"
         },
         "deprecated": null,
+        "license": null,
         "version": "1.0.0",
         "app_version": null,
         "available_versions": ["1.0.0"],

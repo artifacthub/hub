@@ -43,6 +43,7 @@ type Package struct {
 	AppVersion              string                 `json:"app_version"`
 	Digest                  string                 `json:"digest"`
 	Deprecated              bool                   `json:"deprecated"`
+	License                 string                 `json:"license"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	UserID                  string                 `json:"user_id"`
 	UserAlias               string                 `json:"user_alias"`

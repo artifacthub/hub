@@ -5,6 +5,7 @@ import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import SmallTitle from '../common/SmallTitle';
 import Keywords from './Keywords';
+import License from './License';
 import Links from './Links';
 
 interface Props {
@@ -25,6 +26,8 @@ const DefaultDetails = (props: Props) => {
       )}
 
       <Links links={props.package.links} />
+
+      <License license={props.package.license} />
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
