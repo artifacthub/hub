@@ -8,6 +8,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
@@ -39,6 +40,7 @@ type Job struct {
 // releases and dispatching them among the available workers.
 type Dispatcher struct {
 	ctx   context.Context
+	cfg   *viper.Viper
 	il    hub.ChartRepositoryIndexLoader
 	rm    hub.ChartRepositoryManager
 	ec    ErrorsCollector
@@ -48,12 +50,14 @@ type Dispatcher struct {
 // NewDispatcher creates a new dispatcher instance.
 func NewDispatcher(
 	ctx context.Context,
+	cfg *viper.Viper,
 	il hub.ChartRepositoryIndexLoader,
 	rm hub.ChartRepositoryManager,
 	ec ErrorsCollector,
 ) *Dispatcher {
 	return &Dispatcher{
 		ctx:   ctx,
+		cfg:   cfg,
 		il:    il,
 		rm:    rm,
 		ec:    ec,
@@ -102,6 +106,7 @@ func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository
 	}
 
 	// Register new or updated chart releases
+	bypassDigestCheck := d.cfg.GetBool("tracker.bypassDigestCheck")
 	chartsAvailable := make(map[string]struct{})
 	for _, chartVersions := range indexFile.Entries {
 		for i, chartVersion := range chartVersions {
@@ -111,7 +116,7 @@ func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository
 			}
 			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
 			chartsAvailable[key] = struct{}{}
-			if chartVersion.Digest != registeredPackagesDigest[key] {
+			if bypassDigestCheck || chartVersion.Digest != registeredPackagesDigest[key] {
 				d.Queue <- &Job{
 					Kind:         Register,
 					Repo:         r,

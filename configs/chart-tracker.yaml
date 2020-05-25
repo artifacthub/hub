@@ -11,3 +11,4 @@ tracker:
   numWorkers: 50
   repositoriesNames: []
   imageStore: pg
+  bypassDigestCheck: false
