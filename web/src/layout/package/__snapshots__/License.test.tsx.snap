@@ -1,22 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DefaultDetails creates snapshot 1`] = `
+exports[`License creates snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="mt-2 mb-1"
-    data-testid="smallTitle"
-  >
-    <small
-      class="card-title text-muted text-uppercase"
-    >
-      Versions
-    </small>
-  </div>
-  <p
-    data-testid="versions"
-  >
-    -
-  </p>
   <div
     class="mt-2 mb-1"
     data-testid="smallTitle"
@@ -88,31 +73,5 @@ exports[`DefaultDetails creates snapshot 1`] = `
       </div>
     </a>
   </div>
-  <div
-    class="mt-2 mb-1"
-    data-testid="smallTitle"
-  >
-    <small
-      class="card-title text-muted text-uppercase"
-    >
-      Keywords
-    </small>
-  </div>
-  <span
-    data-testid="keywords"
-  >
-    <button
-      class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
-      data-testid="keywordBtn"
-    >
-      key1
-    </button>
-    <button
-      class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
-      data-testid="keywordBtn"
-    >
-      key2
-    </button>
-  </span>
 </DocumentFragment>
 `;

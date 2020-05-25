@@ -45,6 +45,7 @@ begin
         'app_version', s.app_version,
         'digest', s.digest,
         'deprecated', s.deprecated,
+        'license', s.license,
         'maintainers', (
             select json_agg(json_build_object(
                 'name', m.name,

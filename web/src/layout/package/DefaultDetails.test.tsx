@@ -18,6 +18,7 @@ const packageItem: Package = {
   deprecated: false,
   keywords: ['key1', 'key2'],
   chartRepository: null,
+  license: 'MIT',
 };
 const defaultProps = {
   package: packageItem,
@@ -43,10 +44,12 @@ describe('DefaultDetails', () => {
       );
 
       expect(getByText('Versions')).toBeInTheDocument();
+      expect(getByText('License')).toBeInTheDocument();
       expect(getByText('Keywords')).toBeInTheDocument();
 
       expect(getByText('key1')).toBeInTheDocument();
       expect(getByText('key2')).toBeInTheDocument();
+      expect(getByText('MIT')).toBeInTheDocument();
       expect(getAllByText('-')).toHaveLength(1);
     });
   });

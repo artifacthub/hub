@@ -22,6 +22,7 @@ const packageItem: Package = {
     displayName: null,
     url: 'repoUrl',
   },
+  license: 'MIT',
 };
 const defaultProps = {
   package: packageItem,
@@ -49,6 +50,7 @@ describe('ChartDetails', () => {
       expect(getByText('Application version')).toBeInTheDocument();
       expect(getByText('Chart Versions')).toBeInTheDocument();
       expect(queryByText('Links')).toBeNull();
+      expect(getByText('License')).toBeInTheDocument();
       expect(getByText('Maintainers')).toBeInTheDocument();
       expect(getByText('Keywords')).toBeInTheDocument();
 
@@ -58,6 +60,7 @@ describe('ChartDetails', () => {
 
       expect(getByText('1.0.0')).toBeInTheDocument();
       expect(getAllByText('-')).toHaveLength(2);
+      expect(getByText('MIT')).toBeInTheDocument();
     });
   });
 });

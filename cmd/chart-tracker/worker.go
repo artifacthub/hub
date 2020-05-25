@@ -15,6 +15,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
+	"github.com/artifacthub/hub/internal/license"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
@@ -201,6 +202,10 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	readme := getFile(chart, "README.md")
 	if readme != nil {
 		p.Readme = string(readme.Data)
+	}
+	licenseFile := getFile(chart, "LICENSE")
+	if licenseFile != nil {
+		p.License = license.Detect(licenseFile.Data)
 	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {

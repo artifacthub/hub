@@ -153,7 +153,8 @@ begin
         readme,
         links,
         data,
-        deprecated
+        deprecated,
+        license
     ) values (
         v_package_id,
         v_version,
@@ -166,7 +167,8 @@ begin
         nullif(p_pkg->>'readme', ''),
         p_pkg->'links',
         p_pkg->'data',
-        (p_pkg->>'deprecated')::boolean
+        (p_pkg->>'deprecated')::boolean,
+        nullif(p_pkg->>'license', '')
     )
     on conflict (package_id, version) do update
     set
@@ -179,6 +181,7 @@ begin
         readme = excluded.readme,
         links = excluded.links,
         deprecated = excluded.deprecated,
+        license = excluded.license,
         updated_at = current_timestamp;
 
     -- Register new release event if package's latest version has been updated

@@ -46,6 +46,7 @@ export interface Package {
   stars?: number | null;
   userAlias: string | null;
   eventKinds?: EventKind[];
+  license?: string | null;
 }
 
 export interface PackageData {
