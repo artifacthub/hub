@@ -68,7 +68,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
@@ -78,7 +78,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
@@ -160,8 +160,8 @@ func TestAddMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", dbQueryAddMember, "userID", "orgName", "userAlias").Return(nil)
-				db.On("QueryRow", dbQueryGetUserEmail, mock.Anything).Return("email", nil)
+				db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").Return(nil)
+				db.On("QueryRow", ctx, dbQueryGetUserEmail, mock.Anything).Return("email", nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
@@ -176,7 +176,7 @@ func TestAddMember(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQueryAddMember, "userID", "orgName", "userAlias").
+		db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").
 			Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
@@ -187,6 +187,8 @@ func TestAddMember(t *testing.T) {
 }
 
 func TestCheckAvailability(t *testing.T) {
+	ctx := context.Background()
+
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg       string
@@ -232,10 +234,10 @@ func TestCheckAvailability(t *testing.T) {
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
-				db.On("QueryRow", tc.dbQuery, "value").Return(tc.available, nil)
+				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
 				m := NewManager(db, nil)
 
-				available, err := m.CheckAvailability(context.Background(), tc.resourceKind, "value")
+				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value")
 				assert.NoError(t, err)
 				assert.Equal(t, tc.available, available)
 				db.AssertExpectations(t)
@@ -246,7 +248,7 @@ func TestCheckAvailability(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		dbQuery := `select not exists (select organization_id from organization where name = $1)`
-		db.On("QueryRow", dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		available, err := m.CheckAvailability(context.Background(), "organizationName", "value")
@@ -275,7 +277,7 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName").Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName").Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
@@ -285,7 +287,7 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
@@ -335,7 +337,7 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", "userAlias").Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", "userAlias").Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
@@ -345,7 +347,7 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", "userAlias").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", "userAlias").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
@@ -367,7 +369,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
@@ -378,7 +380,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
@@ -390,6 +392,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 func TestGetJSON(t *testing.T) {
 	dbQuery := `select get_organization($1::text)`
+	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
@@ -399,10 +402,10 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
-		dataJSON, err := m.GetJSON(context.Background(), "orgName")
+		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -410,10 +413,10 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
-		dataJSON, err := m.GetJSON(context.Background(), "orgName")
+		dataJSON, err := m.GetJSON(ctx, "orgName")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -439,7 +442,7 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
@@ -450,7 +453,7 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
@@ -497,7 +500,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.Update(ctx, &hub.Organization{})
@@ -507,7 +510,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db, nil)
 
 		err := m.Update(ctx, &hub.Organization{})

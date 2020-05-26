@@ -64,7 +64,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Add(ctx, s)
@@ -74,7 +74,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Add(ctx, s)
@@ -131,7 +131,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, s)
@@ -141,7 +141,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, s)
@@ -170,7 +170,7 @@ func TestGetByPackageJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, userID, packageID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, userID, packageID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetByPackageJSON(ctx, packageID)
@@ -181,7 +181,7 @@ func TestGetByPackageJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, userID, packageID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, userID, packageID).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetByPackageJSON(ctx, packageID)
@@ -204,7 +204,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, userID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, userID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
@@ -215,7 +215,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, userID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, userID).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
@@ -227,6 +227,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 func TestGetSubscriptors(t *testing.T) {
 	dbQuery := "select get_subscriptors($1::uuid, $2::integer)"
+	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -259,10 +260,10 @@ func TestGetSubscriptors(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(context.Background(), packageID, hub.NewRelease)
+		subscriptors, err := m.GetSubscriptors(ctx, packageID, hub.NewRelease)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, subscriptors)
 		db.AssertExpectations(t)
@@ -279,7 +280,7 @@ func TestGetSubscriptors(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, packageID, hub.EventKind(0)).Return([]byte(`
+		db.On("QueryRow", ctx, dbQuery, packageID, hub.EventKind(0)).Return([]byte(`
 		[
 			{
 				"user_id": "00000000-0000-0000-0000-000000000001"

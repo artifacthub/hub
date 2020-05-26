@@ -110,9 +110,9 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndex", mock.Anything).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
@@ -123,9 +123,9 @@ func TestAdd(t *testing.T) {
 
 	t.Run("add chart repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(nil)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndex", mock.Anything).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
@@ -136,6 +136,8 @@ func TestAdd(t *testing.T) {
 }
 
 func TestCheckAvailability(t *testing.T) {
+	ctx := context.Background()
+
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			errMsg       string
@@ -186,10 +188,10 @@ func TestCheckAvailability(t *testing.T) {
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
-				db.On("QueryRow", tc.dbQuery, "value").Return(tc.available, nil)
+				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
 				m := NewManager(db)
 
-				available, err := m.CheckAvailability(context.Background(), tc.resourceKind, "value")
+				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value")
 				assert.NoError(t, err)
 				assert.Equal(t, tc.available, available)
 				db.AssertExpectations(t)
@@ -200,10 +202,10 @@ func TestCheckAvailability(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		dbQuery := `select not exists (select chart_repository_id from chart_repository where name = $1)`
-		db.On("QueryRow", dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		available, err := m.CheckAvailability(context.Background(), "chartRepositoryName", "value")
+		available, err := m.CheckAvailability(ctx, "chartRepositoryName", "value")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)
@@ -229,7 +231,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "repo1").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, "repo1")
@@ -239,7 +241,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("delete chart repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "repo1").Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(nil)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, "repo1")
@@ -250,8 +252,10 @@ func TestDelete(t *testing.T) {
 
 func TestGetAll(t *testing.T) {
 	dbQuery := "select get_chart_repositories()"
+	ctx := context.Background()
+
 	db := &tests.DBMock{}
-	db.On("QueryRow", dbQuery).Return([]byte(`
+	db.On("QueryRow", ctx, dbQuery).Return([]byte(`
 	[{
         "chart_repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -271,7 +275,7 @@ func TestGetAll(t *testing.T) {
 	`), nil)
 	m := NewManager(db)
 
-	r, err := m.GetAll(context.Background())
+	r, err := m.GetAll(ctx)
 	require.NoError(t, err)
 	assert.Len(t, r, 3)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].ChartRepositoryID)
@@ -291,16 +295,17 @@ func TestGetAll(t *testing.T) {
 
 func TestGetByName(t *testing.T) {
 	dbQuery := "select get_chart_repository_by_name($1::text)"
+	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
-		_, err := m.GetByName(context.Background(), "")
+		_, err := m.GetByName(ctx, "")
 		assert.True(t, errors.Is(err, ErrInvalidInput))
 	})
 
 	t.Run("get existing repository by name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, dbQuery, "repo1").Return([]byte(`
 		{
 			"chart_repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -321,7 +326,7 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("database error calling get_chart_repository_by_name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
@@ -332,7 +337,7 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("invalid json data returned from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "repo1").Return([]byte("invalid json"), nil)
+		db.On("QueryRow", ctx, dbQuery, "repo1").Return([]byte("invalid json"), nil)
 		m := NewManager(db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
@@ -343,6 +348,8 @@ func TestGetByName(t *testing.T) {
 }
 
 func TestGetPackagesDigest(t *testing.T) {
+	ctx := context.Background()
+
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetPackagesDigest(context.Background(), "invalid")
@@ -352,7 +359,7 @@ func TestGetPackagesDigest(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		dbQuery := "select get_chart_repository_packages_digest($1::uuid)"
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "00000000-0000-0000-0000-000000000001").Return([]byte(`
+		db.On("QueryRow", ctx, dbQuery, "00000000-0000-0000-0000-000000000001").Return([]byte(`
 		{
 			"package1@1.0.0": "digest-package1-1.0.0",
 			"package1@0.0.9": "digest-package1-0.0.9",
@@ -362,7 +369,7 @@ func TestGetPackagesDigest(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		pd, err := m.GetPackagesDigest(context.Background(), "00000000-0000-0000-0000-000000000001")
+		pd, err := m.GetPackagesDigest(ctx, "00000000-0000-0000-0000-000000000001")
 		require.NoError(t, err)
 		assert.Len(t, pd, 4)
 		assert.Equal(t, "digest-package1-1.0.0", pd["package1@1.0.0"])
@@ -392,7 +399,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
@@ -403,7 +410,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("user chart repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
@@ -426,7 +433,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -437,7 +444,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("user chart repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -448,6 +455,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 }
 
 func TestSetLastTrackingResults(t *testing.T) {
+	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
 	dbQuery := `
 	update chart_repository set
@@ -457,26 +465,26 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
-		err := m.SetLastTrackingResults(context.Background(), "invalid", "errors")
+		err := m.SetLastTrackingResults(ctx, "invalid", "errors")
 		assert.True(t, errors.Is(err, ErrInvalidInput))
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, repoID, "errors").Return(nil)
+		db.On("Exec", ctx, dbQuery, repoID, "errors").Return(nil)
 		m := NewManager(db)
 
-		err := m.SetLastTrackingResults(context.Background(), repoID, "errors")
+		err := m.SetLastTrackingResults(ctx, repoID, "errors")
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, repoID, "errors").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, repoID, "errors").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		err := m.SetLastTrackingResults(context.Background(), repoID, "errors")
+		err := m.SetLastTrackingResults(ctx, repoID, "errors")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})
@@ -547,9 +555,9 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndex", mock.Anything).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)
@@ -560,9 +568,9 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("update chart repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
 		l := &IndexLoaderMock{}
-		l.On("LoadIndex", mock.Anything).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, nil)
 		m := NewManager(db, WithIndexLoader(l))
 
 		err := m.Update(ctx, r)
