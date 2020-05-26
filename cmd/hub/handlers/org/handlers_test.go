@@ -57,14 +57,14 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.omErr != nil {
-					hw.om.On("Add", mock.Anything, mock.Anything).Return(tc.omErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.omErr != nil {
+					hw.om.On("Add", r.Context(), mock.Anything).Return(tc.omErr)
+				}
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -102,12 +102,12 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.om.On("Add", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.om.On("Add", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -144,14 +144,14 @@ func TestAddMember(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.om.On("AddMember", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
-				Return(tc.omErr)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("POST", "/", strings.NewReader("member=userAlias"))
 			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+			hw := newHandlersWrapper()
+			hw.om.On("AddMember", r.Context(), mock.Anything, mock.Anything, mock.Anything).
+				Return(tc.omErr)
 			hw.h.AddMember(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -164,10 +164,6 @@ func TestAddMember(t *testing.T) {
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("CheckAvailability", mock.Anything, "invalid", "value").
-			Return(false, org.ErrInvalidInput)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
@@ -177,6 +173,10 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.om.On("CheckAvailability", r.Context(), "invalid", "value").
+			Return(false, org.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -201,10 +201,6 @@ func TestCheckAvailability(t *testing.T) {
 			for _, tc := range testCases {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
-					hw := newHandlersWrapper()
-					hw.om.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
-						Return(tc.available, nil)
-
 					w := httptest.NewRecorder()
 					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 					rctx := &chi.Context{
@@ -214,6 +210,10 @@ func TestCheckAvailability(t *testing.T) {
 						},
 					}
 					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+					hw := newHandlersWrapper()
+					hw.om.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+						Return(tc.available, nil)
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
@@ -231,10 +231,6 @@ func TestCheckAvailability(t *testing.T) {
 		})
 
 		t.Run("check availability failed", func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.om.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
-				Return(false, tests.ErrFakeDatabaseFailure)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 			rctx := &chi.Context{
@@ -244,6 +240,10 @@ func TestCheckAvailability(t *testing.T) {
 				},
 			}
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+			hw := newHandlersWrapper()
+			hw.om.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+				Return(false, tests.ErrFakeDatabaseFailure)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -279,12 +279,12 @@ func TestConfirmMembership(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.om.On("ConfirmMembership", mock.Anything, mock.Anything).Return(tc.omErr)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("PUT", "/", nil)
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+			hw := newHandlersWrapper()
+			hw.om.On("ConfirmMembership", r.Context(), mock.Anything).Return(tc.omErr)
 			hw.h.ConfirmMembership(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -320,12 +320,12 @@ func TestDeleteMember(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.om.On("DeleteMember", mock.Anything, mock.Anything, mock.Anything).Return(tc.omErr)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("DELETE", "/", nil)
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+			hw := newHandlersWrapper()
+			hw.om.On("DeleteMember", r.Context(), mock.Anything, mock.Anything).Return(tc.omErr)
 			hw.h.DeleteMember(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -354,12 +354,12 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.om.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.omErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.om.On("GetJSON", r.Context(), mock.Anything).Return(nil, tc.omErr)
 				hw.h.Get(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -371,12 +371,12 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("get organization succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.om.On("GetJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -393,12 +393,12 @@ func TestGet(t *testing.T) {
 
 func TestGetByUser(t *testing.T) {
 	t.Run("get user organizations succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.om.On("GetByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -413,12 +413,12 @@ func TestGetByUser(t *testing.T) {
 	})
 
 	t.Run("error getting user organizations", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.om.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -446,12 +446,12 @@ func TestGetMembers(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return(nil, tc.omErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.om.On("GetMembersJSON", r.Context(), mock.Anything).Return(nil, tc.omErr)
 				hw.h.GetMembers(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -463,12 +463,12 @@ func TestGetMembers(t *testing.T) {
 	})
 
 	t.Run("get organization members succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.om.On("GetMembersJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.om.On("GetMembersJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.GetMembers(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -509,14 +509,14 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.omErr != nil {
-					hw.om.On("Update", mock.Anything, mock.Anything).Return(tc.omErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.omErr != nil {
+					hw.om.On("Update", r.Context(), mock.Anything).Return(tc.omErr)
+				}
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -554,12 +554,12 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.om.On("Update", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.om.On("Update", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()

@@ -85,7 +85,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		tx.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager()
 
 		err := m.Add(ctx, tx, n)
@@ -95,7 +95,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, mock.Anything).Return(nil)
+		tx.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
 		m := NewManager()
 
 		err := m.Add(ctx, tx, n)
@@ -110,7 +110,7 @@ func TestGetPending(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		tx.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager()
 
 		dataJSON, err := m.GetPending(ctx, tx)
@@ -133,7 +133,7 @@ func TestGetPending(t *testing.T) {
 		}
 
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", dbQuery).Return([]byte(`
+		tx.On("QueryRow", ctx, dbQuery).Return([]byte(`
 		{
 			"notification_id": "notificationID",
 			"event": {
@@ -183,7 +183,7 @@ func TestUpdateStatus(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, notificationID, true, "").Return(tests.ErrFakeDatabaseFailure)
+		tx.On("Exec", ctx, dbQuery, notificationID, true, "").Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager()
 
 		err := m.UpdateStatus(ctx, tx, notificationID, true, nil)
@@ -193,7 +193,7 @@ func TestUpdateStatus(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", dbQuery, notificationID, true, "").Return(nil)
+		tx.On("Exec", ctx, dbQuery, notificationID, true, "").Return(nil)
 		m := NewManager()
 
 		err := m.UpdateStatus(ctx, tx, notificationID, true, nil)

@@ -45,12 +45,12 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.pmErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return(nil, tc.pmErr)
 				hw.h.Get(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -62,12 +62,12 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("get package succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -84,12 +84,12 @@ func TestGet(t *testing.T) {
 
 func TestGetStarredByUser(t *testing.T) {
 	t.Run("get packages starred by user succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetStarredByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStarredByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetStarredByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -104,12 +104,12 @@ func TestGetStarredByUser(t *testing.T) {
 	})
 
 	t.Run("error getting packages starred by user", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetStarredByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStarredByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetStarredByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -137,12 +137,12 @@ func TestGetStars(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("GetStarsJSON", mock.Anything, mock.Anything).Return(nil, tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetStarsJSON", r.Context(), mock.Anything).Return(nil, tc.err)
 				hw.h.GetStars(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -154,12 +154,12 @@ func TestGetStars(t *testing.T) {
 	})
 
 	t.Run("get stars succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetStarsJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStarsJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.GetStars(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -176,11 +176,11 @@ func TestGetStars(t *testing.T) {
 
 func TestGetStats(t *testing.T) {
 	t.Run("get stats succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetStatsJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStatsJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -195,11 +195,11 @@ func TestGetStats(t *testing.T) {
 	})
 
 	t.Run("error getting stats", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetStatsJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetStatsJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -211,11 +211,11 @@ func TestGetStats(t *testing.T) {
 
 func TestGetUpdates(t *testing.T) {
 	t.Run("get updates succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetUpdatesJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetUpdatesJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetUpdates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -230,11 +230,11 @@ func TestGetUpdates(t *testing.T) {
 	})
 
 	t.Run("error getting updates", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("GetUpdatesJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetUpdatesJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetUpdates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -266,11 +266,11 @@ func TestInjectIndexMeta(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return(nil, tc.pmErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return(nil, tc.pmErr)
 				hw.h.InjectIndexMeta(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -341,11 +341,11 @@ func TestInjectIndexMeta(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dataJSON, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", mock.Anything, mock.Anything).Return([]byte(tc.dataJSON), nil)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return([]byte(tc.dataJSON), nil)
 				hw.h.InjectIndexMeta(checkIndexMeta(tc.expectedTitle, tc.expectedDescription)).ServeHTTP(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -373,10 +373,10 @@ func TestSearch(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
-				hw := newHandlersWrapper()
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
+
+				hw := newHandlersWrapper()
 				hw.h.Search(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -387,11 +387,11 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("invalid search input", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return(nil, pkg.ErrInvalidInput)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, pkg.ErrInvalidInput)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -400,11 +400,11 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("valid request, search succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -419,11 +419,11 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("error searching packages", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -451,12 +451,12 @@ func TestToggleStar(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.pm.On("ToggleStar", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.ToggleStar(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -468,12 +468,12 @@ func TestToggleStar(t *testing.T) {
 	})
 
 	t.Run("toggle star succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.pm.On("ToggleStar", mock.Anything, mock.Anything).Return(nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("ToggleStar", r.Context(), mock.Anything).Return(nil)
 		hw.h.ToggleStar(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

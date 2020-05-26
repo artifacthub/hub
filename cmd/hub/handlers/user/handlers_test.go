@@ -58,10 +58,6 @@ func TestBasicAuth(t *testing.T) {
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckAvailability", mock.Anything, "invalid", "value").
-			Return(false, user.ErrInvalidInput)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
@@ -71,6 +67,10 @@ func TestCheckAvailability(t *testing.T) {
 			},
 		}
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckAvailability", r.Context(), "invalid", "value").
+			Return(false, user.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -95,10 +95,6 @@ func TestCheckAvailability(t *testing.T) {
 			for _, tc := range testCases {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
-					hw := newHandlersWrapper()
-					hw.um.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
-						Return(tc.available, nil)
-
 					w := httptest.NewRecorder()
 					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 					rctx := &chi.Context{
@@ -108,6 +104,10 @@ func TestCheckAvailability(t *testing.T) {
 						},
 					}
 					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+					hw := newHandlersWrapper()
+					hw.um.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+						Return(tc.available, nil)
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
@@ -125,10 +125,6 @@ func TestCheckAvailability(t *testing.T) {
 		})
 
 		t.Run("check availability failed", func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.um.On("CheckAvailability", mock.Anything, mock.Anything, mock.Anything).
-				Return(false, tests.ErrFakeDatabaseFailure)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 			rctx := &chi.Context{
@@ -138,6 +134,10 @@ func TestCheckAvailability(t *testing.T) {
 				},
 			}
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+				Return(false, tests.ErrFakeDatabaseFailure)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -150,12 +150,12 @@ func TestCheckAvailability(t *testing.T) {
 
 func TestGetProfile(t *testing.T) {
 	t.Run("error getting profile", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("GetProfileJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("GetProfileJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -165,12 +165,12 @@ func TestGetProfile(t *testing.T) {
 	})
 
 	t.Run("profile get succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("GetProfileJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("GetProfileJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -197,10 +197,10 @@ func TestInjectUserID(t *testing.T) {
 	}
 
 	t.Run("session cookie not provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -209,14 +209,14 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("invalid session cookie provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: "invalidValue",
 		})
+
+		hw := newHandlersWrapper()
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -225,17 +225,17 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("error checking session", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: encodedSessionID,
 		})
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -245,12 +245,13 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("invalid session provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
+
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
@@ -265,12 +266,12 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("inject user id succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
@@ -287,10 +288,10 @@ func TestInjectUserID(t *testing.T) {
 
 func TestLogin(t *testing.T) {
 	t.Run("credentials not provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", nil)
+
+		hw := newHandlersWrapper()
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -315,13 +316,13 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("invalid credentials provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckCredentialsOutput{Valid: false, UserID: ""}, nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass2"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: false, UserID: ""}, nil)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -331,15 +332,15 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("error registering session", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
+		hw.um.On("RegisterSession", r.Context(), mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -349,15 +350,15 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("login succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", mock.Anything, mock.Anything).
-			Return([]byte("sessionID"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
+		hw.um.On("RegisterSession", r.Context(), mock.Anything).
+			Return([]byte("sessionID"), nil)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -398,13 +399,13 @@ func TestLogout(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				if tc.cookie != nil {
 					r.AddCookie(tc.cookie)
 				}
+
+				hw := newHandlersWrapper()
 				hw.h.Logout(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -435,11 +436,11 @@ func TestLogout(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.um.On("DeleteSession", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.um.On("DeleteSession", r.Context(), mock.Anything).Return(tc.err)
 				encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 				r.AddCookie(&http.Cookie{
 					Name:  sessionCookieName,
@@ -462,10 +463,10 @@ func TestLogout(t *testing.T) {
 
 func TestRegisterUser(t *testing.T) {
 	t.Run("no user provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
+
+		hw := newHandlersWrapper()
 		hw.h.RegisterUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -503,13 +504,13 @@ func TestRegisterUser(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.umErr != nil {
-					hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.umErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.userJSON))
+
+				hw := newHandlersWrapper()
+				if tc.umErr != nil {
+					hw.um.On("RegisterUser", r.Context(), mock.Anything, mock.Anything).Return(tc.umErr)
+				}
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -549,11 +550,11 @@ func TestRegisterUser(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.um.On("RegisterUser", mock.Anything, mock.Anything, mock.Anything).Return(tc.umErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
+
+				hw := newHandlersWrapper()
+				hw.um.On("RegisterUser", r.Context(), mock.Anything, mock.Anything).Return(tc.umErr)
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -567,10 +568,10 @@ func TestRegisterUser(t *testing.T) {
 
 func TestRequireLogin(t *testing.T) {
 	t.Run("session cookie not provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
 		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -579,14 +580,14 @@ func TestRequireLogin(t *testing.T) {
 	})
 
 	t.Run("invalid session cookie provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
 			Value: "invalidValue",
 		})
+
+		hw := newHandlersWrapper()
 		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -595,12 +596,12 @@ func TestRequireLogin(t *testing.T) {
 	})
 
 	t.Run("error checking session", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
@@ -615,12 +616,12 @@ func TestRequireLogin(t *testing.T) {
 	})
 
 	t.Run("invalid session provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
@@ -635,12 +636,12 @@ func TestRequireLogin(t *testing.T) {
 	})
 
 	t.Run("require login succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", mock.Anything, mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
+			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
 		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 		r.AddCookie(&http.Cookie{
 			Name:  sessionCookieName,
@@ -657,13 +658,13 @@ func TestRequireLogin(t *testing.T) {
 
 func TestUpdatePassword(t *testing.T) {
 	t.Run("no old password provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
-			Return(user.ErrInvalidInput)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("new=new"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+			Return(user.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -673,13 +674,13 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("no new password provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
-			Return(user.ErrInvalidInput)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+			Return(user.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -689,14 +690,14 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("invalid old password provided", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
-			Return(user.ErrInvalidPassword)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=invalid&new=new"))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+			Return(user.ErrInvalidPassword)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -706,14 +707,14 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("error updating password", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).
-			Return(tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+			Return(tests.ErrFakeDatabaseFailure)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -723,13 +724,13 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("password updated successfully", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", mock.Anything, mock.Anything, mock.Anything).Return(nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).Return(nil)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -767,13 +768,13 @@ func TestUpdateProfile(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.umErr != nil {
-					hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(tc.umErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.userJSON))
+
+				hw := newHandlersWrapper()
+				if tc.umErr != nil {
+					hw.um.On("UpdateProfile", r.Context(), mock.Anything).Return(tc.umErr)
+				}
 				hw.h.UpdateProfile(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -785,12 +786,12 @@ func TestUpdateProfile(t *testing.T) {
 	})
 
 	t.Run("error updating profile", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdateProfile", r.Context(), mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -800,12 +801,12 @@ func TestUpdateProfile(t *testing.T) {
 	})
 
 	t.Run("user profile updated successfully", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("UpdateProfile", mock.Anything, mock.Anything).Return(nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.um.On("UpdateProfile", r.Context(), mock.Anything).Return(nil)
 		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -816,7 +817,6 @@ func TestUpdateProfile(t *testing.T) {
 }
 
 func TestVerifyEmail(t *testing.T) {
-
 	testCases := []struct {
 		description        string
 		response           []interface{}
@@ -846,12 +846,12 @@ func TestVerifyEmail(t *testing.T) {
 	for _, tc := range testCases {
 		tc := tc
 		t.Run(tc.description, func(t *testing.T) {
-			hw := newHandlersWrapper()
-			hw.um.On("VerifyEmail", mock.Anything, mock.Anything).Return(tc.response...)
-
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
 			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+			hw := newHandlersWrapper()
+			hw.um.On("VerifyEmail", r.Context(), mock.Anything).Return(tc.response...)
 			hw.h.VerifyEmail(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()

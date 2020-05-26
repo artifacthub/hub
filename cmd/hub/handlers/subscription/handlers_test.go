@@ -49,14 +49,14 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.smErr != nil {
-					hw.sm.On("Add", mock.Anything, mock.Anything).Return(tc.smErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.subscriptionJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.smErr != nil {
+					hw.sm.On("Add", r.Context(), mock.Anything).Return(tc.smErr)
+				}
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -93,12 +93,12 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.sm.On("Add", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(subscriptionJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.sm.On("Add", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -136,14 +136,14 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.smErr != nil {
-					hw.sm.On("Delete", mock.Anything, mock.Anything).Return(tc.smErr)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", strings.NewReader(tc.subscriptionJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.smErr != nil {
+					hw.sm.On("Delete", r.Context(), mock.Anything).Return(tc.smErr)
+				}
 				hw.h.Delete(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -180,12 +180,12 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.sm.On("Delete", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", strings.NewReader(subscriptionJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.sm.On("Delete", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.Delete(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -215,12 +215,12 @@ func TestGetByPackage(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.smErr.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.sm.On("GetByPackageJSON", mock.Anything, mock.Anything).Return(nil, tc.smErr)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.sm.On("GetByPackageJSON", r.Context(), mock.Anything).Return(nil, tc.smErr)
 				hw.h.GetByPackage(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -232,12 +232,12 @@ func TestGetByPackage(t *testing.T) {
 	})
 
 	t.Run("get package subscriptions succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.sm.On("GetByPackageJSON", mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.sm.On("GetByPackageJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
 		hw.h.GetByPackage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -254,12 +254,12 @@ func TestGetByPackage(t *testing.T) {
 
 func TestGetByUser(t *testing.T) {
 	t.Run("error getting user subscriptions", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.sm.On("GetByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.sm.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -269,12 +269,12 @@ func TestGetByUser(t *testing.T) {
 	})
 
 	t.Run("get user subscriptions succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.sm.On("GetByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.sm.On("GetByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

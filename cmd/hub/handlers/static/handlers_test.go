@@ -28,12 +28,12 @@ func TestMain(m *testing.M) {
 
 func TestImage(t *testing.T) {
 	t.Run("non existing image", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
-			Return(nil, img.ErrNotFound)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
+			Return(nil, img.ErrNotFound)
 		hw.h.Image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -43,12 +43,12 @@ func TestImage(t *testing.T) {
 	})
 
 	t.Run("other internal error", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
-			Return(nil, errors.New("internal error"))
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
+			Return(nil, errors.New("internal error"))
 		hw.h.Image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -71,12 +71,12 @@ func TestImage(t *testing.T) {
 			t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
 				imgData, err := ioutil.ReadFile(tc.imgPath)
 				require.NoError(t, err)
-				hw := newHandlersWrapper()
-				hw.is.On("GetImage", mock.Anything, mock.Anything, mock.Anything).
-					Return(imgData, nil)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
+					Return(imgData, nil)
 				hw.h.Image(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -97,11 +97,11 @@ func TestSaveImage(t *testing.T) {
 	fakeSaveImageError := errors.New("fake save image error")
 
 	t.Run("imageStore.SaveImage failed", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.is.On("SaveImage", mock.Anything, mock.Anything).Return("", fakeSaveImageError)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
+
+		hw := newHandlersWrapper()
+		hw.is.On("SaveImage", r.Context(), mock.Anything).Return("", fakeSaveImageError)
 		hw.h.SaveImage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -111,11 +111,11 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("imageStore.SaveImage succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.is.On("SaveImage", mock.Anything, mock.Anything).Return("imageID", nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
+
+		hw := newHandlersWrapper()
+		hw.is.On("SaveImage", r.Context(), mock.Anything).Return("imageID", nil)
 		hw.h.SaveImage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -131,10 +131,10 @@ func TestSaveImage(t *testing.T) {
 }
 
 func TestServeIndex(t *testing.T) {
-	hw := newHandlersWrapper()
-
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", "/", nil)
+
+	hw := newHandlersWrapper()
 	hw.h.ServeIndex(w, r)
 	resp := w.Result()
 	defer resp.Body.Close()

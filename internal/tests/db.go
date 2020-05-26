@@ -26,13 +26,13 @@ func (m *DBMock) Begin(ctx context.Context) (pgx.Tx, error) {
 
 // Exec implements the DB interface.
 func (m *DBMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
-	args := m.Called(append([]interface{}{query}, params...)...)
+	args := m.Called(append([]interface{}{ctx, query}, params...)...)
 	return nil, args.Error(0)
 }
 
 // QueryRow implements the DB interface.
 func (m *DBMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
-	args := m.Called(append([]interface{}{query}, params...)...)
+	args := m.Called(append([]interface{}{ctx, query}, params...)...)
 	rowMock := &RowMock{
 		err: args.Error(1),
 	}
@@ -81,7 +81,7 @@ func (m *TXMock) CopyFrom(
 
 // Exec implements the pgx.Tx interface.
 func (m *TXMock) Exec(ctx context.Context, query string, params ...interface{}) (pgconn.CommandTag, error) {
-	args := m.Called(append([]interface{}{query}, params...)...)
+	args := m.Called(append([]interface{}{ctx, query}, params...)...)
 	return nil, args.Error(0)
 }
 
@@ -105,7 +105,7 @@ func (m *TXMock) Query(ctx context.Context, sql string, args ...interface{}) (pg
 
 // QueryRow implements the pgx.Tx interface.
 func (m *TXMock) QueryRow(ctx context.Context, query string, params ...interface{}) pgx.Row {
-	args := m.Called(append([]interface{}{query}, params...)...)
+	args := m.Called(append([]interface{}{ctx, query}, params...)...)
 	rowMock := &RowMock{
 		err: args.Error(1),
 	}

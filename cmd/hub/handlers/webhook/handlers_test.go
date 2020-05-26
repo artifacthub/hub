@@ -50,11 +50,6 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.err != nil {
-					hw.wm.On("Add", mock.Anything, "org1", mock.Anything).Return(tc.err)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -65,6 +60,11 @@ func TestAdd(t *testing.T) {
 					},
 				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				if tc.err != nil {
+					hw.wm.On("Add", r.Context(), "org1", mock.Anything).Return(tc.err)
+				}
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -105,9 +105,6 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.wm.On("Add", mock.Anything, "org1", mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -118,6 +115,9 @@ func TestAdd(t *testing.T) {
 					},
 				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.wm.On("Add", r.Context(), "org1", mock.Anything).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -154,13 +154,13 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.wm.On("Delete", mock.Anything, "000000001").Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.wm.On("Delete", r.Context(), "000000001").Return(tc.err)
 				hw.h.Delete(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -172,13 +172,13 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("delete webhook succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.wm.On("Delete", mock.Anything, "000000001").Return(nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.wm.On("Delete", r.Context(), "000000001").Return(nil)
 		hw.h.Delete(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -213,13 +213,13 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.wm.On("GetJSON", mock.Anything, "000000001").Return(nil, tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.wm.On("GetJSON", r.Context(), "000000001").Return(nil, tc.err)
 				hw.h.Get(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -231,13 +231,13 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("webhook get succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.wm.On("GetJSON", mock.Anything, "000000001").Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.wm.On("GetJSON", r.Context(), "000000001").Return([]byte("dataJSON"), nil)
 		hw.h.Get(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -261,13 +261,13 @@ func TestGetOwnedByOrg(t *testing.T) {
 	}
 
 	t.Run("get webhooks owned by organization succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByOrgJSON", mock.Anything, "org1").Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return([]byte("dataJSON"), nil)
 		hw.h.GetOwnedByOrg(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -298,13 +298,13 @@ func TestGetOwnedByOrg(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.wm.On("GetOwnedByOrgJSON", mock.Anything, "org1").Return(nil, tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.wm.On("GetOwnedByOrgJSON", r.Context(), "org1").Return(nil, tc.err)
 				hw.h.GetOwnedByOrg(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -318,12 +318,12 @@ func TestGetOwnedByOrg(t *testing.T) {
 
 func TestGetOwnedByUser(t *testing.T) {
 	t.Run("error getting webhooks owned by user", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByUserJSON", mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -333,12 +333,12 @@ func TestGetOwnedByUser(t *testing.T) {
 	})
 
 	t.Run("get webhook owned by user succeeded", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByUserJSON", mock.Anything).Return([]byte("dataJSON"), nil)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -379,14 +379,14 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				if tc.err != nil {
-					hw.wm.On("Update", mock.Anything, mock.Anything).Return(tc.err)
-				}
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.err != nil {
+					hw.wm.On("Update", r.Context(), mock.Anything).Return(tc.err)
+				}
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -428,12 +428,12 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
-				hw := newHandlersWrapper()
-				hw.wm.On("Update", mock.Anything, mock.Anything).Return(tc.err)
-
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.wm.On("Update", r.Context(), mock.Anything).Return(tc.err)
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()

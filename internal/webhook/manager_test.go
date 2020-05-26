@@ -116,7 +116,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Add(ctx, "orgName", wh)
@@ -126,7 +126,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("add webhook succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", "orgName", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Add(ctx, "orgName", wh)
@@ -154,7 +154,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", validUUID).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", validUUID).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, validUUID)
@@ -164,7 +164,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("delete webhook succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", validUUID).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", validUUID).Return(nil)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, validUUID)
@@ -192,7 +192,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID", validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, validUUID)
@@ -203,7 +203,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("webhook data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", validUUID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID", validUUID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, validUUID)
@@ -232,7 +232,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
@@ -243,7 +243,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("org webhooks data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
@@ -266,7 +266,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -277,7 +277,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("user webhooks data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -323,7 +323,7 @@ func TestGetSubscribedTo(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, hub.NewRelease, validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQuery, hub.NewRelease, validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		webhooks, err := m.GetSubscribedTo(ctx, hub.NewRelease, validUUID)
@@ -334,7 +334,7 @@ func TestGetSubscribedTo(t *testing.T) {
 
 	t.Run("webhooks returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", dbQuery, hub.NewRelease, validUUID).Return([]byte(`
+		db.On("QueryRow", ctx, dbQuery, hub.NewRelease, validUUID).Return([]byte(`
 		[{
 			"webhook_id": "00000000-0000-0000-0000-000000000001",
 			"name": "webhook1",
@@ -468,7 +468,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
 		err := m.Update(ctx, wh)
@@ -478,7 +478,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("update webhook succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Update(ctx, wh)

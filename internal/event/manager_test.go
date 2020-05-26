@@ -26,7 +26,7 @@ func TestGetPending(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		tx.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager()
 
 		dataJSON, err := m.GetPending(ctx, tx)
@@ -44,7 +44,7 @@ func TestGetPending(t *testing.T) {
 		}
 
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", dbQuery).Return([]byte(`
+		tx.On("QueryRow", ctx, dbQuery).Return([]byte(`
 		{
 			"event_id": "00000000-0000-0000-0000-000000000001",
 			"package_version": "1.0.0",
@@ -54,7 +54,7 @@ func TestGetPending(t *testing.T) {
 		`), nil)
 		m := NewManager()
 
-		e, err := m.GetPending(context.Background(), tx)
+		e, err := m.GetPending(ctx, tx)
 		require.NoError(t, err)
 		assert.Equal(t, expectedEvent, e)
 		tx.AssertExpectations(t)
