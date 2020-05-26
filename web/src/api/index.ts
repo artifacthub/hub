@@ -220,14 +220,14 @@ export const API = {
   },
 
   deleteChartRepository: (chartRepositoryName: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repository/${chartRepositoryName}`, {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories/${chartRepositoryName}`, {
       method: 'DELETE',
     });
   },
 
   updateChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repository/${chartRepository.name}`, {
+    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories/${chartRepository.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
