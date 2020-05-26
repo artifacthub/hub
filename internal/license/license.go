@@ -14,6 +14,7 @@ func Detect(data []byte) string {
 		for name, match := range matches {
 			if match.Confidence > highestConfidence {
 				license = name
+				highestConfidence = match.Confidence
 			}
 		}
 	}
