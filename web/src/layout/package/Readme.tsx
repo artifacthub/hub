@@ -82,7 +82,12 @@ const Readme = (props: Props) => {
   const Heading: React.ElementType = (data) => <AnchorHeader {...data} scrollIntoView={props.scrollIntoView} />;
 
   const isElementInView = (id: string) => {
-    return !isNull(document.querySelector(id));
+    try {
+      const item = document.querySelector(id);
+      return !isNull(item);
+    } catch {
+      return false;
+    }
   };
 
   useLayoutEffect(() => {
