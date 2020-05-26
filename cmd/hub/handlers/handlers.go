@@ -151,10 +151,10 @@ func (h *Handlers) setupRouter() {
 			r.Route("/chart-repositories", func(r chi.Router) {
 				r.Get("/", h.ChartRepositories.GetOwnedByUser)
 				r.Post("/", h.ChartRepositories.Add)
-			})
-			r.Route("/chart-repository/{repoName}", func(r chi.Router) {
-				r.Put("/", h.ChartRepositories.Update)
-				r.Delete("/", h.ChartRepositories.Delete)
+				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/", h.ChartRepositories.Update)
+					r.Delete("/", h.ChartRepositories.Delete)
+				})
 			})
 			r.Route("/webhooks", func(r chi.Router) {
 				r.Get("/", h.Webhooks.GetOwnedByUser)
@@ -181,10 +181,10 @@ func (h *Handlers) setupRouter() {
 				r.Route("/chart-repositories", func(r chi.Router) {
 					r.Get("/", h.ChartRepositories.GetOwnedByOrg)
 					r.Post("/", h.ChartRepositories.Add)
-				})
-				r.Route("/chart-repository/{repoName}", func(r chi.Router) {
-					r.Put("/", h.ChartRepositories.Update)
-					r.Delete("/", h.ChartRepositories.Delete)
+					r.Route("/{repoName}", func(r chi.Router) {
+						r.Put("/", h.ChartRepositories.Update)
+						r.Delete("/", h.ChartRepositories.Delete)
+					})
 				})
 				r.Route("/webhooks", func(r chi.Router) {
 					r.Get("/", h.Webhooks.GetOwnedByOrg)
