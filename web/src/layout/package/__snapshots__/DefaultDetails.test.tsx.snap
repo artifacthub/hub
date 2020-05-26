@@ -28,7 +28,7 @@ exports[`DefaultDetails creates snapshot 1`] = `
     </small>
   </div>
   <div
-    class="mb-1"
+    class="mb-3"
   >
     <a
       class="link text-primary py-1 py-sm-0"

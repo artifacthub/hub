@@ -60,7 +60,7 @@ const License = (props: Props) => {
   return (
     <>
       <SmallTitle text="License" />
-      <div className="mb-1">
+      <div className="mb-3">
         {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
           <ExternalLink
             href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}

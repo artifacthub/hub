@@ -36,6 +36,14 @@ const UserContext = () => {
       setIsLoading(true);
       const allOrganizations = await API.getUserOrganizations();
       const confirmedOrganizations = allOrganizations.filter((org: Organization) => org.confirmed);
+      if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+        const selectedOrg = confirmedOrganizations.find(
+          (org: Organization) => org.name === ctx.prefs.controlPanel.selectedOrg
+        );
+        if (isUndefined(selectedOrg)) {
+          dispatch(unselectOrg());
+        }
+      }
       setOrganizations(confirmedOrganizations);
       setIsLoading(false);
     } catch (err) {
