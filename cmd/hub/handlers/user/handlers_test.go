@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -106,7 +107,7 @@ func TestCheckAvailability(t *testing.T) {
 					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 					hw := newHandlersWrapper()
-					hw.um.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+					hw.um.On("CheckAvailability", r.Context(), tc.resourceKind, "value").
 						Return(tc.available, nil)
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
@@ -136,7 +137,7 @@ func TestCheckAvailability(t *testing.T) {
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAvailability", r.Context(), mock.Anything, mock.Anything).
+			hw.um.On("CheckAvailability", r.Context(), "userAlias", "value").
 				Return(false, tests.ErrFakeDatabaseFailure)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
@@ -300,13 +301,13 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("error checking credentials", func(t *testing.T) {
-		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", mock.Anything, mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
+			Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -321,7 +322,7 @@ func TestLogin(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass2").
 			Return(&hub.CheckCredentialsOutput{Valid: false, UserID: ""}, nil)
 		hw.h.Login(w, r)
 		resp := w.Result()
@@ -337,9 +338,9 @@ func TestLogin(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", r.Context(), mock.Anything).
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
 			Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.Login(w, r)
 		resp := w.Result()
@@ -355,9 +356,9 @@ func TestLogin(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", r.Context(), mock.Anything, mock.Anything).
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
-		hw.um.On("RegisterSession", r.Context(), mock.Anything).
+		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
 			Return([]byte("sessionID"), nil)
 		hw.h.Login(w, r)
 		resp := w.Result()
@@ -440,7 +441,7 @@ func TestLogout(t *testing.T) {
 				r, _ := http.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
-				hw.um.On("DeleteSession", r.Context(), mock.Anything).Return(tc.err)
+				hw.um.On("DeleteSession", r.Context(), []byte("sessionID")).Return(tc.err)
 				encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
 				r.AddCookie(&http.Cookie{
 					Name:  sessionCookieName,
@@ -509,7 +510,7 @@ func TestRegisterUser(t *testing.T) {
 
 				hw := newHandlersWrapper()
 				if tc.umErr != nil {
-					hw.um.On("RegisterUser", r.Context(), mock.Anything, mock.Anything).Return(tc.umErr)
+					hw.um.On("RegisterUser", r.Context(), mock.Anything, "baseURL").Return(tc.umErr)
 				}
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
@@ -531,6 +532,9 @@ func TestRegisterUser(t *testing.T) {
 			"password": "password"
 		}
 		`
+		u := &hub.User{}
+		_ = json.Unmarshal([]byte(userJSON), &u)
+
 		testCases := []struct {
 			description        string
 			umErr              error
@@ -554,7 +558,7 @@ func TestRegisterUser(t *testing.T) {
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
 
 				hw := newHandlersWrapper()
-				hw.um.On("RegisterUser", r.Context(), mock.Anything, mock.Anything).Return(tc.umErr)
+				hw.um.On("RegisterUser", r.Context(), u, "baseURL").Return(tc.umErr)
 				hw.h.RegisterUser(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -663,8 +667,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
-			Return(user.ErrInvalidInput)
+		hw.um.On("UpdatePassword", r.Context(), "", "new").Return(user.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -679,8 +682,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
-			Return(user.ErrInvalidInput)
+		hw.um.On("UpdatePassword", r.Context(), "old", "").Return(user.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -696,7 +698,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+		hw.um.On("UpdatePassword", r.Context(), "invalid", "new").
 			Return(user.ErrInvalidPassword)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
@@ -713,7 +715,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).
+		hw.um.On("UpdatePassword", r.Context(), "old", "new").
 			Return(tests.ErrFakeDatabaseFailure)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
@@ -730,7 +732,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), mock.Anything, mock.Anything).Return(nil)
+		hw.um.On("UpdatePassword", r.Context(), "old", "new").Return(nil)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -742,6 +744,8 @@ func TestUpdatePassword(t *testing.T) {
 
 func TestUpdateProfile(t *testing.T) {
 	userJSON := `{"first_name": "firstname", "last_name": "lastname"}`
+	u := &hub.User{}
+	_ = json.Unmarshal([]byte(userJSON), &u)
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
@@ -791,7 +795,7 @@ func TestUpdateProfile(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdateProfile", r.Context(), mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		hw.um.On("UpdateProfile", r.Context(), u).Return(tests.ErrFakeDatabaseFailure)
 		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -806,7 +810,7 @@ func TestUpdateProfile(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdateProfile", r.Context(), mock.Anything).Return(nil)
+		hw.um.On("UpdateProfile", r.Context(), u).Return(nil)
 		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -851,7 +855,7 @@ func TestVerifyEmail(t *testing.T) {
 			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 			hw := newHandlersWrapper()
-			hw.um.On("VerifyEmail", r.Context(), mock.Anything).Return(tc.response...)
+			hw.um.On("VerifyEmail", r.Context(), "1234").Return(tc.response...)
 			hw.h.VerifyEmail(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -872,6 +876,7 @@ type handlersWrapper struct {
 
 func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
+	cfg.Set("server.baseURL", "baseURL")
 	um := &user.ManagerMock{}
 
 	return &handlersWrapper{

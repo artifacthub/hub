@@ -2,6 +2,7 @@ package chartrepo
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -26,6 +27,13 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -54,12 +62,6 @@ func TestAdd(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				rctx := &chi.Context{
-					URLParams: chi.RouteParams{
-						Keys:   []string{"orgName"},
-						Values: []string{"org1"},
-					},
-				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -84,6 +86,9 @@ func TestAdd(t *testing.T) {
 			"url": "https://repo1.url"
 		}
 		`
+		repo := &hub.ChartRepository{}
+		_ = json.Unmarshal([]byte(repoJSON), &repo)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -106,16 +111,10 @@ func TestAdd(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				rctx := &chi.Context{
-					URLParams: chi.RouteParams{
-						Keys:   []string{"orgName"},
-						Values: []string{"org1"},
-					},
-				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.rm.On("Add", r.Context(), "org1", mock.Anything).Return(tc.err)
+				hw.rm.On("Add", r.Context(), "org1", repo).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -434,6 +433,9 @@ func TestUpdate(t *testing.T) {
 			"url": "https://repo1.url/updated"
 		}
 		`
+		repo := &hub.ChartRepository{}
+		_ = json.Unmarshal([]byte(repoJSON), &repo)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -458,7 +460,7 @@ func TestUpdate(t *testing.T) {
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 				hw := newHandlersWrapper()
-				hw.rm.On("Update", r.Context(), mock.Anything).Return(tc.err)
+				hw.rm.On("Update", r.Context(), repo).Return(tc.err)
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()

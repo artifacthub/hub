@@ -13,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -120,6 +121,13 @@ func TestGetStarredByUser(t *testing.T) {
 }
 
 func TestGetStars(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID"},
+			Values: []string{"packageID"},
+		},
+	}
+
 	t.Run("get stars failed", func(t *testing.T) {
 		testCases := []struct {
 			err            error
@@ -140,9 +148,10 @@ func TestGetStars(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.pm.On("GetStarsJSON", r.Context(), mock.Anything).Return(nil, tc.err)
+				hw.pm.On("GetStarsJSON", r.Context(), "packageID").Return(nil, tc.err)
 				hw.h.GetStars(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -157,9 +166,10 @@ func TestGetStars(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetStarsJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.pm.On("GetStarsJSON", r.Context(), "packageID").Return([]byte("dataJSON"), nil)
 		hw.h.GetStars(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -434,6 +444,13 @@ func TestSearch(t *testing.T) {
 }
 
 func TestToggleStar(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID"},
+			Values: []string{"packageID"},
+		},
+	}
+
 	t.Run("error toggling star", func(t *testing.T) {
 		testCases := []struct {
 			err            error
@@ -454,9 +471,10 @@ func TestToggleStar(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.pm.On("ToggleStar", r.Context(), mock.Anything).Return(tc.err)
+				hw.pm.On("ToggleStar", r.Context(), "packageID").Return(tc.err)
 				hw.h.ToggleStar(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -471,9 +489,10 @@ func TestToggleStar(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("ToggleStar", r.Context(), mock.Anything).Return(nil)
+		hw.pm.On("ToggleStar", r.Context(), "packageID").Return(nil)
 		hw.h.ToggleStar(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

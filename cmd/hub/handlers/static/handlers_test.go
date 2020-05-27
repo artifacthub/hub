@@ -1,6 +1,7 @@
 package static
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -17,7 +18,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
@@ -27,13 +27,20 @@ func TestMain(m *testing.M) {
 }
 
 func TestImage(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"image"},
+			Values: []string{"imageID@2x"},
+		},
+	}
+
 	t.Run("non existing image", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
-			Return(nil, img.ErrNotFound)
+		hw.is.On("GetImage", r.Context(), "imageID", "2x").Return(nil, img.ErrNotFound)
 		hw.h.Image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -45,10 +52,10 @@ func TestImage(t *testing.T) {
 	t.Run("other internal error", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
-			Return(nil, errors.New("internal error"))
+		hw.is.On("GetImage", r.Context(), "imageID", "2x").Return(nil, errors.New("internal error"))
 		hw.h.Image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -73,10 +80,10 @@ func TestImage(t *testing.T) {
 				require.NoError(t, err)
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.is.On("GetImage", r.Context(), mock.Anything, mock.Anything).
-					Return(imgData, nil)
+				hw.is.On("GetImage", r.Context(), "imageID", "2x").Return(imgData, nil)
 				hw.h.Image(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -101,7 +108,7 @@ func TestSaveImage(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
 
 		hw := newHandlersWrapper()
-		hw.is.On("SaveImage", r.Context(), mock.Anything).Return("", fakeSaveImageError)
+		hw.is.On("SaveImage", r.Context(), []byte("imageData")).Return("", fakeSaveImageError)
 		hw.h.SaveImage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -115,7 +122,7 @@ func TestSaveImage(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
 
 		hw := newHandlersWrapper()
-		hw.is.On("SaveImage", r.Context(), mock.Anything).Return("imageID", nil)
+		hw.is.On("SaveImage", r.Context(), []byte("imageData")).Return("imageID", nil)
 		hw.h.SaveImage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

@@ -35,7 +35,7 @@ func (m *ManagerMock) GetStarredByUserJSON(ctx context.Context) ([]byte, error) 
 
 // GetStarsJSON implements the PackageManager interface.
 func (m *ManagerMock) GetStarsJSON(ctx context.Context, packageID string) ([]byte, error) {
-	args := m.Called(ctx)
+	args := m.Called(ctx, packageID)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
