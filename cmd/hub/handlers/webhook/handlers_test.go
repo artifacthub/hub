@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"context"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -25,6 +26,13 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
 			description string
@@ -53,12 +61,6 @@ func TestAdd(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				rctx := &chi.Context{
-					URLParams: chi.RouteParams{
-						Keys:   []string{"orgName"},
-						Values: []string{"org1"},
-					},
-				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
@@ -86,6 +88,9 @@ func TestAdd(t *testing.T) {
 			]
 		}
 		`
+		wh := &hub.Webhook{}
+		_ = json.Unmarshal([]byte(webhookJSON), &wh)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -108,16 +113,10 @@ func TestAdd(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-				rctx := &chi.Context{
-					URLParams: chi.RouteParams{
-						Keys:   []string{"orgName"},
-						Values: []string{"org1"},
-					},
-				}
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.wm.On("Add", r.Context(), "org1", mock.Anything).Return(tc.err)
+				hw.wm.On("Add", r.Context(), "org1", wh).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -409,6 +408,9 @@ func TestUpdate(t *testing.T) {
 			]
 		}
 		`
+		wh := &hub.Webhook{}
+		_ = json.Unmarshal([]byte(webhookJSON), &wh)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -431,9 +433,16 @@ func TestUpdate(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"webhookID"},
+						Values: []string{"000000001"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.wm.On("Update", r.Context(), mock.Anything).Return(tc.err)
+				hw.wm.On("Update", r.Context(), wh).Return(tc.err)
 				hw.h.Update(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()

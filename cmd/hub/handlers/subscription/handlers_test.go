@@ -2,6 +2,7 @@ package subscription
 
 import (
 	"context"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -13,6 +14,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -74,6 +76,9 @@ func TestAdd(t *testing.T) {
 			"event_kind": 0
 		}
 		`
+		s := &hub.Subscription{}
+		_ = json.Unmarshal([]byte(subscriptionJSON), &s)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -98,7 +103,7 @@ func TestAdd(t *testing.T) {
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 				hw := newHandlersWrapper()
-				hw.sm.On("Add", r.Context(), mock.Anything).Return(tc.err)
+				hw.sm.On("Add", r.Context(), s).Return(tc.err)
 				hw.h.Add(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -161,6 +166,9 @@ func TestDelete(t *testing.T) {
 			"event_kind": 0
 		}
 		`
+		s := &hub.Subscription{}
+		_ = json.Unmarshal([]byte(subscriptionJSON), &s)
+
 		testCases := []struct {
 			description        string
 			err                error
@@ -185,7 +193,7 @@ func TestDelete(t *testing.T) {
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 				hw := newHandlersWrapper()
-				hw.sm.On("Delete", r.Context(), mock.Anything).Return(tc.err)
+				hw.sm.On("Delete", r.Context(), s).Return(tc.err)
 				hw.h.Delete(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -198,6 +206,13 @@ func TestDelete(t *testing.T) {
 }
 
 func TestGetByPackage(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID"},
+			Values: []string{"packageID"},
+		},
+	}
+
 	t.Run("error getting package subscriptions", func(t *testing.T) {
 		testCases := []struct {
 			smErr              error
@@ -218,9 +233,10 @@ func TestGetByPackage(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.sm.On("GetByPackageJSON", r.Context(), mock.Anything).Return(nil, tc.smErr)
+				hw.sm.On("GetByPackageJSON", r.Context(), "packageID").Return(nil, tc.smErr)
 				hw.h.GetByPackage(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -235,9 +251,10 @@ func TestGetByPackage(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetByPackageJSON", r.Context(), mock.Anything).Return([]byte("dataJSON"), nil)
+		hw.sm.On("GetByPackageJSON", r.Context(), "packageID").Return([]byte("dataJSON"), nil)
 		hw.h.GetByPackage(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
