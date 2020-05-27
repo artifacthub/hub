@@ -170,16 +170,20 @@ const PackageView = (props: Props) => {
     const elId = id || props.hash;
     if (!elId) return null;
 
-    const element = document.querySelector(elId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    try {
+      const element = document.querySelector(elId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
 
-      if (id) {
-        history.replace({
-          pathname: history.location.pathname,
-          hash: elId,
-        });
+        if (id) {
+          history.replace({
+            pathname: history.location.pathname,
+            hash: elId,
+          });
+        }
       }
+    } finally {
+      return;
     }
   };
 
