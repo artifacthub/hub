@@ -116,6 +116,7 @@ create table if not exists snapshot (
     data jsonb,
     deprecated boolean,
     license text check (license <> ''),
+    content_url text check (content_url <> ''),
     created_at timestamptz default current_timestamp not null,
     updated_at timestamptz default current_timestamp not null,
     primary key (package_id, version),

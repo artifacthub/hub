@@ -44,6 +44,7 @@ type Package struct {
 	Digest                  string                 `json:"digest"`
 	Deprecated              bool                   `json:"deprecated"`
 	License                 string                 `json:"license"`
+	ContentURL              string                 `json:"content_url"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	UserID                  string                 `json:"user_id"`
 	UserAlias               string                 `json:"user_alias"`

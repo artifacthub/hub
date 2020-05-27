@@ -380,6 +380,15 @@ func TestRegister(t *testing.T) {
 				},
 			},
 			{
+				"invalid content url",
+				&hub.Package{
+					Kind:       hub.Chart,
+					Name:       "package1",
+					Version:    "1.0.0",
+					ContentURL: "invalid",
+				},
+			},
+			{
 				"chart repository not provided",
 				&hub.Package{
 					Kind:    hub.Chart,
