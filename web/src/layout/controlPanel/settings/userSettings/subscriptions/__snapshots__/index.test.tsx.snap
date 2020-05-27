@@ -20,7 +20,7 @@ exports[`SubscriptionsSection renders correctly 1`] = `
       </div>
     </div>
     <main
-      class="container"
+      class="container p-0"
       role="main"
     >
       <div
@@ -30,13 +30,13 @@ exports[`SubscriptionsSection renders correctly 1`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Your subscriptions
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addSubscriptionsBtn"
             >
               <div
@@ -80,7 +80,7 @@ exports[`SubscriptionsSection renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="mx-auto mt-5 wrapper"
+          class="mx-auto mt-4 mt-md-5 wrapper"
         >
           <p
             class="m-0"
@@ -100,10 +100,10 @@ exports[`SubscriptionsSection renders correctly 1`] = `
                 class="modal-content content undefined"
               >
                 <div
-                  class="modal-header header"
+                  class="modal-header d-flex flex-row align-items-center header"
                 >
                   <div
-                    class="h3 m-2"
+                    class="h3 m-2 title"
                   >
                     Add subscription
                   </div>
@@ -150,7 +150,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container"
+      class="container p-0"
       role="main"
     >
       <div
@@ -160,13 +160,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Your subscriptions
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addSubscriptionsBtn"
             >
               <div
@@ -210,7 +210,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
           </div>
         </div>
         <div
-          class="mx-auto mt-5 wrapper"
+          class="mx-auto mt-4 mt-md-5 wrapper"
         >
           <p
             class="m-0"
@@ -218,7 +218,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
             You will receive an email notification when an event that matches any of the subscriptions in the list is fired.
           </p>
           <div
-            class="mt-5"
+            class="mt-4 mt-md-5"
           >
             <div
               class="d-none d-sm-inline"
@@ -231,7 +231,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     class="table-primary tableTitle"
                   >
                     <th
-                      class="align-middle text-center fitCell"
+                      class="align-middle text-center d-none d-sm-table-cell fitCell"
                       scope="col"
                     >
                       Kind
@@ -282,7 +282,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -348,7 +348,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -369,7 +369,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -434,7 +434,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -455,7 +455,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -520,7 +520,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -541,7 +541,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -607,7 +607,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -628,7 +628,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -676,7 +676,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -697,7 +697,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -745,7 +745,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -766,7 +766,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -814,7 +814,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -835,7 +835,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     data-testid="subsTableCell"
                   >
                     <td
-                      class="align-middle text-center"
+                      class="align-middle text-center d-none d-sm-table-cell"
                     >
                       <img
                         alt="Icon"
@@ -901,7 +901,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="align-middle text-center"
                     >
                       <div
-                        class="custom-control custom-switch"
+                        class="custom-control custom-switch ml-2"
                       >
                         <input
                           checked=""
@@ -925,1176 +925,1055 @@ exports[`SubscriptionsSection renders correctly 2`] = `
               class="d-inline d-sm-none"
             >
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/chart/stable/airflow"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/chart/stable/airflow"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo airflow"
-                              class="image"
-                              src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
-                              srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                airflow
-                              </div>
+                              <img
+                                alt="Logo airflow"
+                                class="image"
+                                src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
+                                srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  airflow
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="repoLink"
-                                >
-                                  Stable
-                                </button>
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/helm-chart.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/chart/stable/cerebro"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/chart/stable/cerebro"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo cerebro"
-                              class="image"
-                              src="/static/media/kubernetes_grey.svg"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                cerebro
-                              </div>
+                              <img
+                                alt="Logo cerebro"
+                                class="image"
+                                src="/static/media/kubernetes_grey.svg"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  cerebro
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="repoLink"
-                                >
-                                  Stable
-                                </button>
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/helm-chart.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/chart/stable/elastic-stack"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/chart/stable/elastic-stack"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo elastic-stack"
-                              class="image"
-                              src="/static/media/kubernetes_grey.svg"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                elastic-stack
-                              </div>
+                              <img
+                                alt="Logo elastic-stack"
+                                class="image"
+                                src="/static/media/kubernetes_grey.svg"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  elastic-stack
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="repoLink"
-                                >
-                                  Stable
-                                </button>
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Stable
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/helm-chart.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
-                        </div>
-                      </button>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <div
-                class="col-12 py-sm-3 py-2"
-                role="listitem"
-              >
-                <div
-                  class="card h-100 card"
-                >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/chart/ibm-charts/ibm-redis"
-                  >
-                    <div
-                      class="card-body position-relative body"
-                    >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
-                      >
-                        <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo ibm-redis"
-                              class="image"
-                              src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
-                              srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
-                          >
-                            <div
-                              class="card-title font-weight-bolder mb-2 title"
-                            >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
+                               
+                              <span
+                                class="ml-1"
                               >
-                                ibm-redis
-                              </div>
+                                New releases
+                              </span>
                             </div>
-                            <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
-                            >
-                              <div
-                                class="mr-2 text-truncate"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  User:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="userLink"
-                                >
-                                  jsmith
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="repoLink"
-                                >
-                                  IBM charts
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/helm-chart.svg"
-                          />
+                          </label>
                         </div>
                       </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-center"
-                        >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
-                            >
-                              <svg
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-                                />
-                              </svg>
-                            </small>
-                          </span>
-                        </div>
-                      </button>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/falco/ssh-connections"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/chart/ibm-charts/ibm-redis"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo SSH connections"
-                              class="image"
-                              src="/image/23baee82-817d-4443-bb12-164913cb631b"
-                              srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                SSH connections
-                              </div>
+                              <img
+                                alt="Logo ibm-redis"
+                                class="image"
+                                src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
+                                srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  ibm-redis
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    User:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    jsmith
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    IBM charts
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
+                      >
+                        <div
+                          class="custom-control custom-switch clickable"
+                        >
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                                />
+                              </svg>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="py-2"
+                role="listitem"
+              >
+                <div
+                  class="card h-100 card"
+                >
+                  <div>
+                    <div
+                      class="card-body position-relative body"
+                    >
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/falco/ssh-connections"
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between mb-3"
+                        >
+                          <div
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                            >
+                              <img
+                                alt="Logo SSH connections"
+                                class="image"
+                                src="/image/23baee82-817d-4443-bb12-164913cb631b"
+                                srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
+                              />
+                            </div>
+                            <div
+                              class="ml-3 flex-grow-1 truncateWrapper"
+                            >
+                              <div
+                                class="card-title font-weight-bolder mb-2 title"
+                              >
+                                <div
+                                  class="h5 d-flex flex-row align-items-center"
+                                >
+                                  SSH connections
+                                </div>
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     Falco
-                                  </div>
-                                </button>
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/falco-rules.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/falco-rules.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/falco/traefik"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/falco/traefik"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo Traefik"
-                              class="image"
-                              src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
-                              srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                Traefik
-                              </div>
+                              <img
+                                alt="Logo Traefik"
+                                class="image"
+                                src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
+                                srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  Traefik
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     Falco
-                                  </div>
-                                </button>
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/falco-rules.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/falco-rules.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/opa/trusted-registry-images"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/opa/trusted-registry-images"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo Trusted Registry Images"
-                              class="image"
-                              src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
-                              srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                Trusted Registry Images
-                              </div>
+                              <img
+                                alt="Logo Trusted Registry Images"
+                                class="image"
+                                src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
+                                srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  Trusted Registry Images
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </div>
+                              <div
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              >
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
                                   >
                                     OPA
-                                  </div>
-                                </button>
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/opa-policies.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/opa-policies.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
               <div
-                class="col-12 py-sm-3 py-2"
+                class="py-2"
                 role="listitem"
               >
                 <div
                   class="card h-100 card"
                 >
-                  <a
-                    class="text-decoration-none link"
-                    data-testid="packageLink"
-                    href="/package/chart/incubator/zookeeper"
-                  >
+                  <div>
                     <div
                       class="card-body position-relative body"
                     >
-                      <div
-                        class="d-flex align-items-start justify-content-between mb-3"
+                      <a
+                        class="text-decoration-none link"
+                        data-testid="packageCardLink"
+                        href="/package/chart/incubator/zookeeper"
                       >
                         <div
-                          class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                          class="d-flex align-items-start justify-content-between mb-3"
                         >
                           <div
-                            class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                          >
-                            <img
-                              alt="Logo zookeeper"
-                              class="image"
-                              src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
-                              srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
-                            />
-                          </div>
-                          <div
-                            class="ml-3 flex-grow-1 truncateWrapper"
+                            class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-2 title"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
                             >
-                              <div
-                                class="h5 d-flex flex-row align-items-center"
-                              >
-                                zookeeper
-                              </div>
+                              <img
+                                alt="Logo zookeeper"
+                                class="image"
+                                src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
+                                srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
+                              />
                             </div>
                             <div
-                              class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                              class="ml-3 flex-grow-1 truncateWrapper"
                             >
                               <div
-                                class="mr-2"
+                                class="card-title font-weight-bolder mb-2 title"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="h5 d-flex flex-row align-items-center"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  zookeeper
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link undefined"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Helm
-                                  </div>
-                                </button>
                               </div>
                               <div
-                                class="mr-2 text-truncate"
+                                class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
                               >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link"
-                                  data-testid="repoLink"
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Org:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Helm
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
                                 >
-                                  Incubator
-                                </button>
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Incubator
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-flex align-items-center text-uppercase kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
-                        <div
-                          class="d-flex align-items-center text-uppercase kind"
-                        >
-                          <img
-                            alt="Icon"
-                            class="icon"
-                            src="/static/media/helm-chart.svg"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-sm"
-                        data-testid="newReleaseMobileBtn"
+                      </a>
+                      <div
+                        class="d-flex flex-row align-items-center wrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="custom-control custom-switch clickable"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <input
+                            checked=""
+                            class="custom-control-input checkbox"
+                            data-testid="newReleaseMobileBtn"
+                            id="newRelease"
+                            type="checkbox"
+                          />
+                          <label
+                            class="custom-control-label"
+                            data-testid="newRelease_label"
+                            for="newRelease"
                           >
-                            <path
-                              d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                            />
-                          </svg>
-                           
-                          <span
-                            class="ml-1"
-                          >
-                            New releases
-                          </span>
-                          <span
-                            class="m-0 p-0 ml-3 badge badge-pill badge-light badge"
-                          >
-                            <small
-                              class="text-success"
+                            <div
+                              class="d-flex align-items-center"
                             >
                               <svg
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
                                 stroke-width="0"
-                                viewBox="0 0 512 512"
+                                viewBox="0 0 24 24"
                                 width="1em"
                                 xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                  d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                            </small>
-                          </span>
+                               
+                              <span
+                                class="ml-1"
+                              >
+                                New releases
+                              </span>
+                            </div>
+                          </label>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2112,10 +1991,10 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 class="modal-content content undefined"
               >
                 <div
-                  class="modal-header header"
+                  class="modal-header d-flex flex-row align-items-center header"
                 >
                   <div
-                    class="h3 m-2"
+                    class="h3 m-2 title"
                   >
                     Add subscription
                   </div>

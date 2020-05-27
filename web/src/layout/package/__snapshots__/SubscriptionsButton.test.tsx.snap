@@ -89,7 +89,7 @@ exports[`SubscriptionsButton creates snapshot 2`] = `
             class="d-flex flex-column flex-grow-1"
           >
             <div
-              class="h6 mb-0 mb-sm-2 d-flex flex-row align-items-center"
+              class="h6 mb-2 d-flex flex-row align-items-center"
             >
               <svg
                 fill="currentColor"
@@ -111,7 +111,7 @@ exports[`SubscriptionsButton creates snapshot 2`] = `
               </span>
             </div>
             <small
-              class="d-none d-sm-inline text-muted text-left"
+              class="text-muted text-left"
             >
               Receive a notification when a new version of this package is released.
             </small>

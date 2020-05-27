@@ -7,6 +7,7 @@ import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
 import { Package } from '../../types';
 import Loading from '../common/Loading';
+import MobilePackageCard from '../common/MobilePackageCard';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
 import styles from './StarredPackagesView.module.css';
@@ -64,9 +65,17 @@ const StarredPackagesView = () => {
                   </NoData>
                 ) : (
                   <>
-                    {packages.map((item: Package) => (
-                      <PackageCard key={item.packageId} package={item} fromStarredPage={true} />
-                    ))}
+                    <div className="d-none d-md-block">
+                      {packages.map((item: Package) => (
+                        <PackageCard key={item.packageId} package={item} fromStarredPage={true} />
+                      ))}
+                    </div>
+
+                    <div className="d-block d-md-none">
+                      {packages.map((item: Package) => (
+                        <MobilePackageCard key={`mobile_${item.packageId}`} package={item} />
+                      ))}
+                    </div>
                   </>
                 )}
               </>

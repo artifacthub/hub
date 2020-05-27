@@ -102,14 +102,14 @@ const SubscriptionsSection = (props: Props) => {
     <div className="d-flex flex-column flex-grow-1">
       {(isUndefined(packages) || isLoading) && <Loading />}
 
-      <main role="main" className="container">
+      <main role="main" className="container p-0">
         <div className="flex-grow-1">
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
-            <div className="h3 pb-0">Your subscriptions</div>
+            <div className={`h3 pb-0 ${styles.title}`}>Your subscriptions</div>
             <div>
               <button
                 data-testid="addSubscriptionsBtn"
-                className="btn btn-secondary btn-sm text-uppercase"
+                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus(true)}
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
@@ -121,14 +121,14 @@ const SubscriptionsSection = (props: Props) => {
             </div>
           </div>
 
-          <div className={`mx-auto mt-5 ${styles.wrapper}`}>
+          <div className={`mx-auto mt-4 mt-md-5 ${styles.wrapper}`}>
             <p className="m-0">
               You will receive an email notification when an event that matches any of the subscriptions in the list is
               fired.
             </p>
 
             {!isUndefined(packages) && (
-              <div className="mt-5">
+              <div className="mt-4 mt-md-5">
                 {packages.length === 0 ? (
                   <NoData issuesLinkVisible={!isNull(apiError)}>
                     {isNull(apiError) ? <>You have not subscribed to any package yet</> : <>{apiError}</>}
@@ -139,7 +139,10 @@ const SubscriptionsSection = (props: Props) => {
                       <table className={`table table-bordered table-hover ${styles.table}`}>
                         <thead>
                           <tr className={`table-primary ${styles.tableTitle}`}>
-                            <th scope="col" className={`align-middle text-center ${styles.fitCell}`}>
+                            <th
+                              scope="col"
+                              className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}
+                            >
                               Kind
                             </th>
                             <th scope="col" className="align-middle text-center w-50">
@@ -165,7 +168,7 @@ const SubscriptionsSection = (props: Props) => {
                         <tbody>
                           {packages.map((item: Package) => (
                             <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
-                              <td className="align-middle text-center">
+                              <td className="align-middle text-center d-none d-sm-table-cell">
                                 <PackageIcon kind={item.kind} className={styles.icon} />
                               </td>
                               <td className="align-middle">
@@ -260,7 +263,7 @@ const SubscriptionsSection = (props: Props) => {
                                     className="align-middle text-center"
                                     key={`td_${item.normalizedName}_${subs.kind}`}
                                   >
-                                    <div className="custom-control custom-switch">
+                                    <div className="custom-control custom-switch ml-2">
                                       <input
                                         data-testid={`${item.name}_${subs.name}_input`}
                                         id={id}

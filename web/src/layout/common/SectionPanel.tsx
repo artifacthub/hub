@@ -26,7 +26,7 @@ const SectionPanel = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <nav className={styles.sidebar}>
+      <nav className={`mb-3 ${styles.sidebar}`}>
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
           {props.sections.map((section: Section) => {
             return (
@@ -43,9 +43,16 @@ const SectionPanel = (props: Props) => {
                 disabled={section.disabled}
                 onClick={() => onMenuItemClick(section.name)}
               >
-                <div className="d-flex flex-row align-items-center">
+                <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
                   {!isUndefined(section.icon) && <div className={styles.icon}>{section.icon}</div>}
-                  <div className="ml-2">{section.displayName}</div>
+                  {!isUndefined(section.shortName) ? (
+                    <div className="ml-1 ml-sm-2">
+                      <span className="d-none d-md-inline">{section.displayName}</span>
+                      <span className="d-inline d-md-none">{section.shortName}</span>
+                    </div>
+                  ) : (
+                    <div className="ml-1 ml-sm-2">{section.displayName}</div>
+                  )}
                 </div>
               </button>
             );
@@ -53,7 +60,7 @@ const SectionPanel = (props: Props) => {
         </div>
       </nav>
 
-      <div className={`flex-grow-1 ${styles.list}`}>{props.content[activeSection]}</div>
+      <div className={`flex-grow-1 mb-4 ${styles.list}`}>{props.content[activeSection]}</div>
     </main>
   );
 };

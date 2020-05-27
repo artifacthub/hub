@@ -14,6 +14,7 @@ import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import { Facets, Package, PackageKind, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
+import MobilePackageCard from '../common/MobilePackageCard';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
@@ -282,10 +283,7 @@ const SearchView = (props: Props) => {
                     <>
                       <div className="d-flex align-items-center">
                         <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
-                        <button
-                          className={`btn btn-link btn-sm p-0 pl-1 text-secondary ${styles.resetBtn}`}
-                          onClick={onResetFilters}
-                        >
+                        <button className="btn btn-link btn-sm p-0 pl-1 text-secondary" onClick={onResetFilters}>
                           Reset
                         </button>
                       </div>
@@ -381,7 +379,7 @@ const SearchView = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="row no-gutters mb-2">
+                    <div className="d-none d-md-block row no-gutters mb-2">
                       {packages.map((item: Package) => (
                         <PackageCard
                           key={item.packageId}
@@ -394,6 +392,12 @@ const SearchView = (props: Props) => {
                           }}
                           saveScrollPosition={saveScrollPosition}
                         />
+                      ))}
+                    </div>
+
+                    <div className="d-block d-md-none row no-gutters mb-2">
+                      {packages.map((item: Package) => (
+                        <MobilePackageCard key={`mobile_${item.packageId}`} package={item} />
                       ))}
                     </div>
 

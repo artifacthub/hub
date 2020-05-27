@@ -87,7 +87,7 @@ const Facet = (props: Props) => {
       role="menuitem"
       className={classnames(
         styles.facet,
-        { 'mt-4 pt-2 ': isUndefined(props.displaySubtitle) },
+        { 'mt-3 mt-sm-4 pt-2 ': isUndefined(props.displaySubtitle) },
         { 'mt-0 pt-0': !isUndefined(props.displaySubtitle) }
       )}
     >

@@ -200,444 +200,435 @@ const WebhookForm = (props: Props) => {
 
   return (
     <div>
-      <div className="mb-5">
-        {/* TODO */}
-        <div className="mb-4 pb-2 border-bottom">
-          <button
-            data-testid="goBack"
-            className={`btn btn-link text-dark btn-sm pl-0 d-flex align-items-center ${styles.link}`}
-            onClick={onCloseForm}
-          >
-            <IoIosArrowBack className="mr-2" />
-            Back to webhooks list
-          </button>
-        </div>
+      <div className="mb-4 pb-2 border-bottom">
+        <button
+          data-testid="goBack"
+          className={`btn btn-link text-dark btn-sm pl-0 d-flex align-items-center ${styles.link}`}
+          onClick={onCloseForm}
+        >
+          <IoIosArrowBack className="mr-2" />
+          Back to webhooks list
+        </button>
+      </div>
 
-        <div className="mt-2">
-          <form
-            ref={form}
-            data-testid="webhookForm"
-            className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
-            autoComplete="on"
-            onFocus={cleanApiError}
-            noValidate
-          >
+      <div className="mt-2">
+        <form
+          ref={form}
+          data-testid="webhookForm"
+          className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
+          autoComplete="off"
+          onFocus={cleanApiError}
+          noValidate
+        >
+          <div className="form-row">
+            <div className="col-md-8">
+              <InputField
+                type="text"
+                label="Name"
+                labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+                name="name"
+                value={!isUndefined(props.webhook) ? props.webhook.name : ''}
+                invalidText={{
+                  default: 'This field is required',
+                }}
+                validateOnBlur
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="col-md-8">
+              <InputField
+                type="text"
+                label="Description"
+                name="description"
+                value={!isUndefined(props.webhook) ? props.webhook.description : ''}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="url">
+              Url<small className="ml-1 font-italic">(Required)</small>
+            </label>
+            <div>
+              <small className="form-text text-muted mb-2 mt-0">
+                A POST request will be sent to the provided URL when any of the events selected in the triggers section
+                happens.
+              </small>
+            </div>
             <div className="form-row">
               <div className="col-md-8">
                 <InputField
-                  type="text"
-                  label="Name"
-                  labelLegend={<small className="ml-1 font-italic">(Required)</small>}
-                  name="name"
-                  value={!isUndefined(props.webhook) ? props.webhook.name : ''}
+                  type="url"
+                  name="url"
+                  value={!isUndefined(props.webhook) ? props.webhook.url : ''}
                   invalidText={{
                     default: 'This field is required',
+                    typeMismatch: 'Please enter a valid url',
                   }}
                   validateOnBlur
                   required
                 />
               </div>
             </div>
+          </div>
 
+          <div>
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="secret">
+              Secret
+            </label>
+            <div>
+              <small className="form-text text-muted mb-2 mt-0">
+                If you provide a secret, we'll send it to you in the{' '}
+                <span className="font-weight-bold">X-ArtifactHub-Secret</span> header on each request. This will allow
+                you to validate that the request comes from ArtifactHub.
+              </small>
+            </div>
             <div className="form-row">
               <div className="col-md-8">
-                <InputField
-                  type="text"
-                  label="Description"
-                  name="description"
-                  value={!isUndefined(props.webhook) ? props.webhook.description : ''}
+                <InputField type="text" name="secret" value={!isUndefined(props.webhook) ? props.webhook.secret : ''} />
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <div className="custom-control custom-switch pl-0">
+              <input
+                data-testid="activeCheckbox"
+                id="active"
+                type="checkbox"
+                className={`custom-control-input ${styles.checkbox}`}
+                value="true"
+                onChange={() => setIsActive(!isActive)}
+                checked={isActive}
+              />
+              <label
+                htmlFor="active"
+                className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+              >
+                Active
+              </label>
+            </div>
+
+            <small className="form-text text-muted mt-2">
+              This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.
+            </small>
+          </div>
+
+          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Triggers</div>
+
+          <div className="my-4">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
+              Events
+            </label>
+
+            {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+              return (
+                <CheckBox
+                  key={`check_${subs.kind}`}
+                  name="eventKind"
+                  value={subs.kind.toString()}
+                  label={subs.title}
+                  checked={eventKinds.includes(subs.kind)}
+                  onChange={() => updateEventKindList(subs.kind)}
+                  disabled
                 />
-              </div>
-            </div>
+              );
+            })}
+          </div>
 
+          <div className="mb-4">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="packages">
+              Packages<small className="ml-1 font-italic">(Required)</small>
+            </label>
             <div>
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="url">
-                Url<small className="ml-1 font-italic">(Required)</small>
-              </label>
-              <div>
-                <small className="form-text text-muted mb-2 mt-0">
-                  A POST request will be sent to the provided URL when any of the events selected in the triggers
-                  section happens.
-                </small>
-              </div>
-              <div className="form-row">
-                <div className="col-md-8">
-                  <InputField
-                    type="url"
-                    name="url"
-                    value={!isUndefined(props.webhook) ? props.webhook.url : ''}
-                    invalidText={{
-                      default: 'This field is required',
-                      typeMismatch: 'Please enter a valid url',
-                    }}
-                    validateOnBlur
-                    required
-                  />
-                </div>
-              </div>
+              <small className="form-text text-muted mb-4 mt-0">
+                When the events selected happen for any of the packages you've chosen, a notification will be triggered
+                and the configured url will be called. At least one package must be selected.
+              </small>
             </div>
-
-            <div>
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="secret">
-                Secret
-              </label>
-              <div>
-                <small className="form-text text-muted mb-2 mt-0">
-                  If you provide a secret, we'll send it to you in the{' '}
-                  <span className="font-weight-bold">X-ArtifactHub-Secret</span> header on each request. This will allow
-                  you to validate that the request comes from ArtifactHub.
-                </small>
-              </div>
-              <div className="form-row">
-                <div className="col-md-8">
-                  <InputField
-                    type="text"
-                    name="secret"
-                    value={!isUndefined(props.webhook) ? props.webhook.secret : ''}
-                  />
-                </div>
-              </div>
-            </div>
-
             <div className="mb-3">
-              <div className="custom-control custom-switch pl-0">
-                <input
-                  data-testid="activeCheckbox"
-                  id="active"
-                  type="checkbox"
-                  className={`custom-control-input ${styles.checkbox}`}
-                  value="true"
-                  onChange={() => setIsActive(!isActive)}
-                  checked={isActive}
-                />
-                <label
-                  htmlFor="active"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Active
-                </label>
-              </div>
-
-              <small className="form-text text-muted mt-2">
-                This flag indicates if the webhook is active or not. Inactive webhooks will not receive notifications.
-              </small>
+              <SearchTypeahead disabledPackages={getPackagesIds()} onSelection={addPackage} />
             </div>
 
-            <div className="h4 pb-2 mt-5 mb-4 border-bottom">Triggers</div>
-
-            <div className="my-4">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
-                Events
-              </label>
-
-              {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-                return (
-                  <CheckBox
-                    key={`check_${subs.kind}`}
-                    name="eventKind"
-                    value={subs.kind.toString()}
-                    label={subs.title}
-                    checked={eventKinds.includes(subs.kind)}
-                    onChange={() => updateEventKindList(subs.kind)}
-                    disabled
-                  />
-                );
-              })}
-            </div>
-
-            <div className="mb-4">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="packages">
-                Packages<small className="ml-1 font-italic">(Required)</small>
-              </label>
-              <div>
-                <small className="form-text text-muted mb-4 mt-0">
-                  When the events selected happen for any of the packages you've chosen, a notification will be
-                  triggered and the configured url will be called. At least one package must be selected.
-                </small>
-              </div>
-              <div className="mb-3">
-                <SearchTypeahead disabledPackages={getPackagesIds()} onSelection={addPackage} />
-              </div>
-
-              {isValidated && selectedPackages.length === 0 && (
-                <div className="invalid-feedback mt-0 d-block">At least one package has to be selected</div>
-              )}
-
-              {selectedPackages.length > 0 && (
-                <table className={`table table-hover table-sm ${styles.table}`}>
-                  <thead>
-                    <tr className={`table-primary ${styles.tableTitle}`}>
-                      <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
-                      <th scope="col" className="align-middle w-50">
-                        Package
-                      </th>
-                      <th scope="col" className="align-middle w-50">
-                        Publisher
-                      </th>
-                      <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {selectedPackages.map((item: Package) => (
-                      <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
-                        <td className="align-middle text-center">
-                          <PackageIcon kind={item.kind} className={`${styles.icon} mx-2`} />
-                        </td>
-                        <td className="align-middle">
-                          <div className="d-flex flex-row align-items-center">
-                            <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
-                            >
-                              <Image
-                                alt={item.displayName || item.name}
-                                imageId={item.logoImageId}
-                                className={styles.image}
-                              />
-                            </div>
-
-                            <div className="ml-2 text-dark">{item.displayName || item.name}</div>
-                          </div>
-                        </td>
-                        <td className="align-middle position-relative text-dark">
-                          {item.userAlias || item.organizationDisplayName || item.organizationName}
-
-                          {!isNull(item.chartRepository) && !isUndefined(item.chartRepository) && (
-                            <small className="ml-2">
-                              (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
-                              <span className="text-dark">
-                                {item.chartRepository!.displayName || item.chartRepository!.name}
-                              </span>
-                              )
-                            </small>
-                          )}
-                        </td>
-
-                        <td>
-                          <button
-                            data-testid="deletePackageButton"
-                            className={`close text-danger mx-2 ${styles.closeBtn}`}
-                            type="button"
-                            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-                              event.preventDefault();
-                              event.stopPropagation();
-                              deletePackage(item.packageId);
-                            }}
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
-
-            <div className="h4 pb-2 mt-5 mb-4 border-bottom">Payload</div>
-
-            <div className="d-flex flex-row mb-3">
-              {PAYLOAD_KINDS_LIST.map((item: PayloadKindsItem) => {
-                return (
-                  <div className="form-check mr-4" key={`payload_${item.kind}`}>
-                    <input
-                      data-testid={`${item.name}Radio`}
-                      className="form-check-input"
-                      type="radio"
-                      id={`payload_${item.kind}`}
-                      name="payloadKind"
-                      value={item.name}
-                      checked={payloadKind === item.kind}
-                      onChange={() => {
-                        setPayloadKind(item.kind);
-                        setIsValidated(false);
-                        if (item.kind === PayloadKind.default && contentType !== '') {
-                          contentTypeInput.current!.reset();
-                          setTemplate(DEFAULT_PAYLOAD_TEMPLATE);
-                        } else {
-                          setTemplate('');
-                        }
-                      }}
-                    />
-                    <label className="form-check-label" htmlFor={`payload_${item.kind}`}>
-                      {item.title}
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-
-            {payloadKind === PayloadKind.custom && (
-              <small className="form-text text-muted mb-3">
-                It's possible to customize the payload used to notify your service. This may help integrating
-                ArtifactHub webhooks with other services without requiring you to write any code. To integrate
-                ArtifactHub webhooks with Slack, for example, you could use a custom payload using the following
-                template:
-                <div className="my-3 w-100">
-                  <div className={`alert alert-light text-nowrap ${styles.codeWrapper}`} role="alert">
-                    {'{'}
-                    <br />
-                    <span className="ml-3">
-                      {`"text": "Package`} <span className="font-weight-bold">{`{{ .Package.name }}`}</span> {`version`}{' '}
-                      <span className="font-weight-bold">{`{{ .Package.version }}`}</span> released!{' '}
-                      <span className="font-weight-bold">{`{{ .Package.url }}`}</span>
-                      {`"`}
-                      <br />
-                      {'}'}
-                    </span>
-                  </div>
-                </div>
-              </small>
+            {isValidated && selectedPackages.length === 0 && (
+              <div className="invalid-feedback mt-0 d-block">At least one package has to be selected</div>
             )}
 
-            <div className="form-row">
-              <div className="col-md-8">
-                <InputField
-                  ref={contentTypeInput}
-                  type="text"
-                  label="Content type"
-                  name="contentType"
-                  value={contentType}
-                  placeholder={payloadKind === PayloadKind.default ? 'application/cloudevents+json' : ''}
-                  disabled={payloadKind === PayloadKind.default}
-                  required={payloadKind !== PayloadKind.default}
-                  invalidText={{
-                    default: 'This field is required',
-                  }}
-                  onChange={onContentTypeChange}
-                />
+            {selectedPackages.length > 0 && (
+              <table className={`table table-hover table-sm ${styles.table}`}>
+                <thead>
+                  <tr className={`table-primary ${styles.tableTitle}`}>
+                    <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
+                    <th scope="col" className="align-middle w-50">
+                      Package
+                    </th>
+                    <th scope="col" className="align-middle w-50">
+                      Publisher
+                    </th>
+                    <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedPackages.map((item: Package) => (
+                    <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
+                      <td className="align-middle text-center d-none d-sm-table-cell">
+                        <PackageIcon kind={item.kind} className={`${styles.icon} mx-2`} />
+                      </td>
+                      <td className="align-middle">
+                        <div className="d-flex flex-row align-items-center">
+                          <div
+                            className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
+                          >
+                            <Image
+                              alt={item.displayName || item.name}
+                              imageId={item.logoImageId}
+                              className={styles.image}
+                            />
+                          </div>
+
+                          <div className="ml-2 text-dark">{item.displayName || item.name}</div>
+                        </div>
+                      </td>
+                      <td className="align-middle position-relative text-dark">
+                        {item.userAlias || item.organizationDisplayName || item.organizationName}
+
+                        {!isNull(item.chartRepository) && !isUndefined(item.chartRepository) && (
+                          <small className="ml-2">
+                            (
+                            <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                              Repo:{' '}
+                            </span>
+                            <span className="text-dark">
+                              {item.chartRepository!.displayName || item.chartRepository!.name}
+                            </span>
+                            )
+                          </small>
+                        )}
+                      </td>
+
+                      <td className="align-middle">
+                        <button
+                          data-testid="deletePackageButton"
+                          className={`close text-danger mx-2 ${styles.closeBtn}`}
+                          type="button"
+                          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            deletePackage(item.packageId);
+                          }}
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="h4 pb-2 mt-4 mt-md-5 mb-4 border-bottom">Payload</div>
+
+          <div className="d-flex flex-row mb-3">
+            {PAYLOAD_KINDS_LIST.map((item: PayloadKindsItem) => {
+              return (
+                <div className="form-check mr-4" key={`payload_${item.kind}`}>
+                  <input
+                    data-testid={`${item.name}Radio`}
+                    className="form-check-input"
+                    type="radio"
+                    id={`payload_${item.kind}`}
+                    name="payloadKind"
+                    value={item.name}
+                    checked={payloadKind === item.kind}
+                    onChange={() => {
+                      setPayloadKind(item.kind);
+                      setIsValidated(false);
+                      if (item.kind === PayloadKind.default && contentType !== '') {
+                        contentTypeInput.current!.reset();
+                        setTemplate(DEFAULT_PAYLOAD_TEMPLATE);
+                      } else {
+                        setTemplate('');
+                      }
+                    }}
+                  />
+                  <label className="form-check-label" htmlFor={`payload_${item.kind}`}>
+                    {item.title}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+
+          {payloadKind === PayloadKind.custom && (
+            <small className="form-text text-muted mb-3">
+              It's possible to customize the payload used to notify your service. This may help integrating ArtifactHub
+              webhooks with other services without requiring you to write any code. To integrate ArtifactHub webhooks
+              with Slack, for example, you could use a custom payload using the following template:
+              <div className="my-3 w-100">
+                <div className={`alert alert-light text-nowrap ${styles.codeWrapper}`} role="alert">
+                  {'{'}
+                  <br />
+                  <span className="ml-3">
+                    {`"text": "Package`} <span className="font-weight-bold">{`{{ .Package.name }}`}</span> {`version`}{' '}
+                    <span className="font-weight-bold">{`{{ .Package.version }}`}</span> released!{' '}
+                    <span className="font-weight-bold">{`{{ .Package.url }}`}</span>
+                    {`"`}
+                    <br />
+                    {'}'}
+                  </span>
+                </div>
               </div>
+            </small>
+          )}
+
+          <div className="form-row">
+            <div className="col-md-8">
+              <InputField
+                ref={contentTypeInput}
+                type="text"
+                label="Content type"
+                name="contentType"
+                value={contentType}
+                placeholder={payloadKind === PayloadKind.default ? 'application/cloudevents+json' : ''}
+                disabled={payloadKind === PayloadKind.default}
+                required={payloadKind !== PayloadKind.default}
+                invalidText={{
+                  default: 'This field is required',
+                }}
+                onChange={onContentTypeChange}
+              />
             </div>
+          </div>
 
-            <div className="form-group mb-4">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
-                Template
-              </label>
+          <div className="form-group mb-4">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
+              Template
+            </label>
 
-              {payloadKind === PayloadKind.custom && (
-                <div>
-                  <small className="form-text text-muted mb-4 mt-0">
-                    Custom payloads are generated using{' '}
-                    <ExternalLink href="https://golang.org/pkg/text/template/" className="font-weight-bold text-dark">
-                      Go templates
-                    </ExternalLink>
-                    . Below you will find a list of the variables available for use in your template.
-                  </small>
+            {payloadKind === PayloadKind.custom && (
+              <div>
+                <small className="form-text text-muted mb-4 mt-0">
+                  Custom payloads are generated using{' '}
+                  <ExternalLink href="https://golang.org/pkg/text/template/" className="font-weight-bold text-dark">
+                    Go templates
+                  </ExternalLink>
+                  . Below you will find a list of the variables available for use in your template.
+                </small>
+              </div>
+            )}
+
+            <AutoresizeTextarea
+              name="template"
+              value={template}
+              disabled={payloadKind === PayloadKind.default}
+              required={payloadKind !== PayloadKind.default}
+              invalidText="This field is required"
+              minRows={6}
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
+              Variables reference
+            </label>
+            <small className="form-text text-muted">
+              <table className={`table table-sm ${styles.variablesTable}`}>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Event.id }}`}</span>
+                    </th>
+                    <td>Id of the event triggering the notification.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
+                    </th>
+                    <td>
+                      Kind of the event triggering notification. At the moment the only possible value is{' '}
+                      <span className="font-weight-bold">package.new-release</span>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.kind }}`}</span>
+                    </th>
+                    <td>
+                      Kind of the package associated with the notification. Possible values are{' '}
+                      <span className="font-weight-bold">helm-chart</span>,{' '}
+                      <span className="font-weight-bold">falco-rules</span> and{' '}
+                      <span className="font-weight-bold">opa-policies</span>.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.name }}`}</span>
+                    </th>
+                    <td>Name of the package.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.version }}`}</span>
+                    </th>
+                    <td>Version of the new release.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.publisher }}`}</span>
+                    </th>
+                    <td>
+                      Publisher of the package in the format owner/repository on the case of Helm Charts and owner in
+                      the rest.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.url }}`}</span>
+                    </th>
+                    <td>ArtifactHub URL of the package.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </small>
+          </div>
+
+          <div className="mt-4 mt-md-5">
+            <div className="d-flex flex-row justify-content-between">
+              {!isNull(apiError) && (
+                <div className="alert alert-danger mr-5" role="alert" ref={errorWrapper}>
+                  {apiError}
                 </div>
               )}
 
-              <AutoresizeTextarea
-                name="template"
-                value={template}
-                disabled={payloadKind === PayloadKind.default}
-                required={payloadKind !== PayloadKind.default}
-                invalidText="This field is required"
-                minRows={6}
-              />
-            </div>
+              <div className="ml-auto">
+                <button type="button" className={`btn btn-light mr-3 ${styles.btnLight}`} onClick={onCloseForm}>
+                  Cancel
+                </button>
 
-            <div className="mb-3">
-              <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
-                Variables reference
-              </label>
-              <small className="form-text text-muted">
-                <table className={`table table-sm ${styles.variablesTable}`}>
-                  <tbody>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Event.id }}`}</span>
-                      </th>
-                      <td>Id of the event triggering the notification.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
-                      </th>
-                      <td>
-                        Kind of the event triggering notification. At the moment the only possible value is{' '}
-                        <span className="font-weight-bold">package.new-release</span>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Package.kind }}`}</span>
-                      </th>
-                      <td>
-                        Kind of the package associated with the notification. Possible values are{' '}
-                        <span className="font-weight-bold">helm-chart</span>,{' '}
-                        <span className="font-weight-bold">falco-rules</span> and{' '}
-                        <span className="font-weight-bold">opa-policies</span>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Package.name }}`}</span>
-                      </th>
-                      <td>Name of the package.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Package.version }}`}</span>
-                      </th>
-                      <td>Version of the new release.</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Package.publisher }}`}</span>
-                      </th>
-                      <td>
-                        Publisher of the package in the format owner/repository on the case of Helm Charts and owner in
-                        the rest.
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <span className="text-nowrap">{`{{ .Package.url }}`}</span>
-                      </th>
-                      <td>ArtifactHub URL of the package.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </small>
-            </div>
-
-            <div className="mt-5">
-              <div className="d-flex flex-row justify-content-between">
-                {!isNull(apiError) && (
-                  <div className="alert alert-danger mr-5" role="alert" ref={errorWrapper}>
-                    {apiError}
-                  </div>
-                )}
-
-                <div className="ml-auto">
-                  <button
-                    type="button"
-                    className={`btn btn-light mr-3 text-uppercase ${styles.btnLight}`}
-                    onClick={onCloseForm}
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    className="btn btn-secondary"
-                    type="button"
-                    disabled={isSending}
-                    onClick={submitForm}
-                    data-testid="sendWebhookBtn"
-                  >
-                    {isSending ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">{isUndefined(props.webhook) ? 'Adding' : 'Updating'} webhook</span>
-                      </>
-                    ) : (
-                      <>{isUndefined(props.webhook) ? 'Add' : 'Save'}</>
-                    )}
-                  </button>
-                </div>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  disabled={isSending}
+                  onClick={submitForm}
+                  data-testid="sendWebhookBtn"
+                >
+                  {isSending ? (
+                    <>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                      <span className="ml-2">{isUndefined(props.webhook) ? 'Adding' : 'Updating'} webhook</span>
+                    </>
+                  ) : (
+                    <>{isUndefined(props.webhook) ? 'Add' : 'Save'}</>
+                  )}
+                </button>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

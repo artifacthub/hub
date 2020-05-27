@@ -14,13 +14,13 @@ exports[`Organizations section index creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Organizations
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addOrgButton"
             >
               <div
@@ -91,10 +91,10 @@ exports[`Organizations section index creates snapshot 1`] = `
             class="modal-content content modal"
           >
             <div
-              class="modal-header header"
+              class="modal-header d-flex flex-row align-items-center header"
             >
               <div
-                class="h3 m-2"
+                class="h3 m-2 title"
               >
                 Add organization
               </div>
@@ -145,13 +145,13 @@ exports[`Organizations section index creates snapshot 2`] = `
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Organizations
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addOrgButton"
             >
               <div
@@ -195,7 +195,7 @@ exports[`Organizations section index creates snapshot 2`] = `
           </div>
         </div>
         <div
-          class="list-group mt-5"
+          class="list-group mt-4 mt-md-5"
         >
           <li
             class="list-group-item listItem"
@@ -546,10 +546,10 @@ exports[`Organizations section index creates snapshot 2`] = `
             class="modal-content content modal"
           >
             <div
-              class="modal-header header"
+              class="modal-header d-flex flex-row align-items-center header"
             >
               <div
-                class="h3 m-2"
+                class="h3 m-2 title"
               >
                 Add organization
               </div>

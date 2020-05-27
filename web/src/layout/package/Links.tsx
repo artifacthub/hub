@@ -45,33 +45,33 @@ const Links = (props: Props) => {
     <>
       <SmallTitle text="Links" />
       {props.homeUrl && (
-        <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-center mb-3 text-capitalize">
-          <>
-            {getIconLink('homepage')}
-            Homepage
-            <span className={styles.smallIcon}>
-              <FiExternalLink className="ml-1" />
-            </span>
-          </>
-        </ExternalLink>
+        <div className="py-1 py-sm-0">
+          <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-center mb-3 text-capitalize">
+            <>
+              {getIconLink('homepage')}
+              Homepage
+              <span className={styles.smallIcon}>
+                <FiExternalLink className="ml-1" />
+              </span>
+            </>
+          </ExternalLink>
+        </div>
       )}
 
       {!isNull(props.links) && !isUndefined(props.links) && (
         <>
           {props.links.map((link: PackageLink) => (
-            <ExternalLink
-              key={`link_${link.name}`}
-              href={link.url}
-              className="text-primary d-flex align-items-center mb-3 text-capitalize"
-            >
-              <>
-                {getIconLink(link.name)}
-                {link.name}
-                <span className={styles.smallIcon}>
-                  <FiExternalLink className="ml-1" />
-                </span>
-              </>
-            </ExternalLink>
+            <div className="py-1 py-sm-0" key={`link_${link.name}`}>
+              <ExternalLink href={link.url} className="text-primary d-flex align-items-center mb-3 text-capitalize">
+                <>
+                  {getIconLink(link.name)}
+                  {link.name}
+                  <span className={styles.smallIcon}>
+                    <FiExternalLink className="ml-1" />
+                  </span>
+                </>
+              </ExternalLink>
+            </div>
           ))}
         </>
       )}

@@ -54,53 +54,51 @@ const ProfileSection = (props: Props) => {
   }, [props, selectedOrg]);
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between p-0">
-      <div className="flex-grow-1">
-        <div className="h3 pb-2 border-bottom">Profile information</div>
+    <main role="main" className="container p-0">
+      <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
-        <div className={`mt-5 ${styles.form}`}>
-          {(isUndefined(organization) || isLoading) && <Loading />}
+      <div className={`mt-4 mt-md-5 ${styles.form}`}>
+        {(isUndefined(organization) || isLoading) && <Loading />}
 
-          {!isUndefined(organization) && (
-            <>
-              {isNull(organization) ? (
-                <NoData issuesLinkVisible={!isNull(apiError)}>
-                  {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
-                </NoData>
-              ) : (
-                <>
-                  {!isLoading && (
-                    <OrganizationForm
-                      ref={form}
-                      organization={!isLoading ? organization : undefined}
-                      onAuthError={props.onAuthError}
-                      setIsSending={setIsSending}
-                    />
-                  )}
+        {!isUndefined(organization) && (
+          <>
+            {isNull(organization) ? (
+              <NoData issuesLinkVisible={!isNull(apiError)}>
+                {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
+              </NoData>
+            ) : (
+              <>
+                {!isLoading && (
+                  <OrganizationForm
+                    ref={form}
+                    organization={!isLoading ? organization : undefined}
+                    onAuthError={props.onAuthError}
+                    setIsSending={setIsSending}
+                  />
+                )}
 
-                  <div className="mt-4">
-                    <button
-                      className="btn btn-secondary"
-                      type="button"
-                      disabled={isSending}
-                      onClick={submitForm}
-                      data-testid="updateOrgBtn"
-                    >
-                      {isSending ? (
-                        <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Updating organization</span>
-                        </>
-                      ) : (
-                        <>Update</>
-                      )}
-                    </button>
-                  </div>
-                </>
-              )}
-            </>
-          )}
-        </div>
+                <div className="mt-4">
+                  <button
+                    className="btn btn-secondary"
+                    type="button"
+                    disabled={isSending}
+                    onClick={submitForm}
+                    data-testid="updateOrgBtn"
+                  >
+                    {isSending ? (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                        <span className="ml-2">Updating organization</span>
+                      </>
+                    ) : (
+                      <>Update</>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </div>
     </main>
   );

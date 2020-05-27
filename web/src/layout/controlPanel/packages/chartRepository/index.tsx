@@ -61,12 +61,12 @@ const ChartRepository = (props: Props) => {
     <>
       <div>
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
-          <div className="h3 pb-0">Chart repositories</div>
+          <div className={`h3 pb-0 ${styles.title}`}>Chart repositories</div>
 
           <div>
             <button
               data-testid="refreshRepoBtn"
-              className={`btn btn-secondary btn-sm text-uppercase mr-2 ${styles.btnAction}`}
+              className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
               onClick={fetchCharts}
             >
               <div className="d-flex flex-row align-items-center justify-content-center">
@@ -127,7 +127,7 @@ const ChartRepository = (props: Props) => {
               )}
             </NoData>
           ) : (
-            <div className="list-group mt-5" data-testid="chartRepoList">
+            <div className="list-group mt-4 mt-md-5" data-testid="chartRepoList">
               {chartRepositories.map((repo: ChartRepo) => (
                 <ChartRepositoryCard
                   key={repo.name}

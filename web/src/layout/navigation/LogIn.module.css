@@ -1,4 +1,10 @@
 .modal {
   max-width: 90%;
-  width: 350px !important;
+  width: 400px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 1.25rem;
+  }
 }

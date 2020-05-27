@@ -40,3 +40,10 @@
 .spinner {
   left: -30px;
 }
+
+@media only screen and (max-width: 768px) {
+  .spinner {
+    left: auto;
+    right: 13px;
+  }
+}

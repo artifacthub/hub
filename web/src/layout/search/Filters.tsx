@@ -59,7 +59,7 @@ const Filters = (props: Props) => {
 
       if (!isNull(userElement) || !isNull(orgElement)) {
         publishersList = (
-          <div className="mt-4">
+          <div className="mt-3 mt-sm-4">
             <SmallTitle text="Publisher" />
             {orgElement}
             {userElement}
@@ -133,7 +133,7 @@ const Filters = (props: Props) => {
       {getKindFacets()}
       {getChartRepositoryFacets()}
 
-      <div role="menuitem" className={`mt-4 pt-2 ${styles.facet}`}>
+      <div role="menuitem" className={`mt-3 mt-sm-4 pt-2 ${styles.facet}`}>
         <SmallTitle text="Others" />
 
         <div className="mt-3">

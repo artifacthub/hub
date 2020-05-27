@@ -49,7 +49,7 @@
   }
 
   .btnAction {
-    margin-left: 0.5rem;
+    margin-left: 0.6rem;
     height: 2rem;
     width: 2rem;
     border-radius: 50% !important;
@@ -63,5 +63,11 @@
     min-height: calc(100% - 10rem) !important;
     max-height: calc(100% - 10rem) !important;
     margin: 5rem auto !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 1.25rem;
   }
 }

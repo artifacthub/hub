@@ -186,11 +186,11 @@ const SubscriptionsButton = (props: Props) => {
                   )}
                 </div>
                 <div className="d-flex flex-column flex-grow-1">
-                  <div className="h6 mb-0 mb-sm-2 d-flex flex-row align-items-center">
+                  <div className="h6 mb-2 d-flex flex-row align-items-center">
                     {subs.icon}
                     <span className="ml-2">{subs.title}</span>
                   </div>
-                  <small className="d-none d-sm-inline text-muted text-left">
+                  <small className="text-muted text-left">
                     {subs.description}
                     {!subs.enabled && (
                       <i>

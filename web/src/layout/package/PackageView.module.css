@@ -106,10 +106,20 @@
     margin-top: 1.5rem;
     position: relative !important;
   }
+
+  .deprecatedBadge {
+    font-size: 0.6rem !important;
+  }
 }
 
 @media only screen and (min-width: 768px) {
   .modalInstallationWrapper {
     margin-top: 35px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .codeWrapper {
+    margin-left: 15px;
   }
 }

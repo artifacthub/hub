@@ -18,10 +18,10 @@ exports[`Chart Repository Modal - packages section creates snapshot 1`] = `
           class="modal-content content modal"
         >
           <div
-            class="modal-header header"
+            class="modal-header d-flex flex-row align-items-center header"
           >
             <div
-              class="h3 m-2"
+              class="h3 m-2 title"
             >
               Add chart repository
             </div>

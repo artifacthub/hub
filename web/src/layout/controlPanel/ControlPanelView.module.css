@@ -34,3 +34,13 @@
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
+
+@media only screen and (max-width: 768px) {
+  .icon {
+    font-size: 1.5rem;
+  }
+
+  .navItem {
+    margin-bottom: -2px !important;
+  }
+}

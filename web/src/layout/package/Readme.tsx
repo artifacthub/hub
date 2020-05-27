@@ -62,7 +62,7 @@ const Readme = (props: Props) => {
     } else if (data.href.startsWith('#') && isElementInView(data.href)) {
       return (
         <button
-          className={`btn btn-link d-inline-block border-0 p-0 ${styles.btnLink}`}
+          className={`btn btn-link d-inline-block text-left border-0 p-0 ${styles.btnLink}`}
           onClick={() => props.scrollIntoView(data.href)}
         >
           {data.children}

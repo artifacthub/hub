@@ -18,3 +18,9 @@
   font-size: 0.8rem;
   height: 1.5em;
 }
+
+@media only screen and (max-width: 768px) {
+  .filters {
+    font-size: 1rem;
+  }
+}

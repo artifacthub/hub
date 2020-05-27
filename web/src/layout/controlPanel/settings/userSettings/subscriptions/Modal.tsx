@@ -83,7 +83,7 @@ const SubscriptionModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className="h3 m-2">Add subscription</div>}
+      header={<div className={`h3 m-2 ${styles.title}`}>Add subscription</div>}
       open={props.open}
       modalDialogClassName={styles.modal}
       closeButton={
@@ -110,35 +110,33 @@ const SubscriptionModal = (props: Props) => {
       noScrollable
     >
       <div className="w-100 position-relative">
-        <form>
-          <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
-            Events
-          </label>
-          {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-            return (
-              <div className="form-check mb-3" key={`radio_${subs.name}`}>
-                <input
-                  data-testid={`radio_${subs.kind}`}
-                  className="form-check-input"
-                  type="radio"
-                  name="kind"
-                  id={subs.name}
-                  value={subs.kind}
-                  disabled={!subs.enabled}
-                  checked={subs.kind === eventKind}
-                  onChange={() => setEventKind(subs.kind)}
-                  required
-                />
-                <label className="form-check-label" htmlFor={subs.name}>
-                  <div className="d-flex flex-row align-items-center ml-2">
-                    {subs.icon}
-                    <div className="ml-1">{subs.title}</div>
-                  </div>
-                </label>
-              </div>
-            );
-          })}
-        </form>
+        <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
+          Events
+        </label>
+        {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+          return (
+            <div className="form-check mb-3" key={`radio_${subs.name}`}>
+              <input
+                data-testid={`radio_${subs.kind}`}
+                className="form-check-input"
+                type="radio"
+                name="kind"
+                id={subs.name}
+                value={subs.kind}
+                disabled={!subs.enabled}
+                checked={subs.kind === eventKind}
+                onChange={() => setEventKind(subs.kind)}
+                required
+              />
+              <label className="form-check-label" htmlFor={subs.name}>
+                <div className="d-flex flex-row align-items-center ml-2">
+                  {subs.icon}
+                  <div className="ml-1">{subs.title}</div>
+                </div>
+              </label>
+            </div>
+          );
+        })}
 
         <div className="d-flex flex-column mb-3">
           <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
@@ -155,10 +153,12 @@ const SubscriptionModal = (props: Props) => {
               <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">
                 <div className="flex-grow-1 text-truncate py-2">
                   <div className="d-flex flex-row align-items-center h-100 text-truncate">
-                    <PackageIcon kind={packageItem.kind} className={`mx-3 ${styles.icon}`} />
+                    <div className="d-none d-md-inline">
+                      <PackageIcon kind={packageItem.kind} className={`mx-3 ${styles.icon}`} />
+                    </div>
 
                     <div
-                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
+                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ml-2 ml-md-0 ${styles.imageWrapper}`}
                     >
                       <Image
                         alt={packageItem.displayName || packageItem.name}
@@ -171,11 +171,14 @@ const SubscriptionModal = (props: Props) => {
                       {packageItem.displayName || packageItem.name}
                     </div>
 
-                    <div className="pl-2 ml-auto w-50 text-dark text-truncate">
+                    <div className="px-2 ml-auto w-50 text-dark text-truncate">
                       {packageItem.userAlias || packageItem.organizationDisplayName || packageItem.organizationName}
                       {!isNull(packageItem.chartRepository) && (
                         <small className="ml-2">
-                          (<small className={`text-uppercase text-muted ${styles.legend}`}>Repo: </small>
+                          (
+                          <small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>
+                            Repo:{' '}
+                          </small>
                           {packageItem.chartRepository!.displayName || packageItem.chartRepository!.name})
                         </small>
                       )}

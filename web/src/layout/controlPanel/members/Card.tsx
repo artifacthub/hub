@@ -86,7 +86,7 @@ const MemberCard = (props: Props) => {
           </div>
 
           <div>
-            <h5 className="mb-1">
+            <div className="h5 mb-1">
               <div className="d-flex flex-row align-items-start">
                 {!isNull(props.member.firstName) || !isNull(props.member.lastName) ? getFullName() : props.member.alias}
                 {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
@@ -95,7 +95,7 @@ const MemberCard = (props: Props) => {
                   </small>
                 )}
               </div>
-            </h5>
+            </div>
             <div className="h6 text-muted mr-1 font-italic">{props.member.alias}</div>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../../../../types';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
-import prepareQuerystring from '../../../../../utils/prepareQueryString';
 import PackageCard from './PackageCard';
 
 const getMockPackage = (fixtureId: string): Package => {
@@ -93,71 +92,6 @@ describe('PackageCard', () => {
     });
   });
 
-  describe('Chart repository button', () => {
-    it('renders repository link', () => {
-      const mockPackage = getMockPackage('6');
-
-      const { queryByTestId, queryByAltText } = render(
-        <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
-        </Router>
-      );
-      const button = queryByTestId('repoLink');
-      expect(button).toBeInTheDocument();
-      const icon = queryByAltText('Icon');
-      expect(icon).toBeInTheDocument();
-      expect((icon as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      fireEvent.click(button!);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQuerystring({
-          pageNumber: 1,
-          filters: {
-            repo: [mockPackage.chartRepository!.name],
-          },
-          deprecated: false,
-        }),
-      });
-    });
-
-    it('renders user link', () => {
-      const mockPackage = getMockPackage('7');
-
-      const { getByTestId } = render(
-        <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
-        </Router>
-      );
-      const button = getByTestId('userLink');
-      expect(button).toBeInTheDocument();
-      fireEvent.click(button);
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQuerystring({
-          pageNumber: 1,
-          filters: {
-            user: [mockPackage.userAlias!],
-          },
-          deprecated: false,
-        }),
-      });
-    });
-
-    it('does not render repository link when chart kind is not Helm Chart', () => {
-      const mockPackage = getMockPackage('8');
-
-      const { queryByTestId } = render(
-        <Router>
-          <PackageCard {...defaultProps} package={mockPackage} />
-        </Router>
-      );
-      const button = queryByTestId('repoLink');
-      expect(button).toBeNull();
-    });
-  });
-
   describe('Detail', () => {
     it('opens detail page', () => {
       const mockPackage = getMockPackage('9');
@@ -167,7 +101,7 @@ describe('PackageCard', () => {
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const link = getByTestId('packageLink');
+      const link = getByTestId('packageCardLink');
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe(buildPackageURL(mockPackage));

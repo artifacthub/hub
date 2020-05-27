@@ -7,6 +7,7 @@
 
 .ctxBtn {
   width: 180px;
+  line-height: 1rem;
 }
 
 .loading {
@@ -28,6 +29,18 @@
 }
 
 .caret {
-  bottom: 25px;
-  right: 5px;
+  bottom: 5px;
+  right: 7px;
+}
+
+@media only screen and (max-width: 768px) and (min-width: 576px) {
+  .ctxBtn {
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .ctxBtn {
+    line-height: 1.5rem;
+  }
 }
