@@ -44,6 +44,7 @@ select register_package('
     "digest": "digest-package1-1.0.0",
     "deprecated": false,
     "license": "Apache-2.0",
+    "content_url": "https://package.content.url",
     "maintainers": [
         {
             "name": "name1",
@@ -97,7 +98,8 @@ select results_eq(
             s.links,
             s.data,
             s.deprecated,
-            s.license
+            s.license,
+            s.content_url
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -116,7 +118,8 @@ select results_eq(
             '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]'::jsonb,
             '{"key": "value"}'::jsonb,
             false,
-            'Apache-2.0'
+            'Apache-2.0',
+            'https://package.content.url'
         )
     $$,
     'Snapshot should exist'

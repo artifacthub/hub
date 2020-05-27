@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
@@ -117,6 +118,12 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	}
 	if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid version (semantic version expected)")
+	}
+	if pkg.ContentURL != "" {
+		u, err := url.Parse(pkg.ContentURL)
+		if err != nil || u.Scheme == "" || u.Host == "" {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid content url")
+		}
 	}
 	if pkg.Kind == hub.Chart {
 		if pkg.ChartRepository == nil {

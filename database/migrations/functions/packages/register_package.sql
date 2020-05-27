@@ -154,7 +154,8 @@ begin
         links,
         data,
         deprecated,
-        license
+        license,
+        content_url
     ) values (
         v_package_id,
         v_version,
@@ -168,7 +169,8 @@ begin
         p_pkg->'links',
         p_pkg->'data',
         (p_pkg->>'deprecated')::boolean,
-        nullif(p_pkg->>'license', '')
+        nullif(p_pkg->>'license', ''),
+        nullif(p_pkg->>'content_url', '')
     )
     on conflict (package_id, version) do update
     set
@@ -182,6 +184,7 @@ begin
         links = excluded.links,
         deprecated = excluded.deprecated,
         license = excluded.license,
+        content_url = excluded.content_url,
         updated_at = current_timestamp;
 
     -- Register new release event if package's latest version has been updated
