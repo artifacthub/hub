@@ -5,6 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import AnchorHeader from '../common/AnchorHeader';
+import ErrorBoundary from '../common/ErrorBoundary';
 import styles from './Readme.module.css';
 
 interface Props {
@@ -45,7 +46,6 @@ const Readme = (props: Props) => {
     }
   };
 
-  // TODO - get correct image
   const Image: React.ElementType = (data: ImageProps) => {
     return /^https?:/.test(data.src) ? <img src={data.src} alt={data.alt} /> : null;
   };
@@ -95,21 +95,23 @@ const Readme = (props: Props) => {
   }, [props]);
 
   return (
-    <span data-testid="readme">
-      <ReactMarkdown
-        className={`mt-3 mb-5 ${styles.md}`}
-        source={props.markdownContent}
-        linkTarget="_blank"
-        skipHtml
-        renderers={{
-          code: Code,
-          image: Image,
-          link: Link,
-          table: Table,
-          heading: Heading,
-        }}
-      />
-    </span>
+    <ErrorBoundary message="Something went wrong rendering the README file of this package.">
+      <span data-testid="readme">
+        <ReactMarkdown
+          className={`mt-3 mb-5 ${styles.md}`}
+          source={props.markdownContent}
+          linkTarget="_blank"
+          skipHtml
+          renderers={{
+            code: Code,
+            image: Image,
+            link: Link,
+            table: Table,
+            heading: Heading,
+          }}
+        />
+      </span>
+    </ErrorBoundary>
   );
 };
 

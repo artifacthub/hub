@@ -25,6 +25,6 @@ describe('NoData', () => {
     const link = getByRole('button');
     expect(link).toBeInTheDocument();
     expect(link).toHaveTextContent('here');
-    expect(link).toHaveAttribute('href', 'https://github.com/artifacthub/hub/issues');
+    expect(link).toHaveAttribute('href', 'https://github.com/artifacthub/hub/issues/new/choose');
   });
 });
