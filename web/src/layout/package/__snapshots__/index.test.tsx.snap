@@ -151,7 +151,7 @@ exports[`Package index creates snapshot 2`] = `
                       class="modal-content content undefined"
                     >
                       <div
-                        class="modal-header header"
+                        class="modal-header d-flex flex-row align-items-center header"
                       >
                         <div
                           class="d-flex align-items-center"
@@ -260,7 +260,7 @@ exports[`Package index creates snapshot 2`] = `
                       class="modal-content content undefined"
                     >
                       <div
-                        class="modal-header header"
+                        class="modal-header d-flex flex-row align-items-center header"
                       >
                         <div
                           class="d-flex align-items-center"
@@ -333,7 +333,7 @@ exports[`Package index creates snapshot 2`] = `
           class="mainContent"
         >
           <div
-            class="alert alert-primary ml-auto mr-auto my-5 w-75 text-center p-4 p-sm-5 border"
+            class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper"
             data-testid="noData"
           >
             <div
@@ -373,7 +373,7 @@ exports[`Package index creates snapshot 2`] = `
                   class="modal-content content undefined"
                 >
                   <div
-                    class="modal-header header"
+                    class="modal-header d-flex flex-row align-items-center header"
                   >
                     <div
                       class="d-flex align-items-center"

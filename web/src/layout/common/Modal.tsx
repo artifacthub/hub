@@ -89,7 +89,7 @@ const Modal = (props: Props) => {
           ref={ref}
         >
           <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
-            <div className={`modal-header ${styles.header}`}>
+            <div className={`modal-header d-flex flex-row align-items-center ${styles.header}`}>
               {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
 
               <button

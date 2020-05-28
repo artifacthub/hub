@@ -7,13 +7,13 @@ exports[`Chart repository index creates snapshot 1`] = `
       class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
     >
       <div
-        class="h3 pb-0"
+        class="h3 pb-0 title"
       >
         Chart repositories
       </div>
       <div>
         <button
-          class="btn btn-secondary btn-sm text-uppercase mr-2 btnAction"
+          class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
           data-testid="refreshRepoBtn"
         >
           <div
@@ -122,13 +122,13 @@ exports[`Chart repository index creates snapshot 2`] = `
       class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
     >
       <div
-        class="h3 pb-0"
+        class="h3 pb-0 title"
       >
         Chart repositories
       </div>
       <div>
         <button
-          class="btn btn-secondary btn-sm text-uppercase mr-2 btnAction"
+          class="btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 btnAction"
           data-testid="refreshRepoBtn"
         >
           <div
@@ -214,7 +214,7 @@ exports[`Chart repository index creates snapshot 2`] = `
     </div>
   </div>
   <div
-    class="list-group mt-5"
+    class="list-group mt-4 mt-md-5"
     data-testid="chartRepoList"
   >
     <li

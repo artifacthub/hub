@@ -73,22 +73,760 @@ exports[`StarredPackagesView renders correctly 2`] = `
           class="mx-auto mt-4 wrapper"
         >
           <div
-            class="col-12 py-sm-3 py-2"
-            role="listitem"
+            class="d-none d-md-block"
           >
             <div
-              class="card h-100 card"
+              class="col-12 py-sm-3 py-2"
+              role="listitem"
+            >
+              <div
+                class="card h-100 card"
+              >
+                <a
+                  class="text-decoration-none link"
+                  data-testid="link"
+                  href="/package/chart/stable/airflow"
+                >
+                  <div
+                    class="card-body position-relative body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mb-3"
+                    >
+                      <div
+                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        >
+                          <img
+                            alt="Logo airflow"
+                            class="image"
+                            src="/image/48066829-7617-43ca-a37f-78d1e7ad1e31"
+                            srcset="/image/48066829-7617-43ca-a37f-78d1e7ad1e31@1x 1x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@2x 2x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@3x 3x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-3 flex-grow-1 truncateWrapper"
+                        >
+                          <div
+                            class="card-title font-weight-bolder mb-2 title"
+                          >
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              airflow
+                            </div>
+                          </div>
+                          <div
+                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          >
+                            <div
+                              class="mr-2"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <span
+                                class="text-muted text-uppercase mr-1 undefined"
+                              >
+                                Org:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link undefined"
+                                data-testid="orgLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Helm
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link"
+                                data-testid="repoLink"
+                              >
+                                Stable
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              6.6.0
+                            </div>
+                            <div
+                              class="text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                App version: 
+                              </span>
+                              1.10.4
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex align-items-center text-uppercase kind"
+                      >
+                        <span
+                          class="badge badge-pill badge-light mr-2 starBadge"
+                        >
+                          <div
+                            class="d-flex align-items-center"
+                          >
+                            <svg
+                              class="mr-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 576 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                              />
+                            </svg>
+                            <div
+                              class="starBadgeNumber"
+                            >
+                              1
+                            </div>
+                          </div>
+                        </span>
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="mb-0 card-text overflow-hidden description"
+                    >
+                      Airflow is a platform to programmatically author, schedule and monitor workflows
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 py-sm-3 py-2"
+              role="listitem"
+            >
+              <div
+                class="card h-100 card"
+              >
+                <a
+                  class="text-decoration-none link"
+                  data-testid="link"
+                  href="/package/chart/incubator/cassandra"
+                >
+                  <div
+                    class="card-body position-relative body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mb-3"
+                    >
+                      <div
+                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        >
+                          <img
+                            alt="Logo cassandra"
+                            class="image"
+                            src="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49"
+                            srcset="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@1x 1x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@2x 2x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@3x 3x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-3 flex-grow-1 truncateWrapper"
+                        >
+                          <div
+                            class="card-title font-weight-bolder mb-2 title"
+                          >
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              cassandra
+                            </div>
+                          </div>
+                          <div
+                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          >
+                            <div
+                              class="mr-2"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <span
+                                class="text-muted text-uppercase mr-1 undefined"
+                              >
+                                Org:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link undefined"
+                                data-testid="orgLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Helm
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link"
+                                data-testid="repoLink"
+                              >
+                                Incubator
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              0.15.0
+                            </div>
+                            <div
+                              class="text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                App version: 
+                              </span>
+                              3.11.6
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex align-items-center text-uppercase kind"
+                      >
+                        <span
+                          class="badge badge-pill badge-light mr-2 starBadge"
+                        >
+                          <div
+                            class="d-flex align-items-center"
+                          >
+                            <svg
+                              class="mr-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 576 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                              />
+                            </svg>
+                            <div
+                              class="starBadgeNumber"
+                            >
+                              1
+                            </div>
+                          </div>
+                        </span>
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="mb-0 card-text overflow-hidden description"
+                    >
+                      Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 py-sm-3 py-2"
+              role="listitem"
+            >
+              <div
+                class="card h-100 card"
+              >
+                <a
+                  class="text-decoration-none link"
+                  data-testid="link"
+                  href="/package/chart/stable/prometheus"
+                >
+                  <div
+                    class="card-body position-relative body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mb-3"
+                    >
+                      <div
+                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        >
+                          <img
+                            alt="Logo prometheus"
+                            class="image"
+                            src="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b"
+                            srcset="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b@1x 1x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@2x 2x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@3x 3x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-3 flex-grow-1 truncateWrapper"
+                        >
+                          <div
+                            class="card-title font-weight-bolder mb-2 title"
+                          >
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              prometheus
+                            </div>
+                          </div>
+                          <div
+                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          >
+                            <div
+                              class="mr-2"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <span
+                                class="text-muted text-uppercase mr-1 undefined"
+                              >
+                                Org:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link undefined"
+                                data-testid="orgLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Helm
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link"
+                                data-testid="repoLink"
+                              >
+                                Stable
+                              </button>
+                            </div>
+                            <div
+                              class="mr-2 text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              11.1.0
+                            </div>
+                            <div
+                              class="text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                App version: 
+                              </span>
+                              2.16.0
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex align-items-center text-uppercase kind"
+                      >
+                        <span
+                          class="badge badge-pill badge-light mr-2 starBadge"
+                        >
+                          <div
+                            class="d-flex align-items-center"
+                          >
+                            <svg
+                              class="mr-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 576 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                              />
+                            </svg>
+                            <div
+                              class="starBadgeNumber"
+                            >
+                              2
+                            </div>
+                          </div>
+                        </span>
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="mb-0 card-text overflow-hidden description"
+                    >
+                      Prometheus is a monitoring system and time series database.
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 py-sm-3 py-2"
+              role="listitem"
+            >
+              <div
+                class="card h-100 card"
+              >
+                <a
+                  class="text-decoration-none link"
+                  data-testid="link"
+                  href="/package/falco/traefik"
+                >
+                  <div
+                    class="card-body position-relative body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mb-3"
+                    >
+                      <div
+                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        >
+                          <img
+                            alt="Logo Traefik"
+                            class="image"
+                            src="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54"
+                            srcset="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@1x 1x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@2x 2x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@3x 3x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-3 flex-grow-1 truncateWrapper"
+                        >
+                          <div
+                            class="card-title font-weight-bolder mb-2 title"
+                          >
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              Traefik
+                            </div>
+                          </div>
+                          <div
+                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          >
+                            <div
+                              class="mr-2"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <span
+                                class="text-muted text-uppercase mr-1 undefined"
+                              >
+                                Org:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link undefined"
+                                data-testid="orgLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Falco
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              1.0.0
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex align-items-center text-uppercase kind"
+                      >
+                        <span
+                          class="badge badge-pill badge-light mr-2 starBadge"
+                        >
+                          <div
+                            class="d-flex align-items-center"
+                          >
+                            <svg
+                              class="mr-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 576 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                              />
+                            </svg>
+                            <div
+                              class="starBadgeNumber"
+                            >
+                              2
+                            </div>
+                          </div>
+                        </span>
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/falco-rules.svg"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="mb-0 card-text overflow-hidden description"
+                    >
+                      Falco rules for securing Traefik
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 py-sm-3 py-2"
+              role="listitem"
+            >
+              <div
+                class="card h-100 card"
+              >
+                <a
+                  class="text-decoration-none link"
+                  data-testid="link"
+                  href="/package/opa/trusted-registry-images"
+                >
+                  <div
+                    class="card-body position-relative body"
+                  >
+                    <div
+                      class="d-flex align-items-start justify-content-between mb-3"
+                    >
+                      <div
+                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      >
+                        <div
+                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        >
+                          <img
+                            alt="Logo Trusted Registry Images"
+                            class="image"
+                            src="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35"
+                            srcset="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35@1x 1x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@2x 2x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@3x 3x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@4x 4x"
+                          />
+                        </div>
+                        <div
+                          class="ml-3 flex-grow-1 truncateWrapper"
+                        >
+                          <div
+                            class="card-title font-weight-bolder mb-2 title"
+                          >
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              Trusted Registry Images
+                            </div>
+                          </div>
+                          <div
+                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          >
+                            <div
+                              class="mr-2"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <span
+                                class="text-muted text-uppercase mr-1 undefined"
+                              >
+                                Org:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark link undefined"
+                                data-testid="orgLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Falco
+                                </div>
+                              </button>
+                            </div>
+                            <div
+                              class="text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              0.1.0
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex align-items-center text-uppercase kind"
+                      >
+                        <span
+                          class="badge badge-pill badge-light mr-2 starBadge"
+                        >
+                          <div
+                            class="d-flex align-items-center"
+                          >
+                            <svg
+                              class="mr-1"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 576 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                              />
+                            </svg>
+                            <div
+                              class="starBadgeNumber"
+                            >
+                              2
+                            </div>
+                          </div>
+                        </span>
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/opa-policies.svg"
+                        />
+                      </div>
+                    </div>
+                    <p
+                      class="mb-0 card-text overflow-hidden description"
+                    >
+                      Open Policy Agent policy for running only images from a trusted repository
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-block d-md-none"
+          >
+            <div
+              class="card mb-3 w-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="link"
+                data-testid="mobilePackageLink"
                 href="/package/chart/stable/airflow"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1 truncateWrapper"
@@ -104,64 +842,88 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="h-50"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="h-100 d-flex flex-row justify-content-between"
                           >
-                            airflow
+                            <div
+                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                            >
+                              <div
+                                class="h6 text-truncate mr-2"
+                              >
+                                airflow
+                              </div>
+                            </div>
+                            <div
+                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    1
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
                         >
                           <div
-                            class="mr-2"
-                          >
-                            <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="orgInfoDropdown"
-                              />
-                            </div>
-                            <span
-                              class="text-muted text-uppercase mr-1 undefined"
-                            >
-                              Org:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link undefined"
-                              data-testid="orgLink"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Helm
-                              </div>
-                            </button>
-                          </div>
-                          <div
-                            class="mr-2 text-truncate"
+                            class="d-flex flex-row align-items-baseline text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Repo:
+                              Repo: 
                             </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="repoLink"
+                            <div
+                              class="p-0 border-0 text-truncate text-dark mx50"
+                            >
+                              Helm
+                            </div>
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            <div
+                              class="text-truncate p-0 border-0 text-dark mx50"
                             >
                               Stable
-                            </button>
+                            </div>
                           </div>
                           <div
-                            class="mr-2 text-truncate"
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -170,82 +932,35 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </span>
                             6.6.0
                           </div>
-                          <div
-                            class="text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              App version: 
-                            </span>
-                            1.10.4
-                          </div>
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <span
-                        class="badge badge-pill badge-light mr-2 starBadge"
-                      >
-                        <div
-                          class="d-flex align-items-center"
-                        >
-                          <svg
-                            class="mr-1"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 576 512"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            />
-                          </svg>
-                          <div
-                            class="starBadgeNumber"
-                          >
-                            1
-                          </div>
-                        </div>
-                      </span>
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-2"
                   >
-                    Airflow is a platform to programmatically author, schedule and monitor workflows
-                  </p>
+                    <small
+                      class="mb-0 description"
+                    >
+                      Airflow is a platform to programmatically author, schedule and monitor workflows
+                    </small>
+                  </div>
                 </div>
               </a>
             </div>
-          </div>
-          <div
-            class="col-12 py-sm-3 py-2"
-            role="listitem"
-          >
             <div
-              class="card h-100 card"
+              class="card mb-3 w-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="link"
+                data-testid="mobilePackageLink"
                 href="/package/chart/incubator/cassandra"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1 truncateWrapper"
@@ -261,64 +976,88 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="h-50"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="h-100 d-flex flex-row justify-content-between"
                           >
-                            cassandra
+                            <div
+                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                            >
+                              <div
+                                class="h6 text-truncate mr-2"
+                              >
+                                cassandra
+                              </div>
+                            </div>
+                            <div
+                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    1
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
                         >
                           <div
-                            class="mr-2"
-                          >
-                            <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="orgInfoDropdown"
-                              />
-                            </div>
-                            <span
-                              class="text-muted text-uppercase mr-1 undefined"
-                            >
-                              Org:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link undefined"
-                              data-testid="orgLink"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Helm
-                              </div>
-                            </button>
-                          </div>
-                          <div
-                            class="mr-2 text-truncate"
+                            class="d-flex flex-row align-items-baseline text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Repo:
+                              Repo: 
                             </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="repoLink"
+                            <div
+                              class="p-0 border-0 text-truncate text-dark mx50"
+                            >
+                              Helm
+                            </div>
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            <div
+                              class="text-truncate p-0 border-0 text-dark mx50"
                             >
                               Incubator
-                            </button>
+                            </div>
                           </div>
                           <div
-                            class="mr-2 text-truncate"
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -327,82 +1066,35 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </span>
                             0.15.0
                           </div>
-                          <div
-                            class="text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              App version: 
-                            </span>
-                            3.11.6
-                          </div>
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <span
-                        class="badge badge-pill badge-light mr-2 starBadge"
-                      >
-                        <div
-                          class="d-flex align-items-center"
-                        >
-                          <svg
-                            class="mr-1"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 576 512"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            />
-                          </svg>
-                          <div
-                            class="starBadgeNumber"
-                          >
-                            1
-                          </div>
-                        </div>
-                      </span>
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-2"
                   >
-                    Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
-                  </p>
+                    <small
+                      class="mb-0 description"
+                    >
+                      Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+                    </small>
+                  </div>
                 </div>
               </a>
             </div>
-          </div>
-          <div
-            class="col-12 py-sm-3 py-2"
-            role="listitem"
-          >
             <div
-              class="card h-100 card"
+              class="card mb-3 w-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="link"
+                data-testid="mobilePackageLink"
                 href="/package/chart/stable/prometheus"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1 truncateWrapper"
@@ -418,64 +1110,88 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="h-50"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="h-100 d-flex flex-row justify-content-between"
                           >
-                            prometheus
+                            <div
+                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                            >
+                              <div
+                                class="h6 text-truncate mr-2"
+                              >
+                                prometheus
+                              </div>
+                            </div>
+                            <div
+                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
                         >
                           <div
-                            class="mr-2"
-                          >
-                            <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="orgInfoDropdown"
-                              />
-                            </div>
-                            <span
-                              class="text-muted text-uppercase mr-1 undefined"
-                            >
-                              Org:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link undefined"
-                              data-testid="orgLink"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Helm
-                              </div>
-                            </button>
-                          </div>
-                          <div
-                            class="mr-2 text-truncate"
+                            class="d-flex flex-row align-items-baseline text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Repo:
+                              Repo: 
                             </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="repoLink"
+                            <div
+                              class="p-0 border-0 text-truncate text-dark mx50"
+                            >
+                              Helm
+                            </div>
+                            <span
+                              class="px-1"
+                            >
+                              /
+                            </span>
+                            <div
+                              class="text-truncate p-0 border-0 text-dark mx50"
                             >
                               Stable
-                            </button>
+                            </div>
                           </div>
                           <div
-                            class="mr-2 text-truncate"
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -484,82 +1200,35 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </span>
                             11.1.0
                           </div>
-                          <div
-                            class="text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              App version: 
-                            </span>
-                            2.16.0
-                          </div>
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <span
-                        class="badge badge-pill badge-light mr-2 starBadge"
-                      >
-                        <div
-                          class="d-flex align-items-center"
-                        >
-                          <svg
-                            class="mr-1"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 576 512"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            />
-                          </svg>
-                          <div
-                            class="starBadgeNumber"
-                          >
-                            2
-                          </div>
-                        </div>
-                      </span>
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-2"
                   >
-                    Prometheus is a monitoring system and time series database.
-                  </p>
+                    <small
+                      class="mb-0 description"
+                    >
+                      Prometheus is a monitoring system and time series database.
+                    </small>
+                  </div>
                 </div>
               </a>
             </div>
-          </div>
-          <div
-            class="col-12 py-sm-3 py-2"
-            role="listitem"
-          >
             <div
-              class="card h-100 card"
+              class="card mb-3 w-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="link"
+                data-testid="mobilePackageLink"
                 href="/package/falco/traefik"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1 truncateWrapper"
@@ -575,46 +1244,71 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="h-50"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="h-100 d-flex flex-row justify-content-between"
                           >
-                            Traefik
+                            <div
+                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                            >
+                              <div
+                                class="h6 text-truncate mr-2"
+                              >
+                                Traefik
+                              </div>
+                            </div>
+                            <div
+                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/falco-rules.svg"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
                         >
-                          <div
-                            class="mr-2"
+                          <span
+                            class="text-muted text-uppercase mr-1"
                           >
-                            <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="orgInfoDropdown"
-                              />
-                            </div>
-                            <span
-                              class="text-muted text-uppercase mr-1 undefined"
-                            >
-                              Org:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link undefined"
-                              data-testid="orgLink"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Falco
-                              </div>
-                            </button>
+                            Org: 
+                          </span>
+                          <div
+                            class="d-inline text-truncate text-dark mx50"
+                          >
+                            Falco
                           </div>
                           <div
                             class="text-truncate"
@@ -629,69 +1323,32 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <span
-                        class="badge badge-pill badge-light mr-2 starBadge"
-                      >
-                        <div
-                          class="d-flex align-items-center"
-                        >
-                          <svg
-                            class="mr-1"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 576 512"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            />
-                          </svg>
-                          <div
-                            class="starBadgeNumber"
-                          >
-                            2
-                          </div>
-                        </div>
-                      </span>
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/falco-rules.svg"
-                      />
-                    </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-2"
                   >
-                    Falco rules for securing Traefik
-                  </p>
+                    <small
+                      class="mb-0 description"
+                    >
+                      Falco rules for securing Traefik
+                    </small>
+                  </div>
                 </div>
               </a>
             </div>
-          </div>
-          <div
-            class="col-12 py-sm-3 py-2"
-            role="listitem"
-          >
             <div
-              class="card h-100 card"
+              class="card mb-3 w-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="link"
+                data-testid="mobilePackageLink"
                 href="/package/opa/trusted-registry-images"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
                       class="d-flex align-items-center flex-grow-1 truncateWrapper"
@@ -707,46 +1364,71 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="h-50"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="h-100 d-flex flex-row justify-content-between"
                           >
-                            Trusted Registry Images
+                            <div
+                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                            >
+                              <div
+                                class="h6 text-truncate mr-2"
+                              >
+                                Trusted Registry Images
+                              </div>
+                            </div>
+                            <div
+                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div>
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/opa-policies.svg"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
                         >
-                          <div
-                            class="mr-2"
+                          <span
+                            class="text-muted text-uppercase mr-1"
                           >
-                            <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="orgInfoDropdown"
-                              />
-                            </div>
-                            <span
-                              class="text-muted text-uppercase mr-1 undefined"
-                            >
-                              Org:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link undefined"
-                              data-testid="orgLink"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Falco
-                              </div>
-                            </button>
+                            Org: 
+                          </span>
+                          <div
+                            class="d-inline text-truncate text-dark mx50"
+                          >
+                            Falco
                           </div>
                           <div
                             class="text-truncate"
@@ -761,48 +1443,16 @@ exports[`StarredPackagesView renders correctly 2`] = `
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <span
-                        class="badge badge-pill badge-light mr-2 starBadge"
-                      >
-                        <div
-                          class="d-flex align-items-center"
-                        >
-                          <svg
-                            class="mr-1"
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 576 512"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            />
-                          </svg>
-                          <div
-                            class="starBadgeNumber"
-                          >
-                            2
-                          </div>
-                        </div>
-                      </span>
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/opa-policies.svg"
-                      />
-                    </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-2"
                   >
-                    Open Policy Agent policy for running only images from a trusted repository
-                  </p>
+                    <small
+                      class="mb-0 description"
+                    >
+                      Open Policy Agent policy for running only images from a trusted repository
+                    </small>
+                  </div>
                 </div>
               </a>
             </div>

@@ -2,6 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
 import ExternalLink from './ExternalLink';
+import styles from './NoData.module.css';
 
 interface Props {
   children: string | JSX.Element;
@@ -9,7 +10,10 @@ interface Props {
 }
 
 const NoData = (props: Props) => (
-  <div data-testid="noData" className="alert alert-primary ml-auto mr-auto my-5 w-75 text-center p-4 p-sm-5 border">
+  <div
+    data-testid="noData"
+    className={`alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border ${styles.wrapper}`}
+  >
     <div className="h4">{props.children}</div>
     {!isUndefined(props.issuesLinkVisible) && props.issuesLinkVisible && (
       <div className="h6 mt-4">

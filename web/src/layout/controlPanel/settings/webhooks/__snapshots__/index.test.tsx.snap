@@ -6,7 +6,7 @@ exports[`WebhooksSection renders correctly 1`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container"
+      class="container p-0"
       role="main"
     >
       <div
@@ -17,13 +17,13 @@ exports[`WebhooksSection renders correctly 1`] = `
             class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
           >
             <div
-              class="h3 pb-0"
+              class="h3 pb-0 title"
             >
               Webhooks
             </div>
             <div>
               <button
-                class="btn btn-secondary btn-sm text-uppercase"
+                class="btn btn-secondary btn-sm text-uppercase btnAction"
                 data-testid="addWebhookBtn"
               >
                 <div
@@ -82,7 +82,7 @@ exports[`WebhooksSection renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="mt-5"
+          class="mt-4 mt-md-5"
         >
           <p
             class="m-0"
@@ -102,7 +102,7 @@ exports[`WebhooksSection renders correctly 2`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container"
+      class="container p-0"
       role="main"
     >
       <div
@@ -113,13 +113,13 @@ exports[`WebhooksSection renders correctly 2`] = `
             class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
           >
             <div
-              class="h3 pb-0"
+              class="h3 pb-0 title"
             >
               Webhooks
             </div>
             <div>
               <button
-                class="btn btn-secondary btn-sm text-uppercase"
+                class="btn btn-secondary btn-sm text-uppercase btnAction"
                 data-testid="addWebhookBtn"
               >
                 <div
@@ -164,7 +164,7 @@ exports[`WebhooksSection renders correctly 2`] = `
           </div>
         </div>
         <div
-          class="mt-5"
+          class="mt-4 mt-md-5"
         >
           <p
             class="m-0"
@@ -172,7 +172,7 @@ exports[`WebhooksSection renders correctly 2`] = `
             Webhooks notify external services when certain events happen.
           </p>
           <div
-            class="list-group mt-5"
+            class="list-group mt-4 mt-md-5"
           >
             <div
               class="mb-3"

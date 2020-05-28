@@ -64,7 +64,7 @@ const UserContext = () => {
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">
           <button
-            className={`btn btn-primary badge-pill btn-sm pr-3 ${styles.ctxBtn}`}
+            className={`btn btn-primary badge-pill btn-sm pr-3 position-relative ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
               fetchOrganizations();

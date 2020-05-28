@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useState } from 'react';
-import { FaStar, FaUserCircle } from 'react-icons/fa';
+import { FaCog, FaStar, FaUserCircle } from 'react-icons/fa';
 import { GoThreeBars } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
@@ -73,8 +73,7 @@ const MobileSettings = (props: Props) => {
                       </div>
                     </Link>
 
-                    {/* TODO - Control panel mobile version */}
-                    {/* <Link
+                    <Link
                       className="dropdown-item my-2"
                       to={{
                         pathname: '/control-panel',
@@ -85,7 +84,7 @@ const MobileSettings = (props: Props) => {
                         <FaCog className="mr-2" />
                         <div>Control Panel</div>
                       </div>
-                    </Link> */}
+                    </Link>
 
                     <LogOut
                       className="my-2"

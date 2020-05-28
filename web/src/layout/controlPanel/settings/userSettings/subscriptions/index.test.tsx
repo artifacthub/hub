@@ -61,10 +61,11 @@ describe('SubscriptionsSection', () => {
       expect(getByText('Package')).toBeInTheDocument();
       expect(getByText('Publisher')).toBeInTheDocument();
 
-      expect(getAllByTestId('packageLink')).toHaveLength(8 * 2);
-      expect(getAllByTestId('userLink')).toHaveLength(1 * 2);
-      expect(getAllByTestId('orgLink')).toHaveLength(7 * 2);
-      expect(getAllByTestId('repoLink')).toHaveLength(5 * 2);
+      expect(getAllByTestId('packageLink')).toHaveLength(8);
+      expect(getAllByTestId('packageCardLink')).toHaveLength(8);
+      expect(getAllByTestId('userLink')).toHaveLength(1);
+      expect(getAllByTestId('orgLink')).toHaveLength(7);
+      expect(getAllByTestId('repoLink')).toHaveLength(5);
     });
 
     it('opens Add subscription modal', async () => {
@@ -294,7 +295,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('packageLink');
-      expect(links).toHaveLength(8 * 2);
+      expect(links).toHaveLength(8);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe(buildPackageURL(mockSubscriptions[0]));
@@ -315,7 +316,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('userLink');
-      expect(links).toHaveLength(1 * 2);
+      expect(links).toHaveLength(1);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
@@ -337,7 +338,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('orgLink');
-      expect(links).toHaveLength(7 * 2);
+      expect(links).toHaveLength(7);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
@@ -359,7 +360,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('repoLink');
-      expect(links).toHaveLength(5 * 2);
+      expect(links).toHaveLength(5);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');

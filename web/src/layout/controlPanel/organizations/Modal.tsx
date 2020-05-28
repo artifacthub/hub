@@ -32,7 +32,7 @@ const OrganizationModal = (props: Props) => {
   return (
     <Modal
       header={
-        <div className="h3 m-2">
+        <div className={`h3 m-2 ${styles.title}`}>
           {isUndefined(props.organization) ? <>Add organization</> : <>Update organization</>}
         </div>
       }

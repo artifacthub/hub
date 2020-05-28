@@ -5,8 +5,3 @@
 .loading {
   position: relative !important;
 }
-
-.modal {
-  max-width: 90%;
-  width: 620px !important;
-}

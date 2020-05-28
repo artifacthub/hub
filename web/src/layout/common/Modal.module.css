@@ -48,8 +48,9 @@
 
 @media only screen and (max-width: 576px) {
   .content {
-    height: 100%;
-    width: 100%;
+    height: calc(90% - 1rem);
+    width: 90%;
+    margin: auto;
   }
 
   .btn {

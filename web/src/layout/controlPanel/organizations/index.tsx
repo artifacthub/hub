@@ -9,6 +9,7 @@ import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import OrganizationCard from './Card';
 import OrganizationModal from './Modal';
+import styles from './OrganizationsSection.module.css';
 
 interface ModalStatus {
   open: boolean;
@@ -53,12 +54,12 @@ const OrganizationsSection = (props: Props) => {
       <div className="flex-grow-1">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
-            <div className="h3 pb-0">Organizations</div>
+            <div className={`h3 pb-0 ${styles.title}`}>Organizations</div>
 
             <div>
               <button
                 data-testid="addOrgButton"
-                className="btn btn-secondary btn-sm text-uppercase"
+                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
               >
                 <div className="d-flex flex-row align-items-center justify-content-center">
@@ -97,7 +98,7 @@ const OrganizationsSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-5">
+                <div className="list-group mt-4 mt-md-5">
                   {organizations.map((org: Organization) => (
                     <OrganizationCard
                       key={`org_${org.name}`}

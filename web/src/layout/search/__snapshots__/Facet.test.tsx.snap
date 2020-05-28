@@ -3,7 +3,7 @@
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="facet mt-4 pt-2 "
+    class="facet mt-3 mt-sm-4 pt-2 "
     role="menuitem"
   >
     <div

@@ -39,3 +39,13 @@
 .packageWrapper {
   margin-bottom: 6px;
 }
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .modal {
+    margin-top: 3rem;
+  }
+}

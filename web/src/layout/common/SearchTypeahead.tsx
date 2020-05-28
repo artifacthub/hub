@@ -51,6 +51,7 @@ const SearchTypeahead = (props: Props) => {
       event.preventDefault();
       event.stopPropagation();
       searchPackages(searchQuery);
+      inputEl.current!.blur();
     }
   };
 
@@ -122,7 +123,7 @@ const SearchTypeahead = (props: Props) => {
               <table className={`table table-hover table-sm mb-0 ${styles.table}`}>
                 <thead>
                   <tr>
-                    <th scope="col" className={`${styles.fitCell} border-top-0`}></th>
+                    <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell border-top-0`}></th>
                     <th scope="col" className="w-50 border-top-0">
                       Package
                     </th>
@@ -150,7 +151,7 @@ const SearchTypeahead = (props: Props) => {
                         }}
                         key={`search_${item.packageId}`}
                       >
-                        <td className="align-middle text-center">
+                        <td className="align-middle text-center d-none d-sm-table-cell">
                           <PackageIcon kind={item.kind} className={`mx-2 ${styles.icon}`} />
                         </td>
                         <td className="align-middle">
@@ -173,7 +174,10 @@ const SearchTypeahead = (props: Props) => {
                             {item.userAlias || item.organizationDisplayName || item.organizationName}
                             {!isNull(item.chartRepository) && (
                               <small className="ml-2">
-                                (<small className={`text-uppercase text-muted ${styles.legend}`}>Repo: </small>
+                                (
+                                <small className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                                  Repo:{' '}
+                                </small>
                                 {item.chartRepository!.displayName || item.chartRepository!.name})
                               </small>
                             )}

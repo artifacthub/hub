@@ -118,28 +118,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               halkeye
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -225,28 +249,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               halkeye
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -331,28 +379,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                gabibbo97
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               gabibbo97
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -438,28 +510,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               halkeye
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -545,28 +641,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                billimek
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               billimek
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -662,28 +782,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                stable
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               stable
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -769,28 +913,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                stable
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               stable
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -875,28 +1043,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                stable
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               stable
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -981,28 +1173,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                stable
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               stable
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"
@@ -1088,28 +1304,52 @@ exports[`Package index creates snapshot 2`] = `
                           >
                             Repo: 
                           </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mx50 link"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="p-0 border-0 text-truncate text-dark link"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             />
-                          </button>
+                          </div>
                           <span
                             class="px-1"
                           >
                             /
                           </span>
-                          <button
-                            class="text-truncate p-0 border-0 text-dark mx50 link"
-                            data-testid="repoLink"
+                          <div
+                            class="d-none d-md-inline-block mx50"
+                          >
+                            <button
+                              class="text-truncate p-0 border-0 text-dark  link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                stable
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-inline-block d-md-none mx50"
                           >
                             <div
-                              class="text-truncate"
+                              class="p-0 border-0 text-truncate text-dark"
                             >
                               stable
                             </div>
-                          </button>
+                          </div>
                         </div>
                         <div
                           class="text-truncate"

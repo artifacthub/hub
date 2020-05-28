@@ -9,6 +9,7 @@ import { Member } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import MemberCard from './Card';
+import styles from './MembersSection.module.css';
 import MemberModal from './Modal';
 
 interface Props {
@@ -53,14 +54,14 @@ const MembersSection = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 mb-4">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
-            <div className="h3 pb-0">Members</div>
+            <div className={`h3 pb-0 ${styles.title}`}>Members</div>
 
             <div>
               <button
-                className="btn btn-secondary btn-sm text-uppercase"
+                className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalMemberOpen(true)}
                 data-testid="addMemberBtn"
               >
@@ -102,7 +103,7 @@ const MembersSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-5">
+                <div className="list-group mt-4 mt-md-5">
                   {members.map((member: Member) => (
                     <MemberCard
                       key={`member_${member.alias}`}

@@ -124,7 +124,7 @@ const ChartRepositoryModal = (props: Props) => {
   return (
     <Modal
       header={
-        <div className="h3 m-2">
+        <div className={`h3 m-2 ${styles.title}`}>
           {isUndefined(props.chartRepository) ? <>Add chart repository</> : <>Update chart repository</>}
         </div>
       }

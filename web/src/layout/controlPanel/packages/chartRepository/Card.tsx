@@ -66,10 +66,10 @@ const ChartRepositoryCard = (props: Props) => {
             buttonContent={
               <>
                 <span className="d-none d-sm-inline">Show errors log</span>
-                <span className="d-inline d-sm-none">Log</span>
+                <span className="d-inline d-sm-none">Logs</span>
               </>
             }
-            header={<div className="h3 m-2">Errors log</div>}
+            header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
           >
             <div className="mt-3 mw-100">
               <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>

@@ -72,60 +72,88 @@ const PackageCard = (props: Props) => {
                             <div className="d-flex flex-row align-items-baseline text-truncate">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
                               {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                <OrganizationInfo
-                                  className={`d-inline-block mr-0 ${styles.mx50}`}
-                                  btnClassName="text-truncate mw-100"
-                                  organizationName={props.package.organizationName}
-                                  organizationDisplayName={props.package.organizationDisplayName}
-                                  deprecated={props.package.deprecated}
-                                  visibleLegend={false}
-                                />
+                                <>
+                                  <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                    <OrganizationInfo
+                                      className="mr-0"
+                                      btnClassName="text-truncate mw-100"
+                                      organizationName={props.package.organizationName}
+                                      organizationDisplayName={props.package.organizationDisplayName}
+                                      deprecated={props.package.deprecated}
+                                      visibleLegend={false}
+                                    />
+                                  </div>
+                                  <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                    <div className="d-inline-block mr-0 text-dark">
+                                      {props.package.organizationDisplayName || props.package.organizationName}
+                                    </div>
+                                  </div>
+                                </>
                               )}
 
                               {!isNull(props.package.userAlias) && (
-                                <button
-                                  className={`p-0 border-0 text-truncate text-dark ${styles.mx50} ${styles.link}`}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    history.push({
-                                      pathname: '/packages/search',
-                                      search: prepareQueryString({
-                                        pageNumber: 1,
-                                        filters: {
-                                          user: [props.package.userAlias!],
-                                        },
-                                        deprecated: false,
-                                      }),
-                                    });
-                                  }}
-                                >
-                                  <div className="text-truncate">{props.package.userAlias}</div>
-                                </button>
+                                <>
+                                  <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                    <button
+                                      className={`p-0 border-0 text-truncate text-dark ${styles.link}`}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push({
+                                          pathname: '/packages/search',
+                                          search: prepareQueryString({
+                                            pageNumber: 1,
+                                            filters: {
+                                              user: [props.package.userAlias!],
+                                            },
+                                            deprecated: false,
+                                          }),
+                                        });
+                                      }}
+                                    >
+                                      <div className="text-truncate">{props.package.userAlias}</div>
+                                    </button>
+                                  </div>
+                                  <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                    <div className="p-0 border-0 text-truncate text-dark">
+                                      {props.package.userAlias}
+                                    </div>
+                                  </div>
+                                </>
                               )}
 
                               <span className="px-1">/</span>
 
-                              <button
-                                data-testid="repoLink"
-                                className={`text-truncate p-0 border-0 text-dark ${styles.mx50} ${styles.link}`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  history.push({
-                                    pathname: '/packages/search',
-                                    search: prepareQueryString({
-                                      pageNumber: 1,
-                                      filters: {
-                                        repo: [props.package.chartRepository!.name],
-                                      },
-                                      deprecated: false,
-                                    }),
-                                  });
-                                }}
-                              >
-                                <div className="text-truncate">
-                                  {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
+                              <>
+                                <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                  <button
+                                    data-testid="repoLink"
+                                    className={`text-truncate p-0 border-0 text-dark  ${styles.link}`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      history.push({
+                                        pathname: '/packages/search',
+                                        search: prepareQueryString({
+                                          pageNumber: 1,
+                                          filters: {
+                                            repo: [props.package.chartRepository!.name],
+                                          },
+                                          deprecated: false,
+                                        }),
+                                      });
+                                    }}
+                                  >
+                                    <div className="text-truncate">
+                                      {props.package.chartRepository!.displayName ||
+                                        props.package.chartRepository!.name}
+                                    </div>
+                                  </button>
                                 </div>
-                              </button>
+                                <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                  <div className="p-0 border-0 text-truncate text-dark">
+                                    {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
+                                  </div>
+                                </div>
+                              </>
                             </div>
 
                             <div className="text-truncate">
@@ -140,37 +168,56 @@ const PackageCard = (props: Props) => {
                         return (
                           <>
                             {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                              <OrganizationInfo
-                                className="d-inline-block mr-0 w-100"
-                                btnClassName={`text-truncate ${styles.mx50}`}
-                                organizationName={props.package.organizationName}
-                                organizationDisplayName={props.package.organizationDisplayName}
-                                deprecated={props.package.deprecated}
-                                visibleLegend
-                              />
+                              <>
+                                <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                  <OrganizationInfo
+                                    className="d-inline-block mr-0 w-100"
+                                    btnClassName="text-truncate"
+                                    organizationName={props.package.organizationName}
+                                    organizationDisplayName={props.package.organizationDisplayName}
+                                    deprecated={props.package.deprecated}
+                                    visibleLegend
+                                  />
+                                </div>
+                                <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                  <span className="text-muted text-uppercase mr-1">Org: </span>
+                                  <div className="d-inline text-truncate text-dark">
+                                    {props.package.organizationDisplayName || props.package.organizationName}
+                                  </div>
+                                </div>
+                              </>
                             )}
 
                             {!isNull(props.package.userAlias) && (
                               <div className="mr-2 text-truncate">
                                 <span className="text-muted text-uppercase mr-1">User:</span>
-                                <button
-                                  className={`p-0 border-0 text-truncate text-dark ${styles.mx50} ${styles.link}`}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    history.push({
-                                      pathname: '/packages/search',
-                                      search: prepareQueryString({
-                                        pageNumber: 1,
-                                        filters: {
-                                          user: [props.package.userAlias!],
-                                        },
-                                        deprecated: false,
-                                      }),
-                                    });
-                                  }}
-                                >
-                                  <div className="text-truncate">{props.package.userAlias}</div>
-                                </button>
+                                <>
+                                  <div className="d-none d-md-inline-block">
+                                    <button
+                                      className={`p-0 border-0 text-truncate text-dark ${styles.mx50} ${styles.link}`}
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        history.push({
+                                          pathname: '/packages/search',
+                                          search: prepareQueryString({
+                                            pageNumber: 1,
+                                            filters: {
+                                              user: [props.package.userAlias!],
+                                            },
+                                            deprecated: false,
+                                          }),
+                                        });
+                                      }}
+                                    >
+                                      <div className="text-truncate">{props.package.userAlias}</div>
+                                    </button>
+                                  </div>
+                                  <div className="d-inline-block d-md-none">
+                                    <div className={`p-0 border-0 text-truncate text-dark ${styles.mx50}`}>
+                                      {props.package.userAlias}
+                                    </div>
+                                  </div>
+                                </>
                               </div>
                             )}
                             <div className="text-truncate">

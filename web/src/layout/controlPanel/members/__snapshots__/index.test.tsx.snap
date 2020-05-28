@@ -7,20 +7,20 @@ exports[`Members section index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="flex-grow-1"
+      class="flex-grow-1 mb-4"
     >
       <div>
         <div
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Members
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addMemberBtn"
             >
               <div
@@ -93,20 +93,20 @@ exports[`Members section index creates snapshot 2`] = `
     role="main"
   >
     <div
-      class="flex-grow-1"
+      class="flex-grow-1 mb-4"
     >
       <div>
         <div
           class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
         >
           <div
-            class="h3 pb-0"
+            class="h3 pb-0 title"
           >
             Members
           </div>
           <div>
             <button
-              class="btn btn-secondary btn-sm text-uppercase"
+              class="btn btn-secondary btn-sm text-uppercase btnAction"
               data-testid="addMemberBtn"
             >
               <div
@@ -154,7 +154,7 @@ exports[`Members section index creates snapshot 2`] = `
         class="mt-4"
       >
         <div
-          class="list-group mt-5"
+          class="list-group mt-4 mt-md-5"
         >
           <li
             class="list-group-item listItem"
@@ -185,15 +185,15 @@ exports[`Members section index creates snapshot 2`] = `
                   </svg>
                 </div>
                 <div>
-                  <h5
-                    class="mb-1"
+                  <div
+                    class="h5 mb-1"
                   >
                     <div
                       class="d-flex flex-row align-items-start"
                     >
                       Test 1
                     </div>
-                  </h5>
+                  </div>
                   <div
                     class="h6 text-muted mr-1 font-italic"
                   >
@@ -334,15 +334,15 @@ exports[`Members section index creates snapshot 2`] = `
                   </svg>
                 </div>
                 <div>
-                  <h5
-                    class="mb-1"
+                  <div
+                    class="h5 mb-1"
                   >
                     <div
                       class="d-flex flex-row align-items-start"
                     >
                       Test 2
                     </div>
-                  </h5>
+                  </div>
                   <div
                     class="h6 text-muted mr-1 font-italic"
                   >

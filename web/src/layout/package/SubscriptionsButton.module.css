@@ -32,6 +32,11 @@
 
 @media only screen and (max-width: 768px) {
   .dropdown {
-    width: 12rem;
+    width: 18rem;
+    right: -5rem;
+  }
+
+  .arrow {
+    right: 6.25rem !important;
   }
 }

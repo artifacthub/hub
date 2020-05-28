@@ -2,3 +2,9 @@
   max-width: 90%;
   width: 620px !important;
 }
+
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}

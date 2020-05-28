@@ -35,24 +35,22 @@ const ProfileSection = (props: Props) => {
   }, [props]);
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between p-0">
-      <div className="flex-grow-1">
-        {!isNull(profile) && !isUndefined(profile) && (
-          <div className="mb-5">
-            <div className="h3 mb-4 pb-2 border-bottom">Profile information</div>
+    <main role="main" className="container p-0">
+      {!isNull(profile) && !isUndefined(profile) && (
+        <div className="mb-5">
+          <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
-            <div className={`mt-5 ${styles.formWrapper}`}>
-              <UpdateProfile onAuthError={props.onAuthError} profile={profile} />
-            </div>
+          <div className={`mt-4 mt-md-5 ${styles.formWrapper}`}>
+            <UpdateProfile onAuthError={props.onAuthError} profile={profile} />
           </div>
-        )}
+        </div>
+      )}
 
-        <div>
-          <div className="h3 mb-4 pb-2 border-bottom">Change password</div>
+      <div>
+        <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Change password</div>
 
-          <div className={`mt-5 ${styles.formWrapper}`}>
-            <UpdatePassword />
-          </div>
+        <div className={`mt-4 mt-md-5 ${styles.formWrapper}`}>
+          <UpdatePassword />
         </div>
       </div>
     </main>

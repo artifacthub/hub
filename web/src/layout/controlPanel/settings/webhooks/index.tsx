@@ -10,6 +10,7 @@ import Loading from '../../../common/Loading';
 import NoData from '../../../common/NoData';
 import WebhookCard from './Card';
 import WebhookForm from './Form';
+import styles from './WebhooksSection.module.css';
 
 interface Props {
   onAuthError: () => void;
@@ -50,7 +51,7 @@ const WebhooksSection = (props: Props) => {
 
   return (
     <div className="d-flex flex-column flex-grow-1">
-      <main role="main" className="container">
+      <main role="main" className="container p-0">
         <div className="flex-grow-1">
           {!isNull(visibleForm) ? (
             <WebhookForm
@@ -63,11 +64,11 @@ const WebhooksSection = (props: Props) => {
             <>
               <div>
                 <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
-                  <div className="h3 pb-0">Webhooks</div>
+                  <div className={`h3 pb-0 ${styles.title}`}>Webhooks</div>
 
                   <div>
                     <button
-                      className="btn btn-secondary btn-sm text-uppercase"
+                      className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                       onClick={() => setVisibleForm({ visible: true })}
                       data-testid="addWebhookBtn"
                     >
@@ -83,7 +84,7 @@ const WebhooksSection = (props: Props) => {
 
               {(isGettingWebhooks || isUndefined(webhooks)) && <Loading />}
 
-              <div className="mt-5">
+              <div className="mt-4 mt-md-5">
                 <p className="m-0">Webhooks notify external services when certain events happen.</p>
 
                 {!isUndefined(webhooks) && (
@@ -114,7 +115,7 @@ const WebhooksSection = (props: Props) => {
                         )}
                       </NoData>
                     ) : (
-                      <div className="list-group mt-5">
+                      <div className="list-group mt-4 mt-md-5">
                         {webhooks.map((webhook: Webhook) => (
                           <WebhookCard
                             key={`member_${webhook.name}`}

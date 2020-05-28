@@ -87,11 +87,11 @@ const ControlPanelView = (props: Props) => {
     <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
       <div className={`pt-3 position-relative ${styles.navWrapper}`}>
         <div className="container">
-          <div className="d-flex flex-row justify-content-between align-items-end">
-            <ul className="nav nav-tabs" role="tablist">
+          <div className="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
+            <ul className="mr-auto mr-md-0 nav nav-tabs" role="tablist">
               {CONTROL_PANEL_SECTIONS[context].map((section: Section) => {
                 return (
-                  <li key={`section_${section.name}`} className="nav-item mx-1" role="tab">
+                  <li key={`section_${section.name}`} className={`nav-item mx-1 ${styles.navItem}`} role="tab">
                     <button
                       type="button"
                       className={classnames(
@@ -103,8 +103,8 @@ const ControlPanelView = (props: Props) => {
                       onClick={() => onMenuItemClick(section.name)}
                     >
                       <div className="d-flex flex-row align-items-center">
-                        {section.icon}
-                        <span className="ml-2">{section.displayName}</span>
+                        <span className={styles.icon}>{section.icon}</span>
+                        <span className={`d-none d-md-inline ml-2 ${styles.navTitle}`}>{section.displayName}</span>
                       </div>
                     </button>
                   </li>

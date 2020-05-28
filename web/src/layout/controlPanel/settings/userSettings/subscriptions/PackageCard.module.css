@@ -71,15 +71,13 @@
   min-width: 0;
 }
 
-.badge {
-  width: 20px;
-  height: 15px;
-  line-height: 13px;
-  top: 1px !important;
-}
-
 .btn:disabled {
   cursor: auto;
+}
+
+.checkbox,
+.checkbox + label {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {

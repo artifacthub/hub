@@ -49,10 +49,24 @@
   .subtitle {
     flex-direction: column !important;
   }
+
+  .badge {
+    font-size: 0.6rem !important;
+  }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .subtitle {
     font-size: 0.95rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .btnAction {
+    margin-left: 0.6rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50% !important;
+    background-color: var(--color-1-10) !important;
   }
 }

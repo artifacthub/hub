@@ -65,7 +65,7 @@ const StarButton = (props: Props) => {
   if (isUndefined(ctx.user) || isUndefined(packageStars) || isNull(packageStars)) return null;
 
   return (
-    <div className={`d-flex flex-row align-items-center ${styles.wrapper}`}>
+    <div className={`d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
       <button
         data-testid="toggleStarBtn"
         className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}

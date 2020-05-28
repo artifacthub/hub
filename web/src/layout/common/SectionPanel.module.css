@@ -7,7 +7,7 @@
 }
 
 .listItem {
-  z-index: 1;
+  z-index: 0;
 }
 
 .isActive {
@@ -57,6 +57,18 @@
   }
 }
 
+@media only screen and (max-width: 992px) and (min-width: 768px) {
+  .sidebar {
+    width: 250px;
+    min-width: 250px;
+  }
+
+  .list {
+    flex-basis: calc(100% - 250px);
+    max-width: calc(100% - 250px);
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .listGroup {
     flex-direction: row !important;
@@ -64,6 +76,13 @@
 
   .listGroup .listItem {
     border-radius: 0 !important;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .icon {
+    width: 12px;
   }
 
   .listGroup .listItem + .listItem {

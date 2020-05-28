@@ -31,15 +31,15 @@ exports[`Member Card - members section creates snapshot 1`] = `
           </svg>
         </div>
         <div>
-          <h5
-            class="mb-1"
+          <div
+            class="h5 mb-1"
           >
             <div
               class="d-flex flex-row align-items-start"
             >
               first last
             </div>
-          </h5>
+          </div>
           <div
             class="h6 text-muted mr-1 font-italic"
           >
