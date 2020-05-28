@@ -10,6 +10,7 @@ interface Props {
   required?: boolean;
   invalidText?: string;
   minRows?: number;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const DEFAULT_MIN_ROWS = 3;
@@ -48,6 +49,9 @@ const AutoresizeTextarea = (props: Props) => {
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           calculateHeight(e.target.value);
           setTextValue(e.target.value);
+          if (!isUndefined(props.onChange)) {
+            props.onChange(e);
+          }
         }}
         wrap="off"
         spellCheck="false"

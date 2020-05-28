@@ -1,6 +1,7 @@
 package webhook
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"io/ioutil"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/notification"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/go-chi/chi"
@@ -349,6 +351,200 @@ func TestGetOwnedByUser(t *testing.T) {
 		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.wm.AssertExpectations(t)
+	})
+}
+
+func TestTriggerTest(t *testing.T) {
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			webhookJSON string
+		}{
+			{
+				"no webhook provided",
+				"",
+			},
+			{
+				"invalid json",
+				"-",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.TriggerTest(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+				data, _ := ioutil.ReadAll(resp.Body)
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				assert.Equal(t, webhook.ErrInvalidInput.Error()+"\n", string(data))
+			})
+		}
+	})
+
+	t.Run("invalid template", func(t *testing.T) {
+		testCases := []struct {
+			webhookJSON string
+			err         string
+		}{
+			{
+				`{
+					"name": "webhook1",
+					"url": "http://webhook1.url",
+					"template": "{{ .."
+				}`,
+				"error parsing template",
+			},
+			{
+				`{
+					"name": "webhook1",
+					"url": "http://webhook1.url",
+					"template": "{{ .nonExistent }}"
+				}`,
+				"error executing template",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.err, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.TriggerTest(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+				data, _ := ioutil.ReadAll(resp.Body)
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				assert.True(t, strings.HasPrefix(string(data), tc.err))
+			})
+		}
+	})
+
+	t.Run("error calling webhook endpoint", func(t *testing.T) {
+		webhookJSON := `
+		{
+			"name": "webhook1",
+			"url": "http://webhook1.url"
+		}
+		`
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", strings.NewReader(webhookJSON))
+
+		hw := newHandlersWrapper()
+		hw.h.TriggerTest(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.True(t, strings.HasPrefix(string(data), "error doing request:"))
+	})
+
+	t.Run("received unexpected status code", func(t *testing.T) {
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "", http.StatusNotFound)
+		}))
+		defer ts.Close()
+
+		wh := &hub.Webhook{URL: ts.URL}
+		webhookJSON, _ := json.Marshal(wh)
+
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("POST", "/", bytes.NewReader(webhookJSON))
+
+		hw := newHandlersWrapper()
+		hw.h.TriggerTest(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		assert.Equal(t, "received unexpected status code: 404\n", string(data))
+	})
+
+	t.Run("webhook endpoint call succeeded", func(t *testing.T) {
+		testCases := []struct {
+			id              string
+			contentType     string
+			template        string
+			secret          string
+			expectedPayload []byte
+		}{
+			{
+				"1",
+				"",
+				"",
+				"",
+				[]byte(`
+{
+	"specversion" : "1.0",
+	"id" : "00000000-0000-0000-0000-000000000001",
+	"source" : "https://artifacthub.io/cloudevents",
+	"type" : "io.artifacthub.package.new-release",
+	"datacontenttype" : "application/json",
+	"data" : {
+		"package": {
+			"kind": "helm-chart",
+			"name": "sample-package",
+			"version": "1.0.0",
+			"publisher": "artifacthub",
+			"url": "https://artifacthub.io/package/chart/artifacthub/sample-package"
+		}
+	}
+}
+`),
+			},
+			{
+				"2",
+				"custom/type",
+				"Package {{ .Package.name }} {{ .Package.version}} updated!",
+				"very",
+				[]byte("Package sample-package 1.0.0 updated!"),
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.id, func(t *testing.T) {
+				ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					contentType := tc.contentType
+					if contentType == "" {
+						contentType = notification.DefaultPayloadContentType
+					}
+					assert.Equal(t, "POST", r.Method)
+					assert.Equal(t, contentType, r.Header.Get("Content-Type"))
+					assert.Equal(t, tc.secret, r.Header.Get("X-ArtifactHub-Secret"))
+					payload, _ := ioutil.ReadAll(r.Body)
+					assert.Equal(t, tc.expectedPayload, payload)
+				}))
+				defer ts.Close()
+
+				wh := &hub.Webhook{
+					ContentType: tc.contentType,
+					Template:    tc.template,
+					Secret:      tc.secret,
+					URL:         ts.URL,
+				}
+				webhookJSON, _ := json.Marshal(wh)
+
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", bytes.NewReader(webhookJSON))
+
+				hw := newHandlersWrapper()
+				hw.h.TriggerTest(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusOK, resp.StatusCode)
+			})
+		}
 	})
 }
 

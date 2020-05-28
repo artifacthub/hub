@@ -167,6 +167,7 @@ export interface RefInputField {
   checkIsValid: () => Promise<boolean>;
   reset: () => void;
   getValue: () => string;
+  checkValidity: () => boolean;
 }
 
 export interface Alert {
@@ -209,16 +210,19 @@ export interface Subscription {
   eventKind: EventKind;
 }
 
-export interface Webhook {
+export interface TestWebhook {
+  url: string;
+  contentType?: string | null;
+  template?: string | null;
+  eventKinds: EventKind[];
+}
+
+export interface Webhook extends TestWebhook {
   webhookId?: string;
   name: string;
   description?: string;
-  url: string;
   secret?: string;
-  contentType?: string | null;
-  template?: string | null;
   active: boolean;
-  eventKinds: EventKind[];
   packages: Package[];
 }
 

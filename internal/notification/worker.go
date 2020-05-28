@@ -19,9 +19,9 @@ import (
 )
 
 const (
-	pauseOnEmptyQueue  = 30 * time.Second
-	pauseOnError       = 10 * time.Second
-	defaultContentType = "application/cloudevents+json"
+	pauseOnEmptyQueue         = 30 * time.Second
+	pauseOnError              = 10 * time.Second
+	DefaultPayloadContentType = "application/cloudevents+json"
 )
 
 var (
@@ -150,7 +150,7 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 	// Get template data
 	tmplData, err := w.prepareTemplateData(ctx, n.Event)
 	if err != nil {
-		log.Error().Err(err).Msg("error prepating template data")
+		log.Error().Err(err).Msg("error preparing template data")
 		return fmt.Errorf("%w: %v", ErrRetryable, err)
 	}
 
@@ -163,7 +163,7 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 			return err
 		}
 	} else {
-		tmpl = defaultWebhookPayloadTmpl
+		tmpl = DefaultWebhookPayloadTmpl
 	}
 	var payload bytes.Buffer
 	if err := tmpl.Execute(&payload, tmplData); err != nil {
@@ -171,7 +171,7 @@ func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notifica
 	}
 	contentType := n.Webhook.ContentType
 	if contentType == "" {
-		contentType = defaultContentType
+		contentType = DefaultPayloadContentType
 	}
 
 	// Call webhook endpoint
@@ -280,9 +280,9 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 	}, nil
 }
 
-// defaultWebhookPayloadTmpl is the template used for the webhook payload when
+// DefaultWebhookPayloadTmpl is the template used for the webhook payload when
 // the webhook uses the default template.
-var defaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
+var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 {
 	"specversion" : "1.0",
 	"id" : "{{ .Event.id }}",
