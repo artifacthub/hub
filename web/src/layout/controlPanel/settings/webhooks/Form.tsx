@@ -1,12 +1,13 @@
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { EventKind, Package, PayloadKind, RefInputField, Webhook } from '../../../../types';
+import { EventKind, Package, PayloadKind, RefInputField, TestWebhook, Webhook } from '../../../../types';
 import { PAYLOAD_KINDS_LIST, PayloadKindsItem, SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../utils/data';
 import AutoresizeTextarea from '../../../common/AutoresizeTextarea';
 import CheckBox from '../../../common/Checkbox';
@@ -51,6 +52,7 @@ export const DEFAULT_PAYLOAD_TEMPLATE = `{
 const WebhookForm = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const form = useRef<HTMLFormElement>(null);
+  const urlInput = useRef<RefInputField>(null);
   const contentTypeInput = useRef<RefInputField>(null);
   const errorWrapper = useRef<HTMLDivElement>(null);
   const [isSending, setIsSending] = useState(false);
@@ -69,6 +71,10 @@ const WebhookForm = (props: Props) => {
   const [template, setTemplate] = useState<string>(
     !isUndefined(props.webhook) && props.webhook.template ? props.webhook.template : DEFAULT_PAYLOAD_TEMPLATE
   );
+  const [isAvailableTest, setIsAvailableTest] = useState<boolean>(false);
+  const [currentTestWebhook, setCurrentTestWebhook] = useState<TestWebhook | null>(null);
+  const [isTestSent, setIsTestSent] = useState<boolean>(false);
+  const [isSendingTest, setIsSendingTest] = useState<boolean>(false);
 
   const getPayloadKind = (): PayloadKind => {
     let payloadKind: PayloadKind = DEAFULT_PAYLOAD_KIND;
@@ -117,6 +123,39 @@ const WebhookForm = (props: Props) => {
       }
     }
   }
+
+  async function triggerWebhookTest(webhook: TestWebhook) {
+    try {
+      setIsSendingTest(true);
+      setIsTestSent(false);
+      await API.triggerWebhookTest(webhook);
+      setIsTestSent(true);
+      setIsSendingTest(false);
+    } catch (err) {
+      setIsSendingTest(false);
+      if (err.statusText !== 'ErrLoginRedirect') {
+        let error = `An error occurred testing the webhook`;
+        switch (err.status) {
+          case 400:
+            error += `: ${err.statusText}`;
+            break;
+          default:
+            error += '.';
+        }
+        setApiError(error);
+        errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        props.onAuthError();
+      }
+    }
+  }
+
+  const triggerTest = () => {
+    if (!isNull(currentTestWebhook)) {
+      cleanApiError();
+      triggerWebhookTest(currentTestWebhook);
+    }
+  };
 
   const submitForm = () => {
     if (form.current) {
@@ -191,12 +230,42 @@ const WebhookForm = (props: Props) => {
     setEventKinds(updatedEventKinds);
   };
 
-  // Clean API error when form is focused after validation
   const cleanApiError = () => {
     if (!isNull(apiError)) {
       setApiError(null);
     }
   };
+
+  const checkTestAvailability = () => {
+    const formData = new FormData(form.current!);
+
+    let webhook: TestWebhook = {
+      url: formData.get('url') as string,
+      eventKinds: eventKinds,
+    };
+
+    if (payloadKind === PayloadKind.custom) {
+      webhook = {
+        ...webhook,
+        template: formData.get('template') as string,
+        contentType: contentType,
+      };
+    }
+
+    const isFilled = Object.values(webhook).every((x) => x !== null && x !== '');
+
+    if (urlInput.current!.checkValidity() && isFilled) {
+      setCurrentTestWebhook(webhook);
+      setIsAvailableTest(true);
+    } else {
+      setCurrentTestWebhook(null);
+      setIsAvailableTest(false);
+    }
+  };
+
+  useEffect(() => {
+    checkTestAvailability();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <div>
@@ -217,7 +286,6 @@ const WebhookForm = (props: Props) => {
           data-testid="webhookForm"
           className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
           autoComplete="off"
-          onFocus={cleanApiError}
           noValidate
         >
           <div className="form-row">
@@ -261,6 +329,7 @@ const WebhookForm = (props: Props) => {
             <div className="form-row">
               <div className="col-md-8">
                 <InputField
+                  ref={urlInput}
                   type="url"
                   name="url"
                   value={!isUndefined(props.webhook) ? props.webhook.url : ''}
@@ -268,6 +337,7 @@ const WebhookForm = (props: Props) => {
                     default: 'This field is required',
                     typeMismatch: 'Please enter a valid url',
                   }}
+                  onChange={checkTestAvailability}
                   validateOnBlur
                   required
                 />
@@ -332,7 +402,10 @@ const WebhookForm = (props: Props) => {
                   value={subs.kind.toString()}
                   label={subs.title}
                   checked={eventKinds.includes(subs.kind)}
-                  onChange={() => updateEventKindList(subs.kind)}
+                  onChange={() => {
+                    updateEventKindList(subs.kind);
+                    checkTestAvailability();
+                  }}
                   disabled
                 />
               );
@@ -453,6 +526,7 @@ const WebhookForm = (props: Props) => {
                       } else {
                         setTemplate('');
                       }
+                      checkTestAvailability();
                     }}
                   />
                   <label className="form-check-label" htmlFor={`payload_${item.kind}`}>
@@ -499,7 +573,10 @@ const WebhookForm = (props: Props) => {
                 invalidText={{
                   default: 'This field is required',
                 }}
-                onChange={onContentTypeChange}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onContentTypeChange(e);
+                  checkTestAvailability();
+                }}
               />
             </div>
           </div>
@@ -528,6 +605,7 @@ const WebhookForm = (props: Props) => {
               required={payloadKind !== PayloadKind.default}
               invalidText="This field is required"
               minRows={6}
+              onChange={checkTestAvailability}
             />
           </div>
 
@@ -598,11 +676,32 @@ const WebhookForm = (props: Props) => {
 
           <div className="mt-4 mt-md-5">
             <div className="d-flex flex-row justify-content-between">
-              {!isNull(apiError) && (
-                <div className="alert alert-danger mr-5" role="alert" ref={errorWrapper}>
-                  {apiError}
-                </div>
-              )}
+              <div className="d-flex flex-row align-items-center mr-3">
+                <button
+                  data-testid="testWebhookBtn"
+                  type="button"
+                  className="btn btn-success"
+                  onClick={triggerTest}
+                  disabled={!isAvailableTest || isSendingTest}
+                >
+                  {isSendingTest ? (
+                    <>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                      <span className="ml-2">
+                        Testing <span className="d-none d-md-inline"> webhook</span>
+                      </span>
+                    </>
+                  ) : (
+                    <>Test webhook</>
+                  )}
+                </button>
+
+                {isTestSent && (
+                  <span className="text-success ml-2" data-testid="testWebhookTick">
+                    <FaCheck />
+                  </span>
+                )}
+              </div>
 
               <div className="ml-auto">
                 <button type="button" className={`btn btn-light mr-3 ${styles.btnLight}`} onClick={onCloseForm}>
@@ -627,6 +726,12 @@ const WebhookForm = (props: Props) => {
                 </button>
               </div>
             </div>
+
+            {!isNull(apiError) && (
+              <div className="alert alert-danger mt-3" role="alert" ref={errorWrapper}>
+                {apiError}
+              </div>
+            )}
           </div>
         </form>
       </div>

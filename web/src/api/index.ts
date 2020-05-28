@@ -17,6 +17,7 @@ import {
   SearchResults,
   Stats,
   Subscription,
+  TestWebhook,
   User,
   UserFullName,
   UserLogin,
@@ -408,6 +409,18 @@ export const API = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ ...formattedWebhook, packages: formattedPackages }),
+    });
+  },
+
+  triggerWebhookTest: (webhook: TestWebhook): Promise<string | null> => {
+    const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
+
+    return apiFetch(`${API_BASE_URL}/webhook-test`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formattedWebhook),
     });
   },
 };

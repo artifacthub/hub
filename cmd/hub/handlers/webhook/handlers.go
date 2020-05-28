@@ -1,12 +1,16 @@
 package webhook
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"text/template"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/notification"
 	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -105,6 +109,53 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 0)
 }
 
+// TriggerTest is an http handler used to test a webhook before adding or
+// updating it.
+func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
+	// Read webhook from request body
+	wh := &hub.Webhook{}
+	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
+		http.Error(w, webhook.ErrInvalidInput.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare payload
+	var tmpl *template.Template
+	if wh.Template != "" {
+		var err error
+		tmpl, err = template.New("").Parse(wh.Template)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("error parsing template: %s", err.Error()), http.StatusBadRequest)
+			return
+		}
+	} else {
+		tmpl = notification.DefaultWebhookPayloadTmpl
+	}
+	var payload bytes.Buffer
+	if err := tmpl.Execute(&payload, webhookTestTemplateData); err != nil {
+		http.Error(w, fmt.Sprintf("error executing template: %s", err.Error()), http.StatusBadRequest)
+		return
+	}
+
+	// Call webhook endpoint
+	req, _ := http.NewRequest("POST", wh.URL, &payload)
+	contentType := wh.ContentType
+	if contentType == "" {
+		contentType = notification.DefaultPayloadContentType
+	}
+	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("X-ArtifactHub-Secret", wh.Secret)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error doing request: %s", err.Error()), http.StatusBadRequest)
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode >= 400 {
+		http.Error(w, fmt.Sprintf("received unexpected status code: %d", resp.StatusCode), http.StatusBadRequest)
+	}
+}
+
 // Update is an http handler that updates the provided webhook in the database.
 func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	wh := &hub.Webhook{}
@@ -122,4 +173,21 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
+}
+
+// webhookTestTemplateData represents the notification template data used by
+// TriggerTest handler.
+var webhookTestTemplateData = &hub.NotificationTemplateData{
+	BaseURL: "https://artifacthub.io",
+	Event: map[string]interface{}{
+		"id":   "00000000-0000-0000-0000-000000000001",
+		"kind": "package.new-release",
+	},
+	Package: map[string]interface{}{
+		"kind":      "helm-chart",
+		"name":      "sample-package",
+		"version":   "1.0.0",
+		"publisher": "artifacthub",
+		"url":       "https://artifacthub.io/package/chart/artifacthub/sample-package",
+	},
 }

@@ -216,7 +216,7 @@ func TestWorker(t *testing.T) {
 				ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					contentType := tc.contentType
 					if contentType == "" {
-						contentType = defaultContentType
+						contentType = DefaultPayloadContentType
 					}
 					assert.Equal(t, "POST", r.Method)
 					assert.Equal(t, contentType, r.Header.Get("Content-Type"))

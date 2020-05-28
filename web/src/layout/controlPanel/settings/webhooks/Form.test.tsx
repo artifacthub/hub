@@ -151,6 +151,8 @@ describe('WebhookForm', () => {
       expect(getByText(`{{ .Event.kind }}`)).toBeInTheDocument();
       expect(getByText('Version of the new release.')).toBeInTheDocument();
 
+      expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
+      expect(getByTestId('testWebhookBtn')).toBeEnabled();
       expect(getByText('Cancel')).toBeInTheDocument();
       expect(getByText('Save')).toBeInTheDocument();
       expect(getByTestId('sendWebhookBtn')).toBeInTheDocument();
@@ -257,6 +259,8 @@ describe('WebhookForm', () => {
       expect(getByText(`{{ .Event.kind }}`)).toBeInTheDocument();
       expect(getByText('Version of the new release.')).toBeInTheDocument();
 
+      expect(getByTestId('testWebhookBtn')).toBeInTheDocument();
+      expect(getByTestId('testWebhookBtn')).toBeDisabled();
       expect(getByText('Cancel')).toBeInTheDocument();
       expect(getByText('Add')).toBeInTheDocument();
       expect(getByTestId('sendWebhookBtn')).toBeInTheDocument();
@@ -570,6 +574,182 @@ describe('WebhookForm', () => {
           },
           undefined
         );
+      });
+    });
+  });
+
+  describe('testing webhook', () => {
+    it('triggers test on webhook edition', async () => {
+      mocked(API).triggerWebhookTest.mockResolvedValue(null);
+      const mockWebhook = getMockWebhook('9');
+
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const btn = getByTestId('testWebhookBtn');
+      expect(btn).toBeInTheDocument();
+      expect(btn).toBeEnabled();
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
+        expect(API.triggerWebhookTest).toHaveBeenCalledWith({
+          url: mockWebhook.url,
+          eventKinds: mockWebhook.eventKinds,
+        });
+      });
+
+      expect(getByTestId('testWebhookTick')).toBeInTheDocument();
+    });
+
+    it('triggers test on webhook addition', async () => {
+      mocked(API).triggerWebhookTest.mockResolvedValue(null);
+
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookForm {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const btn = getByTestId('testWebhookBtn');
+      expect(btn).toBeInTheDocument();
+      expect(btn).toBeDisabled();
+
+      const urlInput = getByTestId('urlInput');
+      fireEvent.change(urlInput, { target: { value: 'http://url.com' } });
+
+      expect(btn).toBeEnabled();
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
+        expect(API.triggerWebhookTest).toHaveBeenCalledWith({
+          url: 'http://url.com',
+          eventKinds: [0],
+        });
+      });
+
+      expect(getByTestId('testWebhookTick')).toBeInTheDocument();
+    });
+
+    it('disables test btn when webhook for testing is not valid', () => {
+      const mockWebhook = getMockWebhook('10');
+
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const btn = getByTestId('testWebhookBtn');
+      expect(btn).toBeInTheDocument();
+      expect(btn).toBeEnabled();
+
+      const urlInput = getByTestId('urlInput');
+      fireEvent.change(urlInput, { target: { value: 'wrongUrl' } });
+
+      expect(btn).toBeDisabled();
+    });
+
+    describe('when fails', () => {
+      it('401 error', async () => {
+        mocked(API).triggerWebhookTest.mockRejectedValue({
+          statusText: 'ErrLoginRedirect',
+        });
+        const mockWebhook = getMockWebhook('11');
+
+        const { getByTestId } = render(
+          <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+            <Router>
+              <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        const btn = getByTestId('testWebhookBtn');
+        fireEvent.click(btn);
+
+        await waitFor(() => {
+          expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
+          expect(API.triggerWebhookTest).toHaveBeenCalledWith({
+            url: mockWebhook.url,
+            eventKinds: mockWebhook.eventKinds,
+          });
+        });
+
+        expect(mockOnAuthError).toHaveBeenCalledTimes(1);
+      });
+
+      it('400 error', async () => {
+        mocked(API).triggerWebhookTest.mockRejectedValue({
+          statusText: 'custom error',
+          status: 400,
+        });
+        const mockWebhook = getMockWebhook('12');
+
+        const { getByTestId, getByText } = render(
+          <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+            <Router>
+              <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        const btn = getByTestId('testWebhookBtn');
+        fireEvent.click(btn);
+
+        await waitFor(() => {
+          expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
+          expect(API.triggerWebhookTest).toHaveBeenCalledWith({
+            url: mockWebhook.url,
+            eventKinds: mockWebhook.eventKinds,
+          });
+        });
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
+        });
+      });
+
+      it('default error', async () => {
+        mocked(API).triggerWebhookTest.mockRejectedValue({});
+        const mockWebhook = getMockWebhook('13');
+
+        const { getByTestId, getByText } = render(
+          <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+            <Router>
+              <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
+            </Router>
+          </AppCtx.Provider>
+        );
+
+        const btn = getByTestId('testWebhookBtn');
+        fireEvent.click(btn);
+
+        await waitFor(() => {
+          expect(API.triggerWebhookTest).toHaveBeenCalledTimes(1);
+          expect(API.triggerWebhookTest).toHaveBeenCalledWith({
+            url: mockWebhook.url,
+            eventKinds: mockWebhook.eventKinds,
+          });
+        });
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+          expect(getByText('An error occurred testing the webhook.')).toBeInTheDocument();
+        });
       });
     });
   });

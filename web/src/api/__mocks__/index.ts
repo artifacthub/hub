@@ -36,4 +36,5 @@ export const API = {
   addWebhook: jest.fn(),
   deleteWebhook: jest.fn(),
   updateWebhook: jest.fn(),
+  triggerWebhookTest: jest.fn(),
 };
