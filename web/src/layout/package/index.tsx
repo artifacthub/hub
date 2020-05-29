@@ -26,6 +26,7 @@ import FalcoInstall from './FalcoInstall';
 import ModalHeader from './ModalHeader';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
+import RelatedPackages from './RelatedPackages';
 import StarButton from './StarButton';
 import SubscriptionsButton from './SubscriptionsButton';
 
@@ -55,7 +56,7 @@ const PackageView = (props: Props) => {
   useScrollRestorationFix();
 
   useEffect(() => {
-    if (!isUndefined(props.repoName) && !isLoadingPackage) {
+    if (!isUndefined(props.packageName) && !isLoadingPackage) {
       setRepoName(props.repoName);
       setPackageName(props.packageName);
       setVersion(props.version);
@@ -453,6 +454,10 @@ const PackageView = (props: Props) => {
                               fromStarredPage={props.fromStarredPage}
                             />
                           </div>
+                        </div>
+
+                        <div className={styles.relatedPackagesWrapper}>
+                          <RelatedPackages packageId={detail.packageId} name={detail.name} keywords={detail.keywords} />
                         </div>
                       </>
                     )}
