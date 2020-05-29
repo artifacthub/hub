@@ -1,0 +1,15 @@
+.modalDialog {
+  max-width: 1000px !important;
+  width: 90%;
+  min-height: calc(100% - 10rem) !important;
+  max-height: calc(100% - 10rem) !important;
+  margin: 5rem auto !important;
+}
+
+.table {
+  font-size: 0.8rem;
+}
+
+.tableTitle th {
+  border-bottom-color: var(--color-1-300) !important;
+}

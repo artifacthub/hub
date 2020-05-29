@@ -34,7 +34,7 @@ const UserAuthDropdown = (props: Props) => {
             className={classnames(
               'rounded-circle d-flex align-items-center justify-content-center text-light',
               styles.imageWrapper,
-              { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) && !isNull(ctx.user!.profileImageId) }
+              { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) || isNull(ctx.user!.profileImageId) }
             )}
           >
             {ctx.user!.profileImageId ? (

@@ -1,4 +1,6 @@
 import classnames from 'classnames';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
@@ -9,6 +11,7 @@ import useOutsideClick from '../../../../hooks/useOutsideClick';
 import { Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import styles from './Card.module.css';
+import LastNotificationsModal from './LastNotificationsModal';
 interface Props {
   webhook: Webhook;
   onEdition: () => void;
@@ -158,10 +161,17 @@ const WebhookCard = (props: Props) => {
             <div className="card-subtitle d-flex flex-column mw-100 mt-1">
               <p className="card-text">{props.webhook.description}</p>
             </div>
+
             <div className="text-truncate">
               <small className="text-muted text-uppercase mr-2">Url:</small>
               <small>{props.webhook.url}</small>
             </div>
+
+            {!isUndefined(props.webhook.lastNotifications) && !isNull(props.webhook.lastNotifications) && (
+              <div className="d-none d-md-inline mt-2">
+                <LastNotificationsModal notifications={props.webhook.lastNotifications} />
+              </div>
+            )}
           </div>
         </div>
       </div>

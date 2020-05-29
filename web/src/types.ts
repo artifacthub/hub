@@ -225,6 +225,15 @@ export interface Webhook extends TestWebhook {
   secret?: string;
   active: boolean;
   packages: Package[];
+  lastNotifications?: null | WebhookNotification[];
+}
+
+export interface WebhookNotification {
+  notificationId: string;
+  createdAt: number;
+  processed: boolean;
+  processedAt: number;
+  error: null | string;
 }
 
 export enum PayloadKind {
