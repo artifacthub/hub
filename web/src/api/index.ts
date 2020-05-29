@@ -306,7 +306,11 @@ export const API = {
   },
 
   updateUserProfile: (profile: UserFullName): Promise<null | string> => {
-    const updatedProfile = renameKeysInObject(profile, { firstName: 'first_name', lastName: 'last_name' });
+    const updatedProfile = renameKeysInObject(profile, {
+      firstName: 'first_name',
+      lastName: 'last_name',
+      profileImageId: 'profile_image_id',
+    });
     return apiFetch(`${API_BASE_URL}/user/profile`, {
       method: 'PUT',
       headers: {

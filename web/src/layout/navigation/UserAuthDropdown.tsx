@@ -1,10 +1,13 @@
 import classnames from 'classnames';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { FaCaretDown, FaCog, FaStar, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import Image from '../common/Image';
 import LogOut from './LogOut';
 import styles from './UserAuthDropdown.module.css';
 
@@ -28,9 +31,17 @@ const UserAuthDropdown = (props: Props) => {
       >
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
-            className={`rounded-circle d-flex align-items-center justify-content-center text-light ${styles.iconWrapper}`}
+            className={classnames(
+              'rounded-circle d-flex align-items-center justify-content-center text-light',
+              styles.imageWrapper,
+              { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) && !isNull(ctx.user!.profileImageId) }
+            )}
           >
-            <FaUser className="rounded-circle" />
+            {ctx.user!.profileImageId ? (
+              <Image imageId={ctx.user!.profileImageId} alt="User profile" className="mw-100 mh-100" />
+            ) : (
+              <FaUser className="rounded-circle" />
+            )}
           </div>
           <small className="ml-1 text-light">
             <FaCaretDown />

@@ -9,6 +9,7 @@ import { AppCtx, updateUser } from '../../../../../context/AppCtx';
 import { Profile, RefInputField, ResourceKind, UserFullName } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import InputField from '../../../../common/InputField';
+import InputFileField from '../../../../common/InputFileField';
 
 interface Props {
   onAuthError: () => void;
@@ -19,6 +20,7 @@ interface User {
   alias: string;
   firstName?: string;
   lastName?: string;
+  profileImageId?: string;
 }
 
 interface FormValidation {
@@ -33,6 +35,9 @@ const UpdateProfile = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [profile, setProfile] = useState<Profile | null | undefined>(props.profile);
+  const [imageId, setImageId] = useState<string | undefined>(
+    props.profile && props.profile.profileImageId ? props.profile.profileImageId : undefined
+  );
 
   useEffect(() => {
     setProfile(props.profile);
@@ -41,9 +46,9 @@ const UpdateProfile = (props: Props) => {
   async function updateProfile(user: UserFullName) {
     try {
       setIsSending(true);
+      const formattedUser = { ...user };
       await API.updateUserProfile(user);
-      dispatch(updateUser(user));
-
+      dispatch(updateUser(formattedUser));
       setIsSending(false);
     } catch (err) {
       setIsSending(false);
@@ -95,6 +100,10 @@ const UpdateProfile = (props: Props) => {
         if (formData.get('lastName') !== '') {
           user['lastName'] = formData.get('lastName') as string;
         }
+
+        if (!isUndefined(imageId)) {
+          user['profileImageId'] = imageId;
+        }
       }
       setIsValidated(true);
       return { isValid, user };
@@ -115,6 +124,15 @@ const UpdateProfile = (props: Props) => {
       autoComplete="on"
       noValidate
     >
+      <InputFileField
+        name="image"
+        label="Profile image"
+        labelLegend={<small className="ml-1 font-italic">(Click on the image to update)</small>}
+        value={imageId}
+        onImageChange={(imageId: string) => setImageId(imageId)}
+        onAuthError={props.onAuthError}
+      />
+
       <InputField
         type="email"
         label="Email"
