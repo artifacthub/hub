@@ -3,6 +3,7 @@ import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { MdBusiness } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx, updateOrg } from '../../../context/AppCtx';
@@ -144,6 +145,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         label="Logo"
         labelLegend={<small className="ml-1 font-italic">(Click on the image to update)</small>}
         value={imageId}
+        placeholderIcon={<MdBusiness />}
         onImageChange={(imageId: string) => setImageId(imageId)}
         onAuthError={props.onAuthError}
       />

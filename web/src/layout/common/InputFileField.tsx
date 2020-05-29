@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
-import { MdBusiness } from 'react-icons/md';
+import { MdAddAPhoto } from 'react-icons/md';
 
 import { API } from '../../api';
 import { LogoImage } from '../../types';
@@ -18,6 +18,7 @@ interface Props {
   className?: string;
   onImageChange?: (imageId: string) => void;
   onAuthError: () => void;
+  placeholderIcon?: JSX.Element;
 }
 
 const InputFileField = (props: Props) => {
@@ -95,7 +96,7 @@ const InputFileField = (props: Props) => {
             {!isUndefined(props.value) ? (
               <Image imageId={props.value} className={styles.image} alt="Logo" />
             ) : (
-              <MdBusiness />
+              <>{!isUndefined(props.placeholderIcon) ? <>{props.placeholderIcon}</> : <MdAddAPhoto />}</>
             )}
           </button>
           {isSending && (

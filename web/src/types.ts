@@ -117,6 +117,7 @@ export interface UserFullName {
   alias: string;
   firstName?: string;
   lastName?: string;
+  profileImageId?: null | string;
 }
 
 export interface Profile extends UserFullName {
