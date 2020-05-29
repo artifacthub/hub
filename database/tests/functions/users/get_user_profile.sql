@@ -12,14 +12,16 @@ insert into "user" (
     first_name,
     last_name,
     email,
-    password
+    password,
+    profile_image_id
 ) values (
     :'user1ID',
     'user1',
     'firstname',
     'lastname',
     'user1@email.com',
-    'password'
+    'password',
+    '00000000-0000-0000-0000-000000000001'
 );
 
 -- Run some tests
@@ -29,7 +31,8 @@ select is(
         "alias": "user1",
         "first_name": "firstname",
         "last_name": "lastname",
-        "email": "user1@email.com"
+        "email": "user1@email.com",
+        "profile_image_id": "00000000-0000-0000-0000-000000000001"
     }
     '::jsonb,
     'User1 should exist'

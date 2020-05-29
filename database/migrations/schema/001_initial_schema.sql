@@ -22,6 +22,7 @@ create table if not exists "user" (
     email text not null check (email <> '') unique,
     email_verified boolean not null default false,
     password text check (password <> ''),
+    profile_image_id uuid,
     created_at timestamptz default current_timestamp not null
 );
 

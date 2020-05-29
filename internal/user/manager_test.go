@@ -473,6 +473,11 @@ func TestRegisterUser(t *testing.T) {
 				&hub.User{Alias: "user1", Email: "email"},
 				"invalid",
 			},
+			{
+				"invalid profile image id",
+				&hub.User{Alias: "user1", Email: "email", ProfileImageID: "invalid"},
+				"http://baseurl.com",
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -512,11 +517,12 @@ func TestRegisterUser(t *testing.T) {
 				m := NewManager(db, es)
 
 				u := &hub.User{
-					Alias:     "alias",
-					FirstName: "first_name",
-					LastName:  "last_name",
-					Email:     "email@email.com",
-					Password:  "password",
+					Alias:          "alias",
+					FirstName:      "first_name",
+					LastName:       "last_name",
+					Email:          "email@email.com",
+					Password:       "password",
+					ProfileImageID: "00000000-0000-0000-0000-000000000001",
 				}
 				err := m.RegisterUser(ctx, u, "http://baseurl.com")
 				assert.Equal(t, tc.emailSenderResponse, err)
@@ -646,6 +652,10 @@ func TestUpdateProfile(t *testing.T) {
 			{
 				"alias not provided",
 				&hub.User{},
+			},
+			{
+				"invalid profile image id",
+				&hub.User{Alias: "user1", Email: "email", ProfileImageID: "invalid"},
 			},
 		}
 		for _, tc := range testCases {

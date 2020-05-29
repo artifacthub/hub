@@ -5,6 +5,7 @@ returns void as $$
     update "user" set
         alias = p_user->>'alias',
         first_name = nullif(p_user->>'first_name', ''),
-        last_name = nullif(p_user->>'last_name', '')
+        last_name = nullif(p_user->>'last_name', ''),
+        profile_image_id = nullif(p_user->>'profile_image_id', '')::uuid
     where user_id = p_requesting_user_id;
 $$ language sql;

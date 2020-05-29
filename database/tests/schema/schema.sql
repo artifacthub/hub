@@ -163,6 +163,7 @@ select columns_are('user', array[
     'email',
     'email_verified',
     'password',
+    'profile_image_id',
     'created_at'
 ]);
 select columns_are('user_starred_package', array[

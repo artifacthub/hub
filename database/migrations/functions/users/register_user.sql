@@ -24,14 +24,16 @@ begin
         last_name,
         email,
         email_verified,
-        password
+        password,
+        profile_image_id
     ) values (
         p_user->>'alias',
         nullif(p_user->>'first_name', ''),
         nullif(p_user->>'last_name', ''),
         p_user->>'email',
         (p_user->>'email_verified')::boolean,
-        nullif(p_user->>'password', '')
+        nullif(p_user->>'password', ''),
+        nullif(p_user->>'profile_image_id', '')::uuid
     ) returning user_id into v_user_id;
 
     -- Register email verification code

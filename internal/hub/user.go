@@ -28,13 +28,14 @@ type Session struct {
 
 // User represents a Hub user.
 type User struct {
-	UserID        string `json:"user_id"`
-	Alias         string `json:"alias"`
-	FirstName     string `json:"first_name"`
-	LastName      string `json:"last_name"`
-	Email         string `json:"email"`
-	EmailVerified bool   `json:"email_verified"`
-	Password      string `json:"password"`
+	UserID         string `json:"user_id"`
+	Alias          string `json:"alias"`
+	FirstName      string `json:"first_name"`
+	LastName       string `json:"last_name"`
+	Email          string `json:"email"`
+	EmailVerified  bool   `json:"email_verified"`
+	Password       string `json:"password"`
+	ProfileImageID string `json:"profile_image_id"`
 }
 
 type userIDKey struct{}

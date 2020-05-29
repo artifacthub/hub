@@ -12,14 +12,16 @@ insert into "user" (
     first_name,
     last_name,
     email,
-    password
+    password,
+    profile_image_id
 ) values (
     :'user1ID',
     'user1',
     'firstname',
     'lastname',
     'user1@email.com',
-    'password'
+    'password',
+    '00000000-0000-0000-0000-000000000001'
 );
 
 -- Update user profile
@@ -27,7 +29,8 @@ select update_user_profile(:'user1ID', '
 {
     "alias": "user1 updated",
     "first_name": "firstname updated",
-    "last_name": "lastname updated"
+    "last_name": "lastname updated",
+    "profile_image_id": "00000000-0000-0000-0000-000000000002"
 }
 '::jsonb);
 
@@ -39,7 +42,8 @@ select results_eq(
             first_name,
             last_name,
             email,
-            password
+            password,
+            profile_image_id
         from "user"
     $$,
     $$
@@ -48,7 +52,8 @@ select results_eq(
             'firstname updated',
             'lastname updated',
             'user1@email.com',
-            'password'
+            'password',
+            '00000000-0000-0000-0000-000000000002'::uuid
         )
     $$,
     'User first and last name should have been updated'
