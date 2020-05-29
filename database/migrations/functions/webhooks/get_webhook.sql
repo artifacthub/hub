@@ -45,6 +45,22 @@ begin
             left join organization o
                 on p.organization_id = o.organization_id or r.organization_id = o.organization_id
             where wp.webhook_id = wh.webhook_id
+        ),
+        'last_notifications', (
+            select json_agg(json_build_object(
+                'notification_id', notification_id,
+                'created_at', floor(extract(epoch from created_at)),
+                'processed', processed,
+                'processed_at', floor(extract(epoch from processed_at)),
+                'error', error
+            ))
+            from (
+                select *
+                from notification
+                where webhook_id = p_webhook_id
+                order by created_at desc
+                limit 10
+            ) ln
         )
     )
     from webhook wh

@@ -85,7 +85,8 @@ select is(
                         "display_name": "Repo 1"
                     }
                 }
-            ]
+            ],
+            "last_notifications": null
         }
     ]'::jsonb,
     'Webhook owned by org1 should be returned as user1 belongs to it'

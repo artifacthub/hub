@@ -98,7 +98,8 @@ select is(
                         "display_name": "Repo 1"
                     }
                 }
-            ]
+            ],
+            "last_notifications": null
         }
     ]'::jsonb,
     'Webhook1 should be returned when asking for kind0 and package1'

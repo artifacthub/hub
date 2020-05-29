@@ -234,7 +234,8 @@ select indexes_are('notification', array[
     'notification_pkey',
     'notification_not_processed_idx',
     'notification_event_id_user_id_key',
-    'notification_event_id_webhook_id_key'
+    'notification_event_id_webhook_id_key',
+    'notification_webhook_id_created_at_idx'
 ]);
 select indexes_are('organization', array[
     'organization_pkey',
