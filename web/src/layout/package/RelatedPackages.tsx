@@ -20,7 +20,9 @@ const RelatedPackages = (props: Props) => {
     async function fetchRelatedPackages() {
       try {
         const searchResults = await API.searchPackages({
-          text: `${props.name} ${!isUndefined(props.keywords) ? `or ${props.keywords.join(' or ')}` : ''}`,
+          text: `${props.name} ${
+            !isUndefined(props.keywords) && props.keywords.length > 0 ? `or ${props.keywords.join(' or ')}` : ''
+          }`,
           filters: {},
           deprecated: false,
           limit: 11,
