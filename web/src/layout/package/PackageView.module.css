@@ -33,6 +33,10 @@
   width: 230px;
 }
 
+.relatedPackagesWrapper {
+  max-width: 230px;
+}
+
 .labelOrg {
   font-size: 80%;
 }

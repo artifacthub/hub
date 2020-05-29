@@ -497,6 +497,9 @@ exports[`Package index creates snapshot 2`] = `
               </p>
             </div>
           </div>
+          <div
+            class="relatedPackagesWrapper"
+          />
         </div>
       </div>
     </div>

@@ -11,8 +11,8 @@
 }
 
 .loading {
-  right: -22px;
-  top: 22px;
+  left: -22px;
+  top: 20px;
 }
 
 .dropdown {
@@ -42,5 +42,9 @@
 @media only screen and (max-width: 768px) {
   .ctxBtn {
     line-height: 1.5rem;
+  }
+
+  .loading {
+    top: 22px;
   }
 }
