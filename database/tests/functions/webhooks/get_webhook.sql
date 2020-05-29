@@ -8,6 +8,10 @@ select plan(2);
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set webhook1ID '00000000-0000-0000-0000-000000000001'
+\set event1ID '00000000-0000-0000-0000-000000000001'
+\set event2ID '00000000-0000-0000-0000-000000000002'
+\set notification1ID '00000000-0000-0000-0000-000000000001'
+\set notification2ID '00000000-0000-0000-0000-000000000002'
 
 -- Seed some data
 insert into "user" (user_id, alias, email)
@@ -52,6 +56,44 @@ insert into webhook (
 );
 insert into webhook__event_kind (webhook_id, event_kind_id) values (:'webhook1ID', 0);
 insert into webhook__package (webhook_id, package_id) values (:'webhook1ID', :'package1ID');
+insert into event (event_id, package_version, package_id, event_kind_id)
+values (:'event1ID', '1.0.0', :'package1ID', 0);
+insert into event (event_id, package_version, package_id, event_kind_id)
+values (:'event2ID', '1.0.1', :'package1ID', 0);
+insert into notification (
+    notification_id,
+    created_at,
+    processed,
+    processed_at,
+    error,
+    event_id,
+    webhook_id
+) values (
+    :'notification1ID',
+    '2020-05-29 13:55:00',
+    true,
+    '2020-05-29 13:57:00',
+    null,
+    :'event1ID',
+    :'webhook1ID'
+);
+insert into notification (
+    notification_id,
+    created_at,
+    processed,
+    processed_at,
+    error,
+    event_id,
+    webhook_id
+) values (
+    :'notification2ID',
+    '2020-05-29 13:56:00',
+    true,
+    '2020-05-29 13:58:00',
+    'fake error',
+    :'event2ID',
+    :'webhook1ID'
+);
 
 -- Try to get a webhook owned by a user by other user
 select throws_ok(
@@ -95,6 +137,22 @@ select is(
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
+            }
+        ],
+        "last_notifications": [
+            {
+                "notification_id": "00000000-0000-0000-0000-000000000002",
+                "created_at": 1590753360,
+                "processed": true,
+                "processed_at": 1590753480,
+                "error": "fake error"
+            },
+            {
+                "notification_id": "00000000-0000-0000-0000-000000000001",
+                "created_at": 1590753300,
+                "processed": true,
+                "processed_at": 1590753420,
+                "error": null
             }
         ]
     }'::jsonb,

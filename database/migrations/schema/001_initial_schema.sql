@@ -225,6 +225,7 @@ create table notification (
 );
 
 create index notification_not_processed_idx on notification (notification_id) where processed = 'false';
+create index notification_webhook_id_created_at_idx on notification (webhook_id, created_at);
 
 {{ if eq .loadSampleData "true" }}
 {{ template "data/sample.sql" }}

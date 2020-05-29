@@ -81,7 +81,8 @@ select is(
                         "display_name": "Repo 1"
                     }
                 }
-            ]
+            ],
+            "last_notifications": null
         }
     ]'::jsonb,
     'Webhook owned by user1 should be returned'
