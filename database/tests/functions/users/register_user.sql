@@ -10,7 +10,8 @@ select register_user('
     "last_name": "last_name",
     "email": "email",
     "email_verified": true,
-    "password": "password"
+    "password": "password",
+    "profile_image_id": "00000000-0000-0000-0000-000000000001"
 }
 ') as code \gset
 
@@ -23,7 +24,8 @@ select results_eq(
             last_name,
             email,
             email_verified,
-            password
+            password,
+            profile_image_id
         from "user"
         where alias = 'alias'
     $$,
@@ -34,7 +36,8 @@ select results_eq(
             'last_name',
             'email',
             true,
-            'password'
+            'password',
+            '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
     'User should exist'
@@ -58,7 +61,8 @@ select throws_ok(
             "last_name": "last_name",
             "email": "email",
             "email_verified": true,
-            "password": "password"
+            "password": "password",
+            "profile_image_id": "00000000-0000-0000-0000-000000000001"
         }
         ')
     $$,
@@ -82,7 +86,8 @@ select lives_ok(
             "last_name": "last_name",
             "email": "email",
             "email_verified": true,
-            "password": "password"
+            "password": "password",
+            "profile_image_id": "00000000-0000-0000-0000-000000000001"
         }
         ')
     $$,

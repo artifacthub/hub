@@ -228,6 +228,11 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid base url")
 		}
 	}
+	if user.ProfileImageID != "" {
+		if _, err := uuid.FromString(user.ProfileImageID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid profile image id")
+		}
+	}
 
 	// Hash password
 	if user.Password != "" {
@@ -311,6 +316,11 @@ func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 	// Validate input
 	if user.Alias == "" {
 		return fmt.Errorf("%w: %s", ErrInvalidInput, "alias not provided")
+	}
+	if user.ProfileImageID != "" {
+		if _, err := uuid.FromString(user.ProfileImageID); err != nil {
+			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid profile image id")
+		}
 	}
 
 	// Update user profile in database

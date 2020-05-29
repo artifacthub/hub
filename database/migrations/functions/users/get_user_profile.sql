@@ -5,7 +5,8 @@ returns setof json as $$
         'alias', u.alias,
         'first_name', u.first_name,
         'last_name', u.last_name,
-        'email', u.email
+        'email', u.email,
+        'profile_image_id', u.profile_image_id
     )
     from "user" u
     where u.user_id = p_user_id;
