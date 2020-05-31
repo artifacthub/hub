@@ -32,7 +32,7 @@ describe('UserAuthDropdown', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(
+      const { getByText, getByTestId, queryByAltText } = render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <UserAuthDropdown />
@@ -44,14 +44,21 @@ describe('UserAuthDropdown', () => {
       expect(signedAs).toBeInTheDocument();
       expect(signedAs).toHaveTextContent('Signed in as test');
 
+      expect(getByTestId('profileIcon')).toBeInTheDocument();
+      expect(queryByAltText('User profile')).toBeNull();
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 
-    it('renders component', () => {
-      const { getByText } = render(
-        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+    it('renders component with user image', () => {
+      const { getByText, getByAltText, queryByTestId } = render(
+        <AppCtx.Provider
+          value={{
+            ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
+            dispatch: jest.fn(),
+          }}
+        >
           <Router>
             <UserAuthDropdown />
           </Router>
@@ -62,6 +69,8 @@ describe('UserAuthDropdown', () => {
       expect(signedAs).toBeInTheDocument();
       expect(signedAs).toHaveTextContent('Signed in as test');
 
+      expect(getByAltText('User profile')).toBeInTheDocument();
+      expect(queryByTestId('profileIcon')).toBeNull();
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();

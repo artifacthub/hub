@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chart Repository LastNotificationsModal - packages section creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="d-inline-block \${styles.modal"
+  >
+    <button
+      class="font-weight-bold text-uppercase position-relative btn btn-block btn btn badge btn-secondary"
+      data-testid="openModalBtn"
+      type="button"
+    >
+      <div
+        class="d-flex align-items-center justify-content-center"
+      >
+        <span>
+          Show last notifications
+        </span>
+      </div>
+    </button>
+    <div
+      class="modal modal"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+      >
+        <div
+          class="modal-content content undefined"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header"
+          >
+            <div
+              class="h3 m-2"
+            >
+              Last notifications
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          />
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg
+    class="ml-1 text-warning"
+    data-testid="lastNotifAlert"
+    fill="currentColor"
+    height="1em"
+    stroke="currentColor"
+    stroke-width="0"
+    viewBox="0 0 192 512"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M176 432c0 44.112-35.888 80-80 80s-80-35.888-80-80 35.888-80 80-80 80 35.888 80 80zM25.26 25.199l13.6 272C39.499 309.972 50.041 320 62.83 320h66.34c12.789 0 23.331-10.028 23.97-22.801l13.6-272C167.425 11.49 156.496 0 142.77 0H49.23C35.504 0 24.575 11.49 25.26 25.199z"
+    />
+  </svg>
+</DocumentFragment>
+`;

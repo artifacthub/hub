@@ -35,7 +35,7 @@ const RelatedPackages = (props: Props) => {
         if (!isNull(searchResults.data.packages)) {
           filteredPackages = searchResults.data.packages
             .filter((item: Package) => item.packageId !== props.packageId)
-            .slice(0, 8); // Only first 6 packages
+            .slice(0, 8); // Only first 8 packages
         }
         setPackages(filteredPackages);
       } catch {

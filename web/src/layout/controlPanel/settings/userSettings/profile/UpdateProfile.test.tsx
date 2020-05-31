@@ -11,6 +11,7 @@ jest.mock('../../../../../utils/alertDispatcher');
 
 const profile: Profile = {
   alias: 'userAlias',
+  profileImageId: '123',
   firstName: 'John',
   lastName: 'Smith',
   email: 'jsmith@email.com',
@@ -40,6 +41,7 @@ describe('Update profile - user settings', () => {
 
       const form = getByTestId('updateProfileForm');
       expect(form).toBeInTheDocument();
+      expect(getByTestId('inputFile')).toBeInTheDocument();
       expect(getByDisplayValue(profile.alias)).toBeInTheDocument();
       expect(getByDisplayValue(profile.email)).toBeInTheDocument();
       expect(getByDisplayValue(profile.firstName!)).toBeInTheDocument();
@@ -62,6 +64,7 @@ describe('Update profile - user settings', () => {
         expect(API.updateUserProfile).toHaveBeenCalledTimes(1);
         expect(API.updateUserProfile).toHaveBeenCalledWith({
           alias: 'userAlias1',
+          profileImageId: '123',
           firstName: 'John',
           lastName: 'Smith',
         });

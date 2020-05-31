@@ -1,5 +1,6 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
+import { MdImage } from 'react-icons/md';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
@@ -34,7 +35,13 @@ describe('InputFileField', () => {
     expect(getByTestId('inputFile')).toBeInTheDocument();
     expect(getByTestId('inputFile')).toHaveClass('d-none');
     expect(getByTestId('inputFileBtn')).toBeInTheDocument();
+    expect(getByTestId('defaultIcon')).toBeInTheDocument();
     expect(getByTestId('inputFileBtn')).toHaveProperty('type', 'button');
+  });
+
+  it('renders custom placeholder icon', () => {
+    const { queryByTestId } = render(<InputFileField {...defaultProps} placeholderIcon={<MdImage />} />);
+    expect(queryByTestId('defaultIcon')).toBeNull();
   });
 
   it('calls input file click to click button', async () => {

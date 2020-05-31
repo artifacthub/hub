@@ -96,7 +96,13 @@ const InputFileField = (props: Props) => {
             {!isUndefined(props.value) ? (
               <Image imageId={props.value} className={styles.image} alt="Logo" />
             ) : (
-              <>{!isUndefined(props.placeholderIcon) ? <>{props.placeholderIcon}</> : <MdAddAPhoto />}</>
+              <>
+                {!isUndefined(props.placeholderIcon) ? (
+                  <>{props.placeholderIcon}</>
+                ) : (
+                  <MdAddAPhoto data-testid="defaultIcon" />
+                )}
+              </>
             )}
           </button>
           {isSending && (
