@@ -80,6 +80,7 @@ const PackageView = (props: Props) => {
       setDetail(detail);
       setApiError(null);
       setIsLoadingPackage(false);
+      window.scrollTo(0, 0); // Scroll to top when a new version is loaded
     } catch (err) {
       if (err.status !== 404) {
         setApiError('An error occurred getting this package, please try again later');
@@ -92,7 +93,6 @@ const PackageView = (props: Props) => {
   useEffect(() => {
     setIsLoadingPackage(true);
     fetchPackageDetail();
-    window.scrollTo(0, 0); // Scroll to top when a new version is loaded
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [repoName, packageName, version, packageKind, setIsLoadingPackage]);
   /* eslint-enable react-hooks/exhaustive-deps */

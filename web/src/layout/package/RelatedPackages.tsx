@@ -19,20 +19,23 @@ const RelatedPackages = (props: Props) => {
   useEffect(() => {
     async function fetchRelatedPackages() {
       try {
+        let name = props.name.split('-');
+        let words = [...name];
+        if (!isUndefined(props.keywords) && props.keywords.length > 0) {
+          words = [...name, ...props.keywords];
+        }
         const searchResults = await API.searchPackages({
-          text: `${props.name} ${
-            !isUndefined(props.keywords) && props.keywords.length > 0 ? `or ${props.keywords.join(' or ')}` : ''
-          }`,
+          text: Array.from(new Set(words)).join(' or '),
           filters: {},
           deprecated: false,
-          limit: 11,
+          limit: 9,
           offset: 0,
         });
         let filteredPackages: Package[] = [];
         if (!isNull(searchResults.data.packages)) {
           filteredPackages = searchResults.data.packages
             .filter((item: Package) => item.packageId !== props.packageId)
-            .slice(0, 10); // Only first 10 packages
+            .slice(0, 8); // Only first 6 packages
         }
         setPackages(filteredPackages);
       } catch {
