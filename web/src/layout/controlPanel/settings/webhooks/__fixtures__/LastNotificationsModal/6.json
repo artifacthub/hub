@@ -1,0 +1,9 @@
+[
+  {
+    "notificationId": "853a8eb6-2d24-4407-aa37-2693145e5e8b",
+    "createdAt": 1590771122,
+    "processed": true,
+    "processedAt": 1590771123,
+    "error": "template: :2:20: executing \"\" at <.kjsk>: can't evaluate field kjsk in type *hub.NotificationTemplateData"
+  }
+]

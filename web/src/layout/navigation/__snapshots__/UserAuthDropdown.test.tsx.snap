@@ -18,6 +18,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
         >
           <svg
             class="rounded-circle"
+            data-testid="profileIcon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

@@ -1,0 +1,32 @@
+{
+  "webhookId": "d1e1299b-c3ce-4618-b67b-f5e63f4b891f",
+  "name": "Webhook name",
+  "description": "this is a test description",
+  "url": "http://jksdhfkjfds",
+  "secret": null,
+  "contentType": "application/json",
+  "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.id }}\",\n        \"kind\": {{ .Event.kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.kind }},\n        \"name\": \"{{ .Package.name }}\",\n        \"version\": \"{{ .Package.version }}\",\n        \"publisher\": \"{{ .Package.publisher }}\",\n        \"url\": \"{{ .Package.url }}\"\n    }\n}",
+  "active": true,
+  "eventKinds": [0],
+  "packages": [
+    {
+      "packageId": "701964f8-1730-45d2-bdfa-ae2b2d0ecac6",
+      "name": "envoy",
+      "logoImageId": "c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc",
+      "kind": 0,
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm",
+      "chartRepository": { "name": "stable", "displayName": "Stable" }
+    }
+  ],
+  "lastNotifications": [
+    {
+      "notificationId": "0f1c1a3f-55f7-4d7c-91e6-8ed081a1f400",
+      "createdAt": 1590852609,
+      "processed": true,
+      "processedAt": 1590852610,
+      "error": null
+    }
+  ]
+}

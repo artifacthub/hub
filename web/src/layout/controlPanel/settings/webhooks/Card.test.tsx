@@ -239,4 +239,51 @@ describe('WebhookCard', () => {
       });
     });
   });
+
+  describe('last notifications', () => {
+    it('renders button', () => {
+      const mockWebhook = getmockWebhook('9');
+
+      const { getByText, queryByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookCard {...defaultProps} webhook={mockWebhook} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      expect(getByText('Show last notifications')).toBeInTheDocument();
+      expect(queryByTestId('lastNotifAlert')).toBeNull();
+    });
+
+    it('renders button with exclamation icon', () => {
+      const mockWebhook = getmockWebhook('10');
+
+      const { getByText, getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookCard {...defaultProps} webhook={mockWebhook} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      expect(getByText('Show last notifications')).toBeInTheDocument();
+      expect(getByTestId('lastNotifAlert')).toBeInTheDocument();
+    });
+
+    it('does not render button', () => {
+      const mockWebhook = getmockWebhook('11');
+
+      const { queryByText, queryByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
+          <Router>
+            <WebhookCard {...defaultProps} webhook={mockWebhook} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      expect(queryByText('Show last notifications')).toBeNull();
+      expect(queryByTestId('lastNotifAlert')).toBeNull();
+    });
+  });
 });

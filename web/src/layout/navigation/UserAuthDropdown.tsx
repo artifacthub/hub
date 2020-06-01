@@ -40,7 +40,7 @@ const UserAuthDropdown = (props: Props) => {
             {ctx.user!.profileImageId ? (
               <Image imageId={ctx.user!.profileImageId} alt="User profile" className="mw-100 mh-100" />
             ) : (
-              <FaUser className="rounded-circle" />
+              <FaUser data-testid="profileIcon" className="rounded-circle" />
             )}
           </div>
           <small className="ml-1 text-light">

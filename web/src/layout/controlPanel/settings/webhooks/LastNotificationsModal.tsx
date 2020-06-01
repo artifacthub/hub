@@ -46,10 +46,12 @@ const LastNotificationsModal = (props: Props) => {
             </thead>
             <tbody>
               {props.notifications.map((item: WebhookNotification) => (
-                <tr data-testid="lastNotification" key={`lastNotif_${item.notificationId}`}>
+                <tr data-testid="lastNotificationCell" key={`lastNotif_${item.notificationId}`}>
                   <td className="align-middle">{item.notificationId}</td>
                   <td className="align-middle">{moment(item.createdAt * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</td>
-                  <td className="align-middle text-center">{item.processed && <FaCheck className="text-success" />}</td>
+                  <td className="align-middle text-center">
+                    {item.processed && <FaCheck className="text-success" data-testid="processedIcon" />}
+                  </td>
                   <td className="align-middle">
                     {!isNull(item.processedAt) && moment(item.processedAt * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}
                   </td>
@@ -57,9 +59,9 @@ const LastNotificationsModal = (props: Props) => {
                     {item.processed && (
                       <>
                         {isNull(item.error) ? (
-                          <FaCheck className="text-success" />
+                          <FaCheck className="text-success" data-testid="succeededIcon" />
                         ) : (
-                          <FaTimes className="text-danger" />
+                          <FaTimes className="text-danger" data-testid="failedIcon" />
                         )}
                       </>
                     )}
@@ -82,7 +84,7 @@ const LastNotificationsModal = (props: Props) => {
                 </thead>
                 <tbody>
                   {notificationsWithErrors.map((item: WebhookNotification) => (
-                    <tr key={`lastNotifError_${item.notificationId}`}>
+                    <tr data-testid="lastNotificationErrorCell" key={`lastNotifError_${item.notificationId}`}>
                       <td>{item.notificationId}</td>
 
                       <td>{item.error}</td>
@@ -94,7 +96,9 @@ const LastNotificationsModal = (props: Props) => {
           )}
         </div>
       </Modal>
-      {notificationsWithErrors.length > 0 && <FaExclamation className="ml-1 text-warning" />}
+      {notificationsWithErrors.length > 0 && (
+        <FaExclamation className="ml-1 text-warning" data-testid="lastNotifAlert" />
+      )}
     </>
   );
 };

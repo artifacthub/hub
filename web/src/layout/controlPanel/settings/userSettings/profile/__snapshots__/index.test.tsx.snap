@@ -53,6 +53,7 @@ exports[`User settings index creates snapshot 1`] = `
                   type="button"
                 >
                   <svg
+                    data-testid="defaultIcon"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

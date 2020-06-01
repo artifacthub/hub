@@ -1,0 +1,51 @@
+[
+  {
+    "notificationId": "fcd9c7f9-8dad-4b7d-a227-19c7fd06bb94",
+    "createdAt": 1590772472,
+    "processed": true,
+    "processedAt": 1590772473,
+    "error": null
+  },
+  {
+    "notificationId": "76aa85d7-d781-49a5-bb1f-2b321abc082b",
+    "createdAt": 1590771392,
+    "processed": true,
+    "processedAt": 1590771393,
+    "error": null
+  },
+  {
+    "notificationId": "853a8eb6-2d24-4407-aa37-2693145e5e8b",
+    "createdAt": 1590771122,
+    "processed": true,
+    "processedAt": 1590771123,
+    "error": "template: :2:20: executing \"\" at <.kjsk>: can't evaluate field kjsk in type *hub.NotificationTemplateData"
+  },
+  {
+    "notificationId": "d01cffe8-fb21-4e42-a8f5-cb1b24f22cfc",
+    "createdAt": 1590771032,
+    "processed": true,
+    "processedAt": 1590771033,
+    "error": "unexpected status code: 400"
+  },
+  {
+    "notificationId": "e7e7c60b-1fc8-4af3-ae8f-332e4151b4e6",
+    "createdAt": 1590770222,
+    "processed": true,
+    "processedAt": 1590770222,
+    "error": "unexpected status code: 400"
+  },
+  {
+    "notificationId": "d5dc2bac-1140-4bb0-a474-d26fd1a06f9f",
+    "createdAt": 1590770162,
+    "processed": true,
+    "processedAt": 1590770162,
+    "error": null
+  },
+  {
+    "notificationId": "ae518f05-89d9-4b5c-819e-1ed879b4fe81",
+    "createdAt": 1590762078,
+    "processed": true,
+    "processedAt": 1590762108,
+    "error": null
+  }
+]
