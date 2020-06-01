@@ -8,6 +8,7 @@ declare
     v_orgs text[];
     v_chart_repositories text[];
     v_facets boolean := (p_input->>'facets')::boolean;
+    v_tsquery tsquery := websearch_to_tsquery(p_input->>'text');
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_package_kinds
@@ -29,6 +30,7 @@ begin
             p.normalized_name,
             p.logo_image_id,
             p.stars,
+            p.tsdoc,
             s.display_name,
             s.description,
             s.version,
@@ -49,7 +51,7 @@ begin
         where s.version = p.latest_version
         and
             case when p_input ? 'text' and p_input->>'text' <> '' then
-                websearch_to_tsquery(p_input->>'text') @@ p.tsdoc
+                v_tsquery @@ p.tsdoc
             else true end
         and
             case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
@@ -106,8 +108,14 @@ begin
                         ))
                     )), '[]')
                     from (
-                        select * from packages_applying_all_filters
-                        order by stars desc, name asc
+                        select
+                            paaf.*,
+                            (case when p_input ? 'text' and p_input->>'text' <> '' then
+                                ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery, 1) +
+                                ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery)
+                            else 1 end) as rank
+                        from packages_applying_all_filters paaf
+                        order by rank desc, name asc
                         limit (p_input->>'limit')::int
                         offset (p_input->>'offset')::int
                     ) packages_applying_all_filters_paginated
