@@ -207,26 +207,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
-                "name": "package2",
-                "normalized_name": "package2",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "stars": 11,
-                "display_name": "Package 2",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "name": "repo2",
-                    "display_name": "Repo 2"
-                }
-            },
-            {
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "kind": 0,
                 "name": "package1",
@@ -244,6 +224,25 @@ select is(
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "kind": 0,
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
+                "chart_repository": {
+                    "name": "repo2",
+                    "display_name": "Repo 2"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000003",
@@ -321,26 +320,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
-                "name": "package2",
-                "normalized_name": "package2",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "stars": 11,
-                "display_name": "Package 2",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "name": "repo2",
-                    "display_name": "Repo 2"
-                }
-            },
-            {
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "kind": 0,
                 "name": "package1",
@@ -358,6 +337,25 @@ select is(
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "kind": 0,
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
+                "chart_repository": {
+                    "name": "repo2",
+                    "display_name": "Repo 2"
                 }
             }],
             "facets": [{
@@ -899,26 +897,6 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
-                "name": "package2",
-                "normalized_name": "package2",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "stars": 11,
-                "display_name": "Package 2",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": true,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "name": "repo2",
-                    "display_name": "Repo 2"
-                }
-            },
-            {
                 "package_id": "00000000-0000-0000-0000-000000000001",
                 "kind": 0,
                 "name": "package1",
@@ -936,6 +914,25 @@ select is(
                 "chart_repository": {
                     "name": "repo1",
                     "display_name": "Repo 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "kind": 0,
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
+                "chart_repository": {
+                    "name": "repo2",
+                    "display_name": "Repo 2"
                 }
             }],
             "facets": null
@@ -958,23 +955,23 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000002",
+                "package_id": "00000000-0000-0000-0000-000000000001",
                 "kind": 0,
-                "name": "package2",
-                "normalized_name": "package2",
-                "logo_image_id": "00000000-0000-0000-0000-000000000002",
-                "stars": 11,
-                "display_name": "Package 2",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "deprecated": true,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
+                "deprecated": null,
+                "user_alias": "user1",
+                "organization_name": null,
+                "organization_display_name": null,
                 "chart_repository": {
-                    "name": "repo2",
-                    "display_name": "Repo 2"
+                    "name": "repo1",
+                    "display_name": "Repo 1"
                 }
             }],
             "facets": null
@@ -985,7 +982,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 0 Text: kw1 | Package 2 expected'
+    'Limit: 1 Offset: 0 Text: kw1 | Package 1 expected'
 );
 select is(
     search_packages('{
@@ -1017,23 +1014,23 @@ select is(
     '{
         "data": {
             "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
+                "package_id": "00000000-0000-0000-0000-000000000002",
                 "kind": 0,
-                "name": "package1",
-                "normalized_name": "package1",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "stars": 10,
-                "display_name": "Package 1",
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "deprecated": null,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
+                "deprecated": true,
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1",
                 "chart_repository": {
-                    "name": "repo1",
-                    "display_name": "Repo 1"
+                    "name": "repo2",
+                    "display_name": "Repo 2"
                 }
             }],
             "facets": null
@@ -1044,7 +1041,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 1 Text: kw1 | Package 1 expected'
+    'Limit: 1 Offset: 1 Text: kw1 | Package 2 expected'
 );
 select is(
     search_packages('{
