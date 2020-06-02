@@ -382,6 +382,66 @@ func TestGetOwnedByUser(t *testing.T) {
 	})
 }
 
+func TestTransfer(t *testing.T) {
+	t.Run("invalid input - missing chart repo name", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("Transfer", r.Context(), "", "").Return(chartrepo.ErrInvalidInput)
+		hw.h.Transfer(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("valid input", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"chart repository transferred succeeded",
+				nil,
+				http.StatusOK,
+			},
+			{
+				"error transferring chart repository",
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/?org=org1", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"repoName"},
+						Values: []string{"repo1"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.rm.On("Transfer", r.Context(), "repo1", "org1").Return(tc.err)
+				hw.h.Transfer(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestUpdate(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {

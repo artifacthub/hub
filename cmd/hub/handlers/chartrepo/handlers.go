@@ -113,6 +113,21 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 0)
 }
 
+// Transfer is an http handler that transfers the provided chart repository to
+// a different owner.
+func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
+	repoName := chi.URLParam(r, "repoName")
+	orgName := r.FormValue("org")
+	if err := h.chartRepoManager.Transfer(r.Context(), repoName, orgName); err != nil {
+		h.logger.Error().Err(err).Str("method", "Transfer").Send()
+		if errors.Is(err, chartrepo.ErrInvalidInput) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		} else {
+			http.Error(w, "", http.StatusInternalServerError)
+		}
+	}
+}
+
 // Update is an http handler that updates the provided chart repository in the
 // database.
 func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {

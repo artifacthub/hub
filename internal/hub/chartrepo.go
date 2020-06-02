@@ -27,6 +27,7 @@ type ChartRepositoryManager interface {
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
 	SetLastTrackingResults(ctx context.Context, chartRepositoryID, errs string) error
+	Transfer(ctx context.Context, name, orgName string) error
 	Update(ctx context.Context, r *ChartRepository) error
 }
 

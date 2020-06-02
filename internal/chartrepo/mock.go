@@ -75,6 +75,12 @@ func (m *ManagerMock) SetLastTrackingResults(ctx context.Context, chartRepositor
 	return args.Error(0)
 }
 
+// Transfer implements the ChartRepositoryManager interface.
+func (m *ManagerMock) Transfer(ctx context.Context, name, orgName string) error {
+	args := m.Called(ctx, name, orgName)
+	return args.Error(0)
+}
+
 // Update implements the ChartRepositoryManager interface.
 func (m *ManagerMock) Update(ctx context.Context, r *hub.ChartRepository) error {
 	args := m.Called(ctx, r)

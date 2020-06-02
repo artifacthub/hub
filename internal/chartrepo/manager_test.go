@@ -490,6 +490,63 @@ func TestSetLastTrackingResults(t *testing.T) {
 	})
 }
 
+func TestTransfer(t *testing.T) {
+	dbQuery := "select transfer_chart_repository($1::text, $2::uuid, $3::text)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	userID := "userID"
+	userIDP := &userID
+	org := "org1"
+	orgP := &org
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.Transfer(context.Background(), "repo1", "")
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg   string
+			repoName string
+		}{
+			{
+				"chart repository name not provided",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil)
+
+				err := m.Transfer(ctx, tc.repoName, "")
+				assert.True(t, errors.Is(err, ErrInvalidInput))
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		err := m.Transfer(ctx, "repo1", org)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("transfer chart repository succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(nil)
+		m := NewManager(db)
+
+		err := m.Transfer(ctx, "repo1", org)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestUpdate(t *testing.T) {
 	dbQuery := "select update_chart_repository($1::uuid, $2::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")

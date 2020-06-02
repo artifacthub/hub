@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(103);
+select plan(104);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -329,6 +329,7 @@ select has_function('get_chart_repository_by_name');
 select has_function('get_chart_repository_packages_digest');
 select has_function('get_org_chart_repositories');
 select has_function('get_user_chart_repositories');
+select has_function('transfer_chart_repository');
 select has_function('update_chart_repository');
 
 select has_function('get_image');

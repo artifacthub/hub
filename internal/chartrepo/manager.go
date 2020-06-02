@@ -202,6 +202,33 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, chartRepositoryID,
 	return err
 }
 
+// Transfer transfers the provided chart repository to a different owner. A user
+// owned repo can be transferred to an organization the requesting user belongs
+// to. An org owned repo can be transfer to the requesting user, provided the
+// user belongs to the owning org, or to a different organization the user
+// belongs to.
+func (m *Manager) Transfer(ctx context.Context, repoName, orgName string) error {
+	var orgNameP *string
+	if orgName != "" {
+		orgNameP = &orgName
+	}
+	var userIDP *string
+	userID := ctx.Value(hub.UserIDKey).(string)
+	if userID != "" {
+		userIDP = &userID
+	}
+
+	// Validate input
+	if repoName == "" {
+		return fmt.Errorf("%w: %s", ErrInvalidInput, "chart repository name not provided")
+	}
+
+	// Update chart repository in database
+	query := "select transfer_chart_repository($1::text, $2::uuid, $3::text)"
+	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP)
+	return err
+}
+
 // Update updates the provided chart repository in the database.
 func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
