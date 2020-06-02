@@ -21,7 +21,7 @@ const DefaultDetails = (props: Props) => {
         <p data-testid="versions">-</p>
       ) : (
         <div className="mb-3" data-testid="versions">
-          <ExpandableList items={props.allVersions} />
+          <ExpandableList items={props.allVersions} visibleItems={3} />
         </div>
       )}
 

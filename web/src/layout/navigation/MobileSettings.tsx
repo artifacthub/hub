@@ -7,6 +7,7 @@ import { GoThreeBars } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
+import Image from '../common/Image';
 import Sidebar from '../common/Sidebar';
 import LogOut from './LogOut';
 import styles from './MobileSettings.module.css';
@@ -21,8 +22,26 @@ const MobileSettings = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [openSideBarStatus, setOpenSideBarStatus] = useState(false);
 
+  const getSidebarIcon = (): JSX.Element => {
+    if (!isNull(ctx.user) && !isUndefined(ctx.user)) {
+      if (ctx.user.profileImageId) {
+        return (
+          <Image
+            imageId={ctx.user!.profileImageId}
+            alt="User profile"
+            className={`rounded-circle mw-100 mh-100 ${styles.profileImage}`}
+          />
+        );
+      } else {
+        return <FaUserCircle />;
+      }
+    } else {
+      return <GoThreeBars />;
+    }
+  };
+
   return (
-    <div className={`btn-group navbar-toggler pr-0 ${styles.navbarToggler}`}>
+    <div className={`btn-group navbar-toggler pr-0 ml-auto ${styles.navbarToggler}`}>
       {isUndefined(ctx.user) ? (
         <div className="spinner-grow spinner-grow-sm text-light" role="status">
           <span className="sr-only">Loading...</span>
@@ -38,7 +57,7 @@ const MobileSettings = (props: Props) => {
                 styles.iconWrapper
               )}
             >
-              {!isNull(ctx.user) ? <FaUserCircle /> : <GoThreeBars />}
+              {getSidebarIcon()}
             </div>
           }
           direction="right"
@@ -74,6 +93,7 @@ const MobileSettings = (props: Props) => {
                     </Link>
 
                     <Link
+                      data-testid="controlPanelLink"
                       className="dropdown-item my-2"
                       to={{
                         pathname: '/control-panel',

@@ -13,21 +13,21 @@ const testsOrder = [
   { versions: [], sortedVersions: [] },
   {
     versions: ['0.10.0', '0.11.0', '0.12.0', '0.13.0', '0.14.0'],
-    sortedVersions: ['0.14.0', '0.13.0', '0.12.0', '0.11.0', '0.10.0'],
+    sortedVersions: ['0.14.0', '0.13.0', '0.12.0'],
   },
   {
     versions: ['1.3.1', '1.3.10', '1.3.3', '1.3.5', '1.3.6'],
-    sortedVersions: ['1.3.10', '1.3.6', '1.3.5', '1.3.3', '1.3.1'],
+    sortedVersions: ['1.3.10', '1.3.6', '1.3.5'],
   },
   {
     versions: ['1.8.2', '1.9.0', '1.9.1', '2.0.0-rc1', '2.0.0-rc2'],
-    sortedVersions: ['2.0.0-rc2', '2.0.0-rc1', '1.9.1', '1.9.0', '1.8.2'],
+    sortedVersions: ['2.0.0-rc2', '2.0.0-rc1', '1.9.1'],
   },
   {
-    versions: ['0.4.0', '0.5', '0.5.1', '0.6', '0.6.1'],
-    sortedVersions: ['0.6.1', '0.5.1', '0.4.0', '0.5', '0.6'],
+    versions: ['0.4.0', '0.5', '0.5.1', '0.6'],
+    sortedVersions: ['0.5.1', '0.4.0', '0.5'],
   },
-  { versions: ['0.1.0', '0.1.1', '0.1.2', '1.1.1'], sortedVersions: ['1.1.1', '0.1.2', '0.1.1', '0.1.0'] },
+  { versions: ['0.1.0', '0.1.1', '0.1.2', '1.1.1'], sortedVersions: ['1.1.1', '0.1.2', '0.1.1'] },
 ];
 
 const mockHistoryPush = jest.fn();
@@ -156,7 +156,7 @@ describe('Details', () => {
       const chartVersions = queryByTestId('chartVersions');
       expect(chartVersions).toBeInTheDocument();
       const versions = queryAllByTestId('version');
-      expect(versions).toHaveLength(4);
+      expect(versions).toHaveLength(2);
     });
 
     it('renders placeholder when no versions', () => {
