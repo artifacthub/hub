@@ -51,7 +51,7 @@
   opacity: 1;
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 575.98px) {
   .headingLink {
     opacity: 1;
     margin-left: -25px;

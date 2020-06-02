@@ -28,7 +28,7 @@ const ChartDetails = (props: Props) => {
         <p data-testid="chartVersions">-</p>
       ) : (
         <div className="mb-3" data-testid="chartVersions">
-          <ExpandableList items={props.allVersions} />
+          <ExpandableList items={props.allVersions} visibleItems={3} />
         </div>
       )}
 

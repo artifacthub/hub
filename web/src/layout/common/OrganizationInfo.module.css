@@ -42,7 +42,7 @@
   line-height: 1;
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 575.98px) {
   .dropdown {
     display: none !important;
   }

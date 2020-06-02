@@ -3,7 +3,7 @@
 exports[`MobileSettings creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="btn-group navbar-toggler pr-0 navbarToggler"
+    class="btn-group navbar-toggler pr-0 ml-auto navbarToggler"
   >
     <div
       class="d-inline-block d-md-none"
@@ -111,6 +111,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               </a>
               <a
                 class="dropdown-item my-2"
+                data-testid="controlPanelLink"
                 href="/control-panel"
               >
                 <div

@@ -57,7 +57,7 @@
   }
 }
 
-@media only screen and (max-width: 992px) and (min-width: 768px) {
+@media only screen and (max-width: 991.98px) and (min-width: 768px) {
   .sidebar {
     width: 250px;
     min-width: 250px;
@@ -69,7 +69,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767.98px) {
   .listGroup {
     flex-direction: row !important;
   }

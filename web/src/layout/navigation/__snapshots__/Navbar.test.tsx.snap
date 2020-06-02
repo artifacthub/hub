@@ -8,52 +8,56 @@ exports[`Navbar creates snapshot 1`] = `
     <div
       class="container"
     >
-      <a
-        class="navbar-brand d-flex align-items-center"
-        data-testid="brandLink"
-        href="/"
+      <div
+        class="d-flex flex-row mobileWrapper"
       >
-        <svg
-          class="mr-2"
-          fill="none"
-          height="1em"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <a
+          class="navbar-brand d-flex align-items-center"
+          data-testid="brandLink"
+          href="/"
         >
-          <path
-            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-          />
-        </svg>
-        <div
-          class="d-flex align-items-start"
-        >
-          <div
-            class="d-flex align-items-baseline"
+          <svg
+            class="mr-2"
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <span
-              class="mr-1"
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+            />
+          </svg>
+          <div
+            class="d-flex align-items-start"
+          >
+            <div
+              class="d-flex align-items-baseline"
             >
-              Artifact
-            </span>
+              <span
+                class="mr-1"
+              >
+                Artifact
+              </span>
+              <span
+                class="brand"
+              >
+                HUB
+              </span>
+            </div>
             <span
-              class="brand"
+              class="text-uppercase badge badge-pill badge-secondary d-flex align-items-center badge"
             >
-              HUB
+              Alpha
             </span>
           </div>
-          <span
-            class="text-uppercase badge badge-pill badge-secondary d-flex align-items-center badge"
-          >
-            Alpha
-          </span>
-        </div>
-      </a>
-      <div />
+        </a>
+        <div />
+      </div>
       <div
         class="collapse navbar-collapse"
         id="navbarNav"

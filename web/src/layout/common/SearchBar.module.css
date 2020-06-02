@@ -43,7 +43,7 @@
   top: 10px;
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 767.98px) {
   .searchBar {
     height: 30px;
     border-radius: 15px;

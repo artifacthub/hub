@@ -39,26 +39,28 @@ const Navbar = (props: Props) => {
       })}
     >
       <div className="container">
-        <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
-          <FiHexagon className="mr-2" />
-          <div className="d-flex align-items-start">
-            <div className="d-flex align-items-baseline">
-              <span className="mr-1">Artifact</span>
-              <span className={styles.brand}>HUB</span>
+        <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
+          <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
+            <FiHexagon className="mr-2" />
+            <div className="d-flex align-items-start">
+              <div className="d-flex align-items-baseline">
+                <span className="mr-1">Artifact</span>
+                <span className={styles.brand}>HUB</span>
+              </div>
+              <span
+                className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}
+              >
+                Alpha
+              </span>
             </div>
-            <span
-              className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}
-            >
-              Alpha
-            </span>
-          </div>
-        </Link>
+          </Link>
+
+          <MobileSettings setOpenSignUp={setOpenSignUp} setOpenLogIn={setOpenLogIn} privateRoute={props.privateRoute} />
+        </div>
 
         {openSignUp && <SignUp openSignUp={openSignUp} setOpenSignUp={setOpenSignUp} />}
 
         {openLogIn && <LogIn openLogIn={openLogIn} setOpenLogIn={setOpenLogIn} redirect={props.redirect} />}
-
-        <MobileSettings setOpenSignUp={setOpenSignUp} setOpenLogIn={setOpenLogIn} privateRoute={props.privateRoute} />
 
         {isUndefined(props.fromHome) && (
           <SearchBar

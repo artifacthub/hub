@@ -45,13 +45,13 @@
   width: 110px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767.98px) {
   .mainTitle {
     font-size: 2.5rem !important;
   }
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 575.98px) {
   .mainTitle {
     font-size: 2rem !important;
   }

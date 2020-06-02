@@ -19,7 +19,7 @@
   height: 1.5em;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767.98px) {
   .filters {
     font-size: 1rem;
   }

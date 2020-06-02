@@ -42,6 +42,12 @@
   font-size: 0.5rem !important;
 }
 
+@media (max-width: 767.98px) {
+  .mobileWrapper {
+    width: 100%;
+  }
+}
+
 @media (hover: hover) {
   .button:hover::before {
     content: '';

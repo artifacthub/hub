@@ -57,7 +57,7 @@ describe('MobileSettings', () => {
 
   describe('when user is signed in', () => {
     it('renders component', () => {
-      const { getByText } = render(
+      const { getByText, queryByAltText } = render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -68,8 +68,34 @@ describe('MobileSettings', () => {
       const signedText = getByText(/Signed in as/i);
       expect(signedText).toBeInTheDocument();
       expect(signedText).toHaveTextContent('Signed in as test');
+      expect(queryByAltText('User profile')).toBeNull();
 
       expect(getByText('Starred packages')).toBeInTheDocument();
+      expect(getByText('Control Panel')).toBeInTheDocument();
+      expect(getByText('Sign out')).toBeInTheDocument();
+    });
+
+    it('renders profile Image', () => {
+      const { getByText, getByAltText } = render(
+        <AppCtx.Provider
+          value={{
+            ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
+            dispatch: jest.fn(),
+          }}
+        >
+          <Router>
+            <MobileSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const signedText = getByText(/Signed in as/i);
+      expect(signedText).toBeInTheDocument();
+      expect(signedText).toHaveTextContent('Signed in as test');
+
+      expect(getByAltText('User profile')).toBeInTheDocument();
+      expect(getByText('Starred packages')).toBeInTheDocument();
+      expect(getByText('Control Panel')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 
@@ -86,6 +112,21 @@ describe('MobileSettings', () => {
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe('/user/packages/starred');
+    });
+
+    it('loads control panel page', () => {
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
+          <Router>
+            <MobileSettings {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
+      );
+
+      const link = getByTestId('controlPanelLink');
+      expect(link).toBeInTheDocument();
+      fireEvent.click(link);
+      expect(window.location.pathname).toBe('/control-panel');
     });
   });
 
