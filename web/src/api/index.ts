@@ -33,6 +33,12 @@ interface PackageRequest {
   packageKind?: string;
 }
 
+interface TransferChartRepositoryRequest {
+  chartRepositoryName: string;
+  toOrgName?: string;
+  fromOrgName?: string;
+}
+
 interface Result {
   [key: string]: any;
 }
@@ -235,6 +241,17 @@ export const API = {
       },
       body: JSON.stringify(chartRepo),
     });
+  },
+
+  transferChartRepository: (params: TransferChartRepositoryRequest): Promise<null | string> => {
+    return apiFetch(
+      `${API_BASE_URL}${getUrlContext(params.fromOrgName)}/chart-repositories/${params.chartRepositoryName}/transfer${
+        isUndefined(params.toOrgName) ? '' : `?org=${params.toOrgName}`
+      }`,
+      {
+        method: 'PUT',
+      }
+    );
   },
 
   checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {

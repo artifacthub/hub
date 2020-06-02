@@ -19,6 +19,43 @@ exports[`Chart Repository Card - packages section creates snapshot 1`] = `
       >
         <button
           class="btn btn-sm btn-link text-secondary text-center btnAction"
+          data-testid="transferChartRepoBtn"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              class="mr-sm-2 btnIcon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M16.05 12.05L21 17l-4.95 4.95-1.414-1.414 2.536-2.537L4 18v-2h13.172l-2.536-2.536 1.414-1.414zm-8.1-10l1.414 1.414L6.828 6 20 6v2H6.828l2.536 2.536L7.95 11.95 3 7l4.95-4.95z"
+                />
+              </g>
+            </svg>
+            <span
+              class="d-none d-sm-inline"
+            >
+              Transfer
+            </span>
+          </div>
+        </button>
+        <div
+          class="mx-2 my-auto d-none d-sm-inline separator"
+        />
+        <button
+          class="btn btn-sm btn-link text-secondary text-center btnAction"
           data-testid="updateChartRepoBtn"
         >
           <div

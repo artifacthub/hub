@@ -14,6 +14,7 @@ export const API = {
   addChartRepository: jest.fn(),
   deleteChartRepository: jest.fn(),
   updateChartRepository: jest.fn(),
+  transferChartRepository: jest.fn(),
   checkAvailability: jest.fn(),
   getUserOrganizations: jest.fn(),
   getOrganization: jest.fn(),

@@ -44,6 +44,7 @@ describe('Chart Repository Card - packages section', () => {
 
       expect(getByText(chartRepoMock.displayName!)).toBeInTheDocument();
       expect(getByTestId('updateChartRepoBtn')).toBeInTheDocument();
+      expect(getByTestId('transferChartRepoBtn')).toBeInTheDocument();
       expect(getByTestId('deleteChartRepoDropdownBtn')).toBeInTheDocument();
       expect(getByText(chartRepoMock.url!)).toBeInTheDocument();
       expect(getByText('Not processed yet, it will be processed automatically in less than 30m')).toBeInTheDocument();
@@ -90,6 +91,20 @@ describe('Chart Repository Card - packages section', () => {
       expect(setModalStatusMock).toHaveBeenCalledWith({
         open: true,
         chartRepository: chartRepoMock,
+      });
+    });
+
+    it('opens Transfer Chart Repo when Transfer button is clicked', () => {
+      const { getByTestId, getByText } = render(<Card {...defaultProps} />);
+
+      const btn = getByTestId('transferChartRepoBtn');
+      expect(btn).toBeInTheDocument();
+
+      fireEvent.click(btn);
+
+      waitFor(() => {
+        expect(getByTestId('transferChartRepoForm')).toBeInTheDocument();
+        expect(getByText('Transfer chart repository')).toBeInTheDocument();
       });
     });
   });
