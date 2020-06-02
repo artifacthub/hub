@@ -36,6 +36,7 @@
 {{ template "chart_repositories/get_chart_repository_packages_digest.sql" }}
 {{ template "chart_repositories/get_org_chart_repositories.sql" }}
 {{ template "chart_repositories/get_user_chart_repositories.sql" }}
+{{ template "chart_repositories/transfer_chart_repository.sql" }}
 {{ template "chart_repositories/update_chart_repository.sql" }}
 
 {{ template "images/get_image.sql" }}

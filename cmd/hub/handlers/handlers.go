@@ -150,6 +150,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.ChartRepositories.GetOwnedByUser)
 				r.Post("/", h.ChartRepositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/transfer", h.ChartRepositories.Transfer)
 					r.Put("/", h.ChartRepositories.Update)
 					r.Delete("/", h.ChartRepositories.Delete)
 				})
@@ -180,6 +181,7 @@ func (h *Handlers) setupRouter() {
 					r.Get("/", h.ChartRepositories.GetOwnedByOrg)
 					r.Post("/", h.ChartRepositories.Add)
 					r.Route("/{repoName}", func(r chi.Router) {
+						r.Put("/transfer", h.ChartRepositories.Transfer)
 						r.Put("/", h.ChartRepositories.Update)
 						r.Delete("/", h.ChartRepositories.Delete)
 					})
