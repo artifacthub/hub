@@ -5,6 +5,7 @@ import moment from 'moment';
 import React, { useContext, useRef, useState } from 'react';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
+import { RiArrowLeftRightLine } from 'react-icons/ri';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -15,6 +16,7 @@ import { ChartRepository } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import Modal from '../../../common/Modal';
 import styles from './Card.module.css';
+import TransferChartRepositoryModal from './TransferModal';
 
 interface ModalStatus {
   open: boolean;
@@ -32,6 +34,7 @@ const ChartRepositoryCard = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState(false);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
+  const [transferModalStatus, setTransferModalStatus] = useState<boolean>(false);
   const dropdown = useRef(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
   const hasErrors =
@@ -111,7 +114,33 @@ const ChartRepositoryCard = (props: Props) => {
       <div className="d-flex flex-row w-100 justify-content-between">
         <h5 className="mb-1">{props.chartRepository.displayName || props.chartRepository.name}</h5>
 
+        {transferModalStatus && (
+          <TransferChartRepositoryModal
+            open={true}
+            chartRepository={props.chartRepository}
+            onSuccess={props.onSuccess}
+            onAuthError={props.onAuthError}
+            onClose={() => setTransferModalStatus(false)}
+          />
+        )}
+
         <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
+          <button
+            data-testid="transferChartRepoBtn"
+            className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              setTransferModalStatus(true);
+            }}
+          >
+            <div className="d-flex flex-row align-items-center">
+              <RiArrowLeftRightLine className={`mr-sm-2 ${styles.btnIcon}`} />
+              <span className="d-none d-sm-inline">Transfer</span>
+            </div>
+          </button>
+
+          <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
+
           <button
             data-testid="updateChartRepoBtn"
             className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
