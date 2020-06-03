@@ -1,0 +1,39 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish-docker-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
+      - name: Extract tag name
+        id: extract_tag_name
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/}
+      - name: Build hub image
+        run: |
+          docker build \
+            -f cmd/hub/Dockerfile \
+            -t artifacthub/hub:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/hub:latest .
+      - name: Push hub image
+        run: docker push artifacthub/hub
+      - name: Build db-migrator image
+        run: |
+          docker build \
+            -f database/migrations/Dockerfile \
+            -t artifacthub/db-migrator:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/db-migrator:latest .
+      - name: Push db-migrator image
+        run: docker push artifacthub/db-migrator
+      - name: Build chart-tracker image
+        run: docker build \
+          -f cmd/chart-tracker/Dockerfile \
+          -t artifacthub/chart-tracker:${{steps.extract_tag_name.outputs.tag}} \
+          -t artifacthub/chart-tracker:latest .
+      - name: Push chart-tracker image
+        run: docker push artifacthub/chart-tracker
