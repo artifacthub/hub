@@ -56,11 +56,11 @@ Before proceeding, please make sure your system meets the following requirements
 
 ### Installing the chart
 
-To install the chart with the release name `my-hub` run:
+To install the chart with the release name `hub` run:
 
 ```bash
 $ helm repo add artifact-hub https://artifacthub.github.io/hub
-$ helm install --name my-hub artifact-hub/artifact-hub
+$ helm install hub artifact-hub/artifact-hub
 ```
 
 The command deploys Artifact Hub on the Kubernetes cluster using the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -85,10 +85,10 @@ $ kubectl create job initial-chart-tracker-job --from=cronjob/chart-tracker
 
 ### Uninstalling the Chart
 
-To uninstall the `my-hub` deployment run:
+To uninstall the `hub` deployment run:
 
 ```bash
-$ helm uninstall my-hub
+$ helm uninstall hub
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
