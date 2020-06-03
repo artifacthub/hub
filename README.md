@@ -14,8 +14,8 @@ Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. T
 
 The Artifact Hub is an open source project. Aside from contributing code and feature suggestions you can also engage via:
 
-* Attending a meeting. Meetings are on the 2nd and 4th Wednesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
-* Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
+- Attending a meeting. Meetings are on the 2nd and 4th Wednesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
+- Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
 
 ## Process
 
@@ -28,16 +28,17 @@ We're envisioning that Artifact Hub will have three main components:
 3. Operational responsibilities. A number of organizations are likely to depend on Artifact Hub not to “break the build” and so the maintainers will need to provide a high level of uptime, with CNCF funding the hosting and related systems
 
 ## Screenshots
+
 <table>
     <tr>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot1.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot2.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot3.jpg?raw=true"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot1.jpg"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot2.jpg"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot3.jpg"></td>
     </tr>
     <tr>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot4.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot5.jpg?raw=true"></td>
-        <td width="33%"><img src="https://github.com/artifacthub/hub/blob/master/docs/screenshot6.jpg?raw=true"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot4.jpg"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot5.jpg"></td>
+        <td width="33%"><img src="https://artifacthub.github.io/hub/screenshot6.jpg"></td>
     </tr>
 </table>
 
@@ -53,47 +54,41 @@ Before proceeding, please make sure your system meets the following requirements
   - Nginx Ingress controller enabled (`minikube addons enable ingress`)
 - [Helm](https://helm.sh/docs/intro/install/) installed
 
-### Build docker images
+### Installing the chart
 
-At the moment, the Artifact Hub Docker images haven't been published yet to any Docker registry, so you need to build them locally to make them available to your local cluster.
+To install the chart with the release name `my-hub` run:
 
-```console
-$ git clone https://github.com/artifacthub/hub && cd hub
-$ eval $(minikube docker-env)
-$ scripts/docker-build.sh
+```bash
+$ helm repo add artifact-hub https://artifacthub.github.io/hub
+$ helm install --name my-hub artifact-hub/artifact-hub
 ```
 
-*This may take a few minutes*.
-
-### Install chart
-
-Once all images have been built, you can proceed with the chart installation.
-
-```console
-$ helm dep update chart
-$ helm install hub chart
-```
+The command deploys Artifact Hub on the Kubernetes cluster using the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
 
 As soon as all pods are up and running, you can access the Artifact Hub by visiting the address specified in your Ingress object in your browser (`http://192.168.64.18` in the case shown below).
 
-```console
+```bash
 $ kubectl get ingress
 NAME   HOSTS   ADDRESS         PORTS   AGE
 hub    *       192.168.64.18   80      6s
 ```
 
+When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo** user and a couple of sample repositories are registered automatically. The credentials for the demo user are: `demo@artifacthub.io` / `changeme`. You can change the password from the control panel once you log in.
+
 ### Populating packages
 
 The chart installs a `cronjob` in charge of launching periodically (every 30m) a process called `chart-tracker` which indexes charts. If you don't want to wait until it's triggered by the cronjob, you can create a `job` manually using the following command:
 
-```console
+```bash
 $ kubectl create job initial-chart-tracker-job --from=cronjob/chart-tracker
 ```
 
-### Uninstall
+### Uninstalling the Chart
 
-Once you are done, you can clean up all Kubernetes resources created by uninstalling the chart:
+To uninstall the `my-hub` deployment run:
 
-```console
-$ helm uninstall hub
+```bash
+$ helm uninstall my-hub
 ```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.

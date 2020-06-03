@@ -1,20 +1,32 @@
 apiVersion: v1
 entries:
-  artifacthub:
+  artifact-hub:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-06-03T12:49:47.415501+02:00"
+    created: "2020-06-03T14:25:23.782974+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: https://kubernetes-charts.storage.googleapis.com/
       version: 8.2.1
-    description: Artifact Hub Helm chart
-    digest: 84a87987ae432074afb70209d35bed0df7e1e7458165b56ace1d26e1e36b55fe
+    description: Artifact Hub is a web-based application that enables finding, installing,
+      and publishing Kubernetes packages.
+    digest: 2817a1830890b17cf2aeadfde4b63069fa523afce9e0430c8cea248959be0704
+    home: https://artifacthub.io
     icon: https://artifacthub.github.io/hub/logo.png
-    name: artifacthub
+    keywords:
+    - kubernetes
+    - helm
+    - falco
+    - opa
+    maintainers:
+    - email: tegioz@icloud.com
+      name: Sergio
+    - email: cynthiasg@icloud.com
+      name: Cintia
+    name: artifact-hub
     type: application
     urls:
-    - https://artifacthub.github.io/hub/artifacthub-0.1.0.tgz
+    - https://artifacthub.github.io/hub/artifact-hub-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-03T12:49:47.410386+02:00"
+generated: "2020-06-03T14:25:23.779494+02:00"
