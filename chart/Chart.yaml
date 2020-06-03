@@ -1,10 +1,21 @@
 apiVersion: v2
-name: artifacthub
-description: Artifact Hub Helm chart
+name: artifact-hub
+description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
 version: 0.1.0
 appVersion: 0.1.0
+home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/logo.png
+keywords:
+  - kubernetes
+  - helm
+  - falco
+  - opa
+maintainers:
+  - name: Sergio
+    email: tegioz@icloud.com
+  - name: Cintia
+    email: cynthiasg@icloud.com
 dependencies:
   - name: postgresql
     version: 8.2.1
