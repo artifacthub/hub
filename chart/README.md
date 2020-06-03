@@ -76,11 +76,11 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `hub.server.oauth.github.clientID`      | Github oauth client id            |                                            |
 | `hub.server.oauth.github.clientSecret`  | Github oauth client secret        |                                            |
 | `hub.server.oauth.github.redirectURL`   | Github oauth redirect url         |                                            |
-| `hub.server.oauth.github.scopes`        | Github oauth redirect url         | `[read:user, user:email]`                  |
+| `hub.server.oauth.github.scopes`        | Github oauth scopes               | `[read:user, user:email]`                  |
 | `hub.server.oauth.google.clientID`      | Google oauth client id            |                                            |
 | `hub.server.oauth.google.clientSecret`  | Google oauth client secret        |                                            |
 | `hub.server.oauth.google.redirectURL`   | Google oauth redirect url         |                                            |
-| `hub.server.oauth.google.scopes`        | Google oauth redirect url         | `[userinfo.email, userinfo.profile]`       |
+| `hub.server.oauth.google.scopes`        | Google oauth scopes               | `[userinfo.email, userinfo.profile]`       |
 | `hub.email.fromName`                    | From name used in emails          |                                            |
 | `hub.email.from`                        | From address used in emails       |                                            |
 | `hub.email.replyTo`                     | Reply-to address used in emails   |                                            |
