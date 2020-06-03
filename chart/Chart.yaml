@@ -1,9 +1,10 @@
 apiVersion: v2
-name: hub
-description: Hub Helm chart
+name: artifacthub
+description: Artifact Hub Helm chart
 type: application
 version: 0.1.0
 appVersion: 0.1.0
+icon: https://artifacthub.github.io/hub/logo.png
 dependencies:
   - name: postgresql
     version: 8.2.1
