@@ -31,8 +31,8 @@ interface FiltersProp {
 interface Props {
   isSearching: boolean;
   setIsSearching: Dispatch<SetStateAction<boolean>>;
-  scrollPosition: number;
-  setScrollPosition: Dispatch<SetStateAction<number>>;
+  scrollPosition?: number;
+  setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
   text?: string;
   pageNumber: number;
   filters: FiltersProp;
@@ -222,14 +222,14 @@ const SearchView = (props: Props) => {
         // Update scroll position
         if (history.action === 'PUSH') {
           // When search page is open from detail page
-          if (props.fromDetail) {
+          if (props.fromDetail && !isUndefined(scrollPosition)) {
             updateWindowScrollPosition(scrollPosition);
             // When search has changed
           } else {
             updateWindowScrollPosition(0);
           }
           // On pop action and when scroll position has been previously saved
-        } else if (scrollPosition !== 0) {
+        } else if (!isUndefined(scrollPosition)) {
           updateWindowScrollPosition(scrollPosition);
         }
       }

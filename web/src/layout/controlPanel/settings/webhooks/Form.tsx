@@ -727,11 +727,14 @@ const WebhookForm = (props: Props) => {
               </div>
             </div>
 
-            {!isNull(apiError) && (
-              <div className="alert alert-danger mt-3" role="alert" ref={errorWrapper}>
-                {apiError}
+            <div
+              className={classnames(styles.alertWrapper, { [styles.isAlertActive]: !isNull(apiError) })}
+              ref={errorWrapper}
+            >
+              <div className="alert alert-danger mt-3 mb-0" role="alert">
+                {!isNull(apiError) ? apiError : ''}
               </div>
-            )}
+            </div>
           </div>
         </form>
       </div>

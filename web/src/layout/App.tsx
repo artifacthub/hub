@@ -33,7 +33,7 @@ const getQueryParam = (query: string, param: string): string | undefined => {
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
 
   return (
     <AppCtxProvider>
