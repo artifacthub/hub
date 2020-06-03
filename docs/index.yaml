@@ -3,7 +3,7 @@ entries:
   artifact-hub:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-06-03T15:41:45.178512+02:00"
+    created: "2020-06-03T16:21:23.58339+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -11,7 +11,7 @@ entries:
       version: 8.2.1
     description: Artifact Hub is a web-based application that enables finding, installing,
       and publishing Kubernetes packages.
-    digest: d05a6dc905403be90c34b6b43dfaeb268a8bcb79b44f76dfdfa116d47f6ae566
+    digest: 48056f03816be6b08ca38922e280d0359a09b1fed91661beecda11ae87a33d09
     home: https://artifacthub.io
     icon: https://artifacthub.github.io/hub/logo.png
     keywords:
@@ -29,4 +29,4 @@ entries:
     urls:
     - https://artifacthub.github.io/hub/artifact-hub-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-03T15:41:45.175134+02:00"
+generated: "2020-06-03T16:21:23.579739+02:00"
