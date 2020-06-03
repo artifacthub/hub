@@ -41,6 +41,10 @@
   white-space: normal;
 }
 
+.md table {
+  margin-bottom: 16px;
+}
+
 .md table th,
 .md table tr,
 .md table td {
