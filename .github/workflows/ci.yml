@@ -174,7 +174,7 @@ jobs:
         working-directory: ./chart
         run: |
           helm dep update
-          helm upgrade --namespace staging --reuse-values --values values-staging.yaml --set imageTag=$GITHUB_SHA hub .
+          helm upgrade --namespace staging --reuse-values --values values-staging.yaml --set imageTag=$GITHUB_SHA artifact-hub .
 
   deploy-production:
     if: github.ref == 'refs/heads/production'
@@ -202,4 +202,4 @@ jobs:
         working-directory: ./chart
         run: |
           helm dep update
-          helm upgrade --namespace production --reuse-values --values values-production.yaml --set imageTag=$GITHUB_SHA hub .
+          helm upgrade --namespace production --reuse-values --values values-production.yaml --set imageTag=$GITHUB_SHA artifact-hub .
