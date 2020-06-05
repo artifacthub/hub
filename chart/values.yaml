@@ -55,6 +55,9 @@ hub:
         scopes:
           - https://www.googleapis.com/auth/userinfo.email
           - https://www.googleapis.com/auth/userinfo.profile
+    limiter:
+      enabled: false
+    xffIndex: 0
   email:
     fromName: ""
     from: ""

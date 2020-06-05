@@ -81,6 +81,10 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `hub.server.oauth.google.clientSecret`  | Google oauth client secret        |                                            |
 | `hub.server.oauth.google.redirectURL`   | Google oauth redirect url         |                                            |
 | `hub.server.oauth.google.scopes`        | Google oauth scopes               | `[userinfo.email, userinfo.profile]`       |
+| `hub.server.limiter.enabled`            | Enable rate limiter               | `false`                                    |
+| `hub.server.limiter.period`             | Rate limiter period (1m, etc)     |                                            |
+| `hub.server.limiter.limit`              | Rate limiter limit (reqs/period)  |                                            |
+| `hub.server.xffIndex`                   | X-Forwarded-For IP index          | 0                                          |
 | `hub.email.fromName`                    | From name used in emails          |                                            |
 | `hub.email.from`                        | From address used in emails       |                                            |
 | `hub.email.replyTo`                     | Reply-to address used in emails   |                                            |

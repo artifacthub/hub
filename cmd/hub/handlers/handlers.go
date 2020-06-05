@@ -23,7 +23,12 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"github.com/ulule/limiter/v3"
+	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
+	"github.com/ulule/limiter/v3/drivers/store/memory"
 )
+
+var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 
 // Services is a wrapper around several internal services used by the handlers.
 type Services struct {
@@ -101,10 +106,19 @@ func (h *Handlers) setupRouter() {
 	r := chi.NewRouter()
 
 	// Setup middleware and special handlers
-	r.Use(h.MetricsCollector)
-	r.Use(middleware.RealIP)
-	r.Use(Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(RealIP(h.cfg.GetInt("server.xffIndex")))
+	r.Use(Logger)
+	if h.cfg.GetBool("server.limiter.enabled") {
+		limiterRate := limiter.Rate{
+			Period: h.cfg.GetDuration("server.limiter.period"),
+			Limit:  h.cfg.GetInt64("server.limiter.limit"),
+		}
+		limiterStore := memory.NewStore()
+		rateLimiter := limiter.New(limiterStore, limiterRate)
+		r.Use(stdlib.NewMiddleware(rateLimiter).Handler)
+	}
+	r.Use(h.MetricsCollector)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
 	}
@@ -258,6 +272,27 @@ func (h *Handlers) MetricsCollector(next http.Handler) http.Handler {
 		}()
 		next.ServeHTTP(ww, r)
 	})
+}
+
+// RealIP is an http middleware that sets the request remote addr to the result
+// of extracting the IP in the requested index from the X-Forwarded-For header.
+// Positives indexes start by 0 and work like usual slice indexes. Negative
+// indexes are allowed being -1 the last entry in the slice, -2 the next, etc.
+func RealIP(i int) func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if xff := r.Header.Get(xForwardedFor); xff != "" {
+				ips := strings.Split(xff, ",")
+				if i >= 0 && len(ips) > i {
+					r.RemoteAddr = strings.TrimSpace(ips[i])
+				}
+				if i < 0 && len(ips)+i >= 0 {
+					r.RemoteAddr = strings.TrimSpace(ips[len(ips)+i])
+				}
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
 }
 
 // Logger is an http middleware that logs some information about requests
