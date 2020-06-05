@@ -284,10 +284,10 @@ func RealIP(i int) func(next http.Handler) http.Handler {
 			if xff := r.Header.Get(xForwardedFor); xff != "" {
 				ips := strings.Split(xff, ",")
 				if i >= 0 && len(ips) > i {
-					r.RemoteAddr = strings.TrimSpace(ips[i])
+					r.RemoteAddr = strings.TrimSpace(ips[i]) + ":"
 				}
 				if i < 0 && len(ips)+i >= 0 {
-					r.RemoteAddr = strings.TrimSpace(ips[len(ips)+i])
+					r.RemoteAddr = strings.TrimSpace(ips[len(ips)+i]) + ":"
 				}
 			}
 			next.ServeHTTP(w, r)
