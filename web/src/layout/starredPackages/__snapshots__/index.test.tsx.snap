@@ -88,13 +88,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                   href="/package/chart/stable/airflow"
                 >
                   <div
-                    class="card-body position-relative body"
+                    class="card-body d-flex flex-column body"
                   >
                     <div
-                      class="d-flex align-items-start justify-content-between mb-3"
+                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                     >
                       <div
-                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                       >
                         <div
                           class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -107,19 +107,63 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 flex-grow-1 truncateWrapper"
+                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-2 title"
+                            class="d-flex flex-row justify-content-between flex-fill"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                             >
-                              airflow
+                              <div
+                                class="h5 d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  airflow
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex align-items-start text-uppercase ml-auto kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div
+                                    class="starBadgeNumber"
+                                  >
+                                    1
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
                             </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                           >
                             <div
                               class="mr-2"
@@ -186,42 +230,6 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="d-flex align-items-center text-uppercase kind"
-                      >
-                        <span
-                          class="badge badge-pill badge-light mr-2 starBadge"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <svg
-                              class="mr-1"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                              />
-                            </svg>
-                            <div
-                              class="starBadgeNumber"
-                            >
-                              1
-                            </div>
-                          </div>
-                        </span>
-                        <img
-                          alt="Icon"
-                          class="icon"
-                          src="/static/media/helm-chart.svg"
-                        />
-                      </div>
                     </div>
                     <p
                       class="mb-0 card-text overflow-hidden description"
@@ -245,13 +253,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                   href="/package/chart/incubator/cassandra"
                 >
                   <div
-                    class="card-body position-relative body"
+                    class="card-body d-flex flex-column body"
                   >
                     <div
-                      class="d-flex align-items-start justify-content-between mb-3"
+                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                     >
                       <div
-                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                       >
                         <div
                           class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -264,19 +272,63 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 flex-grow-1 truncateWrapper"
+                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-2 title"
+                            class="d-flex flex-row justify-content-between flex-fill"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                             >
-                              cassandra
+                              <div
+                                class="h5 d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  cassandra
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex align-items-start text-uppercase ml-auto kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div
+                                    class="starBadgeNumber"
+                                  >
+                                    1
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
                             </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                           >
                             <div
                               class="mr-2"
@@ -343,42 +395,6 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="d-flex align-items-center text-uppercase kind"
-                      >
-                        <span
-                          class="badge badge-pill badge-light mr-2 starBadge"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <svg
-                              class="mr-1"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                              />
-                            </svg>
-                            <div
-                              class="starBadgeNumber"
-                            >
-                              1
-                            </div>
-                          </div>
-                        </span>
-                        <img
-                          alt="Icon"
-                          class="icon"
-                          src="/static/media/helm-chart.svg"
-                        />
-                      </div>
                     </div>
                     <p
                       class="mb-0 card-text overflow-hidden description"
@@ -402,13 +418,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                   href="/package/chart/stable/prometheus"
                 >
                   <div
-                    class="card-body position-relative body"
+                    class="card-body d-flex flex-column body"
                   >
                     <div
-                      class="d-flex align-items-start justify-content-between mb-3"
+                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                     >
                       <div
-                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                       >
                         <div
                           class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -421,19 +437,63 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 flex-grow-1 truncateWrapper"
+                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-2 title"
+                            class="d-flex flex-row justify-content-between flex-fill"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                             >
-                              prometheus
+                              <div
+                                class="h5 d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  prometheus
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex align-items-start text-uppercase ml-auto kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div
+                                    class="starBadgeNumber"
+                                  >
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/helm-chart.svg"
+                              />
                             </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                           >
                             <div
                               class="mr-2"
@@ -500,42 +560,6 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="d-flex align-items-center text-uppercase kind"
-                      >
-                        <span
-                          class="badge badge-pill badge-light mr-2 starBadge"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <svg
-                              class="mr-1"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                              />
-                            </svg>
-                            <div
-                              class="starBadgeNumber"
-                            >
-                              2
-                            </div>
-                          </div>
-                        </span>
-                        <img
-                          alt="Icon"
-                          class="icon"
-                          src="/static/media/helm-chart.svg"
-                        />
-                      </div>
                     </div>
                     <p
                       class="mb-0 card-text overflow-hidden description"
@@ -559,13 +583,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                   href="/package/falco/traefik"
                 >
                   <div
-                    class="card-body position-relative body"
+                    class="card-body d-flex flex-column body"
                   >
                     <div
-                      class="d-flex align-items-start justify-content-between mb-3"
+                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                     >
                       <div
-                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                       >
                         <div
                           class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -578,19 +602,63 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 flex-grow-1 truncateWrapper"
+                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-2 title"
+                            class="d-flex flex-row justify-content-between flex-fill"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                             >
-                              Traefik
+                              <div
+                                class="h5 d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Traefik
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex align-items-start text-uppercase ml-auto kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div
+                                    class="starBadgeNumber"
+                                  >
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/falco-rules.svg"
+                              />
                             </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                           >
                             <div
                               class="mr-2"
@@ -632,42 +700,6 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="d-flex align-items-center text-uppercase kind"
-                      >
-                        <span
-                          class="badge badge-pill badge-light mr-2 starBadge"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <svg
-                              class="mr-1"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                              />
-                            </svg>
-                            <div
-                              class="starBadgeNumber"
-                            >
-                              2
-                            </div>
-                          </div>
-                        </span>
-                        <img
-                          alt="Icon"
-                          class="icon"
-                          src="/static/media/falco-rules.svg"
-                        />
-                      </div>
                     </div>
                     <p
                       class="mb-0 card-text overflow-hidden description"
@@ -691,13 +723,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                   href="/package/opa/trusted-registry-images"
                 >
                   <div
-                    class="card-body position-relative body"
+                    class="card-body d-flex flex-column body"
                   >
                     <div
-                      class="d-flex align-items-start justify-content-between mb-3"
+                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                     >
                       <div
-                        class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                       >
                         <div
                           class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -710,19 +742,63 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 flex-grow-1 truncateWrapper"
+                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-2 title"
+                            class="d-flex flex-row justify-content-between flex-fill"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                             >
-                              Trusted Registry Images
+                              <div
+                                class="h5 d-flex flex-row align-items-center"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Trusted Registry Images
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex align-items-start text-uppercase ml-auto kind"
+                            >
+                              <span
+                                class="badge badge-pill badge-light mr-2 starBadge"
+                              >
+                                <div
+                                  class="d-flex align-items-center"
+                                >
+                                  <svg
+                                    class="mr-1"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                    />
+                                  </svg>
+                                  <div
+                                    class="starBadgeNumber"
+                                  >
+                                    2
+                                  </div>
+                                </div>
+                              </span>
+                              <img
+                                alt="Icon"
+                                class="icon"
+                                src="/static/media/opa-policies.svg"
+                              />
                             </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                           >
                             <div
                               class="mr-2"
@@ -763,42 +839,6 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-flex align-items-center text-uppercase kind"
-                      >
-                        <span
-                          class="badge badge-pill badge-light mr-2 starBadge"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <svg
-                              class="mr-1"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 576 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                              />
-                            </svg>
-                            <div
-                              class="starBadgeNumber"
-                            >
-                              2
-                            </div>
-                          </div>
-                        </span>
-                        <img
-                          alt="Icon"
-                          class="icon"
-                          src="/static/media/opa-policies.svg"
-                        />
                       </div>
                     </div>
                     <p

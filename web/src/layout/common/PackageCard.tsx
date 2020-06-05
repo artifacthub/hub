@@ -38,9 +38,9 @@ const PackageCard = (props: Props) => {
             state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
           }}
         >
-          <div className={`card-body position-relative ${styles.body}`}>
-            <div className="d-flex align-items-start justify-content-between mb-3">
-              <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
+          <div className={`card-body d-flex flex-column ${styles.body}`}>
+            <div className="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100">
+              <div className={`d-flex align-self-stretch flex-grow-1 ${styles.truncateWrapper}`}>
                 <div
                   className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
                 >
@@ -51,21 +51,37 @@ const PackageCard = (props: Props) => {
                   />
                 </div>
 
-                <div className={`ml-3 flex-grow-1 ${styles.truncateWrapper}`}>
-                  <div className={`card-title font-weight-bolder mb-2 ${styles.title}`}>
-                    <div className="h5 d-flex flex-row align-items-center">
-                      {props.package.displayName || props.package.name}
-                      {!isNull(props.package.deprecated) && props.package.deprecated && (
-                        <div
-                          className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}
-                        >
-                          Deprecated
-                        </div>
+                <div className={`ml-3 d-flex flex-column justify-content-center flex-grow-1 ${styles.truncateWrapper}`}>
+                  <div className="d-flex flex-row justify-content-between flex-fill">
+                    <div
+                      className={`card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 ${styles.title}`}
+                    >
+                      <div className="h5 d-flex flex-row align-items-center">
+                        <div className="text-truncate">{props.package.displayName || props.package.name}</div>
+                        {!isNull(props.package.deprecated) && props.package.deprecated && (
+                          <div
+                            className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}
+                          >
+                            Deprecated
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className={`d-flex align-items-start text-uppercase ml-auto ${styles.kind}`}>
+                      {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
+                        <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
+                          <div className="d-flex align-items-center">
+                            <FaStar className="mr-1" />
+                            <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
+                          </div>
+                        </span>
                       )}
+                      <PackageIcon className={styles.icon} kind={props.package.kind} />
                     </div>
                   </div>
 
-                  <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
+                  <div className={`card-subtitle d-flex flex-wrap flex-fill ${styles.subtitle}`}>
                     {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                       <OrganizationInfo
                         className="mr-2"
@@ -156,18 +172,6 @@ const PackageCard = (props: Props) => {
                     })()}
                   </div>
                 </div>
-              </div>
-
-              <div className={`d-flex align-items-center text-uppercase ${styles.kind}`}>
-                {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
-                  <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
-                    <div className="d-flex align-items-center">
-                      <FaStar className="mr-1" />
-                      <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
-                    </div>
-                  </span>
-                )}
-                <PackageIcon className={styles.icon} kind={props.package.kind} />
               </div>
             </div>
 

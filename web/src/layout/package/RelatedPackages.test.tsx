@@ -51,13 +51,16 @@ describe('RelatedPackages', () => {
 
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
-        expect(API.searchPackages).toHaveBeenCalledWith({
-          deprecated: false,
-          filters: {},
-          limit: 9,
-          offset: 0,
-          text: 'packageName or key1 or key2 or key3',
-        });
+        expect(API.searchPackages).toHaveBeenCalledWith(
+          {
+            deprecated: false,
+            filters: {},
+            limit: 9,
+            offset: 0,
+            text: 'packageName or key1 or key2 or key3',
+          },
+          false
+        );
       });
       expect(getByText('Related packages')).toBeInTheDocument();
     });

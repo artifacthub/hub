@@ -27,6 +27,13 @@
   height: 1.5em;
 }
 
+@media only screen and (min-width: 768px) {
+  .list {
+    flex-basis: calc(100% - 250px);
+    max-width: calc(100% - 250px);
+  }
+}
+
 @media (hover: hover) {
   .btnMobileFilters:hover {
     background-color: var(--color-black-15) !important;

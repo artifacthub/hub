@@ -122,7 +122,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -145,7 +145,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -253,7 +253,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -276,7 +276,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -383,7 +383,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -406,7 +406,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -514,7 +514,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -537,7 +537,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -645,7 +645,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -668,7 +668,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -786,7 +786,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -809,7 +809,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -917,7 +917,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -940,7 +940,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1047,7 +1047,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -1070,7 +1070,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1177,7 +1177,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -1200,7 +1200,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1308,7 +1308,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="p-0 border-0 text-truncate text-dark link"
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
                             >
                               <div
                                 class="text-truncate"
@@ -1331,7 +1331,7 @@ exports[`Package index creates snapshot 2`] = `
                             class="d-none d-md-inline-block mx50"
                           >
                             <button
-                              class="text-truncate p-0 border-0 text-dark  link"
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
                               data-testid="repoLink"
                             >
                               <div

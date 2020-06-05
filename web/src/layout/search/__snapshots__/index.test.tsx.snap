@@ -70,7 +70,7 @@ exports[`Search index creates snapshot 1`] = `
       role="main"
     >
       <div
-        class="flex-grow-1 mw-100"
+        class="flex-grow-1 list"
       />
     </main>
   </div>
@@ -639,7 +639,7 @@ exports[`Search index creates snapshot 2`] = `
         </div>
       </nav>
       <div
-        class="flex-grow-1 mw-100"
+        class="flex-grow-1 list"
       >
         <div
           class="d-none d-md-block row no-gutters mb-2"
@@ -657,13 +657,13 @@ exports[`Search index creates snapshot 2`] = `
                 href="/package/chart/stable/undefined"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -676,19 +676,36 @@ exports[`Search index creates snapshot 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="d-flex flex-row justify-content-between flex-fill"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                           >
-                            centrifugo
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                centrifugo
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                         >
                           <div
                             class="mr-2 text-truncate"
@@ -741,15 +758,6 @@ exports[`Search index creates snapshot 2`] = `
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </div>
                   </div>
                   <p
                     class="mb-0 card-text overflow-hidden description"
@@ -773,13 +781,13 @@ exports[`Search index creates snapshot 2`] = `
                 href="/package/chart/incubator/undefined"
               >
                 <div
-                  class="card-body position-relative body"
+                  class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3"
+                    class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
@@ -791,19 +799,36 @@ exports[`Search index creates snapshot 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 flex-grow-1 truncateWrapper"
+                        class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-2 title"
+                          class="d-flex flex-row justify-content-between flex-fill"
                         >
                           <div
-                            class="h5 d-flex flex-row align-items-center"
+                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
                           >
-                            kafka
+                            <div
+                              class="h5 d-flex flex-row align-items-center"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                kafka
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap mw-100 mt-1 subtitle"
+                          class="card-subtitle d-flex flex-wrap flex-fill subtitle"
                         >
                           <div
                             class="mr-2 text-truncate"
@@ -855,15 +880,6 @@ exports[`Search index creates snapshot 2`] = `
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="d-flex align-items-center text-uppercase kind"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
                     </div>
                   </div>
                   <p

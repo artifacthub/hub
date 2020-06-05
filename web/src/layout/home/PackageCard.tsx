@@ -20,6 +20,14 @@ interface Props {
 const PackageCard = (props: Props) => {
   const history = useHistory();
 
+  const isRepeatedRepoName = (): boolean => {
+    if (props.package.kind !== PackageKind.Chart || !isNull(props.package.userAlias)) return false;
+    return (
+      (props.package.chartRepository!.displayName || props.package.chartRepository!.name) ===
+      (props.package.organizationDisplayName || props.package.organizationName)
+    );
+  };
+
   return (
     <div className={`card mb-3 mw-100 ${styles.card}`}>
       <Link
@@ -71,31 +79,35 @@ const PackageCard = (props: Props) => {
                           <>
                             <div className="d-flex flex-row align-items-baseline text-truncate">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
-                              {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                <>
-                                  <div className={`d-none d-md-inline-block ${styles.mx50}`}>
-                                    <OrganizationInfo
-                                      className="mr-0"
-                                      btnClassName="text-truncate mw-100"
-                                      organizationName={props.package.organizationName}
-                                      organizationDisplayName={props.package.organizationDisplayName}
-                                      deprecated={props.package.deprecated}
-                                      visibleLegend={false}
-                                    />
-                                  </div>
-                                  <div className={`d-inline-block d-md-none ${styles.mx50}`}>
-                                    <div className="d-inline-block mr-0 text-dark">
-                                      {props.package.organizationDisplayName || props.package.organizationName}
+                              {!isUndefined(props.package.organizationName) &&
+                                props.package.organizationName &&
+                                !isRepeatedRepoName() && (
+                                  <>
+                                    <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                      <OrganizationInfo
+                                        className="mr-0"
+                                        btnClassName="text-truncate mw-100"
+                                        organizationName={props.package.organizationName}
+                                        organizationDisplayName={props.package.organizationDisplayName}
+                                        deprecated={props.package.deprecated}
+                                        visibleLegend={false}
+                                      />
                                     </div>
-                                  </div>
-                                </>
-                              )}
+                                    <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                      <div className="d-inline-block mr-0 text-dark">
+                                        {props.package.organizationDisplayName || props.package.organizationName}
+                                      </div>
+                                    </div>
+
+                                    <span className="px-1">/</span>
+                                  </>
+                                )}
 
                               {!isNull(props.package.userAlias) && (
                                 <>
                                   <div className={`d-none d-md-inline-block ${styles.mx50}`}>
                                     <button
-                                      className={`p-0 border-0 text-truncate text-dark ${styles.link}`}
+                                      className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link}`}
                                       onClick={(e) => {
                                         e.preventDefault();
                                         history.push({
@@ -118,16 +130,16 @@ const PackageCard = (props: Props) => {
                                       {props.package.userAlias}
                                     </div>
                                   </div>
+
+                                  <span className="px-1">/</span>
                                 </>
                               )}
-
-                              <span className="px-1">/</span>
 
                               <>
                                 <div className={`d-none d-md-inline-block ${styles.mx50}`}>
                                   <button
                                     data-testid="repoLink"
-                                    className={`text-truncate p-0 border-0 text-dark  ${styles.link}`}
+                                    className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
                                     onClick={(e) => {
                                       e.preventDefault();
                                       history.push({

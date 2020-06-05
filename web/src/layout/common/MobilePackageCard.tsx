@@ -16,6 +16,14 @@ interface Props {
 }
 
 const MobilePackageCard = (props: Props) => {
+  const isRepeatedRepoName = (): boolean => {
+    if (props.package.kind !== PackageKind.Chart || !isNull(props.package.userAlias)) return false;
+    return (
+      (props.package.chartRepository!.displayName || props.package.chartRepository!.name) ===
+      (props.package.organizationDisplayName || props.package.organizationName)
+    );
+  };
+
   return (
     <div className={`card mb-3 w-100 ${styles.card}`}>
       <Link
@@ -67,19 +75,25 @@ const MobilePackageCard = (props: Props) => {
                           <>
                             <div className="d-flex flex-row align-items-baseline text-truncate">
                               <span className="text-muted text-uppercase mr-1">Repo: </span>
-                              {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                <div className={`p-0 border-0 text-truncate text-dark ${styles.mx50}`}>
-                                  {props.package.organizationDisplayName || props.package.organizationName}
-                                </div>
-                              )}
+                              {!isUndefined(props.package.organizationName) &&
+                                props.package.organizationName &&
+                                !isRepeatedRepoName() && (
+                                  <>
+                                    <div className={`p-0 border-0 text-truncate text-dark ${styles.mx50}`}>
+                                      {props.package.organizationDisplayName || props.package.organizationName}
+                                    </div>
+                                    <span className="px-1">/</span>
+                                  </>
+                                )}
 
                               {!isNull(props.package.userAlias) && (
-                                <div className={`p-0 border-0 text-truncate text-dark ${styles.mx50}`}>
-                                  {props.package.userAlias}
-                                </div>
+                                <>
+                                  <div className={`p-0 border-0 text-truncate text-dark ${styles.mx50}`}>
+                                    {props.package.userAlias}
+                                  </div>
+                                  <span className="px-1">/</span>
+                                </>
                               )}
-
-                              <span className="px-1">/</span>
 
                               <div className={`text-truncate p-0 border-0 text-dark ${styles.mx50}`}>
                                 {props.package.chartRepository!.displayName || props.package.chartRepository!.name}

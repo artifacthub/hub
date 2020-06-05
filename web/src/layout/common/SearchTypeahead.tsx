@@ -27,13 +27,16 @@ const SearchTypeahead = (props: Props) => {
   async function searchPackages(text: string) {
     try {
       setIsSearching(true);
-      const searchResults = await API.searchPackages({
-        text: text,
-        filters: {},
-        deprecated: false,
-        limit: 15,
-        offset: 0,
-      });
+      const searchResults = await API.searchPackages(
+        {
+          text: text,
+          filters: {},
+          deprecated: false,
+          limit: 15,
+          offset: 0,
+        },
+        false
+      );
       setPackages(searchResults.data.packages);
       setIsSearching(false);
     } catch (err) {

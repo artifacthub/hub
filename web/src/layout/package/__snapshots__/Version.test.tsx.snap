@@ -3,10 +3,10 @@
 exports[`Version creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="py-1 py-sm-0"
+    class="py-1 py-sm-0 w-100 text-truncate"
   >
     <button
-      class="btn btn-link pl-0 pt-0 pb-0 text-truncate d-block"
+      class="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100"
       data-testid="version"
     >
       1.0.1

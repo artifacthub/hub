@@ -33,17 +33,16 @@ const Version = (props: Props) => {
   }, [props.isActive, isLoading]);
 
   return (
-    <div className="py-1 py-sm-0">
+    <div className="py-1 py-sm-0 w-100 text-truncate">
       {props.isActive ? (
-        <div className="d-flex align-items-center text-truncate">{props.version}</div>
+        <div className="text-truncate mw-100">{props.version}</div>
       ) : (
         <button
           data-testid="version"
           onClick={() => openPackagePage()}
-          className="btn btn-link pl-0 pt-0 pb-0 text-truncate d-block"
+          className="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100"
         >
           {props.version}
-
           {isLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" />}
         </button>
       )}

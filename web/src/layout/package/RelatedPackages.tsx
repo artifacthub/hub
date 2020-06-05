@@ -24,13 +24,16 @@ const RelatedPackages = (props: Props) => {
         if (!isUndefined(props.keywords) && props.keywords.length > 0) {
           words = [...name, ...props.keywords];
         }
-        const searchResults = await API.searchPackages({
-          text: Array.from(new Set(words)).join(' or '),
-          filters: {},
-          deprecated: false,
-          limit: 9,
-          offset: 0,
-        });
+        const searchResults = await API.searchPackages(
+          {
+            text: Array.from(new Set(words)).join(' or '),
+            filters: {},
+            deprecated: false,
+            limit: 9,
+            offset: 0,
+          },
+          false
+        );
         let filteredPackages: Package[] = [];
         if (!isNull(searchResults.data.packages)) {
           filteredPackages = searchResults.data.packages
