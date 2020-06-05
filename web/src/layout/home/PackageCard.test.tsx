@@ -85,11 +85,23 @@ describe('PackageCard', () => {
       const title = queryByText(mockPackage.name!);
       expect(title).toBeInTheDocument();
     });
+
+    it('does not render org name when repo name is the same than org', () => {
+      const mockPackage = getMockPackage('6');
+
+      const { getAllByText } = render(
+        <Router>
+          <PackageCard package={mockPackage} />
+        </Router>
+      );
+      const title = getAllByText(mockPackage.chartRepository!.name);
+      expect(title).toHaveLength(1);
+    });
   });
 
   describe('Chart repository button', () => {
     it('renders repository link', () => {
-      const mockPackage = getMockPackage('6');
+      const mockPackage = getMockPackage('7');
 
       const { queryByTestId, queryByAltText } = render(
         <Router>
@@ -116,7 +128,7 @@ describe('PackageCard', () => {
     });
 
     it('does not render repository link when chart kind is not Helm Chart', () => {
-      const mockPackage = getMockPackage('7');
+      const mockPackage = getMockPackage('8');
 
       const { queryByTestId } = render(
         <Router>
@@ -130,7 +142,7 @@ describe('PackageCard', () => {
 
   describe('Detail', () => {
     it('opens detail page', () => {
-      const mockPackage = getMockPackage('8');
+      const mockPackage = getMockPackage('9');
       const { getByTestId } = render(
         <Router>
           <PackageCard package={mockPackage} />

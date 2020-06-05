@@ -143,9 +143,9 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/package/${packageId}/stars`);
   },
 
-  searchPackages: (query: SearchQuery): Promise<SearchResults> => {
+  searchPackages: (query: SearchQuery, facets: boolean = true): Promise<SearchResults> => {
     const q = new URLSearchParams();
-    q.set('facets', 'true');
+    q.set('facets', facets ? 'true' : 'false');
     q.set('limit', query.limit.toString());
     q.set('offset', query.offset.toString());
     if (!isUndefined(query.filters)) {

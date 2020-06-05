@@ -356,7 +356,7 @@ const SearchView = (props: Props) => {
             </nav>
           )}
 
-          <div className="flex-grow-1 mw-100">
+          <div className={`flex-grow-1 ${styles.list}`}>
             {!isNull(packages) && (
               <>
                 {packages.length === 0 ? (

@@ -8,5 +8,6 @@
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
   "organizationDisplayName": "org name",
-  "organizationName": "org"
+  "organizationName": "org",
+  "userAlias": null
 }
