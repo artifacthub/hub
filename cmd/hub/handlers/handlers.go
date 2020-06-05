@@ -109,15 +109,6 @@ func (h *Handlers) setupRouter() {
 	r.Use(middleware.Recoverer)
 	r.Use(RealIP(h.cfg.GetInt("server.xffIndex")))
 	r.Use(Logger)
-	if h.cfg.GetBool("server.limiter.enabled") {
-		limiterRate := limiter.Rate{
-			Period: h.cfg.GetDuration("server.limiter.period"),
-			Limit:  h.cfg.GetInt64("server.limiter.limit"),
-		}
-		limiterStore := memory.NewStore()
-		rateLimiter := limiter.New(limiterStore, limiterRate)
-		r.Use(stdlib.NewMiddleware(rateLimiter).Handler)
-	}
 	r.Use(h.MetricsCollector)
 	if h.cfg.GetBool("server.basicAuth.enabled") {
 		r.Use(h.Users.BasicAuth)
@@ -126,6 +117,17 @@ func (h *Handlers) setupRouter() {
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
+		// Setup rate limiter middleware
+		if h.cfg.GetBool("server.limiter.enabled") {
+			limiterRate := limiter.Rate{
+				Period: h.cfg.GetDuration("server.limiter.period"),
+				Limit:  h.cfg.GetInt64("server.limiter.limit"),
+			}
+			limiterStore := memory.NewStore()
+			rateLimiter := limiter.New(limiterStore, limiterRate)
+			r.Use(stdlib.NewMiddleware(rateLimiter).Handler)
+		}
+
 		r.Route("/packages", func(r chi.Router) {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/updates", h.Packages.GetUpdates)
