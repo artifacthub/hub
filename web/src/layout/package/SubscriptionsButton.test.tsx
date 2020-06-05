@@ -145,11 +145,7 @@ describe('SubscriptionsButton', () => {
         });
 
         await waitFor(() => {
-          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-            type: 'danger',
-            message: 'An error occurred getting your subscriptions, please try again later',
-          });
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(0);
         });
 
         expect(container).toBeEmpty();
