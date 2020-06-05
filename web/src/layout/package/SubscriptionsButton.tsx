@@ -74,14 +74,14 @@ const SubscriptionsButton = (props: Props) => {
       } catch (err) {
         if (visibleLoading) {
           setIsLoading(false);
+          if (err.statusText !== 'ErrLoginRedirect') {
+            alertDispatcher.postAlert({
+              type: 'danger',
+              message: 'An error occurred getting your subscriptions, please try again later',
+            });
+          }
         }
         setActiveSubscriptions(null);
-        if (err.statusText !== 'ErrLoginRedirect') {
-          alertDispatcher.postAlert({
-            type: 'danger',
-            message: 'An error occurred getting your subscriptions, please try again later',
-          });
-        }
       }
     }
   }
