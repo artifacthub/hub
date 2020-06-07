@@ -250,17 +250,17 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 	switch p.Kind {
 	case hub.Chart:
 		packageKindStr = "helm-chart"
-		packagePath = fmt.Sprintf("/package/chart/%s/%s/%s",
+		packagePath = fmt.Sprintf("/packages/chart/%s/%s/%s",
 			p.ChartRepository.Name,
 			p.NormalizedName,
 			e.PackageVersion,
 		)
 	case hub.Falco:
 		packageKindStr = "falco-rules"
-		packagePath = fmt.Sprintf("/package/falco/%s/%s", p.NormalizedName, e.PackageVersion)
+		packagePath = fmt.Sprintf("/packages/falco/%s/%s", p.NormalizedName, e.PackageVersion)
 	case hub.OPA:
 		packageKindStr = "opa-policies"
-		packagePath = fmt.Sprintf("/package/opa/%s/%s", p.NormalizedName, e.PackageVersion)
+		packagePath = fmt.Sprintf("/packages/opa/%s/%s", p.NormalizedName, e.PackageVersion)
 	}
 
 	return &hub.NotificationTemplateData{

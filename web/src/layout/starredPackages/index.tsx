@@ -21,7 +21,7 @@ const StarredPackagesView = () => {
 
   const onAuthError = (): void => {
     dispatch(signOut());
-    history.push('/login?redirect=/user/packages/starred');
+    history.push('/login?redirect=/packages/starred');
   };
 
   useEffect(() => {

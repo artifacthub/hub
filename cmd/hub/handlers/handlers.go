@@ -128,13 +128,71 @@ func (h *Handlers) setupRouter() {
 			r.Use(stdlib.NewMiddleware(rateLimiter).Handler)
 		}
 
+		// Users
+		r.Route("/users", func(r chi.Router) {
+			r.Post("/", h.Users.RegisterUser)
+			r.Post("/login", h.Users.Login)
+			r.Post("/verify-email", h.Users.VerifyEmail)
+			r.Group(func(r chi.Router) {
+				r.Use(h.Users.RequireLogin)
+				r.Get("/logout", h.Users.Logout)
+				r.Get("/profile", h.Users.GetProfile)
+				r.Put("/profile", h.Users.UpdateProfile)
+				r.Put("/password", h.Users.UpdatePassword)
+			})
+		})
+
+		// Organizations
+		r.Route("/orgs", func(r chi.Router) {
+			r.Group(func(r chi.Router) {
+				r.Use(h.Users.RequireLogin)
+				r.Post("/", h.Organizations.Add)
+				r.Get("/user", h.Organizations.GetByUser)
+			})
+			r.Route("/{orgName}", func(r chi.Router) {
+				r.Get("/", h.Organizations.Get)
+				r.Group(func(r chi.Router) {
+					r.Use(h.Users.RequireLogin)
+					r.Put("/", h.Organizations.Update)
+					r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
+					r.Get("/members", h.Organizations.GetMembers)
+					r.Route("/member/{userAlias}", func(r chi.Router) {
+						r.Post("/", h.Organizations.AddMember)
+						r.Delete("/", h.Organizations.DeleteMember)
+					})
+				})
+			})
+		})
+
+		// Chart repositories
+		r.Route("/chart-repositories", func(r chi.Router) {
+			r.Use(h.Users.RequireLogin)
+			r.Route("/user", func(r chi.Router) {
+				r.Get("/", h.ChartRepositories.GetOwnedByUser)
+				r.Post("/", h.ChartRepositories.Add)
+				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/transfer", h.ChartRepositories.Transfer)
+					r.Put("/", h.ChartRepositories.Update)
+					r.Delete("/", h.ChartRepositories.Delete)
+				})
+			})
+			r.Route("/org/{orgName}", func(r chi.Router) {
+				r.Get("/", h.ChartRepositories.GetOwnedByOrg)
+				r.Post("/", h.ChartRepositories.Add)
+				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/transfer", h.ChartRepositories.Transfer)
+					r.Put("/", h.ChartRepositories.Update)
+					r.Delete("/", h.ChartRepositories.Delete)
+				})
+			})
+		})
+
+		// Packages
 		r.Route("/packages", func(r chi.Router) {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/updates", h.Packages.GetUpdates)
 			r.Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
-		})
-		r.Route("/package", func(r chi.Router) {
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
@@ -148,30 +206,20 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
 		})
+
+		// Subscriptions
 		r.Route("/subscriptions", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Get("/{packageID}", h.Subscriptions.GetByPackage)
+			r.Get("/", h.Subscriptions.GetByUser)
 			r.Post("/", h.Subscriptions.Add)
 			r.Delete("/", h.Subscriptions.Delete)
 		})
-		r.Post("/users", h.Users.RegisterUser)
-		r.Route("/user", func(r chi.Router) {
+
+		// Webhooks
+		r.Route("/webhooks", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
-			r.Get("/", h.Users.GetProfile)
-			r.Get("/orgs", h.Organizations.GetByUser)
-			r.Get("/subscriptions", h.Subscriptions.GetByUser)
-			r.Put("/password", h.Users.UpdatePassword)
-			r.Put("/profile", h.Users.UpdateProfile)
-			r.Route("/chart-repositories", func(r chi.Router) {
-				r.Get("/", h.ChartRepositories.GetOwnedByUser)
-				r.Post("/", h.ChartRepositories.Add)
-				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/transfer", h.ChartRepositories.Transfer)
-					r.Put("/", h.ChartRepositories.Update)
-					r.Delete("/", h.ChartRepositories.Delete)
-				})
-			})
-			r.Route("/webhooks", func(r chi.Router) {
+			r.Route("/user", func(r chi.Router) {
 				r.Get("/", h.Webhooks.GetOwnedByUser)
 				r.Post("/", h.Webhooks.Add)
 				r.Route("/{webhookID}", func(r chi.Router) {
@@ -180,49 +228,27 @@ func (h *Handlers) setupRouter() {
 					r.Delete("/", h.Webhooks.Delete)
 				})
 			})
-		})
-		r.With(h.Users.RequireLogin).Post("/orgs", h.Organizations.Add)
-		r.Route("/org/{orgName}", func(r chi.Router) {
-			r.Get("/", h.Organizations.Get)
-			r.Group(func(r chi.Router) {
-				r.Use(h.Users.RequireLogin)
-				r.Put("/", h.Organizations.Update)
-				r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
-				r.Get("/members", h.Organizations.GetMembers)
-				r.Route("/member/{userAlias}", func(r chi.Router) {
-					r.Post("/", h.Organizations.AddMember)
-					r.Delete("/", h.Organizations.DeleteMember)
-				})
-				r.Route("/chart-repositories", func(r chi.Router) {
-					r.Get("/", h.ChartRepositories.GetOwnedByOrg)
-					r.Post("/", h.ChartRepositories.Add)
-					r.Route("/{repoName}", func(r chi.Router) {
-						r.Put("/transfer", h.ChartRepositories.Transfer)
-						r.Put("/", h.ChartRepositories.Update)
-						r.Delete("/", h.ChartRepositories.Delete)
-					})
-				})
-				r.Route("/webhooks", func(r chi.Router) {
-					r.Get("/", h.Webhooks.GetOwnedByOrg)
-					r.Post("/", h.Webhooks.Add)
-					r.Route("/{webhookID}", func(r chi.Router) {
-						r.Get("/", h.Webhooks.Get)
-						r.Put("/", h.Webhooks.Update)
-						r.Delete("/", h.Webhooks.Delete)
-					})
+			r.Route("/org/{orgName}", func(r chi.Router) {
+				r.Get("/", h.Webhooks.GetOwnedByOrg)
+				r.Post("/", h.Webhooks.Add)
+				r.Route("/{webhookID}", func(r chi.Router) {
+					r.Get("/", h.Webhooks.Get)
+					r.Put("/", h.Webhooks.Update)
+					r.Delete("/", h.Webhooks.Delete)
 				})
 			})
+			r.Post("/test", h.Webhooks.TriggerTest)
 		})
+
+		// Availability checks
 		r.Route("/check-availability", func(r chi.Router) {
 			r.Head("/{resourceKind:^chartRepositoryName$|^chartRepositoryURL$}", h.ChartRepositories.CheckAvailability)
 			r.Head("/{resourceKind:^organizationName$}", h.Organizations.CheckAvailability)
 			r.Head("/{resourceKind:^userAlias$}", h.Users.CheckAvailability)
 		})
-		r.Post("/verify-email", h.Users.VerifyEmail)
-		r.Post("/login", h.Users.Login)
-		r.With(h.Users.RequireLogin).Get("/logout", h.Users.Logout)
+
+		// Images
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
-		r.With(h.Users.RequireLogin).Post("/webhook-test", h.Webhooks.TriggerTest)
 	})
 
 	// Oauth
@@ -238,7 +264,7 @@ func (h *Handlers) setupRouter() {
 	}
 
 	// Index special entry points
-	r.Route("/package", func(r chi.Router) {
+	r.Route("/packages", func(r chi.Router) {
 		r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
 			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
 			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)

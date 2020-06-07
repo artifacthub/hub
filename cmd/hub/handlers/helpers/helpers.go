@@ -8,7 +8,6 @@ import (
 
 const (
 	DefaultAPICacheMaxAge = 5 * time.Minute
-	DefaultBotCacheMaxAge = 5 * time.Minute
 )
 
 // BuildCacheControlHeader builds an http cache header using the max age

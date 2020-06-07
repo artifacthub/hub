@@ -62,7 +62,7 @@ const UserAuthDropdown = (props: Props) => {
           data-testid="starredPackagesLink"
           className="dropdown-item"
           to={{
-            pathname: '/user/packages/starred',
+            pathname: '/packages/starred',
           }}
           onClick={() => setOpenStatus(false)}
         >

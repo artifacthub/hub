@@ -230,7 +230,7 @@ const PackageView = (props: Props) => {
             className={`btn btn-link btn-sm pl-0 d-flex align-items-center ${styles.link}`}
             onClick={() => {
               history.push({
-                pathname: '/user/packages/starred',
+                pathname: '/packages/starred',
                 state: { fromDetail: true },
               });
             }}

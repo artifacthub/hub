@@ -73,7 +73,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
       <a
         class="dropdown-item"
         data-testid="starredPackagesLink"
-        href="/user/packages/starred"
+        href="/packages/starred"
       >
         <div
           class="d-flex align-items-center"

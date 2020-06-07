@@ -111,7 +111,7 @@ describe('MobileSettings', () => {
       const link = getByTestId('starredPackagesLink');
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
-      expect(window.location.pathname).toBe('/user/packages/starred');
+      expect(window.location.pathname).toBe('/packages/starred');
     });
 
     it('loads control panel page', () => {

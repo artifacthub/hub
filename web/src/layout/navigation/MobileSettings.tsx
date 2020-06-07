@@ -82,7 +82,7 @@ const MobileSettings = (props: Props) => {
                       data-testid="starredPackagesLink"
                       className="dropdown-item my-2"
                       to={{
-                        pathname: '/user/packages/starred',
+                        pathname: '/packages/starred',
                       }}
                       onClick={() => setOpenSideBarStatus(false)}
                     >

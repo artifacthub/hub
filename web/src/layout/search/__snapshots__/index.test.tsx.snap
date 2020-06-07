@@ -654,7 +654,7 @@ exports[`Search index creates snapshot 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/package/chart/stable/undefined"
+                href="/packages/chart/stable/undefined"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -778,7 +778,7 @@ exports[`Search index creates snapshot 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/package/chart/incubator/undefined"
+                href="/packages/chart/incubator/undefined"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -901,7 +901,7 @@ exports[`Search index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="mobilePackageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -1008,7 +1008,7 @@ exports[`Search index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="mobilePackageLink"
-              href="/package/chart/incubator/undefined"
+              href="/packages/chart/incubator/undefined"
             >
               <div
                 class="card-body d-flex flex-column body"

@@ -57,7 +57,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/halkeye/undefined"
+              href="/packages/chart/halkeye/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -188,7 +188,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/halkeye/undefined"
+              href="/packages/chart/halkeye/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -319,7 +319,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/gabibbo97/undefined"
+              href="/packages/chart/gabibbo97/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -449,7 +449,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/halkeye/undefined"
+              href="/packages/chart/halkeye/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -580,7 +580,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/billimek/undefined"
+              href="/packages/chart/billimek/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -721,7 +721,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -852,7 +852,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -983,7 +983,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -1113,7 +1113,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex body"
@@ -1243,7 +1243,7 @@ exports[`Package index creates snapshot 2`] = `
             <a
               class="text-decoration-none link"
               data-testid="packageLink"
-              href="/package/chart/stable/undefined"
+              href="/packages/chart/stable/undefined"
             >
               <div
                 class="card-body d-flex body"

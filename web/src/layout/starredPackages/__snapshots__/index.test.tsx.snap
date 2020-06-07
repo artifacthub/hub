@@ -85,7 +85,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                 <a
                   class="text-decoration-none link"
                   data-testid="link"
-                  href="/package/chart/stable/airflow"
+                  href="/packages/chart/stable/airflow"
                 >
                   <div
                     class="card-body d-flex flex-column body"
@@ -250,7 +250,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                 <a
                   class="text-decoration-none link"
                   data-testid="link"
-                  href="/package/chart/incubator/cassandra"
+                  href="/packages/chart/incubator/cassandra"
                 >
                   <div
                     class="card-body d-flex flex-column body"
@@ -415,7 +415,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                 <a
                   class="text-decoration-none link"
                   data-testid="link"
-                  href="/package/chart/stable/prometheus"
+                  href="/packages/chart/stable/prometheus"
                 >
                   <div
                     class="card-body d-flex flex-column body"
@@ -580,7 +580,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                 <a
                   class="text-decoration-none link"
                   data-testid="link"
-                  href="/package/falco/traefik"
+                  href="/packages/falco/traefik"
                 >
                   <div
                     class="card-body d-flex flex-column body"
@@ -720,7 +720,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                 <a
                   class="text-decoration-none link"
                   data-testid="link"
-                  href="/package/opa/trusted-registry-images"
+                  href="/packages/opa/trusted-registry-images"
                 >
                   <div
                     class="card-body d-flex flex-column body"
@@ -860,7 +860,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="mobilePackageLink"
-                href="/package/chart/stable/airflow"
+                href="/packages/chart/stable/airflow"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -994,7 +994,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="mobilePackageLink"
-                href="/package/chart/incubator/cassandra"
+                href="/packages/chart/incubator/cassandra"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -1128,7 +1128,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="mobilePackageLink"
-                href="/package/chart/stable/prometheus"
+                href="/packages/chart/stable/prometheus"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -1262,7 +1262,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="mobilePackageLink"
-                href="/package/falco/traefik"
+                href="/packages/falco/traefik"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -1382,7 +1382,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="mobilePackageLink"
-                href="/package/opa/trusted-registry-images"
+                href="/packages/opa/trusted-registry-images"
               >
                 <div
                   class="card-body d-flex flex-column body"

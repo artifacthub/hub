@@ -46,7 +46,6 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 
@@ -63,7 +62,6 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 
@@ -99,7 +97,6 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 
@@ -115,7 +112,6 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 
@@ -181,6 +177,5 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }

@@ -154,7 +154,7 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                 <tr>
                   <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 10px; color: #545454; text-align: center;">
-                    <p style="color: #545454; font-size: 10px; text-align: center; text-decoration: none;">Didn't subscribe to Artifact Hub notifications for {{ .Package.name }} package? You can unsubscribe <a href="{{ .BaseURL }}/user/subscriptions" target="_blank" style="text-decoration: underline; color: #545454;">here</a>.</p>
+                    <p style="color: #545454; font-size: 10px; text-align: center; text-decoration: none;">Didn't subscribe to Artifact Hub notifications for {{ .Package.name }} package? You can unsubscribe <a href="{{ .BaseURL }}/control-panel/settings/subscriptions" target="_blank" style="text-decoration: underline; color: #545454;">here</a>.</p>
                   </td>
                 </tr>
                 <tr>

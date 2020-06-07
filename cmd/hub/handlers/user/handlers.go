@@ -91,7 +91,7 @@ func NewHandlers(userManager hub.UserManager, cfg *viper.Viper) *Handlers {
 func (h *Handlers) BasicAuth(next http.Handler) http.Handler {
 	validUser := []byte(h.cfg.GetString("server.basicAuth.username"))
 	validPass := []byte(h.cfg.GetString("server.basicAuth.password"))
-	realm := "Hub"
+	realm := "Artifact Hub"
 
 	areCredentialsValid := func(user, pass []byte) bool {
 		if subtle.ConstantTimeCompare(user, validUser) != 1 {
