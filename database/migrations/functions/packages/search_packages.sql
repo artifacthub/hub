@@ -39,6 +39,7 @@ begin
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name,
+            r.chart_repository_id as chart_repository_id,
             r.name as chart_repository_name,
             r.display_name as chart_repository_display_name
         from package p
@@ -101,10 +102,11 @@ begin
                         'organization_display_name', organization_display_name,
                         'chart_repository', (select nullif(
                             jsonb_build_object(
+                                'chart_repository_id', chart_repository_id,
                                 'name', chart_repository_name,
                                 'display_name', chart_repository_display_name
                             ),
-                            '{"name": null, "display_name": null}'::jsonb
+                            '{"chart_repository_id": null, "name": null, "display_name": null}'::jsonb
                         ))
                     )), '[]')
                     from (
