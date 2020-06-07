@@ -222,6 +222,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -241,6 +242,7 @@ select is(
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -335,6 +337,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -354,6 +357,7 @@ select is(
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -427,6 +431,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -512,6 +517,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -585,6 +591,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -624,6 +631,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -666,6 +674,7 @@ select is(
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -912,6 +921,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -931,6 +941,7 @@ select is(
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
@@ -970,6 +981,7 @@ select is(
                 "organization_name": null,
                 "organization_display_name": null,
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                     "name": "repo1",
                     "display_name": "Repo 1"
                 }
@@ -1029,6 +1041,7 @@ select is(
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1",
                 "chart_repository": {
+                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
                     "name": "repo2",
                     "display_name": "Repo 2"
                 }
