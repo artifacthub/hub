@@ -87,7 +87,7 @@ const SearchView = (props: Props) => {
         }
         break;
 
-      // Remove selected user/s if a org is now selected
+      // Remove selected users/s if a org is now selected
       case 'org':
         if (newFilters.length > 0) {
           cleanFilters['user'] = [];

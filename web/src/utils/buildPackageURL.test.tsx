@@ -15,14 +15,14 @@ describe('buildPackageURL', () => {
     it('renders URL without version', () => {
       const mockPackage = getMockPackage('2');
       expect(buildPackageURL(mockPackage)).toBe(
-        `/package/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}`
+        `/packages/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}`
       );
     });
 
     it('renders URL with version', () => {
       const mockPackage = getMockPackage('3');
       expect(buildPackageURL(mockPackage, true)).toBe(
-        `/package/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}/${mockPackage.version}`
+        `/packages/chart/${mockPackage.chartRepository?.name}/${mockPackage.name}/${mockPackage.version}`
       );
     });
   });
@@ -30,25 +30,25 @@ describe('buildPackageURL', () => {
   describe('Others kinds', () => {
     it('renders Falco rules', () => {
       const mockPackage = getMockPackage('4');
-      expect(buildPackageURL(mockPackage, true)).toBe(`/package/falco/${mockPackage.normalizedName}`);
+      expect(buildPackageURL(mockPackage, true)).toBe(`/packages/falco/${mockPackage.normalizedName}`);
     });
 
     it('renders Falco rules with version', () => {
       const mockPackage = getMockPackage('5');
       expect(buildPackageURL(mockPackage, true)).toBe(
-        `/package/falco/${mockPackage.normalizedName}/${mockPackage.version}`
+        `/packages/falco/${mockPackage.normalizedName}/${mockPackage.version}`
       );
     });
 
     it('renders OPA policies', () => {
       const mockPackage = getMockPackage('6');
-      expect(buildPackageURL(mockPackage, true)).toBe(`/package/opa/${mockPackage.normalizedName}`);
+      expect(buildPackageURL(mockPackage, true)).toBe(`/packages/opa/${mockPackage.normalizedName}`);
     });
 
     it('renders OPA policies with version', () => {
       const mockPackage = getMockPackage('7');
       expect(buildPackageURL(mockPackage, true)).toBe(
-        `/package/opa/${mockPackage.normalizedName}/${mockPackage.version}`
+        `/packages/opa/${mockPackage.normalizedName}/${mockPackage.version}`
       );
     });
   });

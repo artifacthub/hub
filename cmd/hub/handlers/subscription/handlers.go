@@ -43,7 +43,6 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 
@@ -63,7 +62,6 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		return
 	}
 }
 

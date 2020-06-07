@@ -496,7 +496,7 @@ func TestTriggerTest(t *testing.T) {
 			"name": "sample-package",
 			"version": "1.0.0",
 			"publisher": "artifacthub",
-			"url": "https://artifacthub.io/package/chart/artifacthub/sample-package"
+			"url": "https://artifacthub.io/packages/chart/artifacthub/sample-package"
 		}
 	}
 }

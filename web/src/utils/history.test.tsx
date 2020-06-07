@@ -21,8 +21,8 @@ describe('history', () => {
     expect(mockUpdateMeta).toHaveBeenCalledTimes(1);
   });
 
-  it('calls analytics, but not update meta when pathname starts with /package/', () => {
-    history.push('/package/123');
+  it('calls analytics, but not update meta when pathname starts with /packages/(chart|opa|falco)/', () => {
+    history.push('/packages/chart/123');
     expect(mockAnalytics.page).toHaveBeenCalledTimes(1);
     expect(mockAnalytics.page).toHaveBeenCalledWith();
     expect(mockUpdateMeta).toHaveBeenCalledTimes(0);

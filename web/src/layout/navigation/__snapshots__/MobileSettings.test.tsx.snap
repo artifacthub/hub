@@ -85,7 +85,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               <a
                 class="dropdown-item my-2"
                 data-testid="starredPackagesLink"
-                href="/user/packages/starred"
+                href="/packages/starred"
               >
                 <div
                   class="d-flex align-items-center"

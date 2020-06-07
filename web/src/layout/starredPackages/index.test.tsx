@@ -122,7 +122,7 @@ describe('StarredPackagesView', () => {
       await waitFor(() => getByRole('main'));
 
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/user/packages/starred');
+      expect(mockHistoryPush).toHaveBeenCalledWith('/login?redirect=/packages/starred');
       await waitFor(() => {});
     });
   });

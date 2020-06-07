@@ -119,7 +119,7 @@ const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
 export const API = {
   getPackage: (request: PackageRequest): Promise<Package> => {
-    let url = `${API_BASE_URL}/package`;
+    let url = `${API_BASE_URL}/packages`;
     if (!isUndefined(request.packageKind)) {
       url += `/${request.packageKind}`;
     }
@@ -134,13 +134,13 @@ export const API = {
   },
 
   toggleStar: (packageId: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/package/${packageId}/stars`, {
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/stars`, {
       method: 'PUT',
     });
   },
 
   getStars: (packageId: string): Promise<PackageStars> => {
-    return apiFetch(`${API_BASE_URL}/package/${packageId}/stars`);
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/stars`);
   },
 
   searchPackages: (query: SearchQuery, facets: boolean = true): Promise<SearchResults> => {
@@ -184,7 +184,7 @@ export const API = {
   },
 
   verifyEmail: (code: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/verify-email`, {
+    return apiFetch(`${API_BASE_URL}/users/verify-email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -194,7 +194,7 @@ export const API = {
   },
 
   login: (user: UserLogin): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/login`, {
+    return apiFetch(`${API_BASE_URL}/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -204,20 +204,20 @@ export const API = {
   },
 
   logout: (): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/logout`);
+    return apiFetch(`${API_BASE_URL}/users/logout`);
   },
 
   getUserProfile: (): Promise<Profile> => {
-    return apiFetch(`${API_BASE_URL}/user`);
+    return apiFetch(`${API_BASE_URL}/users/profile`);
   },
 
   getChartRepositories: (fromOrgName?: string): Promise<ChartRepository[]> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories`);
+    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}`);
   },
 
   addChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories`, {
+    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -227,14 +227,14 @@ export const API = {
   },
 
   deleteChartRepository: (chartRepositoryName: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories/${chartRepositoryName}`, {
+    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}/${chartRepositoryName}`, {
       method: 'DELETE',
     });
   },
 
   updateChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
     const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/chart-repositories/${chartRepository.name}`, {
+    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}/${chartRepository.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -245,7 +245,7 @@ export const API = {
 
   transferChartRepository: (params: TransferChartRepositoryRequest): Promise<null | string> => {
     return apiFetch(
-      `${API_BASE_URL}${getUrlContext(params.fromOrgName)}/chart-repositories/${params.chartRepositoryName}/transfer${
+      `${API_BASE_URL}/chart-repositories${getUrlContext(params.fromOrgName)}/${params.chartRepositoryName}/transfer${
         isUndefined(params.toOrgName) ? '' : `?org=${params.toOrgName}`
       }`,
       {
@@ -261,11 +261,11 @@ export const API = {
   },
 
   getUserOrganizations: (): Promise<Organization[]> => {
-    return apiFetch(`${API_BASE_URL}/user/orgs`);
+    return apiFetch(`${API_BASE_URL}/orgs/user`);
   },
 
   getOrganization: (organizationName: string): Promise<Organization> => {
-    return apiFetch(`${API_BASE_URL}/org/${organizationName}`);
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}`);
   },
 
   addOrganization: (organization: Organization): Promise<null | string> => {
@@ -289,7 +289,7 @@ export const API = {
       logoImageId: 'logo_image_id',
       homeUrl: 'home_url',
     });
-    return apiFetch(`${API_BASE_URL}/org/${org.name}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${org.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -299,23 +299,23 @@ export const API = {
   },
 
   getOrganizationMembers: (organizationName: string): Promise<User[]> => {
-    return apiFetch(`${API_BASE_URL}/org/${organizationName}/members`);
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/members`);
   },
 
   addOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/org/${organizationName}/member/${alias}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${alias}`, {
       method: 'POST',
     });
   },
 
   deleteOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/org/${organizationName}/member/${alias}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${alias}`, {
       method: 'DELETE',
     });
   },
 
   confirmOrganizationMembership: (organizationName: string): Promise<null> => {
-    return apiFetch(`${API_BASE_URL}/org/${organizationName}/accept-invitation`);
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/accept-invitation`);
   },
 
   getStarredByUser: (): Promise<Package[]> => {
@@ -328,7 +328,7 @@ export const API = {
       lastName: 'last_name',
       profileImageId: 'profile_image_id',
     });
-    return apiFetch(`${API_BASE_URL}/user/profile`, {
+    return apiFetch(`${API_BASE_URL}/users/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -338,7 +338,7 @@ export const API = {
   },
 
   updatePassword: (oldPassword: string, newPassword: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/user/password`, {
+    return apiFetch(`${API_BASE_URL}/users/password`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -385,15 +385,15 @@ export const API = {
   },
 
   getUserSubscriptions: (): Promise<Package[]> => {
-    return apiFetch(`${API_BASE_URL}/user/subscriptions`);
+    return apiFetch(`${API_BASE_URL}/subscriptions`);
   },
 
   getWebhooks: (fromOrgName?: string): Promise<Webhook[]> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks`);
+    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}`);
   },
 
   getWebhook: (webhookId: string, fromOrgName?: string): Promise<Webhook> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhookId}`);
+    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhookId}`);
   },
 
   addWebhook: (webhook: Webhook, fromOrgName?: string): Promise<null | string> => {
@@ -401,7 +401,7 @@ export const API = {
     const formattedPackages = webhook.packages.map((packageItem: Package) => ({
       package_id: packageItem.packageId,
     }));
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks`, {
+    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -414,7 +414,7 @@ export const API = {
   },
 
   deleteWebhook: (webhookId: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhookId}`, {
+    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhookId}`, {
       method: 'DELETE',
     });
   },
@@ -424,7 +424,7 @@ export const API = {
     const formattedPackages = webhook.packages.map((packageItem: Package) => ({
       package_id: packageItem.packageId,
     }));
-    return apiFetch(`${API_BASE_URL}${getUrlContext(fromOrgName)}/webhooks/${webhook.webhookId}`, {
+    return apiFetch(`${API_BASE_URL}/webhooks${getUrlContext(fromOrgName)}/${webhook.webhookId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -436,7 +436,7 @@ export const API = {
   triggerWebhookTest: (webhook: TestWebhook): Promise<string | null> => {
     const formattedWebhook = renameKeysInObject(webhook, { contentType: 'content_type', eventKinds: 'event_kinds' });
 
-    return apiFetch(`${API_BASE_URL}/webhook-test`, {
+    return apiFetch(`${API_BASE_URL}/webhooks/test`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

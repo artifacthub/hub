@@ -85,7 +85,10 @@ export default function App() {
             />
 
             <Route
-              path={['/package/chart/:repoName/:packageName/:version?', `/package/:packageKind/:packageName/:version?`]}
+              path={[
+                '/packages/chart/:repoName/:packageName/:version?',
+                `/packages/:packageKind/:packageName/:version?`,
+              ]}
               exact
               render={({ location, match }) => (
                 <>
@@ -117,7 +120,7 @@ export default function App() {
             />
 
             <Route
-              path="/user/packages/starred"
+              path="/packages/starred"
               exact
               render={() => (
                 <>

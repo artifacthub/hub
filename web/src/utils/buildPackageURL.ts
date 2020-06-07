@@ -6,13 +6,13 @@ export default (packageItem: Package, withVersion?: boolean): string => {
   let url = '';
   switch (packageItem.kind) {
     case PackageKind.Chart:
-      url = `/package/chart/${packageItem.chartRepository?.name}/${packageItem.normalizedName}`;
+      url = `/packages/chart/${packageItem.chartRepository?.name}/${packageItem.normalizedName}`;
       break;
     case PackageKind.Falco:
-      url = `/package/falco/${packageItem.normalizedName}`;
+      url = `/packages/falco/${packageItem.normalizedName}`;
       break;
     case PackageKind.Opa:
-      url = `/package/opa/${packageItem.normalizedName}`;
+      url = `/packages/opa/${packageItem.normalizedName}`;
       break;
   }
 

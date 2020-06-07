@@ -196,7 +196,7 @@ func TestWorker(t *testing.T) {
 			"name": "package1",
 			"version": "1.0.0",
 			"publisher": "org1/repo1",
-			"url": "http://baseURL/package/chart/repo1/package1/1.0.0"
+			"url": "http://baseURL/packages/chart/repo1/package1/1.0.0"
 		}
 	}
 }
