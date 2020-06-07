@@ -33,6 +33,13 @@ insert into package (
     0,
     :'repo1ID'
 );
+insert into snapshot (
+    package_id,
+    version
+) values (
+    :'package1ID',
+    '1.0.0'
+);
 insert into webhook (
     webhook_id,
     name,
@@ -74,13 +81,21 @@ select is(
             "packages": [
                 {
                     "package_id": "00000000-0000-0000-0000-000000000001",
-                    "name": "Package 1",
-                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
                     "kind": 0,
+                    "name": "Package 1",
+                    "normalized_name": "package-1",
+                    "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                    "stars": 0,
+                    "display_name": null,
+                    "description": null,
+                    "version": "1.0.0",
+                    "app_version": null,
+                    "deprecated": null,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null,
                     "chart_repository": {
+                        "chart_repository_id": "00000000-0000-0000-0000-000000000001",
                         "name": "repo1",
                         "display_name": "Repo 1"
                     }
