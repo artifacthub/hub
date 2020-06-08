@@ -2,7 +2,6 @@ package org
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
@@ -35,16 +34,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	o := &hub.Organization{}
 	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg("invalid organization")
-		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	if err := h.orgManager.Add(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -56,14 +51,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -76,15 +64,11 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.orgManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	if available {
-		w.WriteHeader(http.StatusNotFound)
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
 }
 
@@ -94,11 +78,7 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	if err := h.orgManager.ConfirmMembership(r.Context(), orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -109,14 +89,7 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	userAlias := chi.URLParam(r, "userAlias")
 	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -126,11 +99,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -142,7 +111,7 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -155,11 +124,7 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -171,19 +136,12 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	o := &hub.Organization{}
 	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Msg("invalid organization")
-		http.Error(w, "organization provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	o.Name = chi.URLParam(r, "orgName")
 	if err := h.orgManager.Update(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }

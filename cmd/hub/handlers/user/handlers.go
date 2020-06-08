@@ -124,15 +124,11 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.userManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	if available {
-		w.WriteHeader(http.StatusNotFound)
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
 }
 
@@ -141,7 +137,7 @@ func (h *Handlers) GetProfile(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.userManager.GetProfileJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetProfile").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -194,7 +190,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	if email == "" || password == "" {
 		errMsg := "credentials not provided"
 		h.logger.Error().Str("method", "Login").Msg(errMsg)
-		http.Error(w, errMsg, http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, fmt.Errorf("%w: %s", hub.ErrInvalidInput, errMsg))
 		return
 	}
 
@@ -202,11 +198,11 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	checkCredentialsOutput, err := h.userManager.CheckCredentials(r.Context(), email, password)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("checkCredentials failed")
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	if !checkCredentialsOutput.Valid {
-		w.WriteHeader(http.StatusUnauthorized)
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
 		return
 	}
 
@@ -220,7 +216,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	sessionID, err := h.userManager.RegisterSession(r.Context(), session)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("registerSession failed")
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 
@@ -228,7 +224,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	encodedSessionID, err := h.sc.Encode(sessionCookieName, sessionID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("sessionID encoding failed")
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	cookie := &http.Cookie{
@@ -488,24 +484,20 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Msg("invalid user")
-		http.Error(w, "user provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	u.EmailVerified = false
 	if u.Password == "" {
 		errMsg := "password not provided"
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Msg(errMsg)
-		http.Error(w, errMsg, http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, fmt.Errorf("%w: %s", hub.ErrInvalidInput, errMsg))
 		return
 	}
 	err = h.userManager.RegisterUser(r.Context(), u, h.cfg.GetString("server.baseURL"))
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -559,13 +551,13 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 		// Extract and validate cookie from request
 		cookie, err := r.Cookie(sessionCookieName)
 		if err != nil {
-			http.Error(w, "", http.StatusUnauthorized)
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
 			return
 		}
 		var sessionID []byte
 		if err = h.sc.Decode(sessionCookieName, cookie.Value, &sessionID); err != nil {
 			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("sessionID decoding failed")
-			http.Error(w, "", http.StatusUnauthorized)
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
 			return
 		}
 
@@ -573,11 +565,11 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 		checkSessionOutput, err := h.userManager.CheckSession(r.Context(), sessionID, sessionDuration)
 		if err != nil {
 			h.logger.Error().Err(err).Str("method", "RequireLogin").Msg("checkSession failed")
-			http.Error(w, "", http.StatusInternalServerError)
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusInternalServerError)
 			return
 		}
 		if !checkSessionOutput.Valid {
-			w.WriteHeader(http.StatusUnauthorized)
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
 			return
 		}
 
@@ -594,13 +586,11 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	new := r.FormValue("new")
 	err := h.userManager.UpdatePassword(r.Context(), old, new)
 	if err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
 		if errors.Is(err, user.ErrInvalidPassword) {
-			http.Error(w, "", http.StatusUnauthorized)
-		} else if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			helpers.RenderErrorWithCodeJSON(w, nil, http.StatusUnauthorized)
 		} else {
-			h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
-			http.Error(w, "", http.StatusInternalServerError)
+			helpers.RenderErrorJSON(w, err)
 		}
 	}
 }
@@ -611,17 +601,13 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Msg("invalid user")
-		http.Error(w, "user provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	err = h.userManager.UpdateProfile(r.Context(), u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -631,15 +617,11 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	verified, err := h.userManager.VerifyEmail(r.Context(), code)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyEmail").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	if !verified {
-		w.WriteHeader(http.StatusGone)
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusGone)
 	}
 }
 

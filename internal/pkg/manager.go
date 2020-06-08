@@ -13,11 +13,6 @@ import (
 	"github.com/satori/uuid"
 )
 
-var (
-	// ErrNotFound indicates that the package requested was not found.
-	ErrNotFound = errors.New("package not found")
-)
-
 // Manager provides an API to manage packages.
 type Manager struct {
 	db hub.DB
@@ -57,7 +52,7 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	dataJSON, err := m.dbQueryJSON(ctx, query, inputJSON)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, ErrNotFound
+			return nil, hub.ErrNotFound
 		}
 		return nil, err
 	}

@@ -35,7 +35,7 @@ func TestGet(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				pkg.ErrNotFound,
+				hub.ErrNotFound,
 				http.StatusNotFound,
 			},
 			{
@@ -265,7 +265,7 @@ func TestInjectIndexMeta(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				pkg.ErrNotFound,
+				hub.ErrNotFound,
 				http.StatusNotFound,
 			},
 			{

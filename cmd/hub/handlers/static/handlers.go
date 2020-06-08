@@ -82,11 +82,11 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 		var err error
 		data, err = h.imageStore.GetImage(r.Context(), imageID, version)
 		if err != nil {
-			if errors.Is(err, img.ErrNotFound) {
-				http.NotFound(w, r)
+			if errors.Is(err, hub.ErrNotFound) {
+				w.WriteHeader(http.StatusNotFound)
 			} else {
 				h.logger.Error().Err(err).Str("method", "Image").Str("imageID", imageID).Send()
-				http.Error(w, "", http.StatusInternalServerError)
+				w.WriteHeader(http.StatusInternalServerError)
 			}
 			return
 		}
@@ -107,17 +107,17 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(data)
 }
 
-// SaveImage is an http handler that stores the provided image returning it id.
+// SaveImage is an http handler that stores the provided image returning its id.
 func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "SaveImage").Msg("error reading body data")
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 	}
 	imageID, err := h.imageStore.SaveImage(r.Context(), data)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "SaveImage").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 	}
 	dataJSON := []byte(fmt.Sprintf(`{"image_id": "%s"}`, imageID))
 	helpers.RenderJSON(w, dataJSON, 0)

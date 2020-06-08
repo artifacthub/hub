@@ -2,7 +2,6 @@ package chartrepo
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
@@ -34,19 +33,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	repo := &hub.ChartRepository{}
 	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
-		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -59,15 +51,11 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.chartRepoManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	if available {
-		w.WriteHeader(http.StatusNotFound)
+		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
 }
 
@@ -77,14 +65,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	repoName := chi.URLParam(r, "repoName")
 	if err := h.chartRepoManager.Delete(r.Context(), repoName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -96,11 +77,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.chartRepoManager.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -112,7 +89,7 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.chartRepoManager.GetOwnedByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -125,14 +102,7 @@ func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 	orgName := r.FormValue("org")
 	if err := h.chartRepoManager.Transfer(r.Context(), repoName, orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -142,19 +112,12 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	repo := &hub.ChartRepository{}
 	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Msg("invalid chart repository")
-		http.Error(w, "chart repository provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	repo.Name = chi.URLParam(r, "repoName")
 	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
