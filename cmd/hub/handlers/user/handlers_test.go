@@ -71,7 +71,7 @@ func TestCheckAvailability(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckAvailability", r.Context(), "invalid", "value").
-			Return(false, user.ErrInvalidInput)
+			Return(false, hub.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -494,12 +494,12 @@ func TestRegisterUser(t *testing.T) {
 			{
 				"missing alias",
 				`{"email": "email", "password": "password"}`,
-				user.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 			{
 				"missing email",
 				`{"alias": "alias", "password": "password"}`,
-				user.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -667,7 +667,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), "", "new").Return(user.ErrInvalidInput)
+		hw.um.On("UpdatePassword", r.Context(), "", "new").Return(hub.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -682,7 +682,7 @@ func TestUpdatePassword(t *testing.T) {
 		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdatePassword", r.Context(), "old", "").Return(user.ErrInvalidInput)
+		hw.um.On("UpdatePassword", r.Context(), "old", "").Return(hub.ErrInvalidInput)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -766,7 +766,7 @@ func TestUpdateProfile(t *testing.T) {
 			{
 				"alias not provided",
 				"{}",
-				user.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -828,7 +828,7 @@ func TestVerifyEmail(t *testing.T) {
 	}{
 		{
 			"code not provided",
-			[]interface{}{false, user.ErrInvalidInput},
+			[]interface{}{false, hub.ErrInvalidInput},
 			http.StatusBadRequest,
 		},
 		{

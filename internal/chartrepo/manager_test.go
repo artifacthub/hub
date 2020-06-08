@@ -102,7 +102,7 @@ func TestAdd(t *testing.T) {
 				m := NewManager(nil, WithIndexLoader(l))
 
 				err := m.Add(ctx, tc.orgName, tc.r)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				l.AssertExpectations(t)
 			})
@@ -179,7 +179,7 @@ func TestCheckAvailability(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -245,7 +245,7 @@ func TestDelete(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		err := m.Delete(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -337,7 +337,7 @@ func TestGetByName(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetByName(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("get existing repository by name", func(t *testing.T) {
@@ -390,7 +390,7 @@ func TestGetPackagesDigest(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetPackagesDigest(context.Background(), "invalid")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -431,7 +431,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetOwnedByOrgJSON(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -503,7 +503,7 @@ func TestSetLastTrackingResults(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		err := m.SetLastTrackingResults(ctx, "invalid", "errors")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
@@ -558,7 +558,7 @@ func TestTransfer(t *testing.T) {
 				m := NewManager(nil)
 
 				err := m.Transfer(ctx, tc.repoName, "")
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 			})
 		}
 	})
@@ -659,7 +659,7 @@ func TestUpdate(t *testing.T) {
 				m := NewManager(nil, WithIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				l.AssertExpectations(t)
 			})
 		}

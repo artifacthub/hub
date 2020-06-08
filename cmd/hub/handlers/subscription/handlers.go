@@ -7,7 +7,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -38,7 +37,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.subscriptionManager.Add(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, subscription.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -57,7 +56,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.subscriptionManager.Delete(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		if errors.Is(err, subscription.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -72,7 +71,7 @@ func (h *Handlers) GetByPackage(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.subscriptionManager.GetByPackageJSON(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByPackage").Send()
-		if errors.Is(err, subscription.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)

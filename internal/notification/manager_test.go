@@ -72,7 +72,7 @@ func TestAdd(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager()
 				err := m.Add(context.Background(), nil, tc.n)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -175,7 +175,7 @@ func TestUpdateStatus(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager()
 				err := m.UpdateStatus(ctx, nil, "invalidNotificationID", false, nil)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}

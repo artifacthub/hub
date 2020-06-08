@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
-	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -34,14 +33,14 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	repo := &hub.ChartRepository{}
 	if err := json.NewDecoder(r.Body).Decode(&repo); err != nil {
-		h.logger.Error().Err(err).Str("method", "Add").Msg(chartrepo.ErrInvalidInput.Error())
-		http.Error(w, chartrepo.ErrInvalidInput.Error(), http.StatusBadRequest)
+		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
+		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
 		return
 	}
 	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		switch {
-		case errors.Is(err, chartrepo.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -60,7 +59,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.chartRepoManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -79,7 +78,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Delete(r.Context(), repoName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		switch {
-		case errors.Is(err, chartrepo.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -97,7 +96,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.chartRepoManager.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -127,7 +126,7 @@ func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Transfer(r.Context(), repoName, orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
 		switch {
-		case errors.Is(err, chartrepo.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -150,7 +149,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		switch {
-		case errors.Is(err, chartrepo.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)

@@ -18,7 +18,7 @@ func TestGet(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.Get(ctx, &hub.GetPackageInput{})
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -151,7 +151,7 @@ func TestGetJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetJSON(ctx, &hub.GetPackageInput{})
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -229,7 +229,7 @@ func TestGetStarsJSON(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				_, err := m.GetStarsJSON(ctx, tc.packageID)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -528,7 +528,7 @@ func TestRegister(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				err := m.Register(ctx, tc.p)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -620,7 +620,7 @@ func TestSearchJSON(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				dataJSON, err := m.SearchJSON(ctx, tc.input)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				assert.Nil(t, dataJSON)
 			})
@@ -675,7 +675,7 @@ func TestToggleStar(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				err := m.ToggleStar(ctx, tc.packageID)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -753,7 +753,7 @@ func TestUnregister(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				err := m.Unregister(ctx, tc.p)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}

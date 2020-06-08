@@ -54,7 +54,7 @@ func TestAdd(t *testing.T) {
 			{
 				"missing name",
 				`{"url": "http://webhook1.url"}`,
-				webhook.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -149,7 +149,7 @@ func TestDelete(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				webhook.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -212,7 +212,7 @@ func TestGet(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				webhook.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -301,7 +301,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				webhook.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -395,7 +395,7 @@ func TestTriggerTest(t *testing.T) {
 				data, _ := ioutil.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-				assert.Equal(t, webhook.ErrInvalidInput.Error()+"\n", string(data))
+				assert.Equal(t, hub.ErrInvalidInput.Error()+"\n", string(data))
 			})
 		}
 	})
@@ -581,7 +581,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"missing name",
 				`{"url": "http://webhook1.url"}`,
-				webhook.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {

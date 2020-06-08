@@ -41,7 +41,7 @@ func TestCheckAvailability(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				_, err := m.CheckAvailability(ctx, tc.resourceKind, tc.value)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -114,7 +114,7 @@ func TestCheckCredentials(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				_, err := m.CheckCredentials(ctx, tc.email, tc.password)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -204,7 +204,7 @@ func TestCheckSession(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				_, err := m.CheckSession(ctx, tc.sessionID, tc.duration)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -287,7 +287,7 @@ func TestDeleteSession(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.DeleteSession(ctx, tc.sessionID)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -363,7 +363,7 @@ func TestGetUserID(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		_, err := m.GetUserID(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -419,7 +419,7 @@ func TestRegisterSession(t *testing.T) {
 				m := NewManager(nil, nil)
 				s := &hub.Session{UserID: tc.userID}
 				_, err := m.RegisterSession(ctx, s)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -487,7 +487,7 @@ func TestRegisterUser(t *testing.T) {
 				m := NewManager(nil, es)
 
 				err := m.RegisterUser(ctx, tc.user, tc.baseURL)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -583,7 +583,7 @@ func TestUpdatePassword(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.UpdatePassword(ctx, tc.old, tc.new)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -663,7 +663,7 @@ func TestUpdateProfile(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.UpdateProfile(ctx, tc.user)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -697,7 +697,7 @@ func TestVerifyEmail(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		_, err := m.VerifyEmail(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("successful email verification", func(t *testing.T) {

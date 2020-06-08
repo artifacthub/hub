@@ -51,7 +51,7 @@ func TestAdd(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				err := m.Add(ctx, tc.s)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -118,7 +118,7 @@ func TestDelete(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				err := m.Delete(ctx, tc.s)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -164,7 +164,7 @@ func TestGetByPackageJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetByPackageJSON(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 		assert.Contains(t, err.Error(), "invalid package id")
 	})
 
@@ -251,7 +251,7 @@ func TestGetSubscriptors(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 				dataJSON, err := m.GetSubscriptors(context.Background(), tc.packageID, tc.eventKind)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				assert.Nil(t, dataJSON)
 			})

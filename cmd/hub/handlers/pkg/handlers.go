@@ -45,7 +45,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Interface("input", input).Str("method", "Get").Send()
-		if errors.Is(err, pkg.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else if errors.Is(err, pkg.ErrNotFound) {
 			http.NotFound(w, r)
@@ -76,7 +76,7 @@ func (h *Handlers) GetStars(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStarsJSON(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStars").Send()
-		if errors.Is(err, pkg.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -125,7 +125,7 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 		dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 		if err != nil {
 			h.logger.Error().Err(err).Interface("input", input).Str("method", "InjectIndexMeta").Send()
-			if errors.Is(err, pkg.ErrInvalidInput) {
+			if errors.Is(err, hub.ErrInvalidInput) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			} else if errors.Is(err, pkg.ErrNotFound) {
 				http.NotFound(w, r)
@@ -169,7 +169,7 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
-		if errors.Is(err, pkg.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -185,7 +185,7 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 	err := h.pkgManager.ToggleStar(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
-		if errors.Is(err, pkg.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)

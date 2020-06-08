@@ -3,7 +3,6 @@ package chartrepo
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"regexp"
 
@@ -15,9 +14,6 @@ import (
 var (
 	// chartRepositoryNameRE is a regexp used to validate a repository name.
 	chartRepositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
-
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage chart repositories.
@@ -52,16 +48,16 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.ChartRepositor
 
 	// Validate input
 	if r.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if r.URL == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "url not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
 	if !chartRepositoryNameRE.MatchString(r.Name) {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid name")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
 	}
 	if _, err := m.il.LoadIndex(r); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
 
 	// Add chart repository to the database
@@ -93,10 +89,10 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 		return false
 	}
 	if !isResourceKindValid(resourceKind) {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid resource kind")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid resource kind")
 	}
 	if value == "" {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid value")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid value")
 	}
 
 	// Check availability in database
@@ -118,7 +114,7 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 
 	// Validate input
 	if name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 
 	// Delete chart repository from database
@@ -141,7 +137,7 @@ func (m *Manager) GetAll(ctx context.Context) ([]*hub.ChartRepository, error) {
 func (m *Manager) GetByName(ctx context.Context, name string) (*hub.ChartRepository, error) {
 	// Validate input
 	if name == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 
 	// Get chart repository from database
@@ -158,7 +154,7 @@ func (m *Manager) GetPackagesDigest(
 ) (map[string]string, error) {
 	// Validate input
 	if _, err := uuid.FromString(chartRepositoryID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid chart repository id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository id")
 	}
 
 	// Get chart repository packages digest from database
@@ -175,7 +171,7 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 
 	// Validate input
 	if orgName == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
 	// Delete org chart repositories from database
@@ -196,7 +192,7 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 func (m *Manager) SetLastTrackingResults(ctx context.Context, chartRepositoryID, errs string) error {
 	// Validate input
 	if _, err := uuid.FromString(chartRepositoryID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid chart repository id")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository id")
 	}
 
 	// Update last tracking results in database
@@ -227,7 +223,7 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string) error 
 
 	// Validate input
 	if repoName == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "chart repository name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "chart repository name not provided")
 	}
 
 	// Update chart repository in database
@@ -245,13 +241,13 @@ func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
 
 	// Validate input
 	if r.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if r.URL == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "url not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
 	if _, err := m.il.LoadIndex(r); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
 
 	// Update chart repository in database

@@ -109,7 +109,7 @@ func TestAdd(t *testing.T) {
 				m := NewManager(nil)
 
 				err := m.Add(ctx, tc.orgName, tc.wh)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -168,7 +168,7 @@ func TestDelete(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		err := m.Delete(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -224,7 +224,7 @@ func TestGetJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetJSON(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -282,7 +282,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)
 		_, err := m.GetOwnedByOrgJSON(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
@@ -369,7 +369,7 @@ func TestGetSubscribedTo(t *testing.T) {
 				m := NewManager(nil)
 
 				webhooks, err := m.GetSubscribedTo(ctx, tc.eventKind, tc.packageID)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				assert.Nil(t, webhooks)
 			})
@@ -515,7 +515,7 @@ func TestUpdate(t *testing.T) {
 				m := NewManager(nil)
 
 				err := m.Update(ctx, tc.wh)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
