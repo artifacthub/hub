@@ -8,6 +8,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -109,16 +110,34 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		l := &IndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(db, WithIndexLoader(l))
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
+				l := &IndexLoaderMock{}
+				l.On("LoadIndex", r).Return(nil, nil)
+				m := NewManager(db, WithIndexLoader(l))
 
-		err := m.Add(ctx, "orgName", r)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
-		l.AssertExpectations(t)
+				err := m.Add(ctx, "orgName", r)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+				l.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("add chart repository succeeded", func(t *testing.T) {
@@ -230,13 +249,31 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(tc.dbErr)
+				m := NewManager(db)
 
-		err := m.Delete(ctx, "repo1")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Delete(ctx, "repo1")
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("delete chart repository succeeded", func(t *testing.T) {
@@ -527,13 +564,31 @@ func TestTransfer(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(tc.dbErr)
+				m := NewManager(db)
 
-		err := m.Transfer(ctx, "repo1", org)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Transfer(ctx, "repo1", org)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("transfer chart repository succeeded", func(t *testing.T) {
@@ -611,16 +666,34 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		l := &IndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(db, WithIndexLoader(l))
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
+				l := &IndexLoaderMock{}
+				l.On("LoadIndex", r).Return(nil, nil)
+				m := NewManager(db, WithIndexLoader(l))
 
-		err := m.Update(ctx, r)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
-		l.AssertExpectations(t)
+				err := m.Update(ctx, r)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+				l.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("update chart repository succeeded", func(t *testing.T) {

@@ -57,9 +57,12 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	err := h.orgManager.AddMember(r.Context(), orgName, userAlias, baseURL)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, org.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -107,9 +110,12 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	userAlias := chi.URLParam(r, "userAlias")
 	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, org.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -172,9 +178,12 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	o.Name = chi.URLParam(r, "orgName")
 	if err := h.orgManager.Update(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, org.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}

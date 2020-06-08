@@ -137,6 +137,10 @@ func TestAddMember(t *testing.T) {
 			http.StatusBadRequest,
 		},
 		{
+			hub.ErrInsufficientPrivilege,
+			http.StatusForbidden,
+		},
+		{
 			tests.ErrFakeDatabaseFailure,
 			http.StatusInternalServerError,
 		},
@@ -323,6 +327,10 @@ func TestDeleteMember(t *testing.T) {
 		{
 			org.ErrInvalidInput,
 			http.StatusBadRequest,
+		},
+		{
+			hub.ErrInsufficientPrivilege,
+			http.StatusForbidden,
 		},
 		{
 			tests.ErrFakeDatabaseFailure,
@@ -590,7 +598,12 @@ func TestUpdate(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error updating organization",
+				"error updating organization (insufficiente privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error updating organization (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},

@@ -100,7 +100,12 @@ func TestAdd(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error adding chart repository",
+				"error adding chart repository (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error adding chart repository (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -254,6 +259,10 @@ func TestDelete(t *testing.T) {
 			{
 				chartrepo.ErrInvalidInput,
 				http.StatusBadRequest,
+			},
+			{
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
 			},
 			{
 				tests.ErrFakeDatabaseFailure,
@@ -410,7 +419,12 @@ func TestTransfer(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error transferring chart repository",
+				"error transferring chart repository (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error transferring chart repository (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -507,7 +521,12 @@ func TestUpdate(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error updating chart repository",
+				"error updating chart repository (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error updating chart repository (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},

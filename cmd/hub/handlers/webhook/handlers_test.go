@@ -104,7 +104,12 @@ func TestAdd(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error adding webhook",
+				"error adding webhook (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error adding webhook (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},
@@ -146,6 +151,10 @@ func TestDelete(t *testing.T) {
 			{
 				webhook.ErrInvalidInput,
 				http.StatusBadRequest,
+			},
+			{
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
 			},
 			{
 				tests.ErrFakeDatabaseFailure,
@@ -205,6 +214,10 @@ func TestGet(t *testing.T) {
 			{
 				webhook.ErrInvalidInput,
 				http.StatusBadRequest,
+			},
+			{
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
 			},
 			{
 				tests.ErrFakeDatabaseFailure,
@@ -618,7 +631,12 @@ func TestUpdate(t *testing.T) {
 				http.StatusOK,
 			},
 			{
-				"error updating webhook",
+				"error updating webhook (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error updating webhook (db error)",
 				tests.ErrFakeDatabaseFailure,
 				http.StatusInternalServerError,
 			},

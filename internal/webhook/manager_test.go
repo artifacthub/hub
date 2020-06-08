@@ -7,6 +7,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -115,13 +116,31 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
+				m := NewManager(db)
 
-		err := m.Add(ctx, "orgName", wh)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Add(ctx, "orgName", wh)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("add webhook succeeded", func(t *testing.T) {
@@ -153,13 +172,31 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", validUUID).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", validUUID).Return(tc.dbErr)
+				m := NewManager(db)
 
-		err := m.Delete(ctx, validUUID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Delete(ctx, validUUID)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("delete webhook succeeded", func(t *testing.T) {
@@ -191,14 +228,32 @@ func TestGetJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, dbQuery, "userID", validUUID).Return(nil, tc.dbErr)
+				m := NewManager(db)
 
-		dataJSON, err := m.GetJSON(ctx, validUUID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
+				dataJSON, err := m.GetJSON(ctx, validUUID)
+				assert.Equal(t, tc.expectedError, err)
+				assert.Nil(t, dataJSON)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("webhook data returned successfully", func(t *testing.T) {
@@ -467,13 +522,31 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
+				m := NewManager(db)
 
-		err := m.Update(ctx, wh)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Update(ctx, wh)
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 
 	t.Run("update webhook succeeded", func(t *testing.T) {

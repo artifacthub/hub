@@ -8,6 +8,7 @@ import (
 	"regexp"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
 )
 
@@ -67,6 +68,9 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.ChartRepositor
 	query := "select add_chart_repository($1::uuid, $2::text, $3::jsonb)"
 	rJSON, _ := json.Marshal(r)
 	_, err := m.db.Exec(ctx, query, userID, orgName, rJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -120,6 +124,9 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 	// Delete chart repository from database
 	query := "select delete_chart_repository($1::uuid, $2::text)"
 	_, err := m.db.Exec(ctx, query, userID, name)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -226,6 +233,9 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string) error 
 	// Update chart repository in database
 	query := "select transfer_chart_repository($1::text, $2::uuid, $3::text)"
 	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -248,6 +258,9 @@ func (m *Manager) Update(ctx context.Context, r *hub.ChartRepository) error {
 	query := "select update_chart_repository($1::uuid, $2::jsonb)"
 	rJSON, _ := json.Marshal(r)
 	_, err := m.db.Exec(ctx, query, userID, rJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 

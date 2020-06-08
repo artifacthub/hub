@@ -9,6 +9,7 @@ import (
 	"net/url"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
 )
 
@@ -63,6 +64,9 @@ func (m *Manager) Add(ctx context.Context, orgName string, wh *hub.Webhook) erro
 	query := "select add_webhook($1::uuid, $2::text, $3::jsonb)"
 	whJSON, _ := json.Marshal(wh)
 	_, err = m.db.Exec(ctx, query, userID, orgName, whJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -78,6 +82,9 @@ func (m *Manager) Delete(ctx context.Context, webhookID string) error {
 	// Delete webhook from database
 	query := "select delete_webhook($1::uuid, $2::uuid)"
 	_, err := m.db.Exec(ctx, query, userID, webhookID)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -92,7 +99,14 @@ func (m *Manager) GetJSON(ctx context.Context, webhookID string) ([]byte, error)
 
 	// Get webhook from database
 	query := "select get_webhook($1::uuid, $2::uuid)"
-	return m.dbQueryJSON(ctx, query, userID, webhookID)
+	dataJSON, err := m.dbQueryJSON(ctx, query, userID, webhookID)
+	if err != nil {
+		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+			return nil, hub.ErrInsufficientPrivilege
+		}
+		return nil, err
+	}
+	return dataJSON, nil
 }
 
 // GetOwnedByOrgJSON returns the webhooks belonging to the provided organization
@@ -185,6 +199,9 @@ func (m *Manager) Update(ctx context.Context, wh *hub.Webhook) error {
 	query := "select update_webhook($1::uuid, $2::jsonb)"
 	whJSON, _ := json.Marshal(wh)
 	_, err = m.db.Exec(ctx, query, userID, whJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
