@@ -9,6 +9,7 @@ import (
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -175,14 +176,31 @@ func TestAddMember(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").
-			Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db, nil)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").Return(tc.dbErr)
+				m := NewManager(db, nil)
 
-		err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.AddMember(ctx, "orgName", "userAlias", "http://baseurl.com")
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -346,13 +364,31 @@ func TestDeleteMember(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName", "userAlias").Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db, nil)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", "orgName", "userAlias").Return(tc.dbErr)
+				m := NewManager(db, nil)
 
-		err := m.DeleteMember(ctx, "orgName", "userAlias")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.DeleteMember(ctx, "orgName", "userAlias")
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -452,14 +488,32 @@ func TestGetMembersJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db, nil)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tc.dbErr)
+				m := NewManager(db, nil)
 
-		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
+				dataJSON, err := m.GetMembersJSON(ctx, "orgName")
+				assert.Equal(t, tc.expectedError, err)
+				assert.Nil(t, dataJSON)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -509,12 +563,30 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db, nil)
+		testCases := []struct {
+			dbErr         error
+			expectedError error
+		}{
+			{
+				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDatabaseFailure,
+			},
+			{
+				util.ErrDBInsufficientPrivilege,
+				hub.ErrInsufficientPrivilege,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
+				m := NewManager(db, nil)
 
-		err := m.Update(ctx, &hub.Organization{})
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		db.AssertExpectations(t)
+				err := m.Update(ctx, &hub.Organization{})
+				assert.Equal(t, tc.expectedError, err)
+				db.AssertExpectations(t)
+			})
+		}
 	})
 }

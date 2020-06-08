@@ -43,9 +43,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.webhookManager.Add(r.Context(), orgName, wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, webhook.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, webhook.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -56,9 +59,12 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	webhookID := chi.URLParam(r, "webhookID")
 	if err := h.webhookManager.Delete(r.Context(), webhookID); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		if errors.Is(err, webhook.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, webhook.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -70,11 +76,15 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.webhookManager.GetJSON(r.Context(), webhookID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
-		if errors.Is(err, webhook.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, webhook.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
+		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
 }
@@ -167,9 +177,12 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	wh.WebhookID = chi.URLParam(r, "webhookID")
 	if err := h.webhookManager.Update(r.Context(), wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		if errors.Is(err, webhook.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, webhook.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}

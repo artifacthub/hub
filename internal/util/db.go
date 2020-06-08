@@ -2,6 +2,7 @@ package util
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -11,6 +12,12 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+)
+
+var (
+	// ErrDBInsufficientPrivilege indicates that the user does not have the
+	// required privilege to perform the operation.
+	ErrDBInsufficientPrivilege = errors.New("ERROR: insufficient_privilege (SQLSTATE 42501)")
 )
 
 // SetupDB creates a database connection pool using the configuration provided.

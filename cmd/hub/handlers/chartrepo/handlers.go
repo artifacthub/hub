@@ -40,9 +40,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, chartrepo.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -75,9 +78,12 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	repoName := chi.URLParam(r, "repoName")
 	if err := h.chartRepoManager.Delete(r.Context(), repoName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, chartrepo.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -120,9 +126,12 @@ func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 	orgName := r.FormValue("org")
 	if err := h.chartRepoManager.Transfer(r.Context(), repoName, orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, chartrepo.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}
@@ -140,9 +149,12 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	repo.Name = chi.URLParam(r, "repoName")
 	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		if errors.Is(err, chartrepo.ErrInvalidInput) {
+		switch {
+		case errors.Is(err, chartrepo.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
+		case errors.Is(err, hub.ErrInsufficientPrivilege):
+			http.Error(w, "", http.StatusForbidden)
+		default:
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	}

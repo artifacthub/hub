@@ -11,6 +11,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
 )
 
@@ -86,6 +87,9 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	query := "select add_organization_member($1::uuid, $2::text, $3::text)"
 	_, err = m.db.Exec(ctx, query, userID, orgName, userAlias)
 	if err != nil {
+		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+			return hub.ErrInsufficientPrivilege
+		}
 		return err
 	}
 
@@ -184,6 +188,9 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 	// Delete organization member from database
 	query := "select delete_organization_member($1::uuid, $2::text, $3::text)"
 	_, err := m.db.Exec(ctx, query, userID, orgName, userAlias)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
@@ -219,7 +226,14 @@ func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, e
 
 	// Get organization members from database
 	query := "select get_organization_members($1::uuid, $2::text)"
-	return m.dbQueryJSON(ctx, query, userID, orgName)
+	dataJSON, err := m.dbQueryJSON(ctx, query, userID, orgName)
+	if err != nil {
+		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+			return nil, hub.ErrInsufficientPrivilege
+		}
+		return nil, err
+	}
+	return dataJSON, nil
 }
 
 // Update updates the provided organization in the database.
@@ -237,6 +251,9 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 	query := "select update_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
 	_, err := m.db.Exec(ctx, query, userID, orgJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
 	return err
 }
 
