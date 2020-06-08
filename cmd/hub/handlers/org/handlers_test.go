@@ -47,12 +47,12 @@ func TestAdd(t *testing.T) {
 			{
 				"missing name",
 				`{"display_name": "Display Name"}`,
-				org.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 			{
 				"invalid name",
 				`{"name": "_org"}`,
-				org.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -133,7 +133,7 @@ func TestAddMember(t *testing.T) {
 			http.StatusOK,
 		},
 		{
-			org.ErrInvalidInput,
+			hub.ErrInvalidInput,
 			http.StatusBadRequest,
 		},
 		{
@@ -189,7 +189,7 @@ func TestCheckAvailability(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.om.On("CheckAvailability", r.Context(), "invalid", "value").
-			Return(false, org.ErrInvalidInput)
+			Return(false, hub.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -277,7 +277,7 @@ func TestConfirmMembership(t *testing.T) {
 			http.StatusOK,
 		},
 		{
-			org.ErrInvalidInput,
+			hub.ErrInvalidInput,
 			http.StatusBadRequest,
 		},
 		{
@@ -325,7 +325,7 @@ func TestDeleteMember(t *testing.T) {
 			http.StatusOK,
 		},
 		{
-			org.ErrInvalidInput,
+			hub.ErrInvalidInput,
 			http.StatusBadRequest,
 		},
 		{
@@ -381,7 +381,7 @@ func TestGet(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				org.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -482,7 +482,7 @@ func TestGetMembers(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				org.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -552,7 +552,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"invalid logo image id",
 				`{"name": "org1", "logo_image_id": "invalid"}`,
-				org.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {

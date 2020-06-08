@@ -14,9 +14,6 @@ import (
 )
 
 var (
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
-
 	// ErrNotFound indicates that the package requested was not found.
 	ErrNotFound = errors.New("package not found")
 )
@@ -51,7 +48,7 @@ func (m *Manager) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Pac
 func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	// Validate input
 	if input.PackageID == "" && input.PackageName == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "package name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package name not provided")
 	}
 
 	// Get package from database
@@ -79,10 +76,10 @@ func (m *Manager) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
 func (m *Manager) GetStarsJSON(ctx context.Context, packageID string) ([]byte, error) {
 	// Validate input
 	if packageID == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "package id not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package id not provided")
 	}
 	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 
 	// Get package stars from database
@@ -108,66 +105,66 @@ func (m *Manager) GetUpdatesJSON(ctx context.Context) ([]byte, error) {
 func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	// Validate input
 	if !isValidKind(pkg.Kind) {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid kind")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid kind")
 	}
 	if pkg.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if pkg.Version == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "version not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
 	if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid version (semantic version expected)")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
 	}
 	if pkg.ContentURL != "" {
 		u, err := url.Parse(pkg.ContentURL)
 		if err != nil || u.Scheme == "" || u.Host == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid content url")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid content url")
 		}
 	}
 	if pkg.Kind == hub.Chart {
 		if pkg.ChartRepository == nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "chart repository not provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "chart repository not provided")
 		}
 		if pkg.ChartRepository.ChartRepositoryID == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "chart repository id not provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "chart repository id not provided")
 		}
 		if _, err := uuid.FromString(pkg.ChartRepository.ChartRepositoryID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid chart repository id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository id")
 		}
 		if pkg.UserID != "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "unexpected user id provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected user id provided")
 		}
 		if pkg.OrganizationID != "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "unexpected organization id provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected organization id provided")
 		}
 	} else {
 		if pkg.UserID == "" && pkg.OrganizationID == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "user id or organization id not provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user id or organization id not provided")
 		}
 		if pkg.UserID != "" && pkg.OrganizationID != "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "both user id and organization id provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "both user id and organization id provided")
 		}
 		if pkg.UserID != "" {
 			if _, err := uuid.FromString(pkg.UserID); err != nil {
-				return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user id")
+				return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user id")
 			}
 		}
 		if pkg.OrganizationID != "" {
 			if _, err := uuid.FromString(pkg.OrganizationID); err != nil {
-				return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid organization id")
+				return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid organization id")
 			}
 		}
 		if pkg.ChartRepository != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "unexpected chart repository provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected chart repository provided")
 		}
 	}
 	for _, m := range pkg.Maintainers {
 		if m.Name == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "maintainer name not provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "maintainer name not provided")
 		}
 		if m.Email == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "maintainer email not provided")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "maintainer email not provided")
 		}
 	}
 
@@ -182,24 +179,24 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) ([]byte, error) {
 	// Validate input
 	if input.Limit <= 0 || input.Limit > 50 {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid limit (0 < l <= 50)")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid limit (0 < l <= 50)")
 	}
 	if input.Offset < 0 {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid offset (o >= 0)")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid offset (o >= 0)")
 	}
 	for _, alias := range input.Users {
 		if alias == "" {
-			return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user alias")
+			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user alias")
 		}
 	}
 	for _, name := range input.Orgs {
 		if name == "" {
-			return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid organization name")
+			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid organization name")
 		}
 	}
 	for _, name := range input.ChartRepositories {
 		if name == "" {
-			return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid chart repository name")
+			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository name")
 		}
 	}
 
@@ -214,10 +211,10 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 
 	// Validate input
 	if packageID == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "package id not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "package id not provided")
 	}
 	if _, err := uuid.FromString(packageID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 
 	// Toggle star in database
@@ -229,16 +226,16 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 func (m *Manager) Unregister(ctx context.Context, pkg *hub.Package) error {
 	// Validate input
 	if !isValidKind(pkg.Kind) {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid kind")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid kind")
 	}
 	if pkg.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if pkg.Version == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "version not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
 	if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid version (semantic version expected)")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
 	}
 
 	// Unregister package from database

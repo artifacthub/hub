@@ -3,16 +3,10 @@ package subscription
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/satori/uuid"
-)
-
-var (
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage subscriptions.
@@ -58,7 +52,7 @@ func (m *Manager) Delete(ctx context.Context, s *hub.Subscription) error {
 func (m *Manager) GetByPackageJSON(ctx context.Context, packageID string) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 	query := "select get_package_subscriptions($1::uuid, $2::uuid)"
 	var dataJSON []byte
@@ -88,10 +82,10 @@ func (m *Manager) GetSubscriptors(
 	eventKind hub.EventKind,
 ) ([]*hub.User, error) {
 	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 	if eventKind != hub.NewRelease {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event kind")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 
 	query := "select get_subscriptors($1::uuid, $2::integer)"
@@ -111,10 +105,10 @@ func (m *Manager) GetSubscriptors(
 // as input for some database functions calls.
 func validateSubscription(s *hub.Subscription) error {
 	if _, err := uuid.FromString(s.PackageID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 	if s.EventKind != hub.NewRelease {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event kind")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	return nil
 }

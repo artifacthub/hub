@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/url"
 	"regexp"
@@ -18,9 +17,6 @@ import (
 var (
 	// organizationNameRE is a regexp used to validate an organization name.
 	organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
-
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage organizations.
@@ -43,14 +39,14 @@ func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
 
 	// Validate input
 	if org.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if !organizationNameRE.MatchString(org.Name) {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid name")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
 	}
 	if org.LogoImageID != "" {
 		if _, err := uuid.FromString(org.LogoImageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid logo image id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid logo image id")
 		}
 	}
 
@@ -70,17 +66,17 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 
 	// Validate input
 	if orgName == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 	if userAlias == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "user alias not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user alias not provided")
 	}
 	if baseURL == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "base url not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "base url not provided")
 	}
 	u, err := url.Parse(baseURL)
 	if err != nil || u.Scheme == "" || u.Host == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid base url")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
 	}
 
 	// Add organization member to database
@@ -140,10 +136,10 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 		return false
 	}
 	if !isResourceKindValid(resourceKind) {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid resource kind")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid resource kind")
 	}
 	if value == "" {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid value")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid value")
 	}
 
 	// Check availability in database
@@ -163,7 +159,7 @@ func (m *Manager) ConfirmMembership(ctx context.Context, orgName string) error {
 
 	// Validate input
 	if orgName == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
 	// Confirm organization membership in database
@@ -179,10 +175,10 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 
 	// Validate input
 	if orgName == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 	if userAlias == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "user alias not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user alias not provided")
 	}
 
 	// Delete organization member from database
@@ -206,7 +202,7 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 	// Validate input
 	if orgName == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
 	// Get organization from database
@@ -221,7 +217,7 @@ func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, e
 
 	// Validate input
 	if orgName == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
 	// Get organization members from database
@@ -243,7 +239,7 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 	// Validate input
 	if org.LogoImageID != "" {
 		if _, err := uuid.FromString(org.LogoImageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid logo image id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid logo image id")
 		}
 	}
 

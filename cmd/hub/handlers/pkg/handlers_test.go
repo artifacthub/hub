@@ -31,7 +31,7 @@ func TestGet(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				pkg.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -134,7 +134,7 @@ func TestGetStars(t *testing.T) {
 			expectedStatus int
 		}{
 			{
-				pkg.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -261,7 +261,7 @@ func TestInjectIndexMeta(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				pkg.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -401,7 +401,7 @@ func TestSearch(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, pkg.ErrInvalidInput)
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, hub.ErrInvalidInput)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -457,7 +457,7 @@ func TestToggleStar(t *testing.T) {
 			expectedStatus int
 		}{
 			{
-				pkg.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{

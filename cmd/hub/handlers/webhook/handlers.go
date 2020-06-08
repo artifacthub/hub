@@ -11,7 +11,6 @@ import (
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/notification"
-	"github.com/artifacthub/hub/internal/webhook"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -37,14 +36,14 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
-		h.logger.Error().Err(err).Str("method", "Add").Msg(webhook.ErrInvalidInput.Error())
-		http.Error(w, webhook.ErrInvalidInput.Error(), http.StatusBadRequest)
+		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
+		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
 		return
 	}
 	if err := h.webhookManager.Add(r.Context(), orgName, wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		switch {
-		case errors.Is(err, webhook.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -60,7 +59,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	if err := h.webhookManager.Delete(r.Context(), webhookID); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		switch {
-		case errors.Is(err, webhook.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -77,7 +76,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
 		switch {
-		case errors.Is(err, webhook.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -97,7 +96,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.webhookManager.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
-		if errors.Is(err, webhook.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -125,7 +124,7 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	// Read webhook from request body
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
-		http.Error(w, webhook.ErrInvalidInput.Error(), http.StatusBadRequest)
+		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -170,15 +169,15 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
-		h.logger.Error().Err(err).Str("method", "Update").Msg(webhook.ErrInvalidInput.Error())
-		http.Error(w, webhook.ErrInvalidInput.Error(), http.StatusBadRequest)
+		h.logger.Error().Err(err).Str("method", "Update").Msg(hub.ErrInvalidInput.Error())
+		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
 		return
 	}
 	wh.WebhookID = chi.URLParam(r, "webhookID")
 	if err := h.webhookManager.Update(r.Context(), wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		switch {
-		case errors.Is(err, webhook.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)

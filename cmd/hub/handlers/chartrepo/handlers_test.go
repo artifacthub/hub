@@ -53,7 +53,7 @@ func TestAdd(t *testing.T) {
 			{
 				"missing name",
 				`{"url": "https://repo1.url"}`,
-				chartrepo.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -145,7 +145,7 @@ func TestCheckAvailability(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.rm.On("CheckAvailability", r.Context(), "invalid", "value").
-			Return(false, chartrepo.ErrInvalidInput)
+			Return(false, hub.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -257,7 +257,7 @@ func TestDelete(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				chartrepo.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -325,7 +325,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				chartrepo.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{
@@ -398,7 +398,7 @@ func TestTransfer(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("Transfer", r.Context(), "", "").Return(chartrepo.ErrInvalidInput)
+		hw.rm.On("Transfer", r.Context(), "", "").Return(hub.ErrInvalidInput)
 		hw.h.Transfer(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -476,7 +476,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"missing name",
 				`{"url": "https://repo1.url"}`,
-				chartrepo.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {

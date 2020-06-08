@@ -45,7 +45,7 @@ func TestAdd(t *testing.T) {
 			{
 				"invalid package id",
 				`{"package_id": "invalid"}`,
-				subscription.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -135,7 +135,7 @@ func TestDelete(t *testing.T) {
 			{
 				"invalid package id",
 				`{"package_id": "invalid"}`,
-				subscription.ErrInvalidInput,
+				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
@@ -219,7 +219,7 @@ func TestGetByPackage(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				subscription.ErrInvalidInput,
+				hub.ErrInvalidInput,
 				http.StatusBadRequest,
 			},
 			{

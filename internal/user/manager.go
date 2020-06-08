@@ -22,9 +22,6 @@ var (
 
 	// ErrNotFound indicates that the user does not exist.
 	ErrNotFound = errors.New("user not found")
-
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage users.
@@ -60,10 +57,10 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 		return false
 	}
 	if !isResourceKindValid(resourceKind) {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid resource kind")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid resource kind")
 	}
 	if value == "" {
-		return available, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid value")
+		return available, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid value")
 	}
 
 	// Check availability in database
@@ -84,10 +81,10 @@ func (m *Manager) CheckCredentials(
 ) (*hub.CheckCredentialsOutput, error) {
 	// Validate input
 	if email == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
 	}
 	if password == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "password not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "password not provided")
 	}
 
 	// Get password for email provided from database
@@ -121,10 +118,10 @@ func (m *Manager) CheckSession(
 ) (*hub.CheckSessionOutput, error) {
 	// Validate input
 	if len(sessionID) == 0 {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "session id not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "session id not provided")
 	}
 	if duration == 0 {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "duration not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "duration not provided")
 	}
 
 	// Get session details from database
@@ -157,7 +154,7 @@ func (m *Manager) CheckSession(
 func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
 	// Validate input
 	if len(sessionID) == 0 {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "session id not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "session id not provided")
 	}
 
 	// Delete session from database
@@ -177,7 +174,7 @@ func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 	// Validate input
 	if email == "" {
-		return "", fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+		return "", fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
 	}
 
 	// Get user id from database
@@ -197,10 +194,10 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]byte, error) {
 	// Validate input
 	if session.UserID == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "user id not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user id not provided")
 	}
 	if _, err := uuid.FromString(session.UserID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid user id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user id")
 	}
 
 	// Register session in database
@@ -217,20 +214,20 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]
 func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
 	// Validate input
 	if user.Alias == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "alias not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "alias not provided")
 	}
 	if user.Email == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "email not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "email not provided")
 	}
 	if !user.EmailVerified && m.es != nil {
 		u, err := url.Parse(baseURL)
 		if err != nil || u.Scheme == "" || u.Host == "" {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid base url")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
 		}
 	}
 	if user.ProfileImageID != "" {
 		if _, err := uuid.FromString(user.ProfileImageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid profile image id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid profile image id")
 		}
 	}
 
@@ -279,10 +276,10 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 
 	// Validate input
 	if old == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "old password not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "old password not provided")
 	}
 	if new == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "new password not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "new password not provided")
 	}
 
 	// Validate old password
@@ -315,11 +312,11 @@ func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 
 	// Validate input
 	if user.Alias == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "alias not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "alias not provided")
 	}
 	if user.ProfileImageID != "" {
 		if _, err := uuid.FromString(user.ProfileImageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid profile image id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid profile image id")
 		}
 	}
 
@@ -337,7 +334,7 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 
 	// Validate input
 	if code == "" {
-		return verified, fmt.Errorf("%w: %s", ErrInvalidInput, "code not provided")
+		return verified, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "code not provided")
 	}
 
 	// Verify email in database

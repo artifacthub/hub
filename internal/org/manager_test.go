@@ -61,7 +61,7 @@ func TestAdd(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.Add(ctx, tc.org)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -137,7 +137,7 @@ func TestAddMember(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.AddMember(ctx, tc.orgName, tc.userAlias, tc.baseURL)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -229,7 +229,7 @@ func TestCheckAvailability(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -290,7 +290,7 @@ func TestConfirmMembership(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		err := m.ConfirmMembership(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -347,7 +347,7 @@ func TestDeleteMember(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.DeleteMember(ctx, tc.orgName, tc.userAlias)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}
@@ -433,7 +433,7 @@ func TestGetJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		_, err := m.GetJSON(context.Background(), "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -473,7 +473,7 @@ func TestGetMembersJSON(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil, nil)
 		_, err := m.GetMembersJSON(ctx, "")
-		assert.True(t, errors.Is(err, ErrInvalidInput))
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
@@ -546,7 +546,7 @@ func TestUpdate(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil, nil)
 				err := m.Update(ctx, tc.org)
-				assert.True(t, errors.Is(err, ErrInvalidInput))
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 			})
 		}

@@ -7,7 +7,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/artifacthub/hub/internal/org"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -41,7 +40,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.orgManager.Add(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -58,7 +57,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
 		switch {
-		case errors.Is(err, org.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -77,7 +76,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.orgManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -95,7 +94,7 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
 	if err := h.orgManager.ConfirmMembership(r.Context(), orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -111,7 +110,7 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
 		switch {
-		case errors.Is(err, org.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)
@@ -127,7 +126,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -156,7 +155,7 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.orgManager.GetMembersJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetMembers").Send()
-		if errors.Is(err, org.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -179,7 +178,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.Update(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		switch {
-		case errors.Is(err, org.ErrInvalidInput):
+		case errors.Is(err, hub.ErrInvalidInput):
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		case errors.Is(err, hub.ErrInsufficientPrivilege):
 			http.Error(w, "", http.StatusForbidden)

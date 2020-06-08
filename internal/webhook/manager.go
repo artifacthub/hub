@@ -3,7 +3,6 @@ package webhook
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"html/template"
 	"net/url"
@@ -11,11 +10,6 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
-)
-
-var (
-	// ErrInvalidInput indicates that the input provided is not valid.
-	ErrInvalidInput = errors.New("invalid input")
 )
 
 // Manager provides an API to manage webhooks.
@@ -36,27 +30,27 @@ func (m *Manager) Add(ctx context.Context, orgName string, wh *hub.Webhook) erro
 
 	// Validate input
 	if wh.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if wh.URL == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "url not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
 	u, err := url.Parse(wh.URL)
 	if err != nil || u.Scheme == "" || u.Host == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
 	if _, err := template.New("").Parse(wh.Template); err != nil {
-		return fmt.Errorf("%w: %s %s", ErrInvalidInput, "invalid template", err)
+		return fmt.Errorf("%w: %s %s", hub.ErrInvalidInput, "invalid template", err)
 	}
 	if len(wh.EventKinds) == 0 {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "no event kinds provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "no event kinds provided")
 	}
 	if len(wh.Packages) == 0 {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "no packages provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "no packages provided")
 	}
 	for _, p := range wh.Packages {
 		if _, err := uuid.FromString(p.PackageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 		}
 	}
 
@@ -76,7 +70,7 @@ func (m *Manager) Delete(ctx context.Context, webhookID string) error {
 
 	// Validate input
 	if _, err := uuid.FromString(webhookID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid webhook id")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid webhook id")
 	}
 
 	// Delete webhook from database
@@ -94,7 +88,7 @@ func (m *Manager) GetJSON(ctx context.Context, webhookID string) ([]byte, error)
 
 	// Validate input
 	if _, err := uuid.FromString(webhookID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid webhook id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid webhook id")
 	}
 
 	// Get webhook from database
@@ -116,7 +110,7 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 
 	// Validate input
 	if orgName == "" {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "organization name not provided")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
 	// Get webhooks from database
@@ -143,10 +137,10 @@ func (m *Manager) GetSubscribedTo(
 ) ([]*hub.Webhook, error) {
 	// Validate input
 	if eventKind != hub.NewRelease {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid event kind")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 
 	// Get webhooks from database
@@ -168,30 +162,30 @@ func (m *Manager) Update(ctx context.Context, wh *hub.Webhook) error {
 
 	// Validate input
 	if _, err := uuid.FromString(wh.WebhookID); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid webhook id")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid webhook id")
 	}
 	if wh.Name == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "name not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 	if wh.URL == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "url not provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
 	u, err := url.Parse(wh.URL)
 	if err != nil || u.Scheme == "" || u.Host == "" {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid url")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
 	if _, err := template.New("").Parse(wh.Template); err != nil {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid template")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid template")
 	}
 	if len(wh.EventKinds) == 0 {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "no event kinds provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "no event kinds provided")
 	}
 	if len(wh.Packages) == 0 {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, "no packages provided")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "no packages provided")
 	}
 	for _, p := range wh.Packages {
 		if _, err := uuid.FromString(p.PackageID); err != nil {
-			return fmt.Errorf("%w: %s", ErrInvalidInput, "invalid package id")
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 		}
 	}
 

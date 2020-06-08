@@ -124,7 +124,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	available, err := h.userManager.CheckAvailability(r.Context(), resourceKind, value)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "CheckAvailability").Send()
-		if errors.Is(err, user.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -501,7 +501,7 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	err = h.userManager.RegisterUser(r.Context(), u, h.cfg.GetString("server.baseURL"))
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
-		if errors.Is(err, user.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -596,7 +596,7 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if errors.Is(err, user.ErrInvalidPassword) {
 			http.Error(w, "", http.StatusUnauthorized)
-		} else if errors.Is(err, user.ErrInvalidInput) {
+		} else if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
@@ -617,7 +617,7 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	err = h.userManager.UpdateProfile(r.Context(), u)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
-		if errors.Is(err, user.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
@@ -631,7 +631,7 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	verified, err := h.userManager.VerifyEmail(r.Context(), code)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyEmail").Send()
-		if errors.Is(err, user.ErrInvalidInput) {
+		if errors.Is(err, hub.ErrInvalidInput) {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		} else {
 			http.Error(w, "", http.StatusInternalServerError)
