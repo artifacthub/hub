@@ -187,9 +187,11 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/verify-email`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: `code=${encodeURIComponent(code)}`,
+      body: JSON.stringify({
+        code: code,
+      }),
     });
   },
 
@@ -197,9 +199,12 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/login`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: `email=${encodeURIComponent(user.email)}&password=${encodeURIComponent(user.password)}`,
+      body: JSON.stringify({
+        email: user.email,
+        password: user.password,
+      }),
     });
   },
 
@@ -341,9 +346,12 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/password`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: `old=${encodeURIComponent(oldPassword)}&new=${encodeURIComponent(newPassword)}`,
+      body: JSON.stringify({
+        old: oldPassword,
+        new: newPassword,
+      }),
     });
   },
 
