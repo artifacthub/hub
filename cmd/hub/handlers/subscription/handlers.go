@@ -2,7 +2,9 @@ package subscription
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -44,11 +46,16 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 // Delete is an http handler that removes the provided subscription from the
 // database.
 func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
-	s := &hub.Subscription{}
-	if err := json.NewDecoder(r.Body).Decode(&s); err != nil {
-		h.logger.Error().Err(err).Str("method", "Delete").Msg("invalid subscription")
-		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+	eventKind, err := strconv.Atoi(r.FormValue("event_kind"))
+	if err != nil {
+		errMsg := "invalid event kind"
+		h.logger.Error().Err(err).Str("method", "Delete").Msg(errMsg)
+		helpers.RenderErrorJSON(w, fmt.Errorf("%w: %s", hub.ErrInvalidInput, errMsg))
 		return
+	}
+	s := &hub.Subscription{
+		PackageID: r.FormValue("package_id"),
+		EventKind: hub.EventKind(eventKind),
 	}
 	if err := h.subscriptionManager.Delete(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()

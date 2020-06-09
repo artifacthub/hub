@@ -118,31 +118,41 @@ func TestAdd(t *testing.T) {
 func TestDelete(t *testing.T) {
 	t.Run("invalid subscription provided", func(t *testing.T) {
 		testCases := []struct {
-			description      string
-			subscriptionJSON string
-			smErr            error
+			desc     string
+			qsParams string
+			smErr    error
 		}{
 			{
-				"no subscription provided",
+				"no qs params provided, invalid event kind",
 				"",
 				nil,
 			},
 			{
-				"invalid json",
-				"-",
+				"invalid event kind",
+				"event_kind=invalid",
+				nil,
+			},
+			{
+				"invalid event kind (none provided)",
+				"package_id=00000000-0000-0000-0000-000000000001",
 				nil,
 			},
 			{
 				"invalid package id",
-				`{"package_id": "invalid"}`,
+				"package_id=invalid&event_kind=0",
+				hub.ErrInvalidInput,
+			},
+			{
+				"invalid event kind (no new release)",
+				"package_id=00000000-0000-0000-0000-000000000001&event_kind=1",
 				hub.ErrInvalidInput,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
-			t.Run(tc.description, func(t *testing.T) {
+			t.Run(tc.desc, func(t *testing.T) {
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("DELETE", "/", strings.NewReader(tc.subscriptionJSON))
+				r, _ := http.NewRequest("DELETE", "/?"+tc.qsParams, nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 				hw := newHandlersWrapper()
@@ -160,14 +170,11 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("valid subscription provided", func(t *testing.T) {
-		subscriptionJSON := `
-		{
-			"package_id": "00000000-0000-0000-0000-000000000001",
-			"event_kind": 0
+		s := &hub.Subscription{
+			PackageID: "00000000-0000-0000-0000-000000000001",
+			EventKind: hub.NewRelease,
 		}
-		`
-		s := &hub.Subscription{}
-		_ = json.Unmarshal([]byte(subscriptionJSON), &s)
+		qs := "package_id=00000000-0000-0000-0000-000000000001&event_kind=0"
 
 		testCases := []struct {
 			description        string
@@ -189,7 +196,7 @@ func TestDelete(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("DELETE", "/", strings.NewReader(subscriptionJSON))
+				r, _ := http.NewRequest("DELETE", "/?"+qs, nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 				hw := newHandlersWrapper()
