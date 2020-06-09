@@ -380,15 +380,8 @@ export const API = {
   },
 
   deleteSubscription: (packageId: string, eventKind: EventKind): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/subscriptions`, {
+    return apiFetch(`${API_BASE_URL}/subscriptions?package_id=${packageId}&event_kind=${eventKind}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        package_id: packageId,
-        event_kind: eventKind,
-      }),
     });
   },
 
