@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
@@ -40,7 +41,7 @@ func TestImage(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.is.On("GetImage", r.Context(), "imageID", "2x").Return(nil, img.ErrNotFound)
+		hw.is.On("GetImage", r.Context(), "imageID", "2x").Return(nil, hub.ErrNotFound)
 		hw.h.Image(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

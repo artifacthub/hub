@@ -3,7 +3,6 @@ package pkg
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -11,7 +10,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
-	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -45,13 +43,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Interface("input", input).Str("method", "Get").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else if errors.Is(err, pkg.ErrNotFound) {
-			http.NotFound(w, r)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
@@ -63,7 +55,7 @@ func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStarredByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStarredByUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -76,11 +68,7 @@ func (h *Handlers) GetStars(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStarsJSON(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStars").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
 }
@@ -91,7 +79,7 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
@@ -103,7 +91,7 @@ func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetUpdatesJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetUpdates").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
@@ -125,18 +113,12 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 		dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 		if err != nil {
 			h.logger.Error().Err(err).Interface("input", input).Str("method", "InjectIndexMeta").Send()
-			if errors.Is(err, hub.ErrInvalidInput) {
-				http.Error(w, err.Error(), http.StatusBadRequest)
-			} else if errors.Is(err, pkg.ErrNotFound) {
-				http.NotFound(w, r)
-			} else {
-				http.Error(w, "", http.StatusInternalServerError)
-			}
+			helpers.RenderErrorJSON(w, err)
 			return
 		}
 		p := &hub.Package{}
 		if err := json.Unmarshal(dataJSON, p); err != nil {
-			http.Error(w, "", http.StatusInternalServerError)
+			helpers.RenderErrorJSON(w, err)
 			return
 		}
 		publisher := p.OrganizationName
@@ -162,18 +144,15 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	input, err := buildSearchInput(r.URL.Query())
 	if err != nil {
+		err = fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Msg("invalid query")
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
@@ -185,11 +164,7 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 	err := h.pkgManager.ToggleStar(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 

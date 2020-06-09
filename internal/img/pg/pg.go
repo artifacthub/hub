@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"errors"
 
+	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	svg "github.com/h2non/go-is-svg"
 	"github.com/jackc/pgx/v4"
@@ -35,7 +36,7 @@ func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]b
 	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, img.ErrNotFound
+			return nil, hub.ErrNotFound
 		}
 		return nil, err
 	}

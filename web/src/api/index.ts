@@ -78,10 +78,10 @@ const handleUnauthorizedRequests = async (res: any) => {
 
 const handleErrors = async (res: any) => {
   if (!res.ok) {
-    let text = await res.text();
+    let text = await res.json();
     return Promise.reject({
       status: res.status,
-      statusText: text || res.statusText,
+      statusText: text.message || res.statusText,
     });
   }
   return res;

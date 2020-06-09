@@ -2,7 +2,6 @@ package subscription
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
@@ -32,16 +31,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	s := &hub.Subscription{}
 	if err := json.NewDecoder(r.Body).Decode(&s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg("invalid subscription")
-		http.Error(w, "subscription provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	if err := h.subscriptionManager.Add(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -51,16 +46,12 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	s := &hub.Subscription{}
 	if err := json.NewDecoder(r.Body).Decode(&s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Msg("invalid subscription")
-		http.Error(w, "subscription provided is not valid", http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	if err := h.subscriptionManager.Delete(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -71,11 +62,7 @@ func (h *Handlers) GetByPackage(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.subscriptionManager.GetByPackageJSON(r.Context(), packageID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByPackage").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -87,7 +74,7 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.subscriptionManager.GetByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)

@@ -144,8 +144,7 @@ func TestCheckAvailability(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("CheckAvailability", r.Context(), "invalid", "value").
-			Return(false, hub.ErrInvalidInput)
+		hw.rm.On("CheckAvailability", r.Context(), "invalid", "value").Return(false, hub.ErrInvalidInput)
 		hw.h.CheckAvailability(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

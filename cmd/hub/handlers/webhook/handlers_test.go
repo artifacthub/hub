@@ -20,6 +20,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
 func TestMain(m *testing.M) {
@@ -395,7 +396,7 @@ func TestTriggerTest(t *testing.T) {
 				data, _ := ioutil.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-				assert.Equal(t, hub.ErrInvalidInput.Error()+"\n", string(data))
+				assert.Equal(t, hub.ErrInvalidInput.Error(), getErrorMessage(t, data))
 			})
 		}
 	})
@@ -435,7 +436,7 @@ func TestTriggerTest(t *testing.T) {
 				data, _ := ioutil.ReadAll(resp.Body)
 
 				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-				assert.True(t, strings.HasPrefix(string(data), tc.err))
+				assert.True(t, strings.HasPrefix(getErrorMessage(t, data), tc.err))
 			})
 		}
 	})
@@ -458,7 +459,7 @@ func TestTriggerTest(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-		assert.True(t, strings.HasPrefix(string(data), "error doing request:"))
+		assert.True(t, strings.HasPrefix(getErrorMessage(t, data), "error doing request:"))
 	})
 
 	t.Run("received unexpected status code", func(t *testing.T) {
@@ -480,7 +481,7 @@ func TestTriggerTest(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
-		assert.Equal(t, "received unexpected status code: 404\n", string(data))
+		assert.Equal(t, "received unexpected status code: 404", getErrorMessage(t, data))
 	})
 
 	t.Run("webhook endpoint call succeeded", func(t *testing.T) {
@@ -680,4 +681,11 @@ func newHandlersWrapper() *handlersWrapper {
 		wm: wm,
 		h:  NewHandlers(wm),
 	}
+}
+
+func getErrorMessage(t *testing.T, data []byte) string {
+	var m map[string]interface{}
+	err := json.Unmarshal(data, &m)
+	require.NoError(t, err)
+	return m["message"].(string)
 }

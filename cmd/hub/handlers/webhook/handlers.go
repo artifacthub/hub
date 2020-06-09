@@ -3,7 +3,6 @@ package webhook
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"text/template"
@@ -37,19 +36,12 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
-		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	if err := h.webhookManager.Add(r.Context(), orgName, wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -58,14 +50,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	webhookID := chi.URLParam(r, "webhookID")
 	if err := h.webhookManager.Delete(r.Context(), webhookID); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
@@ -75,14 +60,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.webhookManager.GetJSON(r.Context(), webhookID)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Get").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -96,11 +74,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.webhookManager.GetOwnedByOrgJSON(r.Context(), orgName)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
-		if errors.Is(err, hub.ErrInvalidInput) {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		} else {
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -112,7 +86,7 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.webhookManager.GetOwnedByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
-		http.Error(w, "", http.StatusInternalServerError)
+		helpers.RenderErrorJSON(w, err)
 		return
 	}
 	helpers.RenderJSON(w, dataJSON, 0)
@@ -124,7 +98,7 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	// Read webhook from request body
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
-		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 
@@ -134,7 +108,8 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 		var err error
 		tmpl, err = template.New("").Parse(wh.Template)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("error parsing template: %s", err.Error()), http.StatusBadRequest)
+			err = fmt.Errorf("error parsing template: %w", err)
+			helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 			return
 		}
 	} else {
@@ -142,7 +117,8 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	}
 	var payload bytes.Buffer
 	if err := tmpl.Execute(&payload, webhookTestTemplateData); err != nil {
-		http.Error(w, fmt.Sprintf("error executing template: %s", err.Error()), http.StatusBadRequest)
+		err = fmt.Errorf("error executing template: %w", err)
+		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 		return
 	}
 
@@ -156,12 +132,14 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("X-ArtifactHub-Secret", wh.Secret)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error doing request: %s", err.Error()), http.StatusBadRequest)
+		err = fmt.Errorf("error doing request: %s", err.Error())
+		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 		return
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode >= 400 {
-		http.Error(w, fmt.Sprintf("received unexpected status code: %d", resp.StatusCode), http.StatusBadRequest)
+		err := fmt.Errorf("received unexpected status code: %d", resp.StatusCode)
+		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 	}
 }
 
@@ -170,20 +148,13 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	wh := &hub.Webhook{}
 	if err := json.NewDecoder(r.Body).Decode(&wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Msg(hub.ErrInvalidInput.Error())
-		http.Error(w, hub.ErrInvalidInput.Error(), http.StatusBadRequest)
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 	wh.WebhookID = chi.URLParam(r, "webhookID")
 	if err := h.webhookManager.Update(r.Context(), wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
-		switch {
-		case errors.Is(err, hub.ErrInvalidInput):
-			http.Error(w, err.Error(), http.StatusBadRequest)
-		case errors.Is(err, hub.ErrInsufficientPrivilege):
-			http.Error(w, "", http.StatusForbidden)
-		default:
-			http.Error(w, "", http.StatusInternalServerError)
-		}
+		helpers.RenderErrorJSON(w, err)
 	}
 }
 
