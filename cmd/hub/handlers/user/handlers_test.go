@@ -287,9 +287,10 @@ func TestInjectUserID(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
-	t.Run("credentials not provided", func(t *testing.T) {
+	t.Run("invalid", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", nil)
+		body := strings.NewReader(`{"email": "email" ...`)
+		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.h.Login(w, r)
@@ -299,14 +300,27 @@ func TestLogin(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
-	t.Run("error checking credentials", func(t *testing.T) {
+	t.Run("credentials not provided", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{}`)
+		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
-			Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckCredentials", r.Context(), "", "").Return(nil, hub.ErrInvalidInput)
+		hw.h.Login(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("error checking credentials", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
+
+		hw := newHandlersWrapper()
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -317,8 +331,8 @@ func TestLogin(t *testing.T) {
 
 	t.Run("invalid credentials provided", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass2"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{"email": "email", "password": "pass2"}`)
+		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass2").
@@ -333,8 +347,8 @@ func TestLogin(t *testing.T) {
 
 	t.Run("error registering session", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
@@ -351,8 +365,8 @@ func TestLogin(t *testing.T) {
 
 	t.Run("login succeeded", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("POST", "/", strings.NewReader("email=email&password=pass"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
+		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
@@ -662,8 +676,8 @@ func TestRequireLogin(t *testing.T) {
 func TestUpdatePassword(t *testing.T) {
 	t.Run("no old password provided", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("new=new"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{"new": "new"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "", "new").Return(hub.ErrInvalidInput)
@@ -677,8 +691,8 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("no new password provided", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		body := strings.NewReader(`{"old": "old"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "old", "").Return(hub.ErrInvalidInput)
@@ -692,9 +706,9 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("invalid old password provided", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=invalid&new=new"))
+		body := strings.NewReader(`{"old": "invalid", "new": "new"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "invalid", "new").
@@ -709,9 +723,9 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("error updating password", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
+		body := strings.NewReader(`{"old": "old", "new": "new"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "old", "new").
@@ -726,9 +740,9 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("password updated successfully", func(t *testing.T) {
 		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("PUT", "/", strings.NewReader("old=old&new=new"))
+		body := strings.NewReader(`{"old": "old", "new": "new"}`)
+		r, _ := http.NewRequest("PUT", "/", body)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
-		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "old", "new").Return(nil)
@@ -850,8 +864,7 @@ func TestVerifyEmail(t *testing.T) {
 		tc := tc
 		t.Run(tc.description, func(t *testing.T) {
 			w := httptest.NewRecorder()
-			r, _ := http.NewRequest("POST", "/", strings.NewReader("code=1234"))
-			r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+			r, _ := http.NewRequest("POST", "/", strings.NewReader(`{"code": "1234"}`))
 
 			hw := newHandlersWrapper()
 			hw.um.On("VerifyEmail", r.Context(), "1234").Return(tc.response...)

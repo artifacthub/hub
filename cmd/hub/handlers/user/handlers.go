@@ -186,17 +186,15 @@ func (h *Handlers) InjectUserID(next http.Handler) http.Handler {
 // Login is an http handler used to log a user in.
 func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 	// Extract credentials from request
-	email := r.FormValue("email")
-	password := r.FormValue("password")
-	if email == "" || password == "" {
-		errMsg := "credentials not provided"
-		h.logger.Error().Str("method", "Login").Msg(errMsg)
-		helpers.RenderErrorJSON(w, fmt.Errorf("%w: %s", hub.ErrInvalidInput, errMsg))
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "Add").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
 
 	// Check if the credentials provided are valid
-	checkCredentialsOutput, err := h.userManager.CheckCredentials(r.Context(), email, password)
+	checkCredentialsOutput, err := h.userManager.CheckCredentials(r.Context(), input["email"], input["password"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "Login").Msg("checkCredentials failed")
 		helpers.RenderErrorJSON(w, err)
@@ -586,9 +584,13 @@ func (h *Handlers) RequireLogin(next http.Handler) http.Handler {
 // UpdatePassword is an http handler used to update the password in the hub
 // database.
 func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
-	old := r.FormValue("old")
-	new := r.FormValue("new")
-	err := h.userManager.UpdatePassword(r.Context(), old, new)
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdatePassword").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	err := h.userManager.UpdatePassword(r.Context(), input["old"], input["new"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdatePassword").Send()
 		if errors.Is(err, user.ErrInvalidPassword) {
@@ -619,8 +621,13 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 // VerifyEmail is an http handler used to verify a user's email address.
 func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
-	code := r.FormValue("code")
-	verified, err := h.userManager.VerifyEmail(r.Context(), code)
+	var input map[string]string
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		h.logger.Error().Err(err).Str("method", "VerifyEmail").Msg(hub.ErrInvalidInput.Error())
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	verified, err := h.userManager.VerifyEmail(r.Context(), input["code"])
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "VerifyEmail").Send()
 		helpers.RenderErrorJSON(w, err)
