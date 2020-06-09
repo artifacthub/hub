@@ -97,7 +97,7 @@ func TestAdd(t *testing.T) {
 			{
 				"add chart repository succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusCreated,
 			},
 			{
 				"error adding chart repository (insufficient privilege)",
@@ -194,7 +194,7 @@ func TestCheckAvailability(t *testing.T) {
 					if tc.available {
 						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 					} else {
-						assert.Equal(t, http.StatusOK, resp.StatusCode)
+						assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 					}
 					assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 					hw.rm.AssertExpectations(t)
@@ -246,7 +246,7 @@ func TestDelete(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		hw.rm.AssertExpectations(t)
 	})
 
@@ -415,7 +415,7 @@ func TestTransfer(t *testing.T) {
 			{
 				"chart repository transferred succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusNoContent,
 			},
 			{
 				"error transferring chart repository (insufficient privilege)",
@@ -517,7 +517,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"chart repository update succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusNoContent,
 			},
 			{
 				"error updating chart repository (insufficient privilege)",

@@ -107,8 +107,7 @@ func TestCheckAvailability(t *testing.T) {
 					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 					hw := newHandlersWrapper()
-					hw.um.On("CheckAvailability", r.Context(), tc.resourceKind, "value").
-						Return(tc.available, nil)
+					hw.um.On("CheckAvailability", r.Context(), tc.resourceKind, "value").Return(tc.available, nil)
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
@@ -117,7 +116,7 @@ func TestCheckAvailability(t *testing.T) {
 					if tc.available {
 						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 					} else {
-						assert.Equal(t, http.StatusOK, resp.StatusCode)
+						assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 					}
 					assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 					hw.um.AssertExpectations(t)
@@ -364,7 +363,7 @@ func TestLogin(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		require.Len(t, resp.Cookies(), 1)
 		cookie := resp.Cookies()[0]
 		assert.Equal(t, sessionCookieName, cookie.Name)
@@ -411,7 +410,7 @@ func TestLogout(t *testing.T) {
 				resp := w.Result()
 				defer resp.Body.Close()
 
-				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 				require.Len(t, resp.Cookies(), 1)
 				cookie := resp.Cookies()[0]
 				assert.Equal(t, sessionCookieName, cookie.Name)
@@ -451,7 +450,7 @@ func TestLogout(t *testing.T) {
 				resp := w.Result()
 				defer resp.Body.Close()
 
-				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 				require.Len(t, resp.Cookies(), 1)
 				cookie := resp.Cookies()[0]
 				assert.Equal(t, sessionCookieName, cookie.Name)
@@ -543,7 +542,7 @@ func TestRegisterUser(t *testing.T) {
 			{
 				"registration succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusCreated,
 			},
 			{
 				"registration failed",
@@ -737,7 +736,7 @@ func TestUpdatePassword(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		hw.um.AssertExpectations(t)
 	})
 }
@@ -815,7 +814,7 @@ func TestUpdateProfile(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		hw.um.AssertExpectations(t)
 	})
 }
@@ -839,7 +838,7 @@ func TestVerifyEmail(t *testing.T) {
 		{
 			"code verified",
 			[]interface{}{true, nil},
-			http.StatusOK,
+			http.StatusNoContent,
 		},
 		{
 			"database error",

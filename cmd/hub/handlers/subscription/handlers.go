@@ -38,6 +38,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // Delete is an http handler that removes the provided subscription from the
@@ -53,6 +54,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // GetByPackage is an http handler that returns the subscriptions a user has

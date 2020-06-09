@@ -87,7 +87,7 @@ func TestAdd(t *testing.T) {
 			{
 				"add subscription succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusCreated,
 			},
 			{
 				"error adding subscription",
@@ -177,7 +177,7 @@ func TestDelete(t *testing.T) {
 			{
 				"delete subscription succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusNoContent,
 			},
 			{
 				"error deleting subscription",

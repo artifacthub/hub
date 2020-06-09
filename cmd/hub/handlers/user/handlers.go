@@ -130,6 +130,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // GetProfile is an http handler used to get a logged in user profile.
@@ -238,6 +239,7 @@ func (h *Handlers) Login(w http.ResponseWriter, r *http.Request) {
 		cookie.Secure = true
 	}
 	http.SetCookie(w, cookie)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Logout is an http handler used to log a user out.
@@ -261,6 +263,7 @@ func (h *Handlers) Logout(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(-24 * time.Hour),
 	}
 	http.SetCookie(w, cookie)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // newUserFromGithubProfile builds a new hub.User instance from the user's
@@ -499,6 +502,7 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // registerUserWithOauth is a helper function that registers a user using the
@@ -593,6 +597,7 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 			helpers.RenderErrorJSON(w, err)
 		}
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // UpdateProfile is an http handler used to update the user in the hub database.
@@ -609,6 +614,7 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // VerifyEmail is an http handler used to verify a user's email address.
@@ -623,6 +629,7 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	if !verified {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusGone)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // OauthState represents the state of an oauth authorization session, used to

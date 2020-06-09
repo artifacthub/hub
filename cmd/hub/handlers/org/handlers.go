@@ -41,6 +41,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // AddMember is an http handler that adds a member to the provided organization.
@@ -53,6 +54,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // CheckAvailability is an http handler that checks the availability of a given
@@ -70,6 +72,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // ConfirmMembership is an http handler used to confirm a user's membership to
@@ -80,6 +83,7 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // DeleteMember is an http handler that deletes a member from the provided
@@ -91,6 +95,7 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Get is an http handler that returns the organization requested.
@@ -144,4 +149,5 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }

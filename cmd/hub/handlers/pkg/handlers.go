@@ -166,6 +166,7 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // buildSearchInput builds a packages search query from a map of query string
