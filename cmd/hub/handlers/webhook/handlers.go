@@ -43,6 +43,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // Delete is an http handler that deletes the provided webhook from the database.
@@ -52,6 +53,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Get is an http handler that returns the requested webhook.
@@ -141,6 +143,8 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 		err := fmt.Errorf("received unexpected status code: %d", resp.StatusCode)
 		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
 	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Update is an http handler that updates the provided webhook in the database.
@@ -156,6 +160,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // webhookTestTemplateData represents the notification template data used by

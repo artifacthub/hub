@@ -102,7 +102,7 @@ func TestAdd(t *testing.T) {
 			{
 				"add webhook succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusCreated,
 			},
 			{
 				"error adding webhook (insufficient privilege)",
@@ -194,7 +194,7 @@ func TestDelete(t *testing.T) {
 		resp := w.Result()
 		defer resp.Body.Close()
 
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 		hw.wm.AssertExpectations(t)
 	})
 }
@@ -464,7 +464,7 @@ func TestTriggerTest(t *testing.T) {
 
 	t.Run("received unexpected status code", func(t *testing.T) {
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			http.Error(w, "", http.StatusNotFound)
+			w.WriteHeader(http.StatusNotFound)
 		}))
 		defer ts.Close()
 
@@ -556,7 +556,7 @@ func TestTriggerTest(t *testing.T) {
 				resp := w.Result()
 				defer resp.Body.Close()
 
-				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 			})
 		}
 	})
@@ -629,7 +629,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"webhook update succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusNoContent,
 			},
 			{
 				"error updating webhook (insufficient privilege)",

@@ -95,7 +95,7 @@ func TestAdd(t *testing.T) {
 			{
 				"add organization succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusCreated,
 			},
 			{
 				"error adding organization",
@@ -130,7 +130,7 @@ func TestAddMember(t *testing.T) {
 	}{
 		{
 			nil,
-			http.StatusOK,
+			http.StatusCreated,
 		},
 		{
 			hub.ErrInvalidInput,
@@ -225,8 +225,7 @@ func TestCheckAvailability(t *testing.T) {
 					r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 					hw := newHandlersWrapper()
-					hw.om.On("CheckAvailability", r.Context(), tc.resourceKind, "value").
-						Return(tc.available, nil)
+					hw.om.On("CheckAvailability", r.Context(), tc.resourceKind, "value").Return(tc.available, nil)
 					hw.h.CheckAvailability(w, r)
 					resp := w.Result()
 					defer resp.Body.Close()
@@ -235,7 +234,7 @@ func TestCheckAvailability(t *testing.T) {
 					if tc.available {
 						assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 					} else {
-						assert.Equal(t, http.StatusOK, resp.StatusCode)
+						assert.Equal(t, http.StatusNoContent, resp.StatusCode)
 					}
 					assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
 					hw.om.AssertExpectations(t)
@@ -274,7 +273,7 @@ func TestConfirmMembership(t *testing.T) {
 	}{
 		{
 			nil,
-			http.StatusOK,
+			http.StatusNoContent,
 		},
 		{
 			hub.ErrInvalidInput,
@@ -322,7 +321,7 @@ func TestDeleteMember(t *testing.T) {
 	}{
 		{
 			nil,
-			http.StatusOK,
+			http.StatusNoContent,
 		},
 		{
 			hub.ErrInvalidInput,
@@ -595,7 +594,7 @@ func TestUpdate(t *testing.T) {
 			{
 				"organization update succeeded",
 				nil,
-				http.StatusOK,
+				http.StatusNoContent,
 			},
 			{
 				"error updating organization (insufficiente privilege)",

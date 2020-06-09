@@ -40,6 +40,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusCreated)
 }
 
 // CheckAvailability is an http handler that checks the availability of a given
@@ -57,6 +58,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Delete is an http handler that deletes the provided chart repository from
@@ -67,6 +69,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // GetOwnedByOrg is an http handler that returns the chart repositories owned
@@ -104,6 +107,7 @@ func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 // Update is an http handler that updates the provided chart repository in the
@@ -120,4 +124,5 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
 	}
+	w.WriteHeader(http.StatusNoContent)
 }
