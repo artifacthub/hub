@@ -217,7 +217,7 @@ func TestGetJSON(t *testing.T) {
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetJSON(context.Background(), "orgName")
+			_, _ = m.GetJSON(context.Background(), validUUID)
 		})
 	})
 

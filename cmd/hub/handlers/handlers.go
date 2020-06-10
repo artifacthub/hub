@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/artifacthub/hub/cmd/hub/handlers/apikey"
 	"github.com/artifacthub/hub/cmd/hub/handlers/chartrepo"
 	"github.com/artifacthub/hub/cmd/hub/handlers/org"
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
@@ -38,6 +39,7 @@ type Services struct {
 	ChartRepositoryManager hub.ChartRepositoryManager
 	SubscriptionManager    hub.SubscriptionManager
 	WebhookManager         hub.WebhookManager
+	APIKeyManager          hub.APIKeyManager
 	ImageStore             img.Store
 }
 
@@ -61,6 +63,7 @@ type Handlers struct {
 	ChartRepositories *chartrepo.Handlers
 	Subscriptions     *subscription.Handlers
 	Webhooks          *webhook.Handlers
+	APIKeys           *apikey.Handlers
 	Static            *static.Handlers
 }
 
@@ -78,6 +81,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
 		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
 		Webhooks:          webhook.NewHandlers(svc.WebhookManager),
+		APIKeys:           apikey.NewHandlers(svc.APIKeyManager),
 		Static:            static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
@@ -238,6 +242,18 @@ func (h *Handlers) setupRouter() {
 				})
 			})
 			r.Post("/test", h.Webhooks.TriggerTest)
+		})
+
+		// API keys
+		r.Route("/api-keys", func(r chi.Router) {
+			r.Use(h.Users.RequireLogin)
+			r.Get("/", h.APIKeys.GetOwnedByUser)
+			r.Post("/", h.APIKeys.Add)
+			r.Route("/{apiKeyID}", func(r chi.Router) {
+				r.Get("/", h.APIKeys.Get)
+				r.Put("/", h.APIKeys.Update)
+				r.Delete("/", h.APIKeys.Delete)
+			})
 		})
 
 		// Availability checks

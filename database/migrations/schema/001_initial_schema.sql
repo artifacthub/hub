@@ -59,6 +59,9 @@ create table if not exists chart_repository (
     check (user_id is null or organization_id is null)
 );
 
+create index chart_repository_user_id_idx on chart_repository (user_id);
+create index chart_repository_organization_id_idx on chart_repository (organization_id);
+
 create table if not exists package_kind (
     package_kind_id integer primary key,
     name text not null check (name <> '')
@@ -198,6 +201,9 @@ create table if not exists webhook (
     check (user_id is null or organization_id is null)
 );
 
+create index webhook_user_id_idx on webhook (user_id);
+create index webhook_organization_id_idx on webhook (organization_id);
+
 create table if not exists webhook__event_kind (
     webhook_id uuid not null references webhook on delete cascade,
     event_kind_id integer not null references event_kind on delete restrict,
@@ -226,6 +232,16 @@ create table notification (
 
 create index notification_not_processed_idx on notification (notification_id) where processed = 'false';
 create index notification_webhook_id_created_at_idx on notification (webhook_id, created_at);
+
+create table if not exists api_key (
+    api_key_id uuid primary key default gen_random_uuid(),
+    name text not null check (name <> ''),
+    key bytea not null default gen_random_bytes(32),
+    user_id uuid not null references "user" on delete cascade,
+    created_at timestamptz default current_timestamp not null
+);
+
+create index api_key_user_id_idx on api_key (user_id);
 
 {{ if eq .loadSampleData "true" }}
 {{ template "data/sample.sql" }}

@@ -42,6 +42,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	if err := h.webhookManager.Add(r.Context(), orgName, wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -52,6 +53,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	if err := h.webhookManager.Delete(r.Context(), webhookID); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -65,7 +67,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetOwnedByOrg is an http handler that returns the webhooks owned by the
@@ -79,7 +81,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetOwnedByUser is an http handler that returns the webhooks owned by the
@@ -91,7 +93,7 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // TriggerTest is an http handler used to test a webhook before adding or
@@ -142,6 +144,7 @@ func (h *Handlers) TriggerTest(w http.ResponseWriter, r *http.Request) {
 	if resp.StatusCode >= 400 {
 		err := fmt.Errorf("received unexpected status code: %d", resp.StatusCode)
 		helpers.RenderErrorWithCodeJSON(w, err, http.StatusBadRequest)
+		return
 	}
 
 	w.WriteHeader(http.StatusNoContent)
@@ -159,6 +162,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	if err := h.webhookManager.Update(r.Context(), wh); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }

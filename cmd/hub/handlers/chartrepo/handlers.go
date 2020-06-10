@@ -39,6 +39,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Add(r.Context(), orgName, repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -57,6 +58,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -68,6 +70,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Delete(r.Context(), repoName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -83,7 +86,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetOwnedByUser is an http handler that returns the chart repositories owned
@@ -95,7 +98,7 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // Transfer is an http handler that transfers the provided chart repository to
@@ -106,6 +109,7 @@ func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Transfer(r.Context(), repoName, orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -123,6 +127,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	if err := h.chartRepoManager.Update(r.Context(), repo); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }

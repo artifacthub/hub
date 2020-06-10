@@ -22,11 +22,11 @@ func BuildCacheControlHeader(cacheMaxAge time.Duration) string {
 }
 
 // RenderJSON is a helper to write the json data provided to the given http
-// response writer, setting the appropriate content type and cache.
-func RenderJSON(w http.ResponseWriter, dataJSON []byte, cacheMaxAge time.Duration) {
+// response writer, setting the appropriate content type, cache and status code.
+func RenderJSON(w http.ResponseWriter, dataJSON []byte, cacheMaxAge time.Duration, code int) {
 	w.Header().Set("Cache-Control", BuildCacheControlHeader(cacheMaxAge))
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(code)
 	_, _ = w.Write(dataJSON)
 }
 

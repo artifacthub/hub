@@ -40,6 +40,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.Add(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -53,6 +54,7 @@ func (h *Handlers) AddMember(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "AddMember").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -71,6 +73,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -82,6 +85,7 @@ func (h *Handlers) ConfirmMembership(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.ConfirmMembership(r.Context(), orgName); err != nil {
 		h.logger.Error().Err(err).Str("method", "ConfirmMembership").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -94,6 +98,7 @@ func (h *Handlers) DeleteMember(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.DeleteMember(r.Context(), orgName, userAlias); err != nil {
 		h.logger.Error().Err(err).Str("method", "DeleteMember").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -107,7 +112,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetByUser is an http handler that returns the organizations the user doing
@@ -119,7 +124,7 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetMembers is an http handler that returns the members of the provided
@@ -132,7 +137,7 @@ func (h *Handlers) GetMembers(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // Update is an http handler that updates the provided organization in the
@@ -148,6 +153,7 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 	if err := h.orgManager.Update(r.Context(), o); err != nil {
 		h.logger.Error().Err(err).Str("method", "Update").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }

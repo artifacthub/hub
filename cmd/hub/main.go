@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers"
+	"github.com/artifacthub/hub/internal/apikey"
 	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/event"
@@ -55,6 +56,7 @@ func main() {
 		SubscriptionManager:    subscription.NewManager(db),
 		ChartRepositoryManager: chartrepo.NewManager(db),
 		WebhookManager:         webhook.NewManager(db),
+		APIKeyManager:          apikey.NewManager(db),
 		ImageStore:             pg.NewImageStore(db),
 	}
 	addr := cfg.GetString("server.addr")
