@@ -1,0 +1,53 @@
+.listItem {
+  border-width: 2px;
+  padding: 1.25rem;
+}
+
+.listItem:hover .buttons {
+  opacity: 1;
+}
+
+.btnIcon,
+.btnLeaveIcon {
+  font-size: 0.75rem;
+}
+
+.dropdown {
+  width: 20rem;
+}
+
+.btnLight {
+  background-color: var(--color-1-20) !important;
+  border-color: var(--color-1-20) !important;
+}
+
+.separator {
+  width: 2px;
+  background-color: var(--color-1-500);
+  height: 15px;
+}
+
+@media (hover: hover) {
+  .buttons {
+    opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .dropdown {
+    right: -14px !important;
+    top: 120% !important;
+  }
+
+  .btnIcon {
+    font-size: 0.95rem;
+  }
+
+  .btnAction {
+    margin-left: 0.6rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50% !important;
+    background-color: var(--color-1-10) !important;
+  }
+}

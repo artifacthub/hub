@@ -169,6 +169,7 @@ export interface RefInputField {
   reset: () => void;
   getValue: () => string;
   checkValidity: () => boolean;
+  updateValue: (value: string) => void;
 }
 
 export interface Alert {
@@ -253,4 +254,14 @@ export interface Section {
 export interface NavSection {
   user: Section[];
   org: Section[];
+}
+
+export interface APIKey {
+  apiKeyId?: string;
+  name: string;
+  createdAt?: number;
+}
+
+export interface APIKeyCode {
+  key: string;
 }

@@ -46,12 +46,12 @@ const SectionPanel = (props: Props) => {
                 <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
                   {!isUndefined(section.icon) && <div className={styles.icon}>{section.icon}</div>}
                   {!isUndefined(section.shortName) ? (
-                    <div className="ml-1 ml-sm-2">
+                    <div className="d-none d-sm-inline ml-1 ml-sm-2">
                       <span className="d-none d-md-inline">{section.displayName}</span>
                       <span className="d-inline d-md-none">{section.shortName}</span>
                     </div>
                   ) : (
-                    <div className="ml-1 ml-sm-2">{section.displayName}</div>
+                    <div className="d-none d-sm-inline ml-1 ml-sm-2">{section.displayName}</div>
                   )}
                 </div>
               </button>
