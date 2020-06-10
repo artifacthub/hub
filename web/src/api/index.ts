@@ -4,6 +4,8 @@ import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 
 import {
+  APIKey,
+  APIKeyCode,
   ChartRepository,
   CheckAvailabilityProps,
   EventKind,
@@ -443,6 +445,42 @@ export const API = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formattedWebhook),
+    });
+  },
+
+  getAPIKeys: (): Promise<APIKey[]> => {
+    return apiFetch(`${API_BASE_URL}/api-keys`);
+  },
+
+  getAPIKey: (id: string): Promise<APIKey> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${id}`);
+  },
+
+  addAPIKey: (name: string): Promise<APIKeyCode> => {
+    return apiFetch(`${API_BASE_URL}/api-keys`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+      }),
+    });
+  },
+
+  updateAPIKey: (id: string, name: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: name }),
+    });
+  },
+
+  deleteAPIKey: (name: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${name}`, {
+      method: 'DELETE',
     });
   },
 };

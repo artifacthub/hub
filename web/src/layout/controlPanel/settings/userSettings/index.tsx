@@ -5,6 +5,7 @@ import { Section } from '../../../../types';
 import { CONTROL_PANEL_SECTIONS } from '../../../../utils/data';
 import SectionPanel from '../../../common/SectionPanel';
 import WebhooksSection from '../webhooks';
+import APIKeysSection from './apiKeys';
 import ProfileSection from './profile';
 import SubscriptionsSection from './subscriptions';
 
@@ -27,6 +28,7 @@ const UserSettingsSection = (props: Props) => {
         profile: <ProfileSection {...props} />,
         subscriptions: <SubscriptionsSection {...props} />,
         webhooks: <WebhooksSection {...props} />,
+        apiKeys: <APIKeysSection {...props} />,
       }}
     />
   );

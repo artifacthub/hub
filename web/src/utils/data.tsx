@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUserFriends } from 'react-icons/fa';
+import { FaKey, FaUserFriends } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
@@ -114,6 +114,7 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
         { displayName: 'Profile', name: 'profile', icon: <MdBusiness />, disabled: false },
         { displayName: 'Subscriptions', name: 'subscriptions', icon: <MdNotificationsActive />, disabled: false },
         { displayName: 'Webhooks', name: 'webhooks', icon: <GrConnect />, disabled: false },
+        { displayName: 'API keys', name: 'apiKeys', icon: <FaKey />, disabled: false },
       ],
     },
   ],

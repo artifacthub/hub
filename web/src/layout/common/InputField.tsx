@@ -57,6 +57,9 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
     checkValidity(): boolean {
       return input.current!.checkValidity();
     },
+    updateValue(newValue: string): void {
+      setInputValue(newValue);
+    },
   }));
 
   const checkValidity = (): boolean => {
