@@ -1,3 +1,9 @@
+{{ template "api_keys/add_api_key.sql" }}
+{{ template "api_keys/delete_api_key.sql" }}
+{{ template "api_keys/get_api_key.sql" }}
+{{ template "api_keys/get_user_api_keys.sql" }}
+{{ template "api_keys/update_api_key.sql" }}
+
 {{ template "organizations/add_organization_member.sql" }}
 {{ template "organizations/add_organization.sql" }}
 {{ template "organizations/confirm_organization_membership.sql" }}

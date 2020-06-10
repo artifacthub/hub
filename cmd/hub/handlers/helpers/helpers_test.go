@@ -46,31 +46,35 @@ func TestRenderJSON(t *testing.T) {
 	testCases := []struct {
 		data        []byte
 		cacheMaxAge time.Duration
+		code        int
 	}{
 		{
 			nil,
 			24 * time.Hour,
+			http.StatusOK,
 		},
 		{
 			[]byte("dataJSON"),
 			0,
+			http.StatusOK,
 		},
 		{
 			[]byte("dataJSON"),
 			24 * time.Hour,
+			http.StatusCreated,
 		},
 	}
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			w := httptest.NewRecorder()
-			RenderJSON(w, tc.data, tc.cacheMaxAge)
+			RenderJSON(w, tc.data, tc.cacheMaxAge, tc.code)
 			resp := w.Result()
 			defer resp.Body.Close()
 			h := resp.Header
 			data, _ := ioutil.ReadAll(resp.Body)
 
-			assert.Equal(t, http.StatusOK, resp.StatusCode)
+			assert.Equal(t, tc.code, resp.StatusCode)
 			assert.Equal(t, "application/json", h.Get("Content-Type"))
 			assert.Equal(t, BuildCacheControlHeader(tc.cacheMaxAge), h.Get("Cache-Control"))
 			if tc.data != nil {

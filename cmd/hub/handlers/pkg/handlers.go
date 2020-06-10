@@ -46,7 +46,7 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // GetStarredByUser is an http handler used to get the packages starred by the
@@ -58,7 +58,7 @@ func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetStars is an http handler used to get the number of stars of the package
@@ -69,8 +69,9 @@ func (h *Handlers) GetStars(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStars").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetStats is an http handler used to get some stats about packages registered
@@ -82,7 +83,7 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // GetUpdates is an http handler used to get the last packages updates in the
@@ -94,7 +95,7 @@ func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // InjectIndexMeta is a middleware that injects the some index metadata related
@@ -155,7 +156,7 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // ToggleStar is an http handler used to toggle the star on a given package.
@@ -165,6 +166,7 @@ func (h *Handlers) ToggleStar(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "ToggleStar").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }

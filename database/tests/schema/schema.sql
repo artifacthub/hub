@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(104);
+select plan(111);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -14,6 +14,7 @@ select has_extension('pgcrypto');
 
 -- Check expected tables exist
 select tables_are(array[
+    'api_key',
     'chart_repository',
     'email_verification_code',
     'event',
@@ -40,6 +41,13 @@ select tables_are(array[
 ]);
 
 -- Check tables have expected columns
+select columns_are('api_key', array[
+    'api_key_id',
+    'name',
+    'key',
+    'user_id',
+    'created_at'
+]);
 select columns_are('chart_repository', array[
     'chart_repository_id',
     'name',
@@ -205,10 +213,16 @@ select columns_are('webhook__package', array[
 ]);
 
 -- Check tables have expected indexes
+select indexes_are('api_key', array[
+    'api_key_pkey',
+    'api_key_user_id_idx'
+]);
 select indexes_are('chart_repository', array[
     'chart_repository_pkey',
     'chart_repository_name_key',
-    'chart_repository_url_key'
+    'chart_repository_url_key',
+    'chart_repository_user_id_idx',
+    'chart_repository_organization_id_idx'
 ]);
 select indexes_are('email_verification_code', array[
     'email_verification_code_pkey',
@@ -281,7 +295,9 @@ select indexes_are('user_starred_package', array[
     'user_starred_package_pkey'
 ]);
 select indexes_are('webhook', array[
-    'webhook_pkey'
+    'webhook_pkey',
+    'webhook_user_id_idx',
+    'webhook_organization_id_idx'
 ]);
 select indexes_are('webhook__event_kind', array[
     'webhook__event_kind_pkey'
@@ -291,6 +307,12 @@ select indexes_are('webhook__package', array[
 ]);
 
 -- Check expected functions exist
+select has_function('add_api_key');
+select has_function('delete_api_key');
+select has_function('get_api_key');
+select has_function('get_user_api_keys');
+select has_function('update_api_key');
+
 select has_function('add_organization');
 select has_function('add_organization_member');
 select has_function('confirm_organization_membership');

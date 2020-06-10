@@ -129,6 +129,7 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 	if available {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusNotFound)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -141,7 +142,7 @@ func (h *Handlers) GetProfile(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // InjectUserID is a middleware that injects the id of the user doing the
@@ -499,6 +500,7 @@ func (h *Handlers) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "RegisterUser").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -598,6 +600,7 @@ func (h *Handlers) UpdatePassword(w http.ResponseWriter, r *http.Request) {
 		} else {
 			helpers.RenderErrorJSON(w, err)
 		}
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -615,6 +618,7 @@ func (h *Handlers) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "UpdateUserProfile").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -635,6 +639,7 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 	}
 	if !verified {
 		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusGone)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }

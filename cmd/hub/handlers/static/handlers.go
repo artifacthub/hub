@@ -113,14 +113,16 @@ func (h *Handlers) SaveImage(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "SaveImage").Msg("error reading body data")
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	imageID, err := h.imageStore.SaveImage(r.Context(), data)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "SaveImage").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	dataJSON := []byte(fmt.Sprintf(`{"image_id": "%s"}`, imageID))
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // ServeIndex is an http handler that serves the index.html file.

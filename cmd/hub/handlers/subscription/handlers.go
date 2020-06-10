@@ -39,6 +39,7 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	if err := h.subscriptionManager.Add(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Add").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusCreated)
 }
@@ -60,6 +61,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	if err := h.subscriptionManager.Delete(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
 		helpers.RenderErrorJSON(w, err)
+		return
 	}
 	w.WriteHeader(http.StatusNoContent)
 }
@@ -74,7 +76,7 @@ func (h *Handlers) GetByPackage(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetByUser is an http handler that returns the subscriptions of the user
@@ -86,5 +88,5 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
