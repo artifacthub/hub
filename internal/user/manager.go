@@ -38,6 +38,29 @@ func NewManager(db hub.DB, es hub.EmailSender) *Manager {
 	}
 }
 
+// CheckAPIKey checks if the api key provided is valid.
+func (m *Manager) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAPIKeyOutput, error) {
+	// Validate input
+	if len(key) == 0 {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "key not provided")
+	}
+
+	// Get key's user id from database
+	var userID string
+	query := `select user_id from api_key where key = $1`
+	err := m.db.QueryRow(ctx, query, key).Scan(&userID)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return &hub.CheckAPIKeyOutput{Valid: false}, nil
+		}
+		return nil, err
+	}
+	return &hub.CheckAPIKeyOutput{
+		Valid:  true,
+		UserID: userID,
+	}, nil
+}
+
 // CheckAvailability checks the availability of a given value for the provided
 // resource kind.
 func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {

@@ -16,6 +16,71 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+func TestCheckAPIKey(t *testing.T) {
+	dbQuery := `select user_id from api_key where key = $1`
+	ctx := context.Background()
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			key    []byte
+		}{
+			{
+				"key not provided",
+				nil,
+			},
+			{
+				"key not provided",
+				[]byte(""),
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil, nil)
+				_, err := m.CheckAPIKey(ctx, tc.key)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("key not found in database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return(nil, pgx.ErrNoRows)
+		m := NewManager(db, nil)
+
+		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		assert.NoError(t, err)
+		assert.False(t, output.Valid)
+		assert.Empty(t, output.UserID)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("error getting key from database", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, output)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("valid key", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return("userID", nil)
+		m := NewManager(db, nil)
+
+		output, err := m.CheckAPIKey(ctx, []byte("key"))
+		assert.NoError(t, err)
+		assert.True(t, output.Valid)
+		assert.Equal(t, "userID", output.UserID)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestCheckAvailability(t *testing.T) {
 	ctx := context.Background()
 

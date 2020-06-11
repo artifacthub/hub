@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -584,7 +585,152 @@ func TestRegisterUser(t *testing.T) {
 }
 
 func TestRequireLogin(t *testing.T) {
-	t.Run("session cookie not provided", func(t *testing.T) {
+	sessionID := []byte("sessionID")
+
+	t.Run("session cookie based authentication", func(t *testing.T) {
+		t.Run("invalid session cookie provided", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.AddCookie(&http.Cookie{
+				Name:  sessionCookieName,
+				Value: "invalidValue",
+			})
+
+			hw := newHandlersWrapper()
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		})
+
+		t.Run("error checking session", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
+				Return(nil, tests.ErrFakeDatabaseFailure)
+			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+			r.AddCookie(&http.Cookie{
+				Name:  sessionCookieName,
+				Value: encodedSessionID,
+			})
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("invalid session provided", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
+				Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
+			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+			r.AddCookie(&http.Cookie{
+				Name:  sessionCookieName,
+				Value: encodedSessionID,
+			})
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("session cookie based authentication succeeded", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
+				Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
+			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
+			r.AddCookie(&http.Cookie{
+				Name:  sessionCookieName,
+				Value: encodedSessionID,
+			})
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+	})
+
+	t.Run("api key based authentication", func(t *testing.T) {
+		key := []byte("key")
+		keyB64 := base64.StdEncoding.EncodeToString(key)
+
+		t.Run("invalid api key provided", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(apiKeyHeader, "invalidB64")
+
+			hw := newHandlersWrapper()
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+		})
+
+		t.Run("error checking api key", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(apiKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDatabaseFailure)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("invalid api key provided", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(apiKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).
+				Return(&hub.CheckAPIKeyOutput{UserID: "", Valid: false}, nil)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+
+		t.Run("api key based authentication succeeded", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
+			r.Header.Add(apiKeyHeader, keyB64)
+
+			hw := newHandlersWrapper()
+			hw.um.On("CheckAPIKey", r.Context(), key).
+				Return(&hub.CheckAPIKeyOutput{UserID: "userID", Valid: true}, nil)
+			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
+			hw.um.AssertExpectations(t)
+		})
+	})
+
+	t.Run("no authentication method used", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -594,82 +740,6 @@ func TestRequireLogin(t *testing.T) {
 		defer resp.Body.Close()
 
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-	})
-
-	t.Run("invalid session cookie provided", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: "invalidValue",
-		})
-
-		hw := newHandlersWrapper()
-		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-	})
-
-	t.Run("error checking session", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
-		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.um.AssertExpectations(t)
-	})
-
-	t.Run("invalid session provided", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "", Valid: false}, nil)
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
-		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode)
-		hw.um.AssertExpectations(t)
-	})
-
-	t.Run("require login succeeded", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-
-		hw := newHandlersWrapper()
-		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
-			Return(&hub.CheckSessionOutput{UserID: "userID", Valid: true}, nil)
-		encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, []byte("sessionID"))
-		r.AddCookie(&http.Cookie{
-			Name:  sessionCookieName,
-			Value: encodedSessionID,
-		})
-		hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		hw.um.AssertExpectations(t)
 	})
 }
 

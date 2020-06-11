@@ -13,6 +13,13 @@ type ManagerMock struct {
 	mock.Mock
 }
 
+// CheckAPIKey implements the UserManager interface.
+func (m *ManagerMock) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAPIKeyOutput, error) {
+	args := m.Called(ctx, key)
+	data, _ := args.Get(0).(*hub.CheckAPIKeyOutput)
+	return data, args.Error(1)
+}
+
 // CheckAvailability implements the ChartRepositoryManager interface.
 func (m *ManagerMock) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
 	args := m.Called(ctx, resourceKind, value)
