@@ -32,7 +32,11 @@
 
 .about {
   background-color: var(--color-1-700);
-  color: var(--white);
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.extraInfo {
   font-weight: 300;
   font-size: 1.5rem;
 }

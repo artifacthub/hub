@@ -127,24 +127,5 @@ describe('Home index', () => {
       expect(heading.innerHTML).toBe('Find, install and publish<br>Kubernetes packages');
       await waitFor(() => {});
     });
-
-    it('renders CNCF info', async () => {
-      const mockStats = getMockStats('6');
-      mocked(API).getStats.mockResolvedValue(mockStats);
-
-      const { getByTestId } = render(
-        <Router>
-          <HomeView {...defaultProps} />
-        </Router>
-      );
-
-      const CNCFInfo = await waitFor(() => getByTestId('CNCFInfo'));
-
-      expect(CNCFInfo).toBeInTheDocument();
-      expect(CNCFInfo).toHaveTextContent(
-        'Artifact Hub aspires to be a Cloud Native Computing Foundation sandbox project.'
-      );
-      await waitFor(() => {});
-    });
   });
 });

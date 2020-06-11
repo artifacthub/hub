@@ -5,7 +5,8 @@ import '../themes/theme.scss';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
-import { FiHexagon } from 'react-icons/fi';
+import { FaGithub, FaSlack } from 'react-icons/fa';
+import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Route, Router, Switch } from 'react-router-dom';
 
 import { AppCtxProvider } from '../context/AppCtx';
@@ -13,6 +14,7 @@ import buildSearchParams from '../utils/buildSearchParams';
 import history from '../utils/history';
 import styles from './App.module.css';
 import AlertController from './common/AlertController';
+import ExternalLink from './common/ExternalLink';
 import ControlPanelView from './controlPanel';
 import HomeView from './home';
 import Navbar from './navigation/Navbar';
@@ -148,17 +150,80 @@ export default function App() {
             })}
           >
             <div className={classnames('container', { invisible: isSearching || isLoadingPackage })}>
-              <div className="d-flex flex-column align-items-center">
-                <div className={`mb-3 d-flex align-items-center ${styles.brand}`}>
-                  <FiHexagon className="mr-2" />
-                  <div className="d-flex align-items-baseline">
-                    <span className="mr-2">Artifact</span>
-                    <span className={styles.hubFont}>HUB</span>
+              <div
+                className={`d-flex flex-row flex-wrap align-items-stretch justify-content-between ${styles.footerContent}`}
+              >
+                <div>
+                  <div className="h6 font-weight-bold text-uppercase">Project</div>
+                  <div className="d-flex flex-column text-left">
+                    <ExternalLink className="text-muted mb-1" href="https://github.com/artifacthub/hub#getting-started">
+                      Getting started
+                    </ExternalLink>
+                    <ExternalLink
+                      className="text-muted mb-1"
+                      href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
+                    >
+                      Code of conduct
+                    </ExternalLink>
+                    <ExternalLink
+                      className="text-muted mb-1"
+                      href="https://github.com/artifacthub/hub/blob/master/CONTRIBUTING.md"
+                    >
+                      Contributing
+                    </ExternalLink>
                   </div>
                 </div>
 
-                <div className="d-flex">
-                  <span className="d-none d-sm-block mr-1">Copyright</span>© Artifact Hub 2020
+                <div>
+                  <div className="h6 font-weight-bold text-uppercase">Community</div>
+                  <div className="d-flex flex-column text-left">
+                    <ExternalLink className="text-muted mb-1" href="https://github.com/cncf/hub">
+                      <div className="d-flex align-items-center">
+                        <FaGithub className="mr-2" />
+                        GitHub
+                      </div>
+                    </ExternalLink>
+                    <ExternalLink
+                      className="text-muted mb-1"
+                      href="https://cloud-native.slack.com/channels/artifact-hub"
+                    >
+                      <div className="d-flex align-items-center">
+                        <FaSlack className="mr-2" />
+                        Slack
+                      </div>
+                    </ExternalLink>
+                  </div>
+                </div>
+
+                <div className={styles.fullMobileSection}>
+                  <div className="h6 font-weight-bold text-uppercase">About</div>
+                  <div className={`text-muted ${styles.copyrightContent}`}>
+                    Artifact Hub is an <b className="d-inline-block">Open Source</b> project licensed under the{' '}
+                    <ExternalLink
+                      className="d-inline-block text-muted mb-1"
+                      href="https://www.apache.org/licenses/LICENSE-2.0"
+                    >
+                      <div className="d-flex align-items-center">
+                        Apache License 2.0
+                        <span className={styles.smallIcon}>
+                          <FiExternalLink className="ml-1" />
+                        </span>
+                      </div>
+                    </ExternalLink>
+                  </div>
+                </div>
+
+                <div className={`ml-0 ml-lg-auto mt-3 mt-lg-0 text-center ${styles.fullMobileSection}`}>
+                  <div className="d-flex flex-column align-items-center h-100">
+                    <div className={styles.hexagon}>
+                      <FiHexagon />
+                    </div>
+                    <div className="mt-2 mt-lg-auto">
+                      <small>
+                        <span className="d-none d-sm-inline mr-1">Copyright</span>© The Artifact Hub Authors
+                      </small>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
