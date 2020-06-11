@@ -7,6 +7,10 @@
   min-height: 140px;
 }
 
+.alert {
+  font-size: 0.82rem;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

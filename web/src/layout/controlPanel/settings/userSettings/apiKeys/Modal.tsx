@@ -51,8 +51,8 @@ const APIKeyModal = (props: Props) => {
 
   async function handleAPIKey(name: string) {
     try {
-      if (!isUndefined(apiKey)) {
-        await API.updateAPIKey(apiKey.apiKeyId!, name);
+      if (!isUndefined(props.apiKey)) {
+        await API.updateAPIKey(props.apiKey.apiKeyId!, name);
       } else {
         setApiKeyCode(await API.addAPIKey(name));
       }
@@ -62,14 +62,14 @@ const APIKeyModal = (props: Props) => {
       setIsSending(false);
 
       // Modal is closed only when updating API key
-      if (!isUndefined(apiKey)) {
+      if (!isUndefined(props.apiKey)) {
         onCloseModal();
       }
     } catch (err) {
       setIsSending(false);
       if (err.statusText !== 'ErrLoginRedirect') {
         setApiError(
-          `An error occurred ${isUndefined(apiKey) ? 'adding' : 'updating'} the API key, please try again later`
+          `An error occurred ${isUndefined(props.apiKey) ? 'adding' : 'updating'} the API key, please try again later`
         );
       } else {
         props.onAuthError();
@@ -141,17 +141,19 @@ const APIKeyModal = (props: Props) => {
       {isSending ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">{`${isUndefined(apiKey) ? 'Adding' : 'Updating'} API key`}</span>
+          <span className="ml-2">{`${isUndefined(props.apiKey) ? 'Adding' : 'Updating'} API key`}</span>
         </>
       ) : (
-        <>{`${isUndefined(apiKey) ? 'Add' : 'Update'}`}</>
+        <>{`${isUndefined(props.apiKey) ? 'Add' : 'Update'}`}</>
       )}
     </button>
   );
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>{`${isUndefined(apiKey) ? 'Add' : 'Update'} API key`}</div>}
+      header={
+        <div className={`h3 m-2 ${styles.title}`}>{`${isUndefined(props.apiKey) ? 'Add' : 'Update'} API key`}</div>
+      }
       open={props.open}
       modalClassName={styles.modal}
       closeButton={isUndefined(apiKeyCode) ? sendBtn : undefined}
@@ -186,6 +188,12 @@ const APIKeyModal = (props: Props) => {
                 <u>You will not be able to see it again once you close this window.</u>
               </b>
             </small>
+
+            <div className={`alert alert-warning mt-4 mb-2 ${styles.alert}`}>
+              <span className="font-weight-bold text-uppercase">Important:</span> the API key you've just generated can
+              be used to perform <u className="font-weight-bold">ANY</u> operation you can, so please store it safely
+              and don't share it with others.
+            </div>
           </>
         ) : (
           <form
