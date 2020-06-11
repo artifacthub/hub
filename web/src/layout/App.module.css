@@ -1,5 +1,5 @@
 .footer {
-  padding: 1.5rem;
+  padding: 3.5rem 1.5rem;
   background-color: var(--color-1-900);
   color: var(--white);
 }
@@ -22,6 +22,53 @@
   font-size: 2rem;
 }
 
+.hexagon {
+  line-height: 1rem;
+  font-size: 5rem;
+}
+
 .hubFont {
   font-family: var(--logo-font);
+}
+
+.smallIcon {
+  font-size: 0.65rem;
+}
+
+@media only screen and (min-width: 992px) {
+  .footerContent > div:not(:last-child) {
+    padding-right: 5rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .copyrightContent {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  .hexagon {
+    font-size: 3rem;
+    width: 100%;
+  }
+
+  .footerContent > div {
+    padding: 0 1rem;
+  }
+
+  .footerContent > div:not(:last-child) {
+    padding-bottom: 1.5rem;
+  }
+
+  .footerContent > div:last-child {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .fullMobileSection {
+    width: 100%;
+  }
 }

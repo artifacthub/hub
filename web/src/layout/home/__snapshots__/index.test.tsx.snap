@@ -131,7 +131,16 @@ exports[`Home index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="mt-5 mb-2 text-center"
+        class="text-center h5 mt-5 mb-4"
+      >
+        Artifact Hub is an 
+        <b>
+          Open Source
+        </b>
+         project
+      </div>
+      <div
+        class="mb-2 text-center"
       >
         <a
           class="link btn btn-secondary socialBtn"
@@ -191,7 +200,7 @@ exports[`Home index creates snapshot 1`] = `
     </div>
     <div />
     <div
-      class="py-5 about"
+      class="py-5 text-light about"
     >
       <div
         class="container py-5"
@@ -201,7 +210,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
           <div
-            class="m-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-5 mt-5 d-flex flex-row align-items-center justify-content-around"
           >
             <img
               alt="Icon"
@@ -219,34 +228,19 @@ exports[`Home index creates snapshot 1`] = `
               src="/static/media/opa-policies-white.svg"
             />
           </div>
-          Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
       </div>
     </div>
     <div
-      class="text-center align-items-center justify-content-center pb-5 pt-5 d-flex flex-grow-1"
-      data-testid="CNCFInfo"
+      class="py-5 text-secondary extraInfo"
     >
-      <div>
-        <img
-          alt="Logo CNCF"
-          class="logo m-3"
-          src="/static/media/cncf.svg"
-        />
+      <div
+        class="container py-5"
+      >
         <div
-          class="h5 px-3 pt-4"
+          class="text-center"
         >
-          Artifact Hub aspires to be a 
-          <a
-            class="link font-weight-bold text-primary"
-            href="https://www.cncf.io/"
-            rel="noopener noreferrer"
-            role="button"
-            target="_blank"
-          >
-            Cloud Native Computing Foundation
-          </a>
-           sandbox project.
+          Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
       </div>
     </div>
