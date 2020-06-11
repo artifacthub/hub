@@ -28,7 +28,7 @@ const UserSettingsSection = (props: Props) => {
         profile: <ProfileSection {...props} />,
         subscriptions: <SubscriptionsSection {...props} />,
         webhooks: <WebhooksSection {...props} />,
-        apiKeys: <APIKeysSection {...props} />,
+        'api-keys': <APIKeysSection {...props} />,
       }}
     />
   );

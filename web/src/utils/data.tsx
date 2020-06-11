@@ -114,7 +114,7 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
         { displayName: 'Profile', name: 'profile', icon: <MdBusiness />, disabled: false },
         { displayName: 'Subscriptions', name: 'subscriptions', icon: <MdNotificationsActive />, disabled: false },
         { displayName: 'Webhooks', name: 'webhooks', icon: <GrConnect />, disabled: false },
-        { displayName: 'API keys', name: 'apiKeys', icon: <FaKey />, disabled: false },
+        { displayName: 'API keys', name: 'api-keys', icon: <FaKey />, disabled: false },
       ],
     },
   ],
