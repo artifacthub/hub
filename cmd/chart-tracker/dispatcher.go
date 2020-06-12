@@ -6,6 +6,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
@@ -114,7 +115,11 @@ func (d *Dispatcher) generateSyncJobs(wg *sync.WaitGroup, r *hub.ChartRepository
 			if i == 0 {
 				getLogo = true
 			}
-			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, chartVersion.Metadata.Version)
+			sv, err := semver.NewVersion(chartVersion.Metadata.Version)
+			if err != nil {
+				continue
+			}
+			key := fmt.Sprintf("%s@%s", chartVersion.Metadata.Name, sv.String())
 			chartsAvailable[key] = struct{}{}
 			if bypassDigestCheck || chartVersion.Digest != registeredPackagesDigest[key] {
 				d.Queue <- &Job{
