@@ -1,0 +1,2048 @@
+openapi: 3.0.3
+info:
+  title: Artifact Hub
+  description: "Find, install and publish Kubernetes packages"
+  version: 0.1.0
+servers:
+  - url: "https://artifacthub.io/api/v1"
+    description: Main production server
+  - url: "https://staging.artifacthub.io/api/v1"
+    description: Staging server for testing
+  - url: "http://localhost:8000/api/v1"
+    description: Local server for development
+tags:
+  - name: Users
+    description: ""
+  - name: Organizations
+    description: ""
+  - name: Chart repositories
+    description: ""
+  - name: Packages
+    description: ""
+  - name: Subscriptions
+    description: ""
+  - name: Webhooks
+    description: ""
+  - name: Images
+    description: ""
+  - name: Availability checks
+    description: ""
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      summary: Register a new user
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                alias:
+                  type: string
+                  example: jdoe
+                first_name:
+                  type: string
+                  example: John
+                last_name:
+                  type: string
+                  example: Doe
+                email:
+                  type: string
+                  format: email
+                  example: jdoe@email.com
+                password:
+                  type: string
+                  format: password
+                  example: pass123
+              required:
+                - alias
+                - email
+                - password
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/verify-email:
+    post:
+      tags:
+        - Users
+      summary: Verify user's email address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+              properties:
+                code:
+                  type: string
+                  format: uuid
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "410":
+          description: The code provided has expired
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/profile:
+    get:
+      tags:
+        - Users
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's profile
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      tags:
+        - Users
+      security:
+        - ApiKeyAuth: []
+      summary: Update user's profile
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /users/password:
+    put:
+      tags:
+        - Users
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Update user's password
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - old
+                - new
+              properties:
+                old:
+                  type: string
+                  format: password
+                new:
+                  type: string
+                  format: password
+              example:
+                old: oldPass
+                new: newPass
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /orgs:
+    post:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Register new organization
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationSummary"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /orgs/user:
+    get:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get organizations the user belongs to
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Organization"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}":
+    get:
+      tags:
+        - Organizations
+      summary: Get organization profile
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationSummary"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Updates organization profile
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      requestBody:
+        description: ""
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationSummary"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/members":
+    get:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get organization members
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Member"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/member/{userAlias}":
+    post:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add a new member to the organization
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/UserAliasParam"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete a member from the organization
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/UserAliasParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/accept-invitation":
+    get:
+      tags:
+        - Organizations
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Confirm user's membership to an organization
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /chart-repositories/user:
+    get:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's chart repositories
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChartRepository"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add user's chart repository
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChartRepositorySummary"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/chart-repositories/user/{repoName}":
+    put:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Update user's chart repository
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChartRepositorySummary"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete user's chart repository
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/chart-repositories/user/{repoName}/transfer":
+    put:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Transfer user's chart repository ownership to an organization
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/chart-repositories/org/{orgName}":
+    get:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get organization's chart repositories
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChartRepository"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add organization's chart repository
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChartRepositorySummary"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/chart-repositories/org/{orgName}/{repoName}":
+    put:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Update organization's chart repository
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+      requestBody:
+        description: Chart repository
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChartRepositorySummary"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete organization's chart repository
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/chart-repositories/org/{orgName}/{repoName}/transfer":
+    put:
+      tags:
+        - Chart repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Transfer organization's chart repository to a different owner
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /packages/stats:
+    get:
+      tags:
+        - Packages
+      summary: Get the number of packages and releases registered
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  packages:
+                    type: integer
+                  releases:
+                    type: integer
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /packages/updates:
+    get:
+      tags:
+        - Packages
+      summary: Get the latest packages added and updated
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  latest_packages_added:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PackageSummary"
+                  packages_recently_updated:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PackageSummary"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /packages/search:
+    get:
+      tags:
+        - Packages
+      summary: Search packages that meet the provided criteria
+      parameters:
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/FacetsParam"
+        - $ref: "#/components/parameters/TextParam"
+        - $ref: "#/components/parameters/PackageKindsListParam"
+        - $ref: "#/components/parameters/UsersListParam"
+        - $ref: "#/components/parameters/OrgsListParam"
+        - $ref: "#/components/parameters/ChartRepositoriesListParam"
+        - $ref: "#/components/parameters/DeprecatedParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      packages:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/PackageSummary"
+                      facets:
+                        nullable: true
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Facets"
+                  metadata:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                      offset:
+                        type: integer
+                      total:
+                        type: integer
+              examples:
+                s1:
+                  value:
+                    data:
+                      packages:
+                        - package_id: a9c77b9a-2cd1-4a8f-b9e8-6b8f94e13407
+                          kind: 0
+                          name: artifact-hub
+                          normalized_name: artifact-hub
+                          logo_image_id: 0f5488e2-da57-486b-a20f-bfe746ed3e23
+                          stars: 2
+                          display_name: null
+                          description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+                          version: 0.1.0
+                          app_version: 0.1.0
+                          deprecated: false
+                          user_alias: null
+                          organization_name: artifacthub
+                          organization_display_name: Artifact Hub
+                          chart_repository:
+                            name: artifact-hub
+                            display_name: Artifact Hub
+                            chart_repository_id: a032a436-3568-4970-804a-2780f5e9d231
+                        - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
+                          kind: 0
+                          name: sentry-kubernetes
+                          normalized_name: sentry-kubernetes
+                          logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
+                          stars: 0
+                          display_name: null
+                          description: A Helm chart for sentry-kubernetes
+                          version: 0.2.3
+                          app_version: latest
+                          deprecated: false
+                          user_alias: null
+                          organization_name: helm
+                          organization_display_name: Helm
+                          chart_repository:
+                            name: incubator
+                            display_name: Incubator
+                            chart_repository_id: dba459d0-6beb-451a-b15a-52d67cc93fa0
+                        - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
+                          kind: 0
+                          name: etcd-operator
+                          normalized_name: etcd-operator
+                          logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
+                          stars: 0
+                          display_name: null
+                          description: CoreOS etcd-operator Helm chart for Kubernetes
+                          version: 0.10.3
+                          app_version: 0.9.4
+                          deprecated: false
+                          user_alias: null
+                          organization_name: helm
+                          organization_display_name: Helm
+                          chart_repository:
+                            name: stable
+                            display_name: Stable
+                            chart_repository_id: dba484d0-6beb-451s-i85a-52d67iu73fa0
+                      facets:
+                        - title: Organization
+                          filter_key: org
+                          options:
+                            - id: helm
+                              name: Helm
+                              total: 53
+                            - id: artifacthub
+                              name: Artifact Hub
+                              total: 1
+                        - title: kind
+                          filter_key: kind
+                          options:
+                            - id: 0
+                              name: Helm charts
+                              total: 54
+                        - title: Chart Repository
+                          filter_key: repo
+                          options:
+                            - id: stable
+                              name: Stable
+                              total: 16
+                            - id: incubator
+                              name: Incubator
+                              total: 36
+                            - id: artifact-hub
+                              name: Artifact Hub
+                              total: 1
+                    metadata:
+                      limit: 15
+                      offset: 3
+                      total: 54
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /packages/starred:
+    get:
+      tags:
+        - Packages
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get packages starred by user
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PackageSummary"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/chart/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/chart/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{^falco$|^opa$}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/FalcoOPAParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{^falco$|^opa$}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/FalcoOPAParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/stars":
+    get:
+      tags:
+        - Packages
+      summary: Get package stars
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stars:
+                    type: integer
+                  starred_by_user:
+                    type: boolean
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      tags:
+        - Packages
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Toggle package's star
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's subscriptions
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    package_id:
+                      type: string
+                      format: uuid
+                    kind:
+                      $ref: "#/components/schemas/PackageKind"
+                    name:
+                      type: string
+                      nullable: false
+                      example: pkg1
+                    normalized_name:
+                      type: string
+                      example: pkg1
+                    logo_image_id:
+                      type: string
+                      example: "12345abcde"
+                    user_alias:
+                      type: string
+                      example: jdoe
+                    organization_name:
+                      type: string
+                      example: org1
+                    organization_display_name:
+                      type: string
+                      example: Organization 1
+                    chart_repository:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: repo1
+                        display_name:
+                          type: string
+                          example: Chart repo 1
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add subscription
+      requestBody:
+        $ref: "#/components/requestBodies/SubscriptionBody"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete subscription
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/EventKindParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/subscriptions/{packageID}":
+    get:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's subscriptions for the given package
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    event_kind:
+                      $ref: "#/components/schemas/EventKindId"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /webhooks/user:
+    get:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's webhooks
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add user's webhook
+      requestBody:
+        $ref: "#/components/requestBodies/WebhookBody"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/user/{webhookID}":
+    get:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's webhook
+      parameters:
+        - $ref: "#/components/parameters/WebhookIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Update user's webhook
+      parameters:
+        - $ref: "#/components/parameters/WebhookIDParam"
+      requestBody:
+        $ref: "#/components/requestBodies/WebhookBody"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete user's webhook
+      parameters:
+        - $ref: "#/components/parameters/WebhookIDParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/org/{orgName}":
+    get:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get organization's webhooks
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add organization's webhook
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+      requestBody:
+        $ref: "#/components/requestBodies/WebhookBody"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/org/{orgName}/{webhookID}":
+    get:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get organization's webhook
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    put:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Update organization's webhook
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
+      requestBody:
+        $ref: "#/components/requestBodies/WebhookBody"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete organization's webhook
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /webhooks/test:
+    post:
+      tags:
+        - Webhooks
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Trigger webhook test
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookTest"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /images:
+    post:
+      tags:
+        - Images
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Store image
+      requestBody:
+        content:
+          image:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: The request has succeeded and has led to the creation of a resource
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  image_id:
+                    type: string
+                    example: "12345abcde"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/check-availability/{resourceKind}":
+    head:
+      tags:
+        - Availability checks
+      summary: Check the availability of a given value for the provided resource kind
+      parameters:
+        - $ref: "#/components/parameters/ResourceKindNameParam"
+        - in: query
+          name: v
+          schema:
+            type: string
+          required: true
+          description: Value to check
+      responses:
+        "204":
+          description: Found, the value is not available
+        "404":
+          description: Not found, the value is available
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: sid
+  schemas:
+    ChartRepository:
+      allOf:
+        - $ref: "#/components/schemas/ChartRepositorySummary"
+        - type: object
+          properties:
+            chart_repository_id:
+              type: string
+              format: uuid
+            last_tracking_ts:
+              type: integer
+              nullable: true
+            last_tracking_errors:
+              type: string
+              example: Error
+    ChartRepositorySummary:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: repo1
+        display_name:
+          type: string
+          example: Repository 1
+        url:
+          type: string
+          format: uri
+          nullable: false
+          example: "http://repourl"
+      required:
+        - name
+        - url
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: error details
+    EventKindId:
+      type: integer
+      enum:
+        - 0
+      description: |
+        Event kind:
+          * `0` - New package release
+    Facets:
+      type: object
+      properties:
+        filter_key:
+          type: string
+        title:
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              total:
+                type: integer
+      example:
+        title: Organization
+        filter_key: org
+        options:
+          - id: helm
+            name: Helm
+            total: 292
+          - id: artifact-hub
+            name: Artifact Hub
+            total: 1
+    Link:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "http://url"
+        name:
+          type: string
+          example: link
+    Maintainer:
+      type: object
+      properties:
+        maintainer_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: maintainer1
+        email:
+          type: string
+          example: maintainer@email.com
+    Member:
+      type: object
+      properties:
+        alias:
+          type: string
+          nullable: false
+          example: jdoe
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        confirmed:
+          type: boolean
+          nullable: false
+          example: true
+    Package:
+      allOf:
+        - $ref: "#/components/schemas/PackageSummary"
+        - type: object
+          properties:
+            latest_version:
+              type: string
+              nullable: false
+              example: "2.0.0"
+            logo_url:
+              type: string
+              format: uri
+              example: "http://logo"
+            keywords:
+              type: array
+              items:
+                type: string
+              nullable: true
+              example:
+                - key1
+                - key2
+            home_url:
+              type: string
+              format: uri
+              nullable: true
+              example: "http://home"
+            readme:
+              type: string
+              nullable: true
+              example: "###Readme"
+            links:
+              type: array
+              items:
+                $ref: "#/components/schemas/Link"
+              nullable: true
+            available_versions:
+              type: array
+              items:
+                type: string
+              nullable: true
+              example:
+                - "2.0.0"
+                - "1.0.0"
+            license:
+              type: string
+              nullable: true
+              example: MIT
+            maintainers:
+              type: array
+              items:
+                $ref: "#/components/schemas/Maintainer"
+              nullable: true
+            created_at:
+              type: integer
+    PackageKind:
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+      description: |
+        Package kind:
+          * `0` - Helm charts
+          * `1` - Falco rules
+          * `2` - OPA policies
+    PackageKindName:
+      type: string
+      enum:
+        - opa
+        - falco
+      description: |
+        Package kind name:
+          * `falco` - Falco rules
+          * `opa` - OPA policies
+    PackageSummary:
+      type: object
+      properties:
+        package_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/PackageKind"
+        name:
+          type: string
+          nullable: false
+          example: pkg1
+        normalized_name:
+          type: string
+          example: pkg1
+        logo_image_id:
+          type: string
+          example: "12345abcde"
+        stars:
+          type: integer
+          nullable: false
+          example: 3
+        display_name:
+          type: string
+          example: Package 1
+        description:
+          type: string
+          example: This is a package sample
+        version:
+          type: string
+          example: "1.0.0"
+        app_version:
+          type: string
+          example: "0.1.0"
+        deprecated:
+          type: boolean
+          example: false
+        user_alias:
+          type: string
+          example: jdoe
+        organization_name:
+          type: string
+          example: org1
+        organization_display_name:
+          type: string
+          example: Organization 1
+        chart_repository:
+          type: object
+          properties:
+            chart_repository_id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              nullable: false
+              example: repo1
+            display_name:
+              type: string
+              example: Repository 1
+          nullable: true
+    Organization:
+      allOf:
+        - $ref: "#/components/schemas/OrganizationSummary"
+        - type: object
+          properties:
+            members_count:
+              type: integer
+            confirmed:
+              type: boolean
+    OrganizationSummary:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: org1
+        display_name:
+          type: string
+          example: Organization 1
+        description:
+          type: string
+          example: description
+        home_url:
+          type: string
+          format: uri
+          example: "http://url"
+        logo_image_id:
+          type: string
+          example: "12345abcde"
+      required:
+        - name
+    ResourceKindName:
+      type: string
+      enum:
+        - chartRepositoryName
+        - chartRepositoryURL
+        - organizationName
+        - userAlias
+      description: |
+        Resource kind name:
+          * `chartRepositoryName` - Chart repository name
+          * `chartRepositoryURL` - Chart repository URL
+          * `organizationName` - Organization name
+          * `userAlias` - User alias
+    User:
+      type: object
+      properties:
+        alias:
+          type: string
+          nullable: false
+          example: jdoe
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        email:
+          type: string
+          format: email
+          nullable: false
+          example: jdoe@email.com
+        profile_image_id:
+          type: string
+          example: "12345abcde"
+      required:
+        - alias
+        - email
+    Webhook:
+      allOf:
+        - $ref: "#/components/schemas/WebhookSummary"
+        - type: object
+          properties:
+            packages:
+              type: array
+              items:
+                $ref: "#/components/schemas/PackageSummary"
+            webhook_id:
+              type: string
+              format: uuid
+            last_notifications:
+              type: array
+              items:
+                $ref: "#/components/schemas/WebhookNotification"
+    WebhookNotification:
+      type: object
+      properties:
+        notification_id:
+          type: string
+          format: uuid
+        created_at:
+          type: integer
+        processed:
+          type: boolean
+        processed_at:
+          type: integer
+        error:
+          type: string
+          nullable: true
+          example: error
+    WebhookSummary:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: webhook1
+        description:
+          type: string
+          example: description
+        url:
+          type: string
+          format: uri
+          nullable: false
+          example: "http://url"
+        secret:
+          type: string
+          example: 123abc
+        content_type:
+          type: string
+          example: application/json
+        template:
+          type: string
+          example: '{"text": "Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}"}'
+        active:
+          type: boolean
+          nullable: false
+        event_kinds:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventKindId"
+    WebhookSummaryWithPackages:
+      allOf:
+        - $ref: "#/components/schemas/WebhookSummary"
+        - type: object
+          properties:
+            packages:
+              type: array
+              items:
+                type: object
+                properties:
+                  package_id:
+                    type: string
+                    format: uuid
+          required:
+            - name
+            - url
+            - active
+            - event_kinds
+            - packages
+    WebhookTest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          nullable: false
+          example: "http://url"
+        content_type:
+          type: string
+          example: application/json
+        template:
+          type: string
+          example: '{"text": "Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}"}'
+        event_kinds:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventKindId"
+          example:
+            - 0
+      required:
+        - url
+        - event_kinds
+  parameters:
+    ChartRepositoriesListParam:
+      in: query
+      name: chart_repositories
+      schema:
+        type: array
+        items:
+          type: string
+        example:
+          - repo1
+          - repo2
+      required: false
+      description: List of chart repository names
+    DeprecatedParam:
+      in: query
+      name: deprecated
+      schema:
+        type: boolean
+        default: false
+      required: false
+      description: Whether to include deprecated packages or not
+    EventKindParam:
+      in: query
+      name: event_kind
+      required: true
+      schema:
+        $ref: "#/components/schemas/EventKindId"
+      description: Event kind
+    FacetsParam:
+      in: query
+      name: facets
+      schema:
+        type: boolean
+        default: false
+      required: true
+      description: Whether we should get facets or not
+    FalcoOPAParam:
+      in: path
+      name: ^falco$|^opa$
+      schema:
+        $ref: "#/components/schemas/PackageKindName"
+      required: true
+      description: Package kind name
+    LimitParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 50
+      required: false
+      description: The number of packages to return
+    OffsetParam:
+      in: query
+      name: offset
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      required: false
+      description: The number of packages to skip before starting to collect the result set
+    OrgNameParam:
+      in: path
+      name: orgName
+      schema:
+        type: string
+        example: org1
+      required: true
+      description: Organization name
+    OrgNameToTransferParam:
+      in: query
+      name: org
+      required: false
+      schema:
+        type: string
+        example: org1
+      description: The org to transfer the repoName
+    OrgsListParam:
+      in: query
+      name: orgs
+      schema:
+        type: array
+        items:
+          type: string
+        example:
+          - org1
+          - org2
+      required: false
+      description: List of organization names
+    PackageIDParam:
+      in: path
+      name: packageID
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Package ID
+    PackageKindsListParam:
+      in: query
+      name: package_kinds
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/PackageKind"
+      required: false
+      description: |
+        Package kind:
+          * `0` - Helm charts
+          * `1` - Falco rules
+          * `2` - OPA policies
+    PackageNameParam:
+      in: path
+      name: packageName
+      schema:
+        type: string
+        example: pkg1
+      required: true
+      description: Package name
+    RepoNameParam:
+      in: path
+      name: repoName
+      schema:
+        type: string
+        example: repoName
+      required: true
+      description: Chart repository name
+    ResourceKindNameParam:
+      in: path
+      name: resourceKind
+      schema:
+        $ref: "#/components/schemas/ResourceKindName"
+      required: true
+      description: Resource kind name
+    TextParam:
+      in: query
+      name: text
+      schema:
+        type: string
+        example: database
+      required: false
+      description: Search text
+    UsersListParam:
+      in: query
+      name: users
+      schema:
+        type: array
+        items:
+          type: string
+          example:
+            - user1
+            - user2
+      required: false
+      description: List of aliases
+    UserAliasParam:
+      in: path
+      name: userAlias
+      schema:
+        type: string
+        example: alias
+      required: true
+      description: User alias
+    VersionParam:
+      in: path
+      name: version
+      schema:
+        type: string
+        example: "1.0.0"
+      required: true
+      description: Package version
+    WebhookIDParam:
+      in: path
+      name: webhookID
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Webhook ID
+  responses:
+    BadRequest:
+      description: The request sent was not valid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Created:
+      description: The request has succeeded and has led to the creation of a resource
+    Forbidden:
+      description: The user does not have permission to perform the requested operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InternalServerError:
+      description: >-
+        The server encountered an unexpected condition that prevented it from
+        fulfilling the request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NoContent:
+      description: The request has succeeded, no content returned
+    NotFoundResponse:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    TooManyRequests:
+      description: The user has sent too many requests in a given amount of time
+    UnauthorizedError:
+      description: Valid authentication credentials not provided
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  requestBodies:
+    SubscriptionBody:
+      description: Subscription Request body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              package_id:
+                type: string
+                format: uuid
+              event_kind:
+                $ref: "#/components/schemas/EventKindId"
+            required:
+              - package_id
+              - event_kind
+    WebhookBody:
+      description: Webhook body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/WebhookSummaryWithPackages"
