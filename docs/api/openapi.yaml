@@ -718,6 +718,7 @@ paths:
                           version: 0.1.0
                           app_version: 0.1.0
                           deprecated: false
+                          signed: null
                           user_alias: null
                           organization_name: artifacthub
                           organization_display_name: Artifact Hub
@@ -736,6 +737,7 @@ paths:
                           version: 0.2.3
                           app_version: latest
                           deprecated: false
+                          signed: null
                           user_alias: null
                           organization_name: helm
                           organization_display_name: Helm
@@ -754,6 +756,7 @@ paths:
                           version: 0.10.3
                           app_version: 0.9.4
                           deprecated: false
+                          signed: null
                           user_alias: null
                           organization_name: helm
                           organization_display_name: Helm
@@ -1610,6 +1613,9 @@ components:
         deprecated:
           type: boolean
           example: false
+        signed:
+          type: boolean
+          nullable: true
         user_alias:
           type: string
           example: jdoe

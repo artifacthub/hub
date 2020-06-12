@@ -46,6 +46,7 @@ begin
         'digest', s.digest,
         'deprecated', s.deprecated,
         'license', s.license,
+        'signed', s.signed,
         'maintainers', (
             select json_agg(json_build_object(
                 'name', m.name,

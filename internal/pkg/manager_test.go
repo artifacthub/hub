@@ -376,7 +376,7 @@ func TestRegister(t *testing.T) {
 				&hub.Package{
 					Kind:    hub.Chart,
 					Name:    "package1",
-					Version: "1.0",
+					Version: "invalid",
 				},
 			},
 			{
@@ -487,22 +487,6 @@ func TestRegister(t *testing.T) {
 					OrganizationID: "00000000-0000-0000-0000-000000000001",
 					ChartRepository: &hub.ChartRepository{
 						ChartRepositoryID: "unexpected",
-					},
-				},
-			},
-			{
-				"maintainer name not provided",
-				&hub.Package{
-					Kind:    hub.Chart,
-					Name:    "package1",
-					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
-					},
-					Maintainers: []*hub.Maintainer{
-						{
-							Email: "email",
-						},
 					},
 				},
 			},

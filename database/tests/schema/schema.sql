@@ -154,6 +154,7 @@ select columns_are('snapshot', array[
     'data',
     'deprecated',
     'license',
+    'signed',
     'content_url',
     'created_at',
     'updated_at'

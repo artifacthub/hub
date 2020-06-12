@@ -22,6 +22,7 @@ func TestWorker(t *testing.T) {
 	repo1 := &hub.ChartRepository{
 		ChartRepositoryID: "repo1",
 	}
+	logoImageURL := "http://icon.url"
 
 	t.Run("handle register job", func(t *testing.T) {
 		pkg1V1 := &repo.ChartVersion{
@@ -88,7 +89,11 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", mock.Anything).Return(nil, errFake)
+			ww.hg.On("Get", logoImageURL).Return(nil, errFake)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
+			}, nil)
 			ww.ec.On("Append", job.Repo.ChartRepositoryID, mock.Anything).Return()
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
 
@@ -107,9 +112,13 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", mock.Anything).Return(&http.Response{
+			ww.hg.On("Get", logoImageURL).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusUnauthorized,
+			}, nil)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
 			}, nil)
 			ww.ec.On("Append", job.Repo.ChartRepositoryID, mock.Anything).Return()
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
@@ -129,9 +138,13 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", mock.Anything).Return(&http.Response{
+			ww.hg.On("Get", logoImageURL).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
+			}, nil)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
 			}, nil)
 			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("", errFake)
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
@@ -151,9 +164,13 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", mock.Anything).Return(&http.Response{
+			ww.hg.On("Get", logoImageURL).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
+			}, nil)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
 			}, nil)
 			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("imageID", nil)
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(errFake)
@@ -174,9 +191,13 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", mock.Anything).Return(&http.Response{
+			ww.hg.On("Get", logoImageURL).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
+			}, nil)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
 			}, nil)
 			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("imageID", nil)
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
@@ -201,6 +222,10 @@ func TestWorker(t *testing.T) {
 			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
+			}, nil)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+				Body:       ioutil.NopCloser(strings.NewReader("")),
+				StatusCode: http.StatusNotFound,
 			}, nil)
 			expectedLogoData, _ := ioutil.ReadFile("testdata/red-dot.png")
 			ww.is.On("SaveImage", mock.Anything, expectedLogoData).Return("imageID", nil)

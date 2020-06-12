@@ -155,6 +155,7 @@ begin
         data,
         deprecated,
         license,
+        signed,
         content_url
     ) values (
         v_package_id,
@@ -170,6 +171,7 @@ begin
         p_pkg->'data',
         (p_pkg->>'deprecated')::boolean,
         nullif(p_pkg->>'license', ''),
+        (p_pkg->>'signed')::boolean,
         nullif(p_pkg->>'content_url', '')
     )
     on conflict (package_id, version) do update
@@ -184,6 +186,7 @@ begin
         links = excluded.links,
         deprecated = excluded.deprecated,
         license = excluded.license,
+        signed = excluded.signed,
         content_url = excluded.content_url,
         updated_at = current_timestamp;
 

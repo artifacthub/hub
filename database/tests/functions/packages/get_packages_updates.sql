@@ -59,7 +59,8 @@ insert into snapshot (
     keywords,
     home_url,
     readme,
-    deprecated
+    deprecated,
+    signed
 ) values (
     :'package1ID',
     '1.0.0',
@@ -68,6 +69,7 @@ insert into snapshot (
     '{"kw1", "kw2"}',
     'home_url',
     'readme',
+    false,
     false
 );
 insert into package (
@@ -117,7 +119,6 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-
     created_at,
     updated_at,
     package_kind_id,
@@ -142,7 +143,8 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    deprecated
+    deprecated,
+    signed
 ) values (
     :'package3ID',
     '1.0.0',
@@ -153,6 +155,7 @@ insert into snapshot (
     '12.1.0',
     'digest-package3-1.0.0',
     'readme',
+    true,
     true
 );
 
@@ -172,6 +175,7 @@ select is(
             "version": "1.0.0",
             "app_version": null,
             "deprecated": false,
+            "signed": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -188,6 +192,7 @@ select is(
             "version": "1.0.0",
             "app_version": "12.1.0",
             "deprecated": null,
+            "signed": null,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -209,6 +214,7 @@ select is(
             "version": "1.0.0",
             "app_version": null,
             "deprecated": false,
+            "signed": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -225,6 +231,7 @@ select is(
             "version": "1.0.0",
             "app_version": "12.1.0",
             "deprecated": null,
+            "signed": null,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -280,6 +287,7 @@ select is(
             "version": "1.0.0",
             "app_version": null,
             "deprecated": false,
+            "signed": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -296,6 +304,7 @@ select is(
             "version": "2.0.0",
             "app_version": "13.0.0",
             "deprecated": null,
+            "signed": null,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -317,6 +326,7 @@ select is(
             "version": "2.0.0",
             "app_version": "13.0.0",
             "deprecated": null,
+            "signed": null,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",
@@ -337,6 +347,7 @@ select is(
             "version": "1.0.0",
             "app_version": null,
             "deprecated": false,
+            "signed": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1",

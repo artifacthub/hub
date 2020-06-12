@@ -92,7 +92,8 @@ insert into snapshot (
     app_version,
     digest,
     readme,
-    deprecated
+    deprecated,
+    signed
 ) values (
     :'package2ID',
     '1.0.0',
@@ -101,6 +102,7 @@ insert into snapshot (
     '12.1.0',
     'digest-package2-1.0.0',
     'readme',
+    true,
     true
 );
 insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package1ID');
@@ -120,6 +122,7 @@ select is(
         "version": "1.0.0",
         "app_version": "12.1.0",
         "deprecated": null,
+        "signed": null,
         "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",

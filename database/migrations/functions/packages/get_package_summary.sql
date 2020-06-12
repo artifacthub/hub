@@ -14,6 +14,7 @@ returns setof json as $$
         'version', s.version,
         'app_version', s.app_version,
         'deprecated', s.deprecated,
+        'signed', s.signed,
         'user_alias', u.alias,
         'organization_name', o.name,
         'organization_display_name', o.display_name,

@@ -108,9 +108,11 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	if pkg.Version == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "version not provided")
 	}
-	if _, err := semver.StrictNewVersion(pkg.Version); err != nil {
+	sv, err := semver.NewVersion(pkg.Version)
+	if err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
 	}
+	pkg.Version = sv.String()
 	if pkg.ContentURL != "" {
 		u, err := url.Parse(pkg.ContentURL)
 		if err != nil || u.Scheme == "" || u.Host == "" {
@@ -155,17 +157,17 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 		}
 	}
 	for _, m := range pkg.Maintainers {
-		if m.Name == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "maintainer name not provided")
-		}
 		if m.Email == "" {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "maintainer email not provided")
+		}
+		if m.Name == "" {
+			m.Name = m.Email
 		}
 	}
 
 	// Register package in database
 	pkgJSON, _ := json.Marshal(pkg)
-	_, err := m.db.Exec(ctx, "select register_package($1::jsonb)", pkgJSON)
+	_, err = m.db.Exec(ctx, "select register_package($1::jsonb)", pkgJSON)
 	return err
 }
 

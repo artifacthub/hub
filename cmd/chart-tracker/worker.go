@@ -208,6 +208,12 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	if licenseFile != nil {
 		p.License = license.Detect(licenseFile.Data)
 	}
+	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(u)
+	if err == nil {
+		p.Signed = hasProvenanceFile
+	} else {
+		w.logger.Warn().Err(err).Msg("error checking provenance file")
+	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {
 		if entry.Email != "" {
@@ -268,6 +274,20 @@ func (w *Worker) loadChart(u string) (*chart.Chart, error) {
 		return chart, nil
 	}
 	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+}
+
+// chartVersionHasProvenanceFile checks if a chart version has a provenance
+// file checking if a .prov file exists for the chart version url provided.
+func (w *Worker) chartVersionHasProvenanceFile(u string) (bool, error) {
+	resp, err := w.hg.Get(u + ".prov")
+	if err != nil {
+		return false, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusOK {
+		return true, nil
+	}
+	return false, nil
 }
 
 // getFile returns the file requested from the provided chart.
