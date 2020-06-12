@@ -391,6 +391,7 @@ const SearchView = (props: Props) => {
                             deprecated: props.deprecated,
                           }}
                           saveScrollPosition={saveScrollPosition}
+                          visibleSignedBadge
                         />
                       ))}
                     </div>

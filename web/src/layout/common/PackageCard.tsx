@@ -12,12 +12,14 @@ import Image from './Image';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageCard.module.css';
 import PackageIcon from './PackageIcon';
+import SignedBadge from './SignedBadge';
 
 interface Props {
   package: Package;
   saveScrollPosition?: () => void;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
+  visibleSignedBadge?: boolean;
 }
 
 const PackageCard = (props: Props) => {
@@ -64,6 +66,9 @@ const PackageCard = (props: Props) => {
                           >
                             Deprecated
                           </div>
+                        )}
+                        {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
+                          <SignedBadge signed={props.package.signed} />
                         )}
                       </div>
                     </div>

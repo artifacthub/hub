@@ -1,0 +1,29 @@
+.badge {
+  border: 1px solid var(--success);
+  color: var(--success);
+  font-size: 0.5rem !important;
+}
+
+.tooltip {
+  width: 130px;
+  bottom: -63px;
+  right: 0;
+}
+
+.tooltipArrow {
+  right: 10px;
+}
+
+.tooltipArrow::before {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+.tooltipContent {
+  background-color: var(--color-1-900) !important;
+}
+
+@media (hover: hover) {
+  .badgeWrapper:hover .tooltip {
+    opacity: 0.9;
+  }
+}
