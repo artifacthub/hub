@@ -44,6 +44,7 @@ select register_package('
     "digest": "digest-package1-1.0.0",
     "deprecated": false,
     "license": "Apache-2.0",
+    "signed": false,
     "content_url": "https://package.content.url",
     "maintainers": [
         {
@@ -99,6 +100,7 @@ select results_eq(
             s.data,
             s.deprecated,
             s.license,
+            s.signed,
             s.content_url
         from snapshot s
         join package p using (package_id)
@@ -119,6 +121,7 @@ select results_eq(
             '{"key": "value"}'::jsonb,
             false,
             'Apache-2.0',
+            false,
             'https://package.content.url'
         )
     $$,
@@ -168,6 +171,7 @@ select register_package('
     "app_version": "13.0.0",
     "digest": "digest-package1-2.0.0",
     "deprecated": true,
+    "signed": true,
     "maintainers": [
         {
             "name": "name1",
@@ -200,7 +204,8 @@ select results_eq(
             s.digest,
             s.readme,
             s.links,
-            s.deprecated
+            s.deprecated,
+            s.signed
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -217,6 +222,7 @@ select results_eq(
             'digest-package1-2.0.0',
             'readme-version-2.0.0',
             null::jsonb,
+            true,
             true
         )
     $$,
@@ -273,6 +279,7 @@ select register_package('
     "app_version": "11.0.0",
     "digest": "digest-package1-0.0.9",
     "deprecated": true,
+    "signed": true,
     "maintainers": [
         {
             "name": "name1",
@@ -309,7 +316,8 @@ select results_eq(
             s.digest,
             s.readme,
             s.links,
-            s.deprecated
+            s.deprecated,
+            s.signed
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -326,6 +334,7 @@ select results_eq(
             'digest-package1-0.0.9',
             'readme-version-0.0.9',
             null::jsonb,
+            true,
             true
         )
     $$,

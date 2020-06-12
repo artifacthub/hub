@@ -66,7 +66,8 @@ insert into snapshot (
     links,
     data,
     deprecated,
-    license
+    license,
+    signed
 ) values (
     :'package1ID',
     '1.0.0',
@@ -80,7 +81,8 @@ insert into snapshot (
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}',
     true,
-    'Apache-2.0'
+    'Apache-2.0',
+    true
 );
 insert into snapshot (
     package_id,
@@ -175,6 +177,7 @@ select is(
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
         "license": "Apache-2.0",
+        "signed": true,
         "maintainers": [
             {
                 "name": "name1",
@@ -232,6 +235,7 @@ select is(
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
         "license": "Apache-2.0",
+        "signed": true,
         "maintainers": [
             {
                 "name": "name1",
@@ -290,6 +294,7 @@ select is(
         "digest": "digest-package1-0.0.9",
         "deprecated": null,
         "license": null,
+        "signed": null,
         "maintainers": [
             {
                 "name": "name1",
@@ -334,6 +339,7 @@ select is(
         },
         "deprecated": null,
         "license": null,
+        "signed": null,
         "version": "1.0.0",
         "app_version": null,
         "available_versions": ["1.0.0"],

@@ -91,6 +91,7 @@ select is(
                     "version": "1.0.0",
                     "app_version": null,
                     "deprecated": null,
+                    "signed": null,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null,

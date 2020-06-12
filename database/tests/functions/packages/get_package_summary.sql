@@ -36,13 +36,15 @@ insert into snapshot (
     app_version,
     display_name,
     description,
-    deprecated
+    deprecated,
+    signed
 ) values (
     :'package1ID',
     '1.0.0',
     '12.0.0',
     'Package 1',
     'description',
+    false,
     false
 );
 
@@ -61,6 +63,7 @@ select is(
         "version": "1.0.0",
         "app_version": "12.0.0",
         "deprecated": false,
+        "signed": false,
         "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",
