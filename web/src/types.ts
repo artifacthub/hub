@@ -40,6 +40,7 @@ export interface Package {
   keywords?: string[];
   maintainers?: Maintainer[];
   deprecated: boolean | null;
+  signed: boolean | null;
   organizationName?: string | null;
   organizationDisplayName?: string | null;
   links?: PackageLink[];

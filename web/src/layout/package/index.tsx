@@ -19,6 +19,7 @@ import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
 import OrganizationInfo from '../common/OrganizationInfo';
+import SignedBadge from '../common/SignedBadge';
 import SubNavbar from '../navigation/SubNavbar';
 import ChartInstall from './ChartInstall';
 import Details from './Details';
@@ -271,6 +272,7 @@ const PackageView = (props: Props) => {
                               Deprecated
                             </div>
                           )}
+                          <SignedBadge packageKind={detail.kind} signed={detail.signed} />
                         </div>
 
                         <div className={`d-flex flex-row mt-1 ${styles.subtitle}`}>
