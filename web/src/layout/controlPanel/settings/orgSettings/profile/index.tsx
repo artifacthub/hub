@@ -29,29 +29,33 @@ const ProfileSection = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    async function fetchOrganization() {
-      try {
-        setIsLoading(true);
-        setOrganization(await API.getOrganization(selectedOrg!));
-        setApiError(null);
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        if (err.statusText !== 'ErrLoginRedirect') {
-          if (err.status === 500) {
-            setApiError('An error occurred getting the organization details, please try again later');
-          }
-          setOrganization(null);
-        } else {
-          props.onAuthError();
+  async function fetchOrganization() {
+    try {
+      setIsLoading(true);
+      setOrganization(await API.getOrganization(selectedOrg!));
+      setApiError(null);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      if (err.statusText !== 'ErrLoginRedirect') {
+        if (err.status === 500) {
+          setApiError('An error occurred getting the organization details, please try again later');
         }
+        setOrganization(null);
+      } else {
+        props.onAuthError();
       }
     }
-    if (!isUndefined(selectedOrg)) {
+  }
+
+  useEffect(() => {
+    if (
+      !isUndefined(selectedOrg) &&
+      (isUndefined(organization) || (!isNull(organization) && selectedOrg !== organization.name))
+    ) {
       fetchOrganization();
     }
-  }, [props, selectedOrg]);
+  }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main role="main" className="container p-0">
@@ -73,6 +77,7 @@ const ProfileSection = (props: Props) => {
                     ref={form}
                     organization={!isLoading ? organization : undefined}
                     onAuthError={props.onAuthError}
+                    onSuccess={fetchOrganization}
                     setIsSending={setIsSending}
                   />
                 )}
