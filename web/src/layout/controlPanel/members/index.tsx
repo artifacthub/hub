@@ -22,6 +22,7 @@ const MembersSection = (props: Props) => {
   const [members, setMembers] = useState<Member[] | undefined>(undefined);
   const [modalMemberOpen, setModalMemberOpen] = useState(false);
   const [confirmedMembersNumber, setConfirmedMembersNumber] = useState<number>(0);
+  const selectedOrg = ctx.prefs.controlPanel.selectedOrg;
   const [apiError, setApiError] = useState<null | string>(null);
 
   const getConfirmedMembersNumber = (members: Member[]): number => {
@@ -32,7 +33,7 @@ const MembersSection = (props: Props) => {
   async function fetchMembers() {
     try {
       setIsGettingMembers(true);
-      const membersList = await API.getOrganizationMembers(ctx.prefs.controlPanel.selectedOrg!);
+      const membersList = await API.getOrganizationMembers(selectedOrg!);
       setMembers(membersList);
       setConfirmedMembersNumber(getConfirmedMembersNumber(membersList));
       setApiError(null);
@@ -50,7 +51,7 @@ const MembersSection = (props: Props) => {
 
   useEffect(() => {
     fetchMembers();
-  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
