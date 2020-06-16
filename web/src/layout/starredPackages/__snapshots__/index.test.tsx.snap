@@ -107,13 +107,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="d-flex flex-row justify-content-between flex-fill"
+                            class="d-flex flex-row justify-content-between"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                             >
                               <div
                                 class="h5 d-flex flex-row align-items-center"
@@ -125,45 +125,9 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex align-items-start text-uppercase ml-auto kind"
-                            >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
-                              >
-                                <div
-                                  class="d-flex align-items-center"
-                                >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div
-                                    class="starBadgeNumber"
-                                  >
-                                    1
-                                  </div>
-                                </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
-                            </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                            class="card-subtitle d-flex flex-wrap subtitle"
                           >
                             <div
                               class="mr-2"
@@ -229,6 +193,51 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          class="d-flex flex-column mb-auto"
+                        >
+                          <small
+                            class="d-none d-lg-block text-muted mb-2 date"
+                          >
+                            Updated Invalid date
+                          </small>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <span
+                              class="badge badge-pill badge-light mr-2 starBadge"
+                            >
+                              <div
+                                class="d-flex align-items-center"
+                              >
+                                <svg
+                                  class="mr-1"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 576 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                  />
+                                </svg>
+                                <div
+                                  class="starBadgeNumber"
+                                >
+                                  1
+                                </div>
+                              </div>
+                            </span>
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <p
@@ -236,6 +245,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     >
                       Airflow is a platform to programmatically author, schedule and monitor workflows
                     </p>
+                    <small
+                      class="d-block d-lg-none text-muted text-right mt-3 date"
+                    >
+                      Updated Invalid date
+                    </small>
                   </div>
                 </a>
               </div>
@@ -272,13 +286,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="d-flex flex-row justify-content-between flex-fill"
+                            class="d-flex flex-row justify-content-between"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                             >
                               <div
                                 class="h5 d-flex flex-row align-items-center"
@@ -290,45 +304,9 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex align-items-start text-uppercase ml-auto kind"
-                            >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
-                              >
-                                <div
-                                  class="d-flex align-items-center"
-                                >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div
-                                    class="starBadgeNumber"
-                                  >
-                                    1
-                                  </div>
-                                </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
-                            </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                            class="card-subtitle d-flex flex-wrap subtitle"
                           >
                             <div
                               class="mr-2"
@@ -394,6 +372,51 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          class="d-flex flex-column mb-auto"
+                        >
+                          <small
+                            class="d-none d-lg-block text-muted mb-2 date"
+                          >
+                            Updated Invalid date
+                          </small>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <span
+                              class="badge badge-pill badge-light mr-2 starBadge"
+                            >
+                              <div
+                                class="d-flex align-items-center"
+                              >
+                                <svg
+                                  class="mr-1"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 576 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                  />
+                                </svg>
+                                <div
+                                  class="starBadgeNumber"
+                                >
+                                  1
+                                </div>
+                              </div>
+                            </span>
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <p
@@ -401,6 +424,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     >
                       Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
                     </p>
+                    <small
+                      class="d-block d-lg-none text-muted text-right mt-3 date"
+                    >
+                      Updated Invalid date
+                    </small>
                   </div>
                 </a>
               </div>
@@ -437,13 +465,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="d-flex flex-row justify-content-between flex-fill"
+                            class="d-flex flex-row justify-content-between"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                             >
                               <div
                                 class="h5 d-flex flex-row align-items-center"
@@ -455,45 +483,9 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex align-items-start text-uppercase ml-auto kind"
-                            >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
-                              >
-                                <div
-                                  class="d-flex align-items-center"
-                                >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div
-                                    class="starBadgeNumber"
-                                  >
-                                    2
-                                  </div>
-                                </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
-                            </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                            class="card-subtitle d-flex flex-wrap subtitle"
                           >
                             <div
                               class="mr-2"
@@ -559,6 +551,51 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          class="d-flex flex-column mb-auto"
+                        >
+                          <small
+                            class="d-none d-lg-block text-muted mb-2 date"
+                          >
+                            Updated Invalid date
+                          </small>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <span
+                              class="badge badge-pill badge-light mr-2 starBadge"
+                            >
+                              <div
+                                class="d-flex align-items-center"
+                              >
+                                <svg
+                                  class="mr-1"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 576 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                  />
+                                </svg>
+                                <div
+                                  class="starBadgeNumber"
+                                >
+                                  2
+                                </div>
+                              </div>
+                            </span>
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <p
@@ -566,6 +603,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     >
                       Prometheus is a monitoring system and time series database.
                     </p>
+                    <small
+                      class="d-block d-lg-none text-muted text-right mt-3 date"
+                    >
+                      Updated Invalid date
+                    </small>
                   </div>
                 </a>
               </div>
@@ -602,13 +644,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="d-flex flex-row justify-content-between flex-fill"
+                            class="d-flex flex-row justify-content-between"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                             >
                               <div
                                 class="h5 d-flex flex-row align-items-center"
@@ -620,45 +662,9 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex align-items-start text-uppercase ml-auto kind"
-                            >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
-                              >
-                                <div
-                                  class="d-flex align-items-center"
-                                >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div
-                                    class="starBadgeNumber"
-                                  >
-                                    2
-                                  </div>
-                                </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/falco-rules.svg"
-                              />
-                            </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                            class="card-subtitle d-flex flex-wrap subtitle"
                           >
                             <div
                               class="mr-2"
@@ -699,6 +705,51 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          class="d-flex flex-column mb-auto"
+                        >
+                          <small
+                            class="d-none d-lg-block text-muted mb-2 date"
+                          >
+                            Updated Invalid date
+                          </small>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <span
+                              class="badge badge-pill badge-light mr-2 starBadge"
+                            >
+                              <div
+                                class="d-flex align-items-center"
+                              >
+                                <svg
+                                  class="mr-1"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 576 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                  />
+                                </svg>
+                                <div
+                                  class="starBadgeNumber"
+                                >
+                                  2
+                                </div>
+                              </div>
+                            </span>
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/falco-rules.svg"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <p
@@ -706,6 +757,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     >
                       Falco rules for securing Traefik
                     </p>
+                    <small
+                      class="d-block d-lg-none text-muted text-right mt-3 date"
+                    >
+                      Updated Invalid date
+                    </small>
                   </div>
                 </a>
               </div>
@@ -742,13 +798,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           />
                         </div>
                         <div
-                          class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                         >
                           <div
-                            class="d-flex flex-row justify-content-between flex-fill"
+                            class="d-flex flex-row justify-content-between"
                           >
                             <div
-                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                              class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                             >
                               <div
                                 class="h5 d-flex flex-row align-items-center"
@@ -760,45 +816,9 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex align-items-start text-uppercase ml-auto kind"
-                            >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
-                              >
-                                <div
-                                  class="d-flex align-items-center"
-                                >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div
-                                    class="starBadgeNumber"
-                                  >
-                                    2
-                                  </div>
-                                </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/opa-policies.svg"
-                              />
-                            </div>
                           </div>
                           <div
-                            class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                            class="card-subtitle d-flex flex-wrap subtitle"
                           >
                             <div
                               class="mr-2"
@@ -839,6 +859,51 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          class="d-flex flex-column mb-auto"
+                        >
+                          <small
+                            class="d-none d-lg-block text-muted mb-2 date"
+                          >
+                            Updated Invalid date
+                          </small>
+                          <div
+                            class="d-flex align-items-start text-uppercase ml-auto kind"
+                          >
+                            <span
+                              class="badge badge-pill badge-light mr-2 starBadge"
+                            >
+                              <div
+                                class="d-flex align-items-center"
+                              >
+                                <svg
+                                  class="mr-1"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 576 512"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                  />
+                                </svg>
+                                <div
+                                  class="starBadgeNumber"
+                                >
+                                  2
+                                </div>
+                              </div>
+                            </span>
+                            <img
+                              alt="Icon"
+                              class="icon"
+                              src="/static/media/opa-policies.svg"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <p
@@ -846,6 +911,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     >
                       Open Policy Agent policy for running only images from a trusted repository
                     </p>
+                    <small
+                      class="d-block d-lg-none text-muted text-right mt-3 date"
+                    >
+                      Updated Invalid date
+                    </small>
                   </div>
                 </a>
               </div>
@@ -985,6 +1055,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       Airflow is a platform to programmatically author, schedule and monitor workflows
                     </small>
                   </div>
+                  <small
+                    class="text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -1119,6 +1194,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
                     </small>
                   </div>
+                  <small
+                    class="text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -1253,6 +1333,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       Prometheus is a monitoring system and time series database.
                     </small>
                   </div>
+                  <small
+                    class="text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -1373,6 +1458,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       Falco rules for securing Traefik
                     </small>
                   </div>
+                  <small
+                    class="text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -1493,6 +1583,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       Open Policy Agent policy for running only images from a trusted repository
                     </small>
                   </div>
+                  <small
+                    class="text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>

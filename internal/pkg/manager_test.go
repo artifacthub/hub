@@ -57,11 +57,20 @@ func TestGet(t *testing.T) {
 			Data: map[string]interface{}{
 				"key": "value",
 			},
-			Version:           "1.0.0",
-			AvailableVersions: []string{"0.0.9", "1.0.0"},
-			AppVersion:        "12.1.0",
-			Digest:            "digest-package1-1.0.0",
-			Deprecated:        true,
+			Version: "1.0.0",
+			AvailableVersions: []*hub.Version{
+				{
+					Version:   "0.0.9",
+					CreatedAt: 1592299233,
+				},
+				{
+					Version:   "1.0.0",
+					CreatedAt: 1592299234,
+				},
+			},
+			AppVersion: "12.1.0",
+			Digest:     "digest-package1-1.0.0",
+			Deprecated: true,
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "name1",
@@ -110,7 +119,16 @@ func TestGet(t *testing.T) {
 				"key": "value"
 			},
 			"version": "1.0.0",
-			"available_versions": ["0.0.9", "1.0.0"],
+			"available_versions": [
+				{
+					"version": "0.0.9",
+					"created_at": 1592299233
+				},
+				{
+					"version": "1.0.0",
+					"created_at": 1592299234
+				}
+			],
 			"app_version": "12.1.0",
 			"digest": "digest-package1-1.0.0",
 			"deprecated": true,
@@ -171,6 +189,33 @@ func TestGetJSON(t *testing.T) {
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetRandomJSON(t *testing.T) {
+	dbQuery := "select get_random_packages()"
+	ctx := context.Background()
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetRandomJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetRandomJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -278,33 +323,6 @@ func TestGetStatsJSON(t *testing.T) {
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStatsJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
-		assert.Nil(t, dataJSON)
-		db.AssertExpectations(t)
-	})
-}
-
-func TestGetUpdatesJSON(t *testing.T) {
-	dbQuery := "select get_packages_updates()"
-	ctx := context.Background()
-
-	t.Run("database query succeeded", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
-		m := NewManager(db)
-
-		dataJSON, err := m.GetUpdatesJSON(ctx)
-		assert.NoError(t, err)
-		assert.Equal(t, []byte("dataJSON"), dataJSON)
-		db.AssertExpectations(t)
-	})
-
-	t.Run("database error", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
-
-		dataJSON, err := m.GetUpdatesJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)

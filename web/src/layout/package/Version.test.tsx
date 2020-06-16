@@ -28,7 +28,15 @@ const packageItem: Package = {
   deprecated: false,
   keywords: ['key1', 'key2'],
   chartRepository: null,
-  availableVersions: ['1.0.0', '1.0.1'],
+  createdAt: 1,
+  signed: false,
+  availableVersions: [
+    {
+      version: '1.0.0',
+      createdAt: 1,
+    },
+    { version: '1.0.1', createdAt: 1 },
+  ],
 };
 
 const defaultProps = {

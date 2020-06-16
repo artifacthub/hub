@@ -59,6 +59,12 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	return dataJSON, nil
 }
 
+// GetRandomJSON returns a json object with some random packages. The json
+// object is built by the database.
+func (m *Manager) GetRandomJSON(ctx context.Context) ([]byte, error) {
+	return m.dbQueryJSON(ctx, "select get_random_packages()")
+}
+
 // GetStarredByUserJSON returns a json object with packages starred by the user
 // doing the request. The json object is built by the database.
 func (m *Manager) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
@@ -87,13 +93,6 @@ func (m *Manager) GetStarsJSON(ctx context.Context, packageID string) ([]byte, e
 // releases available in the database. The json object is built by the database.
 func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	return m.dbQueryJSON(ctx, "select get_packages_stats()")
-}
-
-// GetUpdatesJSON returns a json object with the latest packages added as well
-// as those which have been updated more recently. The json object is built by
-// the database.
-func (m *Manager) GetUpdatesJSON(ctx context.Context) ([]byte, error) {
-	return m.dbQueryJSON(ctx, "select get_packages_updates()")
 }
 
 // Register registers the package provided in the database.

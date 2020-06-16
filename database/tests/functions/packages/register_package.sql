@@ -46,6 +46,7 @@ select register_package('
     "license": "Apache-2.0",
     "signed": false,
     "content_url": "https://package.content.url",
+    "created_at": 1592299234,
     "maintainers": [
         {
             "name": "name1",
@@ -101,7 +102,8 @@ select results_eq(
             s.deprecated,
             s.license,
             s.signed,
-            s.content_url
+            s.content_url,
+            s.created_at
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -122,7 +124,8 @@ select results_eq(
             false,
             'Apache-2.0',
             false,
-            'https://package.content.url'
+            'https://package.content.url',
+            '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,
     'Snapshot should exist'
@@ -172,6 +175,7 @@ select register_package('
     "digest": "digest-package1-2.0.0",
     "deprecated": true,
     "signed": true,
+    "created_at": 1592299235,
     "maintainers": [
         {
             "name": "name1",
@@ -205,7 +209,8 @@ select results_eq(
             s.readme,
             s.links,
             s.deprecated,
-            s.signed
+            s.signed,
+            s.created_at
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -223,7 +228,8 @@ select results_eq(
             'readme-version-2.0.0',
             null::jsonb,
             true,
-            true
+            true,
+            '2020-06-16 11:20:35+02'::timestamptz
         )
     $$,
     'New snapshot should exist'
@@ -280,6 +286,7 @@ select register_package('
     "digest": "digest-package1-0.0.9",
     "deprecated": true,
     "signed": true,
+    "created_at": 1592299233,
     "maintainers": [
         {
             "name": "name1",
@@ -317,7 +324,8 @@ select results_eq(
             s.readme,
             s.links,
             s.deprecated,
-            s.signed
+            s.signed,
+            s.created_at
         from snapshot s
         join package p using (package_id)
         where name='package1'
@@ -335,7 +343,8 @@ select results_eq(
             'readme-version-0.0.9',
             null::jsonb,
             true,
-            true
+            true,
+            '2020-06-16 11:20:33+02'::timestamptz
         )
     $$,
     'New snapshot should exist'

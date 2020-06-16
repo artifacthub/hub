@@ -198,6 +198,7 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 		Digest:          j.ChartVersion.Digest,
 		Deprecated:      md.Deprecated,
 		ContentURL:      u,
+		CreatedAt:       j.ChartVersion.Created.Unix(),
 		ChartRepository: j.Repo,
 	}
 	readme := getFile(chart, "README.md")

@@ -13,7 +13,6 @@ import {
   Organization,
   Package,
   PackageStars,
-  PackagesUpdatesList,
   Profile,
   SearchQuery,
   SearchResults,
@@ -177,8 +176,8 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/packages/stats`);
   },
 
-  getPackagesUpdates: (): Promise<PackagesUpdatesList> => {
-    return apiFetch(`${API_BASE_URL}/packages/updates`);
+  getRandomPackages: (): Promise<Package[]> => {
+    return apiFetch(`${API_BASE_URL}/packages/random`);
   },
 
   register: (user: User): Promise<null | string> => {

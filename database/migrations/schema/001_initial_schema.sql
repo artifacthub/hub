@@ -80,8 +80,6 @@ create table if not exists package (
     logo_image_id uuid,
     stars integer not null default 0,
     tsdoc tsvector,
-    created_at timestamptz default current_timestamp not null,
-    updated_at timestamptz default current_timestamp not null,
     package_kind_id integer not null references package_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,
@@ -94,8 +92,6 @@ create table if not exists package (
 
 create index package_stars_idx on package (stars);
 create index package_tsdoc_idx on package using gin (tsdoc);
-create index package_created_at_idx on package (created_at);
-create index package_updated_at_idx on package (updated_at);
 create index package_package_kind_id_idx on package (package_kind_id);
 create index package_user_id_idx on package (user_id);
 create index package_organization_id_idx on package (organization_id);
@@ -123,7 +119,6 @@ create table if not exists snapshot (
     signed boolean,
     content_url text check (content_url <> ''),
     created_at timestamptz default current_timestamp not null,
-    updated_at timestamptz default current_timestamp not null,
     primary key (package_id, version),
     unique (package_id, digest)
 );

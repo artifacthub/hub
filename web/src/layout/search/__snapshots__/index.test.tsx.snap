@@ -70,7 +70,7 @@ exports[`Search index creates snapshot 1`] = `
       role="main"
     >
       <div
-        class="flex-grow-1 list"
+        class="flex-grow-1 list emptyList"
       />
     </main>
   </div>
@@ -676,13 +676,13 @@ exports[`Search index creates snapshot 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                        class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row justify-content-between flex-fill"
+                          class="d-flex flex-row justify-content-between"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                           >
                             <div
                               class="h5 d-flex flex-row align-items-center"
@@ -694,18 +694,9 @@ exports[`Search index creates snapshot 2`] = `
                               </div>
                             </div>
                           </div>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                          class="card-subtitle d-flex flex-wrap subtitle"
                         >
                           <div
                             class="mr-2 text-truncate"
@@ -757,6 +748,24 @@ exports[`Search index creates snapshot 2`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="d-flex flex-column mb-auto"
+                      >
+                        <small
+                          class="d-none d-lg-block text-muted mb-2 date"
+                        >
+                          Updated Invalid date
+                        </small>
+                        <div
+                          class="d-flex align-items-start text-uppercase ml-auto kind"
+                        >
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/helm-chart.svg"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <p
@@ -764,6 +773,11 @@ exports[`Search index creates snapshot 2`] = `
                   >
                     Centrifugo is a real-time messaging server.
                   </p>
+                  <small
+                    class="d-block d-lg-none text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -799,13 +813,13 @@ exports[`Search index creates snapshot 2`] = `
                         />
                       </div>
                       <div
-                        class="ml-3 d-flex flex-column justify-content-center flex-grow-1 truncateWrapper"
+                        class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row justify-content-between flex-fill"
+                          class="d-flex flex-row justify-content-between"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 title"
+                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
                           >
                             <div
                               class="h5 d-flex flex-row align-items-center"
@@ -817,18 +831,9 @@ exports[`Search index creates snapshot 2`] = `
                               </div>
                             </div>
                           </div>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap flex-fill subtitle"
+                          class="card-subtitle d-flex flex-wrap subtitle"
                         >
                           <div
                             class="mr-2 text-truncate"
@@ -880,6 +885,24 @@ exports[`Search index creates snapshot 2`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="d-flex flex-column mb-auto"
+                      >
+                        <small
+                          class="d-none d-lg-block text-muted mb-2 date"
+                        >
+                          Updated Invalid date
+                        </small>
+                        <div
+                          class="d-flex align-items-start text-uppercase ml-auto kind"
+                        >
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/helm-chart.svg"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <p
@@ -887,6 +910,11 @@ exports[`Search index creates snapshot 2`] = `
                   >
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
                   </p>
+                  <small
+                    class="d-block d-lg-none text-muted text-right mt-3 date"
+                  >
+                    Updated Invalid date
+                  </small>
                 </div>
               </a>
             </div>
@@ -999,6 +1027,11 @@ exports[`Search index creates snapshot 2`] = `
                     Centrifugo is a real-time messaging server.
                   </small>
                 </div>
+                <small
+                  class="text-muted text-right mt-3 date"
+                >
+                  Updated Invalid date
+                </small>
               </div>
             </a>
           </div>
@@ -1105,6 +1138,11 @@ exports[`Search index creates snapshot 2`] = `
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
                   </small>
                 </div>
+                <small
+                  class="text-muted text-right mt-3 date"
+                >
+                  Updated Invalid date
+                </small>
               </div>
             </a>
           </div>

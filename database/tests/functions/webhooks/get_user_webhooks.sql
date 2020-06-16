@@ -31,10 +31,12 @@ insert into package (
 );
 insert into snapshot (
     package_id,
-    version
+    version,
+    created_at
 ) values (
     :'package1ID',
-    '1.0.0'
+    '1.0.0',
+    '2020-06-16 11:20:34+02'
 );
 insert into webhook (
     webhook_id,
@@ -88,6 +90,7 @@ select is(
                     "app_version": null,
                     "deprecated": null,
                     "signed": null,
+                    "created_at": 1592299234,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null,

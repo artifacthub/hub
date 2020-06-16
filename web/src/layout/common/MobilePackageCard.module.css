@@ -81,3 +81,7 @@
   color: var(--danger);
   font-size: 0.6rem !important;
 }
+
+.date {
+  font-size: 70%;
+}

@@ -40,7 +40,8 @@ insert into snapshot (
     description,
     app_version,
     digest,
-    readme
+    readme,
+    created_at
 ) values (
     :'package1ID',
     '1.0.0',
@@ -48,7 +49,8 @@ insert into snapshot (
     'description',
     '12.1.0',
     'digest-package1-1.0.0',
-    'readme'
+    'readme',
+    '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
     package_id,
@@ -57,7 +59,8 @@ insert into snapshot (
     description,
     app_version,
     digest,
-    readme
+    readme,
+    created_at
 ) values (
     :'package1ID',
     '0.0.9',
@@ -65,7 +68,8 @@ insert into snapshot (
     'description',
     '12.0.0',
     'digest-package1-0.0.9',
-    'readme'
+    'readme',
+    '2020-06-16 11:20:33+02'
 );
 insert into package (
     package_id,
@@ -93,7 +97,8 @@ insert into snapshot (
     digest,
     readme,
     deprecated,
-    signed
+    signed,
+    created_at
 ) values (
     :'package2ID',
     '1.0.0',
@@ -103,7 +108,8 @@ insert into snapshot (
     'digest-package2-1.0.0',
     'readme',
     true,
-    true
+    true,
+    '2020-06-16 11:20:34+02'
 );
 insert into user_starred_package (user_id, package_id) values (:'user1ID', :'package1ID');
 
@@ -123,6 +129,7 @@ select is(
         "app_version": "12.1.0",
         "deprecated": null,
         "signed": null,
+        "created_at": 1592299234,
         "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",

@@ -193,8 +193,8 @@ func (h *Handlers) setupRouter() {
 
 		// Packages
 		r.Route("/packages", func(r chi.Router) {
+			r.Get("/random", h.Packages.GetRandom)
 			r.Get("/stats", h.Packages.GetStats)
-			r.Get("/updates", h.Packages.GetUpdates)
 			r.Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {

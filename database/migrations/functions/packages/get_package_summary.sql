@@ -15,6 +15,7 @@ returns setof json as $$
         'app_version', s.app_version,
         'deprecated', s.deprecated,
         'signed', s.signed,
+        'created_at', floor(extract(epoch from s.created_at)),
         'user_alias', u.alias,
         'organization_name', o.name,
         'organization_display_name', o.display_name,

@@ -9,5 +9,8 @@
   "appVersion": null,
   "maintainers": null,
   "chartRepository": null,
-  "availableVersions": ["0.1.0", "0.1.1"]
+  "availableVersions": [
+    { "version": "0.1.0", "createdAt": 1 },
+    { "version": "0.1.1", "createdAt": 1 }
+  ]
 }

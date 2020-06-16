@@ -24,13 +24,13 @@ begin
         'packages', (
             select json_agg(pkgJSON)
             from (
-                select pkgJSON
+                select package_id
                 from package p
                 join webhook__package wp using (package_id)
-                cross join get_package_summary(p.package_id) as pkgJSON
                 where wp.webhook_id = wh.webhook_id
                 order by p.name asc
-            ) pkgs
+            ) wp
+            cross join get_package_summary(wp.package_id) as pkgJSON
         ),
         'last_notifications', (
             select json_agg(json_build_object(

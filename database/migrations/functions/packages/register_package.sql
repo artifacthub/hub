@@ -19,6 +19,7 @@ declare
     v_chart_repository_id uuid := ((p_pkg->'chart_repository')->>'chart_repository_id')::uuid;
     v_maintainer jsonb;
     v_maintainer_id uuid;
+    v_created_at timestamptz;
 begin
     -- Check if a package with the same name and kind but a different owner
     -- already exists.
@@ -84,8 +85,7 @@ begin
         logo_url = excluded.logo_url,
         logo_image_id = excluded.logo_image_id,
         latest_version = excluded.latest_version,
-        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
-        updated_at = current_timestamp
+        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords)
     where semver_gte(v_version, package.latest_version) = true
     returning package_id into v_package_id;
 
@@ -141,6 +141,10 @@ begin
     end if;
 
     -- Package snapshot
+    v_created_at := to_timestamp((p_pkg->>'created_at')::int);
+    if v_created_at is null then
+        v_created_at = current_timestamp;
+    end if;
     insert into snapshot (
         package_id,
         version,
@@ -156,7 +160,8 @@ begin
         deprecated,
         license,
         signed,
-        content_url
+        content_url,
+        created_at
     ) values (
         v_package_id,
         v_version,
@@ -172,7 +177,8 @@ begin
         (p_pkg->>'deprecated')::boolean,
         nullif(p_pkg->>'license', ''),
         (p_pkg->>'signed')::boolean,
-        nullif(p_pkg->>'content_url', '')
+        nullif(p_pkg->>'content_url', ''),
+        v_created_at
     )
     on conflict (package_id, version) do update
     set
@@ -188,7 +194,7 @@ begin
         license = excluded.license,
         signed = excluded.signed,
         content_url = excluded.content_url,
-        updated_at = current_timestamp;
+        created_at = v_created_at;
 
     -- Register new release event if package's latest version has been updated
     if semver_gt(v_version, v_previous_latest_version) then

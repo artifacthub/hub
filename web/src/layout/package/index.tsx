@@ -275,7 +275,7 @@ const PackageView = (props: Props) => {
                           <SignedBadge packageKind={detail.kind} signed={detail.signed} />
                         </div>
 
-                        <div className={`d-flex flex-row mt-1 ${styles.subtitle}`}>
+                        <div className={`d-flex flex-row mt-2 ${styles.subtitle}`}>
                           {!isUndefined(detail.organizationName) && detail.organizationName && (
                             <OrganizationInfo
                               className="mr-2"

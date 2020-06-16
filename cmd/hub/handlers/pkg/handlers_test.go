@@ -83,6 +83,41 @@ func TestGet(t *testing.T) {
 	})
 }
 
+func TestGetRandom(t *testing.T) {
+	t.Run("get random packages succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetRandomJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.GetRandom(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.pm.AssertExpectations(t)
+	})
+
+	t.Run("error getting random packages", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetRandomJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.h.GetRandom(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
 func TestGetStarredByUser(t *testing.T) {
 	t.Run("get packages starred by user succeeded", func(t *testing.T) {
 		w := httptest.NewRecorder()
@@ -211,41 +246,6 @@ func TestGetStats(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.pm.On("GetStatsJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetStats(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-
-		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
-		hw.pm.AssertExpectations(t)
-	})
-}
-
-func TestGetUpdates(t *testing.T) {
-	t.Run("get updates succeeded", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-
-		hw := newHandlersWrapper()
-		hw.pm.On("GetUpdatesJSON", r.Context()).Return([]byte("dataJSON"), nil)
-		hw.h.GetUpdates(w, r)
-		resp := w.Result()
-		defer resp.Body.Close()
-		h := resp.Header
-		data, _ := ioutil.ReadAll(resp.Body)
-
-		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
-		assert.Equal(t, []byte("dataJSON"), data)
-		hw.pm.AssertExpectations(t)
-	})
-
-	t.Run("error getting updates", func(t *testing.T) {
-		w := httptest.NewRecorder()
-		r, _ := http.NewRequest("GET", "/", nil)
-
-		hw := newHandlersWrapper()
-		hw.pm.On("GetUpdatesJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
-		hw.h.GetUpdates(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

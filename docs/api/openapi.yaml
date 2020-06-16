@@ -23,8 +23,6 @@ tags:
     description: ""
   - name: Webhooks
     description: ""
-  - name: Images
-    description: ""
   - name: Availability checks
     description: ""
 paths:
@@ -633,27 +631,20 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /packages/updates:
+  /packages/random:
     get:
       tags:
         - Packages
-      summary: Get the latest packages added and updated
+      summary: Get some random packages
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  latest_packages_added:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/PackageSummary"
-                  packages_recently_updated:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/PackageSummary"
+                type: array
+                items:
+                  $ref: "#/components/schemas/PackageSummary"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -1325,37 +1316,6 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /images:
-    post:
-      tags:
-        - Images
-      security:
-        - ApiKeyAuth: []
-        - CookieAuth: []
-      summary: Store image
-      requestBody:
-        content:
-          image:
-            schema:
-              type: string
-              format: binary
-      responses:
-        "201":
-          description: The request has succeeded and has led to the creation of a resource
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  image_id:
-                    type: string
-                    example: "12345abcde"
-        "401":
-          $ref: "#/components/responses/UnauthorizedError"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
   "/check-availability/{resourceKind}":
     head:
       tags:
@@ -1540,11 +1500,17 @@ components:
             available_versions:
               type: array
               items:
-                type: string
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example:
+                      - "2.0.0"
+                      - "1.0.0"
+                  created_at:
+                    type: integer
+                    example: 1552082346
               nullable: true
-              example:
-                - "2.0.0"
-                - "1.0.0"
             license:
               type: string
               nullable: true
@@ -1556,6 +1522,7 @@ components:
               nullable: true
             created_at:
               type: integer
+              example: 1552082346
     PackageKind:
       type: integer
       enum:
@@ -1616,6 +1583,8 @@ components:
         signed:
           type: boolean
           nullable: true
+        created_at:
+          type: integer
         user_alias:
           type: string
           example: jdoe

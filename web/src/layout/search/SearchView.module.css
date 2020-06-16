@@ -32,6 +32,11 @@
     flex-basis: calc(100% - 250px);
     max-width: calc(100% - 250px);
   }
+
+  .emptyList {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (hover: hover) {

@@ -1,5 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import moment from 'moment';
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -147,6 +148,10 @@ const MobilePackageCard = (props: Props) => {
           <div className="mt-2">
             <small className={`mb-0 ${styles.description}`}>{props.package.description}</small>
           </div>
+
+          <small className={`text-muted text-right mt-3 ${styles.date}`}>
+            Updated {moment(props.package.createdAt * 1000).fromNow()}
+          </small>
 
           {!isNull(props.package.deprecated) && props.package.deprecated && (
             <div>

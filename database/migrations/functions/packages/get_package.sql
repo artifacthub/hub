@@ -38,7 +38,10 @@ begin
         'data', s.data,
         'version', s.version,
         'available_versions', (
-            select json_agg(distinct(version))
+            select json_agg(json_build_object(
+                'version', version,
+                'created_at', floor(extract(epoch from created_at))
+            ))
             from snapshot
             where package_id = v_package_id
         ),
@@ -47,6 +50,7 @@ begin
         'deprecated', s.deprecated,
         'license', s.license,
         'signed', s.signed,
+        'created_at', floor(extract(epoch from s.created_at)),
         'maintainers', (
             select json_agg(json_build_object(
                 'name', m.name,
