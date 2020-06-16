@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
@@ -98,7 +99,12 @@ const PackageCard = (props: Props) => {
 
                             {!isNull(props.package.userAlias) && (
                               <>
-                                <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                                <div
+                                  className={classnames('d-none d-md-inline-block', {
+                                    [styles.mx50]: !isRepeatedRepoName,
+                                    [styles.mx100]: isRepeatedRepoName,
+                                  })}
+                                >
                                   <button
                                     className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link}`}
                                     onClick={(e) => {
@@ -118,7 +124,12 @@ const PackageCard = (props: Props) => {
                                     <div className="text-truncate">{props.package.userAlias}</div>
                                   </button>
                                 </div>
-                                <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                                <div
+                                  className={classnames('d-inline-block d-md-none', {
+                                    [styles.mx50]: !isRepeatedRepoName,
+                                    [styles.mx100]: isRepeatedRepoName,
+                                  })}
+                                >
                                   <div className="p-0 border-0 text-truncate text-dark">{props.package.userAlias}</div>
                                 </div>
 
@@ -127,7 +138,12 @@ const PackageCard = (props: Props) => {
                             )}
 
                             <>
-                              <div className={`d-none d-md-inline-block ${styles.mx50}`}>
+                              <div
+                                className={classnames('d-none d-md-inline-block', {
+                                  [styles.mx50]: !isRepeatedRepoName,
+                                  [styles.mx100]: isRepeatedRepoName,
+                                })}
+                              >
                                 <button
                                   data-testid="repoLink"
                                   className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
@@ -150,7 +166,12 @@ const PackageCard = (props: Props) => {
                                   </div>
                                 </button>
                               </div>
-                              <div className={`d-inline-block d-md-none ${styles.mx50}`}>
+                              <div
+                                className={classnames('d-inline-block d-md-none', {
+                                  [styles.mx50]: !isRepeatedRepoName,
+                                  [styles.mx100]: isRepeatedRepoName,
+                                })}
+                              >
                                 <div className="p-0 border-0 text-truncate text-dark">
                                   {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
                                 </div>
@@ -161,6 +182,11 @@ const PackageCard = (props: Props) => {
                           <div className="text-truncate mt-1">
                             <span className="text-muted text-uppercase mr-1">Version: </span>
                             {props.package.version || '-'}
+
+                            <div className="d-none d-sm-inline">
+                              <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>
+                              {props.package.appVersion || '-'}
+                            </div>
                           </div>
                         </>
                       );
@@ -236,8 +262,8 @@ const PackageCard = (props: Props) => {
               </div>
             </div>
 
-            <div className="d-flex flex-column align-items-end mb-auto">
-              <small className={`d-none d-sm-block text-muted mb-2 ${styles.date}`}>
+            <div className="d-flex flex-column align-items-end mb-auto ml-3">
+              <small className={`d-none d-sm-block text-muted mb-2 text-nowrap ${styles.date}`}>
                 Updated {moment(props.package.createdAt * 1000).fromNow()}
               </small>
               <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>

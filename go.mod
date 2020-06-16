@@ -16,6 +16,7 @@ require (
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/googleapis/gnostic v0.4.0 // indirect
+	github.com/gorilla/feeds v1.1.1
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c

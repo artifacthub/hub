@@ -46,6 +46,12 @@
   width: auto;
 }
 
+.mx100 {
+  max-width: 90%;
+  text-align: left;
+  width: auto;
+}
+
 .title {
   line-height: 1rem;
 }

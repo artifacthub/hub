@@ -77,7 +77,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 
 		Organizations:     org.NewHandlers(svc.OrganizationManager, cfg),
 		Users:             user.NewHandlers(svc.UserManager, cfg),
-		Packages:          pkg.NewHandlers(svc.PackageManager),
+		Packages:          pkg.NewHandlers(svc.PackageManager, cfg),
 		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
 		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
 		Webhooks:          webhook.NewHandlers(svc.WebhookManager),
@@ -198,10 +198,12 @@ func (h *Handlers) setupRouter() {
 			r.Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
 			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
+				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
 			r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
 			})
