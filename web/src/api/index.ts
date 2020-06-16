@@ -80,11 +80,18 @@ const handleUnauthorizedRequests = async (res: any) => {
 
 const handleErrors = async (res: any) => {
   if (!res.ok) {
-    let text = await res.json();
-    return Promise.reject({
-      status: res.status,
-      statusText: text.message || res.statusText,
-    });
+    try {
+      let text = await res.json();
+      return Promise.reject({
+        status: res.status,
+        statusText: text.message !== '' ? text.message : res.statusText,
+      });
+    } catch {
+      return Promise.reject({
+        status: res.status,
+        statusText: res.statusText,
+      });
+    }
   }
   return res;
 };
@@ -262,7 +269,7 @@ export const API = {
   },
 
   checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${props.value}`, {
+    return apiFetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
       method: 'HEAD',
     });
   },
@@ -310,13 +317,13 @@ export const API = {
   },
 
   addOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${alias}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
       method: 'POST',
     });
   },
 
   deleteOrganizationMember: (organizationName: string, alias: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${alias}`, {
+    return apiFetch(`${API_BASE_URL}/orgs/${organizationName}/member/${encodeURI(alias)}`, {
       method: 'DELETE',
     });
   },
@@ -452,8 +459,8 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/api-keys`);
   },
 
-  getAPIKey: (id: string): Promise<APIKey> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${id}`);
+  getAPIKey: (apiKeyId: string): Promise<APIKey> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`);
   },
 
   addAPIKey: (name: string): Promise<APIKeyCode> => {
@@ -468,8 +475,8 @@ export const API = {
     });
   },
 
-  updateAPIKey: (id: string, name: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${id}`, {
+  updateAPIKey: (apiKeyId: string, name: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -478,8 +485,8 @@ export const API = {
     });
   },
 
-  deleteAPIKey: (name: string): Promise<string | null> => {
-    return apiFetch(`${API_BASE_URL}/api-keys/${name}`, {
+  deleteAPIKey: (apiKeyId: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`, {
       method: 'DELETE',
     });
   },
