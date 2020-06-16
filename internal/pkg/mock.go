@@ -26,6 +26,13 @@ func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) (
 	return data, args.Error(1)
 }
 
+// GetRandomJSON implements the PackageManager interface.
+func (m *ManagerMock) GetRandomJSON(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetStarredByUserJSON implements the PackageManager interface.
 func (m *ManagerMock) GetStarredByUserJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
@@ -42,13 +49,6 @@ func (m *ManagerMock) GetStarsJSON(ctx context.Context, packageID string) ([]byt
 
 // GetStatsJSON implements the PackageManager interface.
 func (m *ManagerMock) GetStatsJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
-	return data, args.Error(1)
-}
-
-// GetUpdatesJSON implements the PackageManager interface.
-func (m *ManagerMock) GetUpdatesJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)

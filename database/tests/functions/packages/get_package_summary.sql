@@ -37,7 +37,8 @@ insert into snapshot (
     display_name,
     description,
     deprecated,
-    signed
+    signed,
+    created_at
 ) values (
     :'package1ID',
     '1.0.0',
@@ -45,7 +46,8 @@ insert into snapshot (
     'Package 1',
     'description',
     false,
-    false
+    false,
+    '2020-06-16 11:20:34+02'
 );
 
 -- Run some tests
@@ -64,6 +66,7 @@ select is(
         "app_version": "12.0.0",
         "deprecated": false,
         "signed": false,
+        "created_at": 1592299234,
         "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1",

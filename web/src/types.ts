@@ -34,7 +34,7 @@ export interface Package {
   chartRepository: ChartRepository | null;
   readme?: string | null;
   data?: PackageData | null;
-  availableVersions?: string[];
+  availableVersions?: Version[];
   version?: string;
   homeUrl?: string | null;
   keywords?: string[];
@@ -48,6 +48,12 @@ export interface Package {
   userAlias: string | null;
   eventKinds?: EventKind[];
   license?: string | null;
+  createdAt: number;
+}
+
+export interface Version {
+  version: string;
+  createdAt: number;
 }
 
 export interface PackageData {
@@ -102,11 +108,6 @@ export interface FacetOption {
   id: string | number;
   name: string;
   total: number;
-}
-
-export interface PackagesUpdatesList {
-  latestPackagesAdded: Package[];
-  packagesRecentlyUpdated: Package[];
 }
 
 export interface UserLogin {

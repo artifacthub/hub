@@ -67,7 +67,8 @@ insert into snapshot (
     data,
     deprecated,
     license,
-    signed
+    signed,
+    created_at
 ) values (
     :'package1ID',
     '1.0.0',
@@ -82,7 +83,8 @@ insert into snapshot (
     '{"key": "value"}',
     true,
     'Apache-2.0',
-    true
+    true,
+    '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
     package_id,
@@ -95,7 +97,8 @@ insert into snapshot (
     digest,
     readme,
     links,
-    data
+    data,
+    created_at
 ) values (
     :'package1ID',
     '0.0.9',
@@ -107,7 +110,8 @@ insert into snapshot (
     'digest-package1-0.0.9',
     'readme-version-0.0.9',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
-    '{"key": "value"}'
+    '{"key": "value"}',
+    '2020-06-16 11:20:33+02'
 );
 insert into package (
     package_id,
@@ -131,7 +135,8 @@ insert into snapshot (
     description,
     keywords,
     readme,
-    data
+    data,
+    created_at
 ) values (
     :'package2ID',
     '1.0.0',
@@ -139,7 +144,8 @@ insert into snapshot (
     'description',
     '{"kw1", "kw2"}',
     'readme-version-1.0.0',
-    '{"key": "value"}'
+    '{"key": "value"}',
+    '2020-06-16 11:20:34+02'
 );
 
 -- Run some tests
@@ -172,12 +178,22 @@ select is(
             "key": "value"
         },
         "version": "1.0.0",
-        "available_versions": ["0.0.9", "1.0.0"],
+        "available_versions": [
+            {
+                "version": "0.0.9",
+                "created_at": 1592299233
+            },
+            {
+                "version": "1.0.0",
+                "created_at": 1592299234
+            }
+        ],
         "app_version": "12.1.0",
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
+        "created_at": 1592299234,
         "maintainers": [
             {
                 "name": "name1",
@@ -230,12 +246,22 @@ select is(
             "key": "value"
         },
         "version": "1.0.0",
-        "available_versions": ["0.0.9", "1.0.0"],
+        "available_versions": [
+            {
+                "version": "0.0.9",
+                "created_at": 1592299233
+            },
+            {
+                "version": "1.0.0",
+                "created_at": 1592299234
+            }
+        ],
         "app_version": "12.1.0",
         "digest": "digest-package1-1.0.0",
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
+        "created_at": 1592299234,
         "maintainers": [
             {
                 "name": "name1",
@@ -289,12 +315,22 @@ select is(
             "key": "value"
         },
         "version": "0.0.9",
-        "available_versions": ["0.0.9", "1.0.0"],
+        "available_versions": [
+            {
+                "version": "0.0.9",
+                "created_at": 1592299233
+            },
+            {
+                "version": "1.0.0",
+                "created_at": 1592299234
+            }
+        ],
         "app_version": "12.0.0",
         "digest": "digest-package1-0.0.9",
         "deprecated": null,
         "license": null,
         "signed": null,
+        "created_at": 1592299233,
         "maintainers": [
             {
                 "name": "name1",
@@ -340,9 +376,15 @@ select is(
         "deprecated": null,
         "license": null,
         "signed": null,
+        "created_at": 1592299234,
         "version": "1.0.0",
         "app_version": null,
-        "available_versions": ["1.0.0"],
+        "available_versions": [
+            {
+                "version": "1.0.0",
+                "created_at": 1592299234
+            }
+        ],
         "maintainers": null,
         "user_alias": null,
         "organization_name": "org1",

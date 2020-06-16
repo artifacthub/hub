@@ -5,12 +5,21 @@ exports[`Version creates snapshot 1`] = `
   <div
     class="py-1 py-sm-0 w-100 text-truncate"
   >
-    <button
-      class="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100"
-      data-testid="version"
+    <div
+      class="d-flex flex-row align-items-baseline"
     >
-      1.0.1
-    </button>
+      <button
+        class="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100"
+        data-testid="version"
+      >
+        1.0.1
+      </button>
+      <small
+        class="text-muted"
+      >
+        (Invalid date)
+      </small>
+    </div>
   </div>
 </DocumentFragment>
 `;

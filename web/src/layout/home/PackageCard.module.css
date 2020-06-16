@@ -1,26 +1,20 @@
 .card {
-  min-height: 108px;
-  width: 380px;
-  background-color: var(--white) !important;
-  box-shadow: 0px 0px 5px 0px var(--light);
+  /* min-height: 108px; */
+  width: 700px;
+  background-color: transparent !important;
+  /* box-shadow: none; */
 }
 
-@media (hover: hover) {
-  .card:hover {
-    border-color: var(--color-1-700);
-    box-shadow: 0px 0px 5px 0px var(--color-1-900);
-  }
-}
-
-.body {
-  min-height: 108px !important;
-  padding: 1rem !important;
+.card:not(:last-child) {
+  border-bottom: 1px solid var(--color-black-15);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 .imageWrapper {
-  min-width: 40px;
-  width: 40px;
-  height: 40px;
+  min-width: 70px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: var(--white);
   border: 2px solid var(--color-1-10);
@@ -57,12 +51,12 @@
 }
 
 .subtitle {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1rem;
 }
 
 .subtitle span {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
 }
 
 .kind {
@@ -77,6 +71,14 @@
 .starBadge {
   background-color: var(--color-1-5);
   border: 1px solid var(--color-1-10);
+}
+
+.date {
+  font-size: 70%;
+}
+
+.firstLine {
+  max-height: 30px;
 }
 
 @media (hover: hover) {

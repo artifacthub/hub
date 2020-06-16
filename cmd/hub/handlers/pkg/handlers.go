@@ -49,6 +49,18 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
+// GetRandom is an http handler used to get some random packages from the hub
+// database.
+func (h *Handlers) GetRandom(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.pkgManager.GetRandomJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetRandom").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
 // GetStarredByUser is an http handler used to get the packages starred by the
 // user doing the request.
 func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {
@@ -80,18 +92,6 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
-}
-
-// GetUpdates is an http handler used to get the last packages updates in the
-// hub database.
-func (h *Handlers) GetUpdates(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.pkgManager.GetUpdatesJSON(r.Context())
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetUpdates").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}

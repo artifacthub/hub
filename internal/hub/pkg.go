@@ -16,6 +16,12 @@ type Link struct {
 	URL  string `json:"url"`
 }
 
+// Version represents a package's version
+type Version struct {
+	Version   string `json:"version"`
+	CreatedAt int64  `json:"created_at"`
+}
+
 // Maintainer represents a package's maintainer.
 type Maintainer struct {
 	MaintainerID string `json:"maintainer_id"`
@@ -39,7 +45,7 @@ type Package struct {
 	Links                   []*Link                `json:"links"`
 	Data                    map[string]interface{} `json:"data"`
 	Version                 string                 `json:"version"`
-	AvailableVersions       []string               `json:"available_versions"`
+	AvailableVersions       []*Version             `json:"available_versions"`
 	AppVersion              string                 `json:"app_version"`
 	Digest                  string                 `json:"digest"`
 	Deprecated              bool                   `json:"deprecated"`
@@ -53,6 +59,7 @@ type Package struct {
 	OrganizationName        string                 `json:"organization_name"`
 	OrganizationDisplayName string                 `json:"organization_display_name"`
 	ChartRepository         *ChartRepository       `json:"chart_repository"`
+	CreatedAt               int64                  `json:"created_at"`
 }
 
 // PackageKind represents the kind of a given package.
@@ -74,10 +81,10 @@ const (
 type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
+	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
 	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
-	GetUpdatesJSON(ctx context.Context) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
 	ToggleStar(ctx context.Context, packageID string) error

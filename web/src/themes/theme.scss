@@ -6,12 +6,13 @@ $theme-colors: (
   secondary: #39596c,
 );
 
-$body-bg: #f4f4f4;
+$body-bg: #f9f9f9;
 $body-color: #38383f;
 
 :root {
   --border-md: #eaecef;
   --code-bg-md: #f6f8fa;
+  --body-light-bg: #f9f9f9;
 
   --color-1-100: #f1f6fa;
   --color-1-300: #b2cede;
@@ -39,7 +40,7 @@ $body-color: #38383f;
   --logo-font: 'Archivo Black', cursive;
 
   --color-font: #38383f;
-  --body-bg: #f4f4f4;
+  --body-bg: #f9f9f9;
 }
 
 @import '~bootstrap/scss/bootstrap.scss';

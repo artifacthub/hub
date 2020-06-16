@@ -118,8 +118,6 @@ select columns_are('package', array[
     'logo_image_id',
     'stars',
     'tsdoc',
-    'created_at',
-    'updated_at',
     'package_kind_id',
     'user_id',
     'organization_id',
@@ -156,8 +154,7 @@ select columns_are('snapshot', array[
     'license',
     'signed',
     'content_url',
-    'created_at',
-    'updated_at'
+    'created_at'
 ]);
 select columns_are('subscription', array[
     'user_id',
@@ -261,8 +258,6 @@ select indexes_are('package', array[
     'package_chart_repository_id_idx',
     'package_package_kind_id_idx',
     'package_tsdoc_idx',
-    'package_created_at_idx',
-    'package_updated_at_idx',
     'package_stars_idx',
     'package_user_id_idx',
     'package_organization_id_idx',
@@ -337,7 +332,7 @@ select has_function('get_package_summary');
 select has_function('get_packages_starred_by_user');
 select has_function('get_package_stars');
 select has_function('get_packages_stats');
-select has_function('get_packages_updates');
+select has_function('get_random_packages');
 select has_function('register_package');
 select has_function('search_packages');
 select has_function('semver_gt');

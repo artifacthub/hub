@@ -4,7 +4,7 @@ export const API = {
   getStars: jest.fn(),
   searchPackages: jest.fn(),
   getStats: jest.fn(),
-  getPackagesUpdates: jest.fn(),
+  getRandomPackages: jest.fn(),
   register: jest.fn(),
   verifyEmail: jest.fn(),
   login: jest.fn(),

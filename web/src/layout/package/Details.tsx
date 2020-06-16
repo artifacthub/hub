@@ -2,7 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import * as semver from 'semver';
 
-import { Package, PackageKind, SearchFiltersURL } from '../../types';
+import { Package, PackageKind, SearchFiltersURL, Version as VersionData } from '../../types';
 import ChartDetails from './ChartDetails';
 import DefaultDetails from './DefaultDetails';
 import Version from './Version';
@@ -15,12 +15,17 @@ interface Props {
 
 const Details = (props: Props) => {
   const { availableVersions } = props.package;
-  const getSortedVersions = () => {
+  const getSortedVersions = (): VersionData[] => {
     if (!isUndefined(availableVersions)) {
-      const validVersions = availableVersions.filter((version: string) => semver.valid(version));
-      const invalidVersions = availableVersions.filter((version: string) => !semver.valid(version));
+      const validVersions: VersionData[] = availableVersions.filter((version: VersionData) =>
+        semver.valid(version.version)
+      );
+      const invalidVersions: VersionData[] = availableVersions.filter(
+        (version: VersionData) => !semver.valid(version.version)
+      );
       try {
-        return [...semver.rsort(validVersions), ...invalidVersions];
+        const sortedValidVersions = validVersions.sort((a, b) => (semver.lt(a.version, b.version) ? 1 : -1));
+        return [...sortedValidVersions, ...invalidVersions];
       } catch {
         return availableVersions;
       }
@@ -28,14 +33,14 @@ const Details = (props: Props) => {
     return [];
   };
 
-  const allVersions: JSX.Element[] = getSortedVersions().map((av_version: string) => (
+  const allVersions: JSX.Element[] = getSortedVersions().map((av_version: VersionData) => (
     <Version
-      key={av_version}
-      isActive={av_version === props.package.version}
-      version={av_version}
+      key={av_version.version}
+      isActive={av_version.version === props.package.version}
+      {...av_version}
       packageItem={{
         ...props.package,
-        version: av_version,
+        version: av_version.version,
       }}
       searchUrlReferer={props.searchUrlReferer}
       fromStarredPage={props.fromStarredPage}

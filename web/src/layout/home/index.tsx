@@ -12,7 +12,7 @@ import SearchBar from '../common/SearchBar';
 import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
 import styles from './HomeView.module.css';
-import PackagesUpdates from './PackagesUpdates';
+import RandomPackages from './RandomPackages';
 import SearchTip from './SearchTip';
 import UserConfirmation from './UserConfirmation';
 
@@ -100,7 +100,7 @@ const HomeView = (props: Props) => {
         </div>
       </div>
 
-      <PackagesUpdates />
+      <RandomPackages />
 
       <div className={`py-5 text-light ${styles.about}`}>
         <div className="container py-5">

@@ -1,5 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
+import moment from 'moment';
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
@@ -53,16 +54,17 @@ const PackageCard = (props: Props) => {
                   />
                 </div>
 
-                <div className={`ml-3 d-flex flex-column justify-content-center flex-grow-1 ${styles.truncateWrapper}`}>
-                  <div className="d-flex flex-row justify-content-between flex-fill">
+                <div className={`mx-3 d-flex flex-column justify-content-around flex-grow-1 ${styles.truncateWrapper}`}>
+                  <div className="d-flex flex-row justify-content-between">
                     <div
-                      className={`card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate mr-3 ${styles.title}`}
+                      className={`card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate ${styles.title}`}
                     >
                       <div className="h5 d-flex flex-row align-items-center">
                         <div className="text-truncate">{props.package.displayName || props.package.name}</div>
+
                         {!isNull(props.package.deprecated) && props.package.deprecated && (
                           <div
-                            className={`d-none d-sm-flex badge badge-pill ml-2 mt-1 text-uppercase ${styles.deprecatedBadge}`}
+                            className={`d-none d-sm-flex badge badge-pill ml-3 mt-1 text-uppercase ${styles.deprecatedBadge}`}
                           >
                             Deprecated
                           </div>
@@ -72,21 +74,9 @@ const PackageCard = (props: Props) => {
                         )}
                       </div>
                     </div>
-
-                    <div className={`d-flex align-items-start text-uppercase ml-auto ${styles.kind}`}>
-                      {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
-                        <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
-                          <div className="d-flex align-items-center">
-                            <FaStar className="mr-1" />
-                            <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
-                          </div>
-                        </span>
-                      )}
-                      <PackageIcon className={styles.icon} kind={props.package.kind} />
-                    </div>
                   </div>
 
-                  <div className={`card-subtitle d-flex flex-wrap flex-fill ${styles.subtitle}`}>
+                  <div className={`card-subtitle d-flex flex-wrap ${styles.subtitle}`}>
                     {!isUndefined(props.package.organizationName) && props.package.organizationName && (
                       <OrganizationInfo
                         className="mr-2"
@@ -177,10 +167,31 @@ const PackageCard = (props: Props) => {
                     })()}
                   </div>
                 </div>
+
+                <div className="d-flex flex-column mb-auto">
+                  <small className={`d-none d-lg-block text-muted mb-2 ${styles.date}`}>
+                    Updated {moment(props.package.createdAt * 1000).fromNow()}
+                  </small>
+                  <div className={`d-flex align-items-start text-uppercase ml-auto ${styles.kind}`}>
+                    {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
+                      <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
+                        <div className="d-flex align-items-center">
+                          <FaStar className="mr-1" />
+                          <div className={styles.starBadgeNumber}>{prettifyNumber(props.package.stars)}</div>
+                        </div>
+                      </span>
+                    )}
+                    <PackageIcon className={styles.icon} kind={props.package.kind} />
+                  </div>
+                </div>
               </div>
             </div>
 
             <p className={`mb-0 card-text overflow-hidden ${styles.description}`}>{props.package.description}</p>
+
+            <small className={`d-block d-lg-none text-muted text-right mt-3 ${styles.date}`}>
+              Updated {moment(props.package.createdAt * 1000).fromNow()}
+            </small>
 
             {!isNull(props.package.deprecated) && props.package.deprecated && (
               <div className={`d-inline d-sm-none badge badge-pill mt-1 text-uppercase ${styles.deprecatedBadge}`}>
