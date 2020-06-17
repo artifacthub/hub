@@ -96,7 +96,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -107,7 +107,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -119,7 +119,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             /
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="text-truncate p-0 border-0 text-dark mw-100 link"
@@ -133,7 +133,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -151,14 +151,24 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
+                          <div
+                            class="d-none d-sm-inline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            1.6.8
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column align-items-end mb-auto"
+                      class="d-flex flex-column align-items-end mb-auto ml-3"
                     >
                       <small
-                        class="d-none d-sm-block text-muted mb-2 date"
+                        class="d-none d-sm-block text-muted mb-2 text-nowrap date"
                       >
                         Updated Invalid date
                       </small>
@@ -241,7 +251,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -252,7 +262,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -264,7 +274,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             /
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="text-truncate p-0 border-0 text-dark mw-100 link"
@@ -278,7 +288,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -296,14 +306,24 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
+                          <div
+                            class="d-none d-sm-inline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            4.3.2-1
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column align-items-end mb-auto"
+                      class="d-flex flex-column align-items-end mb-auto ml-3"
                     >
                       <small
-                        class="d-none d-sm-block text-muted mb-2 date"
+                        class="d-none d-sm-block text-muted mb-2 text-nowrap date"
                       >
                         Updated Invalid date
                       </small>
@@ -385,7 +405,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -396,7 +416,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -408,7 +428,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             /
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="text-truncate p-0 border-0 text-dark mw-100 link"
@@ -422,7 +442,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -440,14 +460,24 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
+                          <div
+                            class="d-none d-sm-inline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            1.17.8
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column align-items-end mb-auto"
+                      class="d-flex flex-column align-items-end mb-auto ml-3"
                     >
                       <small
-                        class="d-none d-sm-block text-muted mb-2 date"
+                        class="d-none d-sm-block text-muted mb-2 text-nowrap date"
                       >
                         Updated Invalid date
                       </small>
@@ -530,7 +560,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -541,7 +571,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -553,7 +583,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             /
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="text-truncate p-0 border-0 text-dark mw-100 link"
@@ -567,7 +597,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -585,14 +615,24 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
+                          <div
+                            class="d-none d-sm-inline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            latest
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column align-items-end mb-auto"
+                      class="d-flex flex-column align-items-end mb-auto ml-3"
                     >
                       <small
-                        class="d-none d-sm-block text-muted mb-2 date"
+                        class="d-none d-sm-block text-muted mb-2 text-nowrap date"
                       >
                         Updated Invalid date
                       </small>
@@ -675,7 +715,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Repo: 
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -686,7 +726,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -698,7 +738,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             /
                           </span>
                           <div
-                            class="d-none d-md-inline-block mx50"
+                            class="d-none d-md-inline-block mx100"
                           >
                             <button
                               class="text-truncate p-0 border-0 text-dark mw-100 link"
@@ -712,7 +752,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="d-inline-block d-md-none mx50"
+                            class="d-inline-block d-md-none mx100"
                           >
                             <div
                               class="p-0 border-0 text-truncate text-dark"
@@ -730,14 +770,24 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
+                          <div
+                            class="d-none d-sm-inline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            1.0
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-flex flex-column align-items-end mb-auto"
+                      class="d-flex flex-column align-items-end mb-auto ml-3"
                     >
                       <small
-                        class="d-none d-sm-block text-muted mb-2 date"
+                        class="d-none d-sm-block text-muted mb-2 text-nowrap date"
                       >
                         Updated Invalid date
                       </small>

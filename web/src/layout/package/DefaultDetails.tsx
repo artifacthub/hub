@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
+import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
 import Keywords from './Keywords';
 import License from './License';
@@ -16,7 +17,7 @@ interface Props {
 const DefaultDetails = (props: Props) => {
   return (
     <>
-      <SmallTitle text="Versions" />
+      <RSSLinkTitle title="Versions" package={props.package} />
       {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
         <p data-testid="versions">-</p>
       ) : (

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strconv"
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
@@ -15,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/go-chi/chi"
 	"github.com/rs/zerolog"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -280,7 +282,7 @@ func TestInjectIndexMeta(t *testing.T) {
 				r, _ := http.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return(nil, tc.pmErr)
+				hw.pm.On("Get", r.Context(), mock.Anything).Return(nil, tc.pmErr)
 				hw.h.InjectIndexMeta(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
@@ -299,50 +301,44 @@ func TestInjectIndexMeta(t *testing.T) {
 			}
 		}
 		testCases := []struct {
-			dataJSON            string
+			p                   *hub.Package
 			expectedTitle       string
 			expectedDescription string
 			expectedStatusCode  int
 		}{
 			{
-				"{invalidJSON",
-				"",
-				"",
-				http.StatusInternalServerError,
-			},
-			{
-				`{
-					"normalized_name": "pkg1",
-					"version": "1.0.0",
-					"description": "description",
-					"organization_name": "org1",
-					"chart_repository": {
-						"name": "repo1"
-					}
-				}`,
+				&hub.Package{
+					NormalizedName:   "pkg1",
+					Version:          "1.0.0",
+					Description:      "description",
+					OrganizationName: "org1",
+					ChartRepository: &hub.ChartRepository{
+						Name: "repo1",
+					},
+				},
 				"pkg1 1.0.0 · org1/repo1",
 				"description",
 				http.StatusOK,
 			},
 			{
-				`{
-					"normalized_name": "pkg1",
-					"version": "1.0.0",
-					"user_alias": "user1",
-					"chart_repository": {
-						"name": "repo1"
-					}
-				}`,
+				&hub.Package{
+					NormalizedName: "pkg1",
+					Version:        "1.0.0",
+					UserAlias:      "user1",
+					ChartRepository: &hub.ChartRepository{
+						Name: "repo1",
+					},
+				},
 				"pkg1 1.0.0 · user1/repo1",
 				"",
 				http.StatusOK,
 			},
 			{
-				`{
-					"normalized_name": "pkg1",
-					"version": "1.0.0",
-					"user_alias": "user1"
-				}`,
+				&hub.Package{
+					NormalizedName: "pkg1",
+					Version:        "1.0.0",
+					UserAlias:      "user1",
+				},
 				"pkg1 1.0.0 · user1",
 				"",
 				http.StatusOK,
@@ -350,17 +346,143 @@ func TestInjectIndexMeta(t *testing.T) {
 		}
 		for _, tc := range testCases {
 			tc := tc
-			t.Run(tc.dataJSON, func(t *testing.T) {
+			t.Run(tc.expectedDescription, func(t *testing.T) {
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 
 				hw := newHandlersWrapper()
-				hw.pm.On("GetJSON", r.Context(), mock.Anything).Return([]byte(tc.dataJSON), nil)
+				hw.pm.On("Get", r.Context(), mock.Anything).Return(tc.p, nil)
 				hw.h.InjectIndexMeta(checkIndexMeta(tc.expectedTitle, tc.expectedDescription)).ServeHTTP(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()
 
 				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestRssFeed(t *testing.T) {
+	os.Setenv("TZ", "")
+
+	t.Run("error getting rss feed package", func(t *testing.T) {
+		testCases := []struct {
+			pmErr              error
+			expectedStatusCode int
+		}{
+			{
+				hub.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				hub.ErrNotFound,
+				http.StatusNotFound,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.pm.On("Get", r.Context(), mock.Anything).Return(nil, tc.pmErr)
+				hw.h.RssFeed(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.pm.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("rss feed built successfully", func(t *testing.T) {
+		testCases := []struct {
+			p                   *hub.Package
+			expectedRssFeedData []byte
+		}{
+			{
+				&hub.Package{
+					PackageID:        "0001",
+					NormalizedName:   "pkg1",
+					Description:      "description",
+					Version:          "1.0.0",
+					LogoImageID:      "0001",
+					CreatedAt:        1592299234,
+					OrganizationName: "org1",
+					AvailableVersions: []*hub.Version{
+						{
+							Version:   "1.0.0",
+							CreatedAt: 1592299234,
+						},
+						{
+							Version:   "0.0.9",
+							CreatedAt: 1592299233,
+						},
+					},
+					Maintainers: []*hub.Maintainer{
+						{
+							Name:  "name1",
+							Email: "email1",
+						},
+					},
+					ChartRepository: &hub.ChartRepository{
+						Name: "repo1",
+					},
+				},
+				[]byte(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>org1/pkg1 (Artifact Hub)</title>
+    <link>baseURL</link>
+    <description>description</description>
+    <managingEditor>email1 (name1)</managingEditor>
+    <image>
+      <url>baseURL/image/0001@4x</url>
+      <title>logo</title>
+      <link>baseURL</link>
+    </image>
+    <item>
+      <title>1.0.0</title>
+      <link>baseURL/packages/chart/repo1/pkg1/1.0.0</link>
+      <description>pkg1 1.0.0</description>
+      <guid>0001#1.0.0</guid>
+      <pubDate>Tue, 16 Jun 2020 09:20:34 +0000</pubDate>
+    </item>
+    <item>
+      <title>0.0.9</title>
+      <link>baseURL/packages/chart/repo1/pkg1/0.0.9</link>
+      <description>pkg1 0.0.9</description>
+      <guid>0001#0.0.9</guid>
+      <pubDate>Tue, 16 Jun 2020 09:20:33 +0000</pubDate>
+    </item>
+  </channel>
+</rss>`),
+			},
+		}
+		for i, tc := range testCases {
+			tc := tc
+			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+
+				hw := newHandlersWrapper()
+				hw.pm.On("Get", r.Context(), mock.Anything).Return(tc.p, nil)
+				hw.h.RssFeed(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+				h := resp.Header
+				data, _ := ioutil.ReadAll(resp.Body)
+
+				assert.Equal(t, http.StatusOK, resp.StatusCode)
+				assert.Equal(t, "text/xml; charset=utf-8", h.Get("Content-Type"))
+				assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+				assert.Equal(t, tc.expectedRssFeedData, data)
 				hw.pm.AssertExpectations(t)
 			})
 		}
@@ -510,10 +632,67 @@ type handlersWrapper struct {
 }
 
 func newHandlersWrapper() *handlersWrapper {
+	cfg := viper.New()
+	cfg.Set("server.baseURL", "baseURL")
 	pm := &pkg.ManagerMock{}
 
 	return &handlersWrapper{
 		pm: pm,
-		h:  NewHandlers(pm),
+		h:  NewHandlers(pm, cfg),
+	}
+}
+
+func TestBuildPackageURL(t *testing.T) {
+	baseURL := "http://localhost:8000"
+	testCases := []struct {
+		p              *hub.Package
+		version        string
+		expectedPkgURL string
+	}{
+		{
+			&hub.Package{
+				Kind:           hub.Chart,
+				NormalizedName: "pkg1",
+				ChartRepository: &hub.ChartRepository{
+					Name: "repo1",
+				},
+			},
+			"1.0.0",
+			baseURL + "/packages/chart/repo1/pkg1/1.0.0",
+		},
+		{
+			&hub.Package{
+				Kind:           hub.Chart,
+				NormalizedName: "pkg1",
+				ChartRepository: &hub.ChartRepository{
+					Name: "repo1",
+				},
+			},
+			"",
+			baseURL + "/packages/chart/repo1/pkg1",
+		},
+		{
+			&hub.Package{
+				Kind:           hub.Falco,
+				NormalizedName: "pkg1",
+			},
+			"",
+			baseURL + "/packages/falco/pkg1",
+		},
+		{
+			&hub.Package{
+				Kind:           hub.OPA,
+				NormalizedName: "pkg1",
+			},
+			"",
+			baseURL + "/packages/opa/pkg1",
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.expectedPkgURL, func(t *testing.T) {
+			pkgURL := BuildPackageURL(baseURL, tc.p, tc.version)
+			assert.Equal(t, tc.expectedPkgURL, pkgURL)
+		})
 	}
 }

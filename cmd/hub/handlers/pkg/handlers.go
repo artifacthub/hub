@@ -2,30 +2,36 @@ package pkg
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+	"sort"
 	"strconv"
+	"time"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-chi/chi"
+	"github.com/gorilla/feeds"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 // Handlers represents a group of http handlers in charge of handling packages
 // operations.
 type Handlers struct {
 	pkgManager hub.PackageManager
+	cfg        *viper.Viper
 	logger     zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(pkgManager hub.PackageManager) *Handlers {
+func NewHandlers(pkgManager hub.PackageManager, cfg *viper.Viper) *Handlers {
 	return &Handlers{
 		pkgManager: pkgManager,
+		cfg:        cfg,
 		logger:     log.With().Str("handlers", "pkg").Logger(),
 	}
 }
@@ -111,14 +117,9 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 		if chartRepositoryName != "" {
 			input.ChartRepositoryName = chartRepositoryName
 		}
-		dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
+		p, err := h.pkgManager.Get(r.Context(), input)
 		if err != nil {
 			h.logger.Error().Err(err).Interface("input", input).Str("method", "InjectIndexMeta").Send()
-			helpers.RenderErrorJSON(w, err)
-			return
-		}
-		p := &hub.Package{}
-		if err := json.Unmarshal(dataJSON, p); err != nil {
 			helpers.RenderErrorJSON(w, err)
 			return
 		}
@@ -138,6 +139,64 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 		ctx = context.WithValue(ctx, hub.IndexMetaDescriptionKey, description)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
+}
+
+// RssFeed is an http handler used to get the RSS feed of a given package.
+func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
+	// Get package details
+	input := &hub.GetPackageInput{
+		PackageName: chi.URLParam(r, "packageName"),
+	}
+	chartRepositoryName := chi.URLParam(r, "repoName")
+	if chartRepositoryName != "" {
+		input.ChartRepositoryName = chartRepositoryName
+	}
+	p, err := h.pkgManager.Get(r.Context(), input)
+	if err != nil {
+		h.logger.Error().Err(err).Interface("input", input).Str("method", "RssFeed").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+
+	// Build RSS feed
+	baseURL := h.cfg.GetString("server.baseURL")
+	publisher := p.OrganizationName
+	if publisher == "" {
+		publisher = p.UserAlias
+	}
+	feed := &feeds.Feed{
+		Title:       fmt.Sprintf("%s/%s (Artifact Hub)", publisher, p.NormalizedName),
+		Description: p.Description,
+		Link:        &feeds.Link{Href: baseURL},
+		Image: &feeds.Image{
+			Title: "logo",
+			Url:   fmt.Sprintf("%s/image/%s@4x", baseURL, p.LogoImageID),
+			Link:  baseURL,
+		},
+	}
+	if len(p.Maintainers) > 0 {
+		feed.Author = &feeds.Author{
+			Name:  p.Maintainers[0].Name,
+			Email: p.Maintainers[0].Email,
+		}
+	}
+	for _, s := range p.AvailableVersions {
+		feed.Items = append(feed.Items, &feeds.Item{
+			Id:          fmt.Sprintf("%s#%s", p.PackageID, s.Version),
+			Title:       s.Version,
+			Description: fmt.Sprintf("%s %s", p.NormalizedName, s.Version),
+			Created:     time.Unix(s.CreatedAt, 0),
+			Link:        &feeds.Link{Href: BuildPackageURL(baseURL, p, s.Version)},
+		})
+	}
+	sort.Slice(feed.Items, func(i, j int) bool {
+		vi, _ := semver.NewVersion(feed.Items[i].Title)
+		vj, _ := semver.NewVersion(feed.Items[j].Title)
+		return vj.LessThan(vi)
+	})
+
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge))
+	_ = feed.WriteRss(w)
 }
 
 // Search is an http handler used to searchPackages for packages in the hub
@@ -235,4 +294,21 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		ChartRepositories: qs["repo"],
 		Deprecated:        deprecated,
 	}, nil
+}
+
+// BuildPackageURL builds the url of a given package.
+func BuildPackageURL(baseURL string, p *hub.Package, version string) string {
+	var pkgPath string
+	switch p.Kind {
+	case hub.Chart:
+		pkgPath = fmt.Sprintf("/packages/chart/%s/%s", p.ChartRepository.Name, p.NormalizedName)
+	case hub.Falco:
+		pkgPath = fmt.Sprintf("/packages/falco/%s", p.NormalizedName)
+	case hub.OPA:
+		pkgPath = fmt.Sprintf("/packages/opa/%s", p.NormalizedName)
+	}
+	if version != "" {
+		pkgPath += "/" + version
+	}
+	return baseURL + pkgPath
 }
