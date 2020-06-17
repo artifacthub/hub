@@ -465,7 +465,7 @@ exports[`Package index creates snapshot 2`] = `
                 <small>
                   <a
                     class="badge badge-pill badge-secondary ml-3 badge"
-                    href="feed:/api/v1/packages/chart/stable/undefined/feed/rss"
+                    href="/api/v1/packages/chart/stable/undefined/feed/rss"
                     rel="alternate noopener noreferrer"
                     role="button"
                     target="_blank"
