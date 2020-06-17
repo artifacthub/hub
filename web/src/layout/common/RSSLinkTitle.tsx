@@ -24,7 +24,7 @@ const RSSLinkTitle = (props: Props) => (
         role="button"
         target="_blank"
         type="application/rss+xml"
-        href={`feed:${getHubBaseURL()}/api/v1${buildPackageURL(props.package)}/feed/rss`}
+        href={`${getHubBaseURL()}/api/v1${buildPackageURL(props.package)}/feed/rss`}
       >
         <div className="d-flex flex-row align-items-center">
           <FaRss className="mr-1" />
