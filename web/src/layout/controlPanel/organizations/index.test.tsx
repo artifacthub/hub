@@ -161,7 +161,7 @@ describe('Organizations section index', () => {
       expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
 
-    it('rest API errors - displays generis error message', async () => {
+    it('rest API errors - displays generic error message', async () => {
       mocked(API).getUserOrganizations.mockRejectedValue({ status: 400 });
 
       const { getByTestId, getByText } = render(

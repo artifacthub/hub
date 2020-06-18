@@ -1,5 +1,4 @@
 .card {
-  min-width: 320px;
   max-width: 100%;
   background-color: var(--white) !important;
   box-shadow: 0px 0px 5px 0px var(--light);
@@ -49,8 +48,12 @@
   color: inherit;
 }
 
+.headerInfo {
+  margin: 0.35rem 1rem;
+}
+
 .title {
-  line-height: 1;
+  margin-top: -0.2rem;
 }
 
 .kind {

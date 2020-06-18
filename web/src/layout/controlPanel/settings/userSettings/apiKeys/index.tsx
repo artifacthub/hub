@@ -59,7 +59,7 @@ const APIKeysSection = (props: Props) => {
             <div className={`h3 pb-0 ${styles.title}`}>API keys</div>
             <div>
               <button
-                data-testid="addSubscriptionsBtn"
+                data-testid="addAPIKeyBtn"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
               >

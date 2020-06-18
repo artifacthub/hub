@@ -642,7 +642,7 @@ exports[`Search index creates snapshot 2`] = `
         class="flex-grow-1 list"
       >
         <div
-          class="d-none d-lg-block row no-gutters mb-2"
+          class="row no-gutters mb-2"
         >
           <div
             class="col-12 py-sm-3 py-2"
@@ -660,118 +660,141 @@ exports[`Search index creates snapshot 2`] = `
                   class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo centrifugo"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
                           srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
                         />
                       </div>
                       <div
-                        class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-0 text-truncate title"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h5 mb-0 d-flex flex-row align-items-center"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="text-truncate"
+                              class="text-truncate title"
                             >
                               centrifugo
                             </div>
+                            <div
+                              class="d-none d-lg-inline-block ml-3"
+                            />
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-nowrap subtitle"
+                          class="card-subtitle text-truncate align-items-center subtitle"
                         >
                           <div
                             class="d-inline-block d-md-none text-truncate w-100"
                           >
-                            <span
-                              class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
                               <span
-                                class="px-1"
+                                class="text-muted text-uppercase mr-1"
                               >
-                                /
+                                Repo: 
                               </span>
-                              stable
-                            </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  stable
+                                </div>
+                              </button>
+                            </div>
                           </div>
                           <div
                             class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
                           >
                             <div
-                              class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
                               <span
                                 class="text-muted text-uppercase mr-1"
                               >
-                                User:
+                                User: 
                               </span>
                               <button
-                                class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                class="p-0 border-0 text-truncate text-dark mw-100 link"
                                 data-testid="userLink"
-                              />
-                            </div>
-                            <div
-                              class="mr-2 text-truncate align-items-baseline d-flex flex-row"
-                            >
-                              <span
-                                class="text-muted text-uppercase mr-1"
                               >
-                                Repo:
-                              </span>
-                              <button
-                                class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                                data-testid="repoLink"
-                              >
-                                stable
+                                <div
+                                  class="text-truncate"
+                                />
                               </button>
                             </div>
                             <div
-                              class="text-truncate d-none d-md-inline"
+                              class="ml-3 d-flex flex-row mx50"
                             >
                               <span
-                                class="text-muted text-uppercase mr-1"
+                                class="text-muted text-uppercase pr-1"
                               >
-                                Version: 
+                                Repo: 
                               </span>
-                              -
-                              <div
-                                class="d-none d-lg-inline"
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
-                                <span
-                                  class="text-muted text-uppercase mr-1 ml-2"
+                                <div
+                                  class="text-truncate"
                                 >
-                                  App version: 
-                                </span>
-                                2.1.0
-                              </div>
+                                  stable
+                                </div>
+                              </button>
                             </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="text-truncate mb-1"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Version: 
+                            </span>
+                            -
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            2.1.0
                           </div>
                         </div>
                       </div>
                       <div
-                        class="d-flex flex-column mb-auto"
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
                       >
-                        <small
-                          class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                        >
-                          Updated Invalid date
-                        </small>
                         <div
-                          class="d-flex align-items-start text-uppercase ml-auto kind"
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                         >
                           <img
                             alt="Icon"
@@ -782,16 +805,32 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-3 overflow-hidden description lineClamp"
                   >
                     Centrifugo is a real-time messaging server.
-                  </p>
-                  <small
-                    class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
-                    Updated Invalid date
-                  </small>
+                    <small
+                      class="text-muted text-nowrap date"
+                    >
+                      Updated Invalid date
+                    </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/helm-chart.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
@@ -812,117 +851,140 @@ exports[`Search index creates snapshot 2`] = `
                   class="card-body d-flex flex-column body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
+                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo kafka"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/static/media/kubernetes_grey.svg"
                         />
                       </div>
                       <div
-                        class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="card-title font-weight-bolder mb-0 text-truncate title"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h5 mb-0 d-flex flex-row align-items-center"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="text-truncate"
+                              class="text-truncate title"
                             >
                               kafka
                             </div>
+                            <div
+                              class="d-none d-lg-inline-block ml-3"
+                            />
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-nowrap subtitle"
+                          class="card-subtitle text-truncate align-items-center subtitle"
                         >
                           <div
                             class="d-inline-block d-md-none text-truncate w-100"
                           >
-                            <span
-                              class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
                               <span
-                                class="px-1"
+                                class="text-muted text-uppercase mr-1"
                               >
-                                /
+                                Repo: 
                               </span>
-                              incubator
-                            </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  incubator
+                                </div>
+                              </button>
+                            </div>
                           </div>
                           <div
                             class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
                           >
                             <div
-                              class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
                               <span
                                 class="text-muted text-uppercase mr-1"
                               >
-                                User:
+                                User: 
                               </span>
                               <button
-                                class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                class="p-0 border-0 text-truncate text-dark mw-100 link"
                                 data-testid="userLink"
-                              />
-                            </div>
-                            <div
-                              class="mr-2 text-truncate align-items-baseline d-flex flex-row"
-                            >
-                              <span
-                                class="text-muted text-uppercase mr-1"
                               >
-                                Repo:
-                              </span>
-                              <button
-                                class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                                data-testid="repoLink"
-                              >
-                                incubator
+                                <div
+                                  class="text-truncate"
+                                />
                               </button>
                             </div>
                             <div
-                              class="text-truncate d-none d-md-inline"
+                              class="ml-3 d-flex flex-row mx50"
                             >
                               <span
-                                class="text-muted text-uppercase mr-1"
+                                class="text-muted text-uppercase pr-1"
                               >
-                                Version: 
+                                Repo: 
                               </span>
-                              -
-                              <div
-                                class="d-none d-lg-inline"
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
-                                <span
-                                  class="text-muted text-uppercase mr-1 ml-2"
+                                <div
+                                  class="text-truncate"
                                 >
-                                  App version: 
-                                </span>
-                                5.0.1
-                              </div>
+                                  incubator
+                                </div>
+                              </button>
                             </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="text-truncate mb-1"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Version: 
+                            </span>
+                            -
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            5.0.1
                           </div>
                         </div>
                       </div>
                       <div
-                        class="d-flex flex-column mb-auto"
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
                       >
-                        <small
-                          class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                        >
-                          Updated Invalid date
-                        </small>
                         <div
-                          class="d-flex align-items-start text-uppercase ml-auto kind"
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                         >
                           <img
                             alt="Icon"
@@ -933,246 +995,35 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                   </div>
-                  <p
-                    class="mb-0 card-text overflow-hidden description"
+                  <div
+                    class="mt-3 overflow-hidden description lineClamp"
                   >
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
-                  </p>
-                  <small
-                    class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
-                    Updated Invalid date
-                  </small>
+                    <small
+                      class="text-muted text-nowrap date"
+                    >
+                      Updated Invalid date
+                    </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/helm-chart.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
-          </div>
-        </div>
-        <div
-          class="d-block d-lg-none row no-gutters mb-2"
-        >
-          <div
-            class="card mb-3 w-100 card"
-          >
-            <a
-              class="text-decoration-none link"
-              data-testid="mobilePackageLink"
-              href="/packages/chart/stable/undefined"
-            >
-              <div
-                class="card-body d-flex flex-column body"
-              >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
-                >
-                  <div
-                    class="d-flex align-items-center flex-grow-1 truncateWrapper"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo centrifugo"
-                        class="image"
-                        src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
-                        srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
-                      />
-                    </div>
-                    <div
-                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
-                    >
-                      <div
-                        class="h-50"
-                      >
-                        <div
-                          class="h-100 d-flex flex-row justify-content-between"
-                        >
-                          <div
-                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
-                          >
-                            <div
-                              class="h6 text-truncate mr-2"
-                            >
-                              centrifugo
-                            </div>
-                          </div>
-                          <div
-                            class="align-self-start d-flex align-items-center text-uppercase kind"
-                          >
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Repo: 
-                          </span>
-                          <div
-                            class="p-0 border-0 text-truncate text-dark mx50"
-                          />
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          <div
-                            class="text-truncate p-0 border-0 text-dark mx50"
-                          >
-                            stable
-                          </div>
-                        </div>
-                        <div
-                          class="text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Version: 
-                          </span>
-                          -
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="mt-2"
-                >
-                  <small
-                    class="mb-0 description"
-                  >
-                    Centrifugo is a real-time messaging server.
-                  </small>
-                </div>
-                <small
-                  class="text-muted text-right text-nowrap mt-3 date"
-                >
-                  Updated Invalid date
-                </small>
-              </div>
-            </a>
-          </div>
-          <div
-            class="card mb-3 w-100 card"
-          >
-            <a
-              class="text-decoration-none link"
-              data-testid="mobilePackageLink"
-              href="/packages/chart/incubator/undefined"
-            >
-              <div
-                class="card-body d-flex flex-column body"
-              >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
-                >
-                  <div
-                    class="d-flex align-items-center flex-grow-1 truncateWrapper"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo kafka"
-                        class="image"
-                        src="/static/media/kubernetes_grey.svg"
-                      />
-                    </div>
-                    <div
-                      class="ml-3 h-100 flex-grow-1 truncateWrapper"
-                    >
-                      <div
-                        class="h-50"
-                      >
-                        <div
-                          class="h-100 d-flex flex-row justify-content-between"
-                        >
-                          <div
-                            class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
-                          >
-                            <div
-                              class="h6 text-truncate mr-2"
-                            >
-                              kafka
-                            </div>
-                          </div>
-                          <div
-                            class="align-self-start d-flex align-items-center text-uppercase kind"
-                          >
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="card-subtitle text-truncate h-50 align-items-center subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Repo: 
-                          </span>
-                          <div
-                            class="p-0 border-0 text-truncate text-dark mx50"
-                          />
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          <div
-                            class="text-truncate p-0 border-0 text-dark mx50"
-                          >
-                            incubator
-                          </div>
-                        </div>
-                        <div
-                          class="text-truncate"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Version: 
-                          </span>
-                          -
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="mt-2"
-                >
-                  <small
-                    class="mb-0 description"
-                  >
-                    Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
-                  </small>
-                </div>
-                <small
-                  class="text-muted text-right text-nowrap mt-3 date"
-                >
-                  Updated Invalid date
-                </small>
-              </div>
-            </a>
           </div>
         </div>
       </div>

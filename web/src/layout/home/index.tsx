@@ -76,11 +76,11 @@ const HomeView = (props: Props) => {
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.releases} name="releases" />
         </div>
 
-        <div className="text-center h5 mt-5 mb-4">
+        <div className={`text-center h5 mt-5 mb-4 ${styles.legend}`}>
           Artifact Hub is an <b>Open Source</b> project
         </div>
 
-        <div className="mb-2 text-center">
+        <div className="mb-4 mb-md-2 text-center">
           <ExternalLink className={`btn btn-secondary ${styles.socialBtn}`} href="https://github.com/cncf/hub">
             <div className="d-flex align-items-center justify-content-center">
               <FaGithub className="mr-2" />
@@ -103,8 +103,8 @@ const HomeView = (props: Props) => {
       <RandomPackages />
 
       <div className={`py-5 text-light ${styles.about}`}>
-        <div className="container py-5">
-          <div className="text-center">
+        <div className="container py-0 py-md-5">
+          <div className="text-center px-3 px-md-0">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and
             Open Policy Agent (OPA) policies.
@@ -118,8 +118,8 @@ const HomeView = (props: Props) => {
       </div>
 
       <div className={`py-5 text-secondary ${styles.extraInfo}`}>
-        <div className="container py-5">
-          <div className="text-center">
+        <div className="container py-0 py-md-5">
+          <div className="text-center px-3 px-md-0">
             Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share
             artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured
             experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by

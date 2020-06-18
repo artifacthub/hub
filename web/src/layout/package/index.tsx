@@ -268,11 +268,11 @@ const PackageView = (props: Props) => {
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
                           {!isNull(detail.deprecated) && detail.deprecated && (
-                            <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
+                            <div className={`badge badge-pill text-uppercase ml-3 mt-1 ${styles.deprecatedBadge}`}>
                               Deprecated
                             </div>
                           )}
-                          <SignedBadge packageKind={detail.kind} signed={detail.signed} />
+                          <SignedBadge packageKind={detail.kind} signed={detail.signed} className="ml-3 mt-1" />
                         </div>
 
                         <div className="d-block d-md-none text-truncate w-100">
