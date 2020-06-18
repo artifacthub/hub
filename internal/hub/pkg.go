@@ -59,7 +59,7 @@ type Package struct {
 	OrganizationName        string                 `json:"organization_name"`
 	OrganizationDisplayName string                 `json:"organization_display_name"`
 	ChartRepository         *ChartRepository       `json:"chart_repository"`
-	CreatedAt               int64                  `json:"created_at"`
+	CreatedAt               int64                  `json:"created_at,omitempty"`
 }
 
 // PackageKind represents the kind of a given package.

@@ -22,7 +22,7 @@ const SignedBadge = (props: Props) => {
         </div>
       </div>
       {!isUndefined(props.packageKind) && props.packageKind === PackageKind.Chart && (
-        <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
+        <div className={`d-none d-sm-block tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
           <div className={`arrow ${styles.tooltipArrow}`} />
           <div className={`tooltip-inner ${styles.tooltipContent}`}>This chart has a provenance file</div>
         </div>

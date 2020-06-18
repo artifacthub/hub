@@ -383,7 +383,7 @@ const SearchView = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="d-none d-md-block row no-gutters mb-2">
+                    <div className="d-none d-lg-block row no-gutters mb-2">
                       {packages.map((item: Package) => (
                         <PackageCard
                           key={item.packageId}
@@ -400,7 +400,7 @@ const SearchView = (props: Props) => {
                       ))}
                     </div>
 
-                    <div className="d-block d-md-none row no-gutters mb-2">
+                    <div className="d-block d-lg-none row no-gutters mb-2">
                       {packages.map((item: Package) => (
                         <MobilePackageCard key={`mobile_${item.packageId}`} package={item} />
                       ))}

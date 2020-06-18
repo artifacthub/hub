@@ -253,7 +253,7 @@ const PackageView = (props: Props) => {
               <div className={`jumbotron ${styles.jumbotron}`}>
                 <div className="container position-relative">
                   <div className="d-flex align-items-start w-100 mb-3">
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center flex-grow-1 mw-100">
                       <div
                         className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
                       >
@@ -264,9 +264,9 @@ const PackageView = (props: Props) => {
                         />
                       </div>
 
-                      <div className="ml-3">
+                      <div className="ml-3 text-truncate">
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
-                          <div className="h3 mb-0">{detail.displayName || detail.name}</div>
+                          <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
                           {!isNull(detail.deprecated) && detail.deprecated && (
                             <div className={`badge badge-pill text-uppercase ml-2 mt-1 ${styles.deprecatedBadge}`}>
                               Deprecated
@@ -275,7 +275,29 @@ const PackageView = (props: Props) => {
                           <SignedBadge packageKind={detail.kind} signed={detail.signed} />
                         </div>
 
-                        <div className={`d-flex flex-row mt-2 ${styles.subtitle}`}>
+                        <div className="d-block d-md-none text-truncate w-100">
+                          <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
+                            {isNull(detail.userAlias) && (
+                              <>{detail.organizationDisplayName || detail.organizationName}</>
+                            )}
+                            {!isNull(detail.userAlias) && <>{detail.userAlias}</>}
+                            {(() => {
+                              switch (detail.kind) {
+                                case PackageKind.Chart:
+                                  return (
+                                    <>
+                                      <span className="px-1">/</span>
+                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
+                                    </>
+                                  );
+                                default:
+                                  return null;
+                              }
+                            })()}
+                          </span>
+                        </div>
+
+                        <div className={`d-none d-md-flex flex-row mt-2 ${styles.subtitle}`}>
                           {!isUndefined(detail.organizationName) && detail.organizationName && (
                             <OrganizationInfo
                               className="mr-2"

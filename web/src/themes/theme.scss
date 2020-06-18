@@ -124,7 +124,9 @@ button.text-dark:focus {
   color: #121416 !important;
 }
 
-label {
+label,
+a,
+button {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

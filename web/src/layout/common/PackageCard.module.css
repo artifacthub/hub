@@ -53,15 +53,6 @@
   line-height: 1;
 }
 
-.subtitle {
-  font-size: 0.85rem;
-  line-height: 1.2;
-}
-
-.subtitle span {
-  font-size: 0.65rem;
-}
-
 .kind {
   font-size: 0.75rem;
   color: var(--color-1-500);
@@ -113,18 +104,8 @@
     padding: 1rem !important;
   }
 
-  .subtitle {
-    flex-direction: column !important;
-  }
-
   .deprecatedBadge {
     font-size: 0.6rem !important;
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .subtitle {
-    font-size: 0.95rem;
   }
 }
 

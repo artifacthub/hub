@@ -642,7 +642,7 @@ exports[`Search index creates snapshot 2`] = `
         class="flex-grow-1 list"
       >
         <div
-          class="d-none d-md-block row no-gutters mb-2"
+          class="d-none d-lg-block row no-gutters mb-2"
         >
           <div
             class="col-12 py-sm-3 py-2"
@@ -679,72 +679,86 @@ exports[`Search index creates snapshot 2`] = `
                         class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row justify-content-between"
+                          class="card-title font-weight-bolder mb-0 text-truncate title"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
+                            class="h5 mb-0 d-flex flex-row align-items-center"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="text-truncate"
                             >
-                              <div
-                                class="text-truncate"
-                              >
-                                centrifugo
-                              </div>
+                              centrifugo
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap subtitle"
+                          class="card-subtitle d-flex flex-nowrap subtitle"
                         >
                           <div
-                            class="mr-2 text-truncate"
+                            class="d-inline-block d-md-none text-truncate w-100"
                           >
                             <span
-                              class="text-muted text-uppercase mr-1"
+                              class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
                             >
-                              User:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="userLink"
-                            />
-                          </div>
-                          <div
-                            class="mr-2 text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              Repo:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="repoLink"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               stable
-                            </button>
+                            </span>
                           </div>
                           <div
-                            class="mr-2 text-truncate"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <div
+                              class="mr-2 text-truncate d-flex flex-row align-items-baseline"
                             >
-                              Version: 
-                            </span>
-                            -
-                          </div>
-                          <div
-                            class="text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User:
+                              </span>
+                              <button
+                                class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                data-testid="userLink"
+                              />
+                            </div>
+                            <div
+                              class="mr-2 text-truncate align-items-baseline d-flex flex-row"
                             >
-                              App version: 
-                            </span>
-                            2.1.0
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                stable
+                              </button>
+                            </div>
+                            <div
+                              class="text-truncate d-none d-md-inline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <div
+                                class="d-none d-lg-inline"
+                              >
+                                <span
+                                  class="text-muted text-uppercase mr-1 ml-2"
+                                >
+                                  App version: 
+                                </span>
+                                2.1.0
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -752,7 +766,7 @@ exports[`Search index creates snapshot 2`] = `
                         class="d-flex flex-column mb-auto"
                       >
                         <small
-                          class="d-none d-lg-block text-muted mb-2 date"
+                          class="d-none d-lg-block text-muted text-nowrap mb-2 date"
                         >
                           Updated Invalid date
                         </small>
@@ -774,7 +788,7 @@ exports[`Search index creates snapshot 2`] = `
                     Centrifugo is a real-time messaging server.
                   </p>
                   <small
-                    class="d-block d-lg-none text-muted text-right mt-3 date"
+                    class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
                   >
                     Updated Invalid date
                   </small>
@@ -816,72 +830,86 @@ exports[`Search index creates snapshot 2`] = `
                         class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row justify-content-between"
+                          class="card-title font-weight-bolder mb-0 text-truncate title"
                         >
                           <div
-                            class="card-title font-weight-bolder mb-0 mt-auto flex-grow-1 text-truncate title"
+                            class="h5 mb-0 d-flex flex-row align-items-center"
                           >
                             <div
-                              class="h5 d-flex flex-row align-items-center"
+                              class="text-truncate"
                             >
-                              <div
-                                class="text-truncate"
-                              >
-                                kafka
-                              </div>
+                              kafka
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle d-flex flex-wrap subtitle"
+                          class="card-subtitle d-flex flex-nowrap subtitle"
                         >
                           <div
-                            class="mr-2 text-truncate"
+                            class="d-inline-block d-md-none text-truncate w-100"
                           >
                             <span
-                              class="text-muted text-uppercase mr-1"
+                              class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
                             >
-                              User:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="userLink"
-                            />
-                          </div>
-                          <div
-                            class="mr-2 text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              Repo:
-                            </span>
-                            <button
-                              class="p-0 border-0 text-dark link"
-                              data-testid="repoLink"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               incubator
-                            </button>
+                            </span>
                           </div>
                           <div
-                            class="mr-2 text-truncate"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <div
+                              class="mr-2 text-truncate d-flex flex-row align-items-baseline"
                             >
-                              Version: 
-                            </span>
-                            -
-                          </div>
-                          <div
-                            class="text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User:
+                              </span>
+                              <button
+                                class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                data-testid="userLink"
+                              />
+                            </div>
+                            <div
+                              class="mr-2 text-truncate align-items-baseline d-flex flex-row"
                             >
-                              App version: 
-                            </span>
-                            5.0.1
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo:
+                              </span>
+                              <button
+                                class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                incubator
+                              </button>
+                            </div>
+                            <div
+                              class="text-truncate d-none d-md-inline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <div
+                                class="d-none d-lg-inline"
+                              >
+                                <span
+                                  class="text-muted text-uppercase mr-1 ml-2"
+                                >
+                                  App version: 
+                                </span>
+                                5.0.1
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -889,7 +917,7 @@ exports[`Search index creates snapshot 2`] = `
                         class="d-flex flex-column mb-auto"
                       >
                         <small
-                          class="d-none d-lg-block text-muted mb-2 date"
+                          class="d-none d-lg-block text-muted text-nowrap mb-2 date"
                         >
                           Updated Invalid date
                         </small>
@@ -911,7 +939,7 @@ exports[`Search index creates snapshot 2`] = `
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
                   </p>
                   <small
-                    class="d-block d-lg-none text-muted text-right mt-3 date"
+                    class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
                   >
                     Updated Invalid date
                   </small>
@@ -921,7 +949,7 @@ exports[`Search index creates snapshot 2`] = `
           </div>
         </div>
         <div
-          class="d-block d-md-none row no-gutters mb-2"
+          class="d-block d-lg-none row no-gutters mb-2"
         >
           <div
             class="card mb-3 w-100 card"
@@ -1028,7 +1056,7 @@ exports[`Search index creates snapshot 2`] = `
                   </small>
                 </div>
                 <small
-                  class="text-muted text-right mt-3 date"
+                  class="text-muted text-right text-nowrap mt-3 date"
                 >
                   Updated Invalid date
                 </small>
@@ -1139,7 +1167,7 @@ exports[`Search index creates snapshot 2`] = `
                   </small>
                 </div>
                 <small
-                  class="text-muted text-right mt-3 date"
+                  class="text-muted text-right text-nowrap mt-3 date"
                 >
                   Updated Invalid date
                 </small>

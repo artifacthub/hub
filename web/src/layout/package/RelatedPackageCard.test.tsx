@@ -103,7 +103,7 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(mockPackage.userAlias!)).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.userAlias!, 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
 
@@ -116,7 +116,7 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(mockPackage.organizationDisplayName!)).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.organizationDisplayName!, 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
 
