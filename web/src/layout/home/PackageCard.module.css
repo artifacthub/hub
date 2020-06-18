@@ -1,8 +1,6 @@
 .card {
-  /* min-height: 108px; */
-  width: 700px;
+  width: 750px;
   background-color: transparent !important;
-  /* box-shadow: none; */
 }
 
 .card:not(:last-child) {
@@ -90,5 +88,17 @@
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .card {
+    font-size: 90%;
+  }
+
+  .imageWrapper {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
   }
 }

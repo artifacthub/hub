@@ -50,62 +50,56 @@ const RelatedPackageCard = (props: Props) => {
                     <div className={`align-self-end text-truncate card-title mb-2 ${styles.title}`}>
                       {props.package.displayName || props.package.name}
                     </div>
-                    <div
-                      className={`card-subtitle text-truncate h-50 align-items-center text-muted ${styles.subtitle}`}
-                    >
+                    <div className={`card-subtitle align-items-center text-muted ${styles.subtitle}`}>
                       {(() => {
                         switch (props.package.kind) {
                           case PackageKind.Chart:
                             return (
-                              <>
-                                <div className="d-flex flex-row align-items-baseline text-truncate">
+                              <div className="w-100">
+                                <div className="text-truncate">
                                   {!isUndefined(props.package.organizationName) &&
                                     props.package.organizationName &&
                                     !isRepeatedRepoName() && (
                                       <>
-                                        <div className={`p-0 border-0 text-truncate ${styles.mx50}`}>
-                                          {props.package.organizationDisplayName || props.package.organizationName}
-                                        </div>
+                                        {props.package.organizationDisplayName || props.package.organizationName}
                                         <span className="px-1">/</span>
                                       </>
                                     )}
 
                                   {!isNull(props.package.userAlias) && (
                                     <>
-                                      <div className={`p-0 border-0 text-truncate ${styles.mx50}`}>
-                                        {props.package.userAlias}
-                                      </div>
+                                      {props.package.userAlias}
                                       <span className="px-1">/</span>
                                     </>
                                   )}
 
-                                  <div className={`text-truncate p-0 border-0 ${styles.mx50}`}>
-                                    {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                                  </div>
+                                  {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
                                 </div>
-                              </>
+                              </div>
                             );
 
                           case PackageKind.Falco:
                           case PackageKind.Opa:
                             return (
-                              <>
-                                {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                  <>
-                                    <div className={`d-inline text-truncate ${styles.mx50}`}>
-                                      {props.package.organizationDisplayName || props.package.organizationName}
-                                    </div>
-                                  </>
-                                )}
+                              <div className="w-100">
+                                <div className="text-truncate">
+                                  {!isUndefined(props.package.organizationName) && props.package.organizationName && (
+                                    <>
+                                      <div className={`d-inline text-truncate ${styles.mx50}`}>
+                                        {props.package.organizationDisplayName || props.package.organizationName}
+                                      </div>
+                                    </>
+                                  )}
 
-                                {!isNull(props.package.userAlias) && (
-                                  <div className="mr-2 text-truncate">
-                                    <div className={`d-inline text-truncate ${styles.mx50}`}>
-                                      {props.package.userAlias}
+                                  {!isNull(props.package.userAlias) && (
+                                    <div className="mr-2 text-truncate">
+                                      <div className={`d-inline text-truncate ${styles.mx50}`}>
+                                        {props.package.userAlias}
+                                      </div>
                                     </div>
-                                  </div>
-                                )}
-                              </>
+                                  )}
+                                </div>
+                              </div>
                             );
 
                           default:

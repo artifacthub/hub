@@ -25,7 +25,7 @@ exports[`Package index creates snapshot 2`] = `
           class="d-flex align-items-start w-100 mb-3"
         >
           <div
-            class="d-flex align-items-center"
+            class="d-flex align-items-center flex-grow-1 mw-100"
           >
             <div
               class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
@@ -38,19 +38,33 @@ exports[`Package index creates snapshot 2`] = `
               />
             </div>
             <div
-              class="ml-3"
+              class="ml-3 text-truncate"
             >
               <div
                 class="d-flex flex-row align-items-center titleWrapper"
               >
                 <div
-                  class="h3 mb-0"
+                  class="h3 mb-0 text-nowrap text-truncate"
                 >
                   Pretty name
                 </div>
               </div>
               <div
-                class="d-flex flex-row mt-2 subtitle"
+                class="d-block d-md-none text-truncate w-100"
+              >
+                <span
+                  class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
+                >
+                  <span
+                    class="px-1"
+                  >
+                    /
+                  </span>
+                  stable
+                </span>
+              </div>
+              <div
+                class="d-none d-md-flex flex-row mt-2 subtitle"
               >
                 <div
                   class="mr-2 text-truncate"

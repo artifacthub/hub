@@ -149,7 +149,7 @@ const MobilePackageCard = (props: Props) => {
             <small className={`mb-0 ${styles.description}`}>{props.package.description}</small>
           </div>
 
-          <small className={`text-muted text-right mt-3 ${styles.date}`}>
+          <small className={`text-muted text-right text-nowrap mt-3 ${styles.date}`}>
             Updated {moment(props.package.createdAt * 1000).fromNow()}
           </small>
 

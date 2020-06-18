@@ -5,7 +5,7 @@ exports[`RelatedPackages renders correctly 1`] = `<DocumentFragment />`;
 exports[`RelatedPackages renders correctly 2`] = `
 <DocumentFragment>
   <div
-    class="mt-4 w-100"
+    class="my-4 w-100"
   >
     <div
       class="mt-2 mb-1"
@@ -63,22 +63,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           centrifugo
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               stable
                             </div>
                           </div>
@@ -143,22 +140,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           kafka
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               incubator
                             </div>
                           </div>
@@ -224,22 +218,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           kafka-topics-ui
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               dhiatn
                             </div>
                           </div>
@@ -305,22 +296,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           nats
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               stable
                             </div>
                           </div>
@@ -386,22 +374,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           rabbitmq
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               stable
                             </div>
                           </div>
@@ -466,22 +451,19 @@ exports[`RelatedPackages renders correctly 2`] = `
                           schema-registry
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center text-muted subtitle"
+                          class="card-subtitle align-items-center text-muted subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
+                            class="w-100"
                           >
                             <div
-                              class="p-0 border-0 text-truncate mx50"
-                            />
-                            <span
-                              class="px-1"
+                              class="text-truncate"
                             >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 mx50"
-                            >
+                              <span
+                                class="px-1"
+                              >
+                                /
+                              </span>
                               incubator
                             </div>
                           </div>
