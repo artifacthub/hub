@@ -57,10 +57,16 @@
 
 @media only screen and (max-width: 575.98px) {
   .mainTitle {
-    font-size: 2rem !important;
+    font-size: 1.8rem !important;
   }
 
   .aboutIcon {
     width: 50px;
+  }
+
+  .extraInfo,
+  .about,
+  .legend {
+    font-size: 1.15rem;
   }
 }

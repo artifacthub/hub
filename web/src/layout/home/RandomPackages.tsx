@@ -31,13 +31,13 @@ const RandomPackages = () => {
 
   return (
     <div className={`position-relative ${styles.wrapper}`}>
-      <div className="container mb-5 mt-5">
+      <div className="container my-4 my-md-5">
         <div className="d-flex flex-wrap justify-content-center">
           {!isUndefined(packages) && !isLoading ? (
             <>
               {packages.length > 0 && (
                 <div data-testid="randomPackagesList" className="mw-100 my-2">
-                  <div className="h4 text-center text-secondary mt-2 mb-4">Explore and discover packages</div>
+                  <div className="h4 text-center text-secondary mt-3 mt-md-2 mb-4">Explore and discover packages</div>
 
                   <div className="pt-2">
                     {packages.map((item: Package) => {

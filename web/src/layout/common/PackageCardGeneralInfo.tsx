@@ -111,10 +111,9 @@ const PackageCardGeneralInfo = (props: Props) => {
                     </button>
                   </div>
 
-                  <div className="text-truncate d-none d-md-inline">
+                  <div className={`text-truncate d-none d-md-inline ${styles.versions}`}>
                     <span className="text-muted text-uppercase mr-1">Version: </span>
                     {props.package.version || '-'}
-
                     <div className="d-none d-lg-inline">
                       <span className="text-muted text-uppercase mr-1 ml-2">App version: </span>
                       {props.package.appVersion || '-'}

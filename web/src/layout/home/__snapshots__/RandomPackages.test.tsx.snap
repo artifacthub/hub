@@ -6,7 +6,7 @@ exports[`RandomPackages creates snapshot 1`] = `
     class="position-relative wrapper"
   >
     <div
-      class="container mb-5 mt-5"
+      class="container my-4 my-md-5"
     >
       <div
         class="d-flex flex-wrap justify-content-center"
@@ -37,7 +37,7 @@ exports[`RandomPackages creates snapshot 2`] = `
     class="position-relative wrapper"
   >
     <div
-      class="container mb-5 mt-5"
+      class="container my-4 my-md-5"
     >
       <div
         class="d-flex flex-wrap justify-content-center"
@@ -47,7 +47,7 @@ exports[`RandomPackages creates snapshot 2`] = `
           data-testid="randomPackagesList"
         >
           <div
-            class="h4 text-center text-secondary mt-2 mb-4"
+            class="h4 text-center text-secondary mt-3 mt-md-2 mb-4"
           >
             Explore and discover packages
           </div>
@@ -61,91 +61,122 @@ exports[`RandomPackages creates snapshot 2`] = `
                 class="card-body d-flex flex-column body"
               >
                 <div
-                  class="d-flex align-items-stretch justify-content-between flex-grow-1 mw-100"
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                 >
-                  <a
-                    class="text-decoration-none m-auto link"
-                    href="/packages/chart/halkeye/undefined"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo mosquitto"
-                        class="image"
-                        src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
-                        srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
-                      />
-                    </div>
-                  </a>
                   <div
-                    class="d-flex flex-column justify-content-around my-0 my-md-2 ml-3 flex-grow-1 truncateWrapper"
+                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
-                    <div
-                      class="text-truncate card-title mb-0 font-weight-bolder title"
-                    >
-                      <a
-                        class="link"
-                        data-testid="packageLink"
-                        href="/packages/chart/halkeye/undefined"
-                      >
-                        <div
-                          class="h6 text-truncate mr-2"
-                        >
-                          mosquitto
-                        </div>
-                      </a>
-                    </div>
-                    <div
-                      class="card-subtitle d-flex flex-nowrap subtitle"
+                    <a
+                      class="text-decoration-none link"
+                      href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-inline-block d-md-none text-truncate w-100"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
-                        <span
-                          class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                        >
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          halkeye
-                        </span>
+                        <img
+                          alt="Logo mosquitto"
+                          class="mw-100 mh-100"
+                          src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
+                          srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
+                        />
                       </div>
+                    </a>
+                    <div
+                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                    >
                       <div
-                        class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        class="text-truncate card-title mb-0"
                       >
                         <div
-                          class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                          class="d-flex flex-row align-items-center"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <a
+                            class="link text-truncate"
+                            data-testid="packageLink"
+                            href="/packages/chart/halkeye/undefined"
                           >
-                            User:
-                          </span>
-                          <button
-                            class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="userLink"
+                            <div
+                              class="text-truncate title"
+                            >
+                              mosquitto
+                            </div>
+                          </a>
+                          <div
+                            class="d-none d-lg-inline-block ml-3"
                           />
                         </div>
+                      </div>
+                      <div
+                        class="card-subtitle text-truncate align-items-center subtitle"
+                      >
                         <div
-                          class="mr-2 text-truncate align-items-baseline d-flex flex-row"
+                          class="d-inline-block d-md-none text-truncate w-100"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                           >
-                            Repo:
-                          </span>
-                          <button
-                            class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="repoLink"
-                          >
-                            halkeye
-                          </button>
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
                         </div>
                         <div
-                          class="text-truncate d-none d-md-inline"
+                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline text-truncate mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="ml-3 d-flex flex-row mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase pr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                      >
+                        <div
+                          class="text-truncate mb-1"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -153,47 +184,63 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
-                          <div
-                            class="d-none d-lg-inline"
+                          <span
+                            class="text-muted text-uppercase mr-1 ml-3"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1 ml-2"
-                            >
-                              App version: 
-                            </span>
-                            1.6.8
-                          </div>
+                            App Version: 
+                          </span>
+                          1.6.8
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex flex-column align-items-end mb-auto ml-3"
-                  >
-                    <small
-                      class="d-none d-sm-block text-muted mb-2 text-nowrap date"
-                    >
-                      Updated Invalid date
-                    </small>
                     <div
-                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                     >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
+                      <div
+                        class="mb-2"
+                      >
+                        <small
+                          class="text-muted text-nowrap date"
+                        >
+                          Updated Invalid date
+                        </small>
+                      </div>
+                      <div
+                        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      >
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="mt-3"
+                  class="mt-3 overflow-hidden description lineClamp"
                 />
-                <small
-                  class="d-block d-sm-none text-muted text-nowrap text-right mt-3 date"
+                <div
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
                 >
-                  Updated Invalid date
-                </small>
+                  <small
+                    class="text-muted text-nowrap date"
+                  >
+                    Updated Invalid date
+                  </small>
+                  <div
+                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="d-inline d-lg-none mt-2 mt-sm-0"
+                />
               </div>
             </div>
             <div
@@ -203,91 +250,122 @@ exports[`RandomPackages creates snapshot 2`] = `
                 class="card-body d-flex flex-column body"
               >
                 <div
-                  class="d-flex align-items-stretch justify-content-between flex-grow-1 mw-100"
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                 >
-                  <a
-                    class="text-decoration-none m-auto link"
-                    href="/packages/chart/halkeye/undefined"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo pihole"
-                        class="image"
-                        src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
-                        srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
-                      />
-                    </div>
-                  </a>
                   <div
-                    class="d-flex flex-column justify-content-around my-0 my-md-2 ml-3 flex-grow-1 truncateWrapper"
+                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
-                    <div
-                      class="text-truncate card-title mb-0 font-weight-bolder title"
-                    >
-                      <a
-                        class="link"
-                        data-testid="packageLink"
-                        href="/packages/chart/halkeye/undefined"
-                      >
-                        <div
-                          class="h6 text-truncate mr-2"
-                        >
-                          pihole
-                        </div>
-                      </a>
-                    </div>
-                    <div
-                      class="card-subtitle d-flex flex-nowrap subtitle"
+                    <a
+                      class="text-decoration-none link"
+                      href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-inline-block d-md-none text-truncate w-100"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
-                        <span
-                          class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                        >
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          halkeye
-                        </span>
+                        <img
+                          alt="Logo pihole"
+                          class="mw-100 mh-100"
+                          src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
+                          srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
+                        />
                       </div>
+                    </a>
+                    <div
+                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                    >
                       <div
-                        class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        class="text-truncate card-title mb-0"
                       >
                         <div
-                          class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                          class="d-flex flex-row align-items-center"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <a
+                            class="link text-truncate"
+                            data-testid="packageLink"
+                            href="/packages/chart/halkeye/undefined"
                           >
-                            User:
-                          </span>
-                          <button
-                            class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="userLink"
+                            <div
+                              class="text-truncate title"
+                            >
+                              pihole
+                            </div>
+                          </a>
+                          <div
+                            class="d-none d-lg-inline-block ml-3"
                           />
                         </div>
+                      </div>
+                      <div
+                        class="card-subtitle text-truncate align-items-center subtitle"
+                      >
                         <div
-                          class="mr-2 text-truncate align-items-baseline d-flex flex-row"
+                          class="d-inline-block d-md-none text-truncate w-100"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                           >
-                            Repo:
-                          </span>
-                          <button
-                            class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="repoLink"
-                          >
-                            halkeye
-                          </button>
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
                         </div>
                         <div
-                          class="text-truncate d-none d-md-inline"
+                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline text-truncate mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="ml-3 d-flex flex-row mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase pr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                      >
+                        <div
+                          class="text-truncate mb-1"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -295,47 +373,63 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
-                          <div
-                            class="d-none d-lg-inline"
+                          <span
+                            class="text-muted text-uppercase mr-1 ml-3"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1 ml-2"
-                            >
-                              App version: 
-                            </span>
-                            4.3.2-1
-                          </div>
+                            App Version: 
+                          </span>
+                          4.3.2-1
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex flex-column align-items-end mb-auto ml-3"
-                  >
-                    <small
-                      class="d-none d-sm-block text-muted mb-2 text-nowrap date"
-                    >
-                      Updated Invalid date
-                    </small>
                     <div
-                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                     >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
+                      <div
+                        class="mb-2"
+                      >
+                        <small
+                          class="text-muted text-nowrap date"
+                        >
+                          Updated Invalid date
+                        </small>
+                      </div>
+                      <div
+                        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      >
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="mt-3"
+                  class="mt-3 overflow-hidden description lineClamp"
                 />
-                <small
-                  class="d-block d-sm-none text-muted text-nowrap text-right mt-3 date"
+                <div
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
                 >
-                  Updated Invalid date
-                </small>
+                  <small
+                    class="text-muted text-nowrap date"
+                  >
+                    Updated Invalid date
+                  </small>
+                  <div
+                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="d-inline d-lg-none mt-2 mt-sm-0"
+                />
               </div>
             </div>
             <div
@@ -345,90 +439,121 @@ exports[`RandomPackages creates snapshot 2`] = `
                 class="card-body d-flex flex-column body"
               >
                 <div
-                  class="d-flex align-items-stretch justify-content-between flex-grow-1 mw-100"
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                 >
-                  <a
-                    class="text-decoration-none m-auto link"
-                    href="/packages/chart/gabibbo97/undefined"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo fcgi-nginx-frontend"
-                        class="image"
-                        src="/static/media/kubernetes_grey.svg"
-                      />
-                    </div>
-                  </a>
                   <div
-                    class="d-flex flex-column justify-content-around my-0 my-md-2 ml-3 flex-grow-1 truncateWrapper"
+                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
-                    <div
-                      class="text-truncate card-title mb-0 font-weight-bolder title"
-                    >
-                      <a
-                        class="link"
-                        data-testid="packageLink"
-                        href="/packages/chart/gabibbo97/undefined"
-                      >
-                        <div
-                          class="h6 text-truncate mr-2"
-                        >
-                          fcgi-nginx-frontend
-                        </div>
-                      </a>
-                    </div>
-                    <div
-                      class="card-subtitle d-flex flex-nowrap subtitle"
+                    <a
+                      class="text-decoration-none link"
+                      href="/packages/chart/gabibbo97/undefined"
                     >
                       <div
-                        class="d-inline-block d-md-none text-truncate w-100"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
-                        <span
-                          class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                        >
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          gabibbo97
-                        </span>
+                        <img
+                          alt="Logo fcgi-nginx-frontend"
+                          class="mw-100 mh-100"
+                          src="/static/media/kubernetes_grey.svg"
+                        />
                       </div>
+                    </a>
+                    <div
+                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                    >
                       <div
-                        class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        class="text-truncate card-title mb-0"
                       >
                         <div
-                          class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                          class="d-flex flex-row align-items-center"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <a
+                            class="link text-truncate"
+                            data-testid="packageLink"
+                            href="/packages/chart/gabibbo97/undefined"
                           >
-                            User:
-                          </span>
-                          <button
-                            class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="userLink"
+                            <div
+                              class="text-truncate title"
+                            >
+                              fcgi-nginx-frontend
+                            </div>
+                          </a>
+                          <div
+                            class="d-none d-lg-inline-block ml-3"
                           />
                         </div>
+                      </div>
+                      <div
+                        class="card-subtitle text-truncate align-items-center subtitle"
+                      >
                         <div
-                          class="mr-2 text-truncate align-items-baseline d-flex flex-row"
+                          class="d-inline-block d-md-none text-truncate w-100"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                           >
-                            Repo:
-                          </span>
-                          <button
-                            class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="repoLink"
-                          >
-                            gabibbo97
-                          </button>
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                gabibbo97
+                              </div>
+                            </button>
+                          </div>
                         </div>
                         <div
-                          class="text-truncate d-none d-md-inline"
+                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline text-truncate mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="ml-3 d-flex flex-row mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase pr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                gabibbo97
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                      >
+                        <div
+                          class="text-truncate mb-1"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -436,47 +561,63 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
-                          <div
-                            class="d-none d-lg-inline"
+                          <span
+                            class="text-muted text-uppercase mr-1 ml-3"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1 ml-2"
-                            >
-                              App version: 
-                            </span>
-                            1.17.8
-                          </div>
+                            App Version: 
+                          </span>
+                          1.17.8
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex flex-column align-items-end mb-auto ml-3"
-                  >
-                    <small
-                      class="d-none d-sm-block text-muted mb-2 text-nowrap date"
-                    >
-                      Updated Invalid date
-                    </small>
                     <div
-                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                     >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
+                      <div
+                        class="mb-2"
+                      >
+                        <small
+                          class="text-muted text-nowrap date"
+                        >
+                          Updated Invalid date
+                        </small>
+                      </div>
+                      <div
+                        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      >
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="mt-3"
+                  class="mt-3 overflow-hidden description lineClamp"
                 />
-                <small
-                  class="d-block d-sm-none text-muted text-nowrap text-right mt-3 date"
+                <div
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
                 >
-                  Updated Invalid date
-                </small>
+                  <small
+                    class="text-muted text-nowrap date"
+                  >
+                    Updated Invalid date
+                  </small>
+                  <div
+                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="d-inline d-lg-none mt-2 mt-sm-0"
+                />
               </div>
             </div>
             <div
@@ -486,91 +627,122 @@ exports[`RandomPackages creates snapshot 2`] = `
                 class="card-body d-flex flex-column body"
               >
                 <div
-                  class="d-flex align-items-stretch justify-content-between flex-grow-1 mw-100"
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                 >
-                  <a
-                    class="text-decoration-none m-auto link"
-                    href="/packages/chart/halkeye/undefined"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo sevendaysdie"
-                        class="image"
-                        src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
-                        srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
-                      />
-                    </div>
-                  </a>
                   <div
-                    class="d-flex flex-column justify-content-around my-0 my-md-2 ml-3 flex-grow-1 truncateWrapper"
+                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
-                    <div
-                      class="text-truncate card-title mb-0 font-weight-bolder title"
-                    >
-                      <a
-                        class="link"
-                        data-testid="packageLink"
-                        href="/packages/chart/halkeye/undefined"
-                      >
-                        <div
-                          class="h6 text-truncate mr-2"
-                        >
-                          sevendaysdie
-                        </div>
-                      </a>
-                    </div>
-                    <div
-                      class="card-subtitle d-flex flex-nowrap subtitle"
+                    <a
+                      class="text-decoration-none link"
+                      href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-inline-block d-md-none text-truncate w-100"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
-                        <span
-                          class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                        >
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          halkeye
-                        </span>
+                        <img
+                          alt="Logo sevendaysdie"
+                          class="mw-100 mh-100"
+                          src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
+                          srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
+                        />
                       </div>
+                    </a>
+                    <div
+                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                    >
                       <div
-                        class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        class="text-truncate card-title mb-0"
                       >
                         <div
-                          class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                          class="d-flex flex-row align-items-center"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <a
+                            class="link text-truncate"
+                            data-testid="packageLink"
+                            href="/packages/chart/halkeye/undefined"
                           >
-                            User:
-                          </span>
-                          <button
-                            class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="userLink"
+                            <div
+                              class="text-truncate title"
+                            >
+                              sevendaysdie
+                            </div>
+                          </a>
+                          <div
+                            class="d-none d-lg-inline-block ml-3"
                           />
                         </div>
+                      </div>
+                      <div
+                        class="card-subtitle text-truncate align-items-center subtitle"
+                      >
                         <div
-                          class="mr-2 text-truncate align-items-baseline d-flex flex-row"
+                          class="d-inline-block d-md-none text-truncate w-100"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                           >
-                            Repo:
-                          </span>
-                          <button
-                            class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="repoLink"
-                          >
-                            halkeye
-                          </button>
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
                         </div>
                         <div
-                          class="text-truncate d-none d-md-inline"
+                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline text-truncate mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="ml-3 d-flex flex-row mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase pr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                halkeye
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                      >
+                        <div
+                          class="text-truncate mb-1"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -578,47 +750,63 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
-                          <div
-                            class="d-none d-lg-inline"
+                          <span
+                            class="text-muted text-uppercase mr-1 ml-3"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1 ml-2"
-                            >
-                              App version: 
-                            </span>
-                            latest
-                          </div>
+                            App Version: 
+                          </span>
+                          latest
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex flex-column align-items-end mb-auto ml-3"
-                  >
-                    <small
-                      class="d-none d-sm-block text-muted mb-2 text-nowrap date"
-                    >
-                      Updated Invalid date
-                    </small>
                     <div
-                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                     >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
+                      <div
+                        class="mb-2"
+                      >
+                        <small
+                          class="text-muted text-nowrap date"
+                        >
+                          Updated Invalid date
+                        </small>
+                      </div>
+                      <div
+                        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      >
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="mt-3"
+                  class="mt-3 overflow-hidden description lineClamp"
                 />
-                <small
-                  class="d-block d-sm-none text-muted text-nowrap text-right mt-3 date"
+                <div
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
                 >
-                  Updated Invalid date
-                </small>
+                  <small
+                    class="text-muted text-nowrap date"
+                  >
+                    Updated Invalid date
+                  </small>
+                  <div
+                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="d-inline d-lg-none mt-2 mt-sm-0"
+                />
               </div>
             </div>
             <div
@@ -628,91 +816,122 @@ exports[`RandomPackages creates snapshot 2`] = `
                 class="card-body d-flex flex-column body"
               >
                 <div
-                  class="d-flex align-items-stretch justify-content-between flex-grow-1 mw-100"
+                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                 >
-                  <a
-                    class="text-decoration-none m-auto link"
-                    href="/packages/chart/billimek/undefined"
-                  >
-                    <div
-                      class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                    >
-                      <img
-                        alt="Logo digitalocean-dyndns"
-                        class="image"
-                        src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
-                        srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
-                      />
-                    </div>
-                  </a>
                   <div
-                    class="d-flex flex-column justify-content-around my-0 my-md-2 ml-3 flex-grow-1 truncateWrapper"
+                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
-                    <div
-                      class="text-truncate card-title mb-0 font-weight-bolder title"
-                    >
-                      <a
-                        class="link"
-                        data-testid="packageLink"
-                        href="/packages/chart/billimek/undefined"
-                      >
-                        <div
-                          class="h6 text-truncate mr-2"
-                        >
-                          digitalocean-dyndns
-                        </div>
-                      </a>
-                    </div>
-                    <div
-                      class="card-subtitle d-flex flex-nowrap subtitle"
+                    <a
+                      class="text-decoration-none link"
+                      href="/packages/chart/billimek/undefined"
                     >
                       <div
-                        class="d-inline-block d-md-none text-truncate w-100"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
-                        <span
-                          class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                        >
-                          <span
-                            class="px-1"
-                          >
-                            /
-                          </span>
-                          billimek
-                        </span>
+                        <img
+                          alt="Logo digitalocean-dyndns"
+                          class="mw-100 mh-100"
+                          src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
+                          srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
+                        />
                       </div>
+                    </a>
+                    <div
+                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                    >
                       <div
-                        class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        class="text-truncate card-title mb-0"
                       >
                         <div
-                          class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                          class="d-flex flex-row align-items-center"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <a
+                            class="link text-truncate"
+                            data-testid="packageLink"
+                            href="/packages/chart/billimek/undefined"
                           >
-                            User:
-                          </span>
-                          <button
-                            class="d-none d-md-inline-block p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="userLink"
+                            <div
+                              class="text-truncate title"
+                            >
+                              digitalocean-dyndns
+                            </div>
+                          </a>
+                          <div
+                            class="d-none d-lg-inline-block ml-3"
                           />
                         </div>
+                      </div>
+                      <div
+                        class="card-subtitle text-truncate align-items-center subtitle"
+                      >
                         <div
-                          class="mr-2 text-truncate align-items-baseline d-flex flex-row"
+                          class="d-inline-block d-md-none text-truncate w-100"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                           >
-                            Repo:
-                          </span>
-                          <button
-                            class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                            data-testid="repoLink"
-                          >
-                            billimek
-                          </button>
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                billimek
+                              </div>
+                            </button>
+                          </div>
                         </div>
                         <div
-                          class="text-truncate d-none d-md-inline"
+                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline text-truncate mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              />
+                            </button>
+                          </div>
+                          <div
+                            class="ml-3 d-flex flex-row mx50"
+                          >
+                            <span
+                              class="text-muted text-uppercase pr-1"
+                            >
+                              Repo: 
+                            </span>
+                            <button
+                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                billimek
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                      >
+                        <div
+                          class="text-truncate mb-1"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -720,47 +939,63 @@ exports[`RandomPackages creates snapshot 2`] = `
                             Version: 
                           </span>
                           -
-                          <div
-                            class="d-none d-lg-inline"
+                          <span
+                            class="text-muted text-uppercase mr-1 ml-3"
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1 ml-2"
-                            >
-                              App version: 
-                            </span>
-                            1.0
-                          </div>
+                            App Version: 
+                          </span>
+                          1.0
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="d-flex flex-column align-items-end mb-auto ml-3"
-                  >
-                    <small
-                      class="d-none d-sm-block text-muted mb-2 text-nowrap date"
-                    >
-                      Updated Invalid date
-                    </small>
                     <div
-                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                     >
-                      <img
-                        alt="Icon"
-                        class="icon"
-                        src="/static/media/helm-chart.svg"
-                      />
+                      <div
+                        class="mb-2"
+                      >
+                        <small
+                          class="text-muted text-nowrap date"
+                        >
+                          Updated Invalid date
+                        </small>
+                      </div>
+                      <div
+                        class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                      >
+                        <img
+                          alt="Icon"
+                          class="icon"
+                          src="/static/media/helm-chart.svg"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="mt-3"
+                  class="mt-3 overflow-hidden description lineClamp"
                 />
-                <small
-                  class="d-block d-sm-none text-muted text-nowrap text-right mt-3 date"
+                <div
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
                 >
-                  Updated Invalid date
-                </small>
+                  <small
+                    class="text-muted text-nowrap date"
+                  >
+                    Updated Invalid date
+                  </small>
+                  <div
+                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="d-inline d-lg-none mt-2 mt-sm-0"
+                />
               </div>
             </div>
           </div>

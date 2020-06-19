@@ -28,6 +28,10 @@
   max-width: 30%;
 }
 
+.versions {
+  max-width: 50%;
+}
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .subtitle {
     font-size: 0.95rem;

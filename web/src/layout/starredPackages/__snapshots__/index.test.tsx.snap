@@ -73,926 +73,15 @@ exports[`StarredPackagesView renders correctly 2`] = `
           class="mx-auto mt-4 wrapper"
         >
           <div
-            class="d-none d-md-block"
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
           >
             <div
-              class="col-12 py-sm-3 py-2"
-              role="listitem"
-            >
-              <div
-                class="card h-100 card"
-              >
-                <a
-                  class="text-decoration-none link"
-                  data-testid="link"
-                  href="/packages/chart/stable/airflow"
-                >
-                  <div
-                    class="card-body d-flex flex-column body"
-                  >
-                    <div
-                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
-                    >
-                      <div
-                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                        >
-                          <img
-                            alt="Logo airflow"
-                            class="image"
-                            src="/image/48066829-7617-43ca-a37f-78d1e7ad1e31"
-                            srcset="/image/48066829-7617-43ca-a37f-78d1e7ad1e31@1x 1x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@2x 2x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@3x 3x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@4x 4x"
-                          />
-                        </div>
-                        <div
-                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="card-title font-weight-bolder mb-0 text-truncate title"
-                          >
-                            <div
-                              class="h5 mb-0 d-flex flex-row align-items-center"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                airflow
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="card-subtitle d-flex flex-nowrap subtitle"
-                          >
-                            <div
-                              class="d-inline-block d-md-none text-truncate w-100"
-                            >
-                              <span
-                                class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                              >
-                                Helm
-                                <span
-                                  class="px-1"
-                                >
-                                  /
-                                </span>
-                                Stable
-                              </span>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
-                            >
-                              <div
-                                class="mr-2 d-flex flex-row align-items-baseline"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate buttonWithEllipsis"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate align-items-baseline d-flex flex-row"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                                  data-testid="repoLink"
-                                >
-                                  Stable
-                                </button>
-                              </div>
-                              <div
-                                class="text-truncate d-none d-md-inline"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Version: 
-                                </span>
-                                6.6.0
-                                <div
-                                  class="d-none d-lg-inline"
-                                >
-                                  <span
-                                    class="text-muted text-uppercase mr-1 ml-2"
-                                  >
-                                    App version: 
-                                  </span>
-                                  1.10.4
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex flex-column mb-auto"
-                        >
-                          <small
-                            class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                          >
-                            Updated Invalid date
-                          </small>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <span
-                              class="badge badge-pill badge-light mr-2 starBadge"
-                            >
-                              <div
-                                class="d-flex align-items-center"
-                              >
-                                <svg
-                                  class="mr-1"
-                                  fill="currentColor"
-                                  height="1em"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 576 512"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                  />
-                                </svg>
-                                <div
-                                  class="starBadgeNumber"
-                                >
-                                  1
-                                </div>
-                              </div>
-                            </span>
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      class="mb-0 card-text overflow-hidden description"
-                    >
-                      Airflow is a platform to programmatically author, schedule and monitor workflows
-                    </p>
-                    <small
-                      class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
-                    >
-                      Updated Invalid date
-                    </small>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div
-              class="col-12 py-sm-3 py-2"
-              role="listitem"
-            >
-              <div
-                class="card h-100 card"
-              >
-                <a
-                  class="text-decoration-none link"
-                  data-testid="link"
-                  href="/packages/chart/incubator/cassandra"
-                >
-                  <div
-                    class="card-body d-flex flex-column body"
-                  >
-                    <div
-                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
-                    >
-                      <div
-                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                        >
-                          <img
-                            alt="Logo cassandra"
-                            class="image"
-                            src="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49"
-                            srcset="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@1x 1x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@2x 2x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@3x 3x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@4x 4x"
-                          />
-                        </div>
-                        <div
-                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="card-title font-weight-bolder mb-0 text-truncate title"
-                          >
-                            <div
-                              class="h5 mb-0 d-flex flex-row align-items-center"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                cassandra
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="card-subtitle d-flex flex-nowrap subtitle"
-                          >
-                            <div
-                              class="d-inline-block d-md-none text-truncate w-100"
-                            >
-                              <span
-                                class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                              >
-                                Helm
-                                <span
-                                  class="px-1"
-                                >
-                                  /
-                                </span>
-                                Incubator
-                              </span>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
-                            >
-                              <div
-                                class="mr-2 d-flex flex-row align-items-baseline"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate buttonWithEllipsis"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate align-items-baseline d-flex flex-row"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                                  data-testid="repoLink"
-                                >
-                                  Incubator
-                                </button>
-                              </div>
-                              <div
-                                class="text-truncate d-none d-md-inline"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Version: 
-                                </span>
-                                0.15.0
-                                <div
-                                  class="d-none d-lg-inline"
-                                >
-                                  <span
-                                    class="text-muted text-uppercase mr-1 ml-2"
-                                  >
-                                    App version: 
-                                  </span>
-                                  3.11.6
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex flex-column mb-auto"
-                        >
-                          <small
-                            class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                          >
-                            Updated Invalid date
-                          </small>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <span
-                              class="badge badge-pill badge-light mr-2 starBadge"
-                            >
-                              <div
-                                class="d-flex align-items-center"
-                              >
-                                <svg
-                                  class="mr-1"
-                                  fill="currentColor"
-                                  height="1em"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 576 512"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                  />
-                                </svg>
-                                <div
-                                  class="starBadgeNumber"
-                                >
-                                  1
-                                </div>
-                              </div>
-                            </span>
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      class="mb-0 card-text overflow-hidden description"
-                    >
-                      Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
-                    </p>
-                    <small
-                      class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
-                    >
-                      Updated Invalid date
-                    </small>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div
-              class="col-12 py-sm-3 py-2"
-              role="listitem"
-            >
-              <div
-                class="card h-100 card"
-              >
-                <a
-                  class="text-decoration-none link"
-                  data-testid="link"
-                  href="/packages/chart/stable/prometheus"
-                >
-                  <div
-                    class="card-body d-flex flex-column body"
-                  >
-                    <div
-                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
-                    >
-                      <div
-                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                        >
-                          <img
-                            alt="Logo prometheus"
-                            class="image"
-                            src="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b"
-                            srcset="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b@1x 1x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@2x 2x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@3x 3x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@4x 4x"
-                          />
-                        </div>
-                        <div
-                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="card-title font-weight-bolder mb-0 text-truncate title"
-                          >
-                            <div
-                              class="h5 mb-0 d-flex flex-row align-items-center"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                prometheus
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="card-subtitle d-flex flex-nowrap subtitle"
-                          >
-                            <div
-                              class="d-inline-block d-md-none text-truncate w-100"
-                            >
-                              <span
-                                class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                              >
-                                Helm
-                                <span
-                                  class="px-1"
-                                >
-                                  /
-                                </span>
-                                Stable
-                              </span>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
-                            >
-                              <div
-                                class="mr-2 d-flex flex-row align-items-baseline"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate buttonWithEllipsis"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Helm
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="mr-2 text-truncate align-items-baseline d-flex flex-row"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Repo:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 mw-100 link"
-                                  data-testid="repoLink"
-                                >
-                                  Stable
-                                </button>
-                              </div>
-                              <div
-                                class="text-truncate d-none d-md-inline"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Version: 
-                                </span>
-                                11.1.0
-                                <div
-                                  class="d-none d-lg-inline"
-                                >
-                                  <span
-                                    class="text-muted text-uppercase mr-1 ml-2"
-                                  >
-                                    App version: 
-                                  </span>
-                                  2.16.0
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex flex-column mb-auto"
-                        >
-                          <small
-                            class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                          >
-                            Updated Invalid date
-                          </small>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <span
-                              class="badge badge-pill badge-light mr-2 starBadge"
-                            >
-                              <div
-                                class="d-flex align-items-center"
-                              >
-                                <svg
-                                  class="mr-1"
-                                  fill="currentColor"
-                                  height="1em"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 576 512"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                  />
-                                </svg>
-                                <div
-                                  class="starBadgeNumber"
-                                >
-                                  2
-                                </div>
-                              </div>
-                            </span>
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/helm-chart.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      class="mb-0 card-text overflow-hidden description"
-                    >
-                      Prometheus is a monitoring system and time series database.
-                    </p>
-                    <small
-                      class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
-                    >
-                      Updated Invalid date
-                    </small>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div
-              class="col-12 py-sm-3 py-2"
-              role="listitem"
-            >
-              <div
-                class="card h-100 card"
-              >
-                <a
-                  class="text-decoration-none link"
-                  data-testid="link"
-                  href="/packages/falco/traefik"
-                >
-                  <div
-                    class="card-body d-flex flex-column body"
-                  >
-                    <div
-                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
-                    >
-                      <div
-                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                        >
-                          <img
-                            alt="Logo Traefik"
-                            class="image"
-                            src="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54"
-                            srcset="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@1x 1x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@2x 2x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@3x 3x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@4x 4x"
-                          />
-                        </div>
-                        <div
-                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="card-title font-weight-bolder mb-0 text-truncate title"
-                          >
-                            <div
-                              class="h5 mb-0 d-flex flex-row align-items-center"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Traefik
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="card-subtitle d-flex flex-nowrap subtitle"
-                          >
-                            <div
-                              class="d-inline-block d-md-none text-truncate w-100"
-                            >
-                              <span
-                                class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                              >
-                                Falco
-                              </span>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
-                            >
-                              <div
-                                class="mr-2 d-flex flex-row align-items-baseline"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate buttonWithEllipsis"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="text-truncate d-none d-md-inline"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Version: 
-                                </span>
-                                1.0.0
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex flex-column mb-auto"
-                        >
-                          <small
-                            class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                          >
-                            Updated Invalid date
-                          </small>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <span
-                              class="badge badge-pill badge-light mr-2 starBadge"
-                            >
-                              <div
-                                class="d-flex align-items-center"
-                              >
-                                <svg
-                                  class="mr-1"
-                                  fill="currentColor"
-                                  height="1em"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 576 512"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                  />
-                                </svg>
-                                <div
-                                  class="starBadgeNumber"
-                                >
-                                  2
-                                </div>
-                              </div>
-                            </span>
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/falco-rules.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      class="mb-0 card-text overflow-hidden description"
-                    >
-                      Falco rules for securing Traefik
-                    </p>
-                    <small
-                      class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
-                    >
-                      Updated Invalid date
-                    </small>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div
-              class="col-12 py-sm-3 py-2"
-              role="listitem"
-            >
-              <div
-                class="card h-100 card"
-              >
-                <a
-                  class="text-decoration-none link"
-                  data-testid="link"
-                  href="/packages/opa/trusted-registry-images"
-                >
-                  <div
-                    class="card-body d-flex flex-column body"
-                  >
-                    <div
-                      class="d-flex align-items-start justify-content-between mb-3 flex-grow-1 mw-100"
-                    >
-                      <div
-                        class="d-flex align-self-stretch flex-grow-1 truncateWrapper"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
-                        >
-                          <img
-                            alt="Logo Trusted Registry Images"
-                            class="image"
-                            src="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35"
-                            srcset="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35@1x 1x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@2x 2x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@3x 3x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@4x 4x"
-                          />
-                        </div>
-                        <div
-                          class="mx-3 d-flex flex-column justify-content-around flex-grow-1 truncateWrapper"
-                        >
-                          <div
-                            class="card-title font-weight-bolder mb-0 text-truncate title"
-                          >
-                            <div
-                              class="h5 mb-0 d-flex flex-row align-items-center"
-                            >
-                              <div
-                                class="text-truncate"
-                              >
-                                Trusted Registry Images
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            class="card-subtitle d-flex flex-nowrap subtitle"
-                          >
-                            <div
-                              class="d-inline-block d-md-none text-truncate w-100"
-                            >
-                              <span
-                                class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
-                              >
-                                Falco
-                              </span>
-                            </div>
-                            <div
-                              class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
-                            >
-                              <div
-                                class="mr-2 d-flex flex-row align-items-baseline"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate buttonWithEllipsis"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
-                              <div
-                                class="text-truncate d-none d-md-inline"
-                              >
-                                <span
-                                  class="text-muted text-uppercase mr-1"
-                                >
-                                  Version: 
-                                </span>
-                                0.1.0
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="d-flex flex-column mb-auto"
-                        >
-                          <small
-                            class="d-none d-lg-block text-muted text-nowrap mb-2 date"
-                          >
-                            Updated Invalid date
-                          </small>
-                          <div
-                            class="d-flex align-items-start text-uppercase ml-auto kind"
-                          >
-                            <span
-                              class="badge badge-pill badge-light mr-2 starBadge"
-                            >
-                              <div
-                                class="d-flex align-items-center"
-                              >
-                                <svg
-                                  class="mr-1"
-                                  fill="currentColor"
-                                  height="1em"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 576 512"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                  />
-                                </svg>
-                                <div
-                                  class="starBadgeNumber"
-                                >
-                                  2
-                                </div>
-                              </div>
-                            </span>
-                            <img
-                              alt="Icon"
-                              class="icon"
-                              src="/static/media/opa-policies.svg"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      class="mb-0 card-text overflow-hidden description"
-                    >
-                      Open Policy Agent policy for running only images from a trusted repository
-                    </p>
-                    <small
-                      class="d-block d-lg-none text-muted text-nowrap text-right mt-3 date"
-                    >
-                      Updated Invalid date
-                    </small>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="d-block d-md-none"
-          >
-            <div
-              class="card mb-3 w-100 card"
+              class="card h-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="mobilePackageLink"
+                data-testid="link"
                 href="/packages/chart/stable/airflow"
               >
                 <div
@@ -1002,101 +91,122 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo airflow"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/48066829-7617-43ca-a37f-78d1e7ad1e31"
                           srcset="/image/48066829-7617-43ca-a37f-78d1e7ad1e31@1x 1x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@2x 2x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@3x 3x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@4x 4x"
                         />
                       </div>
                       <div
-                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="h-50"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h-100 d-flex flex-row justify-content-between"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                              class="text-truncate title"
+                            >
+                              airflow
+                            </div>
+                            <div
+                              class="d-none d-lg-inline-block ml-3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="d-inline-block d-md-none text-truncate w-100"
+                          >
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Stable
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
                               <div
-                                class="h6 text-truncate mr-2"
+                                class="mr-0 d-flex flex-row mw-100"
                               >
-                                airflow
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
+                                </div>
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
                               </div>
                             </div>
                             <div
-                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                              class="ml-3 d-flex flex-row mx50"
                             >
                               <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
+                                class="text-muted text-uppercase pr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="d-flex align-items-center"
+                                  class="text-truncate"
                                 >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div>
-                                    1
-                                  </div>
+                                  Stable
                                 </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
+                              </button>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              Repo: 
-                            </span>
-                            <div
-                              class="p-0 border-0 text-truncate text-dark mx50"
-                            >
-                              Helm
-                            </div>
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 text-dark mx50"
-                            >
-                              Stable
-                            </div>
-                          </div>
-                          <div
-                            class="text-truncate"
+                            class="text-truncate mb-1"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1104,34 +214,129 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Version: 
                             </span>
                             6.6.0
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            1.10.4
                           </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
+                      >
+                        <div
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                        >
+                          <span
+                            class="badge badge-pill badge-light mr-2 starBadge"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                class="mr-1"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                />
+                              </svg>
+                              <div>
+                                1
+                              </div>
+                            </div>
+                          </span>
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/helm-chart.svg"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="mt-2"
+                    class="mt-3 overflow-hidden description lineClamp"
+                  >
+                    Airflow is a platform to programmatically author, schedule and monitor workflows
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
                     <small
-                      class="mb-0 description"
+                      class="text-muted text-nowrap date"
                     >
-                      Airflow is a platform to programmatically author, schedule and monitor workflows
+                      Updated Invalid date
                     </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <span
+                        class="badge badge-pill badge-light mr-2 starBadge"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <svg
+                            class="mr-1"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 576 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                            />
+                          </svg>
+                          <div>
+                            1
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/helm-chart.svg"
+                      />
+                    </div>
                   </div>
-                  <small
-                    class="text-muted text-right text-nowrap mt-3 date"
-                  >
-                    Updated Invalid date
-                  </small>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
+          </div>
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
             <div
-              class="card mb-3 w-100 card"
+              class="card h-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="mobilePackageLink"
+                data-testid="link"
                 href="/packages/chart/incubator/cassandra"
               >
                 <div
@@ -1141,101 +346,122 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo cassandra"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49"
                           srcset="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@1x 1x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@2x 2x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@3x 3x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@4x 4x"
                         />
                       </div>
                       <div
-                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="h-50"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h-100 d-flex flex-row justify-content-between"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                              class="text-truncate title"
+                            >
+                              cassandra
+                            </div>
+                            <div
+                              class="d-none d-lg-inline-block ml-3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="d-inline-block d-md-none text-truncate w-100"
+                          >
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Incubator
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
                               <div
-                                class="h6 text-truncate mr-2"
+                                class="mr-0 d-flex flex-row mw-100"
                               >
-                                cassandra
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
+                                </div>
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
                               </div>
                             </div>
                             <div
-                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                              class="ml-3 d-flex flex-row mx50"
                             >
                               <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
+                                class="text-muted text-uppercase pr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="d-flex align-items-center"
+                                  class="text-truncate"
                                 >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div>
-                                    1
-                                  </div>
+                                  Incubator
                                 </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
+                              </button>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              Repo: 
-                            </span>
-                            <div
-                              class="p-0 border-0 text-truncate text-dark mx50"
-                            >
-                              Helm
-                            </div>
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 text-dark mx50"
-                            >
-                              Incubator
-                            </div>
-                          </div>
-                          <div
-                            class="text-truncate"
+                            class="text-truncate mb-1"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1243,34 +469,129 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Version: 
                             </span>
                             0.15.0
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            3.11.6
                           </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
+                      >
+                        <div
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                        >
+                          <span
+                            class="badge badge-pill badge-light mr-2 starBadge"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                class="mr-1"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                />
+                              </svg>
+                              <div>
+                                1
+                              </div>
+                            </div>
+                          </span>
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/helm-chart.svg"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="mt-2"
+                    class="mt-3 overflow-hidden description lineClamp"
+                  >
+                    Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
                     <small
-                      class="mb-0 description"
+                      class="text-muted text-nowrap date"
                     >
-                      Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
+                      Updated Invalid date
                     </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <span
+                        class="badge badge-pill badge-light mr-2 starBadge"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <svg
+                            class="mr-1"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 576 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                            />
+                          </svg>
+                          <div>
+                            1
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/helm-chart.svg"
+                      />
+                    </div>
                   </div>
-                  <small
-                    class="text-muted text-right text-nowrap mt-3 date"
-                  >
-                    Updated Invalid date
-                  </small>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
+          </div>
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
             <div
-              class="card mb-3 w-100 card"
+              class="card h-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="mobilePackageLink"
+                data-testid="link"
                 href="/packages/chart/stable/prometheus"
               >
                 <div
@@ -1280,101 +601,122 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo prometheus"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b"
                           srcset="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b@1x 1x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@2x 2x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@3x 3x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@4x 4x"
                         />
                       </div>
                       <div
-                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="h-50"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h-100 d-flex flex-row justify-content-between"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                              class="text-truncate title"
+                            >
+                              prometheus
+                            </div>
+                            <div
+                              class="d-none d-lg-inline-block ml-3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="d-inline-block d-md-none text-truncate w-100"
+                          >
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  Stable
+                                </div>
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
                               <div
-                                class="h6 text-truncate mr-2"
+                                class="mr-0 d-flex flex-row mw-100"
                               >
-                                prometheus
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
+                                </div>
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
                               </div>
                             </div>
                             <div
-                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                              class="ml-3 d-flex flex-row mx50"
                             >
                               <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
+                                class="text-muted text-uppercase pr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="d-flex align-items-center"
+                                  class="text-truncate"
                                 >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div>
-                                    2
-                                  </div>
+                                  Stable
                                 </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/helm-chart.svg"
-                              />
+                              </button>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
                         >
                           <div
-                            class="d-flex flex-row align-items-baseline text-truncate"
-                          >
-                            <span
-                              class="text-muted text-uppercase mr-1"
-                            >
-                              Repo: 
-                            </span>
-                            <div
-                              class="p-0 border-0 text-truncate text-dark mx50"
-                            >
-                              Helm
-                            </div>
-                            <span
-                              class="px-1"
-                            >
-                              /
-                            </span>
-                            <div
-                              class="text-truncate p-0 border-0 text-dark mx50"
-                            >
-                              Stable
-                            </div>
-                          </div>
-                          <div
-                            class="text-truncate"
+                            class="text-truncate mb-1"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1382,34 +724,129 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Version: 
                             </span>
                             11.1.0
+                            <span
+                              class="text-muted text-uppercase mr-1 ml-3"
+                            >
+                              App Version: 
+                            </span>
+                            2.16.0
                           </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
+                      >
+                        <div
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                        >
+                          <span
+                            class="badge badge-pill badge-light mr-2 starBadge"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                class="mr-1"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                />
+                              </svg>
+                              <div>
+                                2
+                              </div>
+                            </div>
+                          </span>
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/helm-chart.svg"
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="mt-2"
+                    class="mt-3 overflow-hidden description lineClamp"
+                  >
+                    Prometheus is a monitoring system and time series database.
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
                     <small
-                      class="mb-0 description"
+                      class="text-muted text-nowrap date"
                     >
-                      Prometheus is a monitoring system and time series database.
+                      Updated Invalid date
                     </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <span
+                        class="badge badge-pill badge-light mr-2 starBadge"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <svg
+                            class="mr-1"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 576 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                            />
+                          </svg>
+                          <div>
+                            2
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/helm-chart.svg"
+                      />
+                    </div>
                   </div>
-                  <small
-                    class="text-muted text-right text-nowrap mt-3 date"
-                  >
-                    Updated Invalid date
-                  </small>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
+          </div>
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
             <div
-              class="card mb-3 w-100 card"
+              class="card h-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="mobilePackageLink"
+                data-testid="link"
                 href="/packages/falco/traefik"
               >
                 <div
@@ -1419,87 +856,116 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo Traefik"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54"
                           srcset="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@1x 1x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@2x 2x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@3x 3x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@4x 4x"
                         />
                       </div>
                       <div
-                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="h-50"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h-100 d-flex flex-row justify-content-between"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                              class="text-truncate title"
                             >
-                              <div
-                                class="h6 text-truncate mr-2"
-                              >
-                                Traefik
-                              </div>
+                              Traefik
                             </div>
                             <div
-                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                              class="d-none d-lg-inline-block ml-3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="d-inline-block d-md-none text-truncate w-100"
+                          >
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
+                              <div
+                                class="mr-0 d-flex text-truncate"
                               >
                                 <div
-                                  class="d-flex align-items-center"
+                                  class="position-absolute"
                                 >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div>
-                                    2
-                                  </div>
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
                                 </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/falco-rules.svg"
-                              />
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Falco
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
+                            >
+                              <div
+                                class="mr-0 d-flex flex-row mw-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
+                                </div>
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Falco
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Org: 
-                          </span>
                           <div
-                            class="d-inline text-truncate text-dark mx50"
-                          >
-                            Falco
-                          </div>
-                          <div
-                            class="text-truncate"
+                            class="text-truncate mb-1"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1510,31 +976,120 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
+                      >
+                        <div
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                        >
+                          <span
+                            class="badge badge-pill badge-light mr-2 starBadge"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                class="mr-1"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                />
+                              </svg>
+                              <div>
+                                2
+                              </div>
+                            </div>
+                          </span>
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/falco-rules.svg"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
-                    class="mt-2"
+                    class="mt-3 overflow-hidden description lineClamp"
+                  >
+                    Falco rules for securing Traefik
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
                     <small
-                      class="mb-0 description"
+                      class="text-muted text-nowrap date"
                     >
-                      Falco rules for securing Traefik
+                      Updated Invalid date
                     </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <span
+                        class="badge badge-pill badge-light mr-2 starBadge"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <svg
+                            class="mr-1"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 576 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                            />
+                          </svg>
+                          <div>
+                            2
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/falco-rules.svg"
+                      />
+                    </div>
                   </div>
-                  <small
-                    class="text-muted text-right text-nowrap mt-3 date"
-                  >
-                    Updated Invalid date
-                  </small>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
+          </div>
+          <div
+            class="col-12 py-sm-3 py-2"
+            role="listitem"
+          >
             <div
-              class="card mb-3 w-100 card"
+              class="card h-100 card"
             >
               <a
                 class="text-decoration-none link"
-                data-testid="mobilePackageLink"
+                data-testid="link"
                 href="/packages/opa/trusted-registry-images"
               >
                 <div
@@ -1544,87 +1099,116 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
                   >
                     <div
-                      class="d-flex align-items-center flex-grow-1 truncateWrapper"
+                      class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
                       >
                         <img
                           alt="Logo Trusted Registry Images"
-                          class="image"
+                          class="mw-100 mh-100"
                           src="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35"
                           srcset="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35@1x 1x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@2x 2x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@3x 3x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@4x 4x"
                         />
                       </div>
                       <div
-                        class="ml-3 h-100 flex-grow-1 truncateWrapper"
+                        class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                       >
                         <div
-                          class="h-50"
+                          class="text-truncate card-title mb-0"
                         >
                           <div
-                            class="h-100 d-flex flex-row justify-content-between"
+                            class="d-flex flex-row align-items-center"
                           >
                             <div
-                              class="align-self-end text-truncate card-title mb-0 font-weight-bolder title"
+                              class="text-truncate title"
                             >
-                              <div
-                                class="h6 text-truncate mr-2"
-                              >
-                                Trusted Registry Images
-                              </div>
+                              Trusted Registry Images
                             </div>
                             <div
-                              class="align-self-start d-flex align-items-center text-uppercase kind"
+                              class="d-none d-lg-inline-block ml-3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="card-subtitle text-truncate align-items-center subtitle"
+                        >
+                          <div
+                            class="d-inline-block d-md-none text-truncate w-100"
+                          >
+                            <div
+                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
-                              <span
-                                class="badge badge-pill badge-light mr-2 starBadge"
+                              <div
+                                class="mr-0 d-flex text-truncate"
                               >
                                 <div
-                                  class="d-flex align-items-center"
+                                  class="position-absolute"
                                 >
-                                  <svg
-                                    class="mr-1"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 576 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                                    />
-                                  </svg>
-                                  <div>
-                                    2
-                                  </div>
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
                                 </div>
-                              </span>
-                              <img
-                                alt="Icon"
-                                class="icon"
-                                src="/static/media/opa-policies.svg"
-                              />
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Falco
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate mx50"
+                            >
+                              <div
+                                class="mr-0 d-flex flex-row mw-100"
+                              >
+                                <div
+                                  class="position-absolute"
+                                >
+                                  <div
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="orgInfoDropdown"
+                                  />
+                                </div>
+                                <span
+                                  class="text-muted text-uppercase mr-1 undefined"
+                                >
+                                  Org:
+                                </span>
+                                <button
+                                  class="p-0 border-0 text-dark link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Falco
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate h-50 align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            Org: 
-                          </span>
                           <div
-                            class="d-inline text-truncate text-dark mx50"
-                          >
-                            Falco
-                          </div>
-                          <div
-                            class="text-truncate"
+                            class="text-truncate mb-1"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1635,22 +1219,106 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="d-none d-lg-flex flex-column align-items-end mb-auto ml-3"
+                      >
+                        <div
+                          class="mb-2"
+                        >
+                          <small
+                            class="text-muted text-nowrap date"
+                          >
+                            Updated Invalid date
+                          </small>
+                        </div>
+                        <div
+                          class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                        >
+                          <span
+                            class="badge badge-pill badge-light mr-2 starBadge"
+                          >
+                            <div
+                              class="d-flex align-items-center"
+                            >
+                              <svg
+                                class="mr-1"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                                />
+                              </svg>
+                              <div>
+                                2
+                              </div>
+                            </div>
+                          </span>
+                          <img
+                            alt="Icon"
+                            class="icon"
+                            src="/static/media/opa-policies.svg"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
-                    class="mt-2"
+                    class="mt-3 overflow-hidden description lineClamp"
+                  >
+                    Open Policy Agent policy for running only images from a trusted repository
+                  </div>
+                  <div
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
                   >
                     <small
-                      class="mb-0 description"
+                      class="text-muted text-nowrap date"
                     >
-                      Open Policy Agent policy for running only images from a trusted repository
+                      Updated Invalid date
                     </small>
+                    <div
+                      class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
+                    >
+                      <span
+                        class="badge badge-pill badge-light mr-2 starBadge"
+                      >
+                        <div
+                          class="d-flex align-items-center"
+                        >
+                          <svg
+                            class="mr-1"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 576 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
+                            />
+                          </svg>
+                          <div>
+                            2
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        alt="Icon"
+                        class="icon"
+                        src="/static/media/opa-policies.svg"
+                      />
+                    </div>
                   </div>
-                  <small
-                    class="text-muted text-right text-nowrap mt-3 date"
-                  >
-                    Updated Invalid date
-                  </small>
+                  <div
+                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                  />
                 </div>
               </a>
             </div>
