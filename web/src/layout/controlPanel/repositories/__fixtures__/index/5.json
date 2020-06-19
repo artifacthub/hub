@@ -1,0 +1,32 @@
+[
+  {
+    "kind": 0,
+    "repository_id": "test1",
+    "name": "test1",
+    "display_name": null,
+    "url": "http://test1.com",
+    "userAlias": "user",
+    "last_tracking_ts": null,
+    "last_tracking_errors": null
+  },
+  {
+    "kind": 1,
+    "repository_id": "test2",
+    "name": "test2",
+    "display_name": null,
+    "userAlias": "user1",
+    "url": "http://test2.com",
+    "last_tracking_ts": null,
+    "last_tracking_errors": null
+  },
+  {
+    "kind": 0,
+    "repository_id": "test3",
+    "name": "test3",
+    "display_name": null,
+    "userAlias": "user",
+    "url": "http://test3.com",
+    "last_tracking_ts": null,
+    "last_tracking_errors": null
+  }
+]

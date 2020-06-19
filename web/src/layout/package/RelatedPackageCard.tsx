@@ -1,12 +1,10 @@
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Package, PackageKind } from '../../types';
+import { Package } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import Image from '../common/Image';
-import PackageIcon from '../common/PackageIcon';
+import RepositoryIcon from '../common/RepositoryIcon';
 import styles from './RelatedPackageCard.module.css';
 
 interface Props {
@@ -15,10 +13,11 @@ interface Props {
 
 const RelatedPackageCard = (props: Props) => {
   const isRepeatedRepoName = (): boolean => {
-    if (props.package.kind !== PackageKind.Chart || !isNull(props.package.userAlias)) return false;
     return (
-      (props.package.chartRepository!.displayName || props.package.chartRepository!.name) ===
-      (props.package.organizationDisplayName || props.package.organizationName)
+      (props.package.repository.displayName || props.package.repository.name) ===
+      (props.package.repository.userAlias ||
+        props.package.repository.organizationDisplayName ||
+        props.package.repository.organizationName)
     );
   };
 
@@ -51,66 +50,25 @@ const RelatedPackageCard = (props: Props) => {
                       {props.package.displayName || props.package.name}
                     </div>
                     <div className={`card-subtitle align-items-center text-muted ${styles.subtitle}`}>
-                      {(() => {
-                        switch (props.package.kind) {
-                          case PackageKind.Chart:
-                            return (
-                              <div className="w-100">
-                                <div className="text-truncate">
-                                  {!isUndefined(props.package.organizationName) &&
-                                    props.package.organizationName &&
-                                    !isRepeatedRepoName() && (
-                                      <>
-                                        {props.package.organizationDisplayName || props.package.organizationName}
-                                        <span className="px-1">/</span>
-                                      </>
-                                    )}
+                      <div className="w-100">
+                        <div className="text-truncate">
+                          {!isRepeatedRepoName() && (
+                            <>
+                              {props.package.repository.userAlias ||
+                                props.package.repository.organizationDisplayName ||
+                                props.package.repository.organizationName}
+                              <span className="px-1">/</span>
+                            </>
+                          )}
 
-                                  {!isNull(props.package.userAlias) && (
-                                    <>
-                                      {props.package.userAlias}
-                                      <span className="px-1">/</span>
-                                    </>
-                                  )}
-
-                                  {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                                </div>
-                              </div>
-                            );
-
-                          case PackageKind.Falco:
-                          case PackageKind.Opa:
-                            return (
-                              <div className="w-100">
-                                <div className="text-truncate">
-                                  {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                                    <>
-                                      <div className={`d-inline text-truncate ${styles.mx50}`}>
-                                        {props.package.organizationDisplayName || props.package.organizationName}
-                                      </div>
-                                    </>
-                                  )}
-
-                                  {!isNull(props.package.userAlias) && (
-                                    <div className="mr-2 text-truncate">
-                                      <div className={`d-inline text-truncate ${styles.mx50}`}>
-                                        {props.package.userAlias}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            );
-
-                          default:
-                            return null;
-                        }
-                      })()}
+                          {props.package.repository.displayName || props.package.repository.name}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   <div className={`align-self-start d-flex align-items-center text-uppercase ${styles.kind}`}>
-                    <PackageIcon className={styles.icon} kind={props.package.kind} />
+                    <RepositoryIcon className={styles.icon} kind={props.package.repository.kind} />
                   </div>
                 </div>
               </div>

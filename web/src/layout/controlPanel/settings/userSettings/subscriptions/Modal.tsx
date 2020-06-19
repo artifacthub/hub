@@ -9,7 +9,7 @@ import alertDispatcher from '../../../../../utils/alertDispatcher';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
 import Image from '../../../../common/Image';
 import Modal from '../../../../common/Modal';
-import PackageIcon from '../../../../common/PackageIcon';
+import RepositoryIcon from '../../../../common/RepositoryIcon';
 import SearchTypeahead from '../../../../common/SearchTypeahead';
 import styles from './Modal.module.css';
 
@@ -154,7 +154,7 @@ const SubscriptionModal = (props: Props) => {
                 <div className="flex-grow-1 text-truncate py-2">
                   <div className="d-flex flex-row align-items-center h-100 text-truncate">
                     <div className="d-none d-md-inline">
-                      <PackageIcon kind={packageItem.kind} className={`mx-3 ${styles.icon}`} />
+                      <RepositoryIcon kind={packageItem.repository.kind} className={`mx-3 ${styles.icon}`} />
                     </div>
 
                     <div
@@ -172,16 +172,16 @@ const SubscriptionModal = (props: Props) => {
                     </div>
 
                     <div className="px-2 ml-auto w-50 text-dark text-truncate">
-                      {packageItem.userAlias || packageItem.organizationDisplayName || packageItem.organizationName}
-                      {!isNull(packageItem.chartRepository) && (
-                        <small className="ml-2">
-                          (
-                          <small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>
-                            Repo:{' '}
-                          </small>
-                          {packageItem.chartRepository!.displayName || packageItem.chartRepository!.name})
+                      {packageItem.repository.userAlias ||
+                        packageItem.repository.organizationDisplayName ||
+                        packageItem.repository.organizationName}
+                      <small className="ml-2">
+                        (
+                        <small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>
+                          Repo:{' '}
                         </small>
-                      )}
+                        {packageItem.repository.displayName || packageItem.repository.name})
+                      </small>
                     </div>
                   </div>
                 </div>

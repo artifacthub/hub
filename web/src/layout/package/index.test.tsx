@@ -30,7 +30,8 @@ jest.mock('react-router-dom', () => ({
 const defaultProps = {
   isLoadingPackage: false,
   setIsLoadingPackage: mockIsLoading,
-  repoName: 'repoName',
+  repositoryKind: 'helm',
+  repositoryName: 'repoName',
   packageName: 'packageName',
   searchUrlReferer: undefined,
 };
@@ -186,7 +187,7 @@ describe('Package index', () => {
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe(`?page=1&repo=${mockPackage.chartRepository?.name}`);
+      expect(window.location.search).toBe(`?page=1&repo=${mockPackage.repository.name}`);
 
       await waitFor(() => {});
     });

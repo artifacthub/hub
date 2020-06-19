@@ -51,7 +51,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                   <span
                     class="d-none d-md-inline ml-2 navTitle"
                   >
-                    Packages
+                    Repositories
                   </span>
                 </div>
               </button>

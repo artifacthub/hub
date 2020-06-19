@@ -21,14 +21,14 @@ const tests: Test[] = [
   {
     data: {
       context: 'user',
-      sectionToCheck: 'packages',
+      sectionToCheck: 'repositories',
     },
     result: true,
   },
   {
     data: {
       context: 'org',
-      sectionToCheck: 'packages',
+      sectionToCheck: 'repositories',
     },
     result: true,
   },

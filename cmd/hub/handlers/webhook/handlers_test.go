@@ -506,11 +506,14 @@ func TestTriggerTest(t *testing.T) {
 	"datacontenttype" : "application/json",
 	"data" : {
 		"package": {
-			"kind": "helm-chart",
 			"name": "sample-package",
 			"version": "1.0.0",
-			"publisher": "artifacthub",
-			"url": "https://artifacthub.io/packages/chart/artifacthub/sample-package"
+			"url": "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
+			"repository": {
+				"kind": "helm",
+				"name": "repo1",
+				"publisher": "org1"
+			}
 		}
 	}
 }

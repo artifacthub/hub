@@ -15,7 +15,7 @@ tags:
     description: ""
   - name: Organizations
     description: ""
-  - name: Chart repositories
+  - name: Repositories
     description: ""
   - name: Packages
     description: ""
@@ -365,14 +365,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /chart-repositories/user:
+  /repositories/user:
     get:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Get user's chart repositories
+      summary: Get user's repositories
       responses:
         "200":
           description: ""
@@ -381,7 +381,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ChartRepository"
+                  $ref: "#/components/schemas/Repository"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -390,17 +390,17 @@ paths:
           $ref: "#/components/responses/InternalServerError"
     post:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Add user's chart repository
+      summary: Add user's repository
       requestBody:
         description: ""
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChartRepositorySummary"
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -412,14 +412,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/chart-repositories/user/{repoName}":
+  "/repositories/user/{repoName}":
     put:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Update user's chart repository
+      summary: Update user's repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
       requestBody:
@@ -427,7 +427,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChartRepositorySummary"
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -443,11 +443,11 @@ paths:
           $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Delete user's chart repository
+      summary: Delete user's repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
       responses:
@@ -461,14 +461,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/chart-repositories/user/{repoName}/transfer":
+  "/repositories/user/{repoName}/transfer":
     put:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Transfer user's chart repository ownership to an organization
+      summary: Transfer user's repository ownership to an organization
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/OrgNameToTransferParam"
@@ -483,14 +483,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/chart-repositories/org/{orgName}":
+  "/repositories/org/{orgName}":
     get:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Get organization's chart repositories
+      summary: Get organization's Repositories
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
       responses:
@@ -501,7 +501,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ChartRepository"
+                  $ref: "#/components/schemas/Repository"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -510,11 +510,11 @@ paths:
           $ref: "#/components/responses/InternalServerError"
     post:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Add organization's chart repository
+      summary: Add organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
       requestBody:
@@ -522,7 +522,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChartRepositorySummary"
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -536,23 +536,23 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/chart-repositories/org/{orgName}/{repoName}":
+  "/repositories/org/{orgName}/{repoName}":
     put:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Update organization's chart repository
+      summary: Update organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"
       requestBody:
-        description: Chart repository
+        description: Repository
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChartRepositorySummary"
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -568,11 +568,11 @@ paths:
           $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Delete organization's chart repository
+      summary: Delete organization's repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"
@@ -587,14 +587,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/chart-repositories/org/{orgName}/{repoName}/transfer":
+  "/repositories/org/{orgName}/{repoName}/transfer":
     put:
       tags:
-        - Chart repositories
+        - Repositories
       security:
         - ApiKeyAuth: []
         - CookieAuth: []
-      summary: Transfer organization's chart repository to a different owner
+      summary: Transfer organization's repository to a different owner
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"
@@ -659,10 +659,10 @@ paths:
         - $ref: "#/components/parameters/LimitParam"
         - $ref: "#/components/parameters/FacetsParam"
         - $ref: "#/components/parameters/TextParam"
-        - $ref: "#/components/parameters/PackageKindsListParam"
+        - $ref: "#/components/parameters/RepositoryKindsListParam"
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
-        - $ref: "#/components/parameters/ChartRepositoriesListParam"
+        - $ref: "#/components/parameters/RepositoriesListParam"
         - $ref: "#/components/parameters/DeprecatedParam"
       responses:
         "200":
@@ -699,7 +699,6 @@ paths:
                     data:
                       packages:
                         - package_id: a9c77b9a-2cd1-4a8f-b9e8-6b8f94e13407
-                          kind: 0
                           name: artifact-hub
                           normalized_name: artifact-hub
                           logo_image_id: 0f5488e2-da57-486b-a20f-bfe746ed3e23
@@ -710,15 +709,15 @@ paths:
                           app_version: 0.1.0
                           deprecated: false
                           signed: null
-                          user_alias: null
-                          organization_name: artifacthub
-                          organization_display_name: Artifact Hub
-                          chart_repository:
+                          repository:
+                            kind: 0
                             name: artifact-hub
                             display_name: Artifact Hub
-                            chart_repository_id: a032a436-3568-4970-804a-2780f5e9d231
+                            repository_id: a032a436-3568-4970-804a-2780f5e9d231
+                            user_alias: null
+                            organization_name: artifacthub
+                            organization_display_name: Artifact Hub
                         - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
-                          kind: 0
                           name: sentry-kubernetes
                           normalized_name: sentry-kubernetes
                           logo_image_id: 55f2ed75-015d-4edd-9990-11fb2ffcae9e
@@ -729,15 +728,15 @@ paths:
                           app_version: latest
                           deprecated: false
                           signed: null
-                          user_alias: null
-                          organization_name: helm
-                          organization_display_name: Helm
-                          chart_repository:
+                          repository:
+                            kind: 0
                             name: incubator
                             display_name: Incubator
-                            chart_repository_id: dba459d0-6beb-451a-b15a-52d67cc93fa0
+                            repository_id: dba459d0-6beb-451a-b15a-52d67cc93fa0
+                            user_alias: null
+                            organization_name: helm
+                            organization_display_name: Helm
                         - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
-                          kind: 0
                           name: etcd-operator
                           normalized_name: etcd-operator
                           logo_image_id: 5gt2ed75-015d-40dd-9990-11fb2tgcae9e
@@ -748,13 +747,14 @@ paths:
                           app_version: 0.9.4
                           deprecated: false
                           signed: null
-                          user_alias: null
-                          organization_name: helm
-                          organization_display_name: Helm
-                          chart_repository:
+                          repository:
+                            kind: 0
                             name: stable
                             display_name: Stable
-                            chart_repository_id: dba484d0-6beb-451s-i85a-52d67iu73fa0
+                            repository_id: dba484d0-6beb-451s-i85a-52d67iu73fa0
+                            user_alias: null
+                            organization_name: helm
+                            organization_display_name: Helm
                       facets:
                         - title: Organization
                           filter_key: org
@@ -771,7 +771,7 @@ paths:
                             - id: 0
                               name: Helm charts
                               total: 54
-                        - title: Chart Repository
+                        - title: Repository
                           filter_key: repo
                           options:
                             - id: stable
@@ -816,12 +816,13 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/chart/{repoName}/{packageName}":
+  "/packages/{^helm$|^falco$|^opa$}/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/PackageNameParam"
       responses:
@@ -837,56 +838,14 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/chart/{repoName}/{packageName}/{version}":
+  "/packages/{^helm$|^falco$|^opa$}/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
         - $ref: "#/components/parameters/RepoNameParam"
-        - $ref: "#/components/parameters/PackageNameParam"
-        - $ref: "#/components/parameters/VersionParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Package"
-        "404":
-          $ref: "#/components/responses/NotFoundResponse"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-  "/packages/{^falco$|^opa$}/{packageName}":
-    get:
-      tags:
-        - Packages
-      summary: Get package details
-      parameters:
-        - $ref: "#/components/parameters/FalcoOPAParam"
-        - $ref: "#/components/parameters/PackageNameParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Package"
-        "404":
-          $ref: "#/components/responses/NotFoundResponse"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-  "/packages/{^falco$|^opa$}/{packageName}/{version}":
-    get:
-      tags:
-        - Packages
-      summary: Get package version details
-      parameters:
-        - $ref: "#/components/parameters/FalcoOPAParam"
         - $ref: "#/components/parameters/PackageNameParam"
         - $ref: "#/components/parameters/VersionParam"
       responses:
@@ -964,8 +923,6 @@ paths:
                     package_id:
                       type: string
                       format: uuid
-                    kind:
-                      $ref: "#/components/schemas/PackageKind"
                     name:
                       type: string
                       nullable: false
@@ -976,24 +933,26 @@ paths:
                     logo_image_id:
                       type: string
                       example: "12345abcde"
-                    user_alias:
-                      type: string
-                      example: jdoe
-                    organization_name:
-                      type: string
-                      example: org1
-                    organization_display_name:
-                      type: string
-                      example: Organization 1
-                    chart_repository:
+                    repository:
                       type: object
                       properties:
+                        kind:
+                          $ref: "#/components/schemas/RepositoryKind"
                         name:
                           type: string
                           example: repo1
                         display_name:
                           type: string
-                          example: Chart repo 1
+                          example: Repo 1
+                        user_alias:
+                          type: string
+                          example: jdoe
+                        organization_name:
+                          type: string
+                          example: org1
+                        organization_display_name:
+                          type: string
+                          example: Organization 1
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -1349,12 +1308,12 @@ components:
       in: cookie
       name: sid
   schemas:
-    ChartRepository:
+    Repository:
       allOf:
-        - $ref: "#/components/schemas/ChartRepositorySummary"
+        - $ref: "#/components/schemas/RepositorySummary"
         - type: object
           properties:
-            chart_repository_id:
+            repository_id:
               type: string
               format: uuid
             last_tracking_ts:
@@ -1363,7 +1322,7 @@ components:
             last_tracking_errors:
               type: string
               example: Error
-    ChartRepositorySummary:
+    RepositorySummary:
       type: object
       properties:
         name:
@@ -1523,24 +1482,26 @@ components:
             created_at:
               type: integer
               example: 1552082346
-    PackageKind:
+    RepositoryKind:
       type: integer
       enum:
         - 0
         - 1
         - 2
       description: |
-        Package kind:
+        Repository kind:
           * `0` - Helm charts
           * `1` - Falco rules
           * `2` - OPA policies
-    PackageKindName:
+    RepoKindParam:
       type: string
       enum:
+        - helm
         - opa
         - falco
       description: |
-        Package kind name:
+        Repository kind name:
+          * `helm` - Helm charts
           * `falco` - Falco rules
           * `opa` - OPA policies
     PackageSummary:
@@ -1549,8 +1510,6 @@ components:
         package_id:
           type: string
           format: uuid
-        kind:
-          $ref: "#/components/schemas/PackageKind"
         name:
           type: string
           nullable: false
@@ -1585,21 +1544,14 @@ components:
           nullable: true
         created_at:
           type: integer
-        user_alias:
-          type: string
-          example: jdoe
-        organization_name:
-          type: string
-          example: org1
-        organization_display_name:
-          type: string
-          example: Organization 1
-        chart_repository:
+        repository:
           type: object
           properties:
-            chart_repository_id:
+            repository_id:
               type: string
               format: uuid
+            kind:
+              $ref: "#/components/schemas/RepositoryKind"
             name:
               type: string
               nullable: false
@@ -1607,7 +1559,16 @@ components:
             display_name:
               type: string
               example: Repository 1
-          nullable: true
+            user_alias:
+              type: string
+              example: jdoe
+            organization_name:
+              type: string
+              example: org1
+            organization_display_name:
+              type: string
+              example: Organization 1
+          nullable: false
     Organization:
       allOf:
         - $ref: "#/components/schemas/OrganizationSummary"
@@ -1642,14 +1603,14 @@ components:
     ResourceKindName:
       type: string
       enum:
-        - chartRepositoryName
-        - chartRepositoryURL
+        - repositoryName
+        - repositoryURL
         - organizationName
         - userAlias
       description: |
         Resource kind name:
-          * `chartRepositoryName` - Chart repository name
-          * `chartRepositoryURL` - Chart repository URL
+          * `repositoryName` - Repository name
+          * `repositoryURL` - Repository URL
           * `organizationName` - Organization name
           * `userAlias` - User alias
     User:
@@ -1782,9 +1743,9 @@ components:
         - url
         - event_kinds
   parameters:
-    ChartRepositoriesListParam:
+    RepositoriesListParam:
       in: query
-      name: chart_repositories
+      name: repo
       schema:
         type: array
         items:
@@ -1793,7 +1754,7 @@ components:
           - repo1
           - repo2
       required: false
-      description: List of chart repository names
+      description: List of repository names
     DeprecatedParam:
       in: query
       name: deprecated
@@ -1817,11 +1778,11 @@ components:
         default: false
       required: true
       description: Whether we should get facets or not
-    FalcoOPAParam:
+    RepoKindParam:
       in: path
-      name: ^falco$|^opa$
+      name: ^helm$|^falco$|^opa$
       schema:
-        $ref: "#/components/schemas/PackageKindName"
+        $ref: "#/components/schemas/RepoKindParam"
       required: true
       description: Package kind name
     LimitParam:
@@ -1878,16 +1839,16 @@ components:
         format: uuid
       required: true
       description: Package ID
-    PackageKindsListParam:
+    RepositoryKindsListParam:
       in: query
-      name: package_kinds
+      name: kind
       schema:
         type: array
         items:
-          $ref: "#/components/schemas/PackageKind"
+          $ref: "#/components/schemas/RepositoryKind"
       required: false
       description: |
-        Package kind:
+        Repository kind:
           * `0` - Helm charts
           * `1` - Falco rules
           * `2` - OPA policies
@@ -1906,7 +1867,7 @@ components:
         type: string
         example: repoName
       required: true
-      description: Chart repository name
+      description: Repository name
     ResourceKindNameParam:
       in: path
       name: resourceKind

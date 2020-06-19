@@ -215,7 +215,7 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 
 // prepareTemplateData prepares the data available to notifications templates.
 func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.NotificationTemplateData, error) {
-	// Get notification package
+	// Get notification package (try from cache first)
 	var p *hub.Package
 	cKey := "package.%" + e.EventID
 	cValue, ok := w.cache.Get(cKey)
@@ -239,29 +239,16 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 	case hub.NewRelease:
 		eventKindStr = "package.new-release"
 	}
-	publisher := p.OrganizationName
+	publisher := p.Repository.OrganizationName
 	if publisher == "" {
-		publisher = p.UserAlias
+		publisher = p.Repository.UserAlias
 	}
-	if p.ChartRepository != nil {
-		publisher += "/" + p.ChartRepository.Name
-	}
-	var packageKindStr, packagePath string
-	switch p.Kind {
-	case hub.Chart:
-		packageKindStr = "helm-chart"
-		packagePath = fmt.Sprintf("/packages/chart/%s/%s/%s",
-			p.ChartRepository.Name,
-			p.NormalizedName,
-			e.PackageVersion,
-		)
-	case hub.Falco:
-		packageKindStr = "falco-rules"
-		packagePath = fmt.Sprintf("/packages/falco/%s/%s", p.NormalizedName, e.PackageVersion)
-	case hub.OPA:
-		packageKindStr = "opa-policies"
-		packagePath = fmt.Sprintf("/packages/opa/%s/%s", p.NormalizedName, e.PackageVersion)
-	}
+	packagePath := fmt.Sprintf("/packages/%s/%s/%s/%s",
+		hub.GetKindName(p.Repository.Kind),
+		p.Repository.Name,
+		p.NormalizedName,
+		e.PackageVersion,
+	)
 
 	return &hub.NotificationTemplateData{
 		BaseURL: w.baseURL,
@@ -270,12 +257,15 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 			"kind": eventKindStr,
 		},
 		Package: map[string]interface{}{
-			"kind":        packageKindStr,
 			"name":        p.Name,
 			"version":     p.Version,
 			"logoImageID": p.LogoImageID,
-			"publisher":   publisher,
 			"url":         w.baseURL + packagePath,
+			"repository": map[string]interface{}{
+				"kind":      hub.GetKindName(p.Repository.Kind),
+				"name":      p.Repository.Name,
+				"publisher": publisher,
+			},
 		},
 	}, nil
 }
@@ -291,11 +281,14 @@ var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 	"datacontenttype" : "application/json",
 	"data" : {
 		"package": {
-			"kind": "{{ .Package.kind }}",
 			"name": "{{ .Package.name }}",
 			"version": "{{ .Package.version }}",
-			"publisher": "{{ .Package.publisher }}",
-			"url": "{{ .Package.url }}"
+			"url": "{{ .Package.url }}",
+			"repository": {
+				"kind": "{{ .Package.repository.kind }}",
+				"name": "{{ .Package.repository.name }}",
+				"publisher": "{{ .Package.repository.publisher }}"
+			}
 		}
 	}
 }

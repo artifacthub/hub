@@ -1,8 +1,9 @@
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import * as semver from 'semver';
 
-import { Package, PackageKind, SearchFiltersURL, Version as VersionData } from '../../types';
+import { Package, RepositoryKind, SearchFiltersURL, Version as VersionData } from '../../types';
 import ChartDetails from './ChartDetails';
 import DefaultDetails from './DefaultDetails';
 import Version from './Version';
@@ -16,7 +17,7 @@ interface Props {
 const Details = (props: Props) => {
   const { availableVersions } = props.package;
   const getSortedVersions = (): VersionData[] => {
-    if (!isUndefined(availableVersions)) {
+    if (!isUndefined(availableVersions) && !isNull(availableVersions)) {
       const validVersions: VersionData[] = availableVersions.filter((version: VersionData) =>
         semver.valid(version.version)
       );
@@ -50,12 +51,12 @@ const Details = (props: Props) => {
   return (
     <>
       {(() => {
-        switch (props.package.kind) {
-          case PackageKind.Chart:
+        switch (props.package.repository.kind) {
+          case RepositoryKind.Helm:
             return <ChartDetails package={props.package} allVersions={allVersions} />;
 
-          case PackageKind.Falco:
-          case PackageKind.Opa:
+          case RepositoryKind.Falco:
+          case RepositoryKind.OPA:
             return <DefaultDetails package={props.package} allVersions={allVersions} />;
 
           default:

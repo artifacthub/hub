@@ -20,7 +20,7 @@ func (m *ManagerMock) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAP
 	return data, args.Error(1)
 }
 
-// CheckAvailability implements the ChartRepositoryManager interface.
+// CheckAvailability implements the UserManager interface.
 func (m *ManagerMock) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
 	args := m.Called(ctx, resourceKind, value)
 	return args.Bool(0), args.Error(1)

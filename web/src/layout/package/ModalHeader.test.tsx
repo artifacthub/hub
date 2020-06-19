@@ -6,21 +6,23 @@ import ModalHeader from './ModalHeader';
 
 const packageItem: Package = {
   packageId: 'id',
-  kind: 0,
   name: 'test',
   displayName: 'Pretty name',
   description: 'desc',
   logoImageId: 'imageId',
   appVersion: '1.0.0',
-  userAlias: null,
   normalizedName: 'pr',
   maintainers: [{ email: 'main@tainer.com', name: 'maintainerName' }],
   deprecated: false,
-  chartRepository: {
+  repository: {
+    kind: 0,
     name: 'stable',
     displayName: null,
     url: 'repoUrl',
+    userAlias: 'user',
   },
+  createdAt: 0,
+  signed: false,
 };
 
 describe('Links', () => {

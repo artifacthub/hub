@@ -3,7 +3,7 @@ package hub
 import "context"
 
 // Organization represents an entity with one or more users associated that can
-// own packages and other entities like chart repositories.
+// own repositories and other entities like webhooks.
 type Organization struct {
 	OrganizationID string `json:"organization_id"`
 	Name           string `json:"name"`

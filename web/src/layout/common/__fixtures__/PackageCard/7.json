@@ -1,6 +1,5 @@
 {
   "packageId": "id",
-  "kind": 0,
   "name": "test",
   "normalizedName": "test",
   "displayName": "Pretty name",
@@ -8,9 +7,12 @@
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
   "userAlias": "usertest",
-  "chartRepository": {
+  "repository": {
+    "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+    "kind": 0,
     "name": "stable",
     "displayName": null,
-    "url": "repoUrl"
+    "url": "repoUrl",
+    "userAlias": "user"
   }
 }

@@ -3,29 +3,27 @@
 create or replace function search_packages(p_input jsonb)
 returns setof json as $$
 declare
-    v_package_kinds int[];
+    v_repository_kinds int[];
     v_users text[];
     v_orgs text[];
-    v_chart_repositories text[];
+    v_repositories text[];
     v_facets boolean := (p_input->>'facets')::boolean;
     v_tsquery tsquery := websearch_to_tsquery(p_input->>'text');
 begin
     -- Prepare filters for later use
-    select array_agg(e::int) into v_package_kinds
-    from jsonb_array_elements_text(p_input->'package_kinds') e;
+    select array_agg(e::int) into v_repository_kinds
+    from jsonb_array_elements_text(p_input->'repository_kinds') e;
     select array_agg(e::text) into v_users
     from jsonb_array_elements_text(p_input->'users') e;
     select array_agg(e::text) into v_orgs
     from jsonb_array_elements_text(p_input->'orgs') e;
-    select array_agg(e::text) into v_chart_repositories
-    from jsonb_array_elements_text(p_input->'chart_repositories') e;
+    select array_agg(e::text) into v_repositories
+    from jsonb_array_elements_text(p_input->'repositories') e;
 
     return query
     with packages_applying_text_and_deprecated_filters as (
         select
             p.package_id,
-            p.package_kind_id,
-            pk.name as package_kind_name,
             p.name,
             p.normalized_name,
             p.logo_image_id,
@@ -38,19 +36,20 @@ begin
             s.deprecated,
             s.signed,
             s.created_at,
+            r.repository_id,
+            r.repository_kind_id,
+            rk.name as repository_kind_name,
+            r.name as repository_name,
+            r.display_name as repository_display_name,
             u.alias as user_alias,
             o.name as organization_name,
-            o.display_name as organization_display_name,
-            r.chart_repository_id as chart_repository_id,
-            r.name as chart_repository_name,
-            r.display_name as chart_repository_display_name
+            o.display_name as organization_display_name
         from package p
-        join package_kind pk using (package_kind_id)
         join snapshot s using (package_id)
-        left join chart_repository r using (chart_repository_id)
-        left join "user" u on p.user_id = u.user_id or r.user_id = u.user_id
-        left join organization o
-            on p.organization_id = o.organization_id or r.organization_id = o.organization_id
+        join repository r using (repository_id)
+        join repository_kind rk using (repository_kind_id)
+        left join "user" u using (user_id)
+        left join organization o using (organization_id)
         where s.version = p.latest_version
         and
             case when p_input ? 'text' and p_input->>'text' <> '' then
@@ -65,8 +64,8 @@ begin
     ), packages_applying_all_filters as (
         select * from packages_applying_text_and_deprecated_filters
         where
-            case when cardinality(v_package_kinds) > 0
-            then package_kind_id = any(v_package_kinds) else true end
+            case when cardinality(v_repository_kinds) > 0
+            then repository_kind_id = any(v_repository_kinds) else true end
         and
             case when cardinality(v_users) > 0
             then user_alias = any(v_users) else true end
@@ -74,8 +73,8 @@ begin
             case when cardinality(v_orgs) > 0
             then organization_name = any(v_orgs) else true end
         and
-            case when cardinality(v_chart_repositories) > 0
-            then chart_repository_name = any(v_chart_repositories) else true end
+            case when cardinality(v_repositories) > 0
+            then repository_name = any(v_repositories) else true end
         and
             case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
                 true
@@ -89,7 +88,6 @@ begin
                 'packages', (
                     select coalesce(json_agg(json_build_object(
                         'package_id', package_id,
-                        'kind', package_kind_id,
                         'name', name,
                         'normalized_name', normalized_name,
                         'logo_image_id', logo_image_id,
@@ -101,17 +99,15 @@ begin
                         'deprecated', deprecated,
                         'signed', signed,
                         'created_at', floor(extract(epoch from created_at)),
-                        'user_alias', user_alias,
-                        'organization_name', organization_name,
-                        'organization_display_name', organization_display_name,
-                        'chart_repository', (select nullif(
-                            jsonb_build_object(
-                                'chart_repository_id', chart_repository_id,
-                                'name', chart_repository_name,
-                                'display_name', chart_repository_display_name
-                            ),
-                            '{"chart_repository_id": null, "name": null, "display_name": null}'::jsonb
-                        ))
+                        'repository', jsonb_build_object(
+                            'repository_id', repository_id,
+                            'kind', repository_kind_id,
+                            'name', repository_name,
+                            'display_name', repository_display_name,
+                            'user_alias', user_alias,
+                            'organization_name', organization_name,
+                            'organization_display_name', organization_display_name
+                        )
                     )), '[]')
                     from (
                         select
@@ -146,7 +142,7 @@ begin
                                         from packages_applying_text_and_deprecated_filters
                                         where organization_name is not null
                                         group by organization_name, organization_display_name
-                                        order by total desc
+                                        order by total desc, organization_name asc
                                     ) as breakdown
                                 )
                             )
@@ -168,7 +164,7 @@ begin
                                         from packages_applying_text_and_deprecated_filters
                                         where user_alias is not null
                                         group by user_alias
-                                        order by total desc
+                                        order by total desc, user_alias asc
                                     ) as breakdown
                                 )
                             )
@@ -179,40 +175,40 @@ begin
                                 'filter_key', 'kind',
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
-                                        'id', package_kind_id,
-                                        'name', package_kind_name,
+                                        'id', repository_kind_id,
+                                        'name', repository_kind_name,
                                         'total', total
                                     )), '[]')
                                     from (
                                         select
-                                            package_kind_id,
-                                            package_kind_name,
+                                            repository_kind_id,
+                                            repository_kind_name,
                                             count(*) as total
                                         from packages_applying_text_and_deprecated_filters
-                                        group by package_kind_id, package_kind_name
-                                        order by total desc
+                                        group by repository_kind_id, repository_kind_name
+                                        order by total desc, repository_kind_name asc
                                     ) as breakdown
                                 )
                             )
                         ),
                         (
                             select json_build_object(
-                                'title', 'Chart Repository',
+                                'title', 'Repository',
                                 'filter_key', 'repo',
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
-                                        'id', chart_repository_name,
-                                        'name', initcap(chart_repository_name),
+                                        'id', repository_name,
+                                        'name', initcap(repository_name),
                                         'total', total
                                     )), '[]')
                                     from (
                                         select
-                                            chart_repository_name,
+                                            repository_name,
                                             count(*) as total
                                         from packages_applying_text_and_deprecated_filters
-                                        where chart_repository_name is not null
-                                        group by chart_repository_name
-                                        order by total desc
+                                        where repository_name is not null
+                                        group by repository_name
+                                        order by total desc, repository_name asc
                                     ) as breakdown
                                 )
                             )

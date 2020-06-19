@@ -65,7 +65,7 @@ describe('SubscriptionsSection', () => {
       expect(getAllByTestId('packageCardLink')).toHaveLength(8);
       expect(getAllByTestId('userLink')).toHaveLength(1);
       expect(getAllByTestId('orgLink')).toHaveLength(7);
-      expect(getAllByTestId('repoLink')).toHaveLength(5);
+      expect(getAllByTestId('repoLink')).toHaveLength(8);
     });
 
     it('opens Add subscription modal', async () => {
@@ -338,7 +338,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('orgLink');
-      expect(links).toHaveLength(7);
+      expect(links).toHaveLength(8);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');
@@ -360,7 +360,7 @@ describe('SubscriptionsSection', () => {
       });
 
       const links = queryAllByTestId('repoLink');
-      expect(links).toHaveLength(5);
+      expect(links).toHaveLength(8);
       fireEvent.click(links[0]);
 
       expect(window.location.pathname).toBe('/packages/search');

@@ -75,7 +75,7 @@ function redirectToControlPanel(context: 'user' | 'org') {
   if (history.location.pathname.startsWith('/control-panel')) {
     const sections = history.location.pathname.split('/');
     if (!isControlPanelSectionAvailable(context, sections[2], sections[3])) {
-      history.push('/control-panel/packages');
+      history.push('/control-panel/repositories');
     }
   }
 }

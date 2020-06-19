@@ -1,20 +1,15 @@
 import isUndefined from 'lodash/isUndefined';
 
-import { Package, PackageKind } from '../types';
+import { Package } from '../types';
+import { RepoKindDef, REPOSITORY_KINDS } from './data';
 
 export default (packageItem: Package, withVersion?: boolean): string => {
-  let url = '';
-  switch (packageItem.kind) {
-    case PackageKind.Chart:
-      url = `/packages/chart/${packageItem.chartRepository?.name}/${packageItem.normalizedName}`;
-      break;
-    case PackageKind.Falco:
-      url = `/packages/falco/${packageItem.normalizedName}`;
-      break;
-    case PackageKind.Opa:
-      url = `/packages/opa/${packageItem.normalizedName}`;
-      break;
-  }
+  const getRepositoryKindName = (): string => {
+    const kind = REPOSITORY_KINDS.find((repoKind: RepoKindDef) => packageItem.repository.kind === repoKind.kind);
+    return kind!.label;
+  };
+
+  let url = `/packages/${getRepositoryKindName()}/${packageItem.repository.name}/${packageItem.normalizedName}`;
 
   if (!isUndefined(packageItem.version) && !isUndefined(withVersion) && withVersion) {
     url += `/${packageItem.version}`;

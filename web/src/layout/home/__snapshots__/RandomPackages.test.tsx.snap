@@ -68,7 +68,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none link"
-                      href="/packages/chart/halkeye/undefined"
+                      href="/packages/helm/halkeye/undefined"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
@@ -93,7 +93,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           <a
                             class="link text-truncate"
                             data-testid="packageLink"
-                            href="/packages/chart/halkeye/undefined"
+                            href="/packages/helm/halkeye/undefined"
                           >
                             <div
                               class="text-truncate title"
@@ -148,7 +148,9 @@ exports[`RandomPackages creates snapshot 2`] = `
                             >
                               <div
                                 class="text-truncate"
-                              />
+                              >
+                                user
+                              </div>
                             </button>
                           </div>
                           <div
@@ -257,7 +259,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none link"
-                      href="/packages/chart/halkeye/undefined"
+                      href="/packages/helm/halkeye/undefined"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
@@ -282,7 +284,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           <a
                             class="link text-truncate"
                             data-testid="packageLink"
-                            href="/packages/chart/halkeye/undefined"
+                            href="/packages/helm/halkeye/undefined"
                           >
                             <div
                               class="text-truncate title"
@@ -337,7 +339,9 @@ exports[`RandomPackages creates snapshot 2`] = `
                             >
                               <div
                                 class="text-truncate"
-                              />
+                              >
+                                user
+                              </div>
                             </button>
                           </div>
                           <div
@@ -446,7 +450,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none link"
-                      href="/packages/chart/gabibbo97/undefined"
+                      href="/packages/helm/gabibbo97/undefined"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
@@ -454,7 +458,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         <img
                           alt="Logo fcgi-nginx-frontend"
                           class="image"
-                          src="/static/media/kubernetes_grey.svg"
+                          src="/static/media/package_placeholder.svg"
                         />
                       </div>
                     </a>
@@ -470,7 +474,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           <a
                             class="link text-truncate"
                             data-testid="packageLink"
-                            href="/packages/chart/gabibbo97/undefined"
+                            href="/packages/helm/gabibbo97/undefined"
                           >
                             <div
                               class="text-truncate title"
@@ -525,7 +529,9 @@ exports[`RandomPackages creates snapshot 2`] = `
                             >
                               <div
                                 class="text-truncate"
-                              />
+                              >
+                                user1
+                              </div>
                             </button>
                           </div>
                           <div
@@ -634,7 +640,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none link"
-                      href="/packages/chart/halkeye/undefined"
+                      href="/packages/helm/halkeye/undefined"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
@@ -659,7 +665,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           <a
                             class="link text-truncate"
                             data-testid="packageLink"
-                            href="/packages/chart/halkeye/undefined"
+                            href="/packages/helm/halkeye/undefined"
                           >
                             <div
                               class="text-truncate title"
@@ -714,7 +720,9 @@ exports[`RandomPackages creates snapshot 2`] = `
                             >
                               <div
                                 class="text-truncate"
-                              />
+                              >
+                                user
+                              </div>
                             </button>
                           </div>
                           <div
@@ -823,7 +831,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none link"
-                      href="/packages/chart/billimek/undefined"
+                      href="/packages/helm/billimek/undefined"
                     >
                       <div
                         class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
@@ -848,7 +856,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           <a
                             class="link text-truncate"
                             data-testid="packageLink"
-                            href="/packages/chart/billimek/undefined"
+                            href="/packages/helm/billimek/undefined"
                           >
                             <div
                               class="text-truncate title"
@@ -903,7 +911,9 @@ exports[`RandomPackages creates snapshot 2`] = `
                             >
                               <div
                                 class="text-truncate"
-                              />
+                              >
+                                user2
+                              </div>
                             </button>
                           </div>
                           <div

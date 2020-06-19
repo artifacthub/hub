@@ -13,7 +13,7 @@ import prepareQueryString from '../../../../../utils/prepareQueryString';
 import Image from '../../../../common/Image';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
-import PackageIcon from '../../../../common/PackageIcon';
+import RepositoryIcon from '../../../../common/RepositoryIcon';
 import SubscriptionModal from './Modal';
 import PackageCard from './PackageCard';
 import styles from './SubscriptionsSection.module.css';
@@ -169,12 +169,12 @@ const SubscriptionsSection = (props: Props) => {
                           {packages.map((item: Package) => (
                             <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
                               <td className="align-middle text-center d-none d-sm-table-cell">
-                                <PackageIcon kind={item.kind} className={styles.icon} />
+                                <RepositoryIcon kind={item.repository.kind} className={styles.icon} />
                               </td>
                               <td className="align-middle">
                                 <div className="d-flex flex-row align-items-center">
                                   <div
-                                    className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
+                                    className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
                                   >
                                     <Image
                                       alt={item.displayName || item.name}
@@ -195,7 +195,7 @@ const SubscriptionsSection = (props: Props) => {
                                 </div>
                               </td>
                               <td className="align-middle position-relative">
-                                {!isNull(item.userAlias) ? (
+                                {!isNull(item.repository.userAlias) ? (
                                   <Link
                                     data-testid="userLink"
                                     className="text-dark"
@@ -204,13 +204,13 @@ const SubscriptionsSection = (props: Props) => {
                                       search: prepareQueryString({
                                         pageNumber: 1,
                                         filters: {
-                                          user: [item.userAlias!],
+                                          user: [item.repository.userAlias!],
                                         },
                                         deprecated: false,
                                       }),
                                     }}
                                   >
-                                    {item.userAlias}
+                                    {item.repository.userAlias}
                                   </Link>
                                 ) : (
                                   <Link
@@ -221,38 +221,36 @@ const SubscriptionsSection = (props: Props) => {
                                       search: prepareQueryString({
                                         pageNumber: 1,
                                         filters: {
-                                          org: [item.organizationName!],
+                                          org: [item.repository.organizationName!],
                                         },
                                         deprecated: false,
                                       }),
                                     }}
                                   >
-                                    {item.organizationDisplayName || item.organizationName}
+                                    {item.repository.organizationDisplayName || item.repository.organizationName}
                                   </Link>
                                 )}
 
-                                {!isNull(item.chartRepository) && !isUndefined(item.chartRepository) && (
-                                  <small className="ml-2">
-                                    (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
-                                    <Link
-                                      data-testid="repoLink"
-                                      className="text-dark"
-                                      to={{
-                                        pathname: '/packages/search',
-                                        search: prepareQueryString({
-                                          pageNumber: 1,
-                                          filters: {
-                                            repo: [item.chartRepository!.name],
-                                          },
-                                          deprecated: false,
-                                        }),
-                                      }}
-                                    >
-                                      {item.chartRepository!.displayName || item.chartRepository!.name}
-                                    </Link>
-                                    )
-                                  </small>
-                                )}
+                                <small className="ml-2">
+                                  (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
+                                  <Link
+                                    data-testid="repoLink"
+                                    className="text-dark"
+                                    to={{
+                                      pathname: '/packages/search',
+                                      search: prepareQueryString({
+                                        pageNumber: 1,
+                                        filters: {
+                                          repo: [item.repository.name],
+                                        },
+                                        deprecated: false,
+                                      }),
+                                    }}
+                                  >
+                                    {item.repository.displayName || item.repository.name}
+                                  </Link>
+                                  )
+                                </small>
                               </td>
                               {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
                                 const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);

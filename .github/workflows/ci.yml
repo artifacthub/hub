@@ -89,8 +89,8 @@ jobs:
       - name: Build hub
         working-directory: ./cmd/hub
         run: go build -v
-      - name: Build chart-tracker
-        working-directory: ./cmd/chart-tracker
+      - name: Build helm-tracker
+        working-directory: ./cmd/helm-tracker
         run: go build -v
 
   build-frontend:
@@ -140,13 +140,13 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA .
       - name: Push db-migrator image
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA
-      - name: Build chart-tracker image
+      - name: Build helm-tracker image
         run: |
           docker build \
-            -f cmd/chart-tracker/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/chart-tracker:$GITHUB_SHA .
-      - name: Push chart-tracker image
-        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/chart-tracker:$GITHUB_SHA
+            -f cmd/helm-tracker/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/helm-tracker:$GITHUB_SHA .
+      - name: Push helm-tracker image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/helm-tracker:$GITHUB_SHA
 
   deploy-staging:
     if: github.ref == 'refs/heads/staging'

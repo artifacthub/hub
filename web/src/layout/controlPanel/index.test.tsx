@@ -7,7 +7,7 @@ import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import ControlPanelView from './index';
 jest.mock('../../api');
-jest.mock('./packages', () => () => <div />);
+jest.mock('./repositories', () => () => <div />);
 
 const mockHistoryPush = jest.fn();
 const mockHistoryReplace = jest.fn();
@@ -42,7 +42,7 @@ describe('ControlPanelView', () => {
   });
 
   it('renders correctly', async () => {
-    mocked(API).getChartRepositories.mockResolvedValue([]);
+    mocked(API).getRepositories.mockResolvedValue([]);
     const result = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
@@ -55,7 +55,7 @@ describe('ControlPanelView', () => {
   });
 
   it('calls history replace when section is undefined', async () => {
-    mocked(API).getChartRepositories.mockResolvedValue([]);
+    mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
@@ -66,17 +66,17 @@ describe('ControlPanelView', () => {
 
     await waitFor(() => getByRole('main'));
     expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
-    expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/packages');
+    expect(mockHistoryReplace).toHaveBeenCalledWith('/control-panel/repositories');
 
     await waitFor(() => {});
   });
 
   it('renders 3 sections on user context', async () => {
-    mocked(API).getChartRepositories.mockResolvedValue([]);
+    mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
         <Router>
-          <ControlPanelView section="packages" />
+          <ControlPanelView section="repositories" />
         </Router>
       </AppCtx.Provider>
     );
@@ -85,18 +85,18 @@ describe('ControlPanelView', () => {
     const tabs = getAllByRole('tab');
     expect(getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
-    expect(tabs[0]).toHaveTextContent('Packages');
+    expect(tabs[0]).toHaveTextContent('Repositories');
     expect(tabs[1]).toHaveTextContent('Organizations');
     expect(tabs[2]).toHaveTextContent('Settings');
     await waitFor(() => {});
   });
 
   it('renders 3 sections on org context', async () => {
-    mocked(API).getChartRepositories.mockResolvedValue([]);
+    mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole, getAllByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: jest.fn() }}>
         <Router>
-          <ControlPanelView section="packages" />
+          <ControlPanelView section="repositories" />
         </Router>
       </AppCtx.Provider>
     );
@@ -105,7 +105,7 @@ describe('ControlPanelView', () => {
     const tabs = getAllByRole('tab');
     expect(getByRole('tablist')).toBeInTheDocument();
     expect(tabs).toHaveLength(3);
-    expect(tabs[0]).toHaveTextContent('Packages');
+    expect(tabs[0]).toHaveTextContent('Repositories');
     expect(tabs[1]).toHaveTextContent('Members');
     expect(tabs[2]).toHaveTextContent('Settings');
     await waitFor(() => {});

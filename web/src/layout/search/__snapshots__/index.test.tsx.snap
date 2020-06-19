@@ -654,7 +654,7 @@ exports[`Search index creates snapshot 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/chart/stable/undefined"
+                href="/packages/helm/stable/undefined"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -736,7 +736,9 @@ exports[`Search index creates snapshot 2`] = `
                               >
                                 <div
                                   class="text-truncate"
-                                />
+                                >
+                                  user
+                                </div>
                               </button>
                             </div>
                             <div
@@ -845,7 +847,7 @@ exports[`Search index creates snapshot 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/chart/incubator/undefined"
+                href="/packages/helm/incubator/undefined"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -862,7 +864,7 @@ exports[`Search index creates snapshot 2`] = `
                         <img
                           alt="Logo kafka"
                           class="image"
-                          src="/static/media/kubernetes_grey.svg"
+                          src="/static/media/package_placeholder.svg"
                         />
                       </div>
                       <div
@@ -926,7 +928,9 @@ exports[`Search index creates snapshot 2`] = `
                               >
                                 <div
                                   class="text-truncate"
-                                />
+                                >
+                                  user
+                                </div>
                               </button>
                             </div>
                             <div

@@ -5,27 +5,21 @@ returns setof json as $$
 declare
     v_package_id uuid;
     v_package_name text := p_input->>'package_name';
-    v_chart_repository_name text := p_input->>'chart_repository_name';
+    v_repository_name text := p_input->>'repository_name';
 begin
     if p_input->>'package_id' <> '' then
         v_package_id = p_input->>'package_id';
-    elsif v_chart_repository_name <> '' then
+    else
         select p.package_id into v_package_id
         from package p
-        join chart_repository r using (chart_repository_id)
-        where r.name = v_chart_repository_name
-        and p.normalized_name = v_package_name;
-    else
-        select package_id into v_package_id
-        from package
-        where normalized_name = v_package_name
-        and chart_repository_id is null;
+        join repository r using (repository_id)
+        where p.normalized_name = v_package_name
+        and r.name = v_repository_name;
     end if;
 
     return query
     select json_build_object(
         'package_id', p.package_id,
-        'kind', p.package_kind_id,
         'name', p.name,
         'normalized_name', p.normalized_name,
         'logo_image_id', p.logo_image_id,
@@ -60,25 +54,21 @@ begin
             join package__maintainer pm using (maintainer_id)
             where pm.package_id = v_package_id
         ),
-        'user_alias', u.alias,
-        'organization_name', o.name,
-        'organization_display_name', o.display_name,
-        'chart_repository', (select nullif(
-            jsonb_build_object(
-                'chart_repository_id', r.chart_repository_id,
-                'name', r.name,
-                'display_name', r.display_name,
-                'url', r.url
-            ),
-            '{"url": null, "name": null, "display_name": null, "chart_repository_id": null}'::jsonb
-        ))
+        'repository', jsonb_build_object(
+            'repository_id', r.repository_id,
+            'kind', r.repository_kind_id,
+            'name', r.name,
+            'display_name', r.display_name,
+            'user_alias', u.alias,
+            'organization_name', o.name,
+            'organization_display_name', o.display_name
+        )
     )
     from package p
     join snapshot s using (package_id)
-    left join chart_repository r using (chart_repository_id)
-    left join "user" u on p.user_id = u.user_id or r.user_id = u.user_id
-    left join organization o
-        on p.organization_id = o.organization_id or r.organization_id = o.organization_id
+    join repository r using (repository_id)
+    left join "user" u using (user_id)
+    left join organization o using (organization_id)
     where p.package_id = v_package_id
     and
         case when p_input->>'version' <> '' then

@@ -1,15 +1,19 @@
 {
   "packageId": "id",
-  "kind": 0,
   "name": "test",
   "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "chartRepository": {
-    "name": "stable",
+  "repository": {
+    "repositoryId": "id",
+    "kind": 0,
+    "name": "ah",
     "displayName": null,
-    "url": "repoUrl"
+    "url": "repoUrl",
+    "userAlias": null,
+    "organizationName": "artifact-hub",
+    "organizationDisplayName": "Artifact Hub"
   }
 }

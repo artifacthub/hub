@@ -46,7 +46,7 @@ hub:
       google:
         redirectURL: https://staging.artifacthub.io/oauth/google/callback
 
-chartTracker:
+helmTracker:
   cronjob:
     resources:
       requests:

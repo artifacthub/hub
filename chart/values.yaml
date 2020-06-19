@@ -70,10 +70,10 @@ hub:
   analytics:
     gaTrackingID: ""
 
-chartTracker:
+helmTracker:
   cronjob:
     image:
-      repository: artifacthub/chart-tracker
+      repository: artifacthub/helm-tracker
     resources:
       requests:
         cpu: 100m

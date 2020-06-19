@@ -7,18 +7,24 @@ import DefaultDetails from './DefaultDetails';
 
 const packageItem: Package = {
   packageId: 'id',
-  kind: 1,
   name: 'test',
   displayName: 'Pretty name',
   description: 'desc',
   logoImageId: 'imageId',
   appVersion: '1.0.0',
-  userAlias: null,
   normalizedName: 'pr',
   deprecated: false,
   keywords: ['key1', 'key2'],
-  chartRepository: null,
   license: 'MIT',
+  createdAt: 0,
+  signed: false,
+  repository: {
+    kind: 0,
+    name: 'repo',
+    displayName: 'Repo',
+    url: 'http://repo.test',
+    userAlias: 'user',
+  },
 };
 const defaultProps = {
   package: packageItem,

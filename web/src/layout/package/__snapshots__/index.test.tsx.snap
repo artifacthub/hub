@@ -55,29 +55,44 @@ exports[`Package index creates snapshot 2`] = `
                 <span
                   class="text-dark d-inline-block text-truncate mw-100 mobileVersion"
                 >
+                  Helm
                   <span
                     class="px-1"
                   >
                     /
                   </span>
-                  stable
+                  incubator
                 </span>
               </div>
               <div
                 class="d-none d-md-flex flex-row mt-2 subtitle"
               >
                 <div
-                  class="mr-2 text-truncate"
+                  class="mr-2"
                 >
-                  <small
-                    class="mr-1 text-uppercase text-muted"
+                  <div
+                    class="position-absolute"
                   >
-                    User: 
-                  </small>
-                  <a
-                    class="text-dark"
-                    href="/packages/search?page=1&user=undefined"
-                  />
+                    <div
+                      class="dropdown-menu dropdown-menu-left dropdown"
+                      data-testid="orgInfoDropdown"
+                    />
+                  </div>
+                  <span
+                    class="text-muted text-uppercase mr-1 labelOrg"
+                  >
+                    Org:
+                  </span>
+                  <button
+                    class="p-0 border-0 text-dark link undefined"
+                    data-testid="orgLink"
+                  >
+                    <div
+                      class="text-truncate"
+                    >
+                      Helm
+                    </div>
+                  </button>
                 </div>
                 <div
                   class="text-truncate"
@@ -90,9 +105,9 @@ exports[`Package index creates snapshot 2`] = `
                   <a
                     class="text-dark"
                     data-testid="repoLink"
-                    href="/packages/search?page=1&repo=stable"
+                    href="/packages/search?page=1&repo=incubator"
                   >
-                    stable
+                    incubator
                   </a>
                 </div>
               </div>
@@ -479,7 +494,7 @@ exports[`Package index creates snapshot 2`] = `
                 <small>
                   <a
                     class="badge badge-pill badge-secondary ml-3 badge"
-                    href="/api/v1/packages/chart/stable/undefined/feed/rss"
+                    href="/api/v1/packages/helm/incubator/pr/feed/rss"
                     rel="alternate noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -539,11 +554,22 @@ exports[`Package index creates snapshot 2`] = `
                   Keywords
                 </small>
               </div>
-              <p
+              <span
                 data-testid="keywords"
               >
-                -
-              </p>
+                <button
+                  class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+                  data-testid="keywordBtn"
+                >
+                  key1
+                </button>
+                <button
+                  class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+                  data-testid="keywordBtn"
+                >
+                  key2
+                </button>
+              </span>
             </div>
           </div>
           <div

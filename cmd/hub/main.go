@@ -11,7 +11,6 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers"
 	"github.com/artifacthub/hub/internal/apikey"
-	"github.com/artifacthub/hub/internal/chartrepo"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/event"
 	"github.com/artifacthub/hub/internal/hub"
@@ -19,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/notification"
 	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/user"
 	"github.com/artifacthub/hub/internal/util"
@@ -50,14 +50,14 @@ func main() {
 
 	// Setup and launch http server
 	hSvc := &handlers.Services{
-		OrganizationManager:    org.NewManager(db, es),
-		UserManager:            user.NewManager(db, es),
-		PackageManager:         pkg.NewManager(db),
-		SubscriptionManager:    subscription.NewManager(db),
-		ChartRepositoryManager: chartrepo.NewManager(db),
-		WebhookManager:         webhook.NewManager(db),
-		APIKeyManager:          apikey.NewManager(db),
-		ImageStore:             pg.NewImageStore(db),
+		OrganizationManager: org.NewManager(db, es),
+		UserManager:         user.NewManager(db, es),
+		RepositoryManager:   repo.NewManager(db),
+		PackageManager:      pkg.NewManager(db),
+		SubscriptionManager: subscription.NewManager(db),
+		WebhookManager:      webhook.NewManager(db),
+		APIKeyManager:       apikey.NewManager(db),
+		ImageStore:          pg.NewImageStore(db),
 	}
 	addr := cfg.GetString("server.addr")
 	srv := &http.Server{

@@ -3,13 +3,15 @@
     "packages": [
       {
         "packageId": "efd6bafa-9313-499a-a4ea-aa16b819be91",
-        "kind": 0,
         "name": "centrifugo",
         "displayName": null,
         "description": "Centrifugo is a real-time messaging server.",
         "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
         "appVersion": "2.1.0",
-        "chartRepository": {
+        "repository": {
+          "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+          "kind": 0,
+          "userAlias": "user",
           "name": "stable",
           "displayName": null,
           "url": "url"

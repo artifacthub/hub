@@ -3,11 +3,11 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { EventKind, Package, PackageKind } from '../../../../../types';
+import { EventKind, Package } from '../../../../../types';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
 import Image from '../../../../common/Image';
-import PackageIcon from '../../../../common/PackageIcon';
+import RepositoryIcon from '../../../../common/RepositoryIcon';
 import styles from './PackageCard.module.css';
 
 interface Props {
@@ -48,46 +48,36 @@ const PackageCard = (props: Props) => {
                     </div>
 
                     <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
-                      {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                        <div className="mr-2 text-truncate">
-                          <span className="text-muted text-uppercase mr-1">Org:</span>
-                          <p className="d-inline mb-0 text-dark">
-                            {props.package.organizationDisplayName || props.package.organizationName}
-                          </p>
-                        </div>
-                      )}
+                      {!isUndefined(props.package.repository.organizationName) &&
+                        props.package.repository.organizationName && (
+                          <div className="mr-2 text-truncate">
+                            <span className="text-muted text-uppercase mr-1">Org:</span>
+                            <p className="d-inline mb-0 text-dark">
+                              {props.package.repository.organizationDisplayName ||
+                                props.package.repository.organizationName}
+                            </p>
+                          </div>
+                        )}
 
-                      {!isNull(props.package.userAlias) && (
+                      {!isNull(props.package.repository.userAlias) && (
                         <div className="mr-2 text-truncate">
                           <span className="text-muted text-uppercase mr-1">User:</span>
-                          <p className="d-inline mb-0 text-dark">{props.package.userAlias}</p>
+                          <p className="d-inline mb-0 text-dark">{props.package.repository.userAlias}</p>
                         </div>
                       )}
 
-                      {(() => {
-                        switch (props.package.kind) {
-                          case PackageKind.Chart:
-                            return (
-                              <>
-                                <div className="mr-2 text-truncate">
-                                  <span className="text-muted text-uppercase mr-1">Repo:</span>
-                                  <p className="d-inline mb-0 text-dark">
-                                    {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                                  </p>
-                                </div>
-                              </>
-                            );
-
-                          default:
-                            return null;
-                        }
-                      })()}
+                      <div className="mr-2 text-truncate">
+                        <span className="text-muted text-uppercase mr-1">Repo:</span>
+                        <p className="d-inline mb-0 text-dark">
+                          {props.package.repository.displayName || props.package.repository.name}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className={`d-flex align-items-center text-uppercase ${styles.kind}`}>
-                  <PackageIcon className={styles.icon} kind={props.package.kind} />
+                  <RepositoryIcon className={styles.icon} kind={props.package.repository.kind} />
                 </div>
               </div>
             </Link>

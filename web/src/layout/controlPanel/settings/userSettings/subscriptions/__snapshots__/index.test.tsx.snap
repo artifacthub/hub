@@ -297,7 +297,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="airflow"
@@ -309,7 +309,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/chart/stable/airflow"
+                          href="/packages/helm/stable/airflow"
                         >
                           airflow
                         </a>
@@ -384,18 +384,18 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="cerebro"
                             class="image"
-                            src="/static/media/kubernetes_grey.svg"
+                            src="/static/media/package_placeholder.svg"
                           />
                         </div>
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/chart/stable/cerebro"
+                          href="/packages/helm/stable/cerebro"
                         >
                           cerebro
                         </a>
@@ -470,18 +470,18 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="elastic-stack"
                             class="image"
-                            src="/static/media/kubernetes_grey.svg"
+                            src="/static/media/package_placeholder.svg"
                           />
                         </div>
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/chart/stable/elastic-stack"
+                          href="/packages/helm/stable/elastic-stack"
                         >
                           elastic-stack
                         </a>
@@ -556,7 +556,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="ibm-redis"
@@ -568,7 +568,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/chart/ibm-charts/ibm-redis"
+                          href="/packages/helm/ibm-charts/ibm-redis"
                         >
                           ibm-redis
                         </a>
@@ -579,10 +579,10 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <a
                         class="text-dark"
-                        data-testid="userLink"
-                        href="/packages/search?page=1&user=jsmith"
+                        data-testid="orgLink"
+                        href="/packages/search?page=1&org=org1"
                       >
-                        jsmith
+                        Org 1
                       </a>
                       <small
                         class="ml-2"
@@ -643,7 +643,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="SSH connections"
@@ -655,7 +655,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/falco/ssh-connections"
+                          href="/packages/falco/falco/ssh-connections"
                         >
                           SSH connections
                         </a>
@@ -667,10 +667,28 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-dark"
                         data-testid="orgLink"
-                        href="/packages/search?page=1&org=falco"
+                        href="/packages/search?page=1&org=org2"
                       >
-                        Falco
+                        Org 2
                       </a>
+                      <small
+                        class="ml-2"
+                      >
+                        (
+                        <span
+                          class="text-uppercase text-muted legend"
+                        >
+                          Repo: 
+                        </span>
+                        <a
+                          class="text-dark"
+                          data-testid="repoLink"
+                          href="/packages/search?page=1&repo=falco"
+                        >
+                          Falco rules
+                        </a>
+                        )
+                      </small>
                     </td>
                     <td
                       class="align-middle text-center"
@@ -712,7 +730,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="Traefik"
@@ -724,7 +742,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/falco/traefik"
+                          href="/packages/falco/falco/traefik"
                         >
                           Traefik
                         </a>
@@ -736,10 +754,28 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-dark"
                         data-testid="orgLink"
-                        href="/packages/search?page=1&org=falco"
+                        href="/packages/search?page=1&org=org2"
                       >
-                        Falco
+                        Org 2
                       </a>
+                      <small
+                        class="ml-2"
+                      >
+                        (
+                        <span
+                          class="text-uppercase text-muted legend"
+                        >
+                          Repo: 
+                        </span>
+                        <a
+                          class="text-dark"
+                          data-testid="repoLink"
+                          href="/packages/search?page=1&repo=falco"
+                        >
+                          Falco rules
+                        </a>
+                        )
+                      </small>
                     </td>
                     <td
                       class="align-middle text-center"
@@ -781,7 +817,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="Trusted Registry Images"
@@ -793,7 +829,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/opa/trusted-registry-images"
+                          href="/packages/opa/opa/trusted-registry-images"
                         >
                           Trusted Registry Images
                         </a>
@@ -809,6 +845,24 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       >
                         OPA
                       </a>
+                      <small
+                        class="ml-2"
+                      >
+                        (
+                        <span
+                          class="text-uppercase text-muted legend"
+                        >
+                          Repo: 
+                        </span>
+                        <a
+                          class="text-dark"
+                          data-testid="repoLink"
+                          href="/packages/search?page=1&repo=opa"
+                        >
+                          OPA policies
+                        </a>
+                        )
+                      </small>
                     </td>
                     <td
                       class="align-middle text-center"
@@ -850,7 +904,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
                         >
                           <img
                             alt="zookeeper"
@@ -862,7 +916,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         <a
                           class="ml-2 text-dark"
                           data-testid="packageLink"
-                          href="/packages/chart/incubator/zookeeper"
+                          href="/packages/helm/incubator/zookeeper"
                         >
                           zookeeper
                         </a>
@@ -938,7 +992,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/chart/stable/airflow"
+                        href="/packages/helm/stable/airflow"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1075,7 +1129,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/chart/stable/cerebro"
+                        href="/packages/helm/stable/cerebro"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1089,7 +1143,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                               <img
                                 alt="Logo cerebro"
                                 class="image"
-                                src="/static/media/kubernetes_grey.svg"
+                                src="/static/media/package_placeholder.svg"
                               />
                             </div>
                             <div
@@ -1211,7 +1265,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/chart/stable/elastic-stack"
+                        href="/packages/helm/stable/elastic-stack"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1225,7 +1279,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                               <img
                                 alt="Logo elastic-stack"
                                 class="image"
-                                src="/static/media/kubernetes_grey.svg"
+                                src="/static/media/package_placeholder.svg"
                               />
                             </div>
                             <div
@@ -1347,7 +1401,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/chart/ibm-charts/ibm-redis"
+                        href="/packages/helm/ibm-charts/ibm-redis"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1386,12 +1440,12 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                                   <span
                                     class="text-muted text-uppercase mr-1"
                                   >
-                                    User:
+                                    Org:
                                   </span>
                                   <p
                                     class="d-inline mb-0 text-dark"
                                   >
-                                    jsmith
+                                    Org 1
                                   </p>
                                 </div>
                                 <div
@@ -1484,7 +1538,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/falco/ssh-connections"
+                        href="/packages/falco/falco/ssh-connections"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1528,7 +1582,21 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                                   <p
                                     class="d-inline mb-0 text-dark"
                                   >
-                                    Falco
+                                    Org 2
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Falco rules
                                   </p>
                                 </div>
                               </div>
@@ -1607,7 +1675,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/falco/traefik"
+                        href="/packages/falco/falco/traefik"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1651,7 +1719,21 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                                   <p
                                     class="d-inline mb-0 text-dark"
                                   >
-                                    Falco
+                                    Org 2
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    Falco rules
                                   </p>
                                 </div>
                               </div>
@@ -1730,7 +1812,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/opa/trusted-registry-images"
+                        href="/packages/opa/opa/trusted-registry-images"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"
@@ -1775,6 +1857,20 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                                     class="d-inline mb-0 text-dark"
                                   >
                                     OPA
+                                  </p>
+                                </div>
+                                <div
+                                  class="mr-2 text-truncate"
+                                >
+                                  <span
+                                    class="text-muted text-uppercase mr-1"
+                                  >
+                                    Repo:
+                                  </span>
+                                  <p
+                                    class="d-inline mb-0 text-dark"
+                                  >
+                                    OPA policies
                                   </p>
                                 </div>
                               </div>
@@ -1853,7 +1949,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       <a
                         class="text-decoration-none link"
                         data-testid="packageCardLink"
-                        href="/packages/chart/incubator/zookeeper"
+                        href="/packages/helm/incubator/zookeeper"
                       >
                         <div
                           class="d-flex align-items-start justify-content-between mb-3"

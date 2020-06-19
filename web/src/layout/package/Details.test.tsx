@@ -194,7 +194,7 @@ describe('Details', () => {
       const mockPackage = getMockPackage('12');
       const { queryByTestId } = render(<Details package={mockPackage} />);
 
-      const versions = queryByTestId('versions');
+      const versions = queryByTestId(/versions/i);
       expect(versions).toBeInTheDocument();
       expect(versions).toHaveTextContent('-');
     });

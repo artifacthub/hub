@@ -188,8 +188,8 @@ describe('SubscriptionModal', () => {
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
-        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].organizationDisplayName}(Repo: ${
-          mockSearch.data.packages![0].chartRepository!.displayName
+        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].repository.organizationDisplayName}(Repo: ${
+          mockSearch.data.packages![0].repository.displayName
         })`
       );
 
@@ -236,8 +236,8 @@ describe('SubscriptionModal', () => {
 
       expect(activePackage).toBeInTheDocument();
       expect(activePackage).toHaveTextContent(
-        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].organizationDisplayName}(Repo: ${
-          mockSearch.data.packages![0].chartRepository!.displayName
+        `${mockSearch.data.packages![0].name}${mockSearch.data.packages![0].repository.organizationDisplayName}(Repo: ${
+          mockSearch.data.packages![0].repository.displayName
         })`
       );
 

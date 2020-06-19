@@ -1,0 +1,12 @@
+[
+  {
+    "kind": 0,
+    "repository_id": "test",
+    "name": "test",
+    "display_name": null,
+    "url": "http://test.com",
+    "userAlias": "user",
+    "last_tracking_ts": null,
+    "last_tracking_errors": null
+  }
+]

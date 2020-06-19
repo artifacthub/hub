@@ -76,7 +76,7 @@
   },
   {
     "props": {
-      "title": "Chart repository",
+      "title": "Repository",
       "filterKey": "repo",
       "active": [],
       "options": [
@@ -136,7 +136,7 @@
   },
   {
     "props": {
-      "title": "Chart repository",
+      "title": "Repository",
       "filterKey": "repo",
       "active": ["test1", "stable"],
       "options": [

@@ -7,6 +7,7 @@ select plan(20);
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
+\set repo3ID '00000000-0000-0000-0000-000000000003'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set package3ID '00000000-0000-0000-0000-000000000003'
@@ -37,10 +38,12 @@ select is(
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
-insert into chart_repository (chart_repository_id, name, display_name, url, organization_id)
-values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', :'org1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com', 1, :'org1ID');
 insert into package (
     package_id,
     name,
@@ -48,8 +51,7 @@ insert into package (
     logo_image_id,
     stars,
     tsdoc,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package1ID',
     'package1',
@@ -57,7 +59,6 @@ insert into package (
     :'image1ID',
     10,
     generate_package_tsdoc('package1', null, 'description', '{"kw1", "kw2"}'),
-    0,
     :'repo1ID'
 );
 insert into snapshot (
@@ -113,8 +114,7 @@ insert into package (
     logo_image_id,
     stars,
     tsdoc,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package2ID',
     'package2',
@@ -122,7 +122,6 @@ insert into package (
     :'image2ID',
     11,
     generate_package_tsdoc('package2', null, 'description', '{"kw1", "kw2"}'),
-    0,
     :'repo2ID'
 );
 insert into snapshot (
@@ -181,16 +180,14 @@ insert into package (
     latest_version,
     logo_image_id,
     tsdoc,
-    package_kind_id,
-    organization_id
+    repository_id
 ) values (
     :'package3ID',
     'package3',
     '1.0.0',
     :'image3ID',
     generate_package_tsdoc('package3', null, 'description', '{"kw3"}'),
-    1,
-    :'org1ID'
+    :'repo3ID'
 );
 insert into snapshot (
     package_id,
@@ -220,7 +217,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -232,17 +228,17 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
                 "name": "package2",
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -254,17 +250,17 @@ select is(
                 "deprecated": true,
                 "signed": true,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
                     "name": "repo2",
-                    "display_name": "Repo 2"
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000003",
-                "kind": 1,
                 "name": "package3",
                 "normalized_name": "package3",
                 "logo_image_id": "00000000-0000-0000-0000-000000000003",
@@ -276,10 +272,15 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": null
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000003",
+                    "kind": 1,
+                    "name": "repo3",
+                    "display_name": "Repo 3",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
             }],
             "facets": [{
                 "title": "Organization",
@@ -310,7 +311,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -319,6 +320,10 @@ select is(
                 }, {
                     "id": "repo2",
                     "name": "Repo2",
+                    "total": 1
+                }, {
+                    "id": "repo3",
+                    "name": "Repo3",
                     "total": 1
                 }]
             }]
@@ -341,7 +346,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -353,17 +357,17 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
                 "name": "package2",
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -375,13 +379,14 @@ select is(
                 "deprecated": true,
                 "signed": true,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
                     "name": "repo2",
-                    "display_name": "Repo 2"
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
                 }
             }],
             "facets": [{
@@ -409,7 +414,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -439,7 +444,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -451,13 +455,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }],
             "facets": [{
@@ -481,7 +486,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -519,7 +524,7 @@ select is(
 -- Tests with kind and repositories filters
 select is(
     search_packages('{
-        "chart_repositories": [
+        "repositories": [
             "repo1"
         ]
     }')::jsonb,
@@ -527,7 +532,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -539,13 +543,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }],
             "facets": null
@@ -568,7 +573,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000003",
-                "kind": 1,
                 "name": "package3",
                 "normalized_name": "package3",
                 "logo_image_id": "00000000-0000-0000-0000-000000000003",
@@ -580,10 +584,15 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": null
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000003",
+                    "kind": 1,
+                    "name": "repo3",
+                    "display_name": "Repo 3",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
             }],
             "facets": null
         },
@@ -605,7 +614,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -617,13 +625,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }],
             "facets": null
@@ -639,7 +648,7 @@ select is(
 select is(
     search_packages('{
         "text": "",
-        "chart_repositories": [
+        "repositories": [
             "repo1"
         ]
     }')::jsonb,
@@ -647,7 +656,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -659,13 +667,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }],
             "facets": null
@@ -683,7 +692,7 @@ select is(
     '{
         "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "repositories": [
             "repo2"
         ],
         "deprecated": true
@@ -692,7 +701,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
                 "name": "package2",
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -704,13 +712,14 @@ select is(
                 "deprecated": true,
                 "signed": true,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
                     "name": "repo2",
-                    "display_name": "Repo 2"
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
                 }
             }],
             "facets": [{
@@ -738,7 +747,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -764,7 +773,7 @@ select is(
     '{
         "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "repositories": [
             "repo2"
         ],
         "deprecated": false
@@ -793,7 +802,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -815,7 +824,7 @@ select is(
     '{
         "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "repositories": [
             "repo2"
         ]
     }')::jsonb,
@@ -843,7 +852,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -864,7 +873,7 @@ select is(
     search_packages('{
         "facets": true,
         "text": "kw1",
-        "chart_repositories": [
+        "repositories": [
             "repo3"
         ]
     }')::jsonb,
@@ -892,7 +901,7 @@ select is(
                     "total": 1
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
@@ -913,7 +922,7 @@ select is(
     search_packages('{
         "facets": false,
         "text": "kw1",
-        "package_kinds": [1, 2]
+        "repository_kinds": [1, 2]
     }')::jsonb,
     '{
         "data": {
@@ -941,7 +950,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -953,17 +961,17 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
                 "name": "package2",
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -975,13 +983,14 @@ select is(
                 "deprecated": true,
                 "signed": true,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
                     "name": "repo2",
-                    "display_name": "Repo 2"
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
                 }
             }],
             "facets": null
@@ -1005,7 +1014,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "package1",
                 "normalized_name": "package1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -1017,13 +1025,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }],
             "facets": null
@@ -1067,7 +1076,6 @@ select is(
         "data": {
             "packages": [{
                 "package_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
                 "name": "package2",
                 "normalized_name": "package2",
                 "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -1079,13 +1087,14 @@ select is(
                 "deprecated": true,
                 "signed": true,
                 "created_at": 1592299234,
-                "user_alias": null,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1",
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000002",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
                     "name": "repo2",
-                    "display_name": "Repo 2"
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
                 }
             }],
             "facets": null
@@ -1154,7 +1163,7 @@ select is(
                     "total": 2
                 }]
             }, {
-                "title": "Chart Repository",
+                "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",

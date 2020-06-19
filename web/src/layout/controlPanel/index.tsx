@@ -12,7 +12,7 @@ import isControlPanelSectionAvailable from '../../utils/isControlPanelSectionAva
 import styles from './ControlPanelView.module.css';
 import MembersSection from './members';
 import OrganizationsSection from './organizations';
-import PackagesSection from './packages';
+import RepositoriesSection from './repositories';
 import SettingsSection from './settings';
 import UserContext from './UserContext';
 
@@ -22,7 +22,7 @@ interface Props {
   orgToConfirm?: string;
 }
 
-const DEFAULT_SECTION = 'packages';
+const DEFAULT_SECTION = 'repositories';
 
 const ControlPanelView = (props: Props) => {
   const history = useHistory();
@@ -122,10 +122,8 @@ const ControlPanelView = (props: Props) => {
           <div className="container">
             {(() => {
               switch (activeSection) {
-                case 'packages':
-                  return (
-                    <PackagesSection {...props} onAuthError={onAuthError} onSubMenuItemClick={onSubMenuItemClick} />
-                  );
+                case 'repositories':
+                  return <RepositoriesSection {...props} onAuthError={onAuthError} />;
                 case 'organizations':
                   return <OrganizationsSection {...props} onAuthError={onAuthError} />;
                 case 'members':
