@@ -71,11 +71,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                       href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo mosquitto"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
                           srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
                         />
@@ -260,11 +260,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                       href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo pihole"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
                           srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
                         />
@@ -449,11 +449,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                       href="/packages/chart/gabibbo97/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo fcgi-nginx-frontend"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/static/media/kubernetes_grey.svg"
                         />
                       </div>
@@ -637,11 +637,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                       href="/packages/chart/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo sevendaysdie"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
                           srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
                         />
@@ -826,11 +826,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                       href="/packages/chart/billimek/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo digitalocean-dyndns"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
                           srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
                         />

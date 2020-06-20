@@ -61,12 +61,12 @@ const PackageInfo = (props: Props) => {
 
   const packageImage = (
     <div
-      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle ${styles.imageWrapper}`}
+      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper}`}
     >
       <Image
         imageId={props.package.logoImageId}
         alt={`Logo ${props.package.displayName || props.package.name}`}
-        className="mw-100 mh-100"
+        className={styles.image}
       />
     </div>
   );

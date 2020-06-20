@@ -94,11 +94,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo airflow"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/48066829-7617-43ca-a37f-78d1e7ad1e31"
                           srcset="/image/48066829-7617-43ca-a37f-78d1e7ad1e31@1x 1x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@2x 2x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@3x 3x, /image/48066829-7617-43ca-a37f-78d1e7ad1e31@4x 4x"
                         />
@@ -349,11 +349,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo cassandra"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49"
                           srcset="/image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@1x 1x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@2x 2x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@3x 3x, /image/4bb9e777-3772-4ee5-a6a8-9e8aa1421c49@4x 4x"
                         />
@@ -604,11 +604,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo prometheus"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b"
                           srcset="/image/97c12b63-0aba-4510-b648-e37c4f5cf15b@1x 1x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@2x 2x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@3x 3x, /image/97c12b63-0aba-4510-b648-e37c4f5cf15b@4x 4x"
                         />
@@ -859,11 +859,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo Traefik"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54"
                           srcset="/image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@1x 1x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@2x 2x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@3x 3x, /image/e9b2caa9-d6ce-446d-abaa-64be6b063f54@4x 4x"
                         />
@@ -1102,11 +1102,11 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo Trusted Registry Images"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35"
                           srcset="/image/0a54a7b4-2151-4eb7-af8d-55debc351c35@1x 1x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@2x 2x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@3x 3x, /image/0a54a7b4-2151-4eb7-af8d-55debc351c35@4x 4x"
                         />
