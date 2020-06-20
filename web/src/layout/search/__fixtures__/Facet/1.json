@@ -102,7 +102,7 @@
         }
       ]
     },
-    "checkboxes": ["Stable(203)", "Incubator(53)", "Test(6)", "Test1(8)"]
+    "checkboxes": ["Stable(203)", "Incubator(53)", "Test(6)"]
   },
   {
     "props": {
@@ -132,7 +132,7 @@
         }
       ]
     },
-    "checkboxes": ["Test1(8)", "Stable(203)", "Incubator(53)", "Test(6)"]
+    "checkboxes": ["Test1(8)", "Stable(203)", "Incubator(53)"]
   },
   {
     "props": {
@@ -162,7 +162,7 @@
         }
       ]
     },
-    "checkboxes": ["Stable(203)", "Test1(8)", "Incubator(53)", "Test(6)"]
+    "checkboxes": ["Stable(203)", "Test1(8)", "Incubator(53)"]
   },
   {
     "props": {
@@ -215,7 +215,7 @@
         { "id": "jmalcom", "name": "jmalcom", "total": 4 }
       ]
     },
-    "checkboxes": ["jsmith", "atest", "lanth", "jmalcom"]
+    "checkboxes": ["jsmith", "atest", "lanth"]
   },
   {
     "props": {
@@ -229,7 +229,7 @@
         { "id": "jmalcom", "name": "jmalcom", "total": 4 }
       ]
     },
-    "checkboxes": ["atest", "jsmith", "lanth", "jmalcom"]
+    "checkboxes": ["atest", "jsmith", "lanth"]
   },
   {
     "props": {
@@ -243,6 +243,20 @@
         { "id": "jmalcom", "name": "jmalcom", "total": 4 }
       ]
     },
-    "checkboxes": ["atest", "jmalcom", "jsmith", "lanth"]
+    "checkboxes": ["atest", "jmalcom", "jsmith"]
+  },
+  {
+    "props": {
+      "title": "User",
+      "filterKey": "user",
+      "active": ["atest", "jmalcom", "jsmith", "lanth"],
+      "options": [
+        { "id": "atest", "name": "atest", "total": 1 },
+        { "id": "jsmith", "name": "jsmith", "total": 48 },
+        { "id": "lanth", "name": "lanth", "total": 12 },
+        { "id": "jmalcom", "name": "jmalcom", "total": 4 }
+      ]
+    },
+    "checkboxes": ["atest", "jsmith", "lanth", "jmalcom"]
   }
 ]

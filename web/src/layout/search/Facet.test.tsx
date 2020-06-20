@@ -66,7 +66,7 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByText, getByTestId, getAllByTestId } = render(<Facet {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(4);
+      expect(getAllByTestId('checkbox')).toHaveLength(3);
       expect(getByText('Chart Repository')).toBeInTheDocument();
       expect(getByTestId('smallTitle')).toBeInTheDocument();
     });

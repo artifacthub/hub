@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import isNumber from 'lodash/isNumber';
 import React, { useEffect, useState } from 'react';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
 
 import styles from './Pagination.module.css';
 
@@ -55,13 +56,15 @@ const Pagination = (props: Props) => {
 
   return (
     <nav role="navigation" aria-label="pagination">
-      <ul className="pagination justify-content-center mt-5 mb-5">
+      <ul className={`pagination justify-content-center mt-5 mb-5 ${styles.pagination}`}>
         <li className={classnames('page-item', { disabled: props.active === 1 })}>
           {getButton(
             props.active - 1,
             <>
               <span className="d-none d-sm-block">Previous</span>
-              <span className="d-block d-sm-none">Prev</span>
+              <span className="d-block d-sm-none">
+                <FaCaretLeft />
+              </span>
             </>
           )}
         </li>
@@ -86,7 +89,15 @@ const Pagination = (props: Props) => {
         })}
 
         <li className={classnames('page-item', { disabled: props.active === totalPages })}>
-          {getButton(props.active + 1, 'Next')}
+          {getButton(
+            props.active + 1,
+            <>
+              <span className="d-none d-sm-block">Next</span>
+              <span className="d-block d-sm-none">
+                <FaCaretRight />
+              </span>
+            </>
+          )}
         </li>
       </ul>
     </nav>

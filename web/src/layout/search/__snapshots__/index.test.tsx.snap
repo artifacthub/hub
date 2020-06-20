@@ -666,11 +666,11 @@ exports[`Search index creates snapshot 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo centrifugo"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e"
                           srcset="/image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@1x 1x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@2x 2x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@3x 3x, /image/cc7ac35f-abd3-4594-a375-aebfccbfe11e@4x 4x"
                         />
@@ -857,11 +857,11 @@ exports[`Search index creates snapshot 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
                       >
                         <img
                           alt="Logo kafka"
-                          class="mw-100 mh-100"
+                          class="image"
                           src="/static/media/kubernetes_grey.svg"
                         />
                       </div>

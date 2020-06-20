@@ -20,7 +20,7 @@ interface Props {
 }
 
 const SPECIAL_REPOS = ['Incubator', 'Stable'];
-const DEFAULT_VISIBLE_ITEMS = 5;
+const DEFAULT_VISIBLE_ITEMS = 3;
 
 const Facet = (props: Props) => {
   const [visibleOptions, setVisibleOptions] = useState(DEFAULT_VISIBLE_ITEMS);
@@ -33,12 +33,15 @@ const Facet = (props: Props) => {
   );
 
   useEffect(() => {
-    if (props.filterKey === 'repo') {
-      const activeOptions = filter(props.options, (o: FacetOption) => {
+    const activeOptions = filter(props.options, (o: FacetOption) => {
+      if (props.filterKey === 'repo') {
         return isChecked(o.id.toString()) && !SPECIAL_REPOS.includes(o.name);
-      });
-      setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, activeOptions.length + SPECIAL_REPOS.length));
-    }
+      } else {
+        return isChecked(o.id.toString());
+      }
+    });
+    const active = props.filterKey === 'repo' ? activeOptions.length + SPECIAL_REPOS.length : activeOptions.length;
+    setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, active));
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
   const getSortedOptions = () => {

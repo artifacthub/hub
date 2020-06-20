@@ -52,7 +52,7 @@ interface FetchOptions {
   body?: any;
 }
 
-const toCamelCase = (r: any): Result => {
+export const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
     return r.map((v) => toCamelCase(v));
   } else if (isObject(r)) {
@@ -67,7 +67,7 @@ const toCamelCase = (r: any): Result => {
   return r;
 };
 
-const handleUnauthorizedRequests = async (res: any) => {
+export const handleUnauthorizedRequests = async (res: any) => {
   if (res.status === 401) {
     return Promise.reject({
       status: res.status,
@@ -106,7 +106,7 @@ const handleContent = async (res: any) => {
   }
 };
 
-const apiFetch = (url: string, opts?: FetchOptions): any => {
+export const apiFetch = (url: string, opts?: FetchOptions): any => {
   const options = opts || {};
   return fetch(url, options)
     .then(handleUnauthorizedRequests)
@@ -115,7 +115,7 @@ const apiFetch = (url: string, opts?: FetchOptions): any => {
     .catch((error) => Promise.reject(error));
 };
 
-const getUrlContext = (fromOrgName?: string): string => {
+export const getUrlContext = (fromOrgName?: string): string => {
   let context = '/user';
   if (!isUndefined(fromOrgName)) {
     context = `/org/${fromOrgName}`;
