@@ -19,7 +19,7 @@ const LastNotificationsModal = (props: Props) => {
   return (
     <>
       <Modal
-        className="d-inline-block ${styles.modal"
+        className="d-inline-block"
         buttonType="btn badge btn-secondary"
         buttonContent={
           <>
@@ -27,7 +27,7 @@ const LastNotificationsModal = (props: Props) => {
           </>
         }
         modalDialogClassName={styles.modalDialog}
-        header={<div className="h3 m-2">Last notifications</div>}
+        header={<div className={`h3 m-2 ${styles.title}`}>Last notifications</div>}
       >
         <div className="m-3">
           <table className={`table table-striped table-bordered table-sm mb-0 ${styles.table}`}>

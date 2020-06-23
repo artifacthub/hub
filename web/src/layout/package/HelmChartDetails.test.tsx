@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Package } from '../../types';
-import ChartDetails from './ChartDetails';
+import HelmChartDetails from './HelmChartDetails';
 
 const packageItem: Package = {
   packageId: 'id',
@@ -35,7 +35,7 @@ describe('ChartDetails', () => {
   it('creates snapshot', () => {
     const result = render(
       <Router>
-        <ChartDetails {...defaultProps} />
+        <HelmChartDetails {...defaultProps} />
       </Router>
     );
     expect(result.asFragment()).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('ChartDetails', () => {
     it('renders component', () => {
       const { getByText, queryByText, getAllByText } = render(
         <Router>
-          <ChartDetails {...defaultProps} />
+          <HelmChartDetails {...defaultProps} />
         </Router>
       );
 

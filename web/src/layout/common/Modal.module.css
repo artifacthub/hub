@@ -1,5 +1,6 @@
 .active {
   animation: fadeIn 0.25s 1 ease-in-out forwards;
+  z-index: 1080;
 }
 
 .content {
@@ -17,6 +18,33 @@
   right: 0;
   left: 0;
   z-index: 1;
+}
+
+.btn:disabled {
+  cursor: auto;
+}
+
+.tooltip {
+  top: 40px;
+  right: 0;
+  left: 0;
+}
+
+.tooltipArrow {
+  right: calc(50% - 4px);
+}
+
+.tooltipArrow::before {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+.tooltipContent {
+  background-color: var(--color-1-900) !important;
+  max-width: 100%;
+}
+
+.buttonWrapper:hover .tooltip {
+  opacity: 0.9;
 }
 
 @keyframes fadeIn {

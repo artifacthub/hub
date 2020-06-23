@@ -181,7 +181,7 @@ exports[`Search index creates snapshot 2`] = `
                         class="mt-3"
                       >
                         <div
-                          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                         >
                           <input
                             class="custom-control-input input"
@@ -236,7 +236,7 @@ exports[`Search index creates snapshot 2`] = `
                         class="mt-3"
                       >
                         <div
-                          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                         >
                           <input
                             class="custom-control-input input"
@@ -268,7 +268,7 @@ exports[`Search index creates snapshot 2`] = `
                           </label>
                         </div>
                         <div
-                          class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                         >
                           <input
                             class="custom-control-input input"
@@ -323,7 +323,7 @@ exports[`Search index creates snapshot 2`] = `
                         class="mt-3"
                       >
                         <div
-                          class="custom-control custom-checkbox"
+                          class="custom-control custom-checkbox checkbox"
                         >
                           <input
                             class="custom-control-input"
@@ -499,7 +499,7 @@ exports[`Search index creates snapshot 2`] = `
                 class="mt-3"
               >
                 <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                 >
                   <input
                     class="custom-control-input input"
@@ -554,7 +554,7 @@ exports[`Search index creates snapshot 2`] = `
                 class="mt-3"
               >
                 <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                 >
                   <input
                     class="custom-control-input input"
@@ -586,7 +586,7 @@ exports[`Search index creates snapshot 2`] = `
                   </label>
                 </div>
                 <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 undefined"
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                 >
                   <input
                     class="custom-control-input input"
@@ -641,7 +641,7 @@ exports[`Search index creates snapshot 2`] = `
                 class="mt-3"
               >
                 <div
-                  class="custom-control custom-checkbox"
+                  class="custom-control custom-checkbox checkbox"
                 >
                   <input
                     class="custom-control-input"

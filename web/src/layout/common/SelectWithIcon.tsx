@@ -46,6 +46,25 @@ const SelectWithIcon = (props: Props) => {
 
   const selectedOption = getSelectedValue();
 
+  const customStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      border: '1px solid #ced4da',
+      boxShadow: 'none',
+      '&:hover': {
+        border: '1px solid #bed6e3',
+      },
+      '&:active': {
+        border: '1px solid #bed6e3',
+      },
+    }),
+    option: (provided: any, state: any) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#b2cede' : 'white',
+      color: state.isSelected ? '#38383f' : '#38383f',
+    }),
+  };
+
   if (isUndefined(selectedOption)) return null;
 
   return (
@@ -54,6 +73,7 @@ const SelectWithIcon = (props: Props) => {
         {props.label}
       </label>
       <Select
+        styles={customStyles}
         options={props.options}
         components={{ Option: CustomSelectOption, SingleValue: CustomSelectValue }}
         value={selectedOption}

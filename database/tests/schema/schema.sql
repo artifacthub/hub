@@ -108,6 +108,9 @@ select columns_are('package', array[
     'logo_image_id',
     'stars',
     'tsdoc',
+    'is_operator',
+    'channels',
+    'default_channel',
     'repository_id'
 ]);
 select columns_are('package__maintainer', array[
@@ -152,6 +155,8 @@ select columns_are('snapshot', array[
     'license',
     'signed',
     'content_url',
+    'container_image',
+    'provider',
     'created_at'
 ]);
 select columns_are('subscription', array[

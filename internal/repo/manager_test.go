@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -18,17 +19,10 @@ func TestAdd(t *testing.T) {
 	dbQuery := "select add_repository($1::uuid, $2::text, $3::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
-	r := &hub.Repository{
-		Name:        "repo1",
-		DisplayName: "Repository 1",
-		URL:         "https://repo1.com",
-		Kind:        hub.Helm,
-	}
-
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_ = m.Add(context.Background(), "orgName", r)
+			_ = m.Add(context.Background(), "orgName", nil)
 		})
 	})
 
@@ -67,16 +61,6 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"url not provided",
-				"org1",
-				&hub.Repository{
-					Kind: hub.Helm,
-					Name: "repo1",
-					URL:  "",
-				},
-				nil,
-			},
-			{
 				"invalid name",
 				"org1",
 				&hub.Repository{
@@ -93,6 +77,36 @@ func TestAdd(t *testing.T) {
 					Kind: hub.Helm,
 					Name: "REPO_UPPERCASE",
 					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"url not provided",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "https://github.com/incomplete",
 				},
 				nil,
 			},
@@ -126,14 +140,27 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		testCases := []struct {
+			r             *hub.Repository
 			dbErr         error
 			expectedError error
 		}{
 			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
 				tests.ErrFakeDatabaseFailure,
 				tests.ErrFakeDatabaseFailure,
 			},
 			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
 				util.ErrDBInsufficientPrivilege,
 				hub.ErrInsufficientPrivilege,
 			},
@@ -144,10 +171,10 @@ func TestAdd(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
-				l.On("LoadIndex", r).Return(nil, nil)
+				l.On("LoadIndex", tc.r).Return(nil, nil)
 				m := NewManager(db, WithIndexLoader(l))
 
-				err := m.Add(ctx, "orgName", r)
+				err := m.Add(ctx, "orgName", tc.r)
 				assert.Equal(t, tc.expectedError, err)
 				db.AssertExpectations(t)
 				l.AssertExpectations(t)
@@ -156,16 +183,43 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("add repository succeeded", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(nil)
-		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(db, WithIndexLoader(l))
+		testCases := []struct {
+			r *hub.Repository
+		}{
+			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
+			},
+			{
+				&hub.Repository{
+					Name:        "repo2",
+					DisplayName: "Repository 2",
+					URL:         "https://github.com/org2/repo2/path",
+					Kind:        hub.OLM,
+				},
+			},
+		}
+		for i, tc := range testCases {
+			tc := tc
+			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(nil)
+				l := &HelmIndexLoaderMock{}
+				if tc.r.Kind == hub.Helm {
+					l.On("LoadIndex", tc.r).Return(nil, nil)
+				}
+				m := NewManager(db, WithIndexLoader(l))
 
-		err := m.Add(ctx, "orgName", r)
-		assert.NoError(t, err)
-		db.AssertExpectations(t)
-		l.AssertExpectations(t)
+				err := m.Add(ctx, "orgName", tc.r)
+				assert.NoError(t, err)
+				db.AssertExpectations(t)
+				l.AssertExpectations(t)
+			})
+		}
 	})
 }
 
@@ -623,16 +677,10 @@ func TestUpdate(t *testing.T) {
 	dbQuery := "select update_repository($1::uuid, $2::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
-	r := &hub.Repository{
-		Name:        "repo1",
-		DisplayName: "Repository 1",
-		URL:         "https://repo1.com",
-	}
-
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(nil)
 		assert.Panics(t, func() {
-			_ = m.Update(context.Background(), r)
+			_ = m.Update(context.Background(), nil)
 		})
 	})
 
@@ -660,8 +708,18 @@ func TestUpdate(t *testing.T) {
 			{
 				"invalid url",
 				&hub.Repository{
+					Kind: hub.OLM,
 					Name: "repo1",
 					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				&hub.Repository{
+					Name: "repo1",
+					URL:  "https://repo1.com",
+					Kind: hub.Helm,
 				},
 				errors.New("invalid url"),
 			},
@@ -684,14 +742,27 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		testCases := []struct {
+			r             *hub.Repository
 			dbErr         error
 			expectedError error
 		}{
 			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
 				tests.ErrFakeDatabaseFailure,
 				tests.ErrFakeDatabaseFailure,
 			},
 			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
 				util.ErrDBInsufficientPrivilege,
 				hub.ErrInsufficientPrivilege,
 			},
@@ -702,10 +773,10 @@ func TestUpdate(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
-				l.On("LoadIndex", r).Return(nil, nil)
+				l.On("LoadIndex", tc.r).Return(nil, nil)
 				m := NewManager(db, WithIndexLoader(l))
 
-				err := m.Update(ctx, r)
+				err := m.Update(ctx, tc.r)
 				assert.Equal(t, tc.expectedError, err)
 				db.AssertExpectations(t)
 				l.AssertExpectations(t)
@@ -714,15 +785,42 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("update repository succeeded", func(t *testing.T) {
-		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
-		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(db, WithIndexLoader(l))
+		testCases := []struct {
+			r *hub.Repository
+		}{
+			{
+				&hub.Repository{
+					Name:        "repo1",
+					DisplayName: "Repository 1",
+					URL:         "https://repo1.com",
+					Kind:        hub.Helm,
+				},
+			},
+			{
+				&hub.Repository{
+					Name:        "repo2",
+					DisplayName: "Repository 2",
+					URL:         "https://github.com/org2/repo2/path",
+					Kind:        hub.OLM,
+				},
+			},
+		}
+		for i, tc := range testCases {
+			tc := tc
+			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				db := &tests.DBMock{}
+				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
+				l := &HelmIndexLoaderMock{}
+				if tc.r.Kind == hub.Helm {
+					l.On("LoadIndex", tc.r).Return(nil, nil)
+				}
+				m := NewManager(db, WithIndexLoader(l))
 
-		err := m.Update(ctx, r)
-		assert.NoError(t, err)
-		db.AssertExpectations(t)
-		l.AssertExpectations(t)
+				err := m.Update(ctx, tc.r)
+				assert.NoError(t, err)
+				db.AssertExpectations(t)
+				l.AssertExpectations(t)
+			})
+		}
 	})
 }

@@ -26,7 +26,7 @@ const Keywords = (props: Props) => {
   };
 
   return (
-    <>
+    <div className="mb-3">
       {isUndefined(props.keywords) || isNull(props.keywords) || props.keywords.length === 0 ? (
         <p data-testid="keywords">-</p>
       ) : (
@@ -53,7 +53,7 @@ const Keywords = (props: Props) => {
           ))}
         </span>
       )}
-    </>
+    </div>
   );
 };
 

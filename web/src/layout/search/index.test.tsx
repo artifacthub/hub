@@ -520,24 +520,5 @@ describe('Search index', () => {
 
       await waitFor(() => {});
     });
-
-    it('does not render Chart repositories facets when package kind filter different to Chart is active', async () => {
-      const mockSearchResults = getMockSearchResults('19');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { queryByLabelText, queryByRole, getAllByRole } = render(
-        <Router>
-          <SearchView {...defaultProps} filters={{ kind: ['1'] }} />
-        </Router>
-      );
-
-      await waitFor(() => queryByRole('main'));
-
-      expect(getAllByRole('menuitem')).toHaveLength(2 * 3);
-      expect(queryByLabelText(/Stable/g)).toBeNull();
-      expect(queryByLabelText(/Incubator/g)).toBeNull();
-
-      await waitFor(() => {});
-    });
   });
 });

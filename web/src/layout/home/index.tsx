@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import React, { useEffect, useState } from 'react';
 import { FaGithub, FaSlack } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import { RepositoryKind, Stats } from '../../types';
@@ -68,6 +68,19 @@ const HomeView = (props: Props) => {
         <div className="mt-5 text-center">
           <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
           <SearchTip />
+
+          <div className="d-flex flex-row align-items-center justify-content-center mt-3">
+            <span>- or -</span>
+
+            <Link
+              className="btn btn-link text-light font-weight-bold py-0"
+              to={{
+                pathname: '/packages/search',
+              }}
+            >
+              <u>browse all packages</u>
+            </Link>
+          </div>
         </div>
 
         <div className="d-flex align-items-center justify-content-center mt-5">
@@ -106,12 +119,13 @@ const HomeView = (props: Props) => {
         <div className="container py-0 py-md-5">
           <div className="text-center px-3 px-md-0">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
-            configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and
-            Open Policy Agent (OPA) policies.
-            <div className="mx-5 mt-5 d-flex flex-row align-items-center justify-content-around">
+            configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open
+            Policy Agent (OPA) policies, and OLM operators.
+            <div className="mx-3 mx-lg-5 mt-5 d-flex flex-row align-items-center justify-content-around">
               <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
               <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
               <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+              <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
             </div>
           </div>
         </div>

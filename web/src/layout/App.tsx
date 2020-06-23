@@ -95,6 +95,7 @@ export default function App() {
                   <div className="d-flex flex-column flex-grow-1">
                     <PackageView
                       hash={location.hash}
+                      channel={getQueryParam(location.search, 'channel')}
                       isLoadingPackage={isLoadingPackage}
                       setIsLoadingPackage={setIsLoadingPackage}
                       {...location.state}

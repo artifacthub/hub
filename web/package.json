@@ -22,6 +22,7 @@
     "@types/react-select": "^3.0.13",
     "@types/react-syntax-highlighter": "^11.0.4",
     "@types/semver": "^7.1.0",
+    "@types/yaml": "^1.9.7",
     "analytics": "^0.3.5",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
@@ -44,7 +45,8 @@
     "react-syntax-highlighter": "^12.2.1",
     "semver": "^7.3.2",
     "ts-jest": "^25.3.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "yaml": "^1.10.0"
   },
   "scripts": {
     "start": "REACT_APP_HUB_BASE_URL=http://localhost:8000 react-scripts start",

@@ -14,3 +14,8 @@
 .tooltipContent {
   background-color: var(--color-1-900) !important;
 }
+
+.btn {
+  height: 32px;
+  width: 32px;
+}

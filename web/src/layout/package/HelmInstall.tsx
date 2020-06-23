@@ -8,7 +8,6 @@ import { Repository } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExternalLink from '../common/ExternalLink';
 import NoData from '../common/NoData';
-import SmallTitle from '../common/SmallTitle';
 import styles from './ContentInstall.module.css';
 
 interface Props {
@@ -30,7 +29,7 @@ const TABS: Tab[] = [
 ];
 const ACTIVE_TAB: string = 'cli';
 
-const ChartInstall = (props: Props) => {
+const HelmInstall = (props: Props) => {
   const [activeTab, setActiveTab] = useState(ACTIVE_TAB);
 
   if (isUndefined(props.version)) return null;
@@ -61,8 +60,8 @@ const ChartInstall = (props: Props) => {
 
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex justify-content-between mt-2 mb-2">
-                    <SmallTitle text="Add repository" />
+                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                    <small className="text-muted mt-2 mb-1">Add repository</small>
                     <div>
                       <ButtonCopyToClipboard text={block1} />
                     </div>
@@ -78,8 +77,8 @@ const ChartInstall = (props: Props) => {
                     {block1}
                   </SyntaxHighlighter>
 
-                  <div className="d-flex justify-content-between mt-2 mb-2">
-                    <SmallTitle text="Install chart" />
+                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                    <small className="text-muted mt-2 mb-1">Install chart</small>
                     <div>
                       <ButtonCopyToClipboard text={block2} />
                     </div>
@@ -115,4 +114,4 @@ const ChartInstall = (props: Props) => {
   );
 };
 
-export default ChartInstall;
+export default HelmInstall;

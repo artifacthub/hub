@@ -8,6 +8,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 	"golang.org/x/time/rate"
@@ -44,7 +45,7 @@ type Dispatcher struct {
 	cfg   *viper.Viper
 	il    hub.HelmIndexLoader
 	rm    hub.RepositoryManager
-	ec    ErrorsCollector
+	ec    tracker.ErrorsCollector
 	Queue chan *Job
 }
 
@@ -54,7 +55,7 @@ func NewDispatcher(
 	cfg *viper.Viper,
 	il hub.HelmIndexLoader,
 	rm hub.RepositoryManager,
-	ec ErrorsCollector,
+	ec tracker.ErrorsCollector,
 ) *Dispatcher {
 	return &Dispatcher{
 		ctx:   ctx,
@@ -71,8 +72,11 @@ func (d *Dispatcher) Run(wg *sync.WaitGroup, repos []*hub.Repository) {
 	defer wg.Done()
 	defer close(d.Queue)
 
+	// Rate limit how many repositories we want to process concurrently
 	var wgRepos sync.WaitGroup
 	limiter := rate.NewLimiter(25, 25)
+
+	// Process repositories
 	for _, r := range repos {
 		if err := limiter.Wait(d.ctx); err != nil {
 			log.Error().Err(err).Msg("error waiting for limiter")

@@ -32,7 +32,7 @@ const Links = (props: Props) => {
     if (!isUndefined(name) && name.toLowerCase() in ICONS) {
       Icon = ICONS[name.toLowerCase()];
     }
-    return <Icon className="text-muted mr-2" />;
+    return <Icon className={`text-muted mr-2 ${styles.icon}`} />;
   };
 
   if (
@@ -41,40 +41,50 @@ const Links = (props: Props) => {
   )
     return null;
 
+  const comparePackageLink = (a: PackageLink, b: PackageLink): number => {
+    if (a.name === 'source') {
+      return -1;
+    }
+    if (b.name === 'source') {
+      return 1;
+    }
+    return 0;
+  };
+
+  let formattedLinks: PackageLink[] = [];
+  if (props.links && props.links.length > 0) {
+    formattedLinks = props.links.sort(comparePackageLink);
+  }
+
   return (
     <>
       <SmallTitle text="Links" />
-      {props.homeUrl && (
-        <div className="py-1 py-sm-0">
-          <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-center mb-3 text-capitalize">
-            <>
-              {getIconLink('homepage')}
-              Homepage
-              <span className={styles.smallIcon}>
-                <FiExternalLink className="ml-1" />
-              </span>
-            </>
-          </ExternalLink>
-        </div>
-      )}
+      <div className="mb-3">
+        {props.homeUrl && (
+          <div className="py-1 py-sm-0">
+            <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-start mb-1 text-capitalize">
+              <>
+                {getIconLink('homepage')}
+                Homepage
+                <span className={styles.smallIcon}>
+                  <FiExternalLink className="ml-1" />
+                </span>
+              </>
+            </ExternalLink>
+          </div>
+        )}
 
-      {!isNull(props.links) && !isUndefined(props.links) && (
-        <>
-          {props.links.map((link: PackageLink) => (
-            <div className="py-1 py-sm-0" key={`link_${link.name}`}>
-              <ExternalLink href={link.url} className="text-primary d-flex align-items-center mb-3 text-capitalize">
-                <>
-                  {getIconLink(link.name)}
-                  {link.name}
-                  <span className={styles.smallIcon}>
-                    <FiExternalLink className="ml-1" />
-                  </span>
-                </>
-              </ExternalLink>
-            </div>
-          ))}
-        </>
-      )}
+        {formattedLinks.map((link: PackageLink) => (
+          <div className="py-1 py-sm-0" key={`link_${link.name}`}>
+            <ExternalLink href={link.url} className="text-primary d-flex align-items-center mb-1 text-capitalize">
+              <div className="d-flex flex-row align-items-start mw-100">
+                {getIconLink(link.name)}
+                <div className={`flex-grow-1 ${styles.linkText}`}>{link.name}</div>
+              </div>
+            </ExternalLink>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

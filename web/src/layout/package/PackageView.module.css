@@ -80,6 +80,11 @@
   padding-right: 15px;
 }
 
+.repoIcon {
+  height: 17px;
+  width: auto;
+}
+
 @media only screen and (max-width: 767.98px) {
   .mainContent {
     max-width: 100%;

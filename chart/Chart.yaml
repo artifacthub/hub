@@ -11,6 +11,7 @@ keywords:
   - helm
   - falco
   - opa
+  - olm
 maintainers:
   - name: Sergio
     email: tegioz@icloud.com

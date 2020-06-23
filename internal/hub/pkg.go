@@ -29,6 +29,12 @@ type Maintainer struct {
 	Email        string `json:"email"`
 }
 
+// Channel represents a package's channel.
+type Channel struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
+}
+
 // Package represents a Kubernetes package.
 type Package struct {
 	PackageID         string                 `json:"package_id"`
@@ -36,6 +42,9 @@ type Package struct {
 	NormalizedName    string                 `json:"normalized_name"`
 	LogoURL           string                 `json:"logo_url"`
 	LogoImageID       string                 `json:"logo_image_id"`
+	IsOperator        bool                   `json:"is_operator"`
+	Channels          []*Channel             `json:"channels"`
+	DefaultChannel    string                 `json:"default_channel"`
 	DisplayName       string                 `json:"display_name"`
 	Description       string                 `json:"description"`
 	Keywords          []string               `json:"keywords"`
@@ -51,6 +60,8 @@ type Package struct {
 	License           string                 `json:"license"`
 	Signed            bool                   `json:"signed"`
 	ContentURL        string                 `json:"content_url"`
+	ContainerImage    string                 `json:"container_image"`
+	Provider          string                 `json:"provider"`
 	Maintainers       []*Maintainer          `json:"maintainers"`
 	Repository        *Repository            `json:"repository"`
 	CreatedAt         int64                  `json:"created_at,omitempty"`

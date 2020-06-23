@@ -68,7 +68,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'olm',
     name: 'OLM operators',
     icon: <RepositoryIcon kind={RepositoryKind.OLM} className="mw-100 mh-100" />,
-    active: false,
+    active: true,
   },
 ];
 

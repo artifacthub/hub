@@ -9,6 +9,7 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import styles from './Readme.module.css';
 
 interface Props {
+  packageName: string;
   markdownContent: string;
   scrollIntoView: (id?: string) => void;
 }
@@ -94,12 +95,17 @@ const Readme = (props: Props) => {
     props.scrollIntoView();
   }, [props]);
 
+  let readme = props.markdownContent;
+  if (!props.markdownContent.startsWith('#')) {
+    readme = `# ${props.packageName}\n${props.markdownContent}`;
+  }
+
   return (
     <ErrorBoundary message="Something went wrong rendering the README file of this package.">
       <span data-testid="readme">
         <ReactMarkdown
           className={`mt-3 mb-5 ${styles.md}`}
-          source={props.markdownContent}
+          source={readme}
           linkTarget="_blank"
           skipHtml
           renderers={{

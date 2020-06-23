@@ -76,6 +76,7 @@ const Facet = (props: Props) => {
       key={`fo_${option.id}`}
       name={props.filterKey}
       value={option.id.toString()}
+      className={styles.checkbox}
       legend={option.total}
       label={option.name}
       checked={isChecked(option.id.toString())}

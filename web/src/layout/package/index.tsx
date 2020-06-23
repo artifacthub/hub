@@ -10,8 +10,16 @@ import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hl
 
 import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
+import {
+  CustomResourcesDefinition,
+  CustomResourcesDefinitionExample,
+  Package,
+  RepositoryKind,
+  SearchFiltersURL,
+  Version,
+} from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
+import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
 import Image from '../common/Image';
@@ -19,12 +27,15 @@ import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
 import OrganizationInfo from '../common/OrganizationInfo';
+import RepositoryIcon from '../common/RepositoryIcon';
 import SignedBadge from '../common/SignedBadge';
 import SubNavbar from '../navigation/SubNavbar';
-import ChartInstall from './ChartInstall';
+import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import FalcoInstall from './FalcoInstall';
+import HelmInstall from './HelmInstall';
 import ModalHeader from './ModalHeader';
+import OLMInstall from './OLMInstall';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
 import RelatedPackages from './RelatedPackages';
@@ -41,6 +52,7 @@ interface Props {
   repositoryKind: string;
   repositoryName: string;
   hash?: string;
+  channel?: string;
 }
 
 const PackageView = (props: Props) => {
@@ -53,6 +65,7 @@ const PackageView = (props: Props) => {
   const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string>(null);
+  const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
 
   useScrollRestorationFix();
 
@@ -78,6 +91,13 @@ const PackageView = (props: Props) => {
       }/${detail.repository.name}`;
       updateMetaIndex(metaTitle, detail.description);
       setDetail(detail);
+      if (isUndefined(activeChannel) && detail.repository.kind === RepositoryKind.OLM) {
+        if (!isNull(detail.defaultChannel)) {
+          setActiveChannel(detail.defaultChannel);
+        } else if (detail.channels && detail.channels.length > 0) {
+          setActiveChannel(detail.channels[0].name);
+        }
+      }
       setApiError(null);
       setIsLoadingPackage(false);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
@@ -103,11 +123,33 @@ const PackageView = (props: Props) => {
     };
   }, [setIsLoadingPackage]);
 
+  let sortedVersions: Version[] = [];
+  if (detail && detail.availableVersions) {
+    sortedVersions = sortPackageVersions(detail.availableVersions);
+  }
+
+  const onChannelChange = (channel: string) => {
+    history.replace({
+      search: `?channel=${channel}`,
+    });
+    setActiveChannel(channel);
+  };
+
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element | null => {
     // OPA policies doesn't have any installation modal info
-    if (detail!.repository.kind === RepositoryKind.OPA) {
+    if (
+      isNull(detail) ||
+      isUndefined(detail) ||
+      detail!.repository.kind === RepositoryKind.OPA ||
+      (detail.repository.kind === RepositoryKind.OLM && detail.repository.name !== 'community-operators')
+    ) {
       return null;
     }
+
+    const isDisabled =
+      detail.repository.kind === RepositoryKind.OLM &&
+      sortedVersions.length > 0 &&
+      detail!.version !== sortedVersions[0].version;
 
     return (
       <Modal
@@ -120,14 +162,24 @@ const PackageView = (props: Props) => {
         }
         header={<ModalHeader package={detail!} />}
         className={styles.modalInstallationWrapper}
+        disabledOpenBtn={isDisabled}
+        tooltipMessage={isDisabled ? 'Only the current version can be installed' : undefined}
       >
         <>
           {(() => {
             switch (detail!.repository.kind) {
               case RepositoryKind.Helm:
-                return <ChartInstall name={detail!.name} version={detail!.version} repository={detail!.repository} />;
+                return <HelmInstall name={detail.name} version={detail.version} repository={detail.repository} />;
               case RepositoryKind.Falco:
-                return <FalcoInstall normalizedName={detail!.normalizedName!} />;
+                return <FalcoInstall normalizedName={detail.normalizedName!} />;
+              case RepositoryKind.OLM:
+                return (
+                  <OLMInstall
+                    name={detail.name}
+                    activeChannel={activeChannel!}
+                    isGlobalOperator={detail.data!.isGlobalOperator}
+                  />
+                );
               default:
                 return null;
             }
@@ -163,6 +215,32 @@ const PackageView = (props: Props) => {
       policies = map(detail.data.policies, 'raw').join(' ');
     }
     return policies;
+  };
+
+  const getOLMResources = (): CustomResourcesDefinition[] | undefined => {
+    let resources: CustomResourcesDefinition[] | undefined;
+    if (
+      !isUndefined(detail) &&
+      !isNull(detail) &&
+      !isNull(detail.data) &&
+      !isUndefined(detail.data) &&
+      !isUndefined(detail.data.customResourcesDefinitions)
+    ) {
+      let examples: CustomResourcesDefinitionExample[] = [];
+      if (
+        !isUndefined(detail.data.customResourcesDefinitionsExamples) &&
+        detail.data.customResourcesDefinitionsExamples !== ''
+      ) {
+        examples = JSON.parse(detail.data.customResourcesDefinitionsExamples!) as CustomResourcesDefinitionExample[];
+      }
+      resources = detail.data.customResourcesDefinitions.map((resourceDefinition: CustomResourcesDefinition) => {
+        return {
+          ...resourceDefinition,
+          example: examples.find((info: any) => info.kind === resourceDefinition.kind),
+        };
+      });
+    }
+    return resources;
   };
 
   const scrollIntoView = (id?: string) => {
@@ -282,6 +360,7 @@ const PackageView = (props: Props) => {
                               detail.repository.organizationDisplayName ||
                               detail.repository.organizationName}
                             <span className="px-1">/</span>
+                            <RepositoryIcon kind={detail.repository.kind} className={`mr-1 ${styles.repoIcon}`} />
                             {detail.repository.displayName || detail.repository.name}
                           </span>
                         </div>
@@ -320,6 +399,7 @@ const PackageView = (props: Props) => {
 
                           <div className="text-truncate">
                             <small className="mr-1 text-muted text-uppercase">Repo: </small>
+                            <RepositoryIcon kind={detail.repository.kind} className={`mr-1 ${styles.repoIcon}`} />
                             <Link
                               className="text-dark"
                               data-testid="repoLink"
@@ -360,6 +440,9 @@ const PackageView = (props: Props) => {
                         >
                           <Details
                             package={detail}
+                            activeChannel={activeChannel}
+                            onChannelChange={onChannelChange}
+                            sortedVersions={sortedVersions}
                             searchUrlReferer={props.searchUrlReferer}
                             fromStarredPage={props.fromStarredPage}
                           />
@@ -391,7 +474,11 @@ const PackageView = (props: Props) => {
                         {isNull(detail.readme) || isUndefined(detail.readme) ? (
                           <NoData>No README file available for this package</NoData>
                         ) : (
-                          <Readme markdownContent={detail.readme} scrollIntoView={scrollIntoView} />
+                          <Readme
+                            packageName={detail.displayName || detail.name}
+                            markdownContent={detail.readme}
+                            scrollIntoView={scrollIntoView}
+                          />
                         )}
 
                         {(() => {
@@ -434,6 +521,24 @@ const PackageView = (props: Props) => {
                                 </>
                               );
 
+                            case RepositoryKind.OLM:
+                              const resources = getOLMResources();
+                              if (!isUndefined(resources) && resources.length > 0) {
+                                return (
+                                  <div className={`mb-5 ${styles.codeWrapper}`}>
+                                    <AnchorHeader
+                                      level={2}
+                                      scrollIntoView={scrollIntoView}
+                                      title="Custom Resource Definitions"
+                                    />
+
+                                    <CustomResourceDefinition resources={resources} />
+                                  </div>
+                                );
+                              } else {
+                                return null;
+                              }
+
                             default:
                               return null;
                           }
@@ -451,6 +556,9 @@ const PackageView = (props: Props) => {
                           <div className="card-body">
                             <Details
                               package={detail}
+                              activeChannel={activeChannel}
+                              onChannelChange={onChannelChange}
+                              sortedVersions={sortedVersions}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                             />

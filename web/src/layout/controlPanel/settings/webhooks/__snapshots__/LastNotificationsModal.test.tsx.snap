@@ -3,21 +3,25 @@
 exports[`Chart Repository LastNotificationsModal - packages section creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-inline-block \${styles.modal"
+    class="d-inline-block"
   >
-    <button
-      class="font-weight-bold text-uppercase position-relative btn btn-block btn btn badge btn-secondary"
-      data-testid="openModalBtn"
-      type="button"
+    <div
+      class="position-relative buttonWrapper"
     >
-      <div
-        class="d-flex align-items-center justify-content-center"
+      <button
+        class="font-weight-bold text-uppercase position-relative btn btn-block btn btn badge btn-secondary"
+        data-testid="openModalBtn"
+        type="button"
       >
-        <span>
-          Show last notifications
-        </span>
-      </div>
-    </button>
+        <div
+          class="d-flex align-items-center justify-content-center"
+        >
+          <span>
+            Show last notifications
+          </span>
+        </div>
+      </button>
+    </div>
     <div
       class="modal modal"
       role="dialog"
@@ -32,7 +36,7 @@ exports[`Chart Repository LastNotificationsModal - packages section creates snap
             class="modal-header d-flex flex-row align-items-center header"
           >
             <div
-              class="h3 m-2"
+              class="h3 m-2 title"
             >
               Last notifications
             </div>

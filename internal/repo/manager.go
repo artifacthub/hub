@@ -14,6 +14,9 @@ import (
 var (
 	// repositoryNameRE is a regexp used to validate a repository name.
 	repositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
+
+	// OLMRepoURLRE is a regexp used to validate and parse an OLM repository URL.
+	OLMRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
 )
 
 // Manager provides an API to manage repositories.
@@ -58,6 +61,11 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	}
 	if r.URL == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
+	}
+	if r.Kind == hub.OLM {
+		if !OLMRepoURLRE.MatchString(r.URL) {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+		}
 	}
 	if r.Kind == hub.Helm {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
@@ -251,6 +259,11 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if r.URL == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
+	if r.Kind == hub.OLM {
+		if !OLMRepoURLRE.MatchString(r.URL) {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+		}
+	}
 	if r.Kind == hub.Helm {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
@@ -294,6 +307,7 @@ func (m *Manager) dbQueryUnmarshal(ctx context.Context, v interface{}, query str
 func isValidKind(kind hub.RepositoryKind) bool {
 	for _, validKind := range []hub.RepositoryKind{
 		hub.Helm,
+		hub.OLM,
 	} {
 		if kind == validKind {
 			return true

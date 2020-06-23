@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 
 import { Repository } from '../../types';
-import ChartInstall from './ChartInstall';
+import HelmInstall from './HelmInstall';
 
 const repo: Repository = {
   kind: 0,
@@ -17,15 +17,15 @@ const defaultProps = {
   repository: repo,
 };
 
-describe('ChartInstall', () => {
+describe('HelmInstall', () => {
   it('creates snapshot', () => {
-    const result = render(<ChartInstall {...defaultProps} />);
+    const result = render(<HelmInstall {...defaultProps} />);
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<ChartInstall {...defaultProps} />);
+      const { getByText } = render(<HelmInstall {...defaultProps} />);
 
       expect(getByText(`helm repo add ${repo.name} ${repo.url}`));
       expect(getByText(`helm install ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`));
@@ -36,7 +36,7 @@ describe('ChartInstall', () => {
     });
 
     it('does not render content when version is undefined', () => {
-      const { container } = render(<ChartInstall {...defaultProps} version={undefined} />);
+      const { container } = render(<HelmInstall {...defaultProps} version={undefined} />);
       expect(container).toBeEmpty();
     });
   });

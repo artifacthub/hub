@@ -20,6 +20,17 @@ select register_package('
     "name": "package1",
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
+    "channels": [
+        {
+            "name": "stable",
+            "version": "1.0.0"
+        },
+        {
+            "name": "alpha",
+            "version": "1.1.0"
+        }
+    ],
+    "default_channel": "stable",
     "display_name": "Package 1",
     "description": "description",
     "keywords": ["kw1", "kw2"],
@@ -45,6 +56,9 @@ select register_package('
     "license": "Apache-2.0",
     "signed": false,
     "content_url": "https://package.content.url",
+    "is_operator": true,
+    "container_image": "quay.io/org/img:1.0.0",
+    "provider": "Org Inc",
     "created_at": 1592299234,
     "maintainers": [
         {
@@ -68,6 +82,9 @@ select results_eq(
             latest_version,
             logo_url,
             logo_image_id,
+            is_operator,
+            channels,
+            default_channel,
             repository_id
         from package
         where name='package1'
@@ -78,6 +95,18 @@ select results_eq(
             '1.0.0',
             'logo_url',
             '00000000-0000-0000-0000-000000000001'::uuid,
+            true,
+            '[
+                {
+                    "name": "stable",
+                    "version": "1.0.0"
+                },
+                {
+                    "name": "alpha",
+                    "version": "1.1.0"
+                }
+            ]'::jsonb,
+            'stable',
             '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
@@ -100,6 +129,8 @@ select results_eq(
             s.license,
             s.signed,
             s.content_url,
+            s.container_image,
+            s.provider,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -122,6 +153,8 @@ select results_eq(
             'Apache-2.0',
             false,
             'https://package.content.url',
+            'quay.io/org/img:1.0.0',
+            'Org Inc',
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,
@@ -171,6 +204,9 @@ select register_package('
     "digest": "digest-package1-2.0.0",
     "deprecated": true,
     "signed": true,
+    "is_operator": false,
+    "container_image": "quay.io/org/img:2.0.0",
+    "provider": "Org Inc 2",
     "created_at": 1592299235,
     "maintainers": [
         {
@@ -185,10 +221,10 @@ select register_package('
 ');
 select results_eq(
     $$
-        select logo_url from package where name = 'package1'
+        select logo_url, is_operator from package where name = 'package1'
     $$,
     $$
-        values ('logo_url updated')
+        values ('logo_url updated', false)
     $$,
     'Package logo url should have been updated'
 );
@@ -206,6 +242,8 @@ select results_eq(
             s.links,
             s.deprecated,
             s.signed,
+            s.container_image,
+            s.provider,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -225,6 +263,8 @@ select results_eq(
             null::jsonb,
             true,
             true,
+            'quay.io/org/img:2.0.0',
+            'Org Inc 2',
             '2020-06-16 11:20:35+02'::timestamptz
         )
     $$,
@@ -281,6 +321,9 @@ select register_package('
     "digest": "digest-package1-0.0.9",
     "deprecated": true,
     "signed": true,
+    "is_operator": true,
+    "container_image": "quay.io/org/img:0.0.9",
+    "provider": "Org Inc",
     "created_at": 1592299233,
     "maintainers": [
         {
@@ -299,10 +342,10 @@ select register_package('
 ');
 select results_eq(
     $$
-        select logo_url from package where name = 'package1'
+        select logo_url, is_operator from package where name = 'package1'
     $$,
     $$
-        values ('logo_url updated')
+        values ('logo_url updated', false)
     $$,
     'Package logo url should not have been updated'
 );
@@ -320,6 +363,8 @@ select results_eq(
             s.links,
             s.deprecated,
             s.signed,
+            s.container_image,
+            s.provider,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -339,6 +384,8 @@ select results_eq(
             null::jsonb,
             true,
             true,
+            'quay.io/org/img:0.0.9',
+            'Org Inc',
             '2020-06-16 11:20:33+02'::timestamptz
         )
     $$,

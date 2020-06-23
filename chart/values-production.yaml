@@ -54,3 +54,13 @@ helmTracker:
   numWorkers: 50
   repositories: []
   imageStore: pg
+
+olmTracker:
+  cronjob:
+    resources:
+      requests:
+        cpu: 2
+        memory: 8000Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg

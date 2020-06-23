@@ -83,6 +83,9 @@ create table if not exists package (
     logo_image_id uuid,
     stars integer not null default 0,
     tsdoc tsvector,
+    is_operator boolean,
+    channels jsonb,
+    default_channel text check (default_channel <> ''),
     repository_id uuid not null references repository on delete cascade,
     unique (repository_id, name)
 );
@@ -106,6 +109,8 @@ create table if not exists snapshot (
     license text check (license <> ''),
     signed boolean,
     content_url text check (content_url <> ''),
+    container_image text check (container_image <> ''),
+    provider text check (provider <> ''),
     created_at timestamptz default current_timestamp not null,
     primary key (package_id, version),
     unique (package_id, digest)

@@ -54,7 +54,7 @@ const FacetsMock: Facets[] = [
     ],
   },
   {
-    title: 'Chart Repository',
+    title: 'Repository',
     filterKey: 'repo',
     options: [
       {
@@ -152,9 +152,9 @@ describe('Filters', () => {
       const titles = getAllByTestId('smallTitle');
       expect(titles).toHaveLength(4);
 
-      expect(titles[0]).toHaveTextContent('Publisher');
-      expect(titles[1]).toHaveTextContent('Kind');
-      expect(titles[2]).toHaveTextContent('Chart Repository');
+      expect(titles[0]).toHaveTextContent('Kind');
+      expect(titles[1]).toHaveTextContent('Publisher');
+      expect(titles[2]).toHaveTextContent('Repository');
       expect(titles[3]).toHaveTextContent('Others');
     });
   });

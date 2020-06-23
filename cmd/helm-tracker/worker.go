@@ -16,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/license"
+	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
@@ -35,7 +36,7 @@ type Worker struct {
 	id     int
 	pm     hub.PackageManager
 	is     img.Store
-	ec     ErrorsCollector
+	ec     tracker.ErrorsCollector
 	hg     HTTPGetter
 	logger zerolog.Logger
 }
@@ -46,7 +47,7 @@ func NewWorker(
 	id int,
 	pm hub.PackageManager,
 	is img.Store,
-	ec ErrorsCollector,
+	ec tracker.ErrorsCollector,
 	httpClient HTTPGetter,
 ) *Worker {
 	return &Worker{
@@ -61,7 +62,7 @@ func NewWorker(
 }
 
 // Run instructs the worker to start handling jobs. It will keep running until
-// the jobs queue is closed or the context is done.
+// the jobs queue is empty or the context is done.
 func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 	defer wg.Done()
 	for {
@@ -134,7 +135,7 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 				Str("chart", j.ChartVersion.Metadata.Name).
 				Str("version", j.ChartVersion.Metadata.Version).
 				Bytes("stacktrace", debug.Stack()).
-				Interface("recorver", r).
+				Interface("recover", r).
 				Msg("handleJob panic")
 		}
 	}()
@@ -166,20 +167,18 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	}
 	md := chart.Metadata
 
-	// Store chart logo when available if requested
+	// Store logo when available if requested
 	var logoURL, logoImageID string
-	if j.GetLogo {
-		if md.Icon != "" {
-			logoURL = md.Icon
-			data, err := w.getImage(md.Icon)
-			if err != nil {
-				w.ec.Append(j.Repo.RepositoryID, fmt.Errorf("error getting logo image %s: %w", md.Icon, err))
-				w.logger.Debug().Err(err).Str("url", md.Icon).Msg("get image failed")
-			} else {
-				logoImageID, err = w.is.SaveImage(w.ctx, data)
-				if err != nil && !errors.Is(err, image.ErrFormat) {
-					w.logger.Warn().Err(err).Str("url", md.Icon).Msg("save image failed")
-				}
+	if j.GetLogo && md.Icon != "" {
+		logoURL = md.Icon
+		data, err := w.getImage(md.Icon)
+		if err != nil {
+			w.ec.Append(j.Repo.RepositoryID, fmt.Errorf("error getting logo image %s: %w", md.Icon, err))
+			w.logger.Debug().Err(err).Str("url", md.Icon).Msg("get image failed")
+		} else {
+			logoImageID, err = w.is.SaveImage(w.ctx, data)
+			if err != nil && !errors.Is(err, image.ErrFormat) {
+				w.logger.Warn().Err(err).Str("url", md.Icon).Msg("save image failed")
 			}
 		}
 	}

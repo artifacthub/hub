@@ -1,3 +1,5 @@
+import classnames from 'classnames';
+import { isUndefined } from 'lodash';
 import React, { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
 
@@ -5,12 +7,14 @@ import styles from './ButtonCopyToClipboard.module.css';
 
 interface Props {
   text: string;
+  className?: string;
+  visibleBtnText?: boolean;
 }
 
 const copyToClipboard = (text: string): boolean => {
   try {
     const textField = document.createElement('textarea');
-    textField.innerText = text;
+    textField.innerHTML = text;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand('copy');
@@ -41,10 +45,17 @@ const ButtonCopyToClipboard = (props: Props) => {
       <button
         data-testid="ctcBtn"
         type="button"
-        className="btn btn-primary btn-sm rounded-circle"
+        className={classnames(
+          'btn btn-sm',
+          { [`btn-primary rounded-circle ${styles.btn}`]: isUndefined(props.className) },
+          props.className
+        )}
         onClick={() => setCopyStatus(copyToClipboard(props.text))}
       >
-        <FiCopy />
+        <div className="d-flex flex-row align-items-center">
+          <FiCopy />
+          {!isUndefined(props.visibleBtnText) && props.visibleBtnText && <div className="ml-2">Copy to clipboard</div>}
+        </div>
       </button>
     </div>
   );

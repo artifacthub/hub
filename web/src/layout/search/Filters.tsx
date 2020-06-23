@@ -6,7 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
-import { Facets, RepositoryKind } from '../../types';
+import { Facets } from '../../types';
 import SmallTitle from '../common/SmallTitle';
 import Facet from './Facet';
 import styles from './Filters.module.css';
@@ -90,11 +90,7 @@ const Filters = (props: Props) => {
   const getRepositoryFacets = (): JSX.Element | null => {
     let crElement = null;
     const repo = getFacetsByFilterKey('repo');
-    const selectedKinds: string[] = props.activeFilters.hasOwnProperty('kind') ? props.activeFilters.kind : [];
-    if (
-      !isUndefined(repo) &&
-      (!props.activeFilters.hasOwnProperty('kind') || selectedKinds.includes(RepositoryKind.Helm.toString()))
-    ) {
+    if (!isUndefined(repo)) {
       crElement = (
         <Facet
           {...repo}
@@ -127,15 +123,15 @@ const Filters = (props: Props) => {
         </div>
       )}
 
-      {getPublishers()}
       {getKindFacets()}
+      {getPublishers()}
       {getRepositoryFacets()}
 
       <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
-          <div className="custom-control custom-checkbox">
+          <div className={`custom-control custom-checkbox ${styles.checkbox}`}>
             <input
               data-testid="deprecatedCheckbox"
               type="checkbox"
