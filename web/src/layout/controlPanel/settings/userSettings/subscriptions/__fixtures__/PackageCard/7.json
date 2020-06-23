@@ -1,15 +1,16 @@
 {
   "packageId": "cfa55ea2-eb69-4703-8be7-73937c6efc4b",
-  "kind": 0,
   "name": "ibm-redis",
   "normalizedName": "ibm-redis",
   "logoImageId": "ca0a9e33-3656-4536-ac1b-4cff40bc6b88",
-  "userAlias": "jsmith",
-  "organizationName": null,
-  "organizationDisplayName": null,
-  "chartRepository": {
+  "repository": {
+    "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+    "kind": 0,
     "name": "ibm-charts",
-    "displayName": "IBM charts"
+    "displayName": "IBM charts",
+    "userAlias": "jsmith",
+    "organizationName": null,
+    "organizationDisplayName": null
   },
   "eventKinds": [0]
 }

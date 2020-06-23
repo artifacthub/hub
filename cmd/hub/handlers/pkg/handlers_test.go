@@ -308,12 +308,12 @@ func TestInjectIndexMeta(t *testing.T) {
 		}{
 			{
 				&hub.Package{
-					NormalizedName:   "pkg1",
-					Version:          "1.0.0",
-					Description:      "description",
-					OrganizationName: "org1",
-					ChartRepository: &hub.ChartRepository{
-						Name: "repo1",
+					NormalizedName: "pkg1",
+					Version:        "1.0.0",
+					Description:    "description",
+					Repository: &hub.Repository{
+						Name:             "repo1",
+						OrganizationName: "org1",
 					},
 				},
 				"pkg1 1.0.0 · org1/repo1",
@@ -324,22 +324,12 @@ func TestInjectIndexMeta(t *testing.T) {
 				&hub.Package{
 					NormalizedName: "pkg1",
 					Version:        "1.0.0",
-					UserAlias:      "user1",
-					ChartRepository: &hub.ChartRepository{
-						Name: "repo1",
+					Repository: &hub.Repository{
+						Name:      "repo1",
+						UserAlias: "user1",
 					},
 				},
 				"pkg1 1.0.0 · user1/repo1",
-				"",
-				http.StatusOK,
-			},
-			{
-				&hub.Package{
-					NormalizedName: "pkg1",
-					Version:        "1.0.0",
-					UserAlias:      "user1",
-				},
-				"pkg1 1.0.0 · user1",
 				"",
 				http.StatusOK,
 			},
@@ -409,13 +399,12 @@ func TestRssFeed(t *testing.T) {
 		}{
 			{
 				&hub.Package{
-					PackageID:        "0001",
-					NormalizedName:   "pkg1",
-					Description:      "description",
-					Version:          "1.0.0",
-					LogoImageID:      "0001",
-					CreatedAt:        1592299234,
-					OrganizationName: "org1",
+					PackageID:      "0001",
+					NormalizedName: "pkg1",
+					Description:    "description",
+					Version:        "1.0.0",
+					LogoImageID:    "0001",
+					CreatedAt:      1592299234,
 					AvailableVersions: []*hub.Version{
 						{
 							Version:   "1.0.0",
@@ -432,8 +421,9 @@ func TestRssFeed(t *testing.T) {
 							Email: "email1",
 						},
 					},
-					ChartRepository: &hub.ChartRepository{
-						Name: "repo1",
+					Repository: &hub.Repository{
+						Name:             "repo1",
+						OrganizationName: "org1",
 					},
 				},
 				[]byte(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
@@ -449,14 +439,14 @@ func TestRssFeed(t *testing.T) {
     </image>
     <item>
       <title>1.0.0</title>
-      <link>baseURL/packages/chart/repo1/pkg1/1.0.0</link>
+      <link>baseURL/packages/helm/repo1/pkg1/1.0.0</link>
       <description>pkg1 1.0.0</description>
       <guid>0001#1.0.0</guid>
       <pubDate>Tue, 16 Jun 2020 09:20:34 +0000</pubDate>
     </item>
     <item>
       <title>0.0.9</title>
-      <link>baseURL/packages/chart/repo1/pkg1/0.0.9</link>
+      <link>baseURL/packages/helm/repo1/pkg1/0.0.9</link>
       <description>pkg1 0.0.9</description>
       <guid>0001#0.0.9</guid>
       <pubDate>Tue, 16 Jun 2020 09:20:33 +0000</pubDate>
@@ -651,41 +641,58 @@ func TestBuildPackageURL(t *testing.T) {
 	}{
 		{
 			&hub.Package{
-				Kind:           hub.Chart,
 				NormalizedName: "pkg1",
-				ChartRepository: &hub.ChartRepository{
+				Repository: &hub.Repository{
+					Kind: hub.Helm,
 					Name: "repo1",
 				},
 			},
 			"1.0.0",
-			baseURL + "/packages/chart/repo1/pkg1/1.0.0",
+			baseURL + "/packages/helm/repo1/pkg1/1.0.0",
 		},
 		{
 			&hub.Package{
-				Kind:           hub.Chart,
 				NormalizedName: "pkg1",
-				ChartRepository: &hub.ChartRepository{
+				Repository: &hub.Repository{
+					Kind: hub.Helm,
 					Name: "repo1",
 				},
 			},
 			"",
-			baseURL + "/packages/chart/repo1/pkg1",
+			baseURL + "/packages/helm/repo1/pkg1",
 		},
 		{
 			&hub.Package{
-				Kind:           hub.Falco,
 				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.Falco,
+					Name: "repo1",
+				},
 			},
 			"",
-			baseURL + "/packages/falco/pkg1",
+			baseURL + "/packages/falco/repo1/pkg1",
 		},
 		{
 			&hub.Package{
-				Kind:           hub.OPA,
 				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.OPA,
+					Name: "repo1",
+				},
 			},
 			"",
-			baseURL + "/packages/opa/pkg1",
+			baseURL + "/packages/opa/repo1/pkg1",
+		},
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Repository: &hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+				},
+			},
+			"2.0.0",
+			baseURL + "/packages/olm/repo1/pkg1/2.0.0",
 		},
 	}
 	for _, tc := range testCases {

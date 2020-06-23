@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/apikey"
-	"github.com/artifacthub/hub/cmd/hub/handlers/chartrepo"
 	"github.com/artifacthub/hub/cmd/hub/handlers/org"
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
+	"github.com/artifacthub/hub/cmd/hub/handlers/repo"
 	"github.com/artifacthub/hub/cmd/hub/handlers/static"
 	"github.com/artifacthub/hub/cmd/hub/handlers/subscription"
 	"github.com/artifacthub/hub/cmd/hub/handlers/user"
@@ -33,14 +33,14 @@ var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 
 // Services is a wrapper around several internal services used by the handlers.
 type Services struct {
-	OrganizationManager    hub.OrganizationManager
-	UserManager            hub.UserManager
-	PackageManager         hub.PackageManager
-	ChartRepositoryManager hub.ChartRepositoryManager
-	SubscriptionManager    hub.SubscriptionManager
-	WebhookManager         hub.WebhookManager
-	APIKeyManager          hub.APIKeyManager
-	ImageStore             img.Store
+	OrganizationManager hub.OrganizationManager
+	UserManager         hub.UserManager
+	RepositoryManager   hub.RepositoryManager
+	PackageManager      hub.PackageManager
+	SubscriptionManager hub.SubscriptionManager
+	WebhookManager      hub.WebhookManager
+	APIKeyManager       hub.APIKeyManager
+	ImageStore          img.Store
 }
 
 // Metrics groups some metrics collected from a Handlers instance.
@@ -57,14 +57,14 @@ type Handlers struct {
 	logger  zerolog.Logger
 	Router  http.Handler
 
-	Organizations     *org.Handlers
-	Users             *user.Handlers
-	Packages          *pkg.Handlers
-	ChartRepositories *chartrepo.Handlers
-	Subscriptions     *subscription.Handlers
-	Webhooks          *webhook.Handlers
-	APIKeys           *apikey.Handlers
-	Static            *static.Handlers
+	Organizations *org.Handlers
+	Users         *user.Handlers
+	Packages      *pkg.Handlers
+	Repositories  *repo.Handlers
+	Subscriptions *subscription.Handlers
+	Webhooks      *webhook.Handlers
+	APIKeys       *apikey.Handlers
+	Static        *static.Handlers
 }
 
 // Setup creates a new Handlers instance.
@@ -75,14 +75,14 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		metrics: setupMetrics(),
 		logger:  log.With().Str("handlers", "root").Logger(),
 
-		Organizations:     org.NewHandlers(svc.OrganizationManager, cfg),
-		Users:             user.NewHandlers(svc.UserManager, cfg),
-		Packages:          pkg.NewHandlers(svc.PackageManager, cfg),
-		Subscriptions:     subscription.NewHandlers(svc.SubscriptionManager),
-		ChartRepositories: chartrepo.NewHandlers(svc.ChartRepositoryManager),
-		Webhooks:          webhook.NewHandlers(svc.WebhookManager),
-		APIKeys:           apikey.NewHandlers(svc.APIKeyManager),
-		Static:            static.NewHandlers(cfg, svc.ImageStore),
+		Organizations: org.NewHandlers(svc.OrganizationManager, cfg),
+		Users:         user.NewHandlers(svc.UserManager, cfg),
+		Repositories:  repo.NewHandlers(svc.RepositoryManager),
+		Packages:      pkg.NewHandlers(svc.PackageManager, cfg),
+		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
+		Webhooks:      webhook.NewHandlers(svc.WebhookManager),
+		APIKeys:       apikey.NewHandlers(svc.APIKeyManager),
+		Static:        static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
 	return h
@@ -168,25 +168,25 @@ func (h *Handlers) setupRouter() {
 			})
 		})
 
-		// Chart repositories
-		r.Route("/chart-repositories", func(r chi.Router) {
+		// Repositories
+		r.Route("/repositories", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Route("/user", func(r chi.Router) {
-				r.Get("/", h.ChartRepositories.GetOwnedByUser)
-				r.Post("/", h.ChartRepositories.Add)
+				r.Get("/", h.Repositories.GetOwnedByUser)
+				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/transfer", h.ChartRepositories.Transfer)
-					r.Put("/", h.ChartRepositories.Update)
-					r.Delete("/", h.ChartRepositories.Delete)
+					r.Put("/transfer", h.Repositories.Transfer)
+					r.Put("/", h.Repositories.Update)
+					r.Delete("/", h.Repositories.Delete)
 				})
 			})
 			r.Route("/org/{orgName}", func(r chi.Router) {
-				r.Get("/", h.ChartRepositories.GetOwnedByOrg)
-				r.Post("/", h.ChartRepositories.Add)
+				r.Get("/", h.Repositories.GetOwnedByOrg)
+				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
-					r.Put("/transfer", h.ChartRepositories.Transfer)
-					r.Put("/", h.ChartRepositories.Update)
-					r.Delete("/", h.ChartRepositories.Delete)
+					r.Put("/transfer", h.Repositories.Transfer)
+					r.Put("/", h.Repositories.Update)
+					r.Delete("/", h.Repositories.Delete)
 				})
 			})
 		})
@@ -197,12 +197,7 @@ func (h *Handlers) setupRouter() {
 			r.Get("/stats", h.Packages.GetStats)
 			r.Get("/search", h.Packages.Search)
 			r.With(h.Users.RequireLogin).Get("/starred", h.Packages.GetStarredByUser)
-			r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
-				r.Get("/feed/rss", h.Packages.RssFeed)
-				r.Get("/{version}", h.Packages.Get)
-				r.Get("/", h.Packages.Get)
-			})
-			r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+			r.Route("/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}", func(r chi.Router) {
 				r.Get("/feed/rss", h.Packages.RssFeed)
 				r.Get("/{version}", h.Packages.Get)
 				r.Get("/", h.Packages.Get)
@@ -260,7 +255,7 @@ func (h *Handlers) setupRouter() {
 
 		// Availability checks
 		r.Route("/check-availability", func(r chi.Router) {
-			r.Head("/{resourceKind:^chartRepositoryName$|^chartRepositoryURL$}", h.ChartRepositories.CheckAvailability)
+			r.Head("/{resourceKind:^repositoryName$|^repositoryURL$}", h.Repositories.CheckAvailability)
 			r.Head("/{resourceKind:^organizationName$}", h.Organizations.CheckAvailability)
 			r.Head("/{resourceKind:^userAlias$}", h.Users.CheckAvailability)
 		})
@@ -283,11 +278,7 @@ func (h *Handlers) setupRouter() {
 
 	// Index special entry points
 	r.Route("/packages", func(r chi.Router) {
-		r.Route("/chart/{repoName}/{packageName}", func(r chi.Router) {
-			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
-			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
-		})
-		r.Route("/{^falco$|^opa$}/{packageName}", func(r chi.Router) {
+		r.Route("/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}", func(r chi.Router) {
 			r.With(h.Packages.InjectIndexMeta).Get("/{version}", h.Static.ServeIndex)
 			r.With(h.Packages.InjectIndexMeta).Get("/", h.Static.ServeIndex)
 		})

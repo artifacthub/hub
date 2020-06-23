@@ -13,44 +13,16 @@ declare
     v_description text := nullif(p_pkg->>'description', '');
     v_keywords text[] := (select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]);
     v_version text := p_pkg->>'version';
-    v_package_kind_id int := (p_pkg->>'kind')::int;
-    v_user_id uuid := nullif(p_pkg->>'user_id', '')::uuid;
-    v_organization_id uuid := nullif(p_pkg->>'organization_id', '')::uuid;
-    v_chart_repository_id uuid := ((p_pkg->'chart_repository')->>'chart_repository_id')::uuid;
+    v_repository_id uuid := ((p_pkg->'repository')->>'repository_id')::uuid;
     v_maintainer jsonb;
     v_maintainer_id uuid;
     v_created_at timestamptz;
 begin
-    -- Check if a package with the same name and kind but a different owner
-    -- already exists.
-    -- NOTE: packages of kind Helm Chart are allowed to have the same name when
-    -- they belong to different repositories as the repo acts as a namespace.
-    perform
-    from package
-    where package_kind_id = v_package_kind_id
-    and name = v_name
-    and chart_repository_id is null
-    and (
-        user_id <> v_user_id
-        or organization_id <> v_organization_id
-        or (user_id is null and v_user_id is not null)
-        or (organization_id is null and v_organization_id is not null)
-    );
-    if found then
-        raise unique_violation;
-    end if;
-
     -- Get package's latest version before registration, if available
     select latest_version into v_previous_latest_version
     from package
-    where package_kind_id = v_package_kind_id
-    and name = v_name
-    and
-        case when v_chart_repository_id is null then
-            chart_repository_id is null
-        else
-            chart_repository_id = v_chart_repository_id
-        end;
+    where name = v_name
+    and repository_id = v_repository_id;
 
     -- Package
     insert into package (
@@ -59,27 +31,16 @@ begin
         logo_image_id,
         latest_version,
         tsdoc,
-        package_kind_id,
-        user_id,
-        organization_id,
-        chart_repository_id
+        repository_id
     ) values (
         v_name,
         nullif(p_pkg->>'logo_url', ''),
         nullif(p_pkg->>'logo_image_id', '')::uuid,
         v_version,
         generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
-        v_package_kind_id,
-        v_user_id,
-        v_organization_id,
-        v_chart_repository_id
+        v_repository_id
     )
-    on conflict (
-        coalesce(chart_repository_id, '99999999-9999-9999-9999-999999999999'),
-        package_kind_id,
-        name
-    )
-    do update
+    on conflict (repository_id, name) do update
     set
         name = excluded.name,
         logo_url = excluded.logo_url,
@@ -132,12 +93,7 @@ begin
         select package_id into v_package_id
         from package
         where name = v_name
-        and
-            case when v_chart_repository_id is null then
-                chart_repository_id is null
-            else
-                chart_repository_id = v_chart_repository_id
-            end;
+        and repository_id = v_repository_id;
     end if;
 
     -- Package snapshot

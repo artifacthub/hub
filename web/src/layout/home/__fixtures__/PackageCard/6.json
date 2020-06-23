@@ -1,6 +1,5 @@
 {
   "packageId": "cd684a53-e2f4-4ff2-bbaa-aaa15437b2b7",
-  "kind": 0,
   "name": "artifact-hub",
   "normalizedName": "artifact-hub",
   "logoImageId": "95f2e608-3deb-4997-9d2b-7cc9ad5cd08d",
@@ -13,8 +12,14 @@
   "userAlias": null,
   "organizationName": "artifact-hub",
   "organizationDisplayName": "Artifact Hub",
-  "chartRepository": {
-    "name": "artifact-hub",
-    "displayName": "Artifact Hub"
+  "repository": {
+    "repositoryId": "id",
+    "kind": 0,
+    "name": "ah",
+    "displayName": null,
+    "url": "repoUrl",
+    "userAlias": null,
+    "organizationName": "artifact-hub",
+    "organizationDisplayName": "Artifact Hub"
   }
 }

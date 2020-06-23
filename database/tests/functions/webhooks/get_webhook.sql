@@ -16,21 +16,19 @@ select plan(2);
 -- Seed some data
 insert into "user" (user_id, alias, email)
 values (:'user1ID', 'user1', 'user1@email.com');
-insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into package (
     package_id,
     name,
     latest_version,
     logo_image_id,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package1ID',
     'Package 1',
     '1.0.0',
     :'image1ID',
-    0,
     :'repo1ID'
 );
 insert into snapshot (
@@ -136,7 +134,6 @@ select is(
         "packages": [
             {
                 "package_id": "00000000-0000-0000-0000-000000000001",
-                "kind": 0,
                 "name": "Package 1",
                 "normalized_name": "package-1",
                 "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -148,13 +145,14 @@ select is(
                 "deprecated": null,
                 "signed": null,
                 "created_at": 1592299234,
-                "user_alias": "user1",
-                "organization_name": null,
-                "organization_display_name": null,
-                "chart_repository": {
-                    "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
                     "name": "repo1",
-                    "display_name": "Repo 1"
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
                 }
             }
         ],

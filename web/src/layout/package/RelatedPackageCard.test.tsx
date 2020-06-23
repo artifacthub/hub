@@ -47,7 +47,7 @@ describe('RelatedPackageCard', () => {
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/kubernetes_grey.svg');
+      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/package_placeholder.svg');
     });
   });
 
@@ -103,7 +103,7 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(new RegExp(mockPackage.userAlias!, 'i'))).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.repository.userAlias!, 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
 
@@ -116,11 +116,11 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(new RegExp(mockPackage.organizationDisplayName!, 'i'))).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.repository.organizationDisplayName!, 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
 
-    it('renders chart repo', () => {
+    it('renders repo', () => {
       const mockPackage = getMockPackage('8');
 
       const { getByText } = render(
@@ -129,7 +129,7 @@ describe('RelatedPackageCard', () => {
         </Router>
       );
 
-      expect(getByText(mockPackage.chartRepository!.name)).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.repository.name, 'i'))).toBeInTheDocument();
       expect(getByText('/')).toBeInTheDocument();
     });
   });
@@ -143,20 +143,7 @@ describe('RelatedPackageCard', () => {
           <RelatedPackageCard package={mockPackage} />
         </Router>
       );
-
-      expect(getByText(mockPackage.userAlias!)).toBeInTheDocument();
-    });
-
-    it('renders organization', () => {
-      const mockPackage = getMockPackage('10');
-
-      const { getByText } = render(
-        <Router>
-          <RelatedPackageCard package={mockPackage} />
-        </Router>
-      );
-
-      expect(getByText(mockPackage.organizationDisplayName!)).toBeInTheDocument();
+      expect(getByText(new RegExp(mockPackage.repository.userAlias!, 'i'))).toBeInTheDocument();
     });
   });
 });

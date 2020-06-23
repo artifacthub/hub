@@ -77,10 +77,10 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 ### Populating packages
 
-The chart installs a `cronjob` in charge of launching periodically (every 30m) a process called `chart-tracker` which indexes charts. If you don't want to wait until it's triggered by the cronjob, you can create a `job` manually using the following command:
+The chart installs a `cronjob` in charge of launching periodically (every 30m) a process called `helm-tracker` which indexes Helm charts. If you don't want to wait until it's triggered by the cronjob, you can create a `job` manually using the following command:
 
 ```bash
-$ kubectl create job initial-chart-tracker-job --from=cronjob/chart-tracker
+$ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
 ```
 
 ### Uninstalling the Chart

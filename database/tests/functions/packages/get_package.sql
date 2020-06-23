@@ -6,6 +6,7 @@ select plan(5);
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set maintainer1ID '00000000-0000-0000-0000-000000000001'
@@ -18,7 +19,7 @@ select is_empty(
     $$
         select get_package('{
             "package_name": "package1",
-            "chart_repository_name": "repo1"
+            "repository_name": "repo1"
         }')
     $$,
     'If package requested does not exist no rows are returned'
@@ -28,8 +29,10 @@ select is_empty(
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
-insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
 insert into maintainer (maintainer_id, name, email)
 values (:'maintainer1ID', 'name1', 'email1');
 insert into maintainer (maintainer_id, name, email)
@@ -39,14 +42,12 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package1ID',
     'Package 1',
     '1.0.0',
     :'image1ID',
-    0,
     :'repo1ID'
 );
 insert into package__maintainer (package_id, maintainer_id)
@@ -118,15 +119,13 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-    package_kind_id,
-    organization_id
+    repository_id
 ) values (
     :'package2ID',
     'package2',
     '1.0.0',
     :'image2ID',
-    1,
-    :'org1ID'
+    :'repo2ID'
 );
 insert into snapshot (
     package_id,
@@ -155,7 +154,6 @@ select is(
     }')::jsonb,
     '{
         "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -204,14 +202,14 @@ select is(
                 "email": "email2"
             }
         ],
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null,
-        "chart_repository": {
-            "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
-            "url": "https://repo1.com"
+            "user_alias": "user1",
+            "organization_name": null,
+            "organization_display_name": null
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -219,11 +217,10 @@ select is(
 select is(
     get_package('{
         "package_name": "package-1",
-        "chart_repository_name": "repo1"
+        "repository_name": "repo1"
     }')::jsonb,
     '{
         "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -272,14 +269,14 @@ select is(
                 "email": "email2"
             }
         ],
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null,
-        "chart_repository": {
-            "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
-            "url": "https://repo1.com"
+            "user_alias": "user1",
+            "organization_name": null,
+            "organization_display_name": null
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -287,12 +284,11 @@ select is(
 select is(
     get_package('{
         "package_name": "package-1",
-        "chart_repository_name": "repo1",
+        "repository_name": "repo1",
         "version": "0.0.9"
     }')::jsonb,
     '{
         "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -341,25 +337,25 @@ select is(
                 "email": "email2"
             }
         ],
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null,
-        "chart_repository": {
-            "chart_repository_id": "00000000-0000-0000-0000-000000000001",
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000001",
+            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
-            "url": "https://repo1.com"
+            "user_alias": "user1",
+            "organization_name": null,
+            "organization_display_name": null
         }
     }'::jsonb,
     'Requested package version is returned as a json object'
 );
 select is(
     get_package('{
-        "package_name": "package2"
+        "package_name": "package2",
+        "repository_name": "repo2"
     }')::jsonb,
     '{
         "package_id": "00000000-0000-0000-0000-000000000002",
-        "kind": 1,
         "name": "package2",
         "normalized_name": "package2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
@@ -386,10 +382,15 @@ select is(
             }
         ],
         "maintainers": null,
-        "user_alias": null,
-        "organization_name": "org1",
-        "organization_display_name": "Organization 1",
-        "chart_repository": null
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000002",
+            "kind": 0,
+            "name": "repo2",
+            "display_name": "Repo 2",
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1"
+        }
     }'::jsonb,
     'Last package2 version is returned as a json object'
 );

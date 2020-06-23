@@ -57,7 +57,7 @@ describe('PackageCard', () => {
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/kubernetes_grey.svg');
+      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/package_placeholder.svg');
     });
   });
 
@@ -85,21 +85,9 @@ describe('PackageCard', () => {
       const title = queryByText(mockPackage.name!);
       expect(title).toBeInTheDocument();
     });
-
-    it('does not render org name when repo name is the same than org', () => {
-      const mockPackage = getMockPackage('6');
-
-      const { getAllByText } = render(
-        <Router>
-          <PackageCard package={mockPackage} />
-        </Router>
-      );
-      const title = getAllByText(mockPackage.chartRepository!.name);
-      expect(title).toHaveLength(1);
-    });
   });
 
-  describe('Chart repository button', () => {
+  describe('Repository button', () => {
     it('renders repository link', () => {
       const mockPackage = getMockPackage('7');
 
@@ -121,23 +109,11 @@ describe('PackageCard', () => {
         search: prepareQuerystring({
           pageNumber: 1,
           filters: {
-            repo: [mockPackage.chartRepository!.name],
+            repo: [mockPackage.repository.name],
           },
           deprecated: false,
         }),
       });
-    });
-
-    it('does not render repository link when chart kind is not Helm Chart', () => {
-      const mockPackage = getMockPackage('8');
-
-      const { queryByTestId } = render(
-        <Router>
-          <PackageCard package={mockPackage} />
-        </Router>
-      );
-      const button = queryByTestId('repoLink');
-      expect(button).toBeNull();
     });
   });
 

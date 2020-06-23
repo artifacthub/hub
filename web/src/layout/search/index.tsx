@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Facets, Package, PackageKind, SearchResults } from '../../types';
+import { Facets, Package, RepositoryKind, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -81,7 +81,7 @@ const SearchView = (props: Props) => {
     switch (name) {
       case 'kind':
         // Remove selected chart repositories when some kind different to Chart is selected and Chart is not selected
-        if (newFilters.length > 0 && !newFilters.includes(PackageKind.Chart.toString())) {
+        if (newFilters.length > 0 && !newFilters.includes(RepositoryKind.Helm.toString())) {
           cleanFilters['repo'] = [];
         }
         break;

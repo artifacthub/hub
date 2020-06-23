@@ -62,7 +62,7 @@ describe('PackageCard', () => {
       );
       const image = queryByAltText(`Logo ${mockPackage.name}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/kubernetes_grey.svg');
+      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/package_placeholder.svg');
     });
   });
 

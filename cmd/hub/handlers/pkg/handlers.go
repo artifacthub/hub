@@ -42,9 +42,9 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 		PackageName: chi.URLParam(r, "packageName"),
 		Version:     chi.URLParam(r, "version"),
 	}
-	chartRepositoryName := chi.URLParam(r, "repoName")
-	if chartRepositoryName != "" {
-		input.ChartRepositoryName = chartRepositoryName
+	repoName := chi.URLParam(r, "repoName")
+	if repoName != "" {
+		input.RepositoryName = repoName
 	}
 	dataJSON, err := h.pkgManager.GetJSON(r.Context(), input)
 	if err != nil {
@@ -113,9 +113,9 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 			PackageName: chi.URLParam(r, "packageName"),
 			Version:     chi.URLParam(r, "version"),
 		}
-		chartRepositoryName := chi.URLParam(r, "repoName")
-		if chartRepositoryName != "" {
-			input.ChartRepositoryName = chartRepositoryName
+		repoName := chi.URLParam(r, "repoName")
+		if repoName != "" {
+			input.RepositoryName = repoName
 		}
 		p, err := h.pkgManager.Get(r.Context(), input)
 		if err != nil {
@@ -123,15 +123,11 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 			helpers.RenderErrorJSON(w, err)
 			return
 		}
-		publisher := p.OrganizationName
+		publisher := p.Repository.OrganizationName
 		if publisher == "" {
-			publisher = p.UserAlias
+			publisher = p.Repository.UserAlias
 		}
-		repo := ""
-		if p.ChartRepository != nil {
-			repo = "/" + p.ChartRepository.Name
-		}
-		title := fmt.Sprintf("%s %s · %s%s", p.NormalizedName, p.Version, publisher, repo)
+		title := fmt.Sprintf("%s %s · %s/%s", p.NormalizedName, p.Version, publisher, p.Repository.Name)
 		description := p.Description
 
 		// Inject index metadata in context and call next handler
@@ -147,9 +143,9 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 	input := &hub.GetPackageInput{
 		PackageName: chi.URLParam(r, "packageName"),
 	}
-	chartRepositoryName := chi.URLParam(r, "repoName")
-	if chartRepositoryName != "" {
-		input.ChartRepositoryName = chartRepositoryName
+	repoName := chi.URLParam(r, "repoName")
+	if repoName != "" {
+		input.RepositoryName = repoName
 	}
 	p, err := h.pkgManager.Get(r.Context(), input)
 	if err != nil {
@@ -160,9 +156,9 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 
 	// Build RSS feed
 	baseURL := h.cfg.GetString("server.baseURL")
-	publisher := p.OrganizationName
+	publisher := p.Repository.OrganizationName
 	if publisher == "" {
-		publisher = p.UserAlias
+		publisher = p.Repository.UserAlias
 	}
 	feed := &feeds.Feed{
 		Title:       fmt.Sprintf("%s/%s (Artifact Hub)", publisher, p.NormalizedName),
@@ -264,13 +260,13 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	}
 
 	// Kinds
-	kinds := make([]hub.PackageKind, 0, len(qs["kind"]))
+	kinds := make([]hub.RepositoryKind, 0, len(qs["kind"]))
 	for _, kindStr := range qs["kind"] {
 		kind, err := strconv.Atoi(kindStr)
 		if err != nil {
 			return nil, fmt.Errorf("invalid kind: %s", kindStr)
 		}
-		kinds = append(kinds, hub.PackageKind(kind))
+		kinds = append(kinds, hub.RepositoryKind(kind))
 	}
 
 	// Include deprecated packages
@@ -284,29 +280,25 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	}
 
 	return &hub.SearchPackageInput{
-		Limit:             limit,
-		Offset:            offset,
-		Facets:            facets,
-		Text:              qs.Get("text"),
-		PackageKinds:      kinds,
-		Users:             qs["user"],
-		Orgs:              qs["org"],
-		ChartRepositories: qs["repo"],
-		Deprecated:        deprecated,
+		Limit:           limit,
+		Offset:          offset,
+		Facets:          facets,
+		Text:            qs.Get("text"),
+		Users:           qs["user"],
+		Orgs:            qs["org"],
+		Repositories:    qs["repo"],
+		RepositoryKinds: kinds,
+		Deprecated:      deprecated,
 	}, nil
 }
 
 // BuildPackageURL builds the url of a given package.
 func BuildPackageURL(baseURL string, p *hub.Package, version string) string {
-	var pkgPath string
-	switch p.Kind {
-	case hub.Chart:
-		pkgPath = fmt.Sprintf("/packages/chart/%s/%s", p.ChartRepository.Name, p.NormalizedName)
-	case hub.Falco:
-		pkgPath = fmt.Sprintf("/packages/falco/%s", p.NormalizedName)
-	case hub.OPA:
-		pkgPath = fmt.Sprintf("/packages/opa/%s", p.NormalizedName)
-	}
+	pkgPath := fmt.Sprintf("/packages/%s/%s/%s",
+		hub.GetKindName(p.Repository.Kind),
+		p.Repository.Name,
+		p.NormalizedName,
+	)
 	if version != "" {
 		pkgPath += "/" + version
 	}

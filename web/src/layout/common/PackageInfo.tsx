@@ -5,14 +5,14 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
-import { Package, PackageKind } from '../../types';
+import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Image from './Image';
 import OrganizationInfo from './OrganizationInfo';
-import PackageIcon from './PackageIcon';
 import styles from './PackageInfo.module.css';
+import RepositoryIcon from './RepositoryIcon';
 import SignedBadge from './SignedBadge';
 
 interface Props {
@@ -41,7 +41,7 @@ const PackageInfo = (props: Props) => {
           </div>
         </span>
       )}
-      <PackageIcon className={styles.icon} kind={props.package.kind} />
+      <RepositoryIcon className={styles.icon} kind={props.package.repository.kind} />
     </div>
   );
 
@@ -118,73 +118,45 @@ const PackageInfo = (props: Props) => {
             <div className={`card-subtitle text-truncate align-items-center ${styles.subtitle}`}>
               <div className="d-inline-block d-md-none text-truncate w-100">
                 <div className={`text-dark d-flex align-items-baseline text-truncate mw-100 ${styles.mobileVersion}`}>
-                  {(() => {
-                    switch (props.package.kind) {
-                      case PackageKind.Chart:
-                        return (
-                          <>
-                            <span className="text-muted text-uppercase mr-1">Repo: </span>
-                            <button
-                              className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                history.push({
-                                  pathname: '/packages/search',
-                                  search: prepareQueryString({
-                                    pageNumber: 1,
-                                    filters: {
-                                      repo: [props.package.chartRepository!.name],
-                                    },
-                                    deprecated: false,
-                                  }),
-                                });
-                              }}
-                            >
-                              <div className="text-truncate">
-                                {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                              </div>
-                            </button>
-                          </>
-                        );
-
-                      case PackageKind.Falco:
-                      case PackageKind.Opa:
-                        return (
-                          <>
-                            {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                              <OrganizationInfo
-                                className="mr-0 d-flex text-truncate"
-                                btnClassName="text-truncate mw-100"
-                                organizationName={props.package.organizationName}
-                                organizationDisplayName={props.package.organizationDisplayName}
-                                deprecated={props.package.deprecated}
-                                visibleLegend
-                              />
-                            )}
-                          </>
-                        );
-
-                      default:
-                        return null;
-                    }
-                  })()}
+                  <span className="text-muted text-uppercase mr-1">Repo: </span>
+                  <button
+                    className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      history.push({
+                        pathname: '/packages/search',
+                        search: prepareQueryString({
+                          pageNumber: 1,
+                          filters: {
+                            repo: [props.package.repository.name],
+                          },
+                          deprecated: false,
+                        }),
+                      });
+                    }}
+                  >
+                    <div className="text-truncate">
+                      {props.package.repository.displayName || props.package.repository.name}
+                    </div>
+                  </button>
                 </div>
               </div>
 
               <div className={`d-none d-md-flex flex-row align-items-baseline w-100 ${styles.wrapper}`}>
                 <div className={`d-flex flex-row align-items-baseline text-truncate ${styles.mx50}`}>
-                  {!isUndefined(props.package.organizationName) && props.package.organizationName && (
-                    <OrganizationInfo
-                      className="mr-0 d-flex flex-row mw-100"
-                      btnClassName="text-truncate mw-100"
-                      organizationName={props.package.organizationName}
-                      organizationDisplayName={props.package.organizationDisplayName}
-                      deprecated={props.package.deprecated}
-                      visibleLegend
-                    />
-                  )}
+                  {!isUndefined(props.package.repository.organizationName) &&
+                    props.package.repository.organizationName && (
+                      <OrganizationInfo
+                        className="mr-0 d-flex flex-row mw-100"
+                        btnClassName="text-truncate mw-100"
+                        organizationName={props.package.repository.organizationName}
+                        organizationDisplayName={props.package.repository.organizationDisplayName}
+                        deprecated={props.package.deprecated}
+                        visibleLegend
+                      />
+                    )}
 
-                  {!isNull(props.package.userAlias) && (
+                  {!isNull(props.package.repository.userAlias) && (
                     <>
                       <span className="text-muted text-uppercase mr-1">User: </span>
                       <button
@@ -197,52 +169,42 @@ const PackageInfo = (props: Props) => {
                             search: prepareQueryString({
                               pageNumber: 1,
                               filters: {
-                                user: [props.package.userAlias!],
+                                user: [props.package.repository.userAlias!],
                               },
                               deprecated: false,
                             }),
                           });
                         }}
                       >
-                        <div className="text-truncate">{props.package.userAlias}</div>
+                        <div className="text-truncate">{props.package.repository.userAlias}</div>
                       </button>
                     </>
                   )}
                 </div>
-                {(() => {
-                  switch (props.package.kind) {
-                    case PackageKind.Chart:
-                      return (
-                        <div className={`ml-3 d-flex flex-row ${styles.mx50}`}>
-                          <span className="text-muted text-uppercase pr-1">Repo: </span>
-                          <button
-                            data-testid="repoLink"
-                            className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    repo: [props.package.chartRepository!.name],
-                                  },
-                                  deprecated: false,
-                                }),
-                              });
-                            }}
-                          >
-                            <div className="text-truncate">
-                              {props.package.chartRepository!.displayName || props.package.chartRepository!.name}
-                            </div>
-                          </button>
-                        </div>
-                      );
-
-                    default:
-                      return null;
-                  }
-                })()}
+                <div className={`ml-3 d-flex flex-row ${styles.mx50}`}>
+                  <span className="text-muted text-uppercase pr-1">Repo: </span>
+                  <button
+                    data-testid="repoLink"
+                    className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      history.push({
+                        pathname: '/packages/search',
+                        search: prepareQueryString({
+                          pageNumber: 1,
+                          filters: {
+                            repo: [props.package.repository.name],
+                          },
+                          deprecated: false,
+                        }),
+                      });
+                    }}
+                  >
+                    <div className="text-truncate">
+                      {props.package.repository.displayName || props.package.repository.name}
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -252,8 +214,8 @@ const PackageInfo = (props: Props) => {
                 {props.package.version || '-'}
 
                 {(() => {
-                  switch (props.package.kind) {
-                    case PackageKind.Chart:
+                  switch (props.package.repository.kind) {
+                    case RepositoryKind.Helm:
                       return (
                         <>
                           <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>

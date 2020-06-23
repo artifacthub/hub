@@ -98,9 +98,6 @@ func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {
 // Register registers the package provided in the database.
 func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	// Validate input
-	if !isValidKind(pkg.Kind) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid kind")
-	}
 	if pkg.Name == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
@@ -118,42 +115,14 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid content url")
 		}
 	}
-	if pkg.Kind == hub.Chart {
-		if pkg.ChartRepository == nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "chart repository not provided")
-		}
-		if pkg.ChartRepository.ChartRepositoryID == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "chart repository id not provided")
-		}
-		if _, err := uuid.FromString(pkg.ChartRepository.ChartRepositoryID); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository id")
-		}
-		if pkg.UserID != "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected user id provided")
-		}
-		if pkg.OrganizationID != "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected organization id provided")
-		}
-	} else {
-		if pkg.UserID == "" && pkg.OrganizationID == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user id or organization id not provided")
-		}
-		if pkg.UserID != "" && pkg.OrganizationID != "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "both user id and organization id provided")
-		}
-		if pkg.UserID != "" {
-			if _, err := uuid.FromString(pkg.UserID); err != nil {
-				return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid user id")
-			}
-		}
-		if pkg.OrganizationID != "" {
-			if _, err := uuid.FromString(pkg.OrganizationID); err != nil {
-				return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid organization id")
-			}
-		}
-		if pkg.ChartRepository != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "unexpected chart repository provided")
-		}
+	if pkg.Repository == nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository not provided")
+	}
+	if pkg.Repository.RepositoryID == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository id not provided")
+	}
+	if _, err := uuid.FromString(pkg.Repository.RepositoryID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
 	}
 	for _, m := range pkg.Maintainers {
 		if m.Email == "" {
@@ -190,9 +159,9 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid organization name")
 		}
 	}
-	for _, name := range input.ChartRepositories {
+	for _, name := range input.Repositories {
 		if name == "" {
-			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid chart repository name")
+			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository name")
 		}
 	}
 
@@ -221,9 +190,6 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 // Unregister unregisters the package provided from the database.
 func (m *Manager) Unregister(ctx context.Context, pkg *hub.Package) error {
 	// Validate input
-	if !isValidKind(pkg.Kind) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid kind")
-	}
 	if pkg.Name == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
@@ -258,14 +224,4 @@ func getUserID(ctx context.Context) *string {
 		userID = &v
 	}
 	return userID
-}
-
-// isValidKind checks if the provided package kind is valid.
-func isValidKind(kind hub.PackageKind) bool {
-	for _, validKind := range []hub.PackageKind{hub.Chart, hub.Falco, hub.OPA} {
-		if kind == validKind {
-			return true
-		}
-	}
-	return false
 }

@@ -1,0 +1,32 @@
+[
+  {
+    "kind": 0,
+    "name": "test",
+    "displayName": "Test",
+    "description": "Lorem ipsum...",
+    "homeUrl": "https://test.org",
+    "userAlias": "user",
+    "confirmed": true,
+    "membersCount": 1
+  },
+  {
+    "kind": 1,
+    "name": "orgTest",
+    "displayName": "Test org",
+    "description": "Lorem ipsum...",
+    "homeUrl": "https://test.org2",
+    "userAlias": "user1",
+    "confirmed": true,
+    "membersCount": 1
+  },
+  {
+    "kind": 0,
+    "name": "helm",
+    "displayName": "Helm",
+    "description": "The package manager for Kubernetes",
+    "userAlias": "user",
+    "homeUrl": "https://helm.sh",
+    "confirmed": true,
+    "membersCount": 1
+  }
+]

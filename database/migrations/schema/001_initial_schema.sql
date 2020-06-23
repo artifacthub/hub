@@ -47,29 +47,32 @@ create table if not exists session (
     created_at timestamptz default current_timestamp not null
 );
 
-create table if not exists chart_repository (
-    chart_repository_id uuid primary key default gen_random_uuid(),
+create table if not exists repository_kind (
+    repository_kind_id integer primary key,
+    name text not null check (name <> '')
+);
+
+insert into repository_kind values (0, 'Helm charts');
+insert into repository_kind values (1, 'Falco rules');
+insert into repository_kind values (2, 'OPA policies');
+insert into repository_kind values (3, 'OLM operators');
+
+create table if not exists repository (
+    repository_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
     display_name text check (display_name <> ''),
     url text not null check (url <> '') unique,
     last_tracking_ts timestamptz,
     last_tracking_errors text,
+    repository_kind_id integer not null default 0 references repository_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,
-    check (user_id is null or organization_id is null)
+    check (user_id is not null or organization_id is not null)
 );
 
-create index chart_repository_user_id_idx on chart_repository (user_id);
-create index chart_repository_organization_id_idx on chart_repository (organization_id);
-
-create table if not exists package_kind (
-    package_kind_id integer primary key,
-    name text not null check (name <> '')
-);
-
-insert into package_kind values (0, 'Helm charts');
-insert into package_kind values (1, 'Falco rules');
-insert into package_kind values (2, 'OPA policies');
+create index repository_repository_kind_id_idx on repository (repository_kind_id);
+create index repository_user_id_idx on repository (user_id);
+create index repository_organization_id_idx on repository (organization_id);
 
 create table if not exists package (
     package_id uuid primary key default gen_random_uuid(),
@@ -80,27 +83,12 @@ create table if not exists package (
     logo_image_id uuid,
     stars integer not null default 0,
     tsdoc tsvector,
-    package_kind_id integer not null references package_kind on delete restrict,
-    user_id uuid references "user" on delete restrict,
-    organization_id uuid references organization on delete restrict,
-    chart_repository_id uuid references chart_repository on delete cascade,
-    check (user_id is null or organization_id is null),
-    check (user_id is null or chart_repository_id is null),
-    check (organization_id is null or chart_repository_id is null),
-    check (package_kind_id <> 0 or chart_repository_id is not null)
+    repository_id uuid not null references repository on delete cascade,
+    unique (repository_id, name)
 );
 
-create index package_stars_idx on package (stars);
 create index package_tsdoc_idx on package using gin (tsdoc);
-create index package_package_kind_id_idx on package (package_kind_id);
-create index package_user_id_idx on package (user_id);
-create index package_organization_id_idx on package (organization_id);
-create index package_chart_repository_id_idx on package (chart_repository_id);
-create unique index package_unique_name_idx on package (
-    coalesce(chart_repository_id, '99999999-9999-9999-9999-999999999999'),
-    package_kind_id,
-    name
-);
+create index package_repository_id_idx on package (repository_id);
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,

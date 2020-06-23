@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { ChartRepository } from '../../types';
+import { Repository } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExternalLink from '../common/ExternalLink';
 import NoData from '../common/NoData';
@@ -14,7 +14,7 @@ import styles from './ContentInstall.module.css';
 interface Props {
   name: string;
   version?: string;
-  repository: ChartRepository;
+  repository: Repository;
 }
 
 interface Tab {

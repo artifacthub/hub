@@ -14,7 +14,7 @@ import CheckBox from '../../../common/Checkbox';
 import ExternalLink from '../../../common/ExternalLink';
 import Image from '../../../common/Image';
 import InputField from '../../../common/InputField';
-import PackageIcon from '../../../common/PackageIcon';
+import RepositoryIcon from '../../../common/RepositoryIcon';
 import SearchTypeahead from '../../../common/SearchTypeahead';
 import styles from './Form.module.css';
 
@@ -448,12 +448,12 @@ const WebhookForm = (props: Props) => {
                   {selectedPackages.map((item: Package) => (
                     <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
                       <td className="align-middle text-center d-none d-sm-table-cell">
-                        <PackageIcon kind={item.kind} className={`${styles.icon} mx-2`} />
+                        <RepositoryIcon kind={item.repository.kind} className={`${styles.icon} mx-2`} />
                       </td>
                       <td className="align-middle">
                         <div className="d-flex flex-row align-items-center">
                           <div
-                            className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ${styles.imageWrapper}`}
+                            className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
                           >
                             <Image
                               alt={item.displayName || item.name}
@@ -466,20 +466,17 @@ const WebhookForm = (props: Props) => {
                         </div>
                       </td>
                       <td className="align-middle position-relative text-dark">
-                        {item.userAlias || item.organizationDisplayName || item.organizationName}
+                        {item.repository.userAlias ||
+                          item.repository.organizationDisplayName ||
+                          item.repository.organizationName}
 
-                        {!isNull(item.chartRepository) && !isUndefined(item.chartRepository) && (
-                          <small className="ml-2">
-                            (
-                            <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
-                              Repo:{' '}
-                            </span>
-                            <span className="text-dark">
-                              {item.chartRepository!.displayName || item.chartRepository!.name}
-                            </span>
-                            )
-                          </small>
-                        )}
+                        <small className="ml-2">
+                          (
+                          <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                            Repo:{' '}
+                          </span>
+                          <span className="text-dark">{item.repository.displayName || item.repository.name}</span>)
+                        </small>
                       </td>
 
                       <td className="align-middle">

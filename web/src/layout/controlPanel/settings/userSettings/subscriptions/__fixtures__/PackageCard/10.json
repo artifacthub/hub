@@ -1,15 +1,16 @@
 {
   "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-  "kind": 0,
   "name": "airflow",
   "normalizedName": "airflow",
   "logoImageId": "",
-  "userAlias": null,
-  "organizationName": "helm",
-  "organizationDisplayName": "Helm",
-  "chartRepository": {
+  "repository": {
+    "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
+    "kind": 0,
     "name": "stable",
-    "displayName": "Stable"
+    "displayName": "Stable",
+    "userAlias": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm"
   },
   "eventKinds": [0]
 }

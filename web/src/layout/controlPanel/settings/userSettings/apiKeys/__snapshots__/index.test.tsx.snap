@@ -210,7 +210,7 @@ exports[`API keys section index creates snapshot 2`] = `
           >
             <div
               class="list-group mt-4 mt-md-5"
-              data-testid="chartRepoList"
+              data-testid="apiKeysList"
             >
               <li
                 class="list-group-item listItem"

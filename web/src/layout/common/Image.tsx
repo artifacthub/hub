@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-const PLACEHOLDER_SRC = '/static/media/kubernetes_grey.svg';
+const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
 
 const Image = (props: Props) => {
   const [error, setError] = useState(false);

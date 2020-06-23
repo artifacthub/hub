@@ -1,11 +1,21 @@
 {
   "packageId": "id",
-  "kind": 1,
   "name": "test",
-  "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "userAlias": "userAlias"
+  "userAlias": null,
+  "normalizedName": "pr",
+  "deprecated": false,
+  "keywords": ["key1", "key2"],
+  "repository": {
+    "repositoryid": "id",
+    "kind": 1,
+    "name": "repo",
+    "displayName": null,
+    "organizationName": null,
+    "organizationDisplayName": null,
+    "userAlias": "userAlias"
+  }
 }

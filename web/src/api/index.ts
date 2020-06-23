@@ -6,7 +6,6 @@ import isUndefined from 'lodash/isUndefined';
 import {
   APIKey,
   APIKeyCode,
-  ChartRepository,
   CheckAvailabilityProps,
   EventKind,
   LogoImage,
@@ -14,6 +13,7 @@ import {
   Package,
   PackageStars,
   Profile,
+  Repository,
   SearchQuery,
   SearchResults,
   Stats,
@@ -28,14 +28,14 @@ import getHubBaseURL from '../utils/getHubBaseURL';
 import renameKeysInObject from '../utils/renameKeysInObject';
 
 interface PackageRequest {
-  repoName: string;
   packageName: string;
+  repositoryKind: string;
+  repositoryName: string;
   version?: string;
-  packageKind?: string;
 }
 
-interface TransferChartRepositoryRequest {
-  chartRepositoryName: string;
+interface TransferRepositoryRequest {
+  repositoryName: string;
   toOrgName?: string;
   fromOrgName?: string;
 }
@@ -127,14 +127,7 @@ const API_BASE_URL = `${getHubBaseURL()}/api/v1`;
 
 export const API = {
   getPackage: (request: PackageRequest): Promise<Package> => {
-    let url = `${API_BASE_URL}/packages`;
-    if (!isUndefined(request.packageKind)) {
-      url += `/${request.packageKind}`;
-    }
-    if (!isUndefined(request.repoName)) {
-      url += `/chart/${request.repoName}`;
-    }
-    url += `/${request.packageName}`;
+    let url = `${API_BASE_URL}/packages/${request.repositoryKind}/${request.repositoryName}/${request.packageName}`;
     if (!isUndefined(request.version)) {
       url += `/${request.version}`;
     }
@@ -224,41 +217,41 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/profile`);
   },
 
-  getChartRepositories: (fromOrgName?: string): Promise<ChartRepository[]> => {
-    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}`);
+  getRepositories: (fromOrgName?: string): Promise<Repository[]> => {
+    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`);
   },
 
-  addChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
-    const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}`, {
+  addRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
+    const repo = renameKeysInObject(repository, { displayName: 'display_name' });
+    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(chartRepo),
+      body: JSON.stringify(repo),
     });
   },
 
-  deleteChartRepository: (chartRepositoryName: string, fromOrgName?: string): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}/${chartRepositoryName}`, {
+  deleteRepository: (repositoryName: string, fromOrgName?: string): Promise<null | string> => {
+    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repositoryName}`, {
       method: 'DELETE',
     });
   },
 
-  updateChartRepository: (chartRepository: ChartRepository, fromOrgName?: string): Promise<null | string> => {
-    const chartRepo = renameKeysInObject(chartRepository, { displayName: 'display_name' });
-    return apiFetch(`${API_BASE_URL}/chart-repositories${getUrlContext(fromOrgName)}/${chartRepository.name}`, {
+  updateRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
+    const repo = renameKeysInObject(repository, { displayName: 'display_name' });
+    return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repository.name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(chartRepo),
+      body: JSON.stringify(repo),
     });
   },
 
-  transferChartRepository: (params: TransferChartRepositoryRequest): Promise<null | string> => {
+  transferRepository: (params: TransferRepositoryRequest): Promise<null | string> => {
     return apiFetch(
-      `${API_BASE_URL}/chart-repositories${getUrlContext(params.fromOrgName)}/${params.chartRepositoryName}/transfer${
+      `${API_BASE_URL}/repositories${getUrlContext(params.fromOrgName)}/${params.repositoryName}/transfer${
         isUndefined(params.toOrgName) ? '' : `?org=${params.toOrgName}`
       }`,
       {

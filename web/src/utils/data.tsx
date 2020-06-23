@@ -4,8 +4,8 @@ import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
 
-import PackageIcon from '../layout/common/PackageIcon';
-import { EventKind, NavSection, PackageKind, PayloadKind, Section } from '../types';
+import RepositoryIcon from '../layout/common/RepositoryIcon';
+import { EventKind, NavSection, PayloadKind, RepositoryKind } from '../types';
 
 export interface SubscriptionItem {
   kind: EventKind;
@@ -33,23 +33,42 @@ export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
   },
 ];
 
-export interface PackageKindDef {
-  kind: PackageKind;
+export interface RepoKindDef {
+  kind: RepositoryKind;
+  label: string;
   name: string;
+  icon: JSX.Element;
+  active: boolean;
 }
 
-export const PACKAGE_KINDS: PackageKindDef[] = [
+export const REPOSITORY_KINDS: RepoKindDef[] = [
   {
-    kind: PackageKind.Chart,
+    kind: RepositoryKind.Helm,
+    label: 'helm',
     name: 'Helm charts',
+    icon: <RepositoryIcon kind={RepositoryKind.Helm} className="mw-100 mh-100" />,
+    active: true,
   },
   {
-    kind: PackageKind.Falco,
+    kind: RepositoryKind.Falco,
+    label: 'falco',
     name: 'Falco rules',
+    icon: <RepositoryIcon kind={RepositoryKind.Falco} className="mw-100 mh-100" />,
+    active: false,
   },
   {
-    kind: PackageKind.Opa,
+    kind: RepositoryKind.OPA,
+    label: 'opa',
     name: 'OPA policies',
+    icon: <RepositoryIcon kind={RepositoryKind.OPA} className="mw-100 mh-100" />,
+    active: false,
+  },
+  {
+    kind: RepositoryKind.OLM,
+    label: 'olm',
+    name: 'OLM operators',
+    icon: <RepositoryIcon kind={RepositoryKind.OLM} className="mw-100 mh-100" />,
+    active: false,
   },
 ];
 
@@ -66,38 +85,13 @@ export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [
   },
 ];
 
-export const CONTROL_PANEL_PACKAGES_SUBSECTIONS: Section[] = [
-  {
-    name: 'chart',
-    displayName: 'Chart repositories',
-    shortName: 'Chart',
-    icon: <PackageIcon kind={PackageKind.Chart} className="mw-100" />,
-    disabled: false,
-  },
-  {
-    name: 'falco',
-    displayName: 'Falco rules',
-    shortName: 'Falco',
-    icon: <PackageIcon kind={PackageKind.Falco} className="mw-100" />,
-    disabled: true,
-  },
-  {
-    name: 'opa',
-    displayName: 'OPA policies',
-    shortName: 'OPA',
-    icon: <PackageIcon kind={PackageKind.Opa} className="mw-100" />,
-    disabled: true,
-  },
-];
-
 export const CONTROL_PANEL_SECTIONS: NavSection = {
   user: [
     {
-      name: 'packages',
-      displayName: 'Packages',
+      name: 'repositories',
+      displayName: 'Repositories',
       disabled: false,
       icon: <GoPackage />,
-      subsections: CONTROL_PANEL_PACKAGES_SUBSECTIONS,
     },
     {
       name: 'organizations',
@@ -120,11 +114,10 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
   ],
   org: [
     {
-      name: 'packages',
-      displayName: 'Packages',
+      name: 'repositories',
+      displayName: 'Repositories',
       disabled: false,
       icon: <GoPackage />,
-      subsections: CONTROL_PANEL_PACKAGES_SUBSECTIONS,
     },
     {
       name: 'members',

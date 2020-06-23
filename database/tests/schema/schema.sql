@@ -15,7 +15,6 @@ select has_extension('pgcrypto');
 -- Check expected tables exist
 select tables_are(array[
     'api_key',
-    'chart_repository',
     'email_verification_code',
     'event',
     'event_kind',
@@ -26,7 +25,8 @@ select tables_are(array[
     'organization',
     'package',
     'package__maintainer',
-    'package_kind',
+    'repository',
+    'repository_kind',
     'session',
     'snapshot',
     'subscription',
@@ -47,16 +47,6 @@ select columns_are('api_key', array[
     'key',
     'user_id',
     'created_at'
-]);
-select columns_are('chart_repository', array[
-    'chart_repository_id',
-    'name',
-    'display_name',
-    'url',
-    'last_tracking_ts',
-    'last_tracking_errors',
-    'user_id',
-    'organization_id'
 ]);
 select columns_are('email_verification_code', array[
     'email_verification_code_id',
@@ -118,17 +108,25 @@ select columns_are('package', array[
     'logo_image_id',
     'stars',
     'tsdoc',
-    'package_kind_id',
-    'user_id',
-    'organization_id',
-    'chart_repository_id'
+    'repository_id'
 ]);
 select columns_are('package__maintainer', array[
     'package_id',
     'maintainer_id'
 ]);
-select columns_are('package_kind', array[
-    'package_kind_id',
+select columns_are('repository', array[
+    'repository_id',
+    'name',
+    'display_name',
+    'url',
+    'last_tracking_ts',
+    'last_tracking_errors',
+    'repository_kind_id',
+    'user_id',
+    'organization_id'
+]);
+select columns_are('repository_kind', array[
+    'repository_kind_id',
     'name'
 ]);
 select columns_are('session', array[
@@ -215,13 +213,6 @@ select indexes_are('api_key', array[
     'api_key_pkey',
     'api_key_user_id_idx'
 ]);
-select indexes_are('chart_repository', array[
-    'chart_repository_pkey',
-    'chart_repository_name_key',
-    'chart_repository_url_key',
-    'chart_repository_user_id_idx',
-    'chart_repository_organization_id_idx'
-]);
 select indexes_are('email_verification_code', array[
     'email_verification_code_pkey',
     'email_verification_code_user_id_key'
@@ -255,19 +246,23 @@ select indexes_are('organization', array[
 ]);
 select indexes_are('package', array[
     'package_pkey',
-    'package_chart_repository_id_idx',
-    'package_package_kind_id_idx',
     'package_tsdoc_idx',
-    'package_stars_idx',
-    'package_user_id_idx',
-    'package_organization_id_idx',
-    'package_unique_name_idx'
+    'package_repository_id_idx',
+    'package_repository_id_name_key'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'
 ]);
-select indexes_are('package_kind', array[
-    'package_kind_pkey'
+select indexes_are('repository', array[
+    'repository_pkey',
+    'repository_name_key',
+    'repository_url_key',
+    'repository_repository_kind_id_idx',
+    'repository_user_id_idx',
+    'repository_organization_id_idx'
+]);
+select indexes_are('repository_kind', array[
+    'repository_kind_pkey'
 ]);
 select indexes_are('session', array[
     'session_pkey'
@@ -309,6 +304,15 @@ select has_function('get_api_key');
 select has_function('get_user_api_keys');
 select has_function('update_api_key');
 
+select has_function('get_pending_event');
+
+select has_function('get_image');
+select has_function('register_image');
+
+select has_function('add_notification');
+select has_function('get_pending_notification');
+select has_function('update_notification_status');
+
 select has_function('add_organization');
 select has_function('add_organization_member');
 select has_function('confirm_organization_membership');
@@ -318,13 +322,6 @@ select has_function('get_organization_members');
 select has_function('get_user_organizations');
 select has_function('update_organization');
 select has_function('user_belongs_to_organization');
-
-select has_function('get_user_profile');
-select has_function('register_session');
-select has_function('register_user');
-select has_function('update_user_password');
-select has_function('update_user_profile');
-select has_function('verify_email');
 
 select has_function('generate_package_tsdoc');
 select has_function('get_package');
@@ -340,18 +337,15 @@ select has_function('semver_gte');
 select has_function('toggle_star');
 select has_function('unregister_package');
 
-select has_function('add_chart_repository');
-select has_function('delete_chart_repository');
-select has_function('get_chart_repositories');
-select has_function('get_chart_repository_by_name');
-select has_function('get_chart_repository_packages_digest');
-select has_function('get_org_chart_repositories');
-select has_function('get_user_chart_repositories');
-select has_function('transfer_chart_repository');
-select has_function('update_chart_repository');
-
-select has_function('get_image');
-select has_function('register_image');
+select has_function('add_repository');
+select has_function('delete_repository');
+select has_function('get_repositories_by_kind');
+select has_function('get_repository_by_name');
+select has_function('get_repository_packages_digest');
+select has_function('get_org_repositories');
+select has_function('get_user_repositories');
+select has_function('transfer_repository');
+select has_function('update_repository');
 
 select has_function('add_subscription');
 select has_function('delete_subscription');
@@ -359,11 +353,12 @@ select has_function('get_package_subscriptions');
 select has_function('get_subscriptors');
 select has_function('get_user_subscriptions');
 
-select has_function('get_pending_event');
-
-select has_function('add_notification');
-select has_function('get_pending_notification');
-select has_function('update_notification_status');
+select has_function('get_user_profile');
+select has_function('register_session');
+select has_function('register_user');
+select has_function('update_user_password');
+select has_function('update_user_profile');
+select has_function('verify_email');
 
 select has_function('add_webhook');
 select has_function('delete_webhook');
@@ -374,15 +369,16 @@ select has_function('get_webhooks_subscribed_to');
 select has_function('update_webhook');
 select has_function('user_has_access_to_webhook');
 
--- Check package kinds exist
+-- Check repository kinds exist
 select results_eq(
-    'select * from package_kind',
+    'select * from repository_kind',
     $$ values
         (0, 'Helm charts'),
         (1, 'Falco rules'),
-        (2, 'OPA policies')
+        (2, 'OPA policies'),
+        (3, 'OLM operators')
     $$,
-    'Package kinds should exist'
+    'Repository kinds should exist'
 );
 
 -- Check event kinds exist

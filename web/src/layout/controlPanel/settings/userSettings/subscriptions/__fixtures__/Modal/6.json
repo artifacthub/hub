@@ -1,34 +1,34 @@
 [
   {
     "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-    "kind": 0,
     "name": "airflow",
     "normalizedName": "airflow",
     "logoImageId": "f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc",
-    "userAlias": null,
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "chartRepository": null,
-    "displayName": null,
-    "description": "",
-    "appVersion": "1.1.1",
-    "deprecated": false,
-    "eventKinds": [0, 1]
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
+      "name": "stable",
+      "displayName": "Stable",
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm"
+    },
+    "eventKinds": [0]
   },
   {
     "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
-    "kind": 0,
     "name": "cerebro",
     "normalizedName": "cerebro",
     "logoImageId": null,
-    "userAlias": null,
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "chartRepository": null,
-    "displayName": null,
-    "description": "",
-    "appVersion": "1.1.1",
-    "deprecated": false,
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
+      "name": "stable",
+      "displayName": "Stable",
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm"
+    },
     "eventKinds": [1]
   }
 ]

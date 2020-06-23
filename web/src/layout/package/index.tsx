@@ -10,7 +10,7 @@ import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hl
 
 import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Package, PackageKind, SearchFiltersURL } from '../../types';
+import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
@@ -36,18 +36,18 @@ interface Props {
   setIsLoadingPackage: Dispatch<SetStateAction<boolean>>;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
-  repoName: string;
   packageName: string;
   version?: string;
-  packageKind?: string;
+  repositoryKind: string;
+  repositoryName: string;
   hash?: string;
 }
 
 const PackageView = (props: Props) => {
   const history = useHistory();
-  const [repoName, setRepoName] = useState(props.repoName);
   const [packageName, setPackageName] = useState(props.packageName);
-  const [packageKind, setPackageKind] = useState(props.packageKind);
+  const [repositoryKind, setRepositoryKind] = useState(props.repositoryKind);
+  const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
   const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
@@ -58,25 +58,24 @@ const PackageView = (props: Props) => {
 
   useEffect(() => {
     if (!isUndefined(props.packageName) && !isLoadingPackage) {
-      setRepoName(props.repoName);
       setPackageName(props.packageName);
       setVersion(props.version);
-      setPackageKind(props.packageKind);
+      setRepositoryKind(props.repositoryKind);
+      setRepositoryName(props.repositoryName);
     }
   }, [props, isLoadingPackage]);
 
   async function fetchPackageDetail() {
     try {
       const detail = await API.getPackage({
-        repoName: repoName,
         packageName: packageName,
         version: version,
-        packageKind: packageKind,
+        repositoryKind: repositoryKind,
+        repositoryName: repositoryName,
       });
-      let metaTitle = `${detail.normalizedName} ${detail.version} · ${detail.userAlias || detail.organizationName}`;
-      if (detail.chartRepository) {
-        metaTitle += `/${detail.chartRepository.name}`;
-      }
+      let metaTitle = `${detail.normalizedName} ${detail.version} · ${
+        detail.repository.userAlias || detail.repository.organizationName
+      }/${detail.repository.name}`;
       updateMetaIndex(metaTitle, detail.description);
       setDetail(detail);
       setApiError(null);
@@ -95,7 +94,7 @@ const PackageView = (props: Props) => {
     setIsLoadingPackage(true);
     fetchPackageDetail();
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [repoName, packageName, version, packageKind, setIsLoadingPackage]);
+  }, [packageName, version, repositoryName, repositoryKind, setIsLoadingPackage]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
@@ -106,7 +105,7 @@ const PackageView = (props: Props) => {
 
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element | null => {
     // OPA policies doesn't have any installation modal info
-    if (detail!.kind === PackageKind.Opa) {
+    if (detail!.repository.kind === RepositoryKind.OPA) {
       return null;
     }
 
@@ -124,12 +123,10 @@ const PackageView = (props: Props) => {
       >
         <>
           {(() => {
-            switch (detail!.kind) {
-              case PackageKind.Chart:
-                return (
-                  <ChartInstall name={detail!.name} version={detail!.version} repository={detail!.chartRepository!} />
-                );
-              case PackageKind.Falco:
+            switch (detail!.repository.kind) {
+              case RepositoryKind.Helm:
+                return <ChartInstall name={detail!.name} version={detail!.version} repository={detail!.repository} />;
+              case RepositoryKind.Falco:
                 return <FalcoInstall normalizedName={detail!.normalizedName!} />;
               default:
                 return null;
@@ -272,44 +269,25 @@ const PackageView = (props: Props) => {
                               Deprecated
                             </div>
                           )}
-                          <SignedBadge packageKind={detail.kind} signed={detail.signed} className="ml-3 mt-1" />
+                          <SignedBadge
+                            repositoryKind={detail.repository.kind}
+                            signed={detail.signed}
+                            className="ml-3 mt-1"
+                          />
                         </div>
 
                         <div className="d-block d-md-none text-truncate w-100">
                           <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
-                            {isNull(detail.userAlias) && (
-                              <>{detail.organizationDisplayName || detail.organizationName}</>
-                            )}
-                            {!isNull(detail.userAlias) && <>{detail.userAlias}</>}
-                            {(() => {
-                              switch (detail.kind) {
-                                case PackageKind.Chart:
-                                  return (
-                                    <>
-                                      <span className="px-1">/</span>
-                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                    </>
-                                  );
-                                default:
-                                  return null;
-                              }
-                            })()}
+                            {detail.repository.userAlias ||
+                              detail.repository.organizationDisplayName ||
+                              detail.repository.organizationName}
+                            <span className="px-1">/</span>
+                            {detail.repository.displayName || detail.repository.name}
                           </span>
                         </div>
 
                         <div className={`d-none d-md-flex flex-row mt-2 ${styles.subtitle}`}>
-                          {!isUndefined(detail.organizationName) && detail.organizationName && (
-                            <OrganizationInfo
-                              className="mr-2"
-                              labelClassName={styles.labelOrg}
-                              organizationName={detail.organizationName}
-                              organizationDisplayName={detail.organizationDisplayName}
-                              deprecated={detail.deprecated}
-                              visibleLegend
-                            />
-                          )}
-
-                          {!isNull(detail.userAlias) && (
+                          {!isNull(detail.repository.userAlias) ? (
                             <div className="mr-2 text-truncate">
                               <small className="mr-1 text-uppercase text-muted">User: </small>
 
@@ -320,46 +298,45 @@ const PackageView = (props: Props) => {
                                   search: prepareQueryString({
                                     pageNumber: 1,
                                     filters: {
-                                      user: [detail.userAlias],
+                                      user: [detail.repository.userAlias!],
                                     },
                                     deprecated: detail.deprecated || false,
                                   }),
                                 }}
                               >
-                                {detail.userAlias}
+                                {detail.repository.userAlias}
                               </Link>
                             </div>
+                          ) : (
+                            <OrganizationInfo
+                              className="mr-2"
+                              labelClassName={styles.labelOrg}
+                              organizationName={detail.repository.organizationName!}
+                              organizationDisplayName={detail.repository.organizationDisplayName}
+                              deprecated={detail.deprecated}
+                              visibleLegend
+                            />
                           )}
 
-                          {(() => {
-                            switch (detail.kind) {
-                              case PackageKind.Chart:
-                                return (
-                                  <div className="text-truncate">
-                                    <small className="mr-1 text-muted text-uppercase">Repo: </small>
-                                    <Link
-                                      className="text-dark"
-                                      data-testid="repoLink"
-                                      to={{
-                                        pathname: '/packages/search',
-                                        search: prepareQueryString({
-                                          pageNumber: 1,
-                                          filters: {
-                                            repo: [detail.chartRepository!.name],
-                                          },
-                                          deprecated: false,
-                                        }),
-                                      }}
-                                    >
-                                      {detail.chartRepository!.displayName || detail.chartRepository!.name}
-                                    </Link>
-                                  </div>
-                                );
-
-                              default:
-                                return null;
-                            }
-                          })()}
+                          <div className="text-truncate">
+                            <small className="mr-1 text-muted text-uppercase">Repo: </small>
+                            <Link
+                              className="text-dark"
+                              data-testid="repoLink"
+                              to={{
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: {
+                                    repo: [detail.repository.name],
+                                  },
+                                  deprecated: false,
+                                }),
+                              }}
+                            >
+                              {detail.repository.displayName || detail.repository.name}
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -418,8 +395,8 @@ const PackageView = (props: Props) => {
                         )}
 
                         {(() => {
-                          switch (detail.kind) {
-                            case PackageKind.Falco:
+                          switch (detail.repository.kind) {
+                            case RepositoryKind.Falco:
                               let rules: string | undefined = getFalcoRules();
                               return (
                                 <>
@@ -438,7 +415,7 @@ const PackageView = (props: Props) => {
                                 </>
                               );
 
-                            case PackageKind.Opa:
+                            case RepositoryKind.OPA:
                               let policies: string | undefined = getOPAPolicies();
                               return (
                                 <>

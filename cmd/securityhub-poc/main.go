@@ -21,7 +21,7 @@ import (
 )
 
 var basePath = flag.String("base-path", ".", "Path containing SecurityHub yaml files to process")
-var orgID = flag.String("org-id", "", "ID of the organization that will own the packages added")
+var repoID = flag.String("repo-id", "", "ID of the repository that will own the packages added")
 
 func main() {
 	flag.Parse()
@@ -62,7 +62,7 @@ func main() {
 		if !strings.HasSuffix(info.Name(), "yaml") {
 			return nil
 		}
-		return r.registerPackage(*orgID, *basePath, path)
+		return r.registerPackage(*repoID, *basePath, path)
 	})
 	if err != nil {
 		log.Fatal().Err(err).Msg("Error processing SecurityHub yaml files")
@@ -122,20 +122,21 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, basePath, pkgPath string) 
 
 	// Build package to register
 	p := &hub.Package{
-		Name:           e.Name,
-		LogoURL:        logoURL,
-		LogoImageID:    logoImageID,
-		Description:    e.ShortDescription,
-		Keywords:       e.Keywords,
-		Version:        e.Version,
-		Readme:         e.Description,
-		OrganizationID: orgID,
+		Name:        e.Name,
+		LogoURL:     logoURL,
+		LogoImageID: logoImageID,
+		Description: e.ShortDescription,
+		Keywords:    e.Keywords,
+		Version:     e.Version,
+		Readme:      e.Description,
+		Repository: &hub.Repository{
+			RepositoryID: *repoID,
+		},
 	}
 	switch e.Kind {
 	case "FalcoRules":
 		yamlFile := strings.TrimPrefix(pkgPath, basePath)
 		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources%s", yamlFile)
-		p.Kind = hub.Falco
 		p.Links = []*hub.Link{
 			{
 				Name: "source",
@@ -143,17 +144,6 @@ func (r *SecurityHubRegistrar) registerPackage(orgID, basePath, pkgPath string) 
 			},
 		}
 		p.Data = map[string]interface{}{"rules": e.Rules}
-	case "OpenPolicyAgentPolicies":
-		yamlFile := strings.TrimPrefix(pkgPath, basePath)
-		sourceURL := fmt.Sprintf("https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources%s", yamlFile)
-		p.Kind = hub.OPA
-		p.Links = []*hub.Link{
-			{
-				Name: "source",
-				URL:  sourceURL,
-			},
-		}
-		p.Data = map[string]interface{}{"policies": e.Policies}
 	}
 
 	return r.pkgManager.Register(r.ctx, p)

@@ -74,7 +74,7 @@ exports[`ChartInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code>
-          helm repo add chartRepo http://chartRepo.test
+          helm repo add repo http://repo.test
         </code>
       </pre>
       <div
@@ -130,7 +130,7 @@ exports[`ChartInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code>
-          helm install chartRepo/packageName --version 1.0.0
+          helm install repo/packageName --version 1.0.0
         </code>
       </pre>
       <div

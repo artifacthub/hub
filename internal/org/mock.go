@@ -24,7 +24,7 @@ func (m *ManagerMock) AddMember(ctx context.Context, orgName, userAlias, baseURL
 	return args.Error(0)
 }
 
-// CheckAvailability implements the ChartRepositoryManager interface.
+// CheckAvailability implements the OrganizationManager interface.
 func (m *ManagerMock) CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error) {
 	args := m.Called(ctx, resourceKind, value)
 	return args.Bool(0), args.Error(1)

@@ -4,10 +4,10 @@ import { FaGithub, FaSlack } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
-import { PackageKind, Stats } from '../../types';
+import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import ExternalLink from '../common/ExternalLink';
-import PackageIcon from '../common/PackageIcon';
+import RepositoryIcon from '../common/RepositoryIcon';
 import SearchBar from '../common/SearchBar';
 import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
@@ -109,9 +109,9 @@ const HomeView = (props: Props) => {
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and
             Open Policy Agent (OPA) policies.
             <div className="mx-5 mt-5 d-flex flex-row align-items-center justify-content-around">
-              <PackageIcon kind={PackageKind.Chart} type="white" className={styles.aboutIcon} />
-              <PackageIcon kind={PackageKind.Falco} type="white" className={styles.aboutIcon} />
-              <PackageIcon kind={PackageKind.Opa} type="white" className={styles.aboutIcon} />
+              <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+              <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+              <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
             </div>
           </div>
         </div>

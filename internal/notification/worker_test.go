@@ -49,13 +49,13 @@ func TestWorker(t *testing.T) {
 		Version:   e.PackageVersion,
 	}
 	p := &hub.Package{
-		Kind:             0,
-		Name:             "package1",
-		NormalizedName:   "package1",
-		Version:          "1.0.0",
-		OrganizationName: "org1",
-		ChartRepository: &hub.ChartRepository{
-			Name: "repo1",
+		Name:           "package1",
+		NormalizedName: "package1",
+		Version:        "1.0.0",
+		Repository: &hub.Repository{
+			Kind:             hub.Helm,
+			Name:             "repo1",
+			OrganizationName: "org1",
 		},
 	}
 
@@ -192,11 +192,14 @@ func TestWorker(t *testing.T) {
 	"datacontenttype" : "application/json",
 	"data" : {
 		"package": {
-			"kind": "helm-chart",
 			"name": "package1",
 			"version": "1.0.0",
-			"publisher": "org1/repo1",
-			"url": "http://baseURL/packages/chart/repo1/package1/1.0.0"
+			"url": "http://baseURL/packages/helm/repo1/package1/1.0.0",
+			"repository": {
+				"kind": "helm",
+				"name": "repo1",
+				"publisher": "org1"
+			}
 		}
 	}
 }

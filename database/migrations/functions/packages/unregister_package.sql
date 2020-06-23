@@ -5,17 +5,15 @@ declare
     v_package_id uuid;
     v_latest_version text;
     v_snapshots_count int;
-    v_chart_repository_id text := (p_pkg->'chart_repository')->>'chart_repository_id';
     v_semver_regexp text := '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?';
 begin
-    -- Get package id
+    -- Get some package details
     select p.package_id, p.latest_version, count(s.version)
     into v_package_id, v_latest_version, v_snapshots_count
     from package p
     join snapshot s using (package_id)
-    where p.package_kind_id = (p_pkg->>'kind')::int
-    and p.name = p_pkg->>'name'
-    and chart_repository_id = nullif(v_chart_repository_id, '')::uuid
+    where p.name = p_pkg->>'name'
+    and repository_id = ((p_pkg->'repository')->>'repository_id')::uuid
     group by p.package_id, p.latest_version;
     if not found then
         return;

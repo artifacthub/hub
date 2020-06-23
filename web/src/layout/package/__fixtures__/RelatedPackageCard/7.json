@@ -1,19 +1,21 @@
 {
   "packageId": "id",
-  "kind": 0,
   "name": "test",
-  "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "deprecated": true,
   "userAlias": null,
-  "organizationDisplayName": "org name",
-  "organizationName": "org",
-  "chartRepository": {
-    "name": "stable",
+  "normalizedName": "pr",
+  "deprecated": false,
+  "keywords": ["key1", "key2"],
+  "repository": {
+    "repositoryid": "id",
+    "kind": 0,
+    "name": "incubator",
     "displayName": null,
-    "url": "repoUrl"
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "userAlias": null
   }
 }

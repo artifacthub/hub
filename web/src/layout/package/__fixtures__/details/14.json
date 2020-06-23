@@ -1,6 +1,5 @@
 {
   "packageId": "id",
-  "kind": 1,
   "name": "test",
   "displayName": "Pretty name",
   "description": "desc",
@@ -10,5 +9,13 @@
   "normalizedName": "pr",
   "deprecated": false,
   "keywords": ["key1", "key2"],
-  "chartRepository": null
+  "repository": {
+    "repositoryid": "id",
+    "kind": 1,
+    "name": "repo",
+    "displayName": null,
+    "organizationName": "org",
+    "organizationDisplayName": "Org",
+    "userAlias": null
+  }
 }

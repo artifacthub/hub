@@ -3,13 +3,13 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { FaAward } from 'react-icons/fa';
 
-import { PackageKind } from '../../types';
+import { RepositoryKind } from '../../types';
 import styles from './SignedBadge.module.css';
 
 interface Props {
   signed: null | boolean;
   className?: string;
-  packageKind?: PackageKind;
+  repositoryKind?: RepositoryKind;
 }
 
 const SignedBadge = (props: Props) => {
@@ -22,7 +22,7 @@ const SignedBadge = (props: Props) => {
           <div>Signed</div>
         </div>
       </div>
-      {!isUndefined(props.packageKind) && props.packageKind === PackageKind.Chart && (
+      {!isUndefined(props.repositoryKind) && props.repositoryKind === RepositoryKind.Helm && (
         <div className={`d-none d-sm-block tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
           <div className={`arrow ${styles.tooltipArrow}`} />
           <div className={`tooltip-inner ${styles.tooltipContent}`}>This chart has a provenance file</div>

@@ -1,9 +1,14 @@
 {
   "packageId": "id",
-  "kind": 1,
   "name": "test",
   "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
-  "logoImageId": null
+  "logoImageId": null,
+  "repository": {
+    "kind": 1,
+    "name": "repo",
+    "displayName": null,
+    "url": "repoUrl"
+  }
 }

@@ -1,31 +1,33 @@
 [
   {
     "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-    "kind": 0,
     "name": "airflow",
     "normalizedName": "airflow",
     "logoImageId": "f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc",
-    "userAlias": null,
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "chartRepository": {
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
       "name": "stable",
-      "displayName": "Stable"
+      "displayName": "Stable",
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm"
     },
     "eventKinds": [0]
   },
   {
     "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
-    "kind": 0,
     "name": "cerebro",
     "normalizedName": "cerebro",
     "logoImageId": null,
-    "userAlias": null,
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "chartRepository": {
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
       "name": "stable",
-      "displayName": "Stable"
+      "displayName": "Stable",
+      "userAlias": "userLink",
+      "organizationName": null,
+      "organizationDisplayName": null
     },
     "eventKinds": [0]
   },
@@ -38,75 +40,101 @@
     "userAlias": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
-    "chartRepository": {
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
       "name": "stable",
-      "displayName": "Stable"
+      "displayName": "Stable",
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm"
     },
     "eventKinds": [0]
   },
   {
     "packageId": "cfa55ea2-eb69-4703-8be7-73937c6efc4b",
-    "kind": 0,
     "name": "ibm-redis",
     "normalizedName": "ibm-redis",
     "logoImageId": "ca0a9e33-3656-4536-ac1b-4cff40bc6b88",
     "userAlias": "jsmith",
     "organizationName": null,
     "organizationDisplayName": null,
-    "chartRepository": {
+    "repository": {
+      "repositoryId": "d3945a69-2aae-4ff9-8oi3-ce3b070d0384",
+      "kind": 0,
       "name": "ibm-charts",
-      "displayName": "IBM charts"
+      "displayName": "IBM charts",
+      "userAlias": null,
+      "organizationName": "org1",
+      "organizationDisplayName": "Org 1"
     },
     "eventKinds": [0]
   },
   {
     "packageId": "ccd1553a-e9bd-45b5-93a3-9ee127dddcb0",
-    "kind": 1,
     "name": "SSH connections",
     "normalizedName": "ssh-connections",
     "logoImageId": "23baee82-817d-4443-bb12-164913cb631b",
     "userAlias": null,
     "organizationName": "falco",
     "organizationDisplayName": "Falco",
-    "chartRepository": null,
+    "repository": {
+      "repositoryId": "d394iu69-2aae-4ff9-8oi3-ce3b070d0384",
+      "kind": 1,
+      "name": "falco",
+      "displayName": "Falco rules",
+      "userAlias": null,
+      "organizationName": "org2",
+      "organizationDisplayName": "Org 2"
+    },
     "eventKinds": [0]
   },
   {
     "packageId": "e63b8968-a688-4525-889d-cbbf3df82f9f",
-    "kind": 1,
     "name": "Traefik",
     "normalizedName": "traefik",
     "logoImageId": "974d12b9-c75e-46d9-9031-28bc7a00c30b",
-    "userAlias": null,
-    "organizationName": "falco",
-    "organizationDisplayName": "Falco",
-    "chartRepository": null,
+    "repository": {
+      "repositoryId": "d394iu69-2aae-4ff9-8oi3-ce3b070d0384",
+      "kind": 1,
+      "name": "falco",
+      "displayName": "Falco rules",
+      "userAlias": null,
+      "organizationName": "org2",
+      "organizationDisplayName": "Org 2"
+    },
     "eventKinds": [0]
   },
   {
     "packageId": "2052b061-2459-4d9f-8cd3-a5e8dbb4b804",
-    "kind": 2,
     "name": "Trusted Registry Images",
     "normalizedName": "trusted-registry-images",
     "logoImageId": "828583b3-e3a0-4970-899f-27a903fd72cb",
     "userAlias": null,
-    "organizationName": "opa",
-    "organizationDisplayName": "OPA",
-    "chartRepository": null,
+    "repository": {
+      "repositoryId": "d394iu69-2aae-4ff9-8oi3-ce3b070d0384",
+      "kind": 2,
+      "name": "opa",
+      "displayName": "OPA policies",
+      "userAlias": null,
+      "organizationName": "opa",
+      "organizationDisplayName": "OPA"
+    },
     "eventKinds": [0]
   },
   {
     "packageId": "d3945a69-2aae-4ff9-8fb3-ce3b720d0384",
-    "kind": 0,
     "name": "zookeeper",
     "normalizedName": "zookeeper",
     "logoImageId": "4c7230bf-5b08-49dc-b095-c93aef119f47",
-    "userAlias": null,
-    "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "chartRepository": {
+    "repository": {
+      "repositoryId": "d3945a98-2aae-4ff9-8fb3-ce3b070d0384",
+      "kind": 0,
       "name": "incubator",
-      "displayName": "Incubator"
+      "displayName": "Incubator",
+      "userAlias": null,
+      "organizationName": "helm",
+      "organizationDisplayName": "Helm"
     },
     "eventKinds": [0]
   }

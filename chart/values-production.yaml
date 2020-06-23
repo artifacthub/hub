@@ -45,7 +45,7 @@ hub:
       google:
         redirectURL: https://artifacthub.io/oauth/google/callback
 
-chartTracker:
+helmTracker:
   cronjob:
     resources:
       requests:

@@ -7,6 +7,7 @@ select plan(2);
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set user2ID '00000000-0000-0000-0000-000000000002'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set image1ID '00000000-0000-0000-0000-000000000001'
@@ -19,38 +20,14 @@ insert into "user" (user_id, alias, email)
 values (:'user1ID', 'user1', 'user1@email.com');
 insert into "user" (user_id, alias, email)
 values (:'user2ID', 'user2', 'user2@email.com');
-insert into chart_repository (chart_repository_id, name, display_name, url, user_id)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', :'user1ID');
-insert into package (
-    package_id,
-    name,
-    latest_version,
-    logo_image_id,
-    package_kind_id,
-    chart_repository_id
-) values (
-    :'package1ID',
-    'Package 1',
-    '1.0.0',
-    :'image1ID',
-    0,
-    :'repo1ID'
-);
-insert into package (
-    package_id,
-    name,
-    latest_version,
-    logo_image_id,
-    package_kind_id,
-    organization_id
-) values (
-    :'package2ID',
-    'Package 2',
-    '1.0.0',
-    :'image2ID',
-    1,
-    :'org1ID'
-);
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into package (package_id, name, latest_version, logo_image_id, repository_id)
+values (:'package1ID', 'Package 1', '1.0.0', :'image1ID', :'repo1ID');
+insert into package (package_id, name, latest_version, logo_image_id, repository_id)
+values (:'package2ID', 'Package 2', '1.0.0', :'image2ID', :'repo2ID');
 insert into subscription (user_id, package_id, event_kind_id)
 values (:'user1ID', :'package1ID', 0);
 insert into subscription (user_id, package_id, event_kind_id)
@@ -63,28 +40,31 @@ select is(
     get_user_subscriptions(:'user1ID')::jsonb,
     '[{
         "package_id": "00000000-0000-0000-0000-000000000001",
-        "kind": 0,
         "name": "Package 1",
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null,
-        "chart_repository": {
+        "repository": {
+            "kind": 0,
             "name": "repo1",
-            "display_name": "Repo 1"
+            "display_name": "Repo 1",
+            "user_alias": "user1",
+            "organization_name": null,
+            "organization_display_name": null
         },
         "event_kinds": [0, 1]
     }, {
         "package_id": "00000000-0000-0000-0000-000000000002",
-        "kind": 1,
         "name": "Package 2",
         "normalized_name": "package-2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "user_alias": null,
-        "organization_name": "org1",
-        "organization_display_name": "Organization 1",
-        "chart_repository": null,
+        "repository": {
+            "kind": 0,
+            "name": "repo2",
+            "display_name": "Repo 2",
+            "user_alias": null,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1"
+        },
         "event_kinds": [0]
     }]'::jsonb,
     'Two subscriptions should be returned'

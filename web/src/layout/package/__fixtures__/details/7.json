@@ -1,12 +1,20 @@
 {
   "packageId": "id",
-  "kind": 0,
   "name": "chartmuseum",
   "displayName": null,
   "description": null,
   "homeUrl": null,
   "logoImageId": null,
-  "appVersion": null,
+  "appVersion": "1.1.1",
+  "repository": {
+    "repositoryid": "id",
+    "kind": 0,
+    "name": "incubator",
+    "displayName": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "userAlias": null
+  },
   "maintainers": [
     {
       "name": "test1",
@@ -16,6 +24,5 @@
       "name": "test2",
       "email": "test2@gmail.com"
     }
-  ],
-  "chartRepository": null
+  ]
 }

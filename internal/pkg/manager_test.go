@@ -35,7 +35,6 @@ func TestGet(t *testing.T) {
 	t.Run("database query succeeded", func(t *testing.T) {
 		expectedPackage := &hub.Package{
 			PackageID:      "00000000-0000-0000-0000-000000000001",
-			Kind:           hub.Chart,
 			Name:           "Package 1",
 			NormalizedName: "package-1",
 			LogoImageID:    "00000000-0000-0000-0000-000000000001",
@@ -81,14 +80,15 @@ func TestGet(t *testing.T) {
 					Email: "email2",
 				},
 			},
-			UserAlias:               "user1",
-			OrganizationName:        "org1",
-			OrganizationDisplayName: "Organization 1",
-			ChartRepository: &hub.ChartRepository{
-				ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
-				Name:              "repo1",
-				DisplayName:       "Repo 1",
-				URL:               "https://repo1.com",
+			Repository: &hub.Repository{
+				RepositoryID:            "00000000-0000-0000-0000-000000000001",
+				Kind:                    hub.Helm,
+				Name:                    "repo1",
+				DisplayName:             "Repo 1",
+				URL:                     "https://repo1.com",
+				UserAlias:               "user1",
+				OrganizationName:        "org1",
+				OrganizationDisplayName: "Organization 1",
 			},
 		}
 
@@ -96,7 +96,6 @@ func TestGet(t *testing.T) {
 		db.On("QueryRow", ctx, dbQuery, mock.Anything, mock.Anything).Return([]byte(`
 		{
 			"package_id": "00000000-0000-0000-0000-000000000001",
-			"kind": 0,
 			"name": "Package 1",
 			"normalized_name": "package-1",
 			"logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -142,14 +141,15 @@ func TestGet(t *testing.T) {
 					"email": "email2"
 				}
 			],
-			"user_alias": "user1",
-			"organization_name": "org1",
-			"organization_display_name": "Organization 1",
-			"chart_repository": {
-				"chart_repository_id": "00000000-0000-0000-0000-000000000001",
+			"repository": {
+				"repository_id": "00000000-0000-0000-0000-000000000001",
+				"kind": 0,
 				"name": "repo1",
 				"display_name": "Repo 1",
-				"url": "https://repo1.com"
+				"url": "https://repo1.com",
+				"user_alias": "user1",
+				"organization_name": "org1",
+				"organization_display_name": "Organization 1"
 			}
 		}
 		`), nil)
@@ -334,7 +334,6 @@ func TestRegister(t *testing.T) {
 	ctx := context.Background()
 
 	p := &hub.Package{
-		Kind:        hub.Chart,
 		Name:        "package1",
 		Description: "description",
 		HomeURL:     "home_url",
@@ -360,8 +359,8 @@ func TestRegister(t *testing.T) {
 				Email: "email2",
 			},
 		},
-		ChartRepository: &hub.ChartRepository{
-			ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
+		Repository: &hub.Repository{
+			RepositoryID: "00000000-0000-0000-0000-000000000001",
 		},
 	}
 
@@ -371,28 +370,18 @@ func TestRegister(t *testing.T) {
 			p      *hub.Package
 		}{
 			{
-				"invalid kind",
-				&hub.Package{
-					Kind: hub.PackageKind(99),
-				},
-			},
-			{
 				"name not provided",
-				&hub.Package{
-					Kind: hub.Chart,
-				},
+				&hub.Package{},
 			},
 			{
 				"version not provided",
 				&hub.Package{
-					Kind: hub.Chart,
 					Name: "package1",
 				},
 			},
 			{
 				"invalid version (semantic version expected)",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "invalid",
 				},
@@ -400,122 +389,45 @@ func TestRegister(t *testing.T) {
 			{
 				"invalid content url",
 				&hub.Package{
-					Kind:       hub.Chart,
 					Name:       "package1",
 					Version:    "1.0.0",
 					ContentURL: "invalid",
 				},
 			},
 			{
-				"chart repository not provided",
+				"repository not provided",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "1.0.0",
 				},
 			},
 			{
-				"chart repository id not provided",
+				"repository id not provided",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "",
+					Repository: &hub.Repository{
+						RepositoryID: "",
 					},
 				},
 			},
 			{
-				"invalid chart repository id",
+				"invalid repository id",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "invalid",
-					},
-				},
-			},
-			{
-				"unexpected user id provided",
-				&hub.Package{
-					Kind:    hub.Chart,
-					Name:    "package1",
-					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
-					},
-					UserID: "unexpected",
-				},
-			},
-			{
-				"unexpected organization id provided",
-				&hub.Package{
-					Kind:    hub.Chart,
-					Name:    "package1",
-					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
-					},
-					OrganizationID: "unexpected",
-				},
-			},
-			{
-				"user id or organization id not provided",
-				&hub.Package{
-					Kind:    hub.Falco,
-					Name:    "package1",
-					Version: "1.0.0",
-				},
-			},
-			{
-				"both user id and organization id provided",
-				&hub.Package{
-					Kind:           hub.Falco,
-					Name:           "package1",
-					Version:        "1.0.0",
-					UserID:         "unexpected",
-					OrganizationID: "unexpected",
-				},
-			},
-			{
-				"invalid user id",
-				&hub.Package{
-					Kind:    hub.Falco,
-					Name:    "package1",
-					Version: "1.0.0",
-					UserID:  "invalid",
-				},
-			},
-			{
-				"invalid organization id",
-				&hub.Package{
-					Kind:           hub.Falco,
-					Name:           "package1",
-					Version:        "1.0.0",
-					OrganizationID: "invalid",
-				},
-			},
-			{
-				"unexpected chart repository provided",
-				&hub.Package{
-					Kind:           hub.Falco,
-					Name:           "package1",
-					Version:        "1.0.0",
-					OrganizationID: "00000000-0000-0000-0000-000000000001",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "unexpected",
+					Repository: &hub.Repository{
+						RepositoryID: "invalid",
 					},
 				},
 			},
 			{
 				"maintainer email not provided",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "1.0.0",
-					ChartRepository: &hub.ChartRepository{
-						ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
+					Repository: &hub.Repository{
+						RepositoryID: "00000000-0000-0000-0000-000000000001",
 					},
 					Maintainers: []*hub.Maintainer{
 						{
@@ -610,10 +522,10 @@ func TestSearchJSON(t *testing.T) {
 				},
 			},
 			{
-				"invalid chart repository name",
+				"invalid repository name",
 				&hub.SearchPackageInput{
-					Limit:             10,
-					ChartRepositories: []string{""},
+					Limit:        10,
+					Repositories: []string{""},
 				},
 			},
 		}
@@ -709,11 +621,10 @@ func TestUnregister(t *testing.T) {
 	ctx := context.Background()
 
 	p := &hub.Package{
-		Kind:    hub.Chart,
 		Name:    "package1",
 		Version: "1.0.0",
-		ChartRepository: &hub.ChartRepository{
-			ChartRepositoryID: "00000000-0000-0000-0000-000000000001",
+		Repository: &hub.Repository{
+			RepositoryID: "00000000-0000-0000-0000-000000000001",
 		},
 	}
 
@@ -723,28 +634,18 @@ func TestUnregister(t *testing.T) {
 			p      *hub.Package
 		}{
 			{
-				"invalid kind",
-				&hub.Package{
-					Kind: hub.PackageKind(99),
-				},
-			},
-			{
 				"name not provided",
-				&hub.Package{
-					Kind: hub.Chart,
-				},
+				&hub.Package{},
 			},
 			{
 				"version not provided",
 				&hub.Package{
-					Kind: hub.Chart,
 					Name: "package1",
 				},
 			},
 			{
 				"invalid version (semantic version expected)",
 				&hub.Package{
-					Kind:    hub.Chart,
 					Name:    "package1",
 					Version: "1.0",
 				},

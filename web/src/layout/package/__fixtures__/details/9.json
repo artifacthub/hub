@@ -1,12 +1,19 @@
 {
   "packageId": "id",
-  "kind": 0,
   "name": "chartmuseum",
   "displayName": null,
   "description": null,
   "homeUrl": "https://github.com/test/test",
   "logoImageId": null,
-  "appVersion": null,
+  "appVersion": "1.1.1",
   "maintainers": null,
-  "chartRepository": null
+  "repository": {
+    "repositoryid": "id",
+    "kind": 0,
+    "name": "incubator",
+    "displayName": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "userAlias": null
+  }
 }

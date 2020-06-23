@@ -11,7 +11,7 @@ begin
         raise insufficient_privilege;
     end if;
 
-    -- Last user of an organization cannot leave it
+    -- Last member of an organization cannot leave it
     select count(*) into v_users_in_organization
     from user__organization uo
     join organization o using (organization_id)

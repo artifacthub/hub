@@ -1,18 +1,20 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { ChartRepository } from '../../types';
+import { Repository } from '../../types';
 import ChartInstall from './ChartInstall';
 
-const chartRepo: ChartRepository = {
-  name: 'chartRepo',
-  displayName: 'Chart Repo',
-  url: 'http://chartRepo.test',
+const repo: Repository = {
+  kind: 0,
+  name: 'repo',
+  displayName: 'Repo',
+  url: 'http://repo.test',
+  userAlias: 'user',
 };
 const defaultProps = {
   name: 'packageName',
   version: '1.0.0',
-  repository: chartRepo,
+  repository: repo,
 };
 
 describe('ChartInstall', () => {
@@ -25,8 +27,8 @@ describe('ChartInstall', () => {
     it('renders component', () => {
       const { getByText } = render(<ChartInstall {...defaultProps} />);
 
-      expect(getByText(`helm repo add ${chartRepo.name} ${chartRepo.url}`));
-      expect(getByText(`helm install ${chartRepo.name}/${defaultProps.name} --version ${defaultProps.version}`));
+      expect(getByText(`helm repo add ${repo.name} ${repo.url}`));
+      expect(getByText(`helm install ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`));
 
       const helmLink = getByText('Need Helm?');
       expect(helmLink).toBeInTheDocument();

@@ -1,13 +1,19 @@
-export enum PackageKind {
-  Chart = 0,
+export enum RepositoryKind {
+  Helm = 0,
   Falco,
-  Opa,
+  OPA,
+  OLM,
 }
 
-export interface ChartRepository {
+export interface Repository {
+  repositoryId?: string;
   name: string;
   displayName?: string | null;
   url: string;
+  organizationName?: string | null;
+  organizationDisplayName?: string | null;
+  userAlias?: string | null;
+  kind: RepositoryKind;
   lastTrackingTs?: number | null;
   lastTrackingErrors?: string | null;
 }
@@ -24,14 +30,13 @@ export interface PackageLink {
 
 export interface Package {
   packageId: string;
-  kind: PackageKind;
   name: string;
   displayName: string | null;
   normalizedName: string;
   description: string;
   logoImageId: string | null;
   appVersion: string;
-  chartRepository: ChartRepository | null;
+  repository: Repository;
   readme?: string | null;
   data?: PackageData | null;
   availableVersions?: Version[];
@@ -41,11 +46,8 @@ export interface Package {
   maintainers?: Maintainer[];
   deprecated: boolean | null;
   signed: boolean | null;
-  organizationName?: string | null;
-  organizationDisplayName?: string | null;
   links?: PackageLink[];
   stars?: number | null;
-  userAlias: string | null;
   eventKinds?: EventKind[];
   license?: string | null;
   createdAt: number;
@@ -151,8 +153,8 @@ export interface CheckAvailabilityProps {
 
 export enum ResourceKind {
   userAlias = 'userAlias',
-  chartRepositoryName = 'chartRepositoryName',
-  chartRepositoryURL = 'chartRepositoryURL',
+  repositoryName = 'repositoryName',
+  repositoryURL = 'repositoryURL',
   organizationName = 'organizationName',
 }
 
@@ -266,4 +268,10 @@ export interface APIKey {
 
 export interface APIKeyCode {
   key: string;
+}
+
+export interface OptionWithIcon {
+  value: string;
+  label: string;
+  icon: JSX.Element;
 }

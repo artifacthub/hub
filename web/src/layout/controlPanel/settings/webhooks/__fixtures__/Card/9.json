@@ -13,11 +13,15 @@
       "packageId": "701964f8-1730-45d2-bdfa-ae2b2d0ecac6",
       "name": "envoy",
       "logoImageId": "c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc",
-      "kind": 0,
-      "userAlias": null,
-      "organizationName": "helm",
-      "organizationDisplayName": "Helm",
-      "chartRepository": { "name": "stable", "displayName": "Stable" }
+      "repository": {
+        "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+        "kind": 0,
+        "name": "stable",
+        "displayName": "Stable",
+        "userAlias": null,
+        "organizationName": "helm",
+        "organizationDisplayName": "Helm"
+      }
     }
   ],
   "lastNotifications": [

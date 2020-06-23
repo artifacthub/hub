@@ -82,7 +82,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/chart/stable/airflow"
+                href="/packages/helm/stable/airflow"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -337,7 +337,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/chart/incubator/cassandra"
+                href="/packages/helm/incubator/cassandra"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -592,7 +592,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/chart/stable/prometheus"
+                href="/packages/helm/stable/prometheus"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -847,7 +847,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/falco/traefik"
+                href="/packages/falco/falco/traefik"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -896,33 +896,20 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <div
                               class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
-                              <div
-                                class="mr-0 d-flex text-truncate"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="text-truncate"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  falco
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
+                              </button>
                             </div>
                           </div>
                           <div
@@ -931,33 +918,40 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
-                              <div
-                                class="mr-0 d-flex flex-row mw-100"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link"
+                                data-testid="userLink"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="text-truncate"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  user
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </button>
+                            </div>
+                            <div
+                              class="ml-3 d-flex flex-row mx50"
+                            >
+                              <span
+                                class="text-muted text-uppercase pr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
+                                  falco
+                                </div>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1090,7 +1084,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               <a
                 class="text-decoration-none link"
                 data-testid="link"
-                href="/packages/opa/trusted-registry-images"
+                href="/packages/opa/opa/trusted-registry-images"
               >
                 <div
                   class="card-body d-flex flex-column body"
@@ -1139,33 +1133,20 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <div
                               class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
                             >
-                              <div
-                                class="mr-0 d-flex text-truncate"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="text-truncate"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  opa
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
-                                >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
+                              </button>
                             </div>
                           </div>
                           <div
@@ -1174,33 +1155,40 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
                             >
-                              <div
-                                class="mr-0 d-flex flex-row mw-100"
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link"
+                                data-testid="userLink"
                               >
                                 <div
-                                  class="position-absolute"
+                                  class="text-truncate"
                                 >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
+                                  user1
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                              </button>
+                            </div>
+                            <div
+                              class="ml-3 d-flex flex-row mx50"
+                            >
+                              <span
+                                class="text-muted text-uppercase pr-1"
+                              >
+                                Repo: 
+                              </span>
+                              <button
+                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    Falco
-                                  </div>
-                                </button>
-                              </div>
+                                  opa
+                                </div>
+                              </button>
                             </div>
                           </div>
                         </div>

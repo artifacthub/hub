@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(20);
+select plan(13);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -10,14 +10,13 @@ select plan(20);
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com');
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'org1ID');
 
 -- Register package
 select register_package('
 {
-    "kind": 0,
     "name": "package1",
     "logo_url": "logo_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -57,8 +56,8 @@ select register_package('
             "email": "email2"
         }
     ],
-    "chart_repository": {
-        "chart_repository_id": "00000000-0000-0000-0000-000000000001"
+    "repository": {
+        "repository_id": "00000000-0000-0000-0000-000000000001"
     }
 }
 ');
@@ -69,8 +68,7 @@ select results_eq(
             latest_version,
             logo_url,
             logo_image_id,
-            package_kind_id,
-            chart_repository_id
+            repository_id
         from package
         where name='package1'
     $$,
@@ -80,7 +78,6 @@ select results_eq(
             '1.0.0',
             'logo_url',
             '00000000-0000-0000-0000-000000000001'::uuid,
-            0,
             '00000000-0000-0000-0000-000000000001'::uuid
         )
     $$,
@@ -161,7 +158,6 @@ select is_empty(
 -- Register a new version of the package previously registered
 select register_package('
 {
-    "kind": 0,
     "name": "package1",
     "logo_url": "logo_url updated",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -182,8 +178,8 @@ select register_package('
             "email": "email1"
         }
     ],
-    "chart_repository": {
-        "chart_repository_id": "00000000-0000-0000-0000-000000000001"
+    "repository": {
+        "repository_id": "00000000-0000-0000-0000-000000000001"
     }
 }
 ');
@@ -272,7 +268,6 @@ select isnt_empty(
 -- Register an old version of the package previously registered
 select register_package('
 {
-    "kind": 0,
     "name": "package1",
     "display_name": "Package 1",
     "description": "description",
@@ -297,8 +292,8 @@ select register_package('
             "email": "email2"
         }
     ],
-    "chart_repository": {
-        "chart_repository_id": "00000000-0000-0000-0000-000000000001"
+    "repository": {
+        "repository_id": "00000000-0000-0000-0000-000000000001"
     }
 }
 ');
@@ -372,145 +367,6 @@ select is_empty(
         and e.package_version = '0.0.9'
     $$,
     'No new release event should exist for package1 version 0.0.9'
-);
-
--- Register package that belongs to an organization and check it succeeded
-select register_package('
-{
-    "kind": 1,
-    "name": "package3",
-    "display_name": "Package 3",
-    "description": "description",
-    "version": "1.0.0",
-    "organization_id": "00000000-0000-0000-0000-000000000001"
-}
-');
-select results_eq(
-    $$
-        select
-            name,
-            latest_version,
-            package_kind_id,
-            organization_id,
-            chart_repository_id
-        from package
-        where name='package3'
-    $$,
-    $$
-        values (
-            'package3',
-            '1.0.0',
-            1,
-            '00000000-0000-0000-0000-000000000001'::uuid,
-            null::uuid
-        )
-    $$,
-    'Package3 that belongs to organization should exist'
-);
-select is_empty(
-    $$
-        select *
-        from event e
-        join package p using (package_id)
-        where p.name = 'package3'
-        and e.package_version = '1.0.0'
-    $$,
-    'No new release event should exist for first version of package3'
-);
-
--- Register a new version of the package previously registered
-select register_package('
-{
-    "kind": 1,
-    "name": "package3",
-    "display_name": "Package 3",
-    "description": "description",
-    "version": "2.0.0",
-    "organization_id": "00000000-0000-0000-0000-000000000001"
-}
-');
-select results_eq(
-    $$
-        select
-            name,
-            latest_version,
-            package_kind_id,
-            organization_id,
-            chart_repository_id
-        from package
-        where name='package3'
-    $$,
-    $$
-        values (
-            'package3',
-            '2.0.0',
-            1,
-            '00000000-0000-0000-0000-000000000001'::uuid,
-            null::uuid
-        )
-    $$,
-    'Package3 latest version should exist and its latest version should be 2.0.0'
-);
-select isnt_empty(
-    $$
-        select *
-        from event e
-        join package p using (package_id)
-        where p.name = 'package3'
-        and e.package_version = '2.0.0'
-    $$,
-    'New release event should exist for new version of package3'
-);
-
--- Register a package with a name and kind already registered but with a different owner
-select throws_ok(
-    $$
-        select register_package('
-        {
-            "kind": 1,
-            "name": "package3",
-            "display_name": "Package 3",
-            "description": "description",
-            "version": "3.0.0",
-            "organization_id": "00000000-0000-0000-0000-000000000002"
-        }
-        '::jsonb)
-    $$,
-    23505,
-    'unique_violation',
-    'Org2 should not be able to register package3 as it already exists and is owned by org1'
-);
-select throws_ok(
-    $$
-        select register_package('
-        {
-            "kind": 1,
-            "name": "package3",
-            "display_name": "Package 3",
-            "description": "description",
-            "version": "3.0.0",
-            "user_id": "00000000-0000-0000-0000-000000000001"
-        }
-        '::jsonb)
-    $$,
-    23505,
-    'unique_violation',
-    'User1 should not be able to register package3 as it already exists and is owned by org1'
-);
-select lives_ok(
-    $$
-        select register_package('
-        {
-            "kind": 2,
-            "name": "package3",
-            "display_name": "Package 3",
-            "description": "description",
-            "version": "3.0.0",
-            "user_id": "00000000-0000-0000-0000-000000000001"
-        }
-        '::jsonb)
-    $$,
-    'User1 should be able to register package3 now using a different package kind'
 );
 
 -- Finish tests and rollback transaction

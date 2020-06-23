@@ -6,7 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
-import { Facets, PackageKind } from '../../types';
+import { Facets, RepositoryKind } from '../../types';
 import SmallTitle from '../common/SmallTitle';
 import Facet from './Facet';
 import styles from './Filters.module.css';
@@ -87,21 +87,19 @@ const Filters = (props: Props) => {
     return kindElement;
   };
 
-  const getChartRepositoryFacets = (): JSX.Element | null => {
+  const getRepositoryFacets = (): JSX.Element | null => {
     let crElement = null;
-    const chartRepo = getFacetsByFilterKey('repo');
+    const repo = getFacetsByFilterKey('repo');
     const selectedKinds: string[] = props.activeFilters.hasOwnProperty('kind') ? props.activeFilters.kind : [];
     if (
-      !isUndefined(chartRepo) &&
-      (!props.activeFilters.hasOwnProperty('kind') || selectedKinds.includes(PackageKind.Chart.toString()))
+      !isUndefined(repo) &&
+      (!props.activeFilters.hasOwnProperty('kind') || selectedKinds.includes(RepositoryKind.Helm.toString()))
     ) {
       crElement = (
         <Facet
-          {...chartRepo}
+          {...repo}
           onChange={props.onChange}
-          active={
-            props.activeFilters.hasOwnProperty(chartRepo.filterKey) ? props.activeFilters[chartRepo.filterKey] : []
-          }
+          active={props.activeFilters.hasOwnProperty(repo.filterKey) ? props.activeFilters[repo.filterKey] : []}
         />
       );
     }
@@ -131,7 +129,7 @@ const Filters = (props: Props) => {
 
       {getPublishers()}
       {getKindFacets()}
-      {getChartRepositoryFacets()}
+      {getRepositoryFacets()}
 
       <div role="menuitem" className={`mt-3 mt-sm-4 pt-2 ${styles.facet}`}>
         <SmallTitle text="Others" />

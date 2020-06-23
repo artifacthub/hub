@@ -8,7 +8,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import { Package } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import Image from './Image';
-import PackageIcon from './PackageIcon';
+import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchTypeahead.module.css';
 
 interface Props {
@@ -155,7 +155,7 @@ const SearchTypeahead = (props: Props) => {
                         key={`search_${item.packageId}`}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
-                          <PackageIcon kind={item.kind} className={`mx-2 ${styles.icon}`} />
+                          <RepositoryIcon kind={item.repository.kind} className={`mx-2 ${styles.icon}`} />
                         </td>
                         <td className="align-middle">
                           <div className="d-flex flex-row align-items-center">
@@ -174,16 +174,16 @@ const SearchTypeahead = (props: Props) => {
                         </td>
                         <td className="align-middle">
                           <div className="text-dark">
-                            {item.userAlias || item.organizationDisplayName || item.organizationName}
-                            {!isNull(item.chartRepository) && (
-                              <small className="ml-2">
-                                (
-                                <small className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
-                                  Repo:{' '}
-                                </small>
-                                {item.chartRepository!.displayName || item.chartRepository!.name})
+                            {item.repository.userAlias ||
+                              item.repository.organizationDisplayName ||
+                              item.repository.organizationName}
+                            <small className="ml-2">
+                              (
+                              <small className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                                Repo:{' '}
                               </small>
-                            )}
+                              {item.repository.displayName || item.repository.name})
+                            </small>
                           </div>
                         </td>
                       </tr>

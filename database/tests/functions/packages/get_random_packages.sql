@@ -23,26 +23,24 @@ select is(
 -- Seed some data
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into chart_repository (chart_repository_id, name, display_name, url, organization_id)
-values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', :'org1ID');
-insert into chart_repository (chart_repository_id, name, display_name, url)
-values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com', 0, :'org1ID');
 insert into package (
     package_id,
     name,
     latest_version,
     logo_image_id,
     stars,
-    package_kind_id,
-    organization_id
+    repository_id
 ) values (
     :'package1ID',
     'package1',
     '1.0.0',
     :'image1ID',
     10,
-    1,
-    :'org1ID'
+    :'repo2ID'
 );
 insert into snapshot (
     package_id,
@@ -72,14 +70,12 @@ insert into package (
     name,
     latest_version,
     stars,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package2ID',
     'package2',
     '1.0.0',
     5,
-    0,
     :'repo2ID'
 );
 insert into snapshot (
@@ -110,14 +106,12 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
-    package_kind_id,
-    chart_repository_id
+    repository_id
 ) values (
     :'package3ID',
     'package3',
     '1.0.0',
     :'image3ID',
-    0,
     :'repo3ID'
 );
 insert into snapshot (
@@ -154,7 +148,6 @@ select is(
     '[
         {
             "package_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 1,
             "name": "package1",
             "normalized_name": "package1",
             "logo_image_id": "00000000-0000-0000-0000-000000000001",
@@ -166,10 +159,15 @@ select is(
             "deprecated": false,
             "signed": false,
             "created_at": 1592299234,
-            "user_alias": null,
-            "organization_name": "org1",
-            "organization_display_name": "Organization 1",
-            "chart_repository": null
+            "repository": {
+                "repository_id": "00000000-0000-0000-0000-000000000002",
+                "kind": 0,
+                "name": "repo2",
+                "display_name": "Repo 2",
+                "user_alias": null,
+                "organization_name": "org1",
+                "organization_display_name": "Organization 1"
+            }
         }
     ]'::jsonb,
     'One random package expected (package1)'

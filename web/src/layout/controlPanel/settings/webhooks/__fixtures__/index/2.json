@@ -14,81 +14,113 @@
         "packageId": "7e833197-6252-4af2-871b-1bdcffdb5452",
         "name": "unifi",
         "logoImageId": "1830da4b-12de-4902-aaf2-b3d008c01d6b",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       },
       {
         "packageId": "19392bb5-5390-4727-9c92-21eaa3b26a48",
         "name": "airflow",
         "logoImageId": "fd02f050-e601-495f-a5a9-8f9302efc4ab",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       },
       {
         "packageId": "6dc6244e-e1d1-4848-aa53-1d84ecd20f95",
         "name": "Redis",
         "logoImageId": "d8e348cf-92ce-4af5-b210-3effd81d61be",
-        "kind": 1,
-        "userAlias": null,
-        "organizationName": "falco",
-        "organizationDisplayName": "Falco",
-        "chartRepository": null
+        "repository": {
+          "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 1,
+          "name": "falco",
+          "displayName": "Falco",
+          "userAlias": null,
+          "organizationName": "org1",
+          "organizationDisplayName": "Org 1"
+        }
       },
       {
         "packageId": "a9f354a3-cfac-465a-bd31-44125355fd4a",
         "name": "Rook",
         "logoImageId": "7596b71a-25b6-42f5-8ca3-fccfeb36dc45",
-        "kind": 1,
-        "userAlias": null,
-        "organizationName": "falco",
-        "organizationDisplayName": "Falco",
-        "chartRepository": null
+        "repository": {
+          "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 1,
+          "name": "falco",
+          "displayName": "Falco",
+          "userAlias": null,
+          "organizationName": "org1",
+          "organizationDisplayName": "Org 1"
+        }
       },
       {
         "packageId": "55c13085-0f72-4579-a7c4-811e27f9a327",
         "name": "Redis",
         "logoImageId": "d8e348cf-92ce-4af5-b210-3effd81d61be",
-        "kind": 1,
-        "userAlias": null,
-        "organizationName": "falco",
-        "organizationDisplayName": "Falco",
-        "chartRepository": null
+        "repository": {
+          "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 1,
+          "name": "falco",
+          "displayName": "Falco",
+          "userAlias": null,
+          "organizationName": "org1",
+          "organizationDisplayName": "Org 1"
+        }
       },
       {
         "packageId": "23fa13b4-668c-4ff5-870f-af0b358cdff7",
         "name": "Rook",
         "logoImageId": "7596b71a-25b6-42f5-8ca3-fccfeb36dc45",
-        "kind": 1,
-        "userAlias": null,
-        "organizationName": "falco",
-        "organizationDisplayName": "Falco",
-        "chartRepository": null
+        "repository": {
+          "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 1,
+          "name": "falco",
+          "displayName": "Falco",
+          "userAlias": null,
+          "organizationName": "org1",
+          "organizationDisplayName": "Org 1"
+        }
       },
       {
         "packageId": "9d5ff41e-8cce-4861-bc18-9237c45aef90",
         "name": "chartmuseum",
         "logoImageId": "f2c28d59-8986-4fb4-a460-c97885e81142",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       },
       {
         "packageId": "58ba5969-b385-4739-930b-02feb90f3da7",
         "name": "jenkins",
         "logoImageId": "12960f50-b675-4f62-85ba-8dddef254e4b",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       }
     ]
   },
@@ -107,11 +139,15 @@
         "packageId": "501b0e9e-b66b-4872-abb6-4297ea26e6a6",
         "name": "ElasticSearch",
         "logoImageId": "fa91244c-bf14-4742-af6a-204b268ce2b1",
-        "kind": 1,
-        "userAlias": null,
-        "organizationName": "falco",
-        "organizationDisplayName": "Falco",
-        "chartRepository": null
+        "repository": {
+          "repositoryId": "d3945l89-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 1,
+          "name": "falco",
+          "displayName": "Falco",
+          "userAlias": null,
+          "organizationName": "org1",
+          "organizationDisplayName": "Org 1"
+        }
       }
     ]
   },
@@ -130,11 +166,15 @@
         "packageId": "f7f79967-da1c-41b2-be4c-ac353cd729cc",
         "name": "cosbench",
         "logoImageId": null,
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       }
     ]
   },
@@ -153,11 +193,15 @@
         "packageId": "6ea62e06-6c2c-4a39-9713-31d70e750eb7",
         "name": "aerospike",
         "logoImageId": "97a7b4d7-c260-4fa0-812e-c81b618326fb",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       }
     ]
   },
@@ -176,11 +220,15 @@
         "packageId": "701964f8-1730-45d2-bdfa-ae2b2d0ecac6",
         "name": "envoy",
         "logoImageId": "c5cfce82-9b0c-4a26-9a8d-c9d0fd5aa2cc",
-        "kind": 0,
-        "userAlias": null,
-        "organizationName": "helm",
-        "organizationDisplayName": "Helm",
-        "chartRepository": { "name": "stable", "displayName": "Stable" }
+        "repository": {
+          "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
+          "kind": 0,
+          "name": "stable",
+          "displayName": "Stable",
+          "userAlias": null,
+          "organizationName": "helm",
+          "organizationDisplayName": "Helm"
+        }
       }
     ]
   }
