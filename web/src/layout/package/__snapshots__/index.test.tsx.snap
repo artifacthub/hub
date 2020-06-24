@@ -470,7 +470,9 @@ exports[`Package index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Application version
+                  <span>
+                    Application version
+                  </span>
                 </small>
               </div>
               <p
@@ -536,7 +538,9 @@ exports[`Package index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Maintainers
+                  <span>
+                    Maintainers
+                  </span>
                 </small>
               </div>
               <p
@@ -551,7 +555,9 @@ exports[`Package index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Keywords
+                  <span>
+                    Keywords
+                  </span>
                 </small>
               </div>
               <span

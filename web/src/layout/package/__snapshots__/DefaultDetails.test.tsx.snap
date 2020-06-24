@@ -59,7 +59,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
     <small
       class="card-title text-muted text-uppercase"
     >
-      License
+      <span>
+        License
+      </span>
     </small>
   </div>
   <div
@@ -130,7 +132,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
     <small
       class="card-title text-muted text-uppercase"
     >
-      Keywords
+      <span>
+        Keywords
+      </span>
     </small>
   </div>
   <span

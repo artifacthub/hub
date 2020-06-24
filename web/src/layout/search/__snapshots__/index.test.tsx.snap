@@ -160,7 +160,7 @@ exports[`Search index creates snapshot 2`] = `
                     class="filters"
                   >
                     <div
-                      class="facet mt-3 mt-sm-4 pt-2 "
+                      class="facet mt-3 mt-sm-4 pt-1"
                       role="menuitem"
                     >
                       <div
@@ -170,7 +170,11 @@ exports[`Search index creates snapshot 2`] = `
                         <small
                           class="card-title text-muted text-uppercase"
                         >
-                          Kind
+                          <span
+                            class="text-secondary font-weight-bold"
+                          >
+                            Kind
+                          </span>
                         </small>
                       </div>
                       <div
@@ -211,7 +215,7 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                     <div
-                      class="facet mt-3 mt-sm-4 pt-2 "
+                      class="facet mt-3 mt-sm-4 pt-1"
                       role="menuitem"
                     >
                       <div
@@ -221,7 +225,11 @@ exports[`Search index creates snapshot 2`] = `
                         <small
                           class="card-title text-muted text-uppercase"
                         >
-                          Repository
+                          <span
+                            class="text-secondary font-weight-bold"
+                          >
+                            Repository
+                          </span>
                         </small>
                       </div>
                       <div
@@ -294,7 +302,7 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                     <div
-                      class="mt-3 mt-sm-4 pt-2 facet"
+                      class="mt-3 mt-sm-4 pt-1 facet"
                       role="menuitem"
                     >
                       <div
@@ -304,7 +312,11 @@ exports[`Search index creates snapshot 2`] = `
                         <small
                           class="card-title text-muted text-uppercase"
                         >
-                          Others
+                          <span
+                            class="text-secondary font-weight-bold"
+                          >
+                            Others
+                          </span>
                         </small>
                       </div>
                       <div
@@ -466,7 +478,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="facet mt-3 mt-sm-4 pt-2 "
+              class="facet mt-3 mt-sm-4 pt-1"
               role="menuitem"
             >
               <div
@@ -476,7 +488,11 @@ exports[`Search index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Kind
+                  <span
+                    class="text-secondary font-weight-bold"
+                  >
+                    Kind
+                  </span>
                 </small>
               </div>
               <div
@@ -517,7 +533,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="facet mt-3 mt-sm-4 pt-2 "
+              class="facet mt-3 mt-sm-4 pt-1"
               role="menuitem"
             >
               <div
@@ -527,7 +543,11 @@ exports[`Search index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Repository
+                  <span
+                    class="text-secondary font-weight-bold"
+                  >
+                    Repository
+                  </span>
                 </small>
               </div>
               <div
@@ -600,7 +620,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="mt-3 mt-sm-4 pt-2 facet"
+              class="mt-3 mt-sm-4 pt-1 facet"
               role="menuitem"
             >
               <div
@@ -610,7 +630,11 @@ exports[`Search index creates snapshot 2`] = `
                 <small
                   class="card-title text-muted text-uppercase"
                 >
-                  Others
+                  <span
+                    class="text-secondary font-weight-bold"
+                  >
+                    Others
+                  </span>
                 </small>
               </div>
               <div

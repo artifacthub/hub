@@ -59,8 +59,8 @@ const Filters = (props: Props) => {
 
       if (!isNull(userElement) || !isNull(orgElement)) {
         publishersList = (
-          <div className="mt-3 mt-sm-4">
-            <SmallTitle text="Publisher" />
+          <div className="mt-3 mt-sm-4 pt-1">
+            <SmallTitle text="Publisher" className="text-secondary font-weight-bold pt-2" />
             {orgElement}
             {userElement}
           </div>
@@ -131,8 +131,8 @@ const Filters = (props: Props) => {
       {getKindFacets()}
       {getRepositoryFacets()}
 
-      <div role="menuitem" className={`mt-3 mt-sm-4 pt-2 ${styles.facet}`}>
-        <SmallTitle text="Others" />
+      <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+        <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
           <div className="custom-control custom-checkbox">

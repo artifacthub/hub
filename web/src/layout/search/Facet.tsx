@@ -90,14 +90,14 @@ const Facet = (props: Props) => {
       role="menuitem"
       className={classnames(
         styles.facet,
-        { 'mt-3 mt-sm-4 pt-2 ': isUndefined(props.displaySubtitle) },
+        { 'mt-3 mt-sm-4 pt-1': isUndefined(props.displaySubtitle) },
         { 'mt-0 pt-0': !isUndefined(props.displaySubtitle) }
       )}
     >
       {!isUndefined(props.displaySubtitle) && props.displaySubtitle ? (
         <small className={`text-muted ${styles.subtitle}`}>{props.title}</small>
       ) : (
-        <SmallTitle text={props.title} />
+        <SmallTitle text={props.title} className="text-secondary font-weight-bold" />
       )}
 
       <div className={classnames({ 'mt-3': isUndefined(props.displaySubtitle) })}>

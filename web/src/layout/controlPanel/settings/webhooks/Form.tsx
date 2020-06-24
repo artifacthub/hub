@@ -40,11 +40,14 @@ export const DEFAULT_PAYLOAD_TEMPLATE = `{
     "datacontenttype" : "application/json",
     "data" : {
         "package": {
-            "kind": {{ .Package.kind }},
             "name": "{{ .Package.name }}",
             "version": "{{ .Package.version }}",
-            "publisher": "{{ .Package.publisher }}",
             "url": "{{ .Package.url }}"
+            "repository": {
+                "kind": "{{ .Package.repository.kind }}",
+                "name": "{{ .Package.repository.name }}",
+                "publisher": "{{ .Package.repository.publisher }}"
+            }
         }
     }
 }`;
@@ -630,17 +633,6 @@ const WebhookForm = (props: Props) => {
                   </tr>
                   <tr>
                     <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.kind }}`}</span>
-                    </th>
-                    <td>
-                      Kind of the package associated with the notification. Possible values are{' '}
-                      <span className="font-weight-bold">helm-chart</span>,{' '}
-                      <span className="font-weight-bold">falco-rules</span> and{' '}
-                      <span className="font-weight-bold">opa-policies</span>.
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
                       <span className="text-nowrap">{`{{ .Package.name }}`}</span>
                     </th>
                     <td>Name of the package.</td>
@@ -653,18 +645,35 @@ const WebhookForm = (props: Props) => {
                   </tr>
                   <tr>
                     <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.publisher }}`}</span>
+                      <span className="text-nowrap">{`{{ .Package.url }}`}</span>
+                    </th>
+                    <td>ArtifactHub URL of the package.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.repository.kind }}`}</span>
                     </th>
                     <td>
-                      Publisher of the package in the format owner/repository on the case of Helm Charts and owner in
-                      the rest.
+                      Kind of the repository associated with the notification. Possible values are{' '}
+                      <span className="font-weight-bold">helm-chart</span>,{' '}
+                      <span className="font-weight-bold">falco-rules</span> and{' '}
+                      <span className="font-weight-bold">opa-policies</span>.
                     </td>
                   </tr>
                   <tr>
                     <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.url }}`}</span>
+                      <span className="text-nowrap">{`{{ .Package.repository.name }}`}</span>
                     </th>
-                    <td>ArtifactHub URL of the package.</td>
+                    <td>Name of the repository.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span className="text-nowrap">{`{{ .Package.repository.publisher }}`}</span>
+                    </th>
+                    <td>
+                      Publisher of the repository. If the owner is a user it'll be the user alias. If it's an
+                      organization, it'll be the organization name.
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -14,7 +14,9 @@ exports[`RelatedPackages renders correctly 2`] = `
       <small
         class="card-title text-muted text-uppercase"
       >
-        Related packages
+        <span>
+          Related packages
+        </span>
       </small>
     </div>
     <div

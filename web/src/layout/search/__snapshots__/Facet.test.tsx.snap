@@ -3,7 +3,7 @@
 exports[`Filters creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="facet mt-3 mt-sm-4 pt-2 "
+    class="facet mt-3 mt-sm-4 pt-1"
     role="menuitem"
   >
     <div
@@ -13,7 +13,11 @@ exports[`Filters creates snapshot 1`] = `
       <small
         class="card-title text-muted text-uppercase"
       >
-        Chart Repository
+        <span
+          class="text-secondary font-weight-bold"
+        >
+          Chart Repository
+        </span>
       </small>
     </div>
     <div
@@ -116,7 +120,7 @@ exports[`Filters creates snapshot 1`] = `
         </label>
       </div>
       <button
-        class="btn btn-link btn-sm pl-0"
+        class="btn btn-link btn-sm p-0"
         data-testid="expandableListBtn"
       >
         <div

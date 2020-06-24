@@ -246,11 +246,14 @@ describe('WebhookForm', () => {
     "datacontenttype" : "application/json",
     "data" : {
         "package": {
-            "kind": {{ .Package.kind }},
             "name": "{{ .Package.name }}",
             "version": "{{ .Package.version }}",
-            "publisher": "{{ .Package.publisher }}",
             "url": "{{ .Package.url }}"
+            "repository": {
+                "kind": "{{ .Package.repository.kind }}",
+                "name": "{{ .Package.repository.name }}",
+                "publisher": "{{ .Package.repository.publisher }}"
+            }
         }
     }
 }`);
