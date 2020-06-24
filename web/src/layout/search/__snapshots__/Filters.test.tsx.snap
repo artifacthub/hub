@@ -6,7 +6,7 @@ exports[`Filters creates snapshot 1`] = `
     class="filters"
   >
     <div
-      class="mt-3 mt-sm-4"
+      class="mt-3 mt-sm-4 pt-1"
     >
       <div
         class="mt-2 mb-1"
@@ -15,7 +15,11 @@ exports[`Filters creates snapshot 1`] = `
         <small
           class="card-title text-muted text-uppercase"
         >
-          Publisher
+          <span
+            class="text-secondary font-weight-bold pt-2"
+          >
+            Publisher
+          </span>
         </small>
       </div>
       <div
@@ -144,7 +148,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="facet mt-3 mt-sm-4 pt-2 "
+      class="facet mt-3 mt-sm-4 pt-1"
       role="menuitem"
     >
       <div
@@ -154,7 +158,11 @@ exports[`Filters creates snapshot 1`] = `
         <small
           class="card-title text-muted text-uppercase"
         >
-          Kind
+          <span
+            class="text-secondary font-weight-bold"
+          >
+            Kind
+          </span>
         </small>
       </div>
       <div
@@ -259,7 +267,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="facet mt-3 mt-sm-4 pt-2 "
+      class="facet mt-3 mt-sm-4 pt-1"
       role="menuitem"
     >
       <div
@@ -269,7 +277,11 @@ exports[`Filters creates snapshot 1`] = `
         <small
           class="card-title text-muted text-uppercase"
         >
-          Chart Repository
+          <span
+            class="text-secondary font-weight-bold"
+          >
+            Chart Repository
+          </span>
         </small>
       </div>
       <div
@@ -342,7 +354,7 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-3 mt-sm-4 pt-2 facet"
+      class="mt-3 mt-sm-4 pt-1 facet"
       role="menuitem"
     >
       <div
@@ -352,7 +364,11 @@ exports[`Filters creates snapshot 1`] = `
         <small
           class="card-title text-muted text-uppercase"
         >
-          Others
+          <span
+            class="text-secondary font-weight-bold"
+          >
+            Others
+          </span>
         </small>
       </div>
       <div

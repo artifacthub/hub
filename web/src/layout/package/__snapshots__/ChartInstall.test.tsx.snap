@@ -31,7 +31,9 @@ exports[`ChartInstall creates snapshot 1`] = `
           <small
             class="card-title text-muted text-uppercase"
           >
-            Add repository
+            <span>
+              Add repository
+            </span>
           </small>
         </div>
         <div>
@@ -87,7 +89,9 @@ exports[`ChartInstall creates snapshot 1`] = `
           <small
             class="card-title text-muted text-uppercase"
           >
-            Install chart
+            <span>
+              Install chart
+            </span>
           </small>
         </div>
         <div>

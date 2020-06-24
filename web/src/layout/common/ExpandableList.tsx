@@ -20,7 +20,7 @@ const ExpandableList = (props: Props) => {
       {props.items.length > numVisibleItems && (
         <button
           data-testid="expandableListBtn"
-          className="btn btn-link btn-sm pl-0"
+          className="btn btn-link btn-sm p-0"
           onClick={() => setOpenStatus(!open)}
         >
           {open ? (

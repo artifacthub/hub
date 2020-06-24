@@ -9,7 +9,9 @@ exports[`Links creates snapshot 1`] = `
     <small
       class="card-title text-muted text-uppercase"
     >
-      Links
+      <span>
+        Links
+      </span>
     </small>
   </div>
   <div

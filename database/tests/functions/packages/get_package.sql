@@ -207,6 +207,7 @@ select is(
             "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -274,6 +275,7 @@ select is(
             "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -342,6 +344,7 @@ select is(
             "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -387,6 +390,7 @@ select is(
             "kind": 0,
             "name": "repo2",
             "display_name": "Repo 2",
+            "url": "https://repo2.com",
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
