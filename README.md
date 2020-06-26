@@ -6,7 +6,7 @@ Artifact Hub is a web-based application that enables finding, installing, and pu
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
-The project, accessible at https://artifacthub.io, is currently in development in a pre-alpha state. Support for Helm charts, Falco configurations and OPA policies is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome.
+The project, accessible at https://artifacthub.io, is currently in development in a alpha state. Support for Helm charts, Falco configurations, OPA policies and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome.
 
 Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit http://slack.cncf.io/.
 
@@ -44,7 +44,7 @@ We're envisioning that Artifact Hub will have three main components:
 
 ## Getting started
 
-The easiest way to try Artifact Hub in your Kubernetes cluster is deploying the Helm chart provided. Let's see how this can be done using Minikube locally.
+The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. Let's see how this can be done using Minikube locally.
 
 ### Prerequisites
 
@@ -77,10 +77,11 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 ### Populating packages
 
-The chart installs a `cronjob` in charge of launching periodically (every 30m) a process called `helm-tracker` which indexes Helm charts. If you don't want to wait until it's triggered by the cronjob, you can create a `job` manually using the following command:
+The chart installs some `cronjobs` in charge of launching periodically (every 30m) the trackers, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the jobs are triggered by the cronjob, you can create them manually using the following commands:
 
 ```bash
 $ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
+$ kubectl create job initial-olm-tracker-job --from=cronjob/olm-tracker
 ```
 
 ### Uninstalling the Chart
