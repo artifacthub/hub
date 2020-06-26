@@ -77,14 +77,14 @@ const UserContext = () => {
                   <div className={`badge badge-light badge-pill mr-2 p-0 ${styles.badgeIcon}`}>
                     <MdBusiness />
                   </div>
-                  <div className="flex-grow-1 text-left text-truncate">{ctx.prefs.controlPanel.selectedOrg}</div>
+                  <div className="flex-grow-1 text-left mr-1 text-truncate">{ctx.prefs.controlPanel.selectedOrg}</div>
                 </>
               ) : (
                 <>
                   <div className={`badge badge-light badge-pill mr-2 p-0 ${styles.badgeIcon}`}>
                     <FaUser />
                   </div>
-                  <div className="flex-grow-1 text-left text-truncate">{alias}</div>
+                  <div className="flex-grow-1 text-left mr-1 text-truncate">{alias}</div>
                 </>
               )}
             </div>

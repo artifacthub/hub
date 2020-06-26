@@ -92,6 +92,7 @@ const OrganizationCard = (props: Props) => {
                 alt={props.organization.displayName || props.organization.name}
                 imageId={props.organization.logoImageId}
                 className={styles.image}
+                placeholderIcon={<MdBusiness />}
               />
             ) : (
               <MdBusiness className={styles.image} />
@@ -99,7 +100,7 @@ const OrganizationCard = (props: Props) => {
           </div>
 
           <div>
-            <h5 className="mb-0">{props.organization.displayName || props.organization.name}</h5>
+            <div className={`h5 mb-0 ${styles.title}`}>{props.organization.displayName || props.organization.name}</div>
           </div>
 
           {!isMember && (

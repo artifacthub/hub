@@ -168,7 +168,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                       </svg>
                     </div>
                     <div
-                      class="flex-grow-1 text-left text-truncate"
+                      class="flex-grow-1 text-left mr-1 text-truncate"
                     >
                       test
                     </div>

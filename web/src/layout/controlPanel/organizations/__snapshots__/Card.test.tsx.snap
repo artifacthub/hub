@@ -31,11 +31,11 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           </svg>
         </div>
         <div>
-          <h5
-            class="mb-0"
+          <div
+            class="h5 mb-0 title"
           >
             Test
-          </h5>
+          </div>
         </div>
       </div>
       <div

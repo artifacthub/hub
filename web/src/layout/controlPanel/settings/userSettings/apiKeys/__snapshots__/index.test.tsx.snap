@@ -219,11 +219,11 @@ exports[`API keys section index creates snapshot 2`] = `
                 <div
                   class="d-flex flex-row w-100 justify-content-between"
                 >
-                  <h5
-                    class="mb-1"
+                  <div
+                    class="h5 mb-1 titleCard"
                   >
                     key1
-                  </h5>
+                  </div>
                   <div
                     class="d-flex flex-nowrap position-relative buttons"
                   >
@@ -378,11 +378,11 @@ exports[`API keys section index creates snapshot 2`] = `
                 <div
                   class="d-flex flex-row w-100 justify-content-between"
                 >
-                  <h5
-                    class="mb-1"
+                  <div
+                    class="h5 mb-1 titleCard"
                   >
                     key2
-                  </h5>
+                  </div>
                   <div
                     class="d-flex flex-nowrap position-relative buttons"
                   >

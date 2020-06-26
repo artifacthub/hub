@@ -3,7 +3,6 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { FaGithub, FaLink } from 'react-icons/fa';
-import { FiExternalLink } from 'react-icons/fi';
 import { TiHome } from 'react-icons/ti';
 
 import { PackageLink } from '../../types';
@@ -66,9 +65,6 @@ const Links = (props: Props) => {
               <>
                 {getIconLink('homepage')}
                 Homepage
-                <span className={styles.smallIcon}>
-                  <FiExternalLink className="ml-1" />
-                </span>
               </>
             </ExternalLink>
           </div>
