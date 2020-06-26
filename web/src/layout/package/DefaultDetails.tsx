@@ -17,14 +17,16 @@ interface Props {
 const DefaultDetails = (props: Props) => {
   return (
     <>
-      <RSSLinkTitle title="Versions" package={props.package} />
-      {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
-        <p data-testid="versions">-</p>
-      ) : (
-        <div className="mb-3" data-testid="versions">
-          <ExpandableList items={props.allVersions} visibleItems={3} />
-        </div>
-      )}
+      <div>
+        <RSSLinkTitle title="Versions" package={props.package} />
+        {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
+          <p data-testid="versions">-</p>
+        ) : (
+          <div className="mb-3" data-testid="versions">
+            <ExpandableList items={props.allVersions} visibleItems={3} />
+          </div>
+        )}
+      </div>
 
       <Links links={props.package.links} />
 

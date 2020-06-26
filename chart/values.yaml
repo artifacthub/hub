@@ -83,6 +83,18 @@ helmTracker:
   imageStore: pg
   bypassDigestCheck: false
 
+olmTracker:
+  cronjob:
+    image:
+      repository: artifacthub/olm-tracker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg
+
 dbMigrator:
   job:
     image:

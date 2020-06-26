@@ -13,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/stretchr/testify/mock"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
@@ -280,7 +281,7 @@ type workerWrapper struct {
 	wg    *sync.WaitGroup
 	pm    *pkg.ManagerMock
 	is    *img.StoreMock
-	ec    *ErrorsCollectorMock
+	ec    *tracker.ErrorsCollectorMock
 	hg    *httpGetterMock
 	w     *Worker
 	queue chan *Job
@@ -290,7 +291,7 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 	// Setup worker
 	pm := &pkg.ManagerMock{}
 	is := &img.StoreMock{}
-	ec := &ErrorsCollectorMock{}
+	ec := &tracker.ErrorsCollectorMock{}
 	hg := &httpGetterMock{}
 	w := NewWorker(ctx, 1, pm, is, ec, hg)
 	queue := make(chan *Job, 100)

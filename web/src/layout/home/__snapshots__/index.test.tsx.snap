@@ -88,6 +88,21 @@ exports[`Home index creates snapshot 1`] = `
           </div>
         </div>
         <div />
+        <div
+          class="d-flex flex-row align-items-center justify-content-center mt-3"
+        >
+          <span>
+            - or -
+          </span>
+          <a
+            class="btn btn-link text-light font-weight-bold py-0"
+            href="/packages/search"
+          >
+            <u>
+              browse all packages
+            </u>
+          </a>
+        </div>
       </div>
       <div
         class="d-flex align-items-center justify-content-center mt-5"
@@ -208,9 +223,9 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-md-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, and Open Policy Agent (OPA) policies.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, and OLM operators.
           <div
-            class="mx-5 mt-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-3 mx-lg-5 mt-5 d-flex flex-row align-items-center justify-content-around"
           >
             <img
               alt="Icon"
@@ -226,6 +241,11 @@ exports[`Home index creates snapshot 1`] = `
               alt="Icon"
               class="aboutIcon"
               src="/static/media/opa-policies-white.svg"
+            />
+            <img
+              alt="Icon"
+              class="aboutIcon"
+              src="/static/media/olm-operators-white.svg"
             />
           </div>
         </div>

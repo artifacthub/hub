@@ -28,6 +28,11 @@ export interface PackageLink {
   url: string;
 }
 
+export interface Channel {
+  name: string;
+  version: string;
+}
+
 export interface Package {
   packageId: string;
   name: string;
@@ -51,6 +56,10 @@ export interface Package {
   eventKinds?: EventKind[];
   license?: string | null;
   createdAt: number;
+  defaultChannel?: string | null;
+  channels?: Channel[] | null;
+  provider?: string | null;
+  containerImage?: string | null;
 }
 
 export interface Version {
@@ -58,9 +67,32 @@ export interface Version {
   createdAt: number;
 }
 
+export interface OLMExtraData {
+  capabilities?: string;
+  customResourcesExamples?: string;
+}
+
+export interface CustomResourcesDefinitionExample {
+  kind: string;
+  [key: string]: any;
+}
+
+export interface CustomResourcesDefinition {
+  kind: string;
+  name: string;
+  version: string;
+  description: string;
+  displayName?: string;
+  example?: CustomResourcesDefinitionExample;
+}
+
 export interface PackageData {
   policies?: { raw: string }[];
   rules?: { raw: string }[];
+  capabilities?: string;
+  customResourcesDefinitionsExamples?: string;
+  customResourcesDefinitions?: CustomResourcesDefinition[];
+  isGlobalOperator?: boolean;
 }
 
 export interface SearchFiltersURL {

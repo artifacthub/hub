@@ -9,6 +9,7 @@ returns setof json as $$
         where s.version = p.latest_version
         and (s.deprecated is null or s.deprecated = false)
         and p.logo_image_id is not null
+        and s.readme is not null
         order by random() limit 5
     ) rp
     cross join get_package_summary(rp.package_id) as pkgJSON;

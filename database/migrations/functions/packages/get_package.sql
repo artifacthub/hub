@@ -23,6 +23,9 @@ begin
         'name', p.name,
         'normalized_name', p.normalized_name,
         'logo_image_id', p.logo_image_id,
+        'is_operator', p.is_operator,
+        'channels', p.channels,
+        'default_channel', p.default_channel,
         'display_name', s.display_name,
         'description', s.description,
         'keywords', s.keywords,
@@ -44,6 +47,8 @@ begin
         'deprecated', s.deprecated,
         'license', s.license,
         'signed', s.signed,
+        'container_image', s.container_image,
+        'provider', s.provider,
         'created_at', floor(extract(epoch from s.created_at)),
         'maintainers', (
             select json_agg(json_build_object(

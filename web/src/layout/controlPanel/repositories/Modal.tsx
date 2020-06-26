@@ -140,6 +140,84 @@ const RepositoryModal = (props: Props) => {
 
   const handleKindChange = (kind: string) => {
     setSelectedKind(parseInt(kind));
+    // URL is validated when value has been entered previously
+    if (urlInput.current!.getValue() !== '') {
+      urlInput.current!.checkIsValid();
+    }
+  };
+
+  const getAdditionalInfo = (): JSX.Element | undefined => {
+    switch (selectedKind) {
+      case RepositoryKind.Helm:
+        return (
+          <small className="text-muted text-break mt-1">
+            <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
+            <p>
+              If you host your charts in Github, you can use{' '}
+              <ExternalLink
+                href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
+                className="text-reset"
+              >
+                <u>GitHub Pages</u>
+              </ExternalLink>{' '}
+              to serve them or you can use a URL like the one below:
+            </p>
+            <p className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+              https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
+            </p>
+            <p className="mb-0">
+              For more information about how to create and host your own chart repository please visit the{' '}
+              <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset">
+                <u>Helm chart repository guide</u>
+              </ExternalLink>
+              .
+            </p>
+          </small>
+        );
+      case RepositoryKind.OLM:
+        return (
+          <small className="text-muted text-break mt-1">
+            <p>
+              URL where the OLM operators are located. At the moment only Github and Gitlab URLs are supported, and they
+              must follow the following format:
+            </p>
+            <ul className="mt-3">
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://github.com/user/repo[/path/to/operators]
+              </li>
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://gitlab.com/user/repo[/path/to/operators]
+              </li>
+            </ul>
+            <p className="mb-0">
+              Operators inside the repo must be structured the same way as the{' '}
+              <ExternalLink
+                href="https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators"
+                className="text-reset"
+              >
+                <u>Community Operators</u>
+              </ExternalLink>{' '}
+              repository. There are some{' '}
+              <ExternalLink
+                href="https://github.com/operator-framework/community-operators/blob/master/docs/required-fields.md"
+                className="text-reset"
+              >
+                <u>required fields</u>
+              </ExternalLink>{' '}
+              within your CSV for your packages to be displayed properly in Artifact Hub.
+            </p>
+          </small>
+        );
+    }
+  };
+
+  const getURLPattern = (): string | undefined => {
+    switch (selectedKind) {
+      case RepositoryKind.OLM:
+        return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
+      default:
+        return undefined;
+    }
   };
 
   return (
@@ -188,7 +266,7 @@ const RepositoryModal = (props: Props) => {
               options={getActiveRepositoryKinds()}
               onChange={handleKindChange}
               selected={selectedKind.toString()}
-              disabled
+              disabled={!isUndefined(props.repository)}
               required
             />
           </div>
@@ -238,6 +316,7 @@ const RepositoryModal = (props: Props) => {
             invalidText={{
               default: 'This field is required',
               typeMismatch: 'Please enter a valid url',
+              patternMismatch: 'Please enter a valid reposiroty url for this repository kind',
               customError: 'There is another repository using this url',
             }}
             onKeyDown={handleOnReturnKeyDown}
@@ -247,31 +326,8 @@ const RepositoryModal = (props: Props) => {
               resourceKind: ResourceKind.repositoryURL,
               excluded: !isUndefined(props.repository) ? [props.repository.url] : [],
             }}
-            additionalInfo={
-              <small className="text-muted text-break mt-1">
-                <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
-                <p>
-                  If you host your charts in Github, you can use{' '}
-                  <ExternalLink
-                    href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
-                    className="text-reset"
-                  >
-                    <u>GitHub Pages</u>
-                  </ExternalLink>{' '}
-                  to serve them or you can use a URL like the one below:
-                </p>
-                <p className={`font-italic ml-3 ${styles.inputAdditionalInfoURL}`}>
-                  https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
-                </p>
-                <p className="mb-0">
-                  For more information about how to create and host your own chart repository please visit the{' '}
-                  <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset">
-                    <u>Helm chart repository guide</u>
-                  </ExternalLink>
-                  .
-                </p>
-              </small>
-            }
+            pattern={getURLPattern()}
+            additionalInfo={getAdditionalInfo()}
             required
           />
         </form>

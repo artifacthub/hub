@@ -1,0 +1,40 @@
+.lineClamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.separator {
+  width: 100%;
+  background-color: var(--color-1-20);
+  margin: 1.5rem auto;
+  height: 2px;
+}
+
+.extraInfo {
+  font-size: 0.9rem;
+}
+
+.copyBtn {
+  background-color: transparent !important;
+}
+
+.modal code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    max-width: 80% !important;
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}

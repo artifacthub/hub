@@ -20,7 +20,7 @@ interface Tab {
 const TABS: Tab[] = [
   {
     name: 'cli',
-    title: 'Helm CLI',
+    title: 'Falco CLI',
   },
 ];
 const ACTIVE_TAB: string = 'cli';
@@ -53,7 +53,7 @@ const FalcoInstall = (props: Props) => {
 
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex justify-content-end mt-2 mb-2">
+                  <div className="d-flex align-items-center justify-content-end mt-2 mb-2">
                     <div>
                       <ButtonCopyToClipboard text={block1} />
                     </div>

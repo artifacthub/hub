@@ -62,10 +62,10 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                       Kind
                     </label>
                     <div
-                      class=" css-14jk2my-container"
+                      class=" css-2b097c-container"
                     >
                       <div
-                        class=" css-1fhf3k1-control"
+                        class=" css-1dtax8q-control"
                       >
                         <div
                           class=" css-g1d714-ValueContainer"
@@ -102,7 +102,6 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                                 autocapitalize="none"
                                 autocomplete="off"
                                 autocorrect="off"
-                                disabled=""
                                 id="react-select-2-input"
                                 spellcheck="false"
                                 style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
@@ -120,7 +119,7 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                           class=" css-1hb7zxy-IndicatorsContainer"
                         >
                           <span
-                            class=" css-109onse-indicatorSeparator"
+                            class=" css-1okebmr-indicatorSeparator"
                           />
                           <div
                             aria-hidden="true"
@@ -261,7 +260,7 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                          to serve them or you can use a URL like the one below:
                       </p>
                       <p
-                        class="font-italic ml-3 inputAdditionalInfoURL"
+                        class="font-italic ml-1 ml-md-3 inputAdditionalInfoURL"
                       >
                         https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
                       </p>

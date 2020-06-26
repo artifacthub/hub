@@ -99,6 +99,11 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `helmTracker.repositories`             | Repos names to process ([] = all) | []                                         |
 | `helmTracker.imageStore`               | Image store                       | `pg`                                       |
 | `helmTracker.bypassDigestCheck`        | Bypass digest check               | `false`                                    |
+| `olmTracker.cronjob.image.repository`  | OLM tracker image repository      | `artifacthub/olm-tracker`                  |
+| `olmTracker.cronjob.resources`         | OLM tracker requested resources   | Memory: `500Mi`, CPU: `100m`               |
+| `olmTracker.concurrency`               | Repos to process concurrently     | 10                                         |
+| `olmTracker.repositories`              | Repos names to process ([] = all) | []                                         |
+| `olmTracker.imageStore`                | Image store                       | `pg`                                       |
 | `dbMigrator.job.image.repository`      | DB migrator image repository      | `artifacthub/db-migrator`                  |
 | `dbMigrator.loadSampleData`            | Load demo user and sample repos   | `true`                                     |
 

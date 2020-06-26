@@ -8,6 +8,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -465,7 +466,7 @@ type dispatcherWrapper struct {
 	wg         *sync.WaitGroup
 	il         *repo.HelmIndexLoaderMock
 	rm         *repo.ManagerMock
-	ec         *ErrorsCollectorMock
+	ec         *tracker.ErrorsCollectorMock
 	d          *Dispatcher
 	queuedJobs *[]*Job
 }
@@ -475,7 +476,7 @@ func newDispatcherWrapper(ctx context.Context) *dispatcherWrapper {
 	cfg := viper.New()
 	il := &repo.HelmIndexLoaderMock{}
 	rm := &repo.ManagerMock{}
-	ec := &ErrorsCollectorMock{}
+	ec := &tracker.ErrorsCollectorMock{}
 	d := NewDispatcher(ctx, cfg, il, rm, ec)
 
 	// Wait group used for Dispatcher.Run()

@@ -38,6 +38,18 @@ func TestGet(t *testing.T) {
 			Name:           "Package 1",
 			NormalizedName: "package-1",
 			LogoImageID:    "00000000-0000-0000-0000-000000000001",
+			IsOperator:     true,
+			Channels: []*hub.Channel{
+				{
+					Name:    "stable",
+					Version: "1.0.0",
+				},
+				{
+					Name:    "alpha",
+					Version: "1.1.0",
+				},
+			},
+			DefaultChannel: "stable",
 			DisplayName:    "Package 1",
 			Description:    "description",
 			Keywords:       []string{"kw1", "kw2"},
@@ -67,9 +79,11 @@ func TestGet(t *testing.T) {
 					CreatedAt: 1592299234,
 				},
 			},
-			AppVersion: "12.1.0",
-			Digest:     "digest-package1-1.0.0",
-			Deprecated: true,
+			AppVersion:     "12.1.0",
+			Digest:         "digest-package1-1.0.0",
+			Deprecated:     true,
+			ContainerImage: "quay.io/org/img:1.0.0",
+			Provider:       "Org Inc",
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "name1",
@@ -99,6 +113,18 @@ func TestGet(t *testing.T) {
 			"name": "Package 1",
 			"normalized_name": "package-1",
 			"logo_image_id": "00000000-0000-0000-0000-000000000001",
+			"is_operator": true,
+			"channels": [
+				{
+					"name": "stable",
+					"version": "1.0.0"
+				},
+				{
+					"name": "alpha",
+					"version": "1.1.0"
+				}
+			],
+			"default_channel": "stable",
 			"display_name": "Package 1",
 			"description": "description",
 			"keywords": ["kw1", "kw2"],
@@ -131,6 +157,8 @@ func TestGet(t *testing.T) {
 			"app_version": "12.1.0",
 			"digest": "digest-package1-1.0.0",
 			"deprecated": true,
+			"container_image": "quay.io/org/img:1.0.0",
+    		"provider": "Org Inc",
 			"maintainers": [
 				{
 					"name": "name1",

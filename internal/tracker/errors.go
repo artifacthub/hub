@@ -1,4 +1,4 @@
-package main
+package tracker
 
 import (
 	"context"
@@ -64,6 +64,9 @@ func (c *DBErrorsCollector) Append(repositoryID string, err error) {
 // Flush aggregates all errors collected per repository as a single text and
 // stores it in the database.
 func (c *DBErrorsCollector) Flush() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	for repositoryID, errors := range c.errors {
 		var errStr strings.Builder
 		for _, err := range errors {

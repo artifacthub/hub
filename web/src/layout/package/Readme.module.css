@@ -33,6 +33,10 @@
   color: var(--color-1-700);
 }
 
+.md h3 code {
+  word-wrap: break-word;
+}
+
 .md pre code {
   color: var(--black);
 }

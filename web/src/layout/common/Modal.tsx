@@ -24,6 +24,8 @@ interface Props {
   cleanError?: () => void;
   noFooter?: boolean;
   noScrollable?: boolean;
+  disabledOpenBtn?: boolean;
+  tooltipMessage?: string;
 }
 
 const Modal = (props: Props) => {
@@ -59,22 +61,33 @@ const Modal = (props: Props) => {
   return (
     <div className={props.className}>
       {!isUndefined(props.buttonContent) && (
-        <button
-          data-testid="openModalBtn"
-          type="button"
-          className={classnames(
-            'font-weight-bold text-uppercase position-relative btn btn-block',
-            styles.btn,
-            { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
-            { 'btn-primary': isUndefined(props.buttonType) }
+        <div className={`position-relative ${styles.buttonWrapper}`}>
+          <button
+            data-testid="openModalBtn"
+            type="button"
+            className={classnames(
+              'font-weight-bold text-uppercase position-relative btn btn-block',
+              styles.btn,
+              { [`${props.buttonType}`]: !isUndefined(props.buttonType) },
+              { 'btn-primary': isUndefined(props.buttonType) },
+              { disabled: !isUndefined(props.disabledOpenBtn) && props.disabledOpenBtn }
+            )}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              if (isUndefined(props.disabledOpenBtn) || !props.disabledOpenBtn) {
+                setOpenStatus(true);
+              }
+            }}
+          >
+            <div className="d-flex align-items-center justify-content-center">{props.buttonContent}</div>
+          </button>
+          {!isUndefined(props.tooltipMessage) && (
+            <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
+              <div className={`arrow ${styles.tooltipArrow}`} />
+              <div className={`tooltip-inner ${styles.tooltipContent}`}>{props.tooltipMessage}</div>
+            </div>
           )}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            setOpenStatus(true);
-          }}
-        >
-          <div className="d-flex align-items-center justify-content-center">{props.buttonContent}</div>
-        </button>
+        </div>
       )}
 
       {openStatus && <div className={`modal-backdrop ${styles.activeBackdrop}`} data-testid="modalBackdrop" />}

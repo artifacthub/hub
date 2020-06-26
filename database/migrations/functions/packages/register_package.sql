@@ -31,6 +31,9 @@ begin
         logo_image_id,
         latest_version,
         tsdoc,
+        is_operator,
+        channels,
+        default_channel,
         repository_id
     ) values (
         v_name,
@@ -38,6 +41,9 @@ begin
         nullif(p_pkg->>'logo_image_id', '')::uuid,
         v_version,
         generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
+        (p_pkg->>'is_operator')::boolean,
+        p_pkg->'channels',
+        nullif(p_pkg->>'default_channel', ''),
         v_repository_id
     )
     on conflict (repository_id, name) do update
@@ -46,7 +52,10 @@ begin
         logo_url = excluded.logo_url,
         logo_image_id = excluded.logo_image_id,
         latest_version = excluded.latest_version,
-        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords)
+        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
+        is_operator = excluded.is_operator,
+        channels = excluded.channels,
+        default_channel = excluded.default_channel
     where semver_gte(v_version, package.latest_version) = true
     returning package_id into v_package_id;
 
@@ -117,6 +126,8 @@ begin
         license,
         signed,
         content_url,
+        container_image,
+        provider,
         created_at
     ) values (
         v_package_id,
@@ -134,6 +145,8 @@ begin
         nullif(p_pkg->>'license', ''),
         (p_pkg->>'signed')::boolean,
         nullif(p_pkg->>'content_url', ''),
+        nullif(p_pkg->>'container_image', ''),
+        nullif(p_pkg->>'provider', ''),
         v_created_at
     )
     on conflict (package_id, version) do update
@@ -150,6 +163,8 @@ begin
         license = excluded.license,
         signed = excluded.signed,
         content_url = excluded.content_url,
+        container_image = excluded.container_image,
+        provider = excluded.provider,
         created_at = v_created_at;
 
     -- Register new release event if package's latest version has been updated

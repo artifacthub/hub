@@ -1,3 +1,14 @@
 .smallIcon {
   font-size: 0.65rem;
 }
+
+.icon {
+  font-size: 0.7rem;
+  min-width: 12px;
+  margin-top: 5px;
+}
+
+.linkText {
+  font-size: 0.9rem;
+  word-break: break-word;
+}

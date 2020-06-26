@@ -1,0 +1,27 @@
+.step {
+  border: 1px solid var(--color-1-900);
+  background-color: var(--color-white);
+  height: 12px;
+  width: 12px;
+  line-height: 8px;
+  font-size: 7px;
+}
+
+.stepWrapper {
+  height: 20px;
+  line-height: 1rem;
+}
+
+.stepWrapper:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  bottom: -9px;
+  left: 5px;
+  background-color: var(--color-1-900);
+}
+
+.activeStep {
+  background-color: var(--color-1-700);
+}
