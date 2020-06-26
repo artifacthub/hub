@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 
@@ -7,6 +8,7 @@ interface Props {
   imageId: string | null;
   alt: string;
   className?: string;
+  placeholderIcon?: JSX.Element;
 }
 
 const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
@@ -21,7 +23,13 @@ const Image = (props: Props) => {
   return (
     <>
       {error || isNull(props.imageId) ? (
-        <img alt={props.alt} src={PLACEHOLDER_SRC} className={props.className} />
+        <>
+          {isUndefined(props.placeholderIcon) ? (
+            <img alt={props.alt} src={PLACEHOLDER_SRC} className={props.className} />
+          ) : (
+            <>{props.placeholderIcon}</>
+          )}
+        </>
       ) : (
         <img
           alt={props.alt}

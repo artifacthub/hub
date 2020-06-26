@@ -70,4 +70,8 @@
     border-radius: 50% !important;
     background-color: var(--color-1-10) !important;
   }
+
+  .title {
+    font-size: 1rem;
+  }
 }

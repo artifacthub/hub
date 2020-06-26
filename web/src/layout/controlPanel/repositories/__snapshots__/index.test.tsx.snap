@@ -240,11 +240,11 @@ exports[`Repository index creates snapshot 2`] = `
           <div
             class="d-flex flex-row w-100 justify-content-between"
           >
-            <h5
-              class="mb-1"
+            <div
+              class="h5 mb-1 titleCard"
             >
               test
-            </h5>
+            </div>
             <div
               class="d-flex flex-nowrap position-relative ml-auto buttons"
             >

@@ -816,7 +816,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{^helm$|^falco$|^opa$}/{repoName}/{packageName}":
+  "/packages/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}":
     get:
       tags:
         - Packages
@@ -838,7 +838,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{^helm$|^falco$|^opa$}/{repoName}/{packageName}/{version}":
+  "/packages/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
@@ -1542,9 +1542,88 @@ components:
           items:
             $ref: "#/components/schemas/Maintainer"
           nullable: true
+        defaultChannel:
+          type: string
+          nullable: true
+          example: stable
+        channels:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example:
+                  - stable
+                  - alpha
+              version:
+                type: string
+                example:
+                  - "2.0.0"
+                  - "1.0.0"
+          nullable: true
+        provider:
+          type: string
+          nullable: true
+          example:
+            - Provider 1
+            - Provider 2
+        containerImage:
+          type: string
+          nullable: true
+          example: url.io/name/operator:v0.2.0
         created_at:
           type: integer
           example: 1552082346
+        data:
+          type: object
+          properties:
+            capabilities:
+              type: string
+              nullable: true
+              example:
+                - Basic Install
+                - Seamless Upgrades
+                - Full Lifecycle
+                - Deep Insights
+                - Auto Pilot
+            isGlobalOperator:
+              type: boolean
+              nullable: true
+            customResourcesDefinitions:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                  name:
+                    type: string
+                  version:
+                    type: string
+                    example: v1alpha
+                  description:
+                    type: string
+                    example: Description resource definition
+                  displayName:
+                    type: string
+              nullable: true
+            customResourcesDefinitionsExamples:
+              type: string
+              example: "[{\"apiVersion\": v1alpha\n, \"kind\": CustomResource\n, \"spec\": {\n \"replicas\": 1\n  }\n}}]"
+            rules:
+              type: object
+              properties:
+                Raw:
+                  type: string
+                  example: "- macro: text\n  condition: (evt.num < 0)\n\n"
+            policies:
+              type: object
+              properties:
+                Raw:
+                  type: string
+                  example: "- macro: text\n  condition: (evt.num < 0)\n\n"
+          nullable: true
     RepositoryKind:
       type: integer
       enum:
@@ -1556,17 +1635,20 @@ components:
           * `0` - Helm charts
           * `1` - Falco rules
           * `2` - OPA policies
+          * `3` - OLM operators
     RepoKindParam:
       type: string
       enum:
         - helm
         - opa
         - falco
+        - olm
       description: |
         Repository kind name:
           * `helm` - Helm charts
           * `falco` - Falco rules
           * `opa` - OPA policies
+          * `olm` - OLM operators
     PackageSummary:
       type: object
       properties:
@@ -1843,7 +1925,7 @@ components:
       description: Whether we should get facets or not
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$
+      name: ^helm$|^falco$|^opa$|^olm$
       schema:
         $ref: "#/components/schemas/RepoKindParam"
       required: true
@@ -1915,6 +1997,7 @@ components:
           * `0` - Helm charts
           * `1` - Falco rules
           * `2` - OPA policies
+          * `3` - OLM operators
     PackageNameParam:
       in: path
       name: packageName

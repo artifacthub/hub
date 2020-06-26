@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import Image from './Image';
@@ -6,6 +6,7 @@ import Image from './Image';
 const defaultProps = {
   imageId: '123',
   alt: 'image',
+  placeholderIcon: undefined,
 };
 
 describe('Image', () => {
@@ -38,6 +39,9 @@ describe('Image', () => {
     expect(image).toHaveProperty('src', `http://localhost/image/${defaultProps.imageId}`);
 
     fireEvent.error(image);
-    expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
+
+    waitFor(() => {
+      expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
+    });
   });
 });

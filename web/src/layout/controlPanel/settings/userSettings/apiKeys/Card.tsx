@@ -58,7 +58,7 @@ const APIKeyCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="APIKeyCard">
       <div className="d-flex flex-row w-100 justify-content-between">
-        <h5 className="mb-1">{props.apiKey.name}</h5>
+        <div className={`h5 mb-1 ${styles.titleCard}`}>{props.apiKey.name}</div>
 
         <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
           <button

@@ -112,7 +112,7 @@ const RepositoryCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="repoCard">
       <div className="d-flex flex-row w-100 justify-content-between">
-        <h5 className="mb-1">{props.repository.displayName || props.repository.name}</h5>
+        <div className={`h5 mb-1 ${styles.titleCard}`}>{props.repository.displayName || props.repository.name}</div>
 
         {transferModalStatus && (
           <TransferRepositoryModal

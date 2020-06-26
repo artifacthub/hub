@@ -82,6 +82,7 @@ const OrganizationInfo = (props: Props) => {
                       alt={organization.displayName || organization.name}
                       imageId={organization.logoImageId}
                       className={styles.image}
+                      placeholderIcon={<MdBusiness />}
                     />
                   ) : (
                     <MdBusiness className={styles.image} />

@@ -226,11 +226,11 @@ exports[`Organizations section index creates snapshot 2`] = `
                   </svg>
                 </div>
                 <div>
-                  <h5
-                    class="mb-0"
+                  <div
+                    class="h5 mb-0 title"
                   >
                     Test
-                  </h5>
+                  </div>
                 </div>
               </div>
               <div
@@ -393,11 +393,11 @@ exports[`Organizations section index creates snapshot 2`] = `
                   </svg>
                 </div>
                 <div>
-                  <h5
-                    class="mb-0"
+                  <div
+                    class="h5 mb-0 title"
                   >
                     Helm
-                  </h5>
+                  </div>
                 </div>
               </div>
               <div
