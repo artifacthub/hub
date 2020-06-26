@@ -38,4 +38,4 @@ spec:
           volumes:
           - name: olm-tracker-config
             secret:
-              secretName: oml-tracker-config
+              secretName: olm-tracker-config
