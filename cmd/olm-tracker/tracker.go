@@ -340,6 +340,12 @@ func (t *Tracker) registerOperatorVersion(
 	createdAt, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
 	if err == nil {
 		p.CreatedAt = createdAt.Unix()
+	} else {
+		// Try alternative layout
+		createdAt, err = time.Parse("2006-01-02 15:04:05", csv.Annotations["createdAt"])
+		if err == nil {
+			p.CreatedAt = createdAt.Unix()
+		}
 	}
 	for _, channel := range manifest.Channels {
 		matches := channelVersionRE.FindStringSubmatch(channel.CurrentCSVName)
