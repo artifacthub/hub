@@ -26,8 +26,8 @@
 }
 
 .logo {
-  height: 70px;
-  max-width: 75%;
+  height: 90px;
+  width: auto;
 }
 
 .about {
@@ -57,6 +57,16 @@
   .aboutIcon {
     width: 55px;
   }
+
+  .extraInfo,
+  .about,
+  .legend {
+    font-size: 1.15rem;
+  }
+
+  .logo {
+    height: 70px;
+  }
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -68,9 +78,7 @@
     width: 35px;
   }
 
-  .extraInfo,
-  .about,
-  .legend {
-    font-size: 1.15rem;
+  .logo {
+    height: 40px;
   }
 }
