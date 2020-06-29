@@ -225,7 +225,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, and OLM operators.
           <div
-            class="mx-3 mx-lg-5 mt-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around"
           >
             <img
               alt="Icon"
@@ -248,6 +248,7 @@ exports[`Home index creates snapshot 1`] = `
               src="/static/media/olm-operators-white.svg"
             />
           </div>
+          Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
         </div>
       </div>
     </div>
@@ -260,7 +261,26 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-3 px-md-0"
         >
-          Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
+          <img
+            alt="Logo CNCF sandbox project"
+            class="logo m-3"
+            src="/static/media/cncf-sandbox-horizontal-color.png"
+          />
+          <div
+            class="px-3 pt-4"
+          >
+            Artifact Hub is a 
+            <a
+              class="link font-weight-bold text-primary"
+              href="https://www.cncf.io/sandbox-projects/"
+              rel="noopener noreferrer"
+              role="button"
+              target="_blank"
+            >
+              Cloud Native Computing Foundation
+            </a>
+             sandbox project.
+          </div>
         </div>
       </div>
     </div>
