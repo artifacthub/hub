@@ -89,18 +89,65 @@ exports[`Home index creates snapshot 1`] = `
         </div>
         <div />
         <div
-          class="d-flex flex-row align-items-center justify-content-center mt-3"
+          class="d-inline-block text-center mt-3"
         >
-          <span>
-            - or -
-          </span>
+          You can also 
           <a
-            class="btn btn-link text-light font-weight-bold py-0"
+            class="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
           >
             <u>
               browse all packages
             </u>
+          </a>
+           - or - 
+          <span
+            class="ml-3"
+          >
+            try one of the sample filters:
+          </span>
+        </div>
+        <div
+          class="d-flex flex-row align-items-end justify-content-center flex-wrap"
+        >
+          <a
+            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+            data-testid="sampleFilter"
+            href="/packages/search?page=1&text=database&kind=3"
+          >
+            OLM operators for databases
+          </a>
+          <a
+            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+            data-testid="sampleFilter"
+            href="/packages/search?page=1&kind=0&org=bitnami"
+          >
+            Helm Charts provided by Bitnami
+          </a>
+          <a
+            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+            data-testid="sampleFilter"
+            href="/packages/search?page=1&text=etcd"
+          >
+            Packages of any kind related to etcd
+          </a>
+        </div>
+        <div
+          class="d-flex flex-row align-items-start justify-content-center flex-wrap"
+        >
+          <a
+            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+            data-testid="sampleFilter"
+            href="/packages/search?page=1&text=CVE&kind=1"
+          >
+            Falco rules for CVE
+          </a>
+          <a
+            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+            data-testid="sampleFilter"
+            href="/packages/search?page=1&text=monitoring&kind=3"
+          >
+            OLM operators in the monitoring category
           </a>
         </div>
       </div>
@@ -263,7 +310,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           <img
             alt="Logo CNCF sandbox project"
-            class="logo m-3"
+            class="logo"
             src="/static/media/cncf-sandbox-horizontal-color.png"
           />
           <div
