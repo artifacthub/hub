@@ -35,11 +35,15 @@ exports[`SearchTip creates snapshot 1`] = `
           multiple words
         </span>
          to refine your search. Example: 
-        <span
-          class="font-weight-bold"
+        <a
+          class="font-weight-bold text-light p-0"
+          data-testid="sampleFilter"
+          href="/packages/search?page=1&text=kafka+operator"
         >
-          kafka operator
-        </span>
+          <u>
+            kafka operator
+          </u>
+        </a>
       </div>
     </div>
   </div>

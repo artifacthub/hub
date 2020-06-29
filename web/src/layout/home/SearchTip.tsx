@@ -1,24 +1,82 @@
 import React, { useState } from 'react';
 import { FaRegLightbulb } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
+import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchTip.module.css';
 
 const TIPS: JSX.Element[] = [
   <>
     Use <span className="font-weight-bold">multiple words</span> to refine your search. Example:{' '}
-    <span className="font-weight-bold">kafka operator</span>
+    <Link
+      data-testid="sampleFilter"
+      className="font-weight-bold text-light p-0"
+      to={{
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          text: 'kafka operator',
+          filters: {},
+          deprecated: false,
+        }),
+      }}
+    >
+      <u>kafka operator</u>
+    </Link>
   </>,
   <>
     Use <span className="font-weight-bold">-</span> to exclude words from your search. Example:{' '}
-    <span className="font-weight-bold">apache -solr -hadoop</span>
+    <Link
+      data-testid="sampleFilter"
+      className="font-weight-bold text-light p-0"
+      to={{
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          text: 'apache -solr -hadoop',
+          filters: {},
+          deprecated: false,
+        }),
+      }}
+    >
+      <u>apache -solr -hadoop</u>
+    </Link>
   </>,
   <>
     Put a phrase inside <span className="font-weight-bold">double quotes</span> for an exact match. Example:{' '}
-    <span className="font-weight-bold">"monitoring system"</span>
+    <Link
+      data-testid="sampleFilter"
+      className="font-weight-bold text-light p-0"
+      to={{
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          text: `"monitoring system"`,
+          filters: {},
+          deprecated: false,
+        }),
+      }}
+    >
+      <u>"monitoring system"</u>
+    </Link>
   </>,
   <>
     Use <span className="font-weight-bold">or</span> to combine multiple searches. Example:{' '}
-    <span className="font-weight-bold">postgresql or mysql</span>
+    <Link
+      data-testid="sampleFilter"
+      className="font-weight-bold text-light p-0"
+      to={{
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          text: 'postgresql or mysql',
+          filters: {},
+          deprecated: false,
+        }),
+      }}
+    >
+      <u>postgresql or mysql</u>
+    </Link>
   </>,
 ];
 

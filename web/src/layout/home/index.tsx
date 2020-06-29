@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
+import prepareQueryString from '../../utils/prepareQueryString';
 import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
 import SearchBar from '../common/SearchBar';
@@ -69,16 +70,104 @@ const HomeView = (props: Props) => {
           <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
           <SearchTip />
 
-          <div className="d-flex flex-row align-items-center justify-content-center mt-3">
-            <span>- or -</span>
-
+          <div className="d-inline-block text-center mt-3">
+            You can also{' '}
             <Link
-              className="btn btn-link text-light font-weight-bold py-0"
+              className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
               to={{
                 pathname: '/packages/search',
               }}
             >
               <u>browse all packages</u>
+            </Link>{' '}
+            - or - <span className="ml-3">try one of the sample filters:</span>
+          </div>
+
+          <div className="d-flex flex-row align-items-end justify-content-center flex-wrap">
+            <Link
+              data-testid="sampleFilter"
+              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+              to={{
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  text: 'database',
+                  filters: {
+                    kind: ['3'],
+                  },
+                  deprecated: false,
+                }),
+              }}
+            >
+              OLM operators for databases
+            </Link>
+            <Link
+              data-testid="sampleFilter"
+              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+              to={{
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  filters: {
+                    kind: ['0'],
+                    org: ['bitnami'],
+                  },
+                  deprecated: false,
+                }),
+              }}
+            >
+              Helm Charts provided by Bitnami
+            </Link>
+            <Link
+              data-testid="sampleFilter"
+              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+              to={{
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  text: 'etcd',
+                  filters: {},
+                  deprecated: false,
+                }),
+              }}
+            >
+              Packages of any kind related to etcd
+            </Link>
+          </div>
+          <div className="d-flex flex-row align-items-start justify-content-center flex-wrap">
+            <Link
+              data-testid="sampleFilter"
+              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+              to={{
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  text: 'CVE',
+                  filters: {
+                    kind: ['1'],
+                  },
+                  deprecated: false,
+                }),
+              }}
+            >
+              Falco rules for CVE
+            </Link>
+            <Link
+              data-testid="sampleFilter"
+              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
+              to={{
+                pathname: '/packages/search',
+                search: prepareQueryString({
+                  pageNumber: 1,
+                  text: 'monitoring',
+                  filters: {
+                    kind: ['3'],
+                  },
+                  deprecated: false,
+                }),
+              }}
+            >
+              OLM operators in the monitoring category
             </Link>
           </div>
         </div>
@@ -139,7 +228,7 @@ const HomeView = (props: Props) => {
         <div className="container py-0 py-md-5">
           <div className="text-center px-3 px-md-0">
             <img
-              className={`${styles.logo} m-3`}
+              className={styles.logo}
               src="/static/media/cncf-sandbox-horizontal-color.png"
               alt="Logo CNCF sandbox project"
             />
