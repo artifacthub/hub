@@ -81,4 +81,9 @@
   .logo {
     height: 40px;
   }
+
+  .socialBtn {
+    font-size: 85%;
+    width: 90px;
+  }
 }

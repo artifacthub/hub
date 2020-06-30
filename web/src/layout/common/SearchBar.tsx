@@ -47,7 +47,7 @@ const SearchBar = (props: Props) => {
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
       // When return key is pressed
-      if (e.keyCode === 13 && value !== '') {
+      if (e.keyCode === 13) {
         e.preventDefault();
         forceBlur();
 
@@ -55,7 +55,7 @@ const SearchBar = (props: Props) => {
           pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,
-            text: value,
+            text: value || undefined,
             filters: {},
             deprecated: false,
           }),

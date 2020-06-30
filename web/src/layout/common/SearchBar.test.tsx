@@ -91,13 +91,22 @@ describe('SearchBar', () => {
       });
     });
 
-    it('does not call history push on Enter key press when text is empty', () => {
+    it('calls history push on Enter key press when text is empty with undefined text', () => {
       const { getByPlaceholderText } = render(<SearchBar size="big" isSearching={false} />);
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: '' } });
       keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
-      expect(mockHistoryPush).not.toHaveBeenCalled();
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          text: undefined,
+          pageNumber: 1,
+          filters: {},
+          deprecated: false,
+        }),
+      });
     });
 
     it('forces focus to click search bar icon', () => {

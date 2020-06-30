@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import React, { useEffect, useState } from 'react';
-import { FaGithub, FaSlack } from 'react-icons/fa';
+import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
@@ -70,7 +70,7 @@ const HomeView = (props: Props) => {
           <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
           <SearchTip />
 
-          <div className="d-inline-block text-center mt-3">
+          <div className="d-inline-block text-center mt-5">
             You can also{' '}
             <Link
               className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
@@ -191,12 +191,22 @@ const HomeView = (props: Props) => {
           </ExternalLink>
 
           <ExternalLink
-            className={`btn btn-secondary ml-3 ${styles.socialBtn}`}
+            className={`btn btn-secondary ml-2 ml-md-3 ${styles.socialBtn}`}
             href="https://cloud-native.slack.com/channels/artifact-hub"
           >
             <div className="d-flex align-items-center justify-content-center">
               <FaSlack className="mr-2" />
               Slack
+            </div>
+          </ExternalLink>
+
+          <ExternalLink
+            className={`btn btn-secondary ml-2 ml-md-3 ${styles.socialBtn}`}
+            href="https://twitter.com/cncfartifacthub"
+          >
+            <div className="d-flex align-items-center justify-content-center">
+              <FaTwitter className="mr-2" />
+              Twitter
             </div>
           </ExternalLink>
         </div>

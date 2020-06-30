@@ -315,7 +315,7 @@ const SearchView = (props: Props) => {
                   )}
                   {total}
                   <span className="pl-1"> results </span>
-                  {!isUndefined(props.text) && (
+                  {!isUndefined(props.text) && props.text !== '' && (
                     <span className="d-none d-sm-inline pl-1">
                       for "<span className="font-weight-bold">{props.text}</span>"
                     </span>
