@@ -315,15 +315,15 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }, {
                     "id": "repo2",
-                    "name": "Repo2",
+                    "name": "Repo 2",
                     "total": 1
                 }, {
                     "id": "repo3",
-                    "name": "Repo3",
+                    "name": "Repo 3",
                     "total": 1
                 }]
             }]
@@ -418,11 +418,11 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }, {
                     "id": "repo2",
-                    "name": "Repo2",
+                    "name": "Repo 2",
                     "total": 1
                 }]
             }]
@@ -490,7 +490,7 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }]
             }]
@@ -751,11 +751,11 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }, {
                     "id": "repo2",
-                    "name": "Repo2",
+                    "name": "Repo 2",
                     "total": 1
                 }]
             }]
@@ -806,7 +806,7 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }]
             }]
@@ -856,7 +856,7 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }]
             }]
@@ -905,7 +905,7 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }]
             }]
@@ -1167,11 +1167,11 @@ select is(
                 "filter_key": "repo",
                 "options": [{
                     "id": "repo1",
-                    "name": "Repo1",
+                    "name": "Repo 1",
                     "total": 1
                 }, {
                     "id": "repo2",
-                    "name": "Repo2",
+                    "name": "Repo 2",
                     "total": 1
                 }]
             }]

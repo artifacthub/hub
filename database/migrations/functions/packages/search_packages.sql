@@ -198,16 +198,17 @@ begin
                                 'options', (
                                     select coalesce(json_agg(json_build_object(
                                         'id', repository_name,
-                                        'name', initcap(repository_name),
+                                        'name', coalesce(repository_display_name, repository_name),
                                         'total', total
                                     )), '[]')
                                     from (
                                         select
                                             repository_name,
+                                            repository_display_name,
                                             count(*) as total
                                         from packages_applying_text_and_deprecated_filters
                                         where repository_name is not null
-                                        group by repository_name
+                                        group by repository_name, repository_display_name
                                         order by total desc, repository_name asc
                                     ) as breakdown
                                 )
