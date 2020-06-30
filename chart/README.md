@@ -105,6 +105,7 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `olmTracker.concurrency`               | Repos to process concurrently     | 10                                         |
 | `olmTracker.repositories`              | Repos names to process ([] = all) | []                                         |
 | `olmTracker.imageStore`                | Image store                       | `pg`                                       |
+| `olmTracker.bypassDigestCheck`         | Bypass digest check               | `false`                                    |
 | `dbMigrator.job.image.repository`      | DB migrator image repository      | `artifacthub/db-migrator`                  |
 | `dbMigrator.loadSampleData`            | Load demo user and sample repos   | `true`                                     |
 

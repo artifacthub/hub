@@ -14,6 +14,7 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -235,6 +236,7 @@ func withRepositoryCloner(rc hub.RepositoryCloner) func(t *Tracker) {
 
 type trackerWrapper struct {
 	ctx context.Context
+	cfg *viper.Viper
 	wg  *sync.WaitGroup
 	rc  *repo.ClonerMock
 	rm  *repo.ManagerMock
@@ -246,6 +248,7 @@ type trackerWrapper struct {
 
 func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	ctx := context.Background()
+	cfg := viper.New()
 	var wg sync.WaitGroup
 	rc := &repo.ClonerMock{}
 	rm := &repo.ManagerMock{}
@@ -254,10 +257,11 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	ec := &tracker.ErrorsCollectorMock{}
 
 	wg.Add(1)
-	t := NewTracker(ctx, r, rm, pm, is, ec, withRepositoryCloner(rc))
+	t := NewTracker(ctx, cfg, r, rm, pm, is, ec, withRepositoryCloner(rc))
 
 	return &trackerWrapper{
 		ctx: ctx,
+		cfg: cfg,
 		wg:  &wg,
 		rc:  rc,
 		rm:  rm,

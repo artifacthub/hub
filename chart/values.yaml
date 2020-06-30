@@ -94,6 +94,7 @@ olmTracker:
   concurrency: 10
   repositories: []
   imageStore: pg
+  bypassDigestCheck: false
 
 dbMigrator:
   job:

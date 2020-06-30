@@ -24,6 +24,7 @@ import (
 	"github.com/operator-framework/api/pkg/validation"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -36,6 +37,7 @@ var (
 // and unregistering operators versions as needed.
 type Tracker struct {
 	ctx    context.Context
+	cfg    *viper.Viper
 	r      *hub.Repository
 	rc     hub.RepositoryCloner
 	rm     hub.RepositoryManager
@@ -48,6 +50,7 @@ type Tracker struct {
 // NewTracker creates a new Tracker instance.
 func NewTracker(
 	ctx context.Context,
+	cfg *viper.Viper,
 	r *hub.Repository,
 	rm hub.RepositoryManager,
 	pm hub.PackageManager,
@@ -57,6 +60,7 @@ func NewTracker(
 ) *Tracker {
 	t := &Tracker{
 		ctx:    ctx,
+		cfg:    cfg,
 		r:      r,
 		rm:     rm,
 		pm:     pm,
@@ -93,6 +97,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Register operators versions available when needed
+	bypassDigestCheck := t.cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
 	operatorsFullPath := filepath.Join(tmpDir, operatorsPath)
 	operators, err := ioutil.ReadDir(operatorsFullPath)
@@ -158,7 +163,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			// Check if this operator version is already registered
 			key := fmt.Sprintf("%s@%s", operator, getOperatorVersion(csv))
 			packagesAvailable[key] = struct{}{}
-			if _, ok := packagesRegistered[key]; ok {
+			if _, ok := packagesRegistered[key]; ok && !bypassDigestCheck {
 				continue
 			}
 
