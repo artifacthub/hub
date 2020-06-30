@@ -5,7 +5,7 @@ import '../themes/theme.scss';
 import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
-import { FaGithub, FaSlack } from 'react-icons/fa';
+import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Route, Router, Switch } from 'react-router-dom';
 
@@ -191,6 +191,12 @@ export default function App() {
                       <div className="d-flex align-items-center">
                         <FaSlack className="mr-2" />
                         Slack
+                      </div>
+                    </ExternalLink>
+                    <ExternalLink className="text-muted mb-1" href="https://twitter.com/cncfartifacthub">
+                      <div className="d-flex align-items-center">
+                        <FaTwitter className="mr-2" />
+                        Twitter
                       </div>
                     </ExternalLink>
                   </div>
