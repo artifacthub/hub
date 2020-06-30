@@ -1,0 +1,44 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    capabilities: Basic Install
+    categories: Application Runtime
+    containerImage: repo.url:latest
+    createdAt: "2019-06-28T15:23:00Z"
+    description: This is just a test
+    repository: https://github.com/test/test-operator
+  name: test-operator.v0.1.0
+  namespace: placeholder
+spec:
+  customresourcedefinitions:
+    owned:
+      - description: Test CRD
+        kind: Test
+        name: crd.test.com
+        version: v1alpha1
+        displayName: Test
+  description: Test Operator README
+  displayName: Test Operator
+  icon:
+    - base64data: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+  installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: true
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: true
+      type: AllNamespaces
+  keywords:
+    - Test
+  links:
+    - name: Sample link
+      url: https://sample.link
+  maintainers:
+    - email: test@email.com
+      name: Test
+  provider:
+    name: Test
+  version: 0.1.0

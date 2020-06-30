@@ -99,3 +99,14 @@ func (m *HelmIndexLoaderMock) LoadIndex(r *hub.Repository) (*repo.IndexFile, err
 	indexFile, _ := args.Get(0).(*repo.IndexFile)
 	return indexFile, args.Error(1)
 }
+
+// ClonerMock is a mock implementation of the RepositoryCloner interface.
+type ClonerMock struct {
+	mock.Mock
+}
+
+// CloneRepository implements the RepositoryCloner interface.
+func (m *ClonerMock) CloneRepository(ctx context.Context, r *hub.Repository) (string, string, error) {
+	args := m.Called(ctx, r)
+	return args.String(0), args.String(1), args.Error(2)
+}
