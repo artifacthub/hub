@@ -64,7 +64,7 @@ func main() {
 	for _, r := range repos {
 		_ = limiter.Wait(ctx)
 		wg.Add(1)
-		w := NewTracker(ctx, r, rm, pm, is, ec)
+		w := NewTracker(ctx, cfg, r, rm, pm, is, ec)
 		go func(r *hub.Repository) {
 			if err := w.Track(&wg); err != nil {
 				ec.Append(r.RepositoryID, err)
