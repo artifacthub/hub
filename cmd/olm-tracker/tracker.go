@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"runtime/debug"
 	"sort"
 	"strings"
 	"sync"
@@ -20,8 +19,6 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/ghodss/yaml"
-	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/operator-framework/api/pkg/manifests"
 	operatorsv1alpha1 "github.com/operator-framework/api/pkg/operators/v1alpha1"
 	"github.com/operator-framework/api/pkg/validation"
@@ -40,6 +37,7 @@ var (
 type Tracker struct {
 	ctx    context.Context
 	r      *hub.Repository
+	rc     hub.RepositoryCloner
 	rm     hub.RepositoryManager
 	pm     hub.PackageManager
 	is     img.Store
@@ -55,8 +53,9 @@ func NewTracker(
 	pm hub.PackageManager,
 	is img.Store,
 	ec tracker.ErrorsCollector,
+	opts ...func(t *Tracker),
 ) *Tracker {
-	return &Tracker{
+	t := &Tracker{
 		ctx:    ctx,
 		r:      r,
 		rm:     rm,
@@ -65,22 +64,25 @@ func NewTracker(
 		ec:     ec,
 		Logger: log.With().Str("repo", r.Name).Logger(),
 	}
+	for _, o := range opts {
+		o(t)
+	}
+	if t.rc == nil {
+		t.rc = &repo.Cloner{}
+	}
+	return t
 }
 
 // Track registers or unregisters the operators versions available in the
 // repository provided as needed.
 func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	defer wg.Done()
-	defer func() {
-		if rv := recover(); rv != nil {
-			t.Logger.Error().Bytes("stacktrace", debug.Stack()).Interface("recover", rv).Send()
-		}
-	}()
 
 	// Clone repository
-	tmpDir, operatorsPath, err := t.cloneRepository()
+	t.Logger.Debug().Msg("cloning repository")
+	tmpDir, operatorsPath, err := t.rc.CloneRepository(t.ctx, t.r)
 	if err != nil {
-		return err
+		return fmt.Errorf("error cloning repository: %w", err)
 	}
 	defer os.RemoveAll(tmpDir)
 
@@ -201,44 +203,6 @@ func (t *Tracker) Warn(err error) {
 	log.Warn().Err(err).Send()
 }
 
-// cloneRepository clones the operators repository provided in a temporary dir,
-// returning the temporary directory path and the path where the operators are
-// located. It's the caller's responsibility to delete them temporary dir when
-// done.
-func (t *Tracker) cloneRepository() (string, string, error) {
-	t.Logger.Debug().Msg("cloning repository")
-
-	// Parse repository url
-	var repoBaseURL, operatorsPath string
-	matches := repo.OLMRepoURLRE.FindStringSubmatch(t.r.URL)
-	if len(matches) < 2 {
-		return "", "", fmt.Errorf("invalid repository url")
-	}
-	if len(matches) >= 2 {
-		repoBaseURL = matches[1]
-	}
-	if len(matches) == 4 {
-		operatorsPath = matches[3]
-	}
-
-	// Clone git repository
-	tmpDir, err := ioutil.TempDir("", "olm-tracker")
-	if err != nil {
-		return "", "", fmt.Errorf("error creating temp dir: %w", err)
-	}
-	_, err = git.PlainCloneContext(t.ctx, tmpDir, false, &git.CloneOptions{
-		URL:           repoBaseURL,
-		ReferenceName: plumbing.NewBranchReferenceName("master"),
-		SingleBranch:  true,
-		Depth:         1,
-	})
-	if err != nil {
-		return "", "", fmt.Errorf("error cloning repository: %w", err)
-	}
-
-	return tmpDir, operatorsPath, nil
-}
-
 // getOperatorManifest reads and parses the operator package manifest.
 func (t *Tracker) getOperatorManifest(path string) (*manifests.PackageManifest, error) {
 	// Locate operator package manifest file
@@ -247,7 +211,7 @@ func (t *Tracker) getOperatorManifest(path string) (*manifests.PackageManifest, 
 		return nil, fmt.Errorf("error locating package manifest file: %w", err)
 	}
 	if len(matches) != 1 {
-		return nil, fmt.Errorf("package manigest file not found in %s", path)
+		return nil, fmt.Errorf("package manifest file not found in %s", path)
 	}
 	manifestPath := matches[0]
 

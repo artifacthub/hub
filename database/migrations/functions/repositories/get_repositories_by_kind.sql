@@ -6,7 +6,8 @@ returns setof json as $$
         'repository_id', repository_id,
         'name', name,
         'display_name', display_name,
-        'url', url
+        'url', url,
+        'kind', repository_kind_id
     )), '[]')
     from repository
     where repository_kind_id = p_kind;
