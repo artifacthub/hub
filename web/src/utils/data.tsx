@@ -54,7 +54,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'falco',
     name: 'Falco rules',
     icon: <RepositoryIcon kind={RepositoryKind.Falco} className="mw-100 mh-100" />,
-    active: false,
+    active: true,
   },
   {
     kind: RepositoryKind.OPA,

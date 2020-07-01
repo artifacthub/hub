@@ -70,6 +70,19 @@ hub:
   analytics:
     gaTrackingID: ""
 
+falcoTracker:
+  cronjob:
+    image:
+      repository: artifacthub/falco-tracker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg
+  bypassDigestCheck: false
+
 helmTracker:
   cronjob:
     image:

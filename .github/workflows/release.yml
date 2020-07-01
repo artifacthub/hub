@@ -30,6 +30,14 @@ jobs:
             -t artifacthub/db-migrator:latest .
       - name: Push db-migrator image
         run: docker push artifacthub/db-migrator
+      - name: Build falco-tracker image
+        run: |
+          docker build \
+            -f cmd/falco-tracker/Dockerfile \
+            -t artifacthub/falco-tracker:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/falco-tracker:latest .
+      - name: Push falco-tracker image
+        run: docker push artifacthub/falco-tracker
       - name: Build helm-tracker image
         run: |
           docker build \

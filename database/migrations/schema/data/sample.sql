@@ -4,6 +4,8 @@ values ('00000000-0000-0000-0000-000000000001', 'demo', 'demo@artifacthub.io', t
 
 -- Register some repositories
 insert into repository (name, url, repository_kind_id, user_id)
+values ('security-hub','https://github.com/falcosecurity/cloud-native-security-hub/resources/falco', 1, '00000000-0000-0000-0000-000000000001');
+insert into repository (name, url, repository_kind_id, user_id)
 values ('stable','https://kubernetes-charts.storage.googleapis.com', 0, '00000000-0000-0000-0000-000000000001');
 insert into repository (name, url, repository_kind_id, user_id)
 values ('incubator','https://kubernetes-charts-incubator.storage.googleapis.com', 0, '00000000-0000-0000-0000-000000000001');

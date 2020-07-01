@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"strings"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/go-git/go-git/v5"
@@ -18,16 +19,16 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	// Parse repository url
 	var repoBaseURL, packagesPath string
 	switch r.Kind {
-	case hub.OLM:
-		matches := OLMRepoURLRE.FindStringSubmatch(r.URL)
+	case hub.Falco, hub.OLM:
+		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
 		if len(matches) < 2 {
 			return "", "", fmt.Errorf("invalid repository url")
 		}
-		if len(matches) >= 2 {
+		if len(matches) >= 3 {
 			repoBaseURL = matches[1]
 		}
 		if len(matches) == 4 {
-			packagesPath = matches[3]
+			packagesPath = strings.TrimSuffix(matches[3], "/")
 		}
 	}
 

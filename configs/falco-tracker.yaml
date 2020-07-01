@@ -8,4 +8,7 @@ db:
   database: hub
   user: postgres
 tracker:
+  concurrency: 10
+  repositoriesNames: []
   imageStore: pg
+  bypassDigestCheck: false
