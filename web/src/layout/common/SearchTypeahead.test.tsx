@@ -97,7 +97,7 @@ describe('SearchTypeahead', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred searching packages, please try again later',
+        message: 'An error occurred searching packages, please try again later.',
       });
     });
 

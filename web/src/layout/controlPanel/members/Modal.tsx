@@ -5,7 +5,7 @@ import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Member, RefInputField, ResourceKind } from '../../../types';
+import { ErrorKind, Member, RefInputField, ResourceKind } from '../../../types';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
@@ -52,8 +52,8 @@ const MemberModal = (props: Props) => {
       onCloseModal();
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred adding the new member, please try again later');
+      if (err.kind !== ErrorKind.Unauthorized) {
+        setApiError('An error occurred adding the new member, please try again later.');
       } else {
         props.onAuthError();
       }
@@ -90,6 +90,7 @@ const MemberModal = (props: Props) => {
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       event.preventDefault();
+      event.stopPropagation();
       submitForm();
     }
   };

@@ -42,7 +42,7 @@ const SearchTypeahead = (props: Props) => {
       setPackages(null);
       alertDispatcher.postAlert({
         type: 'danger',
-        message: 'An error occurred searching packages, please try again later',
+        message: 'An error occurred searching packages, please try again later.',
       });
       setIsSearching(false);
     }

@@ -6,7 +6,8 @@ import React, { useContext, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { OptionWithIcon, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
+import { ErrorKind, OptionWithIcon, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
+import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import { RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
@@ -66,15 +67,12 @@ const RepositoryModal = (props: Props) => {
       onCloseModal();
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = `An error occurred ${isUndefined(props.repository) ? 'adding' : 'updating'} the repository`;
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(
+          err,
+          `An error occurred ${isUndefined(props.repository) ? 'adding' : 'updating'} the repository`
+        );
+
         setApiError(error);
       } else {
         props.onAuthError();

@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
+import { ErrorKind } from '../../../types';
 import UserInvitation from './UserInvitation';
 jest.mock('../../../api');
 
@@ -51,10 +52,10 @@ describe('UserInvitation', () => {
   });
 
   describe('when email code is invalid', () => {
-    it('error 400', async () => {
+    it('with message', async () => {
       mocked(API).confirmOrganizationMembership.mockRejectedValue({
-        status: 400,
-        message: 'Error 400',
+        kind: ErrorKind.Other,
+        message: 'The request sent was not valid',
       });
 
       const { getByText } = render(
@@ -64,13 +65,13 @@ describe('UserInvitation', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Error 400')).toBeInTheDocument();
+        expect(getByText('The request sent was not valid')).toBeInTheDocument();
       });
     });
 
-    it('error 401', async () => {
+    it('UnauthorizedError', async () => {
       mocked(API).confirmOrganizationMembership.mockRejectedValue({
-        status: 401,
+        kind: ErrorKind.Unauthorized,
       });
 
       const { getByText } = render(
@@ -88,9 +89,9 @@ describe('UserInvitation', () => {
       });
     });
 
-    it('default error message', async () => {
+    it('without message', async () => {
       mocked(API).confirmOrganizationMembership.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByText } = render(

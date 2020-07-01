@@ -5,7 +5,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { Webhook } from '../../../../types';
+import { ErrorKind, Webhook } from '../../../../types';
 import Loading from '../../../common/Loading';
 import NoData from '../../../common/NoData';
 import WebhookCard from './Card';
@@ -36,9 +36,9 @@ const WebhooksSection = (props: Props) => {
       setIsGettingWebhooks(false);
     } catch (err) {
       setIsGettingWebhooks(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         setWebhooks([]);
-        setApiError('An error occurred getting webhooks, please try again later');
+        setApiError('An error occurred getting webhooks, please try again later.');
       } else {
         props.onAuthError();
       }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
-import { SearchResults } from '../../types';
+import { ErrorKind, SearchResults } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import SearchView from './index';
 jest.mock('../../api');
@@ -114,7 +114,7 @@ describe('Search index', () => {
     });
 
     it('renders error message when searchPackages call fails', async () => {
-      mocked(API).searchPackages.mockRejectedValue({ status: 500 });
+      mocked(API).searchPackages.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
         <Router>
@@ -129,7 +129,7 @@ describe('Search index', () => {
       const noData = getByTestId('noData');
 
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent('An error occurred searching packages, please try again later');
+      expect(noData).toHaveTextContent('An error occurred searching packages, please try again later.');
     });
   });
 
@@ -175,7 +175,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('7');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByRole, getAllByTestId, getByLabelText } = render(
+      const { getAllByRole, getAllByTestId } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>

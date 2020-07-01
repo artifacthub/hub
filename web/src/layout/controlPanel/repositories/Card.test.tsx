@@ -4,7 +4,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
-import { Repository } from '../../../types';
+import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../api');
@@ -114,7 +114,7 @@ describe('Repository Card - packages section', () => {
   describe('on deleteRepositoryError', () => {
     it('displays generic error', async () => {
       mocked(API).deleteRepository.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 
@@ -132,13 +132,13 @@ describe('Repository Card - packages section', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred deleting the repository, please try again later',
+        message: 'An error occurred deleting the repository, please try again later.',
       });
     });
 
     it('calls onAuthError', async () => {
       mocked(API).deleteRepository.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 

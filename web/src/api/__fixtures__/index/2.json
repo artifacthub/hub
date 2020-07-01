@@ -1,0 +1,13 @@
+[
+  {
+    "entry": "org1",
+    "output": "/org/org1"
+  },
+  {
+    "entry": "org2",
+    "output": "/org/org2"
+  },
+  {
+    "output": "/user"
+  }
+]

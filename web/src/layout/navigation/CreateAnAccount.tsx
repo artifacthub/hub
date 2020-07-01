@@ -6,6 +6,7 @@ import { MdDone } from 'react-icons/md';
 
 import { API } from '../../api';
 import { RefInputField, ResourceKind, User } from '../../types';
+import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';
 
 interface Loading {
@@ -57,14 +58,7 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
       props.setSuccess(true);
       props.setIsLoading({ status: false });
     } catch (err) {
-      let error = 'An error occurred registering the user';
-      switch (err.status) {
-        case 400:
-          error += `: ${err.statusText}`;
-          break;
-        default:
-          error += ', please try again later';
-      }
+      let error = compoundErrorMessage(err, 'An error occurred registering the user');
       props.setApiError(error);
       props.setIsLoading({ status: false });
     }

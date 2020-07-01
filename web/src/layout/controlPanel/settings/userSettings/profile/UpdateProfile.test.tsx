@@ -3,7 +3,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
-import { Profile } from '../../../../../types';
+import { ErrorKind, Profile } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdateProfile from './UpdateProfile';
 jest.mock('../../../../../api');
@@ -49,7 +49,7 @@ describe('Update profile - user settings', () => {
     });
 
     it('calls updateUserProfile', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).updateUserProfile.mockResolvedValue(null);
 
       const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
@@ -73,11 +73,11 @@ describe('Update profile - user settings', () => {
   });
 
   describe('when updateUserProfile fails', () => {
-    it('error 400', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+    it('with custom error message', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).updateUserProfile.mockRejectedValue({
-        status: 400,
-        statusText: 'Error 400',
+        kind: ErrorKind.Other,
+        message: 'custom error',
       });
 
       const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
@@ -95,14 +95,14 @@ describe('Update profile - user settings', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred updating your profile: Error 400',
+        message: 'An error occurred updating your profile: custom error',
       });
     });
 
-    it('error 401', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+    it('UnauthorizedError', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).updateUserProfile.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
 
       const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
@@ -120,10 +120,10 @@ describe('Update profile - user settings', () => {
       expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
 
-    it('default error message', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+    it('without custom error message', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).updateUserProfile.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByTestId, getByDisplayValue } = render(<UpdateProfile {...defaultProps} />);
@@ -141,7 +141,7 @@ describe('Update profile - user settings', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred updating your profile, please try again later',
+        message: 'An error occurred updating your profile, please try again later.',
       });
     });
   });

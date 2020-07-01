@@ -318,3 +318,13 @@ export interface TsQuery {
   label: string;
   value: string;
 }
+export interface Error {
+  kind: ErrorKind;
+  message?: string;
+}
+
+export enum ErrorKind {
+  Other,
+  NotFound,
+  Unauthorized,
+}

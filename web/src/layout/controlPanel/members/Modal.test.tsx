@@ -4,6 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
+import { ErrorKind } from '../../../types';
 import MemberModal from './Modal';
 jest.mock('../../../api');
 
@@ -56,7 +57,7 @@ describe('Members Modal - members section', () => {
     });
 
     it('calls add organization member', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(null);
+      mocked(API).checkAvailability.mockResolvedValue(true);
       mocked(API).addOrganizationMember.mockResolvedValue(null);
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -76,10 +77,10 @@ describe('Members Modal - members section', () => {
       expect(onSuccessMock).toHaveBeenCalledTimes(1);
     });
 
-    it('displays Api error', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(null);
+    it('Other api error', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(true);
       mocked(API).addOrganizationMember.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -96,13 +97,13 @@ describe('Members Modal - members section', () => {
       });
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-      expect(getByText('An error occurred adding the new member, please try again later')).toBeInTheDocument();
+      expect(getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();
     });
 
-    it('calls onAuthError when error is ErrLoginRedirect', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(null);
+    it('calls onAuthError when error is UnauthorizedError', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(true);
       mocked(API).addOrganizationMember.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

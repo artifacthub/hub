@@ -6,7 +6,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 
 import { API } from '../../../../../api';
 import useOutsideClick from '../../../../../hooks/useOutsideClick';
-import { APIKey } from '../../../../../types';
+import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import styles from './Card.module.css';
 
@@ -42,14 +42,14 @@ const APIKeyCard = (props: Props) => {
       props.onSuccess();
     } catch (err) {
       setIsDeleting(false);
-      if (err.statusText === 'ErrLoginRedirect') {
+      if (err.kind === ErrorKind.Unauthorized) {
         setOpenDropdownStatus(false);
         props.onAuthError();
       } else {
         setOpenDropdownStatus(false);
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred deleting the API key, please try again later',
+          message: 'An error occurred deleting the API key, please try again later.',
         });
       }
     }

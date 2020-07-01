@@ -11,7 +11,7 @@ exports[`FalcoInstall creates snapshot 1`] = `
       <button
         class="btn btn-link nav-item btn active btn-primary active"
       >
-        Falco CLI
+        Helm CLI
       </button>
     </li>
   </ul>

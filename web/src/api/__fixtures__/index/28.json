@@ -1,0 +1,7 @@
+{
+  "url": "https://hooks.com",
+  "secret": "sfsfdsg",
+  "contentType": "application/json",
+  "template": "{\n     \"text\":\"Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}\"\n}",
+  "eventKinds": [0]
+}

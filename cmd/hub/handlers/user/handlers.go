@@ -674,7 +674,7 @@ func (h *Handlers) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !verified {
-		helpers.RenderErrorWithCodeJSON(w, nil, http.StatusGone)
+		helpers.RenderErrorWithCodeJSON(w, fmt.Errorf("email verification code has expired"), http.StatusGone)
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)

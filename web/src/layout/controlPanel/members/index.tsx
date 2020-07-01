@@ -5,7 +5,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Member } from '../../../types';
+import { ErrorKind, Member } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import MemberCard from './Card';
@@ -40,9 +40,9 @@ const MembersSection = (props: Props) => {
       setIsGettingMembers(false);
     } catch (err) {
       setIsGettingMembers(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         setMembers([]);
-        setApiError('An error occurred getting the organization members, please try again later');
+        setApiError('An error occurred getting the organization members, please try again later.');
       } else {
         props.onAuthError();
       }

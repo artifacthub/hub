@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { Webhook } from '../../../../types';
+import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import WebhookCard from './Card';
 jest.mock('../../../../api');
@@ -180,8 +180,10 @@ describe('WebhookCard', () => {
     });
 
     describe('when fails', () => {
-      it('on 401 error', async () => {
-        mocked(API).deleteWebhook.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+      it('on UnauthorizedError', async () => {
+        mocked(API).deleteWebhook.mockRejectedValue({
+          kind: ErrorKind.Unauthorized,
+        });
 
         const mockWebhook = getmockWebhook('7');
 
@@ -208,7 +210,7 @@ describe('WebhookCard', () => {
       });
 
       it('default error', async () => {
-        mocked(API).deleteWebhook.mockRejectedValue({});
+        mocked(API).deleteWebhook.mockRejectedValue({ kind: ErrorKind.Other });
 
         const mockWebhook = getmockWebhook('8');
 
@@ -234,7 +236,7 @@ describe('WebhookCard', () => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
         expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
           type: 'danger',
-          message: 'An error occurred deleting the webhook, please try again later',
+          message: 'An error occurred deleting the webhook, please try again later.',
         });
       });
     });

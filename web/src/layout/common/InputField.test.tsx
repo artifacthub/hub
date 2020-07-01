@@ -83,9 +83,7 @@ describe('InputField', () => {
 
   describe('calls checkAvailability', () => {
     it('value is available', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 404,
-      });
+      mocked(API).checkAvailability.mockResolvedValue(true);
 
       const { getByTestId } = render(
         <InputField
@@ -109,7 +107,7 @@ describe('InputField', () => {
     });
 
     it('value is taken', async () => {
-      mocked(API).checkAvailability.mockResolvedValue('');
+      mocked(API).checkAvailability.mockResolvedValue(true);
 
       const { getByTestId, getByText } = render(
         <InputField
@@ -136,10 +134,8 @@ describe('InputField', () => {
       expect(input).toBeInvalid();
     });
 
-    it('checkAvailability validation is ignored when error is not 404', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 500,
-      });
+    it('checkAvailability validation is ignored when error is different to NotFoundResponse', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(true);
 
       const { getByTestId } = render(
         <InputField
@@ -165,9 +161,7 @@ describe('InputField', () => {
 
   describe('calls isValidResource', () => {
     it('resource is valid', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 404,
-      });
+      mocked(API).checkAvailability.mockResolvedValue(true);
 
       const { getByTestId } = render(
         <InputField
@@ -191,9 +185,7 @@ describe('InputField', () => {
     });
 
     it('resource is not valid', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 404,
-      });
+      mocked(API).checkAvailability.mockResolvedValue(false);
 
       const { getByTestId, getByText } = render(
         <InputField
@@ -220,36 +212,8 @@ describe('InputField', () => {
       expect(input).toBeInvalid();
     });
 
-    it('checkAvailability validation is ignored when error is not 404', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 500,
-      });
-
-      const { getByTestId } = render(
-        <InputField
-          {...defaultProps}
-          type="text"
-          value="userAlias"
-          validateOnBlur
-          checkAvailability={{
-            isAvailable: false,
-            resourceKind: ResourceKind.userAlias,
-            excluded: [],
-          }}
-          autoFocus
-        />
-      );
-      const input = getByTestId(`${defaultProps.name}Input`) as HTMLInputElement;
-      input.blur();
-      expect(API.checkAvailability).toBeCalledTimes(1);
-      expect(input).toBeValid();
-      await waitFor(() => {});
-    });
-
     it('value is part of the excluded list', () => {
-      mocked(API).checkAvailability.mockRejectedValue({
-        status: 404,
-      });
+      mocked(API).checkAvailability.mockResolvedValue(false);
 
       const { getByTestId, getByText } = render(
         <InputField {...defaultProps} type="text" value="user1" validateOnBlur excludedValues={['user1']} autoFocus />

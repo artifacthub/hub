@@ -4,6 +4,7 @@ import { MdImage } from 'react-icons/md';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
+import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import InputFileField from './InputFileField';
 jest.mock('../../api');
@@ -58,7 +59,7 @@ describe('InputFileField', () => {
   });
 
   it('calls alertDispatcher when an error occurred to save image', async () => {
-    mocked(API).saveImage.mockRejectedValue({ statusText: 'error' });
+    mocked(API).saveImage.mockRejectedValue({ kind: ErrorKind.Other });
     const { getByTestId } = render(<InputFileField {...defaultProps} />);
     const input = getByTestId('inputFile');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });
@@ -69,12 +70,14 @@ describe('InputFileField', () => {
     expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
     expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
       type: 'danger',
-      message: 'An error occurred saving the image, please try again later',
+      message: 'An error occurred saving the image, please try again later.',
     });
   });
 
-  it('calls onAuthError when ErrLoginRedirect is returned', async () => {
-    mocked(API).saveImage.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+  it('calls onAuthError when UnauthorizedError is returned', async () => {
+    mocked(API).saveImage.mockRejectedValue({
+      kind: ErrorKind.Unauthorized,
+    });
     const { getByTestId } = render(<InputFileField {...defaultProps} />);
     const input = getByTestId('inputFile');
     const file = new File(['(image)'], 'testImage.png', { type: 'image/png' });

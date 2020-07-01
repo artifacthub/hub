@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Organization, Repository } from '../../../types';
+import { ErrorKind, Organization, Repository } from '../../../types';
 import TransferModal from './TransferModal';
 jest.mock('../../../api');
 
@@ -245,11 +245,11 @@ describe('Transfer Repository Modal - packages section', () => {
     });
 
     describe('When transfer repo fails', () => {
-      it('401 error', async () => {
+      it('UnauthorizedError', async () => {
         const mockOrganizations = getMockOrganizations('7');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
 
         const { getByTestId } = render(
@@ -276,7 +276,7 @@ describe('Transfer Repository Modal - packages section', () => {
         const mockOrganizations = getMockOrganizations('8');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
-          statusText: 'error',
+          kind: ErrorKind.Other,
         });
 
         const { getByTestId, getByText } = render(
@@ -298,16 +298,18 @@ describe('Transfer Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred transfering the repository, please try again later')).toBeInTheDocument();
+          expect(
+            getByText('An error occurred transfering the repository, please try again later.')
+          ).toBeInTheDocument();
         });
       });
 
-      it('400 error', async () => {
+      it('with custom error message', async () => {
         const mockOrganizations = getMockOrganizations('9');
         mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
         mocked(API).transferRepository.mockRejectedValue({
-          statusText: 'error 400',
-          status: 400,
+          kind: ErrorKind.Other,
+          message: 'custom error',
         });
 
         const { getByTestId, getByText } = render(
@@ -329,15 +331,15 @@ describe('Transfer Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred transfering the repository: error 400')).toBeInTheDocument();
+          expect(getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
         });
       });
     });
 
     describe('When fetchOrganizations fails', () => {
-      it('error 401', async () => {
+      it('error UnauthorizedError', async () => {
         mocked(API).getUserOrganizations.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
 
         render(
@@ -355,7 +357,7 @@ describe('Transfer Repository Modal - packages section', () => {
 
       it('default error', async () => {
         mocked(API).getUserOrganizations.mockRejectedValue({
-          statusText: 'error',
+          kind: ErrorKind.Other,
         });
 
         const { getByText } = render(
@@ -370,7 +372,9 @@ describe('Transfer Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred getting your organizations, please try again later')).toBeInTheDocument();
+          expect(
+            getByText('An error occurred getting your organizations, please try again later.')
+          ).toBeInTheDocument();
         });
       });
     });

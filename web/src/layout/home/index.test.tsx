@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
-import { Stats } from '../../types';
+import { ErrorKind, Stats } from '../../types';
 import HomeView from './index';
 jest.mock('../../api');
 jest.mock('./SearchTip', () => () => <div />);
@@ -94,7 +94,7 @@ describe('Home index', () => {
     });
 
     it('renders dash symbol when getStats call fails', async () => {
-      mocked(API).getStats.mockRejectedValue({ status: 500 });
+      mocked(API).getStats.mockRejectedValue({ kind: ErrorKind.Other });
 
       const props = {
         ...defaultProps,

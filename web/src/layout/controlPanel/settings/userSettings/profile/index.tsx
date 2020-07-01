@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { Profile } from '../../../../../types';
+import { ErrorKind, Profile } from '../../../../../types';
 import styles from './ProfileSection.module.css';
 import UpdatePassword from './UpdatePassword';
 import UpdateProfile from './UpdateProfile';
@@ -24,7 +24,7 @@ const ProfileSection = (props: Props) => {
       try {
         setProfile(await API.getUserProfile());
       } catch (err) {
-        if (err.statusText !== 'ErrLoginRedirect') {
+        if (err.kind !== ErrorKind.Unauthorized) {
           setProfile(null);
         } else {
           props.onAuthError();

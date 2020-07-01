@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
+import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import LogOut from './LogOut';
 jest.mock('../../api');
@@ -82,10 +83,10 @@ describe('LogOut', () => {
       });
     });
 
-    it('display 400 api error', async () => {
+    it('with custom error message', async () => {
       mocked(API).logout.mockRejectedValue({
-        status: 400,
-        statusText: 'custom error',
+        kind: ErrorKind.Other,
+        message: 'custom error',
       });
 
       const { getByTestId } = render(
@@ -108,7 +109,7 @@ describe('LogOut', () => {
 
     it('display common logout error', async () => {
       mocked(API).logout.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByTestId } = render(
@@ -124,7 +125,7 @@ describe('LogOut', () => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
         expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
           type: 'danger',
-          message: 'An error occurred, please try again later',
+          message: 'An error occurred, please try again later.',
         });
       });
     });

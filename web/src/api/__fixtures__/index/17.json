@@ -1,0 +1,7 @@
+{
+  "name": "artifacthub",
+  "display_name": "Artifact Hub",
+  "description": "Find, install and publish Kubernetes packages",
+  "home_url": "https://artifacthub.io",
+  "logo_image_id": "3cfb161e-2652-43b9-ada1-c1ced4b20111"
+}

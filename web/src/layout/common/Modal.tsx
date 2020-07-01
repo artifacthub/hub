@@ -123,12 +123,12 @@ const Modal = (props: Props) => {
               {openStatus && <>{props.children}</>}
               {!isUndefined(props.error) && !isNull(props.error) && (
                 <div className={`alert alert-danger mt-3 ${styles.errorAlert}`} role="alert" ref={errorWrapper}>
-                  <div className="d-flex flex-row align-items-center justify-content-between">
+                  <div className="d-flex flex-row align-items-start justify-content-between">
                     <div>{props.error}</div>
                     <button
                       data-testid="closeModalErrorBtn"
                       type="button"
-                      className="close"
+                      className="close ml-3"
                       onClick={() => {
                         if (!isUndefined(props.cleanError)) {
                           props.cleanError();

@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { SearchResults, Webhook } from '../../../../types';
+import { ErrorKind, SearchResults, Webhook } from '../../../../types';
 import WebhookForm from './Form';
 jest.mock('../../../../api');
 
@@ -437,9 +437,9 @@ describe('WebhookForm', () => {
     });
 
     describe('when fails', () => {
-      it('401 error', async () => {
+      it('UnauthorizedError', async () => {
         mocked(API).updateWebhook.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
         const mockWebhook = getMockWebhook('5');
 
@@ -471,10 +471,10 @@ describe('WebhookForm', () => {
         expect(mockOnAuthError).toHaveBeenCalledTimes(1);
       });
 
-      it('400 error', async () => {
+      it('with error message', async () => {
         mocked(API).updateWebhook.mockRejectedValue({
-          statusText: 'custom error',
-          status: 400,
+          kind: ErrorKind.Other,
+          message: 'message error',
         });
         const mockWebhook = getMockWebhook('6');
 
@@ -506,12 +506,12 @@ describe('WebhookForm', () => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
 
         await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook: custom error')).toBeInTheDocument();
+          expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
         });
       });
 
-      it('default error', async () => {
-        mocked(API).updateWebhook.mockRejectedValue({});
+      it('without error message', async () => {
+        mocked(API).updateWebhook.mockRejectedValue({ kind: ErrorKind.Other });
         const mockWebhook = getMockWebhook('7');
 
         const { getByTestId, getByText } = render(
@@ -542,7 +542,7 @@ describe('WebhookForm', () => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
 
         await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook, please try again later')).toBeInTheDocument();
+          expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
         });
       });
     });
@@ -664,9 +664,9 @@ describe('WebhookForm', () => {
     });
 
     describe('when fails', () => {
-      it('401 error', async () => {
+      it('UnauthorizedError', async () => {
         mocked(API).triggerWebhookTest.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
         const mockWebhook = getMockWebhook('11');
 
@@ -692,10 +692,10 @@ describe('WebhookForm', () => {
         expect(mockOnAuthError).toHaveBeenCalledTimes(1);
       });
 
-      it('400 error', async () => {
+      it('with custom error', async () => {
         mocked(API).triggerWebhookTest.mockRejectedValue({
-          statusText: 'custom error',
-          status: 400,
+          kind: ErrorKind.Other,
+          message: 'custom error',
         });
         const mockWebhook = getMockWebhook('12');
 
@@ -726,7 +726,9 @@ describe('WebhookForm', () => {
       });
 
       it('default error', async () => {
-        mocked(API).triggerWebhookTest.mockRejectedValue({});
+        mocked(API).triggerWebhookTest.mockRejectedValue({
+          kind: ErrorKind.Other,
+        });
         const mockWebhook = getMockWebhook('13');
 
         const { getByTestId, getByText } = render(
@@ -751,7 +753,7 @@ describe('WebhookForm', () => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
 
         await waitFor(() => {
-          expect(getByText('An error occurred testing the webhook.')).toBeInTheDocument();
+          expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
         });
       });
     });

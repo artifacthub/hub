@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
-import { Package } from '../../../../../types';
+import { ErrorKind, Package } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import SubscriptionsSection from './index';
@@ -133,8 +133,8 @@ describe('SubscriptionsSection', () => {
       await waitFor(() => {});
     });
 
-    it('renders error message when getUserSubscriptions call fails with not 401', async () => {
-      mocked(API).getUserSubscriptions.mockRejectedValue({ statusText: 'another error' });
+    it('renders error message when getUserSubscriptions call fails with not Unauthorized error', async () => {
+      mocked(API).getUserSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
         <Router>
@@ -144,13 +144,15 @@ describe('SubscriptionsSection', () => {
 
       const noData = await waitFor(() => getByTestId('noData'));
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting your subscriptions, please try again later/i);
+      expect(noData).toHaveTextContent(/An error occurred getting your subscriptions, please try again later./i);
 
       await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
-      mocked(API).getUserSubscriptions.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+      mocked(API).getUserSubscriptions.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       const { getByRole } = render(
         <Router>
@@ -205,7 +207,7 @@ describe('SubscriptionsSection', () => {
     it('generic error', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
-      mocked(API).deleteSubscription.mockRejectedValue({ statusText: 'error' });
+      mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId, queryByTestId } = render(
         <Router>
@@ -233,7 +235,7 @@ describe('SubscriptionsSection', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred unsubscribing from New releases notification for ${mockSubscriptions[0].name} package, please try again later`,
+        message: `An error occurred unsubscribing from New releases notification for ${mockSubscriptions[0].name} package, please try again later.`,
       });
 
       await waitFor(() => {
@@ -246,10 +248,12 @@ describe('SubscriptionsSection', () => {
       });
     });
 
-    it('401 error', async () => {
+    it('UnauthorizedError', async () => {
       const mockSubscriptions = getMockSubscriptions('6');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
-      mocked(API).deleteSubscription.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+      mocked(API).deleteSubscription.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       const { getByTestId, queryByTestId } = render(
         <Router>

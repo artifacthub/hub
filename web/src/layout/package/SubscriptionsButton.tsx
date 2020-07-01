@@ -8,7 +8,7 @@ import { MdNotificationsActive, MdNotificationsOff } from 'react-icons/md';
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { EventKind, Subscription } from '../../types';
+import { ErrorKind, EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../utils/data';
 import styles from './SubscriptionsButton.module.css';
@@ -74,10 +74,10 @@ const SubscriptionsButton = (props: Props) => {
       } catch (err) {
         if (visibleLoading) {
           setIsLoading(false);
-          if (err.statusText !== 'ErrLoginRedirect') {
+          if (err.kind !== ErrorKind.Unauthorized) {
             alertDispatcher.postAlert({
               type: 'danger',
-              message: 'An error occurred getting your subscriptions, please try again later',
+              message: 'An error occurred getting your subscriptions, please try again later.',
             });
           }
         }
@@ -109,12 +109,12 @@ const SubscriptionsButton = (props: Props) => {
       // and we get them again every time we open the dropdown
       setOpenStatus(false);
     } catch (err) {
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
           message: `An error occurred ${isActive ? 'unsubscribing from' : 'subscribing to'} ${getNotificationTitle(
             kind
-          )} notification, please try again later`,
+          )} notification, please try again later.`,
         });
         getSubscriptions(true); // Get subscriptions if changeSubscription fails
       }

@@ -1,0 +1,72 @@
+[
+  {
+    "packageId": "d9b622f6-d240-4336-b2c3-bdb84fba0f17",
+    "name": "mosquitto",
+    "displayName": null,
+    "logoImageId": "aca0e134-7e18-411c-9662-1245f92f438d",
+    "appVersion": "1.6.8",
+    "repository": {
+      "kind": 0,
+      "repositoryId": "id",
+      "name": "halkeye",
+      "displayName": null,
+      "userAlias": "user"
+    }
+  },
+  {
+    "packageId": "59fbdda6-aa2d-4a6c-bbd5-10bc1d3fae81",
+    "name": "pihole",
+    "displayName": null,
+    "logoImageId": "18db8f84-f8a7-4203-9116-60f24d34914f",
+    "appVersion": "4.3.2-1",
+    "repository": {
+      "kind": 0,
+      "repositoryId": "id",
+      "name": "halkeye",
+      "displayName": null,
+      "userAlias": "user"
+    }
+  },
+  {
+    "packageId": "d1d6fc2f-e5a0-4f04-8d20-cf94a453d635",
+    "name": "fcgi-nginx-frontend",
+    "displayName": null,
+    "logoImageId": null,
+    "appVersion": "1.17.8",
+    "repository": {
+      "kind": 0,
+      "repositoryId": "id1",
+      "name": "gabibbo97",
+      "displayName": null,
+      "userAlias": "user1"
+    }
+  },
+  {
+    "packageId": "5b8ffb91-084c-4879-b59f-8a217e8c547e",
+    "name": "sevendaysdie",
+    "displayName": null,
+    "logoImageId": "56724a8a-d8de-4700-8f23-1cf828220d51",
+    "appVersion": "latest",
+    "repository": {
+      "kind": 0,
+      "repositoryId": "id",
+      "name": "halkeye",
+      "displayName": null,
+      "userAlias": "user"
+    }
+  },
+  {
+    "packageId": "7410a9ec-fa09-4b4c-b187-4131660cef7d",
+    "name": "digitalocean-dyndns",
+    "displayName": null,
+    "logoImageId": "2fbaacae-e538-4706-a9fc-bcf443218af1",
+    "appVersion": "1.0",
+    "repository": {
+      "kind": 0,
+      "repositoryId": "id2",
+      "name": "billimek",
+      "displayName": null,
+      "userAlias": "user2"
+    }
+  }
+]

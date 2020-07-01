@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import { MdAddAPhoto } from 'react-icons/md';
 
 import { API } from '../../api';
-import { LogoImage } from '../../types';
+import { ErrorKind, LogoImage } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import Image from './Image';
 import styles from './InputFileField.module.css';
@@ -34,10 +34,10 @@ const InputFileField = (props: Props) => {
       }
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred saving the image, please try again later',
+          message: 'An error occurred saving the image, please try again later.',
         });
       } else {
         props.onAuthError();

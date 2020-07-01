@@ -100,21 +100,19 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         input.current!.setCustomValidity('Value is excluded');
       } else if (!isUndefined(props.checkAvailability) && !props.checkAvailability.excluded.includes(value)) {
         setIsCheckingAvailability(true);
-        await API.checkAvailability({
-          resourceKind: props.checkAvailability.resourceKind,
-          value: value,
-        })
-          .then(() => {
-            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
-          })
-          .catch((error) => {
-            if (error.status === 404) {
-              input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
-              // Validation is ignored when server is not returning ok or error different to 404
-            } else {
-              input.current!.setCustomValidity('');
-            }
+        try {
+          const isAvailable = await API.checkAvailability({
+            resourceKind: props.checkAvailability.resourceKind,
+            value: value,
           });
+          if (isAvailable) {
+            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+          } else {
+            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+          }
+        } catch {
+          input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+        }
         setIsCheckingAvailability(false);
       } else {
         input.current!.setCustomValidity('');
@@ -124,7 +122,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
     return checkValidity();
   };
 
-  const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlur = (): void => {
     if (!isUndefined(props.validateOnBlur) && props.validateOnBlur) {
       isValidField();
     }

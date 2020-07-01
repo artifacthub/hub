@@ -4,6 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
+import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import SubscriptionsButton from './SubscriptionsButton';
 jest.mock('../../api');
@@ -131,7 +132,7 @@ describe('SubscriptionsButton', () => {
 
     describe('does not render component', () => {
       it('when getPackageSubscriptions fails', async () => {
-        mocked(API).getPackageSubscriptions.mockRejectedValue({ statusText: 'error' });
+        mocked(API).getPackageSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
         const { container } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -183,7 +184,7 @@ describe('SubscriptionsButton', () => {
     describe('when change subscription fails', () => {
       it('to activate New release notification', async () => {
         mocked(API).getPackageSubscriptions.mockResolvedValue([]);
-        mocked(API).addSubscription.mockRejectedValue({ statusText: 'error' });
+        mocked(API).addSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
         const { getByTestId, getByRole } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -212,7 +213,7 @@ describe('SubscriptionsButton', () => {
         expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
         expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
           type: 'danger',
-          message: 'An error occurred subscribing to New releases notification, please try again later',
+          message: 'An error occurred subscribing to New releases notification, please try again later.',
         });
 
         await waitFor(() => {
@@ -224,7 +225,7 @@ describe('SubscriptionsButton', () => {
 
     it('to inactivate New release notification', async () => {
       mocked(API).getPackageSubscriptions.mockResolvedValue([{ eventKind: 0 }]);
-      mocked(API).deleteSubscription.mockRejectedValue({ statusText: 'error' });
+      mocked(API).deleteSubscription.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -259,7 +260,7 @@ describe('SubscriptionsButton', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred unsubscribing from New releases notification, please try again later',
+        message: 'An error occurred unsubscribing from New releases notification, please try again later.',
       });
 
       await waitFor(() => {

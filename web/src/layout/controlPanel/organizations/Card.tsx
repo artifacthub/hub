@@ -9,7 +9,7 @@ import { MdBusiness } from 'react-icons/md';
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { Organization } from '../../../types';
+import { ErrorKind, Organization } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ExternalLink from '../../common/ExternalLink';
 import Image from '../../common/Image';
@@ -57,11 +57,11 @@ const OrganizationCard = (props: Props) => {
       }
     } catch (err) {
       setIsLeaving(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         closeDropdown();
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred leaving the organization, please try again later',
+          message: 'An error occurred leaving the organization, please try again later.',
         });
       } else {
         props.onAuthError();

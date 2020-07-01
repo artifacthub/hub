@@ -4,6 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
 import { AppCtx } from '../../context/AppCtx';
+import { ErrorKind } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import StarButton from './StarButton';
 jest.mock('../../api');
@@ -124,7 +125,7 @@ describe('StarButton', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
           expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
             type: 'danger',
-            message: 'An error occurred staring the package, please try again later',
+            message: 'An error occurred staring the package, please try again later.',
           });
         });
       });
@@ -151,7 +152,7 @@ describe('StarButton', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
           expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
             type: 'danger',
-            message: 'An error occurred unstaring the package, please try again later',
+            message: 'An error occurred unstaring the package, please try again later.',
           });
         });
       });
@@ -178,7 +179,7 @@ describe('StarButton', () => {
 
     describe('on getStars error', () => {
       it('does not render component', async () => {
-        mocked(API).getStars.mockRejectedValue({});
+        mocked(API).getStars.mockRejectedValue({ kind: ErrorKind.Other });
 
         const { queryByTestId, queryByText } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

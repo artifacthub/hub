@@ -3,7 +3,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
-import { APIKey } from '../../../../../types';
+import { APIKey, ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../../../api');
@@ -82,7 +82,7 @@ describe('API key Card - API keys section', () => {
   describe('on deleteAPIKey error', () => {
     it('displays generic error', async () => {
       mocked(API).deleteAPIKey.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 
@@ -100,13 +100,13 @@ describe('API key Card - API keys section', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred deleting the API key, please try again later',
+        message: 'An error occurred deleting the API key, please try again later.',
       });
     });
 
     it('calls onAuthError', async () => {
       mocked(API).deleteAPIKey.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 

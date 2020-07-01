@@ -5,7 +5,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Organization, Repository } from '../../../types';
+import { ErrorKind, Organization, Repository } from '../../../types';
+import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import Modal from '../../common/Modal';
 import styles from './TransferModal.module.css';
 
@@ -60,15 +61,8 @@ const TransferRepositoryModal = (props: Props) => {
       onCloseModal();
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = 'An error occurred transfering the repository';
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(err, 'An error occurred transfering the repository');
         setApiError(error);
       } else {
         props.onAuthError();
@@ -104,9 +98,9 @@ const TransferRepositoryModal = (props: Props) => {
         setIsFetchingOrgs(false);
       } catch (err) {
         setIsFetchingOrgs(false);
-        if (err.statusText !== 'ErrLoginRedirect') {
+        if (err.kind !== ErrorKind.Unauthorized) {
           setOrganizations([]);
-          setApiError('An error occurred getting your organizations, please try again later');
+          setApiError('An error occurred getting your organizations, please try again later.');
         } else {
           props.onAuthError();
         }

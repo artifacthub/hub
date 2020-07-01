@@ -9,7 +9,7 @@ import { TiDelete } from 'react-icons/ti';
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { Member } from '../../../types';
+import { ErrorKind, Member } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import styles from './Card.module.css';
 
@@ -50,11 +50,11 @@ const MemberCard = (props: Props) => {
       }
     } catch (err) {
       setIsDeletingMember(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         closeDropdown();
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred removing member from the organization, please try again later',
+          message: 'An error occurred removing member from the organization, please try again later.',
         });
       } else {
         props.onAuthError();
