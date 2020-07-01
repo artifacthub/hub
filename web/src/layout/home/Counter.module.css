@@ -1,3 +1,10 @@
 .counterWrapper {
   width: 100px;
 }
+
+@media only screen and (max-width: 575.98px) {
+  .counter {
+    font-size: 1.5rem !important;
+    margin-bottom: 0 !important;
+  }
+}

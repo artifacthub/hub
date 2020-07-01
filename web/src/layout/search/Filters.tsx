@@ -20,7 +20,9 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDeprecatedChange: () => void;
   onResetFilters: () => void;
+  onFacetExpandableChange: (filterKey: string, open: boolean) => void;
   deprecated: boolean;
+  expandedList?: string;
 }
 
 const Filters = (props: Props) => {
@@ -39,6 +41,8 @@ const Filters = (props: Props) => {
             {...user}
             onChange={props.onChange}
             active={props.activeFilters.hasOwnProperty(user.filterKey) ? props.activeFilters[user.filterKey] : []}
+            isExpanded={props.expandedList === user.filterKey}
+            onFacetExpandableChange={props.onFacetExpandableChange}
             displaySubtitle
           />
         );
@@ -52,6 +56,8 @@ const Filters = (props: Props) => {
             {...org}
             onChange={props.onChange}
             active={props.activeFilters.hasOwnProperty(org.filterKey) ? props.activeFilters[org.filterKey] : []}
+            isExpanded={props.expandedList === org.filterKey}
+            onFacetExpandableChange={props.onFacetExpandableChange}
             displaySubtitle
           />
         );
@@ -80,6 +86,8 @@ const Filters = (props: Props) => {
           {...kind}
           onChange={props.onChange}
           active={props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : []}
+          isExpanded={props.expandedList === kind.filterKey}
+          onFacetExpandableChange={props.onFacetExpandableChange}
         />
       );
     }
@@ -96,6 +104,8 @@ const Filters = (props: Props) => {
           {...repo}
           onChange={props.onChange}
           active={props.activeFilters.hasOwnProperty(repo.filterKey) ? props.activeFilters[repo.filterKey] : []}
+          isExpanded={props.expandedList === repo.filterKey}
+          onFacetExpandableChange={props.onFacetExpandableChange}
         />
       );
     }

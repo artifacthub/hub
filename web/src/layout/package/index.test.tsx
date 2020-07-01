@@ -172,7 +172,7 @@ describe('Package index', () => {
     });
   });
 
-  describe('Chart repository button', () => {
+  describe('Repository button', () => {
     it('renders repository link', async () => {
       const mockPackage = getMockPackage('5');
       mocked(API).getPackage.mockResolvedValue(mockPackage);

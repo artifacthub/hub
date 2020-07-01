@@ -89,7 +89,20 @@ exports[`Home index creates snapshot 1`] = `
         </div>
         <div />
         <div
-          class="d-inline-block text-center mt-5"
+          class="d-inline-block d-md-none text-center mt-3"
+        >
+          - or -
+          <a
+            class="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+            href="/packages/search"
+          >
+            <u>
+              browse all packages
+            </u>
+          </a>
+        </div>
+        <div
+          class="d-none d-md-inline-block text-center mt-5"
         >
           You can also 
           <a
@@ -108,7 +121,7 @@ exports[`Home index creates snapshot 1`] = `
           </span>
         </div>
         <div
-          class="d-flex flex-row align-items-end justify-content-center flex-wrap"
+          class="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap"
         >
           <a
             class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
@@ -133,7 +146,7 @@ exports[`Home index creates snapshot 1`] = `
           </a>
         </div>
         <div
-          class="d-flex flex-row align-items-start justify-content-center flex-wrap"
+          class="d-none d-md-flex flex-row align-items-start justify-content-center flex-wrap"
         >
           <a
             class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
@@ -152,13 +165,13 @@ exports[`Home index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="d-flex align-items-center justify-content-center mt-5"
+        class="d-flex align-items-center justify-content-center mt-4 mt-md-5"
       >
         <div
           class="text-center counterWrapper"
         >
           <div
-            class="h3"
+            class="h3 counter"
           >
             <div
               class="spinner-grow text-primary"
@@ -172,13 +185,13 @@ exports[`Home index creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="ml-5 mr-5 separator"
+          class="mx-3 mx-md-5 separator"
         />
         <div
           class="text-center counterWrapper"
         >
           <div
-            class="h3"
+            class="h3 counter"
           >
             <div
               class="spinner-grow text-primary"
@@ -193,7 +206,7 @@ exports[`Home index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-center h5 mt-5 mb-4 legend"
+        class="text-center h5 my-4 mt-md-5 legend"
       >
         Artifact Hub is an 
         <b>

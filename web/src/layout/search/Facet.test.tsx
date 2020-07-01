@@ -28,13 +28,16 @@ const optionsMock: FacetOption[] = [
 ];
 
 const onChangeMock = jest.fn();
+const onFacetExpandableChangeMock = jest.fn();
 
 const defaultProps = {
   active: [],
-  title: 'Chart Repository',
+  title: 'Repository',
   filterKey: 'repo',
   options: optionsMock,
   onChange: onChangeMock,
+  onFacetExpandableChange: onFacetExpandableChangeMock,
+  isExpanded: false,
 };
 
 interface Test {
@@ -51,7 +54,7 @@ const getSortTests = (fixtureId: string): Test[] => {
   return require(`./__fixtures__/Facet/${fixtureId}.json`) as Test[];
 };
 
-describe('Filters', () => {
+describe('Facet', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -67,7 +70,7 @@ describe('Filters', () => {
       const { getByText, getByTestId, getAllByTestId } = render(<Facet {...defaultProps} />);
 
       expect(getAllByTestId('checkbox')).toHaveLength(3);
-      expect(getByText('Chart Repository')).toBeInTheDocument();
+      expect(getByText('Repository')).toBeInTheDocument();
       expect(getByTestId('smallTitle')).toBeInTheDocument();
     });
 
@@ -78,7 +81,7 @@ describe('Filters', () => {
       };
       const { getByText, queryByTestId } = render(<Facet {...props} />);
 
-      expect(getByText('Chart Repository')).toBeInTheDocument();
+      expect(getByText('Repository')).toBeInTheDocument();
       expect(queryByTestId('smallTitle')).toBeNull();
     });
 

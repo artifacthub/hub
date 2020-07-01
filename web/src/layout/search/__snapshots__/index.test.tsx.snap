@@ -241,15 +241,15 @@ exports[`Search index creates snapshot 2`] = `
                           <input
                             class="custom-control-input input"
                             data-testid="checkbox"
-                            id="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                            id="repo-stable"
                             name="repo"
                             type="checkbox"
-                            value="43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                            value="stable"
                           />
                           <label
                             class="custom-control-label w-100"
                             data-testid="checkboxLabel"
-                            for="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                            for="repo-stable"
                           >
                             <div
                               class="d-flex align-items-center mw-100"
@@ -273,15 +273,15 @@ exports[`Search index creates snapshot 2`] = `
                           <input
                             class="custom-control-input input"
                             data-testid="checkbox"
-                            id="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                            id="repo-incubator"
                             name="repo"
                             type="checkbox"
-                            value="dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                            value="incubator"
                           />
                           <label
                             class="custom-control-label w-100"
                             data-testid="checkboxLabel"
-                            for="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                            for="repo-incubator"
                           >
                             <div
                               class="d-flex align-items-center mw-100"
@@ -559,15 +559,15 @@ exports[`Search index creates snapshot 2`] = `
                   <input
                     class="custom-control-input input"
                     data-testid="checkbox"
-                    id="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                    id="repo-stable"
                     name="repo"
                     type="checkbox"
-                    value="43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                    value="stable"
                   />
                   <label
                     class="custom-control-label w-100"
                     data-testid="checkboxLabel"
-                    for="repo-43898497-a9d0-41eb-9dc7-5c4de0cd0433"
+                    for="repo-stable"
                   >
                     <div
                       class="d-flex align-items-center mw-100"
@@ -591,15 +591,15 @@ exports[`Search index creates snapshot 2`] = `
                   <input
                     class="custom-control-input input"
                     data-testid="checkbox"
-                    id="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                    id="repo-incubator"
                     name="repo"
                     type="checkbox"
-                    value="dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                    value="incubator"
                   />
                   <label
                     class="custom-control-label w-100"
                     data-testid="checkboxLabel"
-                    for="repo-dd9337b4-300c-4b40-b4d4-78f47ede6fcf"
+                    for="repo-incubator"
                   >
                     <div
                       class="d-flex align-items-center mw-100"

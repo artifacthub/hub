@@ -42,6 +42,7 @@ interface Props {
 const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
+  const [expandedList, setExpandedList] = useState<string | undefined>(undefined);
   const [searchResults, setSearchResults] = useState<SearchResults>({
     data: {
       facets: null,
@@ -117,6 +118,10 @@ const SearchView = (props: Props) => {
       newFilters = newFilters.filter((el) => el !== value);
     }
 
+    if (!isUndefined(expandedList) && name !== expandedList) {
+      setExpandedList(undefined);
+    }
+
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -141,6 +146,9 @@ const SearchView = (props: Props) => {
   };
 
   const onResetFilters = (): void => {
+    if (!isUndefined(expandedList)) {
+      setExpandedList(undefined);
+    }
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -177,6 +185,10 @@ const SearchView = (props: Props) => {
     setScrollPosition(0);
     updateWindowScrollPosition(0);
     dispatch(updateLimit(newLimit));
+  };
+
+  const onFacetExpandableChange = (filterKey: string, open: boolean) => {
+    setExpandedList(open ? filterKey : undefined);
   };
 
   useEffect(() => {
@@ -298,6 +310,8 @@ const SearchView = (props: Props) => {
                     onDeprecatedChange={onDeprecatedChange}
                     onResetFilters={onResetFilters}
                     visibleTitle={false}
+                    onFacetExpandableChange={onFacetExpandableChange}
+                    expandedList={expandedList}
                   />
                 </Sidebar>
               )}
@@ -349,6 +363,8 @@ const SearchView = (props: Props) => {
                   deprecated={props.deprecated}
                   onDeprecatedChange={onDeprecatedChange}
                   onResetFilters={onResetFilters}
+                  onFacetExpandableChange={onFacetExpandableChange}
+                  expandedList={expandedList}
                   visibleTitle
                 />
               </div>

@@ -16,10 +16,12 @@ interface Props {
   title: string;
   options: FacetOption[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFacetExpandableChange: (filterKey: string, open: boolean) => void;
   displaySubtitle?: boolean;
+  isExpanded: boolean;
 }
 
-const SPECIAL_REPOS = ['Incubator', 'Stable'];
+const SPECIAL_REPOS = ['incubator', 'stable'];
 const DEFAULT_VISIBLE_ITEMS = 3;
 
 const Facet = (props: Props) => {
@@ -33,14 +35,20 @@ const Facet = (props: Props) => {
   );
 
   useEffect(() => {
+    const specialRepos = filter(props.options, (o: FacetOption) => {
+      if (props.filterKey === 'repo') {
+        return SPECIAL_REPOS.includes(o.id.toString() as string);
+      }
+    });
+
     const activeOptions = filter(props.options, (o: FacetOption) => {
       if (props.filterKey === 'repo') {
-        return isChecked(o.id.toString()) && !SPECIAL_REPOS.includes(o.name);
+        return isChecked(o.id.toString()) && !SPECIAL_REPOS.includes(o.id.toString() as string);
       } else {
         return isChecked(o.id.toString());
       }
     });
-    const active = props.filterKey === 'repo' ? activeOptions.length + SPECIAL_REPOS.length : activeOptions.length;
+    const active = props.filterKey === 'repo' ? activeOptions.length + specialRepos.length : activeOptions.length;
     setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, active));
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
@@ -48,12 +56,12 @@ const Facet = (props: Props) => {
     switch (props.filterKey) {
       case 'repo':
         let options = filter(props.options, (option: FacetOption) => {
-          return !SPECIAL_REPOS.includes(option.name);
+          return !SPECIAL_REPOS.includes(option.id.toString());
         });
 
         SPECIAL_REPOS.forEach((repoName: string) => {
           const repo = props.options.find((option: FacetOption) => {
-            return option.name === repoName;
+            return option.id.toString() === repoName;
           });
 
           if (!isUndefined(repo)) {
@@ -69,6 +77,10 @@ const Facet = (props: Props) => {
       default:
         return sortBy(props.options, [(o: FacetOption) => !isChecked(o.id.toString())]);
     }
+  };
+
+  const onExpandableChange = (open: boolean) => {
+    props.onFacetExpandableChange(props.filterKey, open);
   };
 
   const allOptions = getSortedOptions().map((option: FacetOption) => (
@@ -102,7 +114,12 @@ const Facet = (props: Props) => {
       )}
 
       <div className={classnames({ 'mt-3': isUndefined(props.displaySubtitle) })}>
-        <ExpandableList items={allOptions} visibleItems={visibleOptions} />
+        <ExpandableList
+          items={allOptions}
+          visibleItems={visibleOptions}
+          open={props.isExpanded}
+          onBtnClick={onExpandableChange}
+        />
       </div>
     </div>
   );
