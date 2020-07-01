@@ -408,7 +408,7 @@ func TestRegister(t *testing.T) {
 				},
 			},
 			{
-				"invalid version (semantic version expected)",
+				"invalid version (semver expected)",
 				&hub.Package{
 					Name:    "package1",
 					Version: "invalid",
@@ -460,6 +460,52 @@ func TestRegister(t *testing.T) {
 					Maintainers: []*hub.Maintainer{
 						{
 							Name: "name",
+						},
+					},
+				},
+			},
+			{
+				"channel name not provided",
+				&hub.Package{
+					Name:    "package1",
+					Version: "1.0.0",
+					Repository: &hub.Repository{
+						RepositoryID: "00000000-0000-0000-0000-000000000001",
+					},
+					Channels: []*hub.Channel{
+						{
+							Version: "1.0.0",
+						},
+					},
+				},
+			},
+			{
+				"channel version not provided",
+				&hub.Package{
+					Name:    "package1",
+					Version: "1.0.0",
+					Repository: &hub.Repository{
+						RepositoryID: "00000000-0000-0000-0000-000000000001",
+					},
+					Channels: []*hub.Channel{
+						{
+							Name: "stable",
+						},
+					},
+				},
+			},
+			{
+				"invalid channel version (semver expected)",
+				&hub.Package{
+					Name:    "package1",
+					Version: "1.0.0",
+					Repository: &hub.Repository{
+						RepositoryID: "00000000-0000-0000-0000-000000000001",
+					},
+					Channels: []*hub.Channel{
+						{
+							Name:    "stable",
+							Version: "invalid",
 						},
 					},
 				},

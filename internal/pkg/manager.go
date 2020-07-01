@@ -106,7 +106,7 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	}
 	sv, err := semver.NewVersion(pkg.Version)
 	if err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semantic version expected)")
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid version (semver expected)")
 	}
 	pkg.Version = sv.String()
 	if pkg.ContentURL != "" {
@@ -130,6 +130,17 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 		}
 		if m.Name == "" {
 			m.Name = m.Email
+		}
+	}
+	for _, c := range pkg.Channels {
+		if c.Name == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "channel name not provided")
+		}
+		if c.Version == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "channel version not provided")
+		}
+		if _, err := semver.NewVersion(c.Version); err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid channel version (semver expected)")
 		}
 	}
 
