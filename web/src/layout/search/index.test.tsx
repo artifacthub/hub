@@ -501,23 +501,115 @@ describe('Search index', () => {
 
       await waitFor(() => {});
     });
+  });
 
-    it('renders Chart repositories facets when Helm Chart package kind is selected or when no package kind filter is being applied', async () => {
+  describe('Expand or collapse filters logic', () => {
+    it('collapses previous open facet when a new one is expanded', async () => {
       const mockSearchResults = getMockSearchResults('18');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByLabelText, queryByRole, getAllByRole } = render(
+      const { getAllByTestId, getByRole } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      await waitFor(() => queryByRole('main'));
+      await waitFor(() => getByRole('main'));
 
-      expect(getAllByRole('menuitem')).toHaveLength(2 * 4);
-      expect(getByLabelText(/Stable/g)).toBeInTheDocument();
-      expect(getByLabelText(/Incubator/g)).toBeInTheDocument();
+      const btns = getAllByTestId('expandableListBtn');
 
+      expect(btns).toHaveLength(2 * 2);
+      expect(btns[0]).toHaveTextContent('Show more...');
+      fireEvent.click(btns[0]);
+
+      expect(btns[0]).toHaveTextContent('Show less...');
+
+      expect(btns[1]).toHaveTextContent('Show more...');
+      fireEvent.click(btns[1]);
+
+      expect(btns[1]).toHaveTextContent('Show less...');
+      expect(btns[0]).toHaveTextContent('Show more...');
+      await waitFor(() => {});
+    });
+
+    it('collapses previous open facet when a filter in a different facet is clicked', async () => {
+      const mockSearchResults = getMockSearchResults('19');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getAllByTestId, getByRole, getByLabelText } = render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const btns = getAllByTestId('expandableListBtn');
+
+      expect(btns).toHaveLength(2 * 2);
+      expect(btns[0]).toHaveTextContent('Show more...');
+      fireEvent.click(btns[0]);
+
+      expect(btns[0]).toHaveTextContent('Show less...');
+
+      const opt = getByLabelText(/Test 1/g);
+      fireEvent.click(opt);
+
+      expect(btns[0]).toHaveTextContent('Show more...');
+      await waitFor(() => {});
+    });
+
+    it('does not collapse open facet when a filter in the same facet is clicked', async () => {
+      const mockSearchResults = getMockSearchResults('20');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getAllByTestId, getByRole, getByLabelText } = render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const btns = getAllByTestId('expandableListBtn');
+
+      expect(btns).toHaveLength(2 * 2);
+      expect(btns[0]).toHaveTextContent('Show more...');
+      fireEvent.click(btns[0]);
+
+      expect(btns[0]).toHaveTextContent('Show less...');
+
+      const opt = getByLabelText(/Org 1/g);
+      fireEvent.click(opt);
+
+      expect(btns[0]).toHaveTextContent('Show less...');
+      await waitFor(() => {});
+    });
+
+    it('collapses previous open facet when Reset btn is clicked', async () => {
+      const mockSearchResults = getMockSearchResults('21');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getAllByTestId, getByRole, getByTestId } = render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ org: ['helm', 'falco'] }} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const btns = getAllByTestId('expandableListBtn');
+
+      expect(btns).toHaveLength(2 * 2);
+
+      expect(btns[0]).toHaveTextContent('Show more...');
+      fireEvent.click(btns[0]);
+      expect(btns[0]).toHaveTextContent('Show less...');
+
+      const resetBtn = getByTestId('resetFiltersBtn');
+      fireEvent.click(resetBtn);
+
+      expect(btns[0]).toHaveTextContent('Show more...');
       await waitFor(() => {});
     });
   });

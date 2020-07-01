@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Chart Repository LastNotificationsModal - packages section creates snapshot 1`] = `
+exports[`Repository LastNotificationsModal - packages section creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="d-inline-block"

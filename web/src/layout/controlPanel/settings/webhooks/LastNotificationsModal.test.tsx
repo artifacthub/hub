@@ -9,7 +9,7 @@ const getMockNotifications = (fixtureId: string): WebhookNotification[] => {
   return require(`./__fixtures__/LastNotificationsModal/${fixtureId}.json`) as WebhookNotification[];
 };
 
-describe('Chart Repository LastNotificationsModal - packages section', () => {
+describe('Repository LastNotificationsModal - packages section', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

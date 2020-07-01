@@ -74,6 +74,7 @@ const FacetsMock: Facets[] = [
 const onDeprecatedChangeMock = jest.fn();
 const onResetFiltersMock = jest.fn();
 const onChangeMock = jest.fn();
+const onFacetExpandableChangeMock = jest.fn();
 
 const defaultProps = {
   activeFilters: {},
@@ -82,6 +83,7 @@ const defaultProps = {
   onChange: onChangeMock,
   onDeprecatedChange: onDeprecatedChangeMock,
   onResetFilters: onResetFiltersMock,
+  onFacetExpandableChange: onFacetExpandableChangeMock,
   deprecated: false,
 };
 

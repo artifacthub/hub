@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Filters creates snapshot 1`] = `
+exports[`Facet creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="facet mt-3 mt-sm-4 pt-1"
@@ -16,7 +16,7 @@ exports[`Filters creates snapshot 1`] = `
         <span
           class="text-secondary font-weight-bold"
         >
-          Chart Repository
+          Repository
         </span>
       </small>
     </div>

@@ -70,7 +70,19 @@ const HomeView = (props: Props) => {
           <SearchBar formClassName={`m-auto w-50 ${styles.search}`} size="big" isSearching={props.isSearching} />
           <SearchTip />
 
-          <div className="d-inline-block text-center mt-5">
+          <div className="d-inline-block d-md-none text-center mt-3">
+            - or -
+            <Link
+              className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+              to={{
+                pathname: '/packages/search',
+              }}
+            >
+              <u>browse all packages</u>
+            </Link>
+          </div>
+
+          <div className="d-none d-md-inline-block text-center mt-5">
             You can also{' '}
             <Link
               className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
@@ -83,7 +95,7 @@ const HomeView = (props: Props) => {
             - or - <span className="ml-3">try one of the sample filters:</span>
           </div>
 
-          <div className="d-flex flex-row align-items-end justify-content-center flex-wrap">
+          <div className="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
             <Link
               data-testid="sampleFilter"
               className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
@@ -134,7 +146,7 @@ const HomeView = (props: Props) => {
               Packages of any kind related to etcd
             </Link>
           </div>
-          <div className="d-flex flex-row align-items-start justify-content-center flex-wrap">
+          <div className="d-none d-md-flex flex-row align-items-start justify-content-center flex-wrap">
             <Link
               data-testid="sampleFilter"
               className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
@@ -172,13 +184,13 @@ const HomeView = (props: Props) => {
           </div>
         </div>
 
-        <div className="d-flex align-items-center justify-content-center mt-5">
+        <div className="d-flex align-items-center justify-content-center mt-4 mt-md-5">
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.packages} name="packages" />
-          <div className={`ml-5 mr-5 ${styles.separator}`} />
+          <div className={`mx-3 mx-md-5 ${styles.separator}`} />
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.releases} name="releases" />
         </div>
 
-        <div className={`text-center h5 mt-5 mb-4 ${styles.legend}`}>
+        <div className={`text-center h5 my-4 mt-md-5 ${styles.legend}`}>
           Artifact Hub is an <b>Open Source</b> project
         </div>
 

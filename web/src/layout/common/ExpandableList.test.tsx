@@ -43,4 +43,24 @@ describe('ExpandableList', () => {
 
     expect(queryAllByTestId('item')).toHaveLength(8);
   });
+
+  it('calls onBtnClick mock on status changes when is defined', () => {
+    const onBtnClickMock = jest.fn();
+    const { getByTestId } = render(<ExpandableList items={getItems(12)} onBtnClick={onBtnClickMock} />);
+
+    const btn = getByTestId('expandableListBtn');
+
+    fireEvent.click(btn);
+
+    expect(onBtnClickMock).toHaveBeenCalledTimes(1);
+    expect(onBtnClickMock).toHaveBeenCalledWith(true);
+  });
+
+  it('initializes expandable list open', () => {
+    const { getByTestId, queryAllByTestId } = render(<ExpandableList items={getItems(12)} open />);
+
+    const btn = getByTestId('expandableListBtn');
+    expect(btn).toHaveTextContent('Show less...');
+    expect(queryAllByTestId('item')).toHaveLength(12);
+  });
 });
