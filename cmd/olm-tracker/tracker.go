@@ -130,8 +130,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 				continue
 			}
 			if _, err := semver.StrictNewVersion(entryV.Name()); err != nil {
-				errW := fmt.Errorf("invalid operator %s version (%s): %w", operator, entryV.Name(), err)
-				t.ec.Append(t.r.RepositoryID, errW)
+				t.Warn(fmt.Errorf("invalid operator %s version (%s): %w", operator, entryV.Name(), err))
 				continue
 			} else {
 				versions = append(versions, entryV)

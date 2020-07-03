@@ -208,12 +208,40 @@ const RepositoryModal = (props: Props) => {
             </p>
           </small>
         );
+      case RepositoryKind.Falco:
+        return (
+          <small className="text-muted text-break mt-1">
+            <p>
+              URL where the Falco rules definitions are located. At the moment only Github and Gitlab URLs are
+              supported, and they must follow the following format:
+            </p>
+            <ul className="mt-3">
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://github.com/user/repo[/path/to/rules]
+              </li>
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://gitlab.com/user/repo[/path/to/rules]
+              </li>
+            </ul>
+            <p className="mb-0">
+              Falco rules packages are defined using YAML files, following{' '}
+              <ExternalLink
+                href="https://github.com/falcosecurity/cloud-native-security-hub#adding-a-new-falco-rule"
+                className="text-reset"
+              >
+                <u>the same spec</u>
+              </ExternalLink>{' '}
+              the Cloud Native Security Hub uses.
+            </p>
+          </small>
+        );
     }
   };
 
   const getURLPattern = (): string | undefined => {
     switch (selectedKind) {
       case RepositoryKind.OLM:
+      case RepositoryKind.Falco:
         return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
       default:
         return undefined;

@@ -89,6 +89,9 @@ jobs:
       - name: Build hub
         working-directory: ./cmd/hub
         run: go build -v
+      - name: Build falco-tracker
+        working-directory: ./cmd/falco-tracker
+        run: go build -v
       - name: Build helm-tracker
         working-directory: ./cmd/helm-tracker
         run: go build -v
@@ -143,6 +146,13 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA .
       - name: Push db-migrator image
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA
+      - name: Build falco-tracker image
+        run: |
+          docker build \
+            -f cmd/falco-tracker/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/falco-tracker:$GITHUB_SHA .
+      - name: Push falco-tracker image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/falco-tracker:$GITHUB_SHA
       - name: Build helm-tracker image
         run: |
           docker build \

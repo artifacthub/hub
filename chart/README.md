@@ -29,9 +29,10 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 ## Populating packages
 
-The chart installs some `cronjobs` in charge of launching periodically (every 30m) the trackers, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the jobs are triggered by the cronjob, you can create them manually using the following commands:
+The chart installs some `cronjobs` in charge of launching periodically (every 30m) the trackers, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the jobs are triggered by the cronjob, you can create some or all of them manually using the following commands:
 
 ```bash
+$ kubectl create job initial-falco-tracker-job --from=cronjob/falco-tracker
 $ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
 $ kubectl create job initial-olm-tracker-job --from=cronjob/olm-tracker
 ```
@@ -50,64 +51,70 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following table lists the configurable parameters of the Artifact Hub chart and their default values.
 
-| Parameter                              | Description                       | Default                                    |
-| -------------------------------------- | --------------------------------- | ------------------------------------------ |
-| `imageTag`                             | Tag used when pulling images      | `latest`                                   |
-| `pullPolicy`                           | Image pull policy                 | `IfNotPresent`                             |
-| `log.level`                            | Log level                         | `info`                                     |
-| `log.pretty`                           | Enable pretty logging             | `false`                                    |
-| `db.host`                              | Database host                     | `hub-postgresql.default.svc.cluster.local` |
-| `db.port`                              | Database port                     | `5432`                                     |
-| `db.database`                          | Database name                     | `hub`                                      |
-| `db.user`                              | Database user                     | `postgres`                                 |
-| `db.password`                          | Database password                 | `postgres`                                 |
-| `hub.ingress.enabled`                  | Enable Hub ingress                | `true`                                     |
-| `hub.ingress.annotations`              | Hub ingress annotations           | `{kubernetes.io/ingress.class: nginx}`     |
-| `hub.service.type`                     | Hub service type                  | `NodePort`                                 |
-| `hub.service.port`                     | Hub service port                  | 80                                         |
-| `hub.deploy.replicaCount`              | Hub replicas                      | 1                                          |
-| `hub.deploy.image.repository`          | Hub image repository              | `artifacthub/hub`                          |
-| `hub.deploy.resources`                 | Hub requested resources           | Memory: `500Mi`, CPU: `100m`               |
-| `hub.server.baseURL`                   | Hub server base url               |                                            |
-| `hub.server.basicAuth.enabled`         | Enable basic auth                 | `false`                                    |
-| `hub.server.basicAuth.username`        | Hub basic auth username           | `hub`                                      |
-| `hub.server.basicAuth.password`        | Hub basic auth password           | `changeme`                                 |
-| `hub.server.cookie.hashKey`            | Hub cookie hash key               | `default-unsafe-key`                       |
-| `hub.server.cookie.secure`             | Enable Hub secure cookies         | `false`                                    |
-| `hub.server.oauth.github.clientID`     | Github oauth client id            |                                            |
-| `hub.server.oauth.github.clientSecret` | Github oauth client secret        |                                            |
-| `hub.server.oauth.github.redirectURL`  | Github oauth redirect url         |                                            |
-| `hub.server.oauth.github.scopes`       | Github oauth scopes               | `[read:user, user:email]`                  |
-| `hub.server.oauth.google.clientID`     | Google oauth client id            |                                            |
-| `hub.server.oauth.google.clientSecret` | Google oauth client secret        |                                            |
-| `hub.server.oauth.google.redirectURL`  | Google oauth redirect url         |                                            |
-| `hub.server.oauth.google.scopes`       | Google oauth scopes               | `[userinfo.email, userinfo.profile]`       |
-| `hub.server.limiter.enabled`           | Enable rate limiter               | `false`                                    |
-| `hub.server.limiter.period`            | Rate limiter period (1m, etc)     |                                            |
-| `hub.server.limiter.limit`             | Rate limiter limit (reqs/period)  |                                            |
-| `hub.server.xffIndex`                  | X-Forwarded-For IP index          | 0                                          |
-| `hub.email.fromName`                   | From name used in emails          |                                            |
-| `hub.email.from`                       | From address used in emails       |                                            |
-| `hub.email.replyTo`                    | Reply-to address used in emails   |                                            |
-| `hub.email.smtp.host`                  | SMTP host                         |                                            |
-| `hub.email.smtp.port`                  | SMTP port                         | 587                                        |
-| `hub.email.smtp.username`              | SMTP username                     |                                            |
-| `hub.email.smtp.password`              | SMTP password                     |                                            |
-| `hub.analytics.gaTrackingID`           | Google Analytics tracking id      |                                            |
-| `helmTracker.cronjob.image.repository` | Helm tracker image repository     | `artifacthub/helm-tracker`                 |
-| `helmTracker.cronjob.resources`        | Helm tracker requested resources  | Memory: `500Mi`, CPU: `100m`               |
-| `helmTracker.numWorkers`               | Helm tracker number of workers    | 50                                         |
-| `helmTracker.repositories`             | Repos names to process ([] = all) | []                                         |
-| `helmTracker.imageStore`               | Image store                       | `pg`                                       |
-| `helmTracker.bypassDigestCheck`        | Bypass digest check               | `false`                                    |
-| `olmTracker.cronjob.image.repository`  | OLM tracker image repository      | `artifacthub/olm-tracker`                  |
-| `olmTracker.cronjob.resources`         | OLM tracker requested resources   | Memory: `500Mi`, CPU: `100m`               |
-| `olmTracker.concurrency`               | Repos to process concurrently     | 10                                         |
-| `olmTracker.repositories`              | Repos names to process ([] = all) | []                                         |
-| `olmTracker.imageStore`                | Image store                       | `pg`                                       |
-| `olmTracker.bypassDigestCheck`         | Bypass digest check               | `false`                                    |
-| `dbMigrator.job.image.repository`      | DB migrator image repository      | `artifacthub/db-migrator`                  |
-| `dbMigrator.loadSampleData`            | Load demo user and sample repos   | `true`                                     |
+| Parameter                               | Description                       | Default                                    |
+| --------------------------------------- | --------------------------------- | ------------------------------------------ |
+| `imageTag`                              | Tag used when pulling images      | `latest`                                   |
+| `pullPolicy`                            | Image pull policy                 | `IfNotPresent`                             |
+| `log.level`                             | Log level                         | `info`                                     |
+| `log.pretty`                            | Enable pretty logging             | `false`                                    |
+| `db.host`                               | Database host                     | `hub-postgresql.default.svc.cluster.local` |
+| `db.port`                               | Database port                     | `5432`                                     |
+| `db.database`                           | Database name                     | `hub`                                      |
+| `db.user`                               | Database user                     | `postgres`                                 |
+| `db.password`                           | Database password                 | `postgres`                                 |
+| `hub.ingress.enabled`                   | Enable Hub ingress                | `true`                                     |
+| `hub.ingress.annotations`               | Hub ingress annotations           | `{kubernetes.io/ingress.class: nginx}`     |
+| `hub.service.type`                      | Hub service type                  | `NodePort`                                 |
+| `hub.service.port`                      | Hub service port                  | 80                                         |
+| `hub.deploy.replicaCount`               | Hub replicas                      | 1                                          |
+| `hub.deploy.image.repository`           | Hub image repository              | `artifacthub/hub`                          |
+| `hub.deploy.resources`                  | Hub requested resources           | Memory: `500Mi`, CPU: `100m`               |
+| `hub.server.baseURL`                    | Hub server base url               |                                            |
+| `hub.server.basicAuth.enabled`          | Enable basic auth                 | `false`                                    |
+| `hub.server.basicAuth.username`         | Hub basic auth username           | `hub`                                      |
+| `hub.server.basicAuth.password`         | Hub basic auth password           | `changeme`                                 |
+| `hub.server.cookie.hashKey`             | Hub cookie hash key               | `default-unsafe-key`                       |
+| `hub.server.cookie.secure`              | Enable Hub secure cookies         | `false`                                    |
+| `hub.server.oauth.github.clientID`      | Github oauth client id            |                                            |
+| `hub.server.oauth.github.clientSecret`  | Github oauth client secret        |                                            |
+| `hub.server.oauth.github.redirectURL`   | Github oauth redirect url         |                                            |
+| `hub.server.oauth.github.scopes`        | Github oauth scopes               | `[read:user, user:email]`                  |
+| `hub.server.oauth.google.clientID`      | Google oauth client id            |                                            |
+| `hub.server.oauth.google.clientSecret`  | Google oauth client secret        |                                            |
+| `hub.server.oauth.google.redirectURL`   | Google oauth redirect url         |                                            |
+| `hub.server.oauth.google.scopes`        | Google oauth scopes               | `[userinfo.email, userinfo.profile]`       |
+| `hub.server.limiter.enabled`            | Enable rate limiter               | `false`                                    |
+| `hub.server.limiter.period`             | Rate limiter period (1m, etc)     |                                            |
+| `hub.server.limiter.limit`              | Rate limiter limit (reqs/period)  |                                            |
+| `hub.server.xffIndex`                   | X-Forwarded-For IP index          | 0                                          |
+| `hub.email.fromName`                    | From name used in emails          |                                            |
+| `hub.email.from`                        | From address used in emails       |                                            |
+| `hub.email.replyTo`                     | Reply-to address used in emails   |                                            |
+| `hub.email.smtp.host`                   | SMTP host                         |                                            |
+| `hub.email.smtp.port`                   | SMTP port                         | 587                                        |
+| `hub.email.smtp.username`               | SMTP username                     |                                            |
+| `hub.email.smtp.password`               | SMTP password                     |                                            |
+| `hub.analytics.gaTrackingID`            | Google Analytics tracking id      |                                            |
+| `dbMigrator.job.image.repository`       | DB migrator image repository      | `artifacthub/db-migrator`                  |
+| `dbMigrator.loadSampleData`             | Load demo user and sample repos   | `true`                                     |
+| `falcoTracker.cronjob.image.repository` | Falco tracker image repository    | `artifacthub/falco-tracker`                |
+| `falcoTracker.cronjob.resources`        | Falco tracker requested resources | Memory: `500Mi`, CPU: `100m`               |
+| `falcoTracker.concurrency`              | Repos to process concurrently     | 10                                         |
+| `falcoTracker.repositories`             | Repos names to process ([] = all) | []                                         |
+| `falcoTracker.imageStore`               | Image store                       | `pg`                                       |
+| `falcoTracker.bypassDigestCheck`        | Bypass digest check               | `false`                                    |
+| `helmTracker.cronjob.image.repository`  | Helm tracker image repository     | `artifacthub/helm-tracker`                 |
+| `helmTracker.cronjob.resources`         | Helm tracker requested resources  | Memory: `500Mi`, CPU: `100m`               |
+| `helmTracker.numWorkers`                | Helm tracker number of workers    | 50                                         |
+| `helmTracker.repositories`              | Repos names to process ([] = all) | []                                         |
+| `helmTracker.imageStore`                | Image store                       | `pg`                                       |
+| `helmTracker.bypassDigestCheck`         | Bypass digest check               | `false`                                    |
+| `olmTracker.cronjob.image.repository`   | OLM tracker image repository      | `artifacthub/olm-tracker`                  |
+| `olmTracker.cronjob.resources`          | OLM tracker requested resources   | Memory: `500Mi`, CPU: `100m`               |
+| `olmTracker.concurrency`                | Repos to process concurrently     | 10                                         |
+| `olmTracker.repositories`               | Repos names to process ([] = all) | []                                         |
+| `olmTracker.imageStore`                 | Image store                       | `pg`                                       |
+| `olmTracker.bypassDigestCheck`          | Bypass digest check               | `false`                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
