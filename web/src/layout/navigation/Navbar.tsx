@@ -67,7 +67,7 @@ const Navbar = (props: Props) => {
             size="normal"
             formClassName={`mx-2 mr-md-auto my-3 my-md-0 flex-grow-1 pr-4 ${styles.search}`}
             isSearching={props.isSearching}
-            text={props.searchText}
+            tsQueryWeb={props.searchText}
           />
         )}
 

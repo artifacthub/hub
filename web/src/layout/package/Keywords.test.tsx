@@ -83,7 +83,7 @@ describe('Keywords', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: defaultProps.keywords[0],
+          tsQueryWeb: defaultProps.keywords[0],
           pageNumber: 1,
           filters: {},
           deprecated: defaultProps.deprecated,

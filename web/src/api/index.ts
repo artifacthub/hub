@@ -156,8 +156,8 @@ export const API = {
         });
       });
     }
-    if (!isUndefined(query.text)) {
-      q.set('text', query.text);
+    if (!isUndefined(query.tsQueryWeb)) {
+      q.set('ts_query_web', query.tsQueryWeb);
     }
     if (query.deprecated) {
       q.set('deprecated', 'true');

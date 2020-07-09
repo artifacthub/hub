@@ -87,7 +87,8 @@ type SearchPackageInput struct {
 	Limit           int              `json:"limit,omitempty"`
 	Offset          int              `json:"offset,omitempty"`
 	Facets          bool             `json:"facets"`
-	Text            string           `json:"text"`
+	TsQueryWeb      string           `json:"ts_query_web,omitempty"`
+	TsQuery         string           `json:"ts_query,omitempty"`
 	Users           []string         `json:"users,omitempty"`
 	Orgs            []string         `json:"orgs,omitempty"`
 	Repositories    []string         `json:"repositories,omitempty"`

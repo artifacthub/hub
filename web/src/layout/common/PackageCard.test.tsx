@@ -152,7 +152,7 @@ describe('PackageCard', () => {
     it('opens detail page', () => {
       const mockPackage = getMockPackage('9');
       const urlReferer = {
-        text: 'test',
+        tsQueryWeb: 'test',
         filters: {},
         pageNumber: 1,
         deprecated: false,

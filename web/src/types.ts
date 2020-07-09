@@ -96,7 +96,7 @@ export interface PackageData {
 }
 
 export interface SearchFiltersURL {
-  text?: string;
+  tsQueryWeb?: string;
   filters: {
     [key: string]: string[];
   };
@@ -105,7 +105,7 @@ export interface SearchFiltersURL {
 }
 
 export interface SearchQuery {
-  text?: string;
+  tsQueryWeb?: string;
   filters: {
     [key: string]: string[];
   };

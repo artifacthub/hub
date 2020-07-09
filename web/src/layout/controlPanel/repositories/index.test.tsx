@@ -54,7 +54,7 @@ describe('Repository index', () => {
       });
     });
 
-    it('removes loading spinner after getting repositories', async () => {
+    it('displays spinner to get repositories', async () => {
       const mockRepository = getMockRepository('3');
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
@@ -64,7 +64,7 @@ describe('Repository index', () => {
         </Router>
       );
 
-      const spinner = await waitForElementToBeRemoved(() => getByRole('status'));
+      const spinner = await waitFor(() => getByRole('status'));
 
       expect(spinner).toBeTruthy();
       await waitFor(() => {});

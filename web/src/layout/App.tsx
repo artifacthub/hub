@@ -70,7 +70,7 @@ export default function App() {
                 const searchParams = buildSearchParams(location.search);
                 return (
                   <>
-                    <Navbar isSearching={isSearching} searchText={searchParams.text} />
+                    <Navbar isSearching={isSearching} searchText={searchParams.tsQueryWeb} />
                     <div className="d-flex flex-column flex-grow-1">
                       <SearchView
                         {...searchParams}

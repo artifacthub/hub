@@ -40,7 +40,7 @@ const Keywords = (props: Props) => {
                 history.push({
                   pathname: '/packages/search',
                   search: prepareQueryString({
-                    text: keyword,
+                    tsQueryWeb: keyword,
                     pageNumber: 1,
                     filters: {},
                     deprecated: !isNull(props.deprecated) ? props.deprecated : false,

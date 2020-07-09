@@ -15,7 +15,7 @@ const TIPS: JSX.Element[] = [
         pathname: '/packages/search',
         search: prepareQueryString({
           pageNumber: 1,
-          text: 'kafka operator',
+          tsQueryWeb: 'kafka operator',
           filters: {},
           deprecated: false,
         }),
@@ -33,7 +33,7 @@ const TIPS: JSX.Element[] = [
         pathname: '/packages/search',
         search: prepareQueryString({
           pageNumber: 1,
-          text: 'apache -solr -hadoop',
+          tsQueryWeb: 'apache -solr -hadoop',
           filters: {},
           deprecated: false,
         }),
@@ -51,7 +51,7 @@ const TIPS: JSX.Element[] = [
         pathname: '/packages/search',
         search: prepareQueryString({
           pageNumber: 1,
-          text: `"monitoring system"`,
+          tsQueryWeb: `"monitoring system"`,
           filters: {},
           deprecated: false,
         }),
@@ -69,7 +69,7 @@ const TIPS: JSX.Element[] = [
         pathname: '/packages/search',
         search: prepareQueryString({
           pageNumber: 1,
-          text: 'postgresql or mysql',
+          tsQueryWeb: 'postgresql or mysql',
           filters: {},
           deprecated: false,
         }),

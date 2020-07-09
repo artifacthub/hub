@@ -32,7 +32,7 @@ interface Props {
   setIsSearching: Dispatch<SetStateAction<boolean>>;
   scrollPosition?: number;
   setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
-  text?: string;
+  tsQueryWeb?: string;
   pageNumber: number;
   filters: FiltersProp;
   deprecated: boolean;
@@ -126,7 +126,7 @@ const SearchView = (props: Props) => {
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: prepareSelectedFilters(name, newFilters, props.filters),
         deprecated: props.deprecated,
       }),
@@ -138,7 +138,7 @@ const SearchView = (props: Props) => {
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: props.pageNumber,
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: props.filters,
         deprecated: !props.deprecated,
       }),
@@ -153,7 +153,7 @@ const SearchView = (props: Props) => {
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: {},
         deprecated: false,
       }),
@@ -165,7 +165,7 @@ const SearchView = (props: Props) => {
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: pageNumber,
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: props.filters,
         deprecated: props.deprecated,
       }),
@@ -177,7 +177,7 @@ const SearchView = (props: Props) => {
       pathname: '/packages/search',
       search: prepareQueryString({
         pageNumber: 1,
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: props.filters,
         deprecated: props.deprecated,
       }),
@@ -195,7 +195,7 @@ const SearchView = (props: Props) => {
     async function fetchSearchResults() {
       setIsSearching(true);
       const query = {
-        text: props.text,
+        tsQueryWeb: props.tsQueryWeb,
         filters: props.filters,
         offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
         limit: ctx.prefs.search.limit,
@@ -250,7 +250,7 @@ const SearchView = (props: Props) => {
     // prettier-ignore
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [
-    props.text,
+    props.tsQueryWeb,
     props.pageNumber,
     JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
     props.deprecated,
@@ -329,9 +329,9 @@ const SearchView = (props: Props) => {
                   )}
                   {total}
                   <span className="pl-1"> results </span>
-                  {!isUndefined(props.text) && props.text !== '' && (
+                  {!isUndefined(props.tsQueryWeb) && props.tsQueryWeb !== '' && (
                     <span className="d-none d-sm-inline pl-1">
-                      for "<span className="font-weight-bold">{props.text}</span>"
+                      for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                     </span>
                   )}
                 </div>
@@ -385,9 +385,9 @@ const SearchView = (props: Props) => {
                         We're sorry!
                         <p className="h6 mb-0 mt-3">
                           <span> We can't seem to find any packages that match your search </span>
-                          {!isUndefined(props.text) && (
+                          {!isUndefined(props.tsQueryWeb) && (
                             <span className="pl-1">
-                              for "<span className="font-weight-bold">{props.text}</span>"
+                              for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                             </span>
                           )}
                         </p>
@@ -404,7 +404,7 @@ const SearchView = (props: Props) => {
                           key={item.packageId}
                           package={item}
                           searchUrlReferer={{
-                            text: props.text,
+                            tsQueryWeb: props.tsQueryWeb,
                             pageNumber: props.pageNumber,
                             filters: props.filters,
                             deprecated: props.deprecated,

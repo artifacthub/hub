@@ -38,7 +38,7 @@ exports[`SearchTip creates snapshot 1`] = `
         <a
           class="font-weight-bold text-light p-0"
           data-testid="sampleFilter"
-          href="/packages/search?page=1&text=kafka+operator"
+          href="/packages/search?page=1&ts_query_web=kafka+operator"
         >
           <u>
             kafka operator

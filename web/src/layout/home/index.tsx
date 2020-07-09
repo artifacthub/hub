@@ -103,7 +103,7 @@ const HomeView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,
-                  text: 'database',
+                  tsQueryWeb: 'database',
                   filters: {
                     kind: ['3'],
                   },
@@ -137,7 +137,7 @@ const HomeView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,
-                  text: 'etcd',
+                  tsQueryWeb: 'etcd',
                   filters: {},
                   deprecated: false,
                 }),
@@ -154,7 +154,7 @@ const HomeView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,
-                  text: 'CVE',
+                  tsQueryWeb: 'CVE',
                   filters: {
                     kind: ['1'],
                   },
@@ -171,7 +171,7 @@ const HomeView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,
-                  text: 'monitoring',
+                  tsQueryWeb: 'monitoring',
                   filters: {
                     kind: ['3'],
                   },

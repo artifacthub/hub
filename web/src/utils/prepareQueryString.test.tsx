@@ -20,11 +20,11 @@ const tests: Test[] = [
   {
     query: {
       pageNumber: 1,
-      text: 'test',
+      tsQueryWeb: 'test',
       filters: {},
       deprecated: false,
     },
-    result: '?page=1&text=test',
+    result: '?page=1&ts_query_web=test',
   },
   {
     query: {

@@ -8,7 +8,8 @@ declare
     v_orgs text[];
     v_repositories text[];
     v_facets boolean := (p_input->>'facets')::boolean;
-    v_tsquery tsquery := websearch_to_tsquery(p_input->>'text');
+    v_tsquery_web tsquery := websearch_to_tsquery(p_input->>'ts_query_web');
+    v_tsquery tsquery := to_tsquery(p_input->>'ts_query');
 begin
     -- Prepare filters for later use
     select array_agg(e::int) into v_repository_kinds
@@ -21,7 +22,7 @@ begin
     from jsonb_array_elements_text(p_input->'repositories') e;
 
     return query
-    with packages_applying_text_and_deprecated_filters as (
+    with packages_applying_ts_and_deprecated_filters as (
         select
             p.package_id,
             p.name,
@@ -52,7 +53,11 @@ begin
         left join organization o using (organization_id)
         where s.version = p.latest_version
         and
-            case when p_input ? 'text' and p_input->>'text' <> '' then
+            case when v_tsquery_web is not null then
+                v_tsquery_web @@ p.tsdoc
+            else true end
+        and
+            case when v_tsquery is not null then
                 v_tsquery @@ p.tsdoc
             else true end
         and
@@ -62,7 +67,7 @@ begin
                 (s.deprecated is null or s.deprecated = false)
             end
     ), packages_applying_all_filters as (
-        select * from packages_applying_text_and_deprecated_filters
+        select * from packages_applying_ts_and_deprecated_filters
         where
             case when cardinality(v_repository_kinds) > 0
             then repository_kind_id = any(v_repository_kinds) else true end
@@ -75,12 +80,6 @@ begin
         and
             case when cardinality(v_repositories) > 0
             then repository_name = any(v_repositories) else true end
-        and
-            case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
-                true
-            else
-                (deprecated is null or deprecated = false)
-            end
     )
     select json_build_object(
         'data', (
@@ -112,9 +111,9 @@ begin
                     from (
                         select
                             paaf.*,
-                            (case when p_input ? 'text' and p_input->>'text' <> '' then
-                                ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery, 1) +
-                                ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery)
+                            (case when v_tsquery_web is not null then
+                                ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1) +
+                                ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)
                             else 1 end) as rank
                         from packages_applying_all_filters paaf
                         order by rank desc, name asc
@@ -139,7 +138,7 @@ begin
                                             organization_name,
                                             organization_display_name,
                                             count(*) as total
-                                        from packages_applying_text_and_deprecated_filters
+                                        from packages_applying_ts_and_deprecated_filters
                                         where organization_name is not null
                                         group by organization_name, organization_display_name
                                         order by total desc, organization_name asc
@@ -161,7 +160,7 @@ begin
                                         select
                                             user_alias,
                                             count(*) as total
-                                        from packages_applying_text_and_deprecated_filters
+                                        from packages_applying_ts_and_deprecated_filters
                                         where user_alias is not null
                                         group by user_alias
                                         order by total desc, user_alias asc
@@ -184,7 +183,7 @@ begin
                                             repository_kind_id,
                                             repository_kind_name,
                                             count(*) as total
-                                        from packages_applying_text_and_deprecated_filters
+                                        from packages_applying_ts_and_deprecated_filters
                                         group by repository_kind_id, repository_kind_name
                                         order by total desc, repository_kind_name asc
                                     ) as breakdown
@@ -205,7 +204,7 @@ begin
                                         select
                                             repository_name,
                                             count(*) as total
-                                        from packages_applying_text_and_deprecated_filters
+                                        from packages_applying_ts_and_deprecated_filters
                                         where repository_name is not null
                                         group by repository_name
                                         order by total desc, repository_name asc

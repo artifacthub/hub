@@ -57,7 +57,7 @@ describe('RelatedPackages', () => {
             filters: {},
             limit: 9,
             offset: 0,
-            text: 'packageName or key1 or key2 or key3',
+            tsQueryWeb: 'packageName or key1 or key2 or key3',
           },
           false
         );
