@@ -26,7 +26,7 @@ const RelatedPackages = (props: Props) => {
         }
         const searchResults = await API.searchPackages(
           {
-            text: Array.from(new Set(words)).join(' or '),
+            tsQueryWeb: Array.from(new Set(words)).join(' or '),
             filters: {},
             deprecated: false,
             limit: 9,

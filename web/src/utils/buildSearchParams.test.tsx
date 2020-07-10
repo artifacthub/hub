@@ -18,19 +18,19 @@ const tests: Test[] = [
     },
   },
   {
-    query: '?page=1&text=test',
+    query: '?page=1&ts_query_web=test',
     result: {
       pageNumber: 1,
-      text: 'test',
+      tsQueryWeb: 'test',
       filters: {},
       deprecated: false,
     },
   },
   {
-    query: '?text=test',
+    query: '?ts_query_web=test',
     result: {
       pageNumber: 1,
-      text: 'test',
+      tsQueryWeb: 'test',
       filters: {},
       deprecated: false,
     },

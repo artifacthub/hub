@@ -547,8 +547,8 @@ func TestSearchJSON(t *testing.T) {
 	dbQuery := "select search_packages($1::jsonb)"
 	ctx := context.Background()
 	input := &hub.SearchPackageInput{
-		Limit: 10,
-		Text:  "kw1",
+		Limit:      10,
+		TsQueryWeb: "kw1",
 	}
 
 	t.Run("invalid input", func(t *testing.T) {

@@ -32,7 +32,7 @@ const defaultProps = {
   scrollPosition: 0,
   setScrollPosition: jest.fn(),
   pathname: '/packages/search',
-  text: 'test',
+  tsQueryWeb: 'test',
   pageNumber: 1,
   filters: {},
   fromDetail: false,
@@ -211,7 +211,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { kind: ['0'] },
           deprecated: false,
@@ -303,7 +303,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 2,
           filters: { kind: ['0'] },
           deprecated: false,
@@ -355,7 +355,7 @@ describe('Search index', () => {
       expect(mockHistoryReplace).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: {},
           deprecated: false,
@@ -384,7 +384,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { kind: ['1'] },
           deprecated: false,
@@ -411,7 +411,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { repo: ['stable'], kind: ['0'] },
           deprecated: false,
@@ -438,7 +438,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { repo: ['stable'], kind: ['0'] },
           deprecated: false,
@@ -465,7 +465,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { org: ['helmOrg'] },
           deprecated: false,
@@ -492,7 +492,7 @@ describe('Search index', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: { user: ['testUser'] },
           deprecated: false,

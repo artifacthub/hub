@@ -37,7 +37,7 @@ describe('Details', () => {
         {...defaultProps}
         package={mockPackage}
         searchUrlReferer={{
-          text: 'test',
+          tsQueryWeb: 'test',
           pageNumber: 1,
           filters: {},
           deprecated: false,
@@ -94,7 +94,7 @@ describe('Details', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQuerystring({
-          text: mockPackage.keywords![0],
+          tsQueryWeb: mockPackage.keywords![0],
           pageNumber: 1,
           filters: {},
           deprecated: false,

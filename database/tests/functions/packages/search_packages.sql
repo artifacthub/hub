@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(20);
+select plan(21);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -18,7 +18,7 @@ select plan(20);
 -- No packages at this point
 select is(
     search_packages('{
-        "text": "package1"
+        "ts_query_web": "package1"
     }')::jsonb,
     '{
         "data": {
@@ -31,7 +31,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Text: package1 | No packages in db yet | No packages or facets expected'
+    'TsQueryWeb: package1 | No packages in db yet | No packages or facets expected'
 );
 
 -- Seed some data
@@ -334,12 +334,159 @@ select is(
             "total": 3
         }
     }'::jsonb,
-    'Text: empty | Three packages expected (all) - Facets expected'
+    'TsQueryWeb: - | Three packages expected (all) - Facets expected'
+);
+select is(
+    search_packages('{
+        "ts_query": "kw1 | kw3",
+        "deprecated": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "signed": true,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
+                    "name": "repo2",
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000003",
+                "name": "package3",
+                "normalized_name": "package3",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                "stars": 0,
+                "display_name": "Package 3",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": null,
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000003",
+                    "kind": 1,
+                    "name": "repo3",
+                    "display_name": "Repo 3",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 3
+        }
+    }'::jsonb,
+    'TsQuery: kw1 | kw3 | Three packages expected (all) - No facets expected'
+);
+select is(
+    search_packages('{
+        "ts_query": "kw1",
+        "ts_query_web": "kw2",
+        "deprecated": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000002",
+                "name": "package2",
+                "normalized_name": "package2",
+                "logo_image_id": "00000000-0000-0000-0000-000000000002",
+                "stars": 11,
+                "display_name": "Package 2",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": true,
+                "signed": true,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000002",
+                    "kind": 0,
+                    "name": "repo2",
+                    "display_name": "Repo 2",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 2
+        }
+    }'::jsonb,
+    'TsQuery: kw1 | TsQueryWeb: kw2 | Two packages expected | No facets expected'
 );
 select is(
     search_packages('{
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -433,12 +580,12 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Facets: true Text: kw1 | Two packages expected - Facets expected'
+    'Facets: true TsQueryWeb: kw1 | Two packages expected - Facets expected'
 );
 select is(
     search_packages('{
         "facets": true,
-        "text": "package1"
+        "ts_query_web": "package1"
     }')::jsonb,
     '{
         "data": {
@@ -501,11 +648,11 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Facets: true Text: package1 | Package 1 expected - Facets expected'
+    'Facets: true TsQueryWeb: package1 | Package 1 expected - Facets expected'
 );
 select is(
     search_packages('{
-        "text": "kw9"
+        "ts_query_web": "kw9"
     }')::jsonb,
     '{
         "data": {
@@ -518,7 +665,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Text: kw9 (inexistent) | No packages or facets expected'
+    'TsQueryWeb: kw9 (inexistent) | No packages or facets expected'
 );
 
 -- Tests with kind and repositories filters
@@ -561,7 +708,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Text: missing Repo: repo1 | Package 1 expected - Facets not expected'
+    'TsQueryWeb: - Repo: repo1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages('{
@@ -602,7 +749,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Text: missing Org: org1 | Package 3 expected - Facets not expected'
+    'TsQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
 );
 select is(
     search_packages('{
@@ -643,55 +790,13 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Text: missing User: user1 | Package 1 expected - Facets not expected'
-);
-select is(
-    search_packages('{
-        "text": "",
-        "repositories": [
-            "repo1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "stars": 10,
-                "display_name": "Package 1",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": null,
-                "signed": null,
-                "created_at": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
-                }
-            }],
-            "facets": null
-        },
-        "metadata": {
-            "limit": null,
-            "offset": null,
-            "total": 1
-        }
-    }'::jsonb,
-    'Text: empty Repo: repo1 | Package 1 expected - Facets not expected'
+    'TsQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages(
     '{
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "repositories": [
             "repo2"
         ],
@@ -766,13 +871,13 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 | Package 2 expected - Facets expected'
+    'Facets: true TsQueryWeb: kw1 Repo: repo2 | Package 2 expected - Facets expected'
 );
 select is(
     search_packages(
     '{
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "repositories": [
             "repo2"
         ],
@@ -817,13 +922,13 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
+    'Facets: true TsQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
 );
 select is(
     search_packages(
     '{
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "repositories": [
             "repo2"
         ]
@@ -867,12 +972,12 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
+    'Facets: true TsQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "repositories": [
             "repo3"
         ]
@@ -916,12 +1021,12 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true Text: kw1 Repo: inexistent | No packages expected - Facets expected'
+    'Facets: true TsQueryWeb: kw1 Repo: inexistent | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
         "facets": false,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "repository_kinds": [1, 2]
     }')::jsonb,
     '{
@@ -935,7 +1040,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: false Text: kw1 Kinds: 1, 2 | No packages or facets expected'
+    'Facets: false TsQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
 
 -- Tests with limit and offset
@@ -943,7 +1048,7 @@ select is(
     search_packages('{
         "limit": 2,
         "offset": 0,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1001,13 +1106,13 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 2 Offset: 0 Text: kw1 | Packages 1 and 2 expected'
+    'Limit: 2 Offset: 0 TsQueryWeb: kw1 | Packages 1 and 2 expected'
 );
 select is(
     search_packages('{
         "limit": 1,
         "offset": 0,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1043,13 +1148,13 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 0 Text: kw1 | Package 1 expected'
+    'Limit: 1 Offset: 0 TsQueryWeb: kw1 | Package 1 expected'
 );
 select is(
     search_packages('{
         "limit": 1,
         "offset": 2,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1063,13 +1168,13 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 2 Text: kw1 | No packages expected'
+    'Limit: 1 Offset: 2 TsQueryWeb: kw1 | No packages expected'
 );
 select is(
     search_packages('{
         "limit": 1,
         "offset": 1,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1105,13 +1210,13 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 1 Text: kw1 | Package 2 expected'
+    'Limit: 1 Offset: 1 TsQueryWeb: kw1 | Package 2 expected'
 );
 select is(
     search_packages('{
         "limit": 0,
         "offset": 0,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1125,14 +1230,14 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 0 Offset: 0 Text: kw1 | No packages expected'
+    'Limit: 0 Offset: 0 TsQueryWeb: kw1 | No packages expected'
 );
 select is(
     search_packages('{
         "limit": 1,
         "offset": 2,
         "facets": true,
-        "text": "kw1",
+        "ts_query_web": "kw1",
         "deprecated": true
     }')::jsonb,
     '{
@@ -1182,7 +1287,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 2 Text: kw1 | No packages expected - Facets expected'
+    'Limit: 1 Offset: 2 TsQueryWeb: kw1 | No packages expected - Facets expected'
 );
 
 -- Finish tests and rollback transaction

@@ -62,7 +62,7 @@ const PackageView = (props: Props) => {
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { text, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
+  const { tsQueryWeb, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
@@ -276,7 +276,7 @@ const PackageView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: pageNumber || 1,
-                  text: text,
+                  tsQueryWeb: tsQueryWeb,
                   filters: filters || {},
                   deprecated: deprecated || false,
                 }),
@@ -285,9 +285,9 @@ const PackageView = (props: Props) => {
             }}
           >
             <IoIosArrowBack className="mr-2" />
-            {!isUndefined(text) ? (
+            {!isUndefined(tsQueryWeb) ? (
               <>
-                Back to "<span className="font-weight-bold">{text}</span>" results
+                Back to "<span className="font-weight-bold">{tsQueryWeb}</span>" results
               </>
             ) : (
               <>

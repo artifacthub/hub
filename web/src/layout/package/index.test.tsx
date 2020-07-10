@@ -143,7 +143,7 @@ describe('Package index', () => {
   describe('Go back button', () => {
     it('creates snapshot', async () => {
       const searchUrlReferer = {
-        text: 'test',
+        tsQueryWeb: 'test',
         filters: {},
         pageNumber: 1,
         deprecated: false,

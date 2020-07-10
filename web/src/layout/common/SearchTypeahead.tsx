@@ -24,12 +24,12 @@ const SearchTypeahead = (props: Props) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   useOutsideClick([dropdownRef], !isNull(packages), () => setPackages(null));
 
-  async function searchPackages(text: string) {
+  async function searchPackages(tsQueryWeb: string) {
     try {
       setIsSearching(true);
       const searchResults = await API.searchPackages(
         {
-          text: text,
+          tsQueryWeb: tsQueryWeb,
           filters: {},
           deprecated: false,
           limit: 15,

@@ -21,17 +21,17 @@ describe('SearchBar', () => {
   });
 
   it('creates snapshot', () => {
-    const { asFragment } = render(<SearchBar text="test" size="big" isSearching={false} />);
+    const { asFragment } = render(<SearchBar tsQueryWeb="test" size="big" isSearching={false} />);
     expect(asFragment).toMatchSnapshot();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId } = render(<SearchBar text="test" size="big" isSearching />);
+    const { getByTestId } = render(<SearchBar tsQueryWeb="test" size="big" isSearching />);
     expect(getByTestId('searchBarSpinning')).toBeInTheDocument();
   });
 
   it('renders loading when is searching', () => {
-    const { getByTestId, getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching />);
+    const { getByTestId, getByPlaceholderText } = render(<SearchBar tsQueryWeb="test" size="big" isSearching />);
 
     const spinning = getByTestId('searchBarSpinning');
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -41,7 +41,9 @@ describe('SearchBar', () => {
   });
 
   it('focuses input when clean button is clicked', () => {
-    const { getByTestId, getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
+    const { getByTestId, getByPlaceholderText } = render(
+      <SearchBar tsQueryWeb="test" size="big" isSearching={false} />
+    );
 
     const cleanBtn = getByTestId('cleanBtn');
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
@@ -53,7 +55,7 @@ describe('SearchBar', () => {
   });
 
   it('updates value on change input', () => {
-    const { getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
+    const { getByPlaceholderText } = render(<SearchBar tsQueryWeb="test" size="big" isSearching={false} />);
 
     const input = getByPlaceholderText('Search packages') as HTMLInputElement;
 
@@ -73,7 +75,7 @@ describe('SearchBar', () => {
     });
 
     it('calls on Enter key press', () => {
-      const { getByPlaceholderText } = render(<SearchBar text="test" size="big" isSearching={false} />);
+      const { getByPlaceholderText } = render(<SearchBar tsQueryWeb="test" size="big" isSearching={false} />);
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: 'testing' } });
@@ -83,7 +85,7 @@ describe('SearchBar', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQueryString({
-          text: 'testing',
+          tsQueryWeb: 'testing',
           pageNumber: 1,
           filters: {},
           deprecated: false,
@@ -101,7 +103,7 @@ describe('SearchBar', () => {
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
         search: prepareQueryString({
-          text: undefined,
+          tsQueryWeb: undefined,
           pageNumber: 1,
           filters: {},
           deprecated: false,

@@ -9,14 +9,14 @@ import styles from './SearchBar.module.css';
 
 interface Props {
   formClassName?: string;
-  text?: string;
+  tsQueryWeb?: string;
   size: 'big' | 'normal';
   isSearching: boolean;
 }
 
 const SearchBar = (props: Props) => {
   const history = useHistory();
-  const [value, setValue] = useState(props.text || '');
+  const [value, setValue] = useState(props.tsQueryWeb || '');
   const inputEl = useRef<HTMLInputElement>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -41,8 +41,8 @@ const SearchBar = (props: Props) => {
   };
 
   useEffect(() => {
-    setValue(props.text || '');
-  }, [props.text]);
+    setValue(props.tsQueryWeb || '');
+  }, [props.tsQueryWeb]);
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
@@ -55,7 +55,7 @@ const SearchBar = (props: Props) => {
           pathname: '/packages/search',
           search: prepareQueryString({
             pageNumber: 1,
-            text: value || undefined,
+            tsQueryWeb: value || undefined,
             filters: {},
             deprecated: false,
           }),

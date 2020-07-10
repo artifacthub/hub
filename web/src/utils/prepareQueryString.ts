@@ -5,8 +5,8 @@ import { SearchFiltersURL } from '../types';
 export default (query: SearchFiltersURL): string => {
   const p = new URLSearchParams();
   p.set('page', query.pageNumber.toString());
-  if (!isUndefined(query.text)) {
-    p.set('text', query.text);
+  if (!isUndefined(query.tsQueryWeb)) {
+    p.set('ts_query_web', query.tsQueryWeb);
   }
   if (query.deprecated) {
     p.set('deprecated', 'true');
