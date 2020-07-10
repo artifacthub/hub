@@ -10,14 +10,17 @@ import { Facets } from '../../types';
 import SmallTitle from '../common/SmallTitle';
 import Facet from './Facet';
 import styles from './Filters.module.css';
+import TsQuery from './TsQuery';
 
 interface Props {
   activeFilters: {
     [key: string]: string[];
   };
+  activeTsQuery?: string[];
   facets: Facets[] | null;
   visibleTitle: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTsQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDeprecatedChange: () => void;
   onResetFilters: () => void;
   onFacetExpandableChange: (filterKey: string, open: boolean) => void;
@@ -118,7 +121,7 @@ const Filters = (props: Props) => {
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>
-          {(!isEmpty(props.activeFilters) || props.deprecated) && (
+          {(!isEmpty(props.activeFilters) || props.deprecated || !isEmpty(props.activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
               <button
@@ -133,6 +136,7 @@ const Filters = (props: Props) => {
         </div>
       )}
 
+      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getKindFacets()}
       {getPublishers()}
       {getRepositoryFacets()}

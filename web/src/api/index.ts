@@ -19,11 +19,13 @@ import {
   Stats,
   Subscription,
   TestWebhook,
+  TsQuery,
   User,
   UserFullName,
   UserLogin,
   Webhook,
 } from '../types';
+import { TS_QUERY } from '../utils/data';
 import getHubBaseURL from '../utils/getHubBaseURL';
 import renameKeysInObject from '../utils/renameKeysInObject';
 
@@ -158,6 +160,20 @@ export const API = {
     }
     if (!isUndefined(query.tsQueryWeb)) {
       q.set('ts_query_web', query.tsQueryWeb);
+    }
+    if (!isUndefined(query.tsQuery)) {
+      let values: string[] = [];
+
+      query.tsQuery.forEach((value: string) => {
+        if (value !== '') {
+          const activeTsQuery = TS_QUERY.find((ts: TsQuery) => ts.label === value);
+          if (!isUndefined(activeTsQuery)) {
+            values.push(activeTsQuery.value);
+          }
+        }
+      });
+
+      q.set('ts_query', values.join(' | '));
     }
     if (query.deprecated) {
       q.set('deprecated', 'true');

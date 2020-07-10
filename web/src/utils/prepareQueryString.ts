@@ -8,6 +8,9 @@ export default (query: SearchFiltersURL): string => {
   if (!isUndefined(query.tsQueryWeb)) {
     p.set('ts_query_web', query.tsQueryWeb);
   }
+  if (!isUndefined(query.tsQuery) && query.tsQuery.length > 0) {
+    p.set('ts_query', query.tsQuery.join(' | '));
+  }
   if (query.deprecated) {
     p.set('deprecated', 'true');
   }

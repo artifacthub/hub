@@ -33,6 +33,7 @@ interface Props {
   scrollPosition?: number;
   setScrollPosition: Dispatch<SetStateAction<number | undefined>>;
   tsQueryWeb?: string;
+  tsQuery?: string[];
   pageNumber: number;
   filters: FiltersProp;
   deprecated: boolean;
@@ -127,7 +128,33 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
         filters: prepareSelectedFilters(name, newFilters, props.filters),
+        deprecated: props.deprecated,
+      }),
+    });
+  };
+
+  const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { value, checked } = e.target;
+    let query = isUndefined(props.tsQuery) ? [] : props.tsQuery.slice();
+    if (checked) {
+      query.push(value);
+    } else {
+      query = query.filter((el) => el !== value);
+    }
+
+    if (!isUndefined(expandedList)) {
+      setExpandedList(undefined);
+    }
+
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        tsQueryWeb: props.tsQueryWeb,
+        tsQuery: query,
+        filters: props.filters,
         deprecated: props.deprecated,
       }),
     });
@@ -139,6 +166,7 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: props.pageNumber,
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
         filters: props.filters,
         deprecated: !props.deprecated,
       }),
@@ -154,6 +182,7 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: [],
         filters: {},
         deprecated: false,
       }),
@@ -166,6 +195,7 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: pageNumber,
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
         filters: props.filters,
         deprecated: props.deprecated,
       }),
@@ -178,6 +208,7 @@ const SearchView = (props: Props) => {
       search: prepareQueryString({
         pageNumber: 1,
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
         filters: props.filters,
         deprecated: props.deprecated,
       }),
@@ -196,6 +227,7 @@ const SearchView = (props: Props) => {
       setIsSearching(true);
       const query = {
         tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
         filters: props.filters,
         offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
         limit: ctx.prefs.search.limit,
@@ -251,6 +283,7 @@ const SearchView = (props: Props) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [
     props.tsQueryWeb,
+    JSON.stringify(props.tsQuery),
     props.pageNumber,
     JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
     props.deprecated,
@@ -305,7 +338,9 @@ const SearchView = (props: Props) => {
                   <Filters
                     facets={facets}
                     activeFilters={props.filters}
+                    activeTsQuery={props.tsQuery}
                     onChange={onFiltersChange}
+                    onTsQueryChange={onTsQueryChange}
                     deprecated={props.deprecated}
                     onDeprecatedChange={onDeprecatedChange}
                     onResetFilters={onResetFilters}
@@ -359,7 +394,9 @@ const SearchView = (props: Props) => {
                 <Filters
                   facets={facets}
                   activeFilters={props.filters}
+                  activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
+                  onTsQueryChange={onTsQueryChange}
                   deprecated={props.deprecated}
                   onDeprecatedChange={onDeprecatedChange}
                   onResetFilters={onResetFilters}
