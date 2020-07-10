@@ -327,7 +327,13 @@ func (t *Tracker) registerOperatorVersion(
 			Version: version,
 		})
 	}
-	p.Keywords = append(p.Keywords, strings.Split(csv.Annotations["categories"], ",")...)
+	for _, category := range strings.Split(csv.Annotations["categories"], ",") {
+		if strings.Trim(strings.ToLower(category), " ") == "ai/machine learning" {
+			p.Keywords = append(p.Keywords, []string{"AI", "Machine Learning"}...)
+		} else {
+			p.Keywords = append(p.Keywords, strings.Trim(category, " "))
+		}
+	}
 	for _, link := range csv.Spec.Links {
 		p.Links = append(p.Links, &hub.Link{
 			Name: link.Name,
