@@ -97,6 +97,7 @@ export interface PackageData {
 
 export interface SearchFiltersURL {
   tsQueryWeb?: string;
+  tsQuery?: string[];
   filters: {
     [key: string]: string[];
   };
@@ -106,6 +107,7 @@ export interface SearchFiltersURL {
 
 export interface SearchQuery {
   tsQueryWeb?: string;
+  tsQuery?: string[];
   filters: {
     [key: string]: string[];
   };
@@ -306,4 +308,10 @@ export interface OptionWithIcon {
   value: string;
   label: string;
   icon: JSX.Element;
+}
+
+export interface TsQuery {
+  name: string;
+  label: string;
+  value: string;
 }

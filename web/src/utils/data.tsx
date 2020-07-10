@@ -5,7 +5,7 @@ import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
 
 import RepositoryIcon from '../layout/common/RepositoryIcon';
-import { EventKind, NavSection, PayloadKind, RepositoryKind } from '../types';
+import { EventKind, NavSection, PayloadKind, RepositoryKind, TsQuery } from '../types';
 
 export interface SubscriptionItem {
   kind: EventKind;
@@ -137,3 +137,56 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
     },
   ],
 };
+
+export const TS_QUERY: TsQuery[] = [
+  {
+    name: 'Database',
+    label: 'database',
+    value: '(database)',
+  },
+  {
+    name: 'Integration and Delivery',
+    label: 'integration-and-delivery',
+    value: '(integration | delivery)',
+  },
+  {
+    name: 'Logging and Tracing',
+    label: 'logging-and-tracing',
+    value: '(logging | tracing)',
+  },
+  {
+    name: 'Machine learning',
+    label: 'machine-learning',
+    value: '(machine <-> learning)',
+  },
+  {
+    name: 'Monitoring',
+    label: 'monitoring',
+    value: '(monitoring)',
+  },
+  {
+    name: 'Networking',
+    label: 'networking',
+    value: '(networking)',
+  },
+  {
+    name: 'Security',
+    label: 'security',
+    value: '(security | falco)',
+  },
+  {
+    name: 'Storage',
+    label: 'storage',
+    value: '(storage | (big <-> data))',
+  },
+  {
+    name: 'Streaming and Messaging',
+    label: 'streaming-messaging',
+    value: '(streaming | messaging)',
+  },
+  {
+    name: 'Web applications',
+    label: 'web-applications',
+    value: '(web <-> application)',
+  },
+];

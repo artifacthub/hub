@@ -188,8 +188,8 @@ describe('Search index', () => {
       ]);
 
       // Desktop + mobile (sidebar)
-      expect(facets).toHaveLength(2 * 2 + 2);
-      expect(options).toHaveLength(4 * 2);
+      expect(facets).toHaveLength(2 * 3 + 2);
+      expect(options).toHaveLength(14 * 2);
       expect(deprecated).toHaveLength(1 * 2);
       await waitFor(() => {});
     });
