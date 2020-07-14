@@ -93,5 +93,6 @@ type SearchPackageInput struct {
 	Orgs            []string         `json:"orgs,omitempty"`
 	Repositories    []string         `json:"repositories,omitempty"`
 	RepositoryKinds []RepositoryKind `json:"repository_kinds,omitempty"`
+	Operators       bool             `json:"operators"`
 	Deprecated      bool             `json:"deprecated"`
 }

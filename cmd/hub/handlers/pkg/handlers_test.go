@@ -490,6 +490,7 @@ func TestSearch(t *testing.T) {
 			{"invalid facets", "facets=z"},
 			{"invalid kind", "kind=z"},
 			{"invalid kind (one of them)", "kind=0&kind=z"},
+			{"invalid operators", "operators=z"},
 			{"invalid deprecated", "deprecated=z"},
 		}
 		for _, tc := range testCases {

@@ -22,7 +22,7 @@ begin
     from jsonb_array_elements_text(p_input->'repositories') e;
 
     return query
-    with packages_applying_ts_and_deprecated_filters as (
+    with packages_applying_minimum_filters as (
         select
             p.package_id,
             p.name,
@@ -61,13 +61,19 @@ begin
                 v_tsquery @@ p.tsdoc
             else true end
         and
+            case when p_input ? 'operators' and (p_input->>'operators')::boolean = true then
+                p.is_operator = true
+            else
+                true
+            end
+        and
             case when p_input ? 'deprecated' and (p_input->>'deprecated')::boolean = true then
                 true
             else
                 (s.deprecated is null or s.deprecated = false)
             end
     ), packages_applying_all_filters as (
-        select * from packages_applying_ts_and_deprecated_filters
+        select * from packages_applying_minimum_filters
         where
             case when cardinality(v_repository_kinds) > 0
             then repository_kind_id = any(v_repository_kinds) else true end
@@ -138,7 +144,7 @@ begin
                                             organization_name,
                                             organization_display_name,
                                             count(*) as total
-                                        from packages_applying_ts_and_deprecated_filters
+                                        from packages_applying_minimum_filters
                                         where organization_name is not null
                                         group by organization_name, organization_display_name
                                         order by total desc, organization_name asc
@@ -160,7 +166,7 @@ begin
                                         select
                                             user_alias,
                                             count(*) as total
-                                        from packages_applying_ts_and_deprecated_filters
+                                        from packages_applying_minimum_filters
                                         where user_alias is not null
                                         group by user_alias
                                         order by total desc, user_alias asc
@@ -183,7 +189,7 @@ begin
                                             repository_kind_id,
                                             repository_kind_name,
                                             count(*) as total
-                                        from packages_applying_ts_and_deprecated_filters
+                                        from packages_applying_minimum_filters
                                         group by repository_kind_id, repository_kind_name
                                         order by total desc, repository_kind_name asc
                                     ) as breakdown
@@ -204,7 +210,7 @@ begin
                                         select
                                             repository_name,
                                             count(*) as total
-                                        from packages_applying_ts_and_deprecated_filters
+                                        from packages_applying_minimum_filters
                                         where repository_name is not null
                                         group by repository_name
                                         order by total desc, repository_name asc
