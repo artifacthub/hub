@@ -442,6 +442,7 @@ const SearchView = (props: Props) => {
                           package={item}
                           searchUrlReferer={{
                             tsQueryWeb: props.tsQueryWeb,
+                            tsQuery: props.tsQuery,
                             pageNumber: props.pageNumber,
                             filters: props.filters,
                             deprecated: props.deprecated,
