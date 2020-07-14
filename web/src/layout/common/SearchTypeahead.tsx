@@ -31,7 +31,6 @@ const SearchTypeahead = (props: Props) => {
         {
           tsQueryWeb: tsQueryWeb,
           filters: {},
-          deprecated: false,
           limit: 15,
           offset: 0,
         },

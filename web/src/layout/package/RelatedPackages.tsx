@@ -28,7 +28,6 @@ const RelatedPackages = (props: Props) => {
           {
             tsQueryWeb: Array.from(new Set(words)).join(' or '),
             filters: {},
-            deprecated: false,
             limit: 9,
             offset: 0,
           },

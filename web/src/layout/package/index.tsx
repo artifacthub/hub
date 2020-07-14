@@ -62,7 +62,7 @@ const PackageView = (props: Props) => {
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated } = props.searchUrlReferer || {};
+  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators } = props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
@@ -279,7 +279,8 @@ const PackageView = (props: Props) => {
                   tsQueryWeb: tsQueryWeb,
                   tsQuery: tsQuery,
                   filters: filters || {},
-                  deprecated: deprecated || false,
+                  deprecated: deprecated,
+                  operators: operators,
                 }),
                 state: { fromDetail: true },
               });
@@ -343,7 +344,7 @@ const PackageView = (props: Props) => {
                       <div className="ml-3 text-truncate">
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
-                          {!isNull(detail.deprecated) && detail.deprecated && (
+                          {detail.deprecated && (
                             <div className={`badge badge-pill text-uppercase ml-3 mt-1 ${styles.deprecatedBadge}`}>
                               Deprecated
                             </div>
@@ -381,6 +382,7 @@ const PackageView = (props: Props) => {
                                       user: [detail.repository.userAlias!],
                                     },
                                     deprecated: detail.deprecated || false,
+                                    operators: detail.isOperator || false,
                                   }),
                                 }}
                               >
@@ -411,7 +413,6 @@ const PackageView = (props: Props) => {
                                   filters: {
                                     repo: [detail.repository.name],
                                   },
-                                  deprecated: false,
                                 }),
                               }}
                             >

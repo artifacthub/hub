@@ -16,7 +16,7 @@ import styles from './OrganizationInfo.module.css';
 interface Props {
   organizationName: string;
   organizationDisplayName?: string | null;
-  deprecated: null | boolean;
+  deprecated?: null | boolean;
   className?: string;
   labelClassName?: string;
   btnClassName?: string;
@@ -125,7 +125,7 @@ const OrganizationInfo = (props: Props) => {
               filters: {
                 org: [props.organizationName!],
               },
-              deprecated: isNull(props.deprecated) ? false : props.deprecated,
+              deprecated: props.deprecated,
             }),
           });
         }}

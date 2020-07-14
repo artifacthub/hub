@@ -50,6 +50,7 @@ export interface Package {
   keywords?: string[];
   maintainers?: Maintainer[];
   deprecated: boolean | null;
+  isOperator?: boolean | null;
   signed: boolean | null;
   links?: PackageLink[];
   stars?: number | null;
@@ -102,7 +103,8 @@ export interface SearchFiltersURL {
     [key: string]: string[];
   };
   pageNumber: number;
-  deprecated: boolean;
+  deprecated?: boolean | null;
+  operators?: boolean | null;
 }
 
 export interface SearchQuery {
@@ -111,7 +113,8 @@ export interface SearchQuery {
   filters: {
     [key: string]: string[];
   };
-  deprecated: boolean;
+  deprecated?: boolean | null;
+  operators?: boolean | null;
   limit: number;
   offset: number;
   total?: number;

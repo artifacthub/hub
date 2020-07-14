@@ -118,7 +118,6 @@ describe('PackageCard', () => {
           filters: {
             repo: [mockPackage.repository.name],
           },
-          deprecated: false,
         }),
       });
     });
@@ -142,7 +141,6 @@ describe('PackageCard', () => {
           filters: {
             user: [mockPackage.repository.userAlias!],
           },
-          deprecated: false,
         }),
       });
     });
@@ -155,7 +153,6 @@ describe('PackageCard', () => {
         tsQueryWeb: 'test',
         filters: {},
         pageNumber: 1,
-        deprecated: false,
       };
       const { queryByTestId } = render(
         <Router>

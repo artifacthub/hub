@@ -107,7 +107,6 @@ const HomeView = (props: Props) => {
                   filters: {
                     kind: ['3'],
                   },
-                  deprecated: false,
                 }),
               }}
             >
@@ -124,7 +123,6 @@ const HomeView = (props: Props) => {
                     kind: ['0'],
                     org: ['bitnami'],
                   },
-                  deprecated: false,
                 }),
               }}
             >
@@ -139,7 +137,6 @@ const HomeView = (props: Props) => {
                   pageNumber: 1,
                   tsQueryWeb: 'etcd',
                   filters: {},
-                  deprecated: false,
                 }),
               }}
             >
@@ -158,7 +155,6 @@ const HomeView = (props: Props) => {
                   filters: {
                     kind: ['1'],
                   },
-                  deprecated: false,
                 }),
               }}
             >
@@ -175,7 +171,6 @@ const HomeView = (props: Props) => {
                   filters: {
                     kind: ['3'],
                   },
-                  deprecated: false,
                 }),
               }}
             >

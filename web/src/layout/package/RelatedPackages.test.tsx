@@ -53,7 +53,6 @@ describe('RelatedPackages', () => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
         expect(API.searchPackages).toHaveBeenCalledWith(
           {
-            deprecated: false,
             filters: {},
             limit: 9,
             offset: 0,

@@ -6,6 +6,125 @@ exports[`Filters creates snapshot 1`] = `
     class="filters"
   >
     <div
+      class="facet mt-3 mt-sm-4 pt-1"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            class="text-secondary font-weight-bold"
+          >
+            Kind
+          </span>
+        </small>
+      </div>
+      <div
+        class="mt-3"
+      >
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="kind-0"
+            name="kind"
+            type="checkbox"
+            value="0"
+          />
+          <label
+            class="custom-control-label w-100"
+            data-testid="checkboxLabel"
+            for="kind-0"
+          >
+            <div
+              class="d-flex align-items-center mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Helm charts
+              </span>
+              <small
+                class="pl-1"
+              >
+                (256)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="kind-1"
+            name="kind"
+            type="checkbox"
+            value="1"
+          />
+          <label
+            class="custom-control-label w-100"
+            data-testid="checkboxLabel"
+            for="kind-1"
+          >
+            <div
+              class="d-flex align-items-center mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Falco rules
+              </span>
+              <small
+                class="pl-1"
+              >
+                (21)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="kind-2"
+            name="kind"
+            type="checkbox"
+            value="2"
+          />
+          <label
+            class="custom-control-label w-100"
+            data-testid="checkboxLabel"
+            for="kind-2"
+          >
+            <div
+              class="d-flex align-items-center mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                OPA policies
+              </span>
+              <small
+                class="pl-1"
+              >
+                (1)
+              </small>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
       class="mt-3 mt-sm-4 pt-1"
       role="menuitem"
     >
@@ -299,125 +418,6 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="facet mt-3 mt-sm-4 pt-1"
-      role="menuitem"
-    >
-      <div
-        class="mt-2 mb-1"
-        data-testid="smallTitle"
-      >
-        <small
-          class="card-title text-muted text-uppercase"
-        >
-          <span
-            class="text-secondary font-weight-bold"
-          >
-            Kind
-          </span>
-        </small>
-      </div>
-      <div
-        class="mt-3"
-      >
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="kind-0"
-            name="kind"
-            type="checkbox"
-            value="0"
-          />
-          <label
-            class="custom-control-label w-100"
-            data-testid="checkboxLabel"
-            for="kind-0"
-          >
-            <div
-              class="d-flex align-items-center mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Helm charts
-              </span>
-              <small
-                class="pl-1"
-              >
-                (256)
-              </small>
-            </div>
-          </label>
-        </div>
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="kind-1"
-            name="kind"
-            type="checkbox"
-            value="1"
-          />
-          <label
-            class="custom-control-label w-100"
-            data-testid="checkboxLabel"
-            for="kind-1"
-          >
-            <div
-              class="d-flex align-items-center mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Falco rules
-              </span>
-              <small
-                class="pl-1"
-              >
-                (21)
-              </small>
-            </div>
-          </label>
-        </div>
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="kind-2"
-            name="kind"
-            type="checkbox"
-            value="2"
-          />
-          <label
-            class="custom-control-label w-100"
-            data-testid="checkboxLabel"
-            for="kind-2"
-          >
-            <div
-              class="d-flex align-items-center mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                OPA policies
-              </span>
-              <small
-                class="pl-1"
-              >
-                (1)
-              </small>
-            </div>
-          </label>
-        </div>
-      </div>
-    </div>
-    <div
       class="mt-3 mt-sm-4 pt-1"
     >
       <div
@@ -667,6 +667,23 @@ exports[`Filters creates snapshot 1`] = `
       <div
         class="mt-3"
       >
+        <div
+          class="custom-control custom-checkbox checkbox"
+        >
+          <input
+            class="custom-control-input"
+            data-testid="operatorsCheckbox"
+            id="operators"
+            name="operators"
+            type="checkbox"
+          />
+          <label
+            class="custom-control-label w-100"
+            for="operators"
+          >
+            Only operators
+          </label>
+        </div>
         <div
           class="custom-control custom-checkbox checkbox"
         >

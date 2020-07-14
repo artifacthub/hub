@@ -24,6 +24,7 @@ const packageItem: Package = {
   appVersion: '1.0.0',
   normalizedName: 'pr',
   deprecated: false,
+  isOperator: false,
   keywords: ['key1', 'key2'],
   repository: {
     kind: 0,

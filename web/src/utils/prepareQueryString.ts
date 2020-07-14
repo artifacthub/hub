@@ -14,6 +14,9 @@ export default (query: SearchFiltersURL): string => {
   if (query.deprecated) {
     p.set('deprecated', 'true');
   }
+  if (query.operators) {
+    p.set('operators', 'true');
+  }
   Object.keys(query.filters).forEach((filterId: string) => {
     return query.filters[filterId].forEach((id: string) => {
       p.append(filterId, id);

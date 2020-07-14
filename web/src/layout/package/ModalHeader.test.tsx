@@ -14,6 +14,7 @@ const packageItem: Package = {
   normalizedName: 'pr',
   maintainers: [{ email: 'main@tainer.com', name: 'maintainerName' }],
   deprecated: false,
+  isOperator: false,
   repository: {
     kind: 0,
     name: 'stable',
