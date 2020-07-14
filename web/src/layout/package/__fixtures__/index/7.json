@@ -8,6 +8,7 @@
   "userAlias": null,
   "normalizedName": "pr",
   "deprecated": false,
+  "isOperator": false,
   "keywords": ["key1", "key2"],
   "repository": {
     "repositoryid": "id",

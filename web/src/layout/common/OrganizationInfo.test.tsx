@@ -10,7 +10,6 @@ jest.mock('../../api');
 
 const defaultProps = {
   organizationName: 'orgname',
-  deprecated: false,
   visibleLegend: false,
 };
 
@@ -58,7 +57,6 @@ describe('OrganizationInfo', () => {
         filters: {
           org: [defaultProps.organizationName],
         },
-        deprecated: defaultProps.deprecated,
       }),
     });
   });

@@ -40,7 +40,6 @@ describe('Details', () => {
           tsQueryWeb: 'test',
           pageNumber: 1,
           filters: {},
-          deprecated: false,
         }}
       />
     );
@@ -97,7 +96,6 @@ describe('Details', () => {
           tsQueryWeb: mockPackage.keywords![0],
           pageNumber: 1,
           filters: {},
-          deprecated: false,
         }),
       });
     });

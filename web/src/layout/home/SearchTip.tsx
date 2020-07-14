@@ -17,7 +17,6 @@ const TIPS: JSX.Element[] = [
           pageNumber: 1,
           tsQueryWeb: 'kafka operator',
           filters: {},
-          deprecated: false,
         }),
       }}
     >
@@ -35,7 +34,6 @@ const TIPS: JSX.Element[] = [
           pageNumber: 1,
           tsQueryWeb: 'apache -solr -hadoop',
           filters: {},
-          deprecated: false,
         }),
       }}
     >
@@ -53,7 +51,6 @@ const TIPS: JSX.Element[] = [
           pageNumber: 1,
           tsQueryWeb: `"monitoring system"`,
           filters: {},
-          deprecated: false,
         }),
       }}
     >
@@ -71,7 +68,6 @@ const TIPS: JSX.Element[] = [
           pageNumber: 1,
           tsQueryWeb: 'postgresql or mysql',
           filters: {},
-          deprecated: false,
         }),
       }}
     >

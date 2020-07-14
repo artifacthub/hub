@@ -57,7 +57,6 @@ const SearchBar = (props: Props) => {
             pageNumber: 1,
             tsQueryWeb: value || undefined,
             filters: {},
-            deprecated: false,
           }),
         });
       }

@@ -111,7 +111,6 @@ describe('PackageCard', () => {
           filters: {
             repo: [mockPackage.repository.name],
           },
-          deprecated: false,
         }),
       });
     });

@@ -22,9 +22,11 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onTsQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDeprecatedChange: () => void;
+  onOperatorsChange: () => void;
   onResetFilters: () => void;
   onFacetExpandableChange: (filterKey: string, open: boolean) => void;
-  deprecated: boolean;
+  deprecated?: boolean | null;
+  operators?: boolean | null;
   expandedList?: string;
 }
 
@@ -121,7 +123,7 @@ const Filters = (props: Props) => {
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>
-          {(!isEmpty(props.activeFilters) || props.deprecated || !isEmpty(props.activeTsQuery)) && (
+          {(!isEmpty(props.activeFilters) || props.deprecated || props.operators || !isEmpty(props.activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
               <button
@@ -136,8 +138,8 @@ const Filters = (props: Props) => {
         </div>
       )}
 
-      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getKindFacets()}
+      <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getPublishers()}
       {getRepositoryFacets()}
 
@@ -147,13 +149,28 @@ const Filters = (props: Props) => {
         <div className="mt-3">
           <div className={`custom-control custom-checkbox ${styles.checkbox}`}>
             <input
+              data-testid="operatorsCheckbox"
+              type="checkbox"
+              className="custom-control-input"
+              name="operators"
+              id="operators"
+              onChange={() => props.onOperatorsChange()}
+              checked={!isUndefined(props.operators) && !isNull(props.operators) && props.operators}
+            />
+            <label className="custom-control-label w-100" htmlFor="operators">
+              Only operators
+            </label>
+          </div>
+
+          <div className={`custom-control custom-checkbox ${styles.checkbox}`}>
+            <input
               data-testid="deprecatedCheckbox"
               type="checkbox"
               className="custom-control-input"
               name="deprecated"
               id="deprecated"
               onChange={() => props.onDeprecatedChange()}
-              checked={props.deprecated}
+              checked={!isUndefined(props.deprecated) && !isNull(props.deprecated) && props.deprecated}
             />
             <label className="custom-control-label w-100" htmlFor="deprecated">
               Include deprecated

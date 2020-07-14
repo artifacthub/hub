@@ -16,7 +16,6 @@ jest.mock('react-router-dom', () => ({
 
 const defaultProps = {
   keywords: ['key1', 'key2', 'key3'],
-  deprecated: false,
 };
 
 describe('Keywords', () => {
@@ -86,7 +85,6 @@ describe('Keywords', () => {
           tsQueryWeb: defaultProps.keywords[0],
           pageNumber: 1,
           filters: {},
-          deprecated: defaultProps.deprecated,
         }),
       });
     });

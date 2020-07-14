@@ -665,6 +665,7 @@ paths:
         - $ref: "#/components/parameters/OrgsListParam"
         - $ref: "#/components/parameters/RepositoriesListParam"
         - $ref: "#/components/parameters/DeprecatedParam"
+        - $ref: "#/components/parameters/OperatorsParam"
       responses:
         "200":
           description: ""
@@ -1457,6 +1458,11 @@ components:
         deprecated:
           type: boolean
           example: false
+          nullable: true
+        is_operator:
+          type: boolean
+          example: false
+          nullable: true
         signed:
           type: boolean
           nullable: true
@@ -1909,6 +1915,13 @@ components:
         default: false
       required: false
       description: Whether to include deprecated packages or not
+    OperatorsParam:
+      in: query
+      name: operators
+      schema:
+        type: boolean
+      required: false
+      description: Whether to include only operators or not
     EventKindParam:
       in: query
       name: event_kind

@@ -88,7 +88,6 @@ describe('SearchBar', () => {
           tsQueryWeb: 'testing',
           pageNumber: 1,
           filters: {},
-          deprecated: false,
         }),
       });
     });
@@ -106,7 +105,6 @@ describe('SearchBar', () => {
           tsQueryWeb: undefined,
           pageNumber: 1,
           filters: {},
-          deprecated: false,
         }),
       });
     });

@@ -36,7 +36,8 @@ interface Props {
   tsQuery?: string[];
   pageNumber: number;
   filters: FiltersProp;
-  deprecated: boolean;
+  deprecated?: boolean | null;
+  operators?: boolean | null;
   fromDetail: boolean;
 }
 
@@ -131,6 +132,7 @@ const SearchView = (props: Props) => {
         tsQuery: props.tsQuery,
         filters: prepareSelectedFilters(name, newFilters, props.filters),
         deprecated: props.deprecated,
+        operators: props.operators,
       }),
     });
   };
@@ -156,6 +158,7 @@ const SearchView = (props: Props) => {
         tsQuery: query,
         filters: props.filters,
         deprecated: props.deprecated,
+        operators: props.operators,
       }),
     });
   };
@@ -168,7 +171,22 @@ const SearchView = (props: Props) => {
         tsQueryWeb: props.tsQueryWeb,
         tsQuery: props.tsQuery,
         filters: props.filters,
-        deprecated: !props.deprecated,
+        deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
+        operators: props.operators,
+      }),
+    });
+  };
+
+  const onOperatorsChange = (): void => {
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: props.pageNumber,
+        tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
+        filters: props.filters,
+        deprecated: props.deprecated,
+        operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
       }),
     });
   };
@@ -184,7 +202,6 @@ const SearchView = (props: Props) => {
         tsQueryWeb: props.tsQueryWeb,
         tsQuery: [],
         filters: {},
-        deprecated: false,
       }),
     });
   };
@@ -198,6 +215,7 @@ const SearchView = (props: Props) => {
         tsQuery: props.tsQuery,
         filters: props.filters,
         deprecated: props.deprecated,
+        operators: props.operators,
       }),
     });
   };
@@ -211,6 +229,7 @@ const SearchView = (props: Props) => {
         tsQuery: props.tsQuery,
         filters: props.filters,
         deprecated: props.deprecated,
+        operators: props.operators,
       }),
     });
     setScrollPosition(0);
@@ -232,6 +251,7 @@ const SearchView = (props: Props) => {
         offset: (props.pageNumber - 1) * ctx.prefs.search.limit,
         limit: ctx.prefs.search.limit,
         deprecated: props.deprecated,
+        operators: props.operators,
       };
 
       try {
@@ -287,6 +307,7 @@ const SearchView = (props: Props) => {
     props.pageNumber,
     JSON.stringify(props.filters), // https://twitter.com/dan_abramov/status/1104414272753487872
     props.deprecated,
+    props.operators,
     ctx.prefs.search.limit,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -294,7 +315,7 @@ const SearchView = (props: Props) => {
   const { packages, facets } = searchResults.data;
   const { total, offset } = searchResults.metadata;
 
-  const activeFilters = props.deprecated || !isEmpty(props.filters);
+  const activeFilters = props.deprecated || props.operators || !isUndefined(props.tsQuery) || !isEmpty(props.filters);
 
   return (
     <>
@@ -342,7 +363,9 @@ const SearchView = (props: Props) => {
                     onChange={onFiltersChange}
                     onTsQueryChange={onTsQueryChange}
                     deprecated={props.deprecated}
+                    operators={props.operators}
                     onDeprecatedChange={onDeprecatedChange}
+                    onOperatorsChange={onOperatorsChange}
                     onResetFilters={onResetFilters}
                     visibleTitle={false}
                     onFacetExpandableChange={onFacetExpandableChange}
@@ -398,7 +421,9 @@ const SearchView = (props: Props) => {
                   onChange={onFiltersChange}
                   onTsQueryChange={onTsQueryChange}
                   deprecated={props.deprecated}
+                  operators={props.operators}
                   onDeprecatedChange={onDeprecatedChange}
+                  onOperatorsChange={onOperatorsChange}
                   onResetFilters={onResetFilters}
                   onFacetExpandableChange={onFacetExpandableChange}
                   expandedList={expandedList}
@@ -446,6 +471,7 @@ const SearchView = (props: Props) => {
                             pageNumber: props.pageNumber,
                             filters: props.filters,
                             deprecated: props.deprecated,
+                            operators: props.operators,
                           }}
                           saveScrollPosition={saveScrollPosition}
                           visibleSignedBadge

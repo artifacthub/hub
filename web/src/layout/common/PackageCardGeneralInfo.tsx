@@ -67,7 +67,7 @@ const PackageCardGeneralInfo = (props: Props) => {
                     filters: {
                       user: [props.package.repository.userAlias!],
                     },
-                    deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
+                    deprecated: props.package.deprecated,
                   }),
                 });
               }}
@@ -91,7 +91,7 @@ const PackageCardGeneralInfo = (props: Props) => {
                   filters: {
                     repo: [props.package.repository.name],
                   },
-                  deprecated: isNull(props.package.deprecated) ? false : props.package.deprecated,
+                  deprecated: props.package.deprecated,
                 }),
               });
             }}

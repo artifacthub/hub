@@ -9,7 +9,7 @@ import styles from './Keywords.module.css';
 
 interface Props {
   keywords?: string[] | null;
-  deprecated: boolean | null;
+  deprecated?: boolean | null;
 }
 
 const Keywords = (props: Props) => {
@@ -43,7 +43,7 @@ const Keywords = (props: Props) => {
                     tsQueryWeb: keyword,
                     pageNumber: 1,
                     filters: {},
-                    deprecated: !isNull(props.deprecated) ? props.deprecated : false,
+                    deprecated: props.deprecated,
                   }),
                 });
               }}

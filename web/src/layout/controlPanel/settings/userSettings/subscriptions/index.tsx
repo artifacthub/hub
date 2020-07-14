@@ -206,7 +206,6 @@ const SubscriptionsSection = (props: Props) => {
                                         filters: {
                                           user: [item.repository.userAlias!],
                                         },
-                                        deprecated: false,
                                       }),
                                     }}
                                   >
@@ -223,7 +222,6 @@ const SubscriptionsSection = (props: Props) => {
                                         filters: {
                                           org: [item.repository.organizationName!],
                                         },
-                                        deprecated: false,
                                       }),
                                     }}
                                   >
@@ -243,7 +241,6 @@ const SubscriptionsSection = (props: Props) => {
                                         filters: {
                                           repo: [item.repository.name],
                                         },
-                                        deprecated: false,
                                       }),
                                     }}
                                   >

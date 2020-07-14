@@ -47,7 +47,7 @@ const PackageInfo = (props: Props) => {
 
   const badges = (
     <>
-      {!isNull(props.package.deprecated) && props.package.deprecated && (
+      {props.package.deprecated && (
         <div className={`badge badge-pill text-uppercase mb-1 ${styles.deprecatedBadge}`}>Deprecated</div>
       )}
       {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
@@ -130,7 +130,6 @@ const PackageInfo = (props: Props) => {
                           filters: {
                             repo: [props.package.repository.name],
                           },
-                          deprecated: false,
                         }),
                       });
                     }}
@@ -171,7 +170,6 @@ const PackageInfo = (props: Props) => {
                               filters: {
                                 user: [props.package.repository.userAlias!],
                               },
-                              deprecated: false,
                             }),
                           });
                         }}
@@ -195,7 +193,6 @@ const PackageInfo = (props: Props) => {
                           filters: {
                             repo: [props.package.repository.name],
                           },
-                          deprecated: false,
                         }),
                       });
                     }}
