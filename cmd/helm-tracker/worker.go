@@ -225,6 +225,9 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	if len(maintainers) > 0 {
 		p.Maintainers = maintainers
 	}
+	if strings.Contains(strings.ToLower(md.Name), "operator") {
+		p.IsOperator = true
+	}
 
 	// Register package
 	err = w.pm.Register(w.ctx, p)
