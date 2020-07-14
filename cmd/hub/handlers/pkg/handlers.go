@@ -269,6 +269,16 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		kinds = append(kinds, hub.RepositoryKind(kind))
 	}
 
+	// Only display operators
+	var operators bool
+	if qs.Get("operators") != "" {
+		var err error
+		operators, err = strconv.ParseBool(qs.Get("operators"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid operators: %s", qs.Get("operators"))
+		}
+	}
+
 	// Include deprecated packages
 	var deprecated bool
 	if qs.Get("deprecated") != "" {
@@ -289,6 +299,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Orgs:            qs["org"],
 		Repositories:    qs["repo"],
 		RepositoryKinds: kinds,
+		Operators:       operators,
 		Deprecated:      deprecated,
 	}, nil
 }

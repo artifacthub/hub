@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(21);
+select plan(22);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -49,6 +49,7 @@ insert into package (
     name,
     latest_version,
     logo_image_id,
+    is_operator,
     stars,
     tsdoc,
     repository_id
@@ -57,6 +58,7 @@ insert into package (
     'package1',
     '1.0.0',
     :'image1ID',
+    true,
     10,
     generate_package_tsdoc('package1', null, 'description', '{"kw1", "kw2"}'),
     :'repo1ID'
@@ -419,6 +421,45 @@ select is(
         }
     }'::jsonb,
     'TsQuery: kw1 | kw3 | Three packages expected (all) - No facets expected'
+);
+select is(
+    search_packages('{
+        "operators": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'Operators: true | Package 1 expected - No facets expected'
 );
 select is(
     search_packages('{
