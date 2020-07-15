@@ -160,61 +160,6 @@ exports[`Search index creates snapshot 2`] = `
                     class="filters"
                   >
                     <div
-                      class="facet mt-3 mt-sm-4 pt-1"
-                      role="menuitem"
-                    >
-                      <div
-                        class="mt-2 mb-1"
-                        data-testid="smallTitle"
-                      >
-                        <small
-                          class="card-title text-muted text-uppercase"
-                        >
-                          <span
-                            class="text-secondary font-weight-bold"
-                          >
-                            Kind
-                          </span>
-                        </small>
-                      </div>
-                      <div
-                        class="mt-3"
-                      >
-                        <div
-                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-                        >
-                          <input
-                            class="custom-control-input input"
-                            data-testid="checkbox"
-                            id="kind-0"
-                            name="kind"
-                            type="checkbox"
-                            value="0"
-                          />
-                          <label
-                            class="custom-control-label w-100"
-                            data-testid="checkboxLabel"
-                            for="kind-0"
-                          >
-                            <div
-                              class="d-flex align-items-center mw-100"
-                            >
-                              <span
-                                class="d-inline-block text-truncate"
-                              >
-                                Chart
-                              </span>
-                              <small
-                                class="pl-1"
-                              >
-                                (7)
-                              </small>
-                            </div>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div
                       class="mt-3 mt-sm-4 pt-1"
                       role="menuitem"
                     >
@@ -247,12 +192,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="database"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-database"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -274,12 +219,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="integration-and-delivery"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-integration-and-delivery"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -301,12 +246,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="logging-and-tracing"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-logging-and-tracing"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -328,12 +273,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="machine-learning"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-machine-learning"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -355,12 +300,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="monitoring"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-monitoring"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -382,12 +327,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="networking"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-networking"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -409,12 +354,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="security"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-security"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -436,12 +381,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="storage"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-storage"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -463,12 +408,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="streaming-messaging"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-streaming-messaging"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -490,18 +435,73 @@ exports[`Search index creates snapshot 2`] = `
                             value="web-applications"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="tsQuery-web-applications"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
                               >
                                 Web applications
                               </span>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="facet mt-3 mt-sm-4 pt-1"
+                      role="menuitem"
+                    >
+                      <div
+                        class="mt-2 mb-1"
+                        data-testid="smallTitle"
+                      >
+                        <small
+                          class="card-title text-muted text-uppercase"
+                        >
+                          <span
+                            class="text-secondary font-weight-bold"
+                          >
+                            Kind
+                          </span>
+                        </small>
+                      </div>
+                      <div
+                        class="mt-3"
+                      >
+                        <div
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                        >
+                          <input
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="kind-0"
+                            name="kind"
+                            type="checkbox"
+                            value="0"
+                          />
+                          <label
+                            class="custom-control-label w-100 label"
+                            data-testid="checkboxLabel"
+                            for="kind-0"
+                          >
+                            <div
+                              class="d-flex align-items-baseline mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Chart
+                              </span>
+                              <small
+                                class="pl-1"
+                              >
+                                (7)
+                              </small>
                             </div>
                           </label>
                         </div>
@@ -540,12 +540,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="stable"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="repo-stable"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -572,12 +572,12 @@ exports[`Search index creates snapshot 2`] = `
                             value="incubator"
                           />
                           <label
-                            class="custom-control-label w-100"
+                            class="custom-control-label w-100 label"
                             data-testid="checkboxLabel"
                             for="repo-incubator"
                           >
                             <div
-                              class="d-flex align-items-center mw-100"
+                              class="d-flex align-items-baseline mw-100"
                             >
                               <span
                                 class="d-inline-block text-truncate"
@@ -616,37 +616,57 @@ exports[`Search index creates snapshot 2`] = `
                         class="mt-3"
                       >
                         <div
-                          class="custom-control custom-checkbox checkbox"
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                         >
                           <input
-                            class="custom-control-input"
-                            data-testid="operatorsCheckbox"
-                            id="operators"
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="operators-operators"
                             name="operators"
                             type="checkbox"
+                            value="operators"
                           />
                           <label
-                            class="custom-control-label w-100"
-                            for="operators"
+                            class="custom-control-label w-100 label"
+                            data-testid="checkboxLabel"
+                            for="operators-operators"
                           >
-                            Only operators
+                            <div
+                              class="d-flex align-items-baseline mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Only operators
+                              </span>
+                            </div>
                           </label>
                         </div>
                         <div
-                          class="custom-control custom-checkbox checkbox"
+                          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                         >
                           <input
-                            class="custom-control-input"
-                            data-testid="deprecatedCheckbox"
-                            id="deprecated"
+                            class="custom-control-input input"
+                            data-testid="checkbox"
+                            id="deprecated-deprecated"
                             name="deprecated"
                             type="checkbox"
+                            value="deprecated"
                           />
                           <label
-                            class="custom-control-label w-100"
-                            for="deprecated"
+                            class="custom-control-label w-100 label"
+                            data-testid="checkboxLabel"
+                            for="deprecated-deprecated"
                           >
-                            Include deprecated
+                            <div
+                              class="d-flex align-items-baseline mw-100"
+                            >
+                              <span
+                                class="d-inline-block text-truncate"
+                              >
+                                Include deprecated
+                              </span>
+                            </div>
                           </label>
                         </div>
                       </div>
@@ -788,61 +808,6 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="facet mt-3 mt-sm-4 pt-1"
-              role="menuitem"
-            >
-              <div
-                class="mt-2 mb-1"
-                data-testid="smallTitle"
-              >
-                <small
-                  class="card-title text-muted text-uppercase"
-                >
-                  <span
-                    class="text-secondary font-weight-bold"
-                  >
-                    Kind
-                  </span>
-                </small>
-              </div>
-              <div
-                class="mt-3"
-              >
-                <div
-                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-                >
-                  <input
-                    class="custom-control-input input"
-                    data-testid="checkbox"
-                    id="kind-0"
-                    name="kind"
-                    type="checkbox"
-                    value="0"
-                  />
-                  <label
-                    class="custom-control-label w-100"
-                    data-testid="checkboxLabel"
-                    for="kind-0"
-                  >
-                    <div
-                      class="d-flex align-items-center mw-100"
-                    >
-                      <span
-                        class="d-inline-block text-truncate"
-                      >
-                        Chart
-                      </span>
-                      <small
-                        class="pl-1"
-                      >
-                        (7)
-                      </small>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div
               class="mt-3 mt-sm-4 pt-1"
               role="menuitem"
             >
@@ -875,12 +840,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="database"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-database"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -902,12 +867,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="integration-and-delivery"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-integration-and-delivery"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -929,12 +894,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="logging-and-tracing"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-logging-and-tracing"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -956,12 +921,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="machine-learning"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-machine-learning"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -983,12 +948,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="monitoring"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-monitoring"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1010,12 +975,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="networking"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-networking"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1037,12 +1002,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="security"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-security"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1064,12 +1029,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="storage"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-storage"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1091,12 +1056,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="streaming-messaging"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-streaming-messaging"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1118,18 +1083,73 @@ exports[`Search index creates snapshot 2`] = `
                     value="web-applications"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="tsQuery-web-applications"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
                       >
                         Web applications
                       </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              class="facet mt-3 mt-sm-4 pt-1"
+              role="menuitem"
+            >
+              <div
+                class="mt-2 mb-1"
+                data-testid="smallTitle"
+              >
+                <small
+                  class="card-title text-muted text-uppercase"
+                >
+                  <span
+                    class="text-secondary font-weight-bold"
+                  >
+                    Kind
+                  </span>
+                </small>
+              </div>
+              <div
+                class="mt-3"
+              >
+                <div
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                >
+                  <input
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="kind-0"
+                    name="kind"
+                    type="checkbox"
+                    value="0"
+                  />
+                  <label
+                    class="custom-control-label w-100 label"
+                    data-testid="checkboxLabel"
+                    for="kind-0"
+                  >
+                    <div
+                      class="d-flex align-items-baseline mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Chart
+                      </span>
+                      <small
+                        class="pl-1"
+                      >
+                        (7)
+                      </small>
                     </div>
                   </label>
                 </div>
@@ -1168,12 +1188,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="stable"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="repo-stable"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1200,12 +1220,12 @@ exports[`Search index creates snapshot 2`] = `
                     value="incubator"
                   />
                   <label
-                    class="custom-control-label w-100"
+                    class="custom-control-label w-100 label"
                     data-testid="checkboxLabel"
                     for="repo-incubator"
                   >
                     <div
-                      class="d-flex align-items-center mw-100"
+                      class="d-flex align-items-baseline mw-100"
                     >
                       <span
                         class="d-inline-block text-truncate"
@@ -1244,37 +1264,57 @@ exports[`Search index creates snapshot 2`] = `
                 class="mt-3"
               >
                 <div
-                  class="custom-control custom-checkbox checkbox"
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                 >
                   <input
-                    class="custom-control-input"
-                    data-testid="operatorsCheckbox"
-                    id="operators"
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="operators-operators"
                     name="operators"
                     type="checkbox"
+                    value="operators"
                   />
                   <label
-                    class="custom-control-label w-100"
-                    for="operators"
+                    class="custom-control-label w-100 label"
+                    data-testid="checkboxLabel"
+                    for="operators-operators"
                   >
-                    Only operators
+                    <div
+                      class="d-flex align-items-baseline mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Only operators
+                      </span>
+                    </div>
                   </label>
                 </div>
                 <div
-                  class="custom-control custom-checkbox checkbox"
+                  class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
                 >
                   <input
-                    class="custom-control-input"
-                    data-testid="deprecatedCheckbox"
-                    id="deprecated"
+                    class="custom-control-input input"
+                    data-testid="checkbox"
+                    id="deprecated-deprecated"
                     name="deprecated"
                     type="checkbox"
+                    value="deprecated"
                   />
                   <label
-                    class="custom-control-label w-100"
-                    for="deprecated"
+                    class="custom-control-label w-100 label"
+                    data-testid="checkboxLabel"
+                    for="deprecated-deprecated"
                   >
-                    Include deprecated
+                    <div
+                      class="d-flex align-items-baseline mw-100"
+                    >
+                      <span
+                        class="d-inline-block text-truncate"
+                      >
+                        Include deprecated
+                      </span>
+                    </div>
                   </label>
                 </div>
               </div>

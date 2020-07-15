@@ -7,6 +7,7 @@ import React from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 import { Facets } from '../../types';
+import CheckBox from '../common/Checkbox';
 import SmallTitle from '../common/SmallTitle';
 import Facet from './Facet';
 import styles from './Filters.module.css';
@@ -138,8 +139,8 @@ const Filters = (props: Props) => {
         </div>
       )}
 
-      {getKindFacets()}
       <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
+      {getKindFacets()}
       {getPublishers()}
       {getRepositoryFacets()}
 
@@ -147,35 +148,23 @@ const Filters = (props: Props) => {
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
-          <div className={`custom-control custom-checkbox ${styles.checkbox}`}>
-            <input
-              data-testid="operatorsCheckbox"
-              type="checkbox"
-              className="custom-control-input"
-              name="operators"
-              id="operators"
-              onChange={() => props.onOperatorsChange()}
-              checked={!isUndefined(props.operators) && !isNull(props.operators) && props.operators}
-            />
-            <label className="custom-control-label w-100" htmlFor="operators">
-              Only operators
-            </label>
-          </div>
+          <CheckBox
+            name="operators"
+            value="operators"
+            className={styles.checkbox}
+            label="Only operators"
+            checked={!isUndefined(props.operators) && !isNull(props.operators) && props.operators}
+            onChange={props.onOperatorsChange}
+          />
 
-          <div className={`custom-control custom-checkbox ${styles.checkbox}`}>
-            <input
-              data-testid="deprecatedCheckbox"
-              type="checkbox"
-              className="custom-control-input"
-              name="deprecated"
-              id="deprecated"
-              onChange={() => props.onDeprecatedChange()}
-              checked={!isUndefined(props.deprecated) && !isNull(props.deprecated) && props.deprecated}
-            />
-            <label className="custom-control-label w-100" htmlFor="deprecated">
-              Include deprecated
-            </label>
-          </div>
+          <CheckBox
+            name="deprecated"
+            value="deprecated"
+            className={styles.checkbox}
+            label="Include deprecated"
+            checked={!isUndefined(props.deprecated) && !isNull(props.deprecated) && props.deprecated}
+            onChange={props.onDeprecatedChange}
+          />
         </div>
       </div>
     </div>

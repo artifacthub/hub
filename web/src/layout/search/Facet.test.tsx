@@ -6,6 +6,16 @@ import Facet from './Facet';
 
 const optionsMock: FacetOption[] = [
   {
+    id: 'stable',
+    name: 'Stable',
+    total: 203,
+  },
+  {
+    id: 'incubator',
+    name: 'Incubator',
+    total: 53,
+  },
+  {
     id: 'test',
     name: 'Test',
     total: 6,
@@ -14,16 +24,6 @@ const optionsMock: FacetOption[] = [
     id: 'test1',
     name: 'Test1',
     total: 8,
-  },
-  {
-    id: 'incubator',
-    name: 'Incubator',
-    total: 53,
-  },
-  {
-    id: 'stable',
-    name: 'Stable',
-    total: 203,
   },
 ];
 

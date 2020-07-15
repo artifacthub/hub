@@ -35,12 +35,12 @@ exports[`Facet creates snapshot 1`] = `
           value="stable"
         />
         <label
-          class="custom-control-label w-100"
+          class="custom-control-label w-100 label"
           data-testid="checkboxLabel"
           for="repo-stable"
         >
           <div
-            class="d-flex align-items-center mw-100"
+            class="d-flex align-items-baseline mw-100"
           >
             <span
               class="d-inline-block text-truncate"
@@ -67,12 +67,12 @@ exports[`Facet creates snapshot 1`] = `
           value="incubator"
         />
         <label
-          class="custom-control-label w-100"
+          class="custom-control-label w-100 label"
           data-testid="checkboxLabel"
           for="repo-incubator"
         >
           <div
-            class="d-flex align-items-center mw-100"
+            class="d-flex align-items-baseline mw-100"
           >
             <span
               class="d-inline-block text-truncate"
@@ -99,12 +99,12 @@ exports[`Facet creates snapshot 1`] = `
           value="test"
         />
         <label
-          class="custom-control-label w-100"
+          class="custom-control-label w-100 label"
           data-testid="checkboxLabel"
           for="repo-test"
         >
           <div
-            class="d-flex align-items-center mw-100"
+            class="d-flex align-items-baseline mw-100"
           >
             <span
               class="d-inline-block text-truncate"
