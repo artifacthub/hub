@@ -105,7 +105,7 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(18);
+      expect(getAllByTestId('checkbox')).toHaveLength(20);
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -134,9 +134,9 @@ describe('Filters', () => {
     });
 
     it('calls deprecated mock when deprecated checkbox is clicked', () => {
-      const { getByTestId } = render(<Filters {...defaultProps} />);
+      const { getByLabelText } = render(<Filters {...defaultProps} />);
 
-      const opt = getByTestId('deprecatedCheckbox');
+      const opt = getByLabelText('Include deprecated');
       expect(opt).toBeInTheDocument();
       fireEvent.click(opt);
       expect(onDeprecatedChangeMock).toHaveBeenCalledTimes(1);
@@ -157,8 +157,8 @@ describe('Filters', () => {
       const titles = getAllByTestId('smallTitle');
       expect(titles).toHaveLength(5);
 
-      expect(titles[0]).toHaveTextContent('Kind');
-      expect(titles[1]).toHaveTextContent('Category');
+      expect(titles[0]).toHaveTextContent('Category');
+      expect(titles[1]).toHaveTextContent('Kind');
       expect(titles[2]).toHaveTextContent('Publisher');
       expect(titles[3]).toHaveTextContent('Repository');
       expect(titles[4]).toHaveTextContent('Others');

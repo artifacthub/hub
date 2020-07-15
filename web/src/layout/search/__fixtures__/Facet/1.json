@@ -102,7 +102,7 @@
         }
       ]
     },
-    "checkboxes": ["Stable(203)", "Incubator(53)", "Test(6)"]
+    "checkboxes": ["Test(6)", "Test1(8)", "Incubator(53)"]
   },
   {
     "props": {
@@ -110,6 +110,16 @@
       "filterKey": "repo",
       "active": ["test1"],
       "options": [
+        {
+          "id": "stable",
+          "name": "Stable",
+          "total": 203
+        },
+        {
+          "id": "incubator",
+          "name": "Incubator",
+          "total": 53
+        },
         {
           "id": "test",
           "name": "Test",
@@ -119,16 +129,6 @@
           "id": "test1",
           "name": "Test1",
           "total": 8
-        },
-        {
-          "id": "incubator",
-          "name": "Incubator",
-          "total": 53
-        },
-        {
-          "id": "stable",
-          "name": "Stable",
-          "total": 203
         }
       ]
     },
@@ -162,7 +162,7 @@
         }
       ]
     },
-    "checkboxes": ["Stable(203)", "Test1(8)", "Incubator(53)"]
+    "checkboxes": ["Test1(8)", "Stable(203)", "Test(6)"]
   },
   {
     "props": {
