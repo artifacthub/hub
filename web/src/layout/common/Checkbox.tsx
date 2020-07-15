@@ -36,8 +36,8 @@ const CheckBox = (props: Props) => {
         checked={props.checked}
         disabled={props.disabled}
       />
-      <label className="custom-control-label w-100" htmlFor={id} data-testid="checkboxLabel">
-        <div className="d-flex align-items-center mw-100">
+      <label className={`custom-control-label w-100 ${styles.label}`} htmlFor={id} data-testid="checkboxLabel">
+        <div className="d-flex align-items-baseline mw-100">
           <span className="d-inline-block text-truncate">{props.label}</span>
           {!isUndefined(props.legend) && <small className="pl-1">({props.legend})</small>}
         </div>

@@ -171,26 +171,21 @@ describe('Search index', () => {
   });
 
   describe('Filters', () => {
-    it('renders 2 facets groups + deprecated', async () => {
+    it('renders 2 facets groups', async () => {
       const mockSearchResults = getMockSearchResults('7');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getAllByRole, getAllByTestId } = render(
+      const { getAllByRole, getAllByTestId, getByLabelText } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
       );
 
-      const [facets, options, deprecated] = await waitFor(() => [
-        getAllByRole('menuitem'),
-        getAllByTestId('checkbox'),
-        getAllByTestId('deprecatedCheckbox'),
-      ]);
+      const [facets, options] = await waitFor(() => [getAllByRole('menuitem'), getAllByTestId('checkbox')]);
 
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 3 + 2);
-      expect(options).toHaveLength(14 * 2);
-      expect(deprecated).toHaveLength(1 * 2);
+      expect(options).toHaveLength(16 * 2);
       await waitFor(() => {});
     });
 

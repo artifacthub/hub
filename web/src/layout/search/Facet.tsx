@@ -21,7 +21,6 @@ interface Props {
   isExpanded: boolean;
 }
 
-const SPECIAL_REPOS = ['incubator', 'stable'];
 const DEFAULT_VISIBLE_ITEMS = 3;
 
 const Facet = (props: Props) => {
@@ -35,42 +34,14 @@ const Facet = (props: Props) => {
   );
 
   useEffect(() => {
-    const specialRepos = filter(props.options, (o: FacetOption) => {
-      if (props.filterKey === 'repo') {
-        return SPECIAL_REPOS.includes(o.id.toString() as string);
-      }
-    });
-
     const activeOptions = filter(props.options, (o: FacetOption) => {
-      if (props.filterKey === 'repo') {
-        return isChecked(o.id.toString()) && !SPECIAL_REPOS.includes(o.id.toString() as string);
-      } else {
-        return isChecked(o.id.toString());
-      }
+      return isChecked(o.id.toString());
     });
-    const active = props.filterKey === 'repo' ? activeOptions.length + specialRepos.length : activeOptions.length;
-    setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, active));
+    setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, activeOptions.length));
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
   const getSortedOptions = () => {
     switch (props.filterKey) {
-      case 'repo':
-        let options = filter(props.options, (option: FacetOption) => {
-          return !SPECIAL_REPOS.includes(option.id.toString());
-        });
-
-        SPECIAL_REPOS.forEach((repoName: string) => {
-          const repo = props.options.find((option: FacetOption) => {
-            return option.id.toString() === repoName;
-          });
-
-          if (!isUndefined(repo)) {
-            options.unshift(repo);
-          }
-        });
-
-        return sortBy(options, [(o: FacetOption) => !isChecked(o.id.toString())]);
-
       case 'kind':
         return props.options;
 
