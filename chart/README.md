@@ -12,7 +12,7 @@ To install the chart with the release name `hub` run:
 
 ```bash
 $ helm repo add artifact-hub https://artifacthub.github.io/hub
-$ helm install hub artifact-hub/artifact-hub
+$ helm install --name hub artifact-hub/artifact-hub
 ```
 
 The command deploys Artifact Hub on the Kubernetes cluster using the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
