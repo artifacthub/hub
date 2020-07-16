@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { Organization } from '../../../../../types';
+import { ErrorKind, Organization } from '../../../../../types';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
 import OrganizationForm from '../../../organizations/Form';
@@ -32,14 +32,21 @@ const ProfileSection = (props: Props) => {
   async function fetchOrganization() {
     try {
       setIsLoading(true);
-      setOrganization(await API.getOrganization(selectedOrg!));
-      setApiError(null);
+      const organization = await API.getOrganization(selectedOrg!);
+      setOrganization(organization);
+      if (isNull(organization)) {
+        setApiError('Sorry, the organization you requested was not found.');
+      } else {
+        setApiError(null);
+      }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        if (err.status === 500) {
-          setApiError('An error occurred getting the organization details, please try again later');
+      if (err.kind !== ErrorKind.Unauthorized) {
+        if (err.kind === ErrorKind.NotFound) {
+          setApiError('Sorry, the organization you requested was not found.');
+        } else if (!isUndefined(err.message)) {
+          setApiError(err.message);
         }
         setOrganization(null);
       } else {
@@ -68,7 +75,11 @@ const ProfileSection = (props: Props) => {
           <>
             {isNull(organization) ? (
               <NoData issuesLinkVisible={!isNull(apiError)}>
-                {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
+                {isNull(apiError) ? (
+                  <>An error occurred getting the organization details, please try again later.</>
+                ) : (
+                  <>{apiError}</>
+                )}
               </NoData>
             ) : (
               <>

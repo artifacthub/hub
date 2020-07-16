@@ -6,7 +6,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Repository as Repo } from '../../../types';
+import { ErrorKind, Repository as Repo } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import RepositoryCard from './Card';
@@ -40,8 +40,8 @@ const RepositoriesSection = (props: Props) => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred getting the repositories, please try again later');
+      if (err.kind !== ErrorKind.Unauthorized) {
+        setApiError('An error occurred getting the repositories, please try again later.');
         setRepositories([]);
       } else {
         props.onAuthError();

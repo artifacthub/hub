@@ -13,6 +13,7 @@ import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
 import {
   CustomResourcesDefinition,
   CustomResourcesDefinitionExample,
+  ErrorKind,
   Package,
   RepositoryKind,
   SearchFiltersURL,
@@ -99,11 +100,13 @@ const PackageView = (props: Props) => {
         }
       }
       setApiError(null);
-      setIsLoadingPackage(false);
       window.scrollTo(0, 0); // Scroll to top when a new version is loaded
+      setIsLoadingPackage(false);
     } catch (err) {
-      if (err.status !== 404) {
-        setApiError('An error occurred getting this package, please try again later');
+      if (err.kind === ErrorKind.NotFound) {
+        setApiError('Sorry, the package you requested was not found.');
+      } else if (!isUndefined(err.message)) {
+        setApiError(err.message);
       }
       setDetail(null);
       setIsLoadingPackage(false);
@@ -367,7 +370,7 @@ const PackageView = (props: Props) => {
                           </span>
                         </div>
 
-                        <div className={`d-none d-md-flex flex-row mt-2 ${styles.subtitle}`}>
+                        <div className={`d-none d-md-flex flex-row align-items-center mt-2 ${styles.subtitle}`}>
                           {!isNull(detail.repository.userAlias) ? (
                             <div className="mr-2 text-truncate">
                               <small className="mr-1 text-uppercase text-muted">User: </small>
@@ -466,7 +469,11 @@ const PackageView = (props: Props) => {
             <div className="container">
               {isNull(detail) && !isLoadingPackage ? (
                 <NoData issuesLinkVisible={!isNull(apiError)}>
-                  {isNull(apiError) ? <>Sorry, the package you requested was not found.</> : <>{apiError}</>}
+                  {isNull(apiError) ? (
+                    <>An error occurred getting this package, please try again later.</>
+                  ) : (
+                    <>{apiError}</>
+                  )}
                 </NoData>
               ) : (
                 <div className="row">

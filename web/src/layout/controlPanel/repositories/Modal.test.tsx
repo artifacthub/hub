@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Repository } from '../../../types';
+import { ErrorKind, Repository } from '../../../types';
 import Modal from './Modal';
 jest.mock('../../../api');
 
@@ -72,7 +72,7 @@ describe('Repository Modal - packages section', () => {
 
     describe('Add repo', () => {
       it('calls add repo', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
         const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
@@ -101,7 +101,7 @@ describe('Repository Modal - packages section', () => {
       });
 
       it('calls add repo for org', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
         const { getByTestId } = render(
@@ -132,10 +132,10 @@ describe('Repository Modal - packages section', () => {
       });
 
       it('displays default Api error', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockRejectedValue({
-          statusText: 'error',
+          kind: ErrorKind.Other,
         });
         const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
 
@@ -150,16 +150,16 @@ describe('Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred adding the repository, please try again later')).toBeInTheDocument();
+          expect(getByText('An error occurred adding the repository, please try again later.')).toBeInTheDocument();
         });
       });
 
-      it('displays custom Api error 400', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      it('displays custom Api error', async () => {
+        mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockRejectedValue({
-          statusText: 'error 400',
-          status: 400,
+          kind: ErrorKind.Other,
+          message: 'custom error',
         });
         const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
 
@@ -174,15 +174,15 @@ describe('Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred adding the repository: error 400')).toBeInTheDocument();
+          expect(getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
         });
       });
 
-      it('calls onAuthError when error is ErrLoginRedirect', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      it('calls onAuthError when error is UnauthorizedError', async () => {
+        mocked(API).checkAvailability.mockResolvedValue(false);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
         const { getByTestId } = render(<Modal {...defaultProps} />);
 
@@ -201,7 +201,7 @@ describe('Repository Modal - packages section', () => {
 
     describe('Update organization', () => {
       it('calls update organization', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
         const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
@@ -226,7 +226,7 @@ describe('Repository Modal - packages section', () => {
       });
 
       it('calls update organization for org', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).addRepository.mockResolvedValue(null);
         const { getByTestId } = render(
@@ -253,10 +253,10 @@ describe('Repository Modal - packages section', () => {
       });
 
       it('displays default Api error', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+        mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).updateRepository.mockRejectedValue({
-          statusText: 'error',
+          kind: ErrorKind.Other,
         });
         const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
 
@@ -269,16 +269,16 @@ describe('Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred updating the repository, please try again later')).toBeInTheDocument();
+          expect(getByText('An error occurred updating the repository, please try again later.')).toBeInTheDocument();
         });
       });
 
-      it('displays custom Api error 400', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      it('displays custom Api error message', async () => {
+        mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
         mocked(API).updateRepository.mockRejectedValue({
-          statusText: 'error 400',
-          status: 400,
+          kind: ErrorKind.Other,
+          message: 'custom error',
         });
         const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
 
@@ -291,14 +291,14 @@ describe('Repository Modal - packages section', () => {
 
         await waitFor(() => {
           expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred updating the repository: error 400')).toBeInTheDocument();
+          expect(getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
         });
       });
 
-      it('calls onAuthError when error is ErrLoginRedirect', async () => {
-        mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      it('calls onAuthError when error is UnauthorizedError', async () => {
+        mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).updateRepository.mockRejectedValue({
-          statusText: 'ErrLoginRedirect',
+          kind: ErrorKind.Unauthorized,
         });
         const { getByTestId } = render(<Modal {...defaultProps} repository={repoMock} />);
 

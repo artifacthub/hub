@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
-import { APIKey } from '../../../../../types';
+import { APIKey, ErrorKind } from '../../../../../types';
 import APIKeysSection from './index';
 jest.mock('../../../../../api');
 jest.mock('moment', () => () => ({ format: () => '2020/06/18 16:35:39 (+00:00)' }));
@@ -135,9 +135,9 @@ describe('API keys section index', () => {
   });
 
   describe('on getAPIKeys error', () => {
-    it('401 error', async () => {
+    it('UnauthorizedError', async () => {
       mocked(API).getAPIKeys.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
 
       render(
@@ -152,7 +152,7 @@ describe('API keys section index', () => {
     });
 
     it('rest API errors - displays generic error message', async () => {
-      mocked(API).getAPIKeys.mockRejectedValue({ status: 400 });
+      mocked(API).getAPIKeys.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       const { getByTestId, getByText } = render(
         <Router>
@@ -164,7 +164,7 @@ describe('API keys section index', () => {
 
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(getByText(/An error occurred getting your API keys, please try again later/i)).toBeInTheDocument();
+      expect(getByText(/An error occurred getting your API keys, please try again later./i)).toBeInTheDocument();
 
       await waitFor(() => {});
     });

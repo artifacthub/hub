@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
-import { Organization } from '../../../types';
+import { ErrorKind, Organization } from '../../../types';
 import OrganizationsSection from './index';
 jest.mock('../../../api');
 
@@ -145,9 +145,9 @@ describe('Organizations section index', () => {
   });
 
   describe('on getUserOrganizations error', () => {
-    it('401 error', async () => {
+    it('UnauthorizedError', async () => {
       mocked(API).getUserOrganizations.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
 
       render(
@@ -162,7 +162,7 @@ describe('Organizations section index', () => {
     });
 
     it('rest API errors - displays generic error message', async () => {
-      mocked(API).getUserOrganizations.mockRejectedValue({ status: 400 });
+      mocked(API).getUserOrganizations.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       const { getByTestId, getByText } = render(
         <Router>
@@ -174,7 +174,7 @@ describe('Organizations section index', () => {
 
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(getByText(/An error occurred getting your organizations, please try again later/i)).toBeInTheDocument();
+      expect(getByText(/An error occurred getting your organizations, please try again later./i)).toBeInTheDocument();
 
       await waitFor(() => {});
     });

@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { User } from '../../../types';
+import { ErrorKind, User } from '../../../types';
 import MembersSection from './index';
 jest.mock('../../../api');
 
@@ -155,9 +155,9 @@ describe('Members section index', () => {
   });
 
   describe('on getOrganizationMembers error', () => {
-    it('401 error', async () => {
+    it('UnauthorizedError error', async () => {
       mocked(API).getOrganizationMembers.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
 
       render(
@@ -173,8 +173,8 @@ describe('Members section index', () => {
       expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
 
-    it('rest API errors - displays generic error message', async () => {
-      mocked(API).getOrganizationMembers.mockRejectedValue({ status: 400 });
+    it('rest API errors', async () => {
+      mocked(API).getOrganizationMembers.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -189,7 +189,7 @@ describe('Members section index', () => {
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(
-        getByText(/An error occurred getting the organization members, please try again later/i)
+        getByText(/An error occurred getting the organization members, please try again later./i)
       ).toBeInTheDocument();
 
       await waitFor(() => {});

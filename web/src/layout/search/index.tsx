@@ -279,7 +279,7 @@ const SearchView = (props: Props) => {
             limit: 0,
           },
         });
-        setApiError('An error occurred searching packages, please try again later');
+        setApiError('An error occurred searching packages, please try again later.');
       } finally {
         setIsSearching(false);
         // Update scroll position

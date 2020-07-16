@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
-import { Package } from '../../types';
+import { ErrorKind, Package } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import PackageView from './index';
 jest.mock('../../api');
@@ -96,7 +96,9 @@ describe('Package index', () => {
 
   describe('when getPackage fails', () => {
     it('generic error', async () => {
-      mocked(API).getPackage.mockRejectedValue({ status: 500 });
+      mocked(API).getPackage.mockRejectedValue({
+        kind: ErrorKind.Other,
+      });
 
       const props = {
         ...defaultProps,
@@ -114,11 +116,14 @@ describe('Package index', () => {
 
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later/i);
+      expect(noData).toHaveTextContent(/An error occurred getting this package, please try again later./i);
     });
 
-    it('error 404', async () => {
-      mocked(API).getPackage.mockRejectedValue({ status: 404 });
+    it('not found package', async () => {
+      mocked(API).getPackage.mockRejectedValue({
+        kind: ErrorKind.Other,
+        message: 'Sorry, the package you requested was not found.',
+      });
 
       const props = {
         ...defaultProps,

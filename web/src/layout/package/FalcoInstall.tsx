@@ -20,7 +20,7 @@ interface Tab {
 const TABS: Tab[] = [
   {
     name: 'cli',
-    title: 'Falco CLI',
+    title: 'Helm CLI',
   },
 ];
 const ACTIVE_TAB: string = 'cli';

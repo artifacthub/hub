@@ -27,13 +27,8 @@ const UserConfirmation = (props: Props) => {
         setValidEmail(true);
       } catch (err) {
         let error = 'An error occurred verifying your email, please contact us about this issue.';
-        switch (err.status) {
-          case 400:
-            error = err.message;
-            break;
-          case 410:
-            error = 'Sorry, your confirmation code has expired.';
-            break;
+        if (!isUndefined(err.message)) {
+          error = `Sorry, ${err.message}`;
         }
         setApiError(error);
         setValidEmail(false);

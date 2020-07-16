@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { Webhook } from '../../../../types';
+import { ErrorKind, Webhook } from '../../../../types';
 import WebhooksSection from './index';
 jest.mock('../../../../api');
 
@@ -146,8 +146,10 @@ describe('WebhooksSection', () => {
   });
 
   describe('when getWebhooks fails', () => {
-    it('on 401 error', async () => {
-      mocked(API).getWebhooks.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+    it('on UnauthorizedError', async () => {
+      mocked(API).getWebhooks.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -165,7 +167,7 @@ describe('WebhooksSection', () => {
     });
 
     it('default error', async () => {
-      mocked(API).getWebhooks.mockRejectedValue({});
+      mocked(API).getWebhooks.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByText } = render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
@@ -179,7 +181,7 @@ describe('WebhooksSection', () => {
         expect(API.getWebhooks).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('An error occurred getting webhooks, please try again later')).toBeInTheDocument();
+      expect(getByText('An error occurred getting webhooks, please try again later.')).toBeInTheDocument();
     });
   });
 });

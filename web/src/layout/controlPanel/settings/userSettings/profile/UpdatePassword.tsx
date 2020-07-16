@@ -3,8 +3,9 @@ import every from 'lodash/every';
 import React, { useRef, useState } from 'react';
 
 import { API } from '../../../../../api';
-import { RefInputField } from '../../../../../types';
+import { ErrorKind, RefInputField } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
+import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
 import InputField from '../../../../common/InputField';
 
 interface Password {
@@ -40,15 +41,8 @@ const UpdatePassword = () => {
       setIsValidated(false);
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = 'An error occurred updating your password';
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(err, 'An error occurred updating your password');
         alertDispatcher.postAlert({
           type: 'danger',
           message: error,

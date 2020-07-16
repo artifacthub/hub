@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
+import { ErrorKind } from '../../types';
 import UserConfirmation from './UserConfirmation';
 jest.mock('../../api');
 
@@ -51,10 +52,10 @@ describe('UserConfirmation', () => {
   });
 
   describe('when email code is invalid', () => {
-    it('error 400', async () => {
+    it('with custom error message', async () => {
       mocked(API).verifyEmail.mockRejectedValue({
-        status: 400,
-        message: 'Error 400',
+        kind: ErrorKind.Other,
+        message: 'custom error',
       });
 
       const { getByText } = render(
@@ -64,13 +65,14 @@ describe('UserConfirmation', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Error 400')).toBeInTheDocument();
+        expect(getByText('Sorry, custom error')).toBeInTheDocument();
       });
     });
 
-    it('error 410', async () => {
+    it('Code has expired', async () => {
       mocked(API).verifyEmail.mockRejectedValue({
-        status: 410,
+        kind: ErrorKind.Other,
+        message: 'email verification code has expired.',
       });
 
       const { getByText } = render(
@@ -80,13 +82,13 @@ describe('UserConfirmation', () => {
       );
 
       await waitFor(() => {
-        expect(getByText('Sorry, your confirmation code has expired.')).toBeInTheDocument();
+        expect(getByText('Sorry, email verification code has expired.')).toBeInTheDocument();
       });
     });
 
     it('default error message', async () => {
       mocked(API).verifyEmail.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByText } = render(

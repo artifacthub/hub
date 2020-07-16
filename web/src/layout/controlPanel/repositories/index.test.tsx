@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
-import { Repository as Repo } from '../../../types';
+import { ErrorKind, Repository as Repo } from '../../../types';
 import Repository from './index';
 jest.mock('../../../api');
 
@@ -127,8 +127,10 @@ describe('Repository index', () => {
   });
 
   describe('when getRepositories fails', () => {
-    it('on 401 error', async () => {
-      mocked(API).getRepositories.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+    it('on UnauthorizedError', async () => {
+      mocked(API).getRepositories.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       render(
         <Router>
@@ -143,8 +145,8 @@ describe('Repository index', () => {
       expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
 
-    it('on error different to 401', async () => {
-      mocked(API).getRepositories.mockRejectedValue({ status: 500 });
+    it('on error different to UnauthorizedError', async () => {
+      mocked(API).getRepositories.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
         <Router>
@@ -158,7 +160,7 @@ describe('Repository index', () => {
 
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting the repositories, please try again later/i);
+      expect(noData).toHaveTextContent(/An error occurred getting the repositories, please try again later./i);
     });
   });
 });

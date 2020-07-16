@@ -7,6 +7,8 @@ import {
   APIKey,
   APIKeyCode,
   CheckAvailabilityProps,
+  Error,
+  ErrorKind,
   EventKind,
   LogoImage,
   Organization,
@@ -69,30 +71,34 @@ export const toCamelCase = (r: any): Result => {
   return r;
 };
 
-export const handleUnauthorizedRequests = async (res: any) => {
-  if (res.status === 401) {
-    return Promise.reject({
-      status: res.status,
-      statusText: 'ErrLoginRedirect',
-    });
-  }
-  return res;
-};
-
 const handleErrors = async (res: any) => {
   if (!res.ok) {
-    try {
-      let text = await res.json();
-      return Promise.reject({
-        status: res.status,
-        statusText: text.message !== '' ? text.message : res.statusText,
-      });
-    } catch {
-      return Promise.reject({
-        status: res.status,
-        statusText: res.statusText,
-      });
+    let error: Error;
+    switch (res.status) {
+      case 401:
+        error = {
+          kind: ErrorKind.Unauthorized,
+        };
+        break;
+      case 404:
+        error = {
+          kind: ErrorKind.NotFound,
+        };
+        break;
+      default:
+        try {
+          let text = await res.json();
+          error = {
+            kind: ErrorKind.Other,
+            message: text.message !== '' ? text.message : undefined,
+          };
+        } catch {
+          error = {
+            kind: ErrorKind.Other,
+          };
+        }
     }
+    throw error;
   }
   return res;
 };
@@ -105,13 +111,14 @@ const handleContent = async (res: any) => {
     case 'application/json':
       const json = await res.json();
       return toCamelCase(json);
+    default:
+      return res;
   }
 };
 
 export const apiFetch = (url: string, opts?: FetchOptions): any => {
   const options = opts || {};
   return fetch(url, options)
-    .then(handleUnauthorizedRequests)
     .then(handleErrors)
     .then(handleContent)
     .catch((error) => Promise.reject(error));
@@ -279,17 +286,28 @@ export const API = {
     );
   },
 
-  checkAvailability: (props: CheckAvailabilityProps): Promise<null | string> => {
-    return apiFetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
+  checkAvailability: async (props: CheckAvailabilityProps): Promise<boolean> => {
+    return fetch(`${API_BASE_URL}/check-availability/${props.resourceKind}?v=${encodeURIComponent(props.value)}`, {
       method: 'HEAD',
-    });
+    })
+      .then((res: any) => {
+        switch (res.status) {
+          case 404:
+            return Promise.resolve(false);
+          default:
+            return Promise.resolve(true);
+        }
+      })
+      .catch(() => {
+        return Promise.resolve(true);
+      });
   },
 
   getUserOrganizations: (): Promise<Organization[]> => {
     return apiFetch(`${API_BASE_URL}/orgs/user`);
   },
 
-  getOrganization: (organizationName: string): Promise<Organization> => {
+  getOrganization: (organizationName: string): Promise<Organization | null> => {
     return apiFetch(`${API_BASE_URL}/orgs/${organizationName}`);
   },
 

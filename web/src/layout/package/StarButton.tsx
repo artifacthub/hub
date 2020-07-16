@@ -57,7 +57,7 @@ const StarButton = (props: Props) => {
       setIsSending(false);
       alertDispatcher.postAlert({
         type: 'danger',
-        message: `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later`,
+        message: `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later.`,
       });
     }
   }

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../../../api';
-import { APIKey } from '../../../../../types';
+import { APIKey, ErrorKind } from '../../../../../types';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
 import styles from './APIKeysSection.module.css';
@@ -36,8 +36,8 @@ const APIKeysSection = (props: Props) => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred getting your API keys, please try again later');
+      if (err.kind !== ErrorKind.Unauthorized) {
+        setApiError('An error occurred getting your API keys, please try again later.');
         setApiKeysList([]);
       } else {
         props.onAuthError();

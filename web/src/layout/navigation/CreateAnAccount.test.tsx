@@ -3,6 +3,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
+import { ErrorKind } from '../../types';
 import CreateAnAccount from './CreateAnAccount';
 jest.mock('../../api');
 
@@ -54,7 +55,7 @@ describe('CreateAnAccount', () => {
     });
 
     it('calls registerUser', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockResolvedValue(null);
 
       const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
@@ -82,7 +83,7 @@ describe('CreateAnAccount', () => {
     });
 
     it('does not call registerUser if alias is not available', async () => {
-      mocked(API).checkAvailability.mockResolvedValue(null);
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockResolvedValue(null);
 
       const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
@@ -104,11 +105,11 @@ describe('CreateAnAccount', () => {
   });
 
   describe('when register user fails', () => {
-    it('error 400', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+    it('with custom error message', async () => {
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockRejectedValue({
-        status: 400,
-        statusText: 'Error 400',
+        kind: ErrorKind.Other,
+        message: 'custom error',
       });
 
       const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
@@ -127,13 +128,13 @@ describe('CreateAnAccount', () => {
         expect(API.register).toHaveBeenCalledTimes(0);
       });
       expect(setApiErrorMock).toHaveBeenCalledTimes(1);
-      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user: Error 400');
+      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user: custom error');
     });
 
     it('default error message', async () => {
-      mocked(API).checkAvailability.mockRejectedValue({ status: 404 });
+      mocked(API).checkAvailability.mockResolvedValue(false);
       mocked(API).register.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByTestId } = render(<CreateAnAccount {...defaultProps} />);
@@ -153,7 +154,7 @@ describe('CreateAnAccount', () => {
       });
 
       expect(setApiErrorMock).toHaveBeenCalledTimes(1);
-      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user, please try again later');
+      expect(setApiErrorMock).toHaveBeenCalledWith('An error occurred registering the user, please try again later.');
     });
   });
 });

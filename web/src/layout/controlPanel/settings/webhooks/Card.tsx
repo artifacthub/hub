@@ -8,7 +8,7 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
-import { Webhook } from '../../../../types';
+import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
 import styles from './Card.module.css';
 import LastNotificationsModal from './LastNotificationsModal';
@@ -39,12 +39,12 @@ const WebhookCard = (props: Props) => {
       props.onDeletion();
     } catch (err) {
       setIsDeleting(false);
-      if (err.statusText === 'ErrLoginRedirect') {
+      if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();
       } else {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred deleting the webhook, please try again later',
+          message: 'An error occurred deleting the webhook, please try again later.',
         });
       }
     }

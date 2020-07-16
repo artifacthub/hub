@@ -1,0 +1,117 @@
+[
+  {
+    "package_id": "6924c4ee-8129-4a49-95d6-8c0292f4a120",
+    "name": "cloudflare-dyndns",
+    "normalized_name": "cloudflare-dyndns",
+    "logo_image_id": "3a0eac41-21b4-4a1b-b127-c7e70123eda8",
+    "stars": 2,
+    "display_name": null,
+    "description": "Dynamic DNS using Cloudflare's DNS Services",
+    "version": "2.0.0",
+    "app_version": "1.0",
+    "deprecated": false,
+    "signed": false,
+    "created_at": 1592053209,
+    "repository": {
+      "kind": 0,
+      "name": "billimek-charts",
+      "user_alias": "billimek",
+      "display_name": "Billimek's collection of helm charts",
+      "repository_id": "2e2b71e4-f9e7-4575-acb3-cc96c9e01998",
+      "organization_name": null,
+      "organization_display_name": null
+    }
+  },
+  {
+    "package_id": "713bb247-8f5b-4dd4-b67b-e6d2c97124c8",
+    "name": "druid",
+    "normalized_name": "druid",
+    "logo_image_id": "09a35903-7910-42a3-9c66-ae93da1235c5",
+    "stars": 1,
+    "display_name": null,
+    "description": "Apache Druid is a high performance real-time analytics database.",
+    "version": "0.2.8",
+    "app_version": "0.18.1",
+    "deprecated": false,
+    "signed": false,
+    "created_at": 1594805441,
+    "repository": {
+      "kind": 0,
+      "name": "helm-incubator",
+      "user_alias": null,
+      "display_name": "Incubator",
+      "repository_id": "dba459d0-6beb-451a-b15a-52d67cc93fa0",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    }
+  },
+  {
+    "package_id": "b6b16be4-90e7-491f-ac53-221073b72abc",
+    "name": "jira-software",
+    "normalized_name": "jira-software",
+    "logo_image_id": "b159a47a-e649-4d2b-9382-3c72c421124b",
+    "stars": 1,
+    "display_name": null,
+    "description": "Issue tracker and agile project management platform",
+    "version": "0.2.8",
+    "app_version": "8.10.0",
+    "deprecated": false,
+    "signed": false,
+    "created_at": 1594331208,
+    "repository": {
+      "kind": 0,
+      "name": "mox",
+      "user_alias": "mox",
+      "display_name": "mox",
+      "repository_id": "938ef51b-152f-4dd7-8e41-b9e9b6999c51",
+      "organization_name": null,
+      "organization_display_name": null
+    }
+  },
+  {
+    "package_id": "604dd18f-405b-4c79-9dd6-6383f18f9c94",
+    "name": "oauth2-proxy",
+    "normalized_name": "oauth2-proxy",
+    "logo_image_id": null,
+    "stars": 1,
+    "display_name": null,
+    "description": "A reverse proxy that provides authentication with Google, Github or other providers",
+    "version": "3.2.1",
+    "app_version": "5.1.0",
+    "deprecated": false,
+    "signed": false,
+    "created_at": 1594801730,
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "repository_id": "3cc327ae-9403-4521-9b71-f9a41d5f86c8",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    }
+  },
+  {
+    "package_id": "c3142917-4072-4ec8-8df1-d182e983d3d6",
+    "name": "sentry",
+    "normalized_name": "sentry",
+    "logo_image_id": "99c59c56-5ee0-4dca-bd7f-b714b6e7e4d6",
+    "stars": 1,
+    "display_name": null,
+    "description": "Sentry is a cross-platform crash reporting and aggregation platform.",
+    "version": "4.3.0",
+    "app_version": "9.1.2",
+    "deprecated": false,
+    "signed": false,
+    "created_at": 1594769376,
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "repository_id": "3cc327ae-9403-4521-9b71-f9a41d5f86c8",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    }
+  }
+]

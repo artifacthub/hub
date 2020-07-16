@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { Organization } from '../../../../../types';
+import { ErrorKind, Organization } from '../../../../../types';
 import DetailsSection from './index';
 jest.mock('../../../../../api');
 
@@ -115,8 +115,8 @@ describe('Organization settings index', () => {
   });
 
   describe('when getPackage call fails', () => {
-    it('generic error', async () => {
-      mocked(API).getOrganization.mockRejectedValue({ status: 400 });
+    it('not found', async () => {
+      mocked(API).getOrganization.mockResolvedValue(null);
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -133,11 +133,11 @@ describe('Organization settings index', () => {
       const noData = getByTestId('noData');
 
       expect(noData).toBeInTheDocument();
-      expect(getByText('Sorry, the package you requested was not found.')).toBeInTheDocument();
+      expect(getByText('Sorry, the organization you requested was not found.')).toBeInTheDocument();
     });
 
-    it('error 500', async () => {
-      mocked(API).getOrganization.mockRejectedValue({ status: 500 });
+    it('generic error', async () => {
+      mocked(API).getOrganization.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -155,12 +155,14 @@ describe('Organization settings index', () => {
 
       expect(noData).toBeInTheDocument();
       expect(
-        getByText(/An error occurred getting the organization details, please try again later/i)
+        getByText(/An error occurred getting the organization details, please try again later./i)
       ).toBeInTheDocument();
     });
 
-    it('error 401', async () => {
-      mocked(API).getOrganization.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+    it('UnauthorizedError', async () => {
+      mocked(API).getOrganization.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

@@ -5,7 +5,7 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { API } from '../../../../../api';
-import { EventKind, Package } from '../../../../../types';
+import { ErrorKind, EventKind, Package } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
@@ -60,8 +60,8 @@ const SubscriptionsSection = (props: Props) => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        setApiError('An error occurred getting your subscriptions, please try again later');
+      if (err.kind !== ErrorKind.Unauthorized) {
+        setApiError('An error occurred getting your subscriptions, please try again later.');
         setPackages([]);
       } else {
         props.onAuthError();
@@ -80,12 +80,12 @@ const SubscriptionsSection = (props: Props) => {
       }
       getSubscriptions();
     } catch (err) {
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
           message: `An error occurred ${isActive ? 'unsubscribing from' : 'subscribing to'} ${getNotificationTitle(
             kind
-          )} notification for ${packageName} package, please try again later`,
+          )} notification for ${packageName} package, please try again later.`,
         });
         getSubscriptions(); // Get subscriptions if changeSubscription fails
       } else {

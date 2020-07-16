@@ -10,7 +10,7 @@ import { MdBusiness } from 'react-icons/md';
 import { API } from '../../api';
 import { AppCtx, unselectOrg, updateOrg } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
-import { Organization } from '../../types';
+import { ErrorKind, Organization } from '../../types';
 import styles from './UserContext.module.css';
 
 const UserContext = () => {
@@ -48,7 +48,7 @@ const UserContext = () => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         setOrganizations([]);
       }
     }

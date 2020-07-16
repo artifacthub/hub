@@ -4,6 +4,7 @@ import { MdClose, MdDone } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
+import { ErrorKind } from '../../../types';
 import Loading from '../../common/Loading';
 import Modal from '../../common/Modal';
 import styles from './UserInvitation.module.css';
@@ -26,15 +27,12 @@ const UserInvitation = (props: Props) => {
         await API.confirmOrganizationMembership(orgToConfirm!);
         setValidInvitation(true);
       } catch (err) {
-        let error = 'An error occurred accepting your invitation, please contact us about this issue.';
-        switch (err.status) {
-          case 400:
-            error = err.message;
-            break;
-          case 401:
-            error =
-              'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.';
-            break;
+        let error = !isUndefined(err.message)
+          ? err.message
+          : 'An error occurred accepting your invitation, please contact us about this issue.';
+        if (err.kind === ErrorKind.Unauthorized) {
+          error =
+            'Please sign in to accept the invitation to join the organization. You can accept it from the Control Panel, in the organizations tab, or from the link you received in the invitation email.';
         }
         setApiError(error);
         setValidInvitation(false);

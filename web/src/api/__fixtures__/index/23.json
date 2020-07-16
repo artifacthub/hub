@@ -1,0 +1,107 @@
+[
+  {
+    "package_id": "80fdc35e-c9a2-40ef-a05e-c790f00da525",
+    "name": "airflow",
+    "normalized_name": "airflow",
+    "logo_image_id": "1848fc36-164f-43ec-9d3f-d224e9d72351",
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "75ee6e00-b4d5-429e-9d82-33ab730081ff",
+    "name": "artifact-hub",
+    "normalized_name": "artifact-hub",
+    "logo_image_id": "3cfb161e-2652-43b9-ada1-c1ced4b20111",
+    "repository": {
+      "kind": 0,
+      "name": "artifact-hub",
+      "user_alias": null,
+      "display_name": "Artifact Hub",
+      "organization_name": "artifacthub",
+      "organization_display_name": "Artifact Hub"
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "b6b16be4-90e7-491f-ac53-221073b72abc",
+    "name": "jira-software",
+    "normalized_name": "jira-software",
+    "logo_image_id": "b159a47a-e649-4d2b-9382-3c72c421124b",
+    "repository": {
+      "kind": 0,
+      "name": "mox",
+      "user_alias": "mox",
+      "display_name": "mox",
+      "organization_name": null,
+      "organization_display_name": null
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "cfd04009-89fd-4ab0-864a-1ec2f8e086be",
+    "name": "mariadb-operator-app",
+    "normalized_name": "mariadb-operator-app",
+    "logo_image_id": "a8ee9b85-065e-421b-b429-ba3793829dc5",
+    "repository": {
+      "kind": 3,
+      "name": "community-operators",
+      "user_alias": null,
+      "display_name": "Community Operators",
+      "organization_name": "operator-framework",
+      "organization_display_name": "Operator Framework"
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "1a4afa08-6f62-4087-8495-8f523444a8cb",
+    "name": "percona",
+    "normalized_name": "percona",
+    "logo_image_id": "53b5ccf2-8a2e-41a6-b8ca-44e8e7b2cdd3",
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "e97a3a26-a9d9-404d-916b-6fd1501f22df",
+    "name": "prometheus",
+    "normalized_name": "prometheus",
+    "logo_image_id": "0503add5-3fce-4b63-bbf3-b9f649512a86",
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    },
+    "event_kinds": [0]
+  },
+  {
+    "package_id": "30ab8c2b-fabe-4e2f-abe3-8bf794f7b16f",
+    "name": "spring-cloud-data-flow",
+    "normalized_name": "spring-cloud-data-flow",
+    "logo_image_id": "fe46811b-09c3-4ae2-a633-26c535cf1eef",
+    "repository": {
+      "kind": 0,
+      "name": "helm-stable",
+      "user_alias": null,
+      "display_name": "Stable",
+      "organization_name": "helm",
+      "organization_display_name": "Helm"
+    },
+    "event_kinds": [0]
+  }
+]

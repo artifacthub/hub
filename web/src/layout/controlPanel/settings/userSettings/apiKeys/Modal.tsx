@@ -6,7 +6,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { API } from '../../../../../api';
-import { APIKey, APIKeyCode, RefInputField } from '../../../../../types';
+import { APIKey, APIKeyCode, ErrorKind, RefInputField } from '../../../../../types';
 import ButtonCopyToClipboard from '../../../../common/ButtonCopyToClipboard';
 import InputField from '../../../../common/InputField';
 import Modal from '../../../../common/Modal';
@@ -46,6 +46,7 @@ const APIKeyModal = (props: Props) => {
     setApiKey(undefined);
     setApiKeyCode(undefined);
     setIsValidated(false);
+    setApiError(null);
     props.onClose();
   };
 
@@ -67,9 +68,9 @@ const APIKeyModal = (props: Props) => {
       }
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         setApiError(
-          `An error occurred ${isUndefined(props.apiKey) ? 'adding' : 'updating'} the API key, please try again later`
+          `An error occurred ${isUndefined(props.apiKey) ? 'adding' : 'updating'} the API key, please try again later.`
         );
       } else {
         props.onAuthError();
@@ -108,6 +109,7 @@ const APIKeyModal = (props: Props) => {
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter' && !isNull(form)) {
       event.preventDefault();
+      event.stopPropagation();
       submitForm();
     }
   };
@@ -119,7 +121,7 @@ const APIKeyModal = (props: Props) => {
         setApiKey(currentAPIKey);
         nameInput.current!.updateValue(currentAPIKey.name);
       } catch (err) {
-        if (err.statusText === 'ErrLoginRedirect') {
+        if (err.kind === ErrorKind.Unauthorized) {
           props.onAuthError();
         }
       }

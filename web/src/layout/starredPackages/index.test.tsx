@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
-import { Package } from '../../types';
+import { ErrorKind, Package } from '../../types';
 import StarredPackagesView from './index';
 jest.mock('../../api');
 
@@ -93,8 +93,8 @@ describe('StarredPackagesView', () => {
       await waitFor(() => {});
     });
 
-    it('renders error message when getStarredByUser call fails with not 401', async () => {
-      mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'another error' });
+    it('renders error message when getStarredByUser call fails with not unauthorized error', async () => {
+      mocked(API).getStarredByUser.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
         <Router>
@@ -105,13 +105,15 @@ describe('StarredPackagesView', () => {
       const noData = await waitFor(() => getByTestId('noData'));
 
       expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later/i);
+      expect(noData).toHaveTextContent(/An error occurred getting your starred packages, please try again later./i);
 
       await waitFor(() => {});
     });
 
     it('calls history push to load login modal when user is not signed in', async () => {
-      mocked(API).getStarredByUser.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+      mocked(API).getStarredByUser.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       const { getByRole } = render(
         <Router>

@@ -7,7 +7,8 @@ import { MdBusiness } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx, updateOrg } from '../../../context/AppCtx';
-import { Organization, RefInputField, ResourceKind } from '../../../types';
+import { ErrorKind, Organization, RefInputField, ResourceKind } from '../../../types';
+import compoundErrorMessage from '../../../utils/compoundErrorMessage';
 import InputField from '../../common/InputField';
 import InputFileField from '../../common/InputFileField';
 import styles from './Form.module.css';
@@ -64,15 +65,11 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       }
     } catch (err) {
       props.setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = `An error occurred ${isUndefined(props.organization) ? 'adding' : 'updating'} the organization`;
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(
+          err,
+          `An error occurred ${isUndefined(props.organization) ? 'adding' : 'updating'} the organization`
+        );
         setApiError(error);
         if (!isUndefined(setApiError)) {
           setApiError(error);

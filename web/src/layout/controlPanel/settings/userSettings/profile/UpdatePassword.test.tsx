@@ -3,6 +3,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
+import { ErrorKind } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import UpdatePassword from './UpdatePassword';
 jest.mock('../../../../../api');
@@ -73,10 +74,10 @@ describe('Update password - user settings', () => {
   });
 
   describe('when updateUserProfile fails', () => {
-    it('error 400', async () => {
+    it('with custom error message', async () => {
       mocked(API).updatePassword.mockRejectedValue({
-        status: 400,
-        statusText: 'Error 400',
+        kind: ErrorKind.Other,
+        message: 'custom error',
       });
 
       const { getByTestId } = render(<UpdatePassword />);
@@ -96,13 +97,13 @@ describe('Update password - user settings', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred updating your password: Error 400',
+        message: 'An error occurred updating your password: custom error',
       });
     });
 
-    it('error 401', async () => {
+    it('UnauthorizedError', async () => {
       mocked(API).updatePassword.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
 
       const { getByTestId } = render(<UpdatePassword />);
@@ -129,7 +130,7 @@ describe('Update password - user settings', () => {
 
     it('default error message', async () => {
       mocked(API).updatePassword.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByTestId } = render(<UpdatePassword />);
@@ -149,7 +150,7 @@ describe('Update password - user settings', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred updating your password, please try again later',
+        message: 'An error occurred updating your password, please try again later.',
       });
     });
   });

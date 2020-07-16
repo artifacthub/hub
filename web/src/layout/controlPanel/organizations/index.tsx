@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
-import { Organization } from '../../../types';
+import { ErrorKind, Organization } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import OrganizationCard from './Card';
@@ -36,9 +36,9 @@ const OrganizationsSection = (props: Props) => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         setOrganizations([]);
-        setApiError('An error occurred getting your organizations, please try again later');
+        setApiError('An error occurred getting your organizations, please try again later.');
       } else {
         props.onAuthError();
       }

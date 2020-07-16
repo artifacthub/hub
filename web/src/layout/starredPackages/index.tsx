@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import { AppCtx, signOut } from '../../context/AppCtx';
-import { Package } from '../../types';
+import { ErrorKind, Package } from '../../types';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
@@ -32,8 +32,8 @@ const StarredPackagesView = () => {
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        if (err.statusText !== 'ErrLoginRedirect') {
-          setApiError('An error occurred getting your starred packages, please try again later');
+        if (err.kind !== ErrorKind.Unauthorized) {
+          setApiError('An error occurred getting your starred packages, please try again later.');
           setPackages([]);
         } else {
           onAuthError();

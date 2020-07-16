@@ -5,7 +5,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { Profile } from '../../../../../types';
+import { ErrorKind, Profile } from '../../../../../types';
 import UserSettings from './index';
 jest.mock('../../../../../api');
 
@@ -72,8 +72,8 @@ describe('User settings index', () => {
   });
 
   describe('on getUserProfile error', () => {
-    it('does not render profile information section if error is different to 401', async () => {
-      mocked(API).getUserProfile.mockRejectedValue({ status: 500 });
+    it('does not render profile information section if error is different to UnauthorizedError', async () => {
+      mocked(API).getUserProfile.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       const { queryByText, queryByTestId, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -92,8 +92,10 @@ describe('User settings index', () => {
       expect(getByText('Change password')).toBeInTheDocument();
     });
 
-    it('calls onAuthError if error is 401', async () => {
-      mocked(API).getUserProfile.mockRejectedValue({ statusText: 'ErrLoginRedirect' });
+    it('calls onAuthError if error is UnauthorizedError', async () => {
+      mocked(API).getUserProfile.mockRejectedValue({
+        kind: ErrorKind.Unauthorized,
+      });
 
       render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

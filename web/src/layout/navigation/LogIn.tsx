@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom';
 
 import { API } from '../../api';
 import { AppCtx, refreshUserProfile, signOut } from '../../context/AppCtx';
-import { RefInputField, UserLogin } from '../../types';
+import { ErrorKind, RefInputField, UserLogin } from '../../types';
+import compoundErrorMessage from '../../utils/compoundErrorMessage';
 import InputField from '../common/InputField';
 import Modal from '../common/Modal';
 import styles from './LogIn.module.css';
@@ -69,16 +70,9 @@ const LogIn = (props: Props) => {
       props.setOpenLogIn(false);
       dispatch(refreshUserProfile(dispatch, props.redirect));
     } catch (err) {
-      let error = 'An error occurred signing in';
-      switch (err.status) {
-        case 400:
-          error += `: ${err.statusText}`;
-          break;
-        case 401:
-          error = 'Authentication failed. Please check your credentials';
-          break;
-        default:
-          error += ', please try again later';
+      let error = compoundErrorMessage(err, 'An error occurred signing in');
+      if (err.kind === ErrorKind.Unauthorized) {
+        error = 'Authentication failed. Please check your credentials.';
       }
       setApiError(error);
       setIsLoading({ status: false });

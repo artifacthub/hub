@@ -3,7 +3,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../../../api';
-import { APIKey } from '../../../../../types';
+import { APIKey, ErrorKind } from '../../../../../types';
 import Modal from './Modal';
 jest.mock('../../../../../api');
 
@@ -89,7 +89,7 @@ describe('APIKeyModal - API keys section', () => {
 
     it('displays default Api error', async () => {
       mocked(API).addAPIKey.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
 
@@ -102,13 +102,13 @@ describe('APIKeyModal - API keys section', () => {
 
       await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred adding the API key, please try again later')).toBeInTheDocument();
+        expect(getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
       });
     });
 
-    it('calls onAuthError when error is ErrLoginRedirect', async () => {
+    it('calls onAuthError when error is UnauthorizedError', async () => {
       mocked(API).addAPIKey.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(<Modal {...defaultProps} />);
 
@@ -143,7 +143,7 @@ describe('APIKeyModal - API keys section', () => {
 
     it('displays default Api error', async () => {
       mocked(API).updateAPIKey.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId, getByText } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 
@@ -156,13 +156,13 @@ describe('APIKeyModal - API keys section', () => {
 
       await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the API key, please try again later')).toBeInTheDocument();
+        expect(getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
       });
     });
 
-    it('calls onAuthError when error is ErrLoginRedirect', async () => {
+    it('calls onAuthError when error is UnauthorizedError', async () => {
       mocked(API).updateAPIKey.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
 

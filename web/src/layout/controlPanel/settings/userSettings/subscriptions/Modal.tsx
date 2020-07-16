@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { MdClose } from 'react-icons/md';
 
 import { API } from '../../../../../api';
-import { EventKind, Package } from '../../../../../types';
+import { ErrorKind, EventKind, Package } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
 import Image from '../../../../common/Image';
@@ -70,12 +70,12 @@ const SubscriptionModal = (props: Props) => {
       props.onClose();
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
+      if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
           message: `An error occurred subscribing to ${getNotificationTitle(eventKind)} notification for ${
             packageItem!.displayName || packageItem!.name
-          } package, please try again later`,
+          } package, please try again later.`,
         });
       }
     }

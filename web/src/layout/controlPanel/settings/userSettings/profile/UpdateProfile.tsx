@@ -6,8 +6,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { API } from '../../../../../api';
 import { AppCtx, updateUser } from '../../../../../context/AppCtx';
-import { Profile, RefInputField, ResourceKind, UserFullName } from '../../../../../types';
+import { ErrorKind, Profile, RefInputField, ResourceKind, UserFullName } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
+import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
 import InputField from '../../../../common/InputField';
 import InputFileField from '../../../../common/InputFileField';
 
@@ -52,15 +53,8 @@ const UpdateProfile = (props: Props) => {
       setIsSending(false);
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = 'An error occurred updating your profile';
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(err, 'An error occurred updating your profile');
         alertDispatcher.postAlert({
           type: 'danger',
           message: error,

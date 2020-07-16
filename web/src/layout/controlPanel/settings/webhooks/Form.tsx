@@ -7,7 +7,8 @@ import { IoIosArrowBack } from 'react-icons/io';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
-import { EventKind, Package, PayloadKind, RefInputField, TestWebhook, Webhook } from '../../../../types';
+import { ErrorKind, EventKind, Package, PayloadKind, RefInputField, TestWebhook, Webhook } from '../../../../types';
+import compoundErrorMessage from '../../../../utils/compoundErrorMessage';
 import { PAYLOAD_KINDS_LIST, PayloadKindsItem, SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../utils/data';
 import AutoresizeTextarea from '../../../common/AutoresizeTextarea';
 import CheckBox from '../../../common/Checkbox';
@@ -110,15 +111,11 @@ const WebhookForm = (props: Props) => {
       onCloseForm();
     } catch (err) {
       setIsSending(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = `An error occurred ${isUndefined(props.webhook) ? 'adding' : 'updating'} the webhook`;
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += ', please try again later';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(
+          err,
+          `An error occurred ${isUndefined(props.webhook) ? 'adding' : 'updating'} the webhook`
+        );
         setApiError(error);
         errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {
@@ -136,15 +133,8 @@ const WebhookForm = (props: Props) => {
       setIsSendingTest(false);
     } catch (err) {
       setIsSendingTest(false);
-      if (err.statusText !== 'ErrLoginRedirect') {
-        let error = `An error occurred testing the webhook`;
-        switch (err.status) {
-          case 400:
-            error += `: ${err.statusText}`;
-            break;
-          default:
-            error += '.';
-        }
+      if (err.kind !== ErrorKind.Unauthorized) {
+        let error = compoundErrorMessage(err, `An error occurred testing the webhook`);
         setApiError(error);
         errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {

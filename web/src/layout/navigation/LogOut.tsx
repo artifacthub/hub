@@ -31,11 +31,9 @@ const LogOut = (props: Props) => {
         history.push('/');
       }
     } catch (err) {
-      let error = 'An error occurred, please try again later';
-      switch (err.status) {
-        case 400:
-          error = `Error: ${err.statusText}`;
-          break;
+      let error = 'An error occurred, please try again later.';
+      if (!isUndefined(err.message)) {
+        error = `Error: ${err.message}`;
       }
       setIsLoggingOut(false);
       alertDispatcher.postAlert({

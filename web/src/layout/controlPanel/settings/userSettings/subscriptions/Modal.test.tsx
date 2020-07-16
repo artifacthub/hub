@@ -256,7 +256,7 @@ describe('SubscriptionModal', () => {
         type: 'danger',
         message: `An error occurred subscribing to New releases notification for ${
           mockSearch.data.packages![0].name
-        } package, please try again later`,
+        } package, please try again later.`,
       });
     });
   });

@@ -4,7 +4,7 @@ import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { Organization } from '../../../types';
+import { ErrorKind, Organization } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../api');
@@ -120,9 +120,9 @@ describe('Organization Card - organization section', () => {
   });
 
   describe('on deleteOrganizationMember error', () => {
-    it('displays generic error', async () => {
+    it('API error', async () => {
       mocked(API).deleteOrganizationMember.mockRejectedValue({
-        statusText: 'error',
+        kind: ErrorKind.Other,
       });
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
@@ -144,13 +144,13 @@ describe('Organization Card - organization section', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: 'An error occurred leaving the organization, please try again later',
+        message: 'An error occurred leaving the organization, please try again later.',
       });
     });
 
     it('calls onAuthError', async () => {
       mocked(API).deleteOrganizationMember.mockRejectedValue({
-        statusText: 'ErrLoginRedirect',
+        kind: ErrorKind.Unauthorized,
       });
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>

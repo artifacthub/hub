@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../api';
+import { ErrorKind } from '../../types';
 import LogIn from './LogIn';
 jest.mock('../../api');
 
@@ -78,9 +79,9 @@ describe('LogIn', () => {
       });
     });
 
-    it('display 401 api error', async () => {
+    it('display UnauthorizedError', async () => {
       mocked(API).login.mockRejectedValue({
-        status: 401,
+        kind: ErrorKind.Unauthorized,
       });
 
       const { getByTestId, getByText } = render(
@@ -101,14 +102,14 @@ describe('LogIn', () => {
 
       await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('Authentication failed. Please check your credentials')).toBeInTheDocument();
+        expect(getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
       });
     });
 
-    it('display 400 api error', async () => {
+    it('with custom error message', async () => {
       mocked(API).login.mockRejectedValue({
-        status: 400,
-        statusText: 'Password not provided',
+        kind: ErrorKind.Other,
+        message: 'Password not provided',
       });
 
       const { getByTestId, getByText } = render(
@@ -133,9 +134,9 @@ describe('LogIn', () => {
       });
     });
 
-    it('display common login error', async () => {
+    it('displays common login error', async () => {
       mocked(API).login.mockRejectedValue({
-        status: 500,
+        kind: ErrorKind.Other,
       });
 
       const { getByTestId, getByText } = render(
@@ -156,7 +157,7 @@ describe('LogIn', () => {
 
       await waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred signing in, please try again later')).toBeInTheDocument();
+        expect(getByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
       });
     });
 

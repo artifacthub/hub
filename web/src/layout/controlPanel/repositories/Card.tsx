@@ -12,7 +12,7 @@ import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { Repository } from '../../../types';
+import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
@@ -96,14 +96,14 @@ const RepositoryCard = (props: Props) => {
       props.onSuccess();
     } catch (err) {
       setIsDeleting(false);
-      if (err.statusText === 'ErrLoginRedirect') {
+      if (err.kind === ErrorKind.Unauthorized) {
         setOpenDropdownStatus(false);
         props.onAuthError();
       } else {
         setOpenDropdownStatus(false);
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred deleting the repository, please try again later',
+          message: 'An error occurred deleting the repository, please try again later.',
         });
       }
     }
