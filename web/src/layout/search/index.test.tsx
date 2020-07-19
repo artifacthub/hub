@@ -153,7 +153,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('6');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId } = render(
+      const { getByTestId, getAllByTestId } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -165,6 +165,8 @@ describe('Search index', () => {
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
+      expect(getByTestId('resetLink')).toBeInTheDocument();
+      expect(getAllByTestId('sampleFilterLink')).toHaveLength(5);
 
       await waitFor(() => {});
     });

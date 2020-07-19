@@ -31,6 +31,10 @@
   max-width: 100%;
 }
 
+.noDataMessage {
+  line-height: 1.5rem;
+}
+
 @media only screen and (min-width: 768px) {
   .list {
     flex-basis: calc(100% - 250px);
