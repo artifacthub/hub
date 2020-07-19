@@ -92,7 +92,7 @@ const HomeView = (props: Props) => {
             >
               <u>browse all packages</u>
             </Link>{' '}
-            - or - <span className="ml-3">try one of the sample filters:</span>
+            - or - <span className="ml-3">try one of the sample queries:</span>
           </div>
 
           <div className="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">

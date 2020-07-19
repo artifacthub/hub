@@ -117,7 +117,7 @@ exports[`Home index creates snapshot 1`] = `
           <span
             class="ml-3"
           >
-            try one of the sample filters:
+            try one of the sample queries:
           </span>
         </div>
         <div

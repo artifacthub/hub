@@ -462,24 +462,34 @@ const SearchView = (props: Props) => {
                         </p>
                         <p className={`h6 mb-0 mt-5 d-none d-md-block ${styles.noDataMessage}`}>
                           You can{' '}
-                          <button
-                            data-testid="resetLink"
-                            className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-1"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  tsQueryWeb: '',
-                                  tsQuery: [],
-                                  filters: {},
-                                }),
-                              });
-                            }}
-                          >
-                            <u>reset the filters</u>
-                          </button>{' '}
-                          or try a new search using one of these sample filters:
+                          {!isEmpty(props.filters) ? (
+                            <button
+                              data-testid="resetLink"
+                              className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
+                              onClick={onResetFilters}
+                            >
+                              <u>reset the filters</u>
+                            </button>
+                          ) : (
+                            <button
+                              data-testid="resetLink"
+                              className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
+                              onClick={() => {
+                                history.push({
+                                  pathname: '/packages/search',
+                                  search: prepareQueryString({
+                                    pageNumber: 1,
+                                    tsQueryWeb: '',
+                                    tsQuery: [],
+                                    filters: {},
+                                  }),
+                                });
+                              }}
+                            >
+                              <u>browse all packages</u>
+                            </button>
+                          )}
+                          , try a new search or start with one of the sample queries:
                         </p>
                         <div className="h5 d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
                           <button
