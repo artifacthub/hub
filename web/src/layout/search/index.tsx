@@ -451,14 +451,117 @@ const SearchView = (props: Props) => {
                     {isNull(apiError) ? (
                       <>
                         We're sorry!
-                        <p className="h6 mb-0 mt-3">
+                        <p className={`h6 mb-0 mt-3 ${styles.noDataMessage}`}>
                           <span> We can't seem to find any packages that match your search </span>
                           {!isUndefined(props.tsQueryWeb) && (
                             <span className="pl-1">
                               for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                             </span>
                           )}
+                          {!isEmpty(props.filters) && <span className="pl-1">with the selected filters</span>}
                         </p>
+                        <p className={`h6 mb-0 mt-5 d-none d-md-block ${styles.noDataMessage}`}>
+                          You can{' '}
+                          <button
+                            data-testid="resetLink"
+                            className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-1"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  tsQueryWeb: '',
+                                  tsQuery: [],
+                                  filters: {},
+                                }),
+                              });
+                            }}
+                          >
+                            <u>reset the filters</u>
+                          </button>{' '}
+                          or try a new search using one of these sample filters:
+                        </p>
+                        <div className="h5 d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
+                          <button
+                            data-testid="sampleFilterLink"
+                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  tsQueryWeb: 'database',
+                                  filters: { kind: ['3'] },
+                                }),
+                              });
+                            }}
+                          >
+                            OLM operators for databases
+                          </button>
+                          <button
+                            data-testid="sampleFilterLink"
+                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  filters: { kind: ['0'], org: ['bitnami'] },
+                                }),
+                              });
+                            }}
+                          >
+                            Helm Charts provided by Bitnami
+                          </button>
+                          <button
+                            data-testid="sampleFilterLink"
+                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  tsQueryWeb: 'etcd',
+                                  filters: {},
+                                }),
+                              });
+                            }}
+                          >
+                            Packages of any kind related to etcd
+                          </button>
+                          <button
+                            data-testid="sampleFilterLink"
+                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  tsQueryWeb: 'CVE',
+                                  filters: { kind: ['1'] },
+                                }),
+                              });
+                            }}
+                          >
+                            Falco rules for CVE
+                          </button>
+                          <button
+                            data-testid="sampleFilterLink"
+                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
+                            onClick={() => {
+                              history.push({
+                                pathname: '/packages/search',
+                                search: prepareQueryString({
+                                  pageNumber: 1,
+                                  tsQueryWeb: 'monitoring',
+                                  filters: { kind: ['3'] },
+                                }),
+                              });
+                            }}
+                          >
+                            OLM operators in the monitoring category
+                          </button>
+                        </div>
                       </>
                     ) : (
                       <>{apiError}</>
