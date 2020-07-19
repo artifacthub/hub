@@ -896,12 +896,12 @@ select is(
                 "title": "Repository",
                 "filter_key": "repo",
                 "options": [{
-                    "id": "repo1",
-                    "name": "Repo1",
-                    "total": 1
-                }, {
                     "id": "repo2",
                     "name": "Repo2",
+                    "total": 1
+                }, {
+                    "id": "repo1",
+                    "name": "Repo1",
                     "total": 1
                 }]
             }]

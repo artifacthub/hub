@@ -50,10 +50,6 @@ interface Test {
   checkboxes: string[];
 }
 
-const getSortTests = (fixtureId: string): Test[] => {
-  return require(`./__fixtures__/Facet/${fixtureId}.json`) as Test[];
-};
-
 describe('Facet', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -93,25 +89,5 @@ describe('Facet', () => {
       fireEvent.click(opt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
     });
-  });
-
-  describe('Sort facets properly', () => {
-    const tests = getSortTests('1');
-
-    for (let i = 0; i < tests.length; i++) {
-      it('renders component', () => {
-        const props = {
-          ...defaultProps,
-          ...tests[i].props,
-        };
-        const { getAllByTestId, getByText } = render(<Facet {...props} />);
-
-        expect(getByText(tests[i].props.title)).toBeInTheDocument();
-        const opts = getAllByTestId('checkboxLabel');
-        for (let c = 0; c < tests[i].checkboxes.length; c++) {
-          expect(opts[c]).toHaveTextContent(tests[i].checkboxes[c]);
-        }
-      });
-    }
   });
 });

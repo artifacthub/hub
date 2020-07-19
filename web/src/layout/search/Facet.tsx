@@ -1,7 +1,6 @@
 import classnames from 'classnames';
 import filter from 'lodash/filter';
 import isUndefined from 'lodash/isUndefined';
-import sortBy from 'lodash/sortBy';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { FacetOption } from '../../types';
@@ -40,21 +39,11 @@ const Facet = (props: Props) => {
     setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, activeOptions.length));
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
-  const getSortedOptions = () => {
-    switch (props.filterKey) {
-      case 'kind':
-        return props.options;
-
-      default:
-        return sortBy(props.options, [(o: FacetOption) => !isChecked(o.id.toString())]);
-    }
-  };
-
   const onExpandableChange = (open: boolean) => {
     props.onFacetExpandableChange(props.filterKey, open);
   };
 
-  const allOptions = getSortedOptions().map((option: FacetOption) => (
+  const allOptions = props.options.map((option: FacetOption) => (
     <Checkbox
       key={`fo_${option.id}`}
       name={props.filterKey}

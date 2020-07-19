@@ -140,15 +140,24 @@ begin
                                         'total', total
                                     )), '[]')
                                     from (
-                                        select
-                                            organization_name,
-                                            organization_display_name,
-                                            count(*) as total
-                                        from packages_applying_minimum_filters
-                                        where organization_name is not null
-                                        group by organization_name, organization_display_name
-                                        order by total desc, organization_name asc
-                                    ) as breakdown
+                                        select organization_name, organization_display_name, total
+                                        from (
+                                            select 1 as pri, organization_name, organization_display_name, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where organization_name = any(v_orgs)
+                                            group by organization_name, organization_display_name
+                                            union
+                                            select 2 as pri, organization_name, organization_display_name, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where organization_name is not null
+                                            and
+                                                case when cardinality(v_orgs) > 0
+                                                then organization_name <> all(v_orgs) else true end
+                                            group by organization_name, organization_display_name
+                                        ) as orgs
+                                        order by pri asc, total desc, organization_name asc
+                                        limit 10
+                                    ) as orgs_filtered
                                 )
                             )
                         ),
@@ -163,14 +172,24 @@ begin
                                         'total', total
                                     )), '[]')
                                     from (
-                                        select
-                                            user_alias,
-                                            count(*) as total
-                                        from packages_applying_minimum_filters
-                                        where user_alias is not null
-                                        group by user_alias
-                                        order by total desc, user_alias asc
-                                    ) as breakdown
+                                        select user_alias, total
+                                        from (
+                                            select 1 as pri, user_alias, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where user_alias = any(v_users)
+                                            group by user_alias
+                                            union
+                                            select 2 as pri, user_alias, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where user_alias is not null
+                                            and
+                                                case when cardinality(v_users) > 0
+                                                then user_alias <> all(v_users) else true end
+                                            group by user_alias
+                                        ) as users
+                                        order by pri asc, total desc, user_alias asc
+                                        limit 10
+                                    ) as users_filtered
                                 )
                             )
                         ),
@@ -207,14 +226,24 @@ begin
                                         'total', total
                                     )), '[]')
                                     from (
-                                        select
-                                            repository_name,
-                                            count(*) as total
-                                        from packages_applying_minimum_filters
-                                        where repository_name is not null
-                                        group by repository_name
-                                        order by total desc, repository_name asc
-                                    ) as breakdown
+                                        select repository_name, total
+                                        from (
+                                            select 1 as pri, repository_name, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where repository_name = any(v_repositories)
+                                            group by repository_name
+                                            union
+                                            select 2 as pri, repository_name, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where repository_name is not null
+                                            and
+                                                case when cardinality(v_repositories) > 0
+                                                then repository_name <> all(v_repositories) else true end
+                                            group by repository_name
+                                        ) as repos
+                                        order by pri asc, total desc, repository_name asc
+                                        limit 10
+                                    ) as repos_filtered
                                 )
                             )
                         )
