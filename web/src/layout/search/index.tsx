@@ -255,12 +255,21 @@ const SearchView = (props: Props) => {
       };
 
       try {
-        const searchResults = await API.searchPackages(query);
-        setSearchResults({ ...searchResults });
+        let newSearchResults = await API.searchPackages(query);
+        if (newSearchResults.metadata.total === 0 && !isEmpty(searchResults.data.facets)) {
+          newSearchResults = {
+            ...newSearchResults,
+            data: {
+              ...newSearchResults.data,
+              facets: searchResults.data.facets,
+            },
+          };
+        }
+        setSearchResults({ ...newSearchResults });
         setApiError(null);
 
         // Preload next page if required
-        if (total > ctx.prefs.search.limit + offset) {
+        if (newSearchResults.metadata.total > ctx.prefs.search.limit + newSearchResults.metadata.offset) {
           API.searchPackages({
             ...query,
             offset: props.pageNumber * ctx.prefs.search.limit,
@@ -312,16 +321,13 @@ const SearchView = (props: Props) => {
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const { packages, facets } = searchResults.data;
-  const { total, offset } = searchResults.metadata;
-
   const activeFilters = props.deprecated || props.operators || !isUndefined(props.tsQuery) || !isEmpty(props.filters);
 
   return (
     <>
       <SubNavbar>
         <div className="d-flex align-items-center text-truncate">
-          {!isNull(packages) && (
+          {!isNull(searchResults.data.packages) && (
             <>
               {/* Mobile filters */}
               {!isEmptyFacets() && (
@@ -340,7 +346,7 @@ const SearchView = (props: Props) => {
                           <span className="ml-2">Loading...</span>
                         </>
                       ) : (
-                        <>See {total} results</>
+                        <>See {searchResults.metadata.total} results</>
                       )}
                     </>
                   }
@@ -357,7 +363,7 @@ const SearchView = (props: Props) => {
                   header={<div className="h6 text-uppercase mb-0">Filters</div>}
                 >
                   <Filters
-                    facets={facets}
+                    facets={searchResults.data.facets}
                     activeFilters={props.filters}
                     activeTsQuery={props.tsQuery}
                     onChange={onFiltersChange}
@@ -376,16 +382,16 @@ const SearchView = (props: Props) => {
 
               {!isSearching && (
                 <div data-testid="resultsText" className="text-truncate">
-                  {total > 0 && (
+                  {searchResults.metadata.total > 0 && (
                     <span className="pr-1">
-                      {offset + 1} -{' '}
-                      {total < ctx.prefs.search.limit * props.pageNumber
-                        ? total
+                      {searchResults.metadata.offset + 1} -{' '}
+                      {searchResults.metadata.total < ctx.prefs.search.limit * props.pageNumber
+                        ? searchResults.metadata.total
                         : ctx.prefs.search.limit * props.pageNumber}{' '}
                       of{' '}
                     </span>
                   )}
-                  {total}
+                  {searchResults.metadata.total}
                   <span className="pl-1"> results </span>
                   {!isUndefined(props.tsQueryWeb) && props.tsQueryWeb !== '' && (
                     <span className="d-none d-sm-inline pl-1">
@@ -408,14 +414,14 @@ const SearchView = (props: Props) => {
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(packages)) && <Loading />}
+        {(isSearching || isNull(searchResults.data.packages)) && <Loading />}
 
         <main role="main" className="container d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
             <nav className={`d-none d-md-block ${styles.sidebar}`}>
               <div className="mr-5">
                 <Filters
-                  facets={facets}
+                  facets={searchResults.data.facets}
                   activeFilters={props.filters}
                   activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
@@ -435,12 +441,12 @@ const SearchView = (props: Props) => {
 
           <div
             className={classnames('flex-grow-1', styles.list, {
-              [styles.emptyList]: isNull(packages) || packages.length === 0,
+              [styles.emptyList]: isNull(searchResults.data.packages) || searchResults.data.packages.length === 0,
             })}
           >
-            {!isNull(packages) && (
+            {!isNull(searchResults.data.packages) && (
               <>
-                {packages.length === 0 ? (
+                {searchResults.data.packages.length === 0 ? (
                   <NoData issuesLinkVisible={!isNull(apiError)}>
                     {isNull(apiError) ? (
                       <>
@@ -461,7 +467,7 @@ const SearchView = (props: Props) => {
                 ) : (
                   <>
                     <div className="row no-gutters mb-2">
-                      {packages.map((item: Package) => (
+                      {searchResults.data.packages.map((item: Package) => (
                         <PackageCard
                           key={item.packageId}
                           package={item}
@@ -481,8 +487,8 @@ const SearchView = (props: Props) => {
 
                     <Pagination
                       limit={ctx.prefs.search.limit}
-                      offset={offset}
-                      total={total}
+                      offset={searchResults.metadata.offset}
+                      total={searchResults.metadata.total}
                       active={props.pageNumber}
                       onChange={onPageChange}
                     />
