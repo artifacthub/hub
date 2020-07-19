@@ -608,4 +608,65 @@ describe('Search index', () => {
       await waitFor(() => {});
     });
   });
+
+  describe('Facets', () => {
+    it('keeps previous facets when new ones are empty', async () => {
+      const mockSearchResults1 = getMockSearchResults('22a');
+      const mockSearchResults2 = getMockSearchResults('22b');
+      mocked(API).searchPackages.mockResolvedValueOnce(mockSearchResults1).mockResolvedValue(mockSearchResults2);
+
+      const { rerender, getByRole, getAllByTestId, getByTestId } = render(
+        <Router>
+          <SearchView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(1);
+        expect(API.searchPackages).toHaveBeenCalledWith({
+          deprecated: false,
+          filters: {},
+          limit: 15,
+          offset: 0,
+          tsQueryWeb: 'test',
+        });
+      });
+
+      const main = await waitFor(() => getByRole('main'));
+
+      expect(main).toBeInTheDocument();
+      const checks = getAllByTestId('checkbox');
+      expect(checks).toHaveLength(36);
+
+      rerender(
+        <Router>
+          <SearchView {...defaultProps} tsQuery={['database']} />
+        </Router>
+      );
+
+      await waitFor(() => {
+        expect(API.searchPackages).toHaveBeenCalledTimes(2);
+        expect(API.searchPackages).toHaveBeenCalledWith({
+          deprecated: false,
+          filters: {},
+          limit: 15,
+          offset: 0,
+          tsQueryWeb: 'test',
+          tsQuery: ['database'],
+        });
+      });
+
+      await waitFor(() => getByRole('main'));
+
+      const noData = await waitFor(() => getByTestId('noData'));
+
+      expect(noData).toBeInTheDocument();
+      expect(noData).toHaveTextContent(
+        `We're sorry! We can't seem to find any packages that match your search for "test"`
+      );
+      expect(checks).toHaveLength(36);
+
+      await waitFor(() => {});
+    });
+  });
 });
