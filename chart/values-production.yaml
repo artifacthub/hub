@@ -2,6 +2,7 @@ postgresql:
   enabled: false
 
 log:
+  level: debug
   pretty: true
 
 db:

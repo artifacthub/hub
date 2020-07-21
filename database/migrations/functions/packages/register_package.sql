@@ -17,7 +17,18 @@ declare
     v_maintainer jsonb;
     v_maintainer_id uuid;
     v_created_at timestamptz;
+    v_provider text := nullif(p_pkg->>'provider', '');
+    v_ts_repository text[];
+    v_ts_publisher text[];
 begin
+    -- Get repository and publisher name for tsdoc
+    select array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider]
+    into v_ts_repository, v_ts_publisher
+    from repository r
+    left join "user" u using (user_id)
+    left join organization o using (organization_id)
+    where repository_id = v_repository_id;
+
     -- Get package's latest version before registration, if available
     select latest_version into v_previous_latest_version
     from package
@@ -40,7 +51,7 @@ begin
         nullif(p_pkg->>'logo_url', ''),
         nullif(p_pkg->>'logo_image_id', '')::uuid,
         v_version,
-        generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
+        generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         (p_pkg->>'is_operator')::boolean,
         p_pkg->'channels',
         nullif(p_pkg->>'default_channel', ''),
@@ -52,7 +63,7 @@ begin
         logo_url = excluded.logo_url,
         logo_image_id = excluded.logo_image_id,
         latest_version = excluded.latest_version,
-        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords),
+        tsdoc = generate_package_tsdoc(v_name, v_display_name, v_description, v_keywords, v_ts_repository, v_ts_publisher),
         is_operator = excluded.is_operator,
         channels = excluded.channels,
         default_channel = excluded.default_channel
@@ -146,7 +157,7 @@ begin
         (p_pkg->>'signed')::boolean,
         nullif(p_pkg->>'content_url', ''),
         nullif(p_pkg->>'container_image', ''),
-        nullif(p_pkg->>'provider', ''),
+        v_provider,
         v_created_at
     )
     on conflict (package_id, version) do update
