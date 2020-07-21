@@ -158,6 +158,7 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	if err != nil {
 		w.ec.Append(j.Repo.RepositoryID, fmt.Errorf("error loading chart %s: %w", u, err))
 		w.logger.Warn().
+			Err(err).
 			Str("repo", j.Repo.Name).
 			Str("chart", j.ChartVersion.Metadata.Name).
 			Str("version", j.ChartVersion.Metadata.Version).
