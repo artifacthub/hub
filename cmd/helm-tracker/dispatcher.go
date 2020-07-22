@@ -11,7 +11,6 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
 )
@@ -72,20 +71,11 @@ func (d *Dispatcher) Run(wg *sync.WaitGroup, repos []*hub.Repository) {
 	defer wg.Done()
 	defer close(d.Queue)
 
-	// Rate limit how many repositories we want to process concurrently
 	var wgRepos sync.WaitGroup
-	limiter := rate.NewLimiter(25, 25)
-
-	// Process repositories
 	for _, r := range repos {
-		if err := limiter.Wait(d.ctx); err != nil {
-			log.Error().Err(err).Msg("error waiting for limiter")
-			return
-		}
 		wgRepos.Add(1)
 		go d.generateSyncJobs(&wgRepos, r)
 	}
-
 	wgRepos.Wait()
 }
 

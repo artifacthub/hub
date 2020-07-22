@@ -20,6 +20,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
+	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 )
@@ -39,6 +40,7 @@ type Worker struct {
 	ec     tracker.ErrorsCollector
 	hg     HTTPGetter
 	logger zerolog.Logger
+	rl     *rate.Limiter
 }
 
 // NewWorker creates a new worker instance.
@@ -49,6 +51,7 @@ func NewWorker(
 	is img.Store,
 	ec tracker.ErrorsCollector,
 	httpClient HTTPGetter,
+	rl *rate.Limiter,
 ) *Worker {
 	return &Worker{
 		ctx:    ctx,
@@ -58,6 +61,7 @@ func NewWorker(
 		ec:     ec,
 		hg:     httpClient,
 		logger: log.With().Int("worker", id).Logger(),
+		rl:     rl,
 	}
 }
 
@@ -263,6 +267,11 @@ func (w *Worker) handleUnregisterJob(j *Job) error {
 
 // loadChart loads a chart from a remote archive located at the url provided.
 func (w *Worker) loadChart(u string) (*chart.Chart, error) {
+	// Rate limit requests to Github to avoid them being rejected
+	if strings.HasPrefix(u, "https://github.com") {
+		_ = w.rl.Wait(w.ctx)
+	}
+
 	resp, err := w.hg.Get(u)
 	if err != nil {
 		return nil, err

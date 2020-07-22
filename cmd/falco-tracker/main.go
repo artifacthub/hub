@@ -13,7 +13,6 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
-	"golang.org/x/time/rate"
 )
 
 func main() {
@@ -58,11 +57,10 @@ func main() {
 		log.Fatal().Err(err).Send()
 	}
 	ec := tracker.NewDBErrorsCollector(ctx, rm, repos)
-	concurrency := cfg.GetInt("tracker.concurrency")
-	limiter := rate.NewLimiter(rate.Limit(concurrency), concurrency)
+	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
 	for _, r := range repos {
-		_ = limiter.Wait(ctx)
+		limiter <- struct{}{}
 		wg.Add(1)
 		w := NewTracker(ctx, cfg, r, rm, pm, is, ec)
 		go func(r *hub.Repository) {
@@ -70,6 +68,7 @@ func main() {
 				ec.Append(r.RepositoryID, err)
 				w.Logger.Err(err).Send()
 			}
+			<-limiter
 		}(r)
 	}
 	wg.Wait()

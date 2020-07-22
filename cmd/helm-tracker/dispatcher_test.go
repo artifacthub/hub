@@ -17,18 +17,6 @@ import (
 )
 
 func TestDispatcher(t *testing.T) {
-	t.Run("error waiting for limiter", func(t *testing.T) {
-		// Setup dispatcher
-		ctx, cancel := context.WithCancel(context.Background())
-		cancel()
-		dw := newDispatcherWrapper(ctx)
-
-		// Run dispatcher and check expectations
-		r := &hub.Repository{RepositoryID: "repo1"}
-		dw.d.Run(dw.wg, []*hub.Repository{r})
-		dw.assertExpectations(t, nil)
-	})
-
 	t.Run("error loading chart repository index file", func(t *testing.T) {
 		// Setup dispatcher and expectations
 		r := &hub.Repository{RepositoryID: "repo1"}
