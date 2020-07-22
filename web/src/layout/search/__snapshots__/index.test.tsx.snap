@@ -52,17 +52,21 @@ exports[`Search index creates snapshot 1`] = `
     class="d-flex position-relative pt-3 pb-3 flex-grow-1"
   >
     <div
-      class="text-center p-5 wrapper undefined"
+      class="position-fixed p-5 wrapper undefined"
     >
       <div
-        class="spinner-border text-primary spinner undefined"
-        role="status"
+        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
       >
-        <span
-          class="sr-only"
+        <div
+          class="spinner-border text-primary spinner undefined"
+          role="status"
         >
-          Loading...
-        </span>
+          <span
+            class="sr-only"
+          >
+            Loading...
+          </span>
+        </div>
       </div>
     </div>
     <main
@@ -1379,7 +1383,7 @@ exports[`Search index creates snapshot 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate align-items-center subtitle"
+                          class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
                             class="d-inline-block d-md-none text-truncate w-100"
@@ -1426,7 +1430,7 @@ exports[`Search index creates snapshot 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row mx50"
+                              class="ml-3 d-flex flex-row align-items-baseline mx50"
                             >
                               <span
                                 class="text-muted text-uppercase pr-1"
@@ -1571,7 +1575,7 @@ exports[`Search index creates snapshot 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle text-truncate align-items-center subtitle"
+                          class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
                             class="d-inline-block d-md-none text-truncate w-100"
@@ -1618,7 +1622,7 @@ exports[`Search index creates snapshot 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row mx50"
+                              class="ml-3 d-flex flex-row align-items-baseline mx50"
                             >
                               <span
                                 class="text-muted text-uppercase pr-1"

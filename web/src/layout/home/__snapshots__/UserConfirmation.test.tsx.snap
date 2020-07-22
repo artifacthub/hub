@@ -45,17 +45,21 @@ exports[`UserConfirmation creates snapshot 1`] = `
               class="d-flex flex-column h-100 w-100 px-3 align-items-center justify-content-center text-center position-relative content"
             >
               <div
-                class="text-center p-5 wrapper loading"
+                class="position-fixed p-5 wrapper loading"
               >
                 <div
-                  class="spinner-border text-primary spinner mt-0"
-                  role="status"
+                  class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
                 >
-                  <span
-                    class="sr-only"
+                  <div
+                    class="spinner-border text-primary spinner mt-0"
+                    role="status"
                   >
-                    Loading...
-                  </span>
+                    <span
+                      class="sr-only"
+                    >
+                      Loading...
+                    </span>
+                  </div>
                 </div>
               </div>
               <small

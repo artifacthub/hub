@@ -95,7 +95,7 @@ const OrganizationInfo = (props: Props) => {
               </div>
 
               {!isUndefined(organization.homeUrl) && !isNull(organization.homeUrl) && (
-                <div className="mt-1 text-truncate">
+                <div className="mt-1 text-truncate d-flex flex-row align-items-baseline">
                   <small className="text-muted text-uppercase mr-1">Homepage: </small>
                   <ExternalLink href={organization.homeUrl} className={`text-reset ${styles.externalLink}`} btnType>
                     {organization.homeUrl}

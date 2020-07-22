@@ -460,7 +460,7 @@ const SearchView = (props: Props) => {
                           )}
                           {!isEmpty(props.filters) && <span className="pl-1">with the selected filters</span>}
                         </p>
-                        <p className={`h6 mb-0 mt-5 d-none d-md-block ${styles.noDataMessage}`}>
+                        <p className={`h6 mb-0 mt-5 ${styles.noDataMessage}`}>
                           You can{' '}
                           {!isEmpty(props.filters) ? (
                             <button
@@ -491,7 +491,7 @@ const SearchView = (props: Props) => {
                           )}
                           , try a new search or start with one of the sample queries:
                         </p>
-                        <div className="h5 d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
+                        <div className="h5 d-flex flex-row align-items-end justify-content-center flex-wrap">
                           <button
                             data-testid="sampleFilterLink"
                             className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"

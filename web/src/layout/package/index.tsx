@@ -370,7 +370,7 @@ const PackageView = (props: Props) => {
                           </span>
                         </div>
 
-                        <div className={`d-none d-md-flex flex-row align-items-center mt-2 ${styles.subtitle}`}>
+                        <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
                           {!isNull(detail.repository.userAlias) ? (
                             <div className="mr-2 text-truncate">
                               <small className="mr-1 text-uppercase text-muted">User: </small>
@@ -394,7 +394,7 @@ const PackageView = (props: Props) => {
                             </div>
                           ) : (
                             <OrganizationInfo
-                              className="mr-2"
+                              className="mr-2 text-truncate d-flex flex-row align-items-baseline"
                               labelClassName={styles.labelOrg}
                               organizationName={detail.repository.organizationName!}
                               organizationDisplayName={detail.repository.organizationDisplayName}

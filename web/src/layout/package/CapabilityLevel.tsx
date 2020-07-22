@@ -24,7 +24,7 @@ const CapabilityLevel = (props: Props) => {
       <div className="d-flex flex-row align-items-center">
         <SmallTitle text="Capability Level" />
         <Modal
-          buttonType="btn-link btn-sm px-0 text-secondary"
+          buttonType="btn-link btn-sm px-0 pb-0 text-secondary"
           buttonContent={<MdInfo />}
           className="d-none d-lg-inline-block mt-1 ml-2"
           header={<div className="h5 m-0">Capability level</div>}

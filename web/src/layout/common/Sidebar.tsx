@@ -28,7 +28,7 @@ const Sidebar = (props: Props) => {
   const direction = props.direction || DEFAULT_DIRECTION;
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
-  useBodyScroll(openStatus);
+  useBodyScroll(openStatus, 'sidebar');
 
   const openStatusChange = (open: boolean): void => {
     setOpenStatus(open);
