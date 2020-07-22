@@ -15,6 +15,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
+	"golang.org/x/time/rate"
 )
 
 func main() {
@@ -67,8 +68,9 @@ func main() {
 	wg.Add(1)
 	go dispatcher.Run(&wg, repos)
 	hc := &http.Client{Timeout: 10 * time.Second}
+	rl := rate.NewLimiter(2, 1)
 	for i := 0; i < cfg.GetInt("tracker.numWorkers"); i++ {
-		w := NewWorker(ctx, i, pm, is, ec, hc)
+		w := NewWorker(ctx, i, pm, is, ec, hc, rl)
 		wg.Add(1)
 		go w.Run(&wg, dispatcher.Queue)
 	}
