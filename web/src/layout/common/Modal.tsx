@@ -35,7 +35,7 @@ const Modal = (props: Props) => {
   useOutsideClick([ref], openStatus, () => {
     closeModal();
   });
-  useBodyScroll(openStatus);
+  useBodyScroll(openStatus, 'modal');
 
   const closeModal = () => {
     if (isUndefined(props.disabledClose) || !props.disabledClose) {

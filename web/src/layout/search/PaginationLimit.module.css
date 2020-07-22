@@ -5,6 +5,12 @@
   padding-left: 0.75rem !important;
 }
 
+@supports (-ms-ime-align: auto) {
+  .select {
+    width: auto !important;
+  }
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 767.98px) {
   .select:active {
     font-size: 16px !important;

@@ -8,9 +8,11 @@ interface Props {
 }
 
 const Loading = (props: Props) => (
-  <div className={`text-center p-5 ${styles.wrapper} ${props.className}`}>
-    <div className={`spinner-border text-primary ${styles.spinner} ${props.spinnerClassName}`} role="status">
-      <span className="sr-only">Loading...</span>
+  <div className={`position-fixed p-5 ${styles.wrapper} ${props.className}`}>
+    <div className="d-flex flex-row align-items-center justify-content-center w-100 h-100">
+      <div className={`spinner-border text-primary ${styles.spinner} ${props.spinnerClassName}`} role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 );

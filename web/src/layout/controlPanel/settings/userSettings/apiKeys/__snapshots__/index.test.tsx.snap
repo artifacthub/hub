@@ -6,17 +6,21 @@ exports[`API keys section index creates snapshot 1`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <div
-      class="text-center p-5 wrapper undefined"
+      class="position-fixed p-5 wrapper undefined"
     >
       <div
-        class="spinner-border text-primary spinner undefined"
-        role="status"
+        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
       >
-        <span
-          class="sr-only"
+        <div
+          class="spinner-border text-primary spinner undefined"
+          role="status"
         >
-          Loading...
-        </span>
+          <span
+            class="sr-only"
+          >
+            Loading...
+          </span>
+        </div>
       </div>
     </div>
     <main

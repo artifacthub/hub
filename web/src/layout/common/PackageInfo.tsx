@@ -115,7 +115,7 @@ const PackageInfo = (props: Props) => {
               </div>
             </div>
 
-            <div className={`card-subtitle text-truncate align-items-center ${styles.subtitle}`}>
+            <div className={`card-subtitle text-truncate align-items-baseline ${styles.subtitle}`}>
               <div className="d-inline-block d-md-none text-truncate w-100">
                 <div className={`text-dark d-flex align-items-baseline text-truncate mw-100 ${styles.mobileVersion}`}>
                   <span className="text-muted text-uppercase mr-1">Repo: </span>
@@ -146,7 +146,7 @@ const PackageInfo = (props: Props) => {
                   {!isUndefined(props.package.repository.organizationName) &&
                     props.package.repository.organizationName && (
                       <OrganizationInfo
-                        className="mr-0 d-flex flex-row mw-100"
+                        className="mr-0 d-flex flex-row align-items-baseline mw-100"
                         btnClassName="text-truncate mw-100"
                         organizationName={props.package.repository.organizationName}
                         organizationDisplayName={props.package.repository.organizationDisplayName}
@@ -179,7 +179,7 @@ const PackageInfo = (props: Props) => {
                     </>
                   )}
                 </div>
-                <div className={`ml-3 d-flex flex-row ${styles.mx50}`}>
+                <div className={`ml-3 d-flex flex-row align-items-baseline ${styles.mx50}`}>
                   <span className="text-muted text-uppercase pr-1">Repo: </span>
                   <button
                     data-testid="repoLink"

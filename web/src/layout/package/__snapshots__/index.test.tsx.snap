@@ -70,10 +70,10 @@ exports[`Package index creates snapshot 2`] = `
                 </span>
               </div>
               <div
-                class="d-none d-md-flex flex-row align-items-center mt-2 subtitle"
+                class="d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
               >
                 <div
-                  class="mr-2"
+                  class="mr-2 text-truncate d-flex flex-row align-items-baseline"
                 >
                   <div
                     class="position-absolute"
