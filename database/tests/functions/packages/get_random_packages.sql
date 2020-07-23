@@ -164,6 +164,7 @@ select is(
                 "kind": 0,
                 "name": "repo2",
                 "display_name": "Repo 2",
+                "url": "https://repo2.com",
                 "user_alias": null,
                 "organization_name": "org1",
                 "organization_display_name": "Organization 1"

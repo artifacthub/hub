@@ -41,6 +41,7 @@ begin
             r.repository_kind_id,
             rk.name as repository_kind_name,
             r.name as repository_name,
+            r.url as repository_url,
             r.display_name as repository_display_name,
             u.alias as user_alias,
             o.name as organization_name,
@@ -109,6 +110,7 @@ begin
                             'kind', repository_kind_id,
                             'name', repository_name,
                             'display_name', repository_display_name,
+                            'url', repository_url,
                             'user_alias', user_alias,
                             'organization_name', organization_name,
                             'organization_display_name', organization_display_name
