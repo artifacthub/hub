@@ -1,0 +1,33 @@
+version: A SemVer 2 version (required)
+name: The name of the package (only alphanum, no spaces, dashes allowed) (required)
+displayName: The name of the package nicely formatted (required)
+createdAt: The date this package was created (RFC3339 layout) (required)
+description: A short description of the package (required)
+logoURL: A URL for the package logo. Data URIs are supported (optional, but it improves your package visibility)
+digest: String that uniquely identifies this package version (optional)
+license: SPDX identifier of the package license (https://spdx.org/licenses/) (optional)
+homeURL: The URL of the project home page (optional)
+appVersion: The version of the app that this contains (optional)
+publisherID: The ID of the entity that will publish this package to Artifact Hub (optional)
+containerImage: The container image of the package. The format should match ${REGISTRYHOST}/${USERNAME}/${NAME}:${TAG} (optional)
+operator: Whether this package is an Operator (optional, boolean)
+deprecated: Whether this package is deprecated (optional, boolean)
+keywords: # (optional)
+  - A list of keywords about this package
+  - Using one or more categories names as keywords will improve your package visibility
+links: # (optional)
+  - name: Title of the link (required for each link)
+    url: URL of the link (required for each link)
+readme: | # (optional)
+  Package documentation in markdown format
+
+  Content added here will be rendered on Artifact Hub
+install: | # (optional)
+  Install instructions in markdown format
+
+  Content added here will be displayed when the INSTALL button on the package details page is clicked.
+maintainers: # (optional)
+  - name: The maintainer name (required for each maintainer)
+    email: The maintainer email (required for each maintainer)
+provider: # (optional)
+  name: The name of the individual, company, or service that provides this package (optional)
