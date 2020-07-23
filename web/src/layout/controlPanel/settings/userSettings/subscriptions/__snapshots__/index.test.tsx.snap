@@ -6,7 +6,7 @@ exports[`SubscriptionsSection renders correctly 1`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <div
-      class="position-fixed p-5 wrapper undefined"
+      class="position-absolute p-5 wrapper undefined"
     >
       <div
         class="d-flex flex-row align-items-center justify-content-center w-100 h-100"

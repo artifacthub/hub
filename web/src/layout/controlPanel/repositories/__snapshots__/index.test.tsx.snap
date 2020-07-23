@@ -106,7 +106,7 @@ exports[`Repository index creates snapshot 1`] = `
         </div>
       </div>
       <div
-        class="position-fixed p-5 wrapper undefined"
+        class="position-absolute p-5 wrapper undefined"
       >
         <div
           class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
