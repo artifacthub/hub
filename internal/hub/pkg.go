@@ -1,6 +1,14 @@
 package hub
 
-import "context"
+import (
+	"context"
+)
+
+// Channel represents a package's channel.
+type Channel struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
+}
 
 // GetPackageInput represents the input used to get a specific package.
 type GetPackageInput struct {
@@ -12,27 +20,15 @@ type GetPackageInput struct {
 
 // Link represents a url associated with a package.
 type Link struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
-
-// Version represents a package's version
-type Version struct {
-	Version   string `json:"version"`
-	CreatedAt int64  `json:"created_at"`
+	Name string `json:"name" yaml:"name"`
+	URL  string `json:"url" yaml:"url"`
 }
 
 // Maintainer represents a package's maintainer.
 type Maintainer struct {
 	MaintainerID string `json:"maintainer_id"`
-	Name         string `json:"name"`
-	Email        string `json:"email"`
-}
-
-// Channel represents a package's channel.
-type Channel struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
+	Name         string `json:"name" yaml:"name"`
+	Email        string `json:"email" yaml:"email"`
 }
 
 // Package represents a Kubernetes package.
@@ -50,6 +46,7 @@ type Package struct {
 	Keywords          []string               `json:"keywords"`
 	HomeURL           string                 `json:"home_url"`
 	Readme            string                 `json:"readme"`
+	Install           string                 `json:"install"`
 	Links             []*Link                `json:"links"`
 	Data              map[string]interface{} `json:"data"`
 	Version           string                 `json:"version"`
@@ -82,6 +79,37 @@ type PackageManager interface {
 	Unregister(ctx context.Context, pkg *Package) error
 }
 
+// PackageMetadata represents some metadata about a given package. It's usually
+// provided by repositories publishers, to provide the required information
+// about the content they'd like to be indexed.
+type PackageMetadata struct {
+	Version        string        `yaml:"version"`
+	Name           string        `yaml:"name"`
+	DisplayName    string        `yaml:"displayName"`
+	CreatedAt      string        `yaml:"createdAt"`
+	Description    string        `yaml:"description"`
+	LogoPath       string        `yaml:"logoPath"`
+	Digest         string        `yaml:"digest"`
+	License        string        `yaml:"license"`
+	HomeURL        string        `yaml:"homeURL"`
+	AppVersion     string        `yaml:"appVersion"`
+	PublisherID    string        `yaml:"publisherID"`
+	ContainerImage string        `yaml:"containerImage"`
+	Operator       bool          `yaml:"operator"`
+	Deprecated     bool          `yaml:"deprecated"`
+	Keywords       []string      `yaml:"keywords"`
+	Links          []*Link       `yaml:"links"`
+	Readme         string        `yaml:"readme"`
+	Install        string        `yaml:"install"`
+	Maintainers    []*Maintainer `yaml:"maintainers"`
+	Provider       *Provider     `yaml:"provider"`
+}
+
+// Provider represents a package's provider.
+type Provider struct {
+	Name string `yaml:"name"`
+}
+
 // SearchPackageInput represents the query input when searching for packages.
 type SearchPackageInput struct {
 	Limit           int              `json:"limit,omitempty"`
@@ -95,4 +123,10 @@ type SearchPackageInput struct {
 	RepositoryKinds []RepositoryKind `json:"repository_kinds,omitempty"`
 	Operators       bool             `json:"operators"`
 	Deprecated      bool             `json:"deprecated"`
+}
+
+// Version represents a package's version
+type Version struct {
+	Version   string `json:"version"`
+	CreatedAt int64  `json:"created_at"`
 }

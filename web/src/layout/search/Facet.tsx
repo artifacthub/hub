@@ -18,6 +18,7 @@ interface Props {
   onFacetExpandableChange: (filterKey: string, open: boolean) => void;
   displaySubtitle?: boolean;
   isExpanded: boolean;
+  notExpandable?: boolean;
 }
 
 const DEFAULT_VISIBLE_ITEMS = 3;
@@ -74,12 +75,16 @@ const Facet = (props: Props) => {
       )}
 
       <div className={classnames({ 'mt-3': isUndefined(props.displaySubtitle) })}>
-        <ExpandableList
-          items={allOptions}
-          visibleItems={visibleOptions}
-          open={props.isExpanded}
-          onBtnClick={onExpandableChange}
-        />
+        {!isUndefined(props.notExpandable) && props.notExpandable ? (
+          <>{allOptions}</>
+        ) : (
+          <ExpandableList
+            items={allOptions}
+            visibleItems={visibleOptions}
+            open={props.isExpanded}
+            onBtnClick={onExpandableChange}
+          />
+        )}
       </div>
     </div>
   );

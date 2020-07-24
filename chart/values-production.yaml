@@ -51,7 +51,7 @@ falcoTracker:
     resources:
       requests:
         cpu: 2
-        memory: 8000Mi
+        memory: 4000Mi
   concurrency: 10
   repositories: []
   imageStore: pg
@@ -61,7 +61,7 @@ helmTracker:
     resources:
       requests:
         cpu: 2
-        memory: 8000Mi
+        memory: 4000Mi
   numWorkers: 50
   repositories: []
   imageStore: pg
@@ -71,7 +71,17 @@ olmTracker:
     resources:
       requests:
         cpu: 2
-        memory: 8000Mi
+        memory: 4000Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg
+
+opaTracker:
+  cronjob:
+    resources:
+      requests:
+        cpu: 2
+        memory: 4000Mi
   concurrency: 10
   repositories: []
   imageStore: pg

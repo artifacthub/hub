@@ -35,6 +35,7 @@ The chart installs some `cronjobs` in charge of launching periodically (every 30
 $ kubectl create job initial-falco-tracker-job --from=cronjob/falco-tracker
 $ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
 $ kubectl create job initial-olm-tracker-job --from=cronjob/olm-tracker
+$ kubectl create job initial-opa-tracker-job --from=cronjob/opa-tracker
 ```
 
 ## Uninstalling the Chart
@@ -115,6 +116,12 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `olmTracker.repositories`               | Repos names to process ([] = all) | []                                         |
 | `olmTracker.imageStore`                 | Image store                       | `pg`                                       |
 | `olmTracker.bypassDigestCheck`          | Bypass digest check               | `false`                                    |
+| `opaTracker.cronjob.image.repository`   | OPA tracker image repository      | `artifacthub/opa-tracker`                  |
+| `opaTracker.cronjob.resources`          | OPA tracker requested resources   | Memory: `500Mi`, CPU: `100m`               |
+| `opaTracker.concurrency`                | Repos to process concurrently     | 10                                         |
+| `opaTracker.repositories`               | Repos names to process ([] = all) | []                                         |
+| `opaTracker.imageStore`                 | Image store                       | `pg`                                       |
+| `opaTracker.bypassDigestCheck`          | Bypass digest check               | `false`                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

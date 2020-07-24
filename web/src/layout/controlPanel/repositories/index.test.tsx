@@ -65,7 +65,6 @@ describe('Repository index', () => {
       );
 
       const spinner = await waitFor(() => getByRole('status'));
-
       expect(spinner).toBeTruthy();
       await waitFor(() => {});
     });

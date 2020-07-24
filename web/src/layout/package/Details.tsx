@@ -4,6 +4,7 @@ import { Package, RepositoryKind, SearchFiltersURL, Version as VersionData } fro
 import DefaultDetails from './DefaultDetails';
 import HelmChartDetails from './HelmChartDetails';
 import OLMOperatorsDetails from './OLMOperatorsDetails';
+import OPAPoliciesDetails from './OPAPoliciesDetails';
 import Version from './Version';
 
 interface Props {
@@ -38,8 +39,10 @@ const Details = (props: Props) => {
             return <HelmChartDetails package={props.package} allVersions={allVersions} />;
 
           case RepositoryKind.Falco:
-          case RepositoryKind.OPA:
             return <DefaultDetails package={props.package} allVersions={allVersions} />;
+
+          case RepositoryKind.OPA:
+            return <OPAPoliciesDetails package={props.package} allVersions={allVersions} />;
 
           case RepositoryKind.OLM:
             return (

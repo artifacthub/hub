@@ -109,6 +109,19 @@ olmTracker:
   imageStore: pg
   bypassDigestCheck: false
 
+opaTracker:
+  cronjob:
+    image:
+      repository: artifacthub/opa-tracker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg
+  bypassDigestCheck: false
+
 dbMigrator:
   job:
     image:

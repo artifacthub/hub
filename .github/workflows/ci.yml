@@ -98,6 +98,9 @@ jobs:
       - name: Build olm-tracker
         working-directory: ./cmd/olm-tracker
         run: go build -v
+      - name: Build opa-tracker
+        working-directory: ./cmd/opa-tracker
+        run: go build -v
 
   build-frontend:
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
@@ -167,6 +170,13 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/olm-tracker:$GITHUB_SHA .
       - name: Push olm-tracker image
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/olm-tracker:$GITHUB_SHA
+      - name: Build opa-tracker image
+        run: |
+          docker build \
+            -f cmd/opa-tracker/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/opa-tracker:$GITHUB_SHA .
+      - name: Push opa-tracker image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/opa-tracker:$GITHUB_SHA
 
   deploy-staging:
     if: github.ref == 'refs/heads/staging'

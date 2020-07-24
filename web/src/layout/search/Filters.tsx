@@ -94,6 +94,7 @@ const Filters = (props: Props) => {
           active={props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : []}
           isExpanded={props.expandedList === kind.filterKey}
           onFacetExpandableChange={props.onFacetExpandableChange}
+          notExpandable
         />
       );
     }

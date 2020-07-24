@@ -1596,13 +1596,13 @@ components:
                     Raw:
                       type: string
                       example: "- macro: text\n  condition: (evt.num < 0)\n\n"
-                policies:
-                  type: object
-                  properties:
-                    Raw:
-                      type: string
-                      example: "- macro: text\n  condition: (evt.num < 0)\n\n"
-              nullable: true
+            policies:
+              type: object
+              additionalProperties:
+                type: string
+              example:
+                policy1: "- macro: text\n  condition: (evt.num < 0)\n\n"
+          nullable: true
     RepositoryKind:
       type: integer
       enum:

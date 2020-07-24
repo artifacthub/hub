@@ -55,6 +55,7 @@ func TestGet(t *testing.T) {
 			Keywords:       []string{"kw1", "kw2"},
 			HomeURL:        "home_url",
 			Readme:         "readme-version-1.0.0",
+			Install:        "install-version-1.0.0",
 			Links: []*hub.Link{
 				{
 					Name: "link1",
@@ -130,6 +131,7 @@ func TestGet(t *testing.T) {
 			"keywords": ["kw1", "kw2"],
 			"home_url": "home_url",
 			"readme": "readme-version-1.0.0",
+			"install": "install-version-1.0.0",
 			"links": [
 				{
 					"name": "link1",

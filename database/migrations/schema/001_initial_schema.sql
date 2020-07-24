@@ -103,6 +103,7 @@ create table if not exists snapshot (
     app_version text check (app_version <> ''),
     digest text check (digest <> ''),
     readme text check (readme <> ''),
+    install text check (install <> ''),
     links jsonb,
     data jsonb,
     deprecated boolean,

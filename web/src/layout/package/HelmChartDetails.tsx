@@ -18,12 +18,14 @@ interface Props {
 const HelmChartDetails = (props: Props) => {
   return (
     <>
-      <div>
-        <SmallTitle text="Application version" />
-        <p data-testid="appVersion" className="text-truncate">
-          {props.package.appVersion || '-'}
-        </p>
-      </div>
+      {props.package.appVersion && (
+        <div>
+          <SmallTitle text="Application version" />
+          <p data-testid="appVersion" className="text-truncate">
+            {props.package.appVersion}
+          </p>
+        </div>
+      )}
 
       <div>
         <RSSLinkTitle title="Chart Versions" package={props.package} />
@@ -38,9 +40,9 @@ const HelmChartDetails = (props: Props) => {
 
       <Links links={props.package.links} homeUrl={props.package.homeUrl} />
 
-      <License license={props.package.license} />
-
       <Maintainers maintainers={props.package.maintainers} />
+
+      <License license={props.package.license} />
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

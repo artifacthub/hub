@@ -3,6 +3,10 @@
   width: 620px !important;
 }
 
+.body {
+  min-height: 580px;
+}
+
 .inputAdditionalInfoURL {
   font-size: 90%;
 }

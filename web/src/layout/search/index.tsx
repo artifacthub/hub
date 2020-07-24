@@ -440,7 +440,7 @@ const SearchView = (props: Props) => {
           )}
 
           <div
-            className={classnames('flex-grow-1', styles.list, {
+            className={classnames('flex-grow-1 mt-3', styles.list, {
               [styles.emptyList]: isNull(searchResults.data.packages) || searchResults.data.packages.length === 0,
             })}
           >
