@@ -1,3 +1,7 @@
+.badgeWrapper {
+  top: -12px;
+}
+
 .badge {
   border: 1px solid var(--success);
   color: var(--success);
@@ -7,11 +11,11 @@
 .tooltip {
   width: 130px;
   bottom: -63px;
-  right: 0;
+  left: 0;
 }
 
 .tooltipArrow {
-  right: 10px;
+  left: 10px;
 }
 
 .tooltipArrow::before {

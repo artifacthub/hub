@@ -114,29 +114,37 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="card-subtitle text-truncate align-items-baseline subtitle"
                       >
                         <div
-                          class="d-inline-block d-md-none text-truncate w-100"
+                          class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                         >
                           <div
-                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            class="position-absolute"
+                          />
+                          <div
+                            class="d-flex flex-row aling-items-start text-truncate "
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <small
+                              class="mr-1 text-muted text-uppercase"
                             >
-                              Repo: 
-                            </span>
+                              Repo:
+                            </small>
                             <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
                             >
                               <div
-                                class="text-truncate"
+                                class="d-flex flex-row align-items-center"
                               >
-                                halkeye
+                                <div
+                                  class="text-truncate"
+                                >
+                                  halkeye
+                                </div>
                               </div>
                             </button>
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                         >
                           <div
                             class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -158,23 +166,34 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="ml-3 d-flex flex-row align-items-baseline mx50"
+                            class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase pr-1"
+                            <div
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              Repo: 
-                            </span>
-                            <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
-                              data-testid="repoLink"
-                            >
-                              <div
-                                class="text-truncate"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                halkeye
-                              </div>
-                            </button>
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    halkeye
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -305,29 +324,37 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="card-subtitle text-truncate align-items-baseline subtitle"
                       >
                         <div
-                          class="d-inline-block d-md-none text-truncate w-100"
+                          class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                         >
                           <div
-                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            class="position-absolute"
+                          />
+                          <div
+                            class="d-flex flex-row aling-items-start text-truncate "
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <small
+                              class="mr-1 text-muted text-uppercase"
                             >
-                              Repo: 
-                            </span>
+                              Repo:
+                            </small>
                             <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
                             >
                               <div
-                                class="text-truncate"
+                                class="d-flex flex-row align-items-center"
                               >
-                                halkeye
+                                <div
+                                  class="text-truncate"
+                                >
+                                  halkeye
+                                </div>
                               </div>
                             </button>
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                         >
                           <div
                             class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -349,23 +376,34 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="ml-3 d-flex flex-row align-items-baseline mx50"
+                            class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase pr-1"
+                            <div
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              Repo: 
-                            </span>
-                            <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
-                              data-testid="repoLink"
-                            >
-                              <div
-                                class="text-truncate"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                halkeye
-                              </div>
-                            </button>
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    halkeye
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -495,29 +533,37 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="card-subtitle text-truncate align-items-baseline subtitle"
                       >
                         <div
-                          class="d-inline-block d-md-none text-truncate w-100"
+                          class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                         >
                           <div
-                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            class="position-absolute"
+                          />
+                          <div
+                            class="d-flex flex-row aling-items-start text-truncate "
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <small
+                              class="mr-1 text-muted text-uppercase"
                             >
-                              Repo: 
-                            </span>
+                              Repo:
+                            </small>
                             <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
                             >
                               <div
-                                class="text-truncate"
+                                class="d-flex flex-row align-items-center"
                               >
-                                gabibbo97
+                                <div
+                                  class="text-truncate"
+                                >
+                                  gabibbo97
+                                </div>
                               </div>
                             </button>
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                         >
                           <div
                             class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -539,23 +585,34 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="ml-3 d-flex flex-row align-items-baseline mx50"
+                            class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase pr-1"
+                            <div
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              Repo: 
-                            </span>
-                            <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
-                              data-testid="repoLink"
-                            >
-                              <div
-                                class="text-truncate"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                gabibbo97
-                              </div>
-                            </button>
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    gabibbo97
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -686,29 +743,37 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="card-subtitle text-truncate align-items-baseline subtitle"
                       >
                         <div
-                          class="d-inline-block d-md-none text-truncate w-100"
+                          class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                         >
                           <div
-                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            class="position-absolute"
+                          />
+                          <div
+                            class="d-flex flex-row aling-items-start text-truncate "
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <small
+                              class="mr-1 text-muted text-uppercase"
                             >
-                              Repo: 
-                            </span>
+                              Repo:
+                            </small>
                             <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
                             >
                               <div
-                                class="text-truncate"
+                                class="d-flex flex-row align-items-center"
                               >
-                                halkeye
+                                <div
+                                  class="text-truncate"
+                                >
+                                  halkeye
+                                </div>
                               </div>
                             </button>
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                         >
                           <div
                             class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -730,23 +795,34 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="ml-3 d-flex flex-row align-items-baseline mx50"
+                            class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase pr-1"
+                            <div
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              Repo: 
-                            </span>
-                            <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
-                              data-testid="repoLink"
-                            >
-                              <div
-                                class="text-truncate"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                halkeye
-                              </div>
-                            </button>
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    halkeye
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -877,29 +953,37 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="card-subtitle text-truncate align-items-baseline subtitle"
                       >
                         <div
-                          class="d-inline-block d-md-none text-truncate w-100"
+                          class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                         >
                           <div
-                            class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                            class="position-absolute"
+                          />
+                          <div
+                            class="d-flex flex-row aling-items-start text-truncate "
                           >
-                            <span
-                              class="text-muted text-uppercase mr-1"
+                            <small
+                              class="mr-1 text-muted text-uppercase"
                             >
-                              Repo: 
-                            </span>
+                              Repo:
+                            </small>
                             <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                              data-testid="repoLink"
                             >
                               <div
-                                class="text-truncate"
+                                class="d-flex flex-row align-items-center"
                               >
-                                billimek
+                                <div
+                                  class="text-truncate"
+                                >
+                                  billimek
+                                </div>
                               </div>
                             </button>
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                          class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                         >
                           <div
                             class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -921,23 +1005,34 @@ exports[`RandomPackages creates snapshot 2`] = `
                             </button>
                           </div>
                           <div
-                            class="ml-3 d-flex flex-row align-items-baseline mx50"
+                            class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                           >
-                            <span
-                              class="text-muted text-uppercase pr-1"
+                            <div
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              Repo: 
-                            </span>
-                            <button
-                              class="text-truncate p-0 border-0 text-dark mw-100 link"
-                              data-testid="repoLink"
-                            >
-                              <div
-                                class="text-truncate"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                billimek
-                              </div>
-                            </button>
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    billimek
+                                  </div>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

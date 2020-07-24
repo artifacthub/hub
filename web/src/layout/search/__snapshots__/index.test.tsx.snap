@@ -1386,29 +1386,86 @@ exports[`Search index creates snapshot 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              <div
+                                class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                role="tooltip"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="content"
                                 >
-                                  stable
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      REPO: 
+                                    </span>
+                                    <img
+                                      alt="Icon"
+                                      class="mr-1 repoIcon"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    stable
+                                  </div>
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      URL: 
+                                    </span>
+                                    url
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
+                            >
+                              <small
+                                class="mr-1 text-muted text-uppercase"
+                              >
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    stable
+                                  </div>
+                                  <svg
+                                    class="d-none d-sm-block ml-1 infoIcon"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                    />
+                                  </svg>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -1430,23 +1487,83 @@ exports[`Search index creates snapshot 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
+                              <div
+                                class="position-absolute"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                  role="tooltip"
                                 >
-                                  stable
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        REPO: 
+                                      </span>
+                                      <img
+                                        alt="Icon"
+                                        class="mr-1 repoIcon"
+                                        src="/static/media/helm-chart.svg"
+                                      />
+                                      stable
+                                    </div>
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        URL: 
+                                      </span>
+                                      url
+                                    </div>
+                                  </div>
                                 </div>
-                              </button>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
+                              >
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
+                                >
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      stable
+                                    </div>
+                                    <svg
+                                      class="d-none d-sm-block ml-1 infoIcon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1578,29 +1695,86 @@ exports[`Search index creates snapshot 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              <div
+                                class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                role="tooltip"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="content"
                                 >
-                                  incubator
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      REPO: 
+                                    </span>
+                                    <img
+                                      alt="Icon"
+                                      class="mr-1 repoIcon"
+                                      src="/static/media/helm-chart.svg"
+                                    />
+                                    incubator
+                                  </div>
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      URL: 
+                                    </span>
+                                    url
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
+                            >
+                              <small
+                                class="mr-1 text-muted text-uppercase"
+                              >
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    incubator
+                                  </div>
+                                  <svg
+                                    class="d-none d-sm-block ml-1 infoIcon"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                    />
+                                  </svg>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -1622,23 +1796,83 @@ exports[`Search index creates snapshot 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
+                              <div
+                                class="position-absolute"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                  role="tooltip"
                                 >
-                                  incubator
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        REPO: 
+                                      </span>
+                                      <img
+                                        alt="Icon"
+                                        class="mr-1 repoIcon"
+                                        src="/static/media/helm-chart.svg"
+                                      />
+                                      incubator
+                                    </div>
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        URL: 
+                                      </span>
+                                      url
+                                    </div>
+                                  </div>
                                 </div>
-                              </button>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
+                              >
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
+                                >
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      incubator
+                                    </div>
+                                    <svg
+                                      class="d-none d-sm-block ml-1 infoIcon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>

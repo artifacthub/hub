@@ -1072,7 +1072,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1208,7 +1208,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1344,7 +1344,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1481,7 +1481,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1618,7 +1618,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1755,7 +1755,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -1892,7 +1892,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"
@@ -2029,7 +2029,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         </div>
                       </a>
                       <div
-                        class="d-flex flex-row align-items-center wrapper"
+                        class="d-flex flex-row align-items-center"
                       >
                         <div
                           class="custom-control custom-switch clickable"

@@ -158,7 +158,7 @@ exports[`Home index creates snapshot 1`] = `
           <a
             class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
             data-testid="sampleFilter"
-            href="/packages/search?page=1&ts_query_web=monitoring&kind=3"
+            href="/packages/search?page=1&ts_query=monitoring&kind=3"
           >
             OLM operators in the monitoring category
           </a>

@@ -98,18 +98,18 @@ describe('PackageCard', () => {
     it('renders repository link', () => {
       const mockPackage = getMockPackage('6');
 
-      const { queryByTestId, queryAllByAltText } = render(
+      const { queryAllByTestId, queryAllByAltText } = render(
         <Router>
           <PackageCard {...defaultProps} package={mockPackage} />
         </Router>
       );
-      const button = queryByTestId('repoLink');
-      expect(button).toBeInTheDocument();
+      const buttons = queryAllByTestId('repoLink');
+      expect(buttons).toHaveLength(2);
       const icons = queryAllByAltText('Icon');
-      expect(icons).toHaveLength(2);
+      expect(icons).toHaveLength(4);
       expect(icons[0]).toBeInTheDocument();
       expect((icons[0] as HTMLImageElement).src).toBe('http://localhost/static/media/helm-chart.svg');
-      fireEvent.click(button!);
+      fireEvent.click(buttons[0]!);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
@@ -119,6 +119,7 @@ describe('PackageCard', () => {
             repo: [mockPackage.repository.name],
           },
         }),
+        state: {},
       });
     });
 

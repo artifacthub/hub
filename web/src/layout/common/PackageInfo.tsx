@@ -13,6 +13,7 @@ import Image from './Image';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
 import RepositoryIcon from './RepositoryIcon';
+import RepositoryInfo from './RepositoryInfo';
 import SignedBadge from './SignedBadge';
 
 interface Props {
@@ -116,32 +117,13 @@ const PackageInfo = (props: Props) => {
             </div>
 
             <div className={`card-subtitle text-truncate align-items-baseline ${styles.subtitle}`}>
-              <div className="d-inline-block d-md-none text-truncate w-100">
-                <div className={`text-dark d-flex align-items-baseline text-truncate mw-100 ${styles.mobileVersion}`}>
-                  <span className="text-muted text-uppercase mr-1">Repo: </span>
-                  <button
-                    className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      history.push({
-                        pathname: '/packages/search',
-                        search: prepareQueryString({
-                          pageNumber: 1,
-                          filters: {
-                            repo: [props.package.repository.name],
-                          },
-                        }),
-                      });
-                    }}
-                  >
-                    <div className="text-truncate">
-                      {props.package.repository.displayName || props.package.repository.name}
-                    </div>
-                  </button>
-                </div>
-              </div>
+              <RepositoryInfo
+                repository={props.package.repository}
+                deprecated={props.package.deprecated}
+                className="d-inline-block d-md-none text-truncate w-100"
+              />
 
-              <div className={`d-none d-md-flex flex-row align-items-baseline w-100 ${styles.wrapper}`}>
+              <div className={`d-none d-md-flex flex-row align-items-start w-100 ${styles.wrapper}`}>
                 <div className={`d-flex flex-row align-items-baseline text-truncate ${styles.mx50}`}>
                   {!isUndefined(props.package.repository.organizationName) &&
                     props.package.repository.organizationName && (
@@ -179,29 +161,11 @@ const PackageInfo = (props: Props) => {
                     </>
                   )}
                 </div>
-                <div className={`ml-3 d-flex flex-row align-items-baseline ${styles.mx50}`}>
-                  <span className="text-muted text-uppercase pr-1">Repo: </span>
-                  <button
-                    data-testid="repoLink"
-                    className={`text-truncate p-0 border-0 text-dark mw-100 ${styles.link}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      history.push({
-                        pathname: '/packages/search',
-                        search: prepareQueryString({
-                          pageNumber: 1,
-                          filters: {
-                            repo: [props.package.repository.name],
-                          },
-                        }),
-                      });
-                    }}
-                  >
-                    <div className="text-truncate">
-                      {props.package.repository.displayName || props.package.repository.name}
-                    </div>
-                  </button>
-                </div>
+                <RepositoryInfo
+                  repository={props.package.repository}
+                  deprecated={props.package.deprecated}
+                  className={`ml-3 d-flex flex-row align-items-baseline ${styles.mx50}`}
+                />
               </div>
             </div>
 

@@ -38,7 +38,7 @@ exports[`Package index creates snapshot 2`] = `
               />
             </div>
             <div
-              class="ml-3 text-truncate"
+              class="ml-3 text-truncate w-100"
             >
               <div
                 class="d-flex flex-row align-items-center titleWrapper"
@@ -70,10 +70,10 @@ exports[`Package index creates snapshot 2`] = `
                 </span>
               </div>
               <div
-                class="d-none d-md-flex flex-row align-items-baseline mt-2 subtitle"
+                class="d-none d-md-flex flex-row align-items-start mt-2 subtitle"
               >
                 <div
-                  class="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                  class="mr-2 text-truncate d-flex flex-row align-items-baseline mw50"
                 >
                   <div
                     class="position-absolute"
@@ -83,42 +83,60 @@ exports[`Package index creates snapshot 2`] = `
                       data-testid="orgInfoDropdown"
                     />
                   </div>
-                  <span
-                    class="text-muted text-uppercase mr-1 labelOrg"
+                  <div
+                    class="d-flex flex-row aling-items-start text-truncate"
                   >
-                    Org:
-                  </span>
-                  <button
-                    class="p-0 border-0 text-dark link undefined"
-                    data-testid="orgLink"
-                  >
-                    <div
-                      class="text-truncate"
+                    <span
+                      class="text-muted text-uppercase mr-1 labelOrg"
                     >
-                      Helm
-                    </div>
-                  </button>
+                      Org:
+                    </span>
+                    <button
+                      class="p-0 border-0 text-dark text-truncate flex-grow-1 link undefined"
+                      data-testid="orgLink"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        Helm
+                      </div>
+                    </button>
+                  </div>
                 </div>
                 <div
-                  class="text-truncate"
+                  class="text-truncate text-truncate d-flex flex-row align-items-baseline mw50 wrapper"
                 >
-                  <small
-                    class="mr-1 text-muted text-uppercase"
-                  >
-                    Repo: 
-                  </small>
-                  <img
-                    alt="Icon"
-                    class="mr-1 repoIcon"
-                    src="/static/media/helm-chart.svg"
+                  <div
+                    class="position-absolute"
                   />
-                  <a
-                    class="text-dark"
-                    data-testid="repoLink"
-                    href="/packages/search?page=1&repo=incubator"
+                  <div
+                    class="d-flex flex-row aling-items-start text-truncate "
                   >
-                    incubator
-                  </a>
+                    <small
+                      class="mr-1 text-muted text-uppercase"
+                    >
+                      Repo:
+                    </small>
+                    <img
+                      alt="Icon"
+                      class="mr-1 repoIcon"
+                      src="/static/media/helm-chart.svg"
+                    />
+                    <button
+                      class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                      data-testid="repoLink"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <div
+                          class="text-truncate"
+                        >
+                          incubator
+                        </div>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

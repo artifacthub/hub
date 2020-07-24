@@ -29,6 +29,7 @@ import Modal from '../common/Modal';
 import NoData from '../common/NoData';
 import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIcon from '../common/RepositoryIcon';
+import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
 import SubNavbar from '../navigation/SubNavbar';
 import CustomResourceDefinition from './CustomResourceDefinition';
@@ -344,7 +345,7 @@ const PackageView = (props: Props) => {
                         />
                       </div>
 
-                      <div className="ml-3 text-truncate">
+                      <div className="ml-3 text-truncate w-100">
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
                           {detail.deprecated && (
@@ -370,9 +371,9 @@ const PackageView = (props: Props) => {
                           </span>
                         </div>
 
-                        <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
+                        <div className={`d-none d-md-flex flex-row align-items-start mt-2 ${styles.subtitle}`}>
                           {!isNull(detail.repository.userAlias) ? (
-                            <div className="mr-2 text-truncate">
+                            <div className={`mr-2 text-truncate ${styles.mw50}`}>
                               <small className="mr-1 text-uppercase text-muted">User: </small>
 
                               <Link
@@ -394,7 +395,7 @@ const PackageView = (props: Props) => {
                             </div>
                           ) : (
                             <OrganizationInfo
-                              className="mr-2 text-truncate d-flex flex-row align-items-baseline"
+                              className={`mr-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
                               labelClassName={styles.labelOrg}
                               organizationName={detail.repository.organizationName!}
                               organizationDisplayName={detail.repository.organizationDisplayName}
@@ -403,25 +404,13 @@ const PackageView = (props: Props) => {
                             />
                           )}
 
-                          <div className="text-truncate">
-                            <small className="mr-1 text-muted text-uppercase">Repo: </small>
-                            <RepositoryIcon kind={detail.repository.kind} className={`mr-1 ${styles.repoIcon}`} />
-                            <Link
-                              className="text-dark"
-                              data-testid="repoLink"
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    repo: [detail.repository.name],
-                                  },
-                                }),
-                              }}
-                            >
-                              {detail.repository.displayName || detail.repository.name}
-                            </Link>
-                          </div>
+                          <RepositoryInfo
+                            repository={detail.repository}
+                            deprecated={detail.deprecated}
+                            className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                            fromDetail
+                            visibleIcon
+                          />
                         </div>
                       </div>
                     </div>
