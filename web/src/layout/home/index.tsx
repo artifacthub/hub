@@ -167,7 +167,7 @@ const HomeView = (props: Props) => {
                 pathname: '/packages/search',
                 search: prepareQueryString({
                   pageNumber: 1,
-                  tsQueryWeb: 'monitoring',
+                  tsQuery: ['monitoring'],
                   filters: {
                     kind: ['3'],
                   },

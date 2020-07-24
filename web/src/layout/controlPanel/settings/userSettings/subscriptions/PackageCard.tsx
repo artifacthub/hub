@@ -87,7 +87,7 @@ const PackageCard = (props: Props) => {
 
               return (
                 <div
-                  className={`d-flex flex-row align-items-center ${styles.wrapper}`}
+                  className="d-flex flex-row align-items-center"
                   key={`card_${props.package.normalizedName}_${subs.kind}`}
                 >
                   <div className={`custom-control custom-switch ${styles.clickable}`}>

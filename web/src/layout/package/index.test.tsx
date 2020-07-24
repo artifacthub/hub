@@ -191,8 +191,18 @@ describe('Package index', () => {
       const link = await waitFor(() => getByTestId('repoLink'));
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
-      expect(window.location.pathname).toBe('/packages/search');
-      expect(window.location.search).toBe(`?page=1&repo=${mockPackage.repository.name}`);
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          filters: {
+            repo: [mockPackage.repository.name],
+          },
+          deprecated: mockPackage.deprecated,
+        }),
+        state: { fromDetail: true },
+      });
 
       await waitFor(() => {});
     });

@@ -1,0 +1,38 @@
+.repoIcon {
+  height: 16px;
+  width: auto;
+}
+
+.link {
+  color: var(--gray-dark);
+  background-color: transparent;
+}
+
+.link:hover {
+  color: inherit;
+}
+.dropdown {
+  opacity: 0;
+  width: 400px;
+  white-space: normal;
+  font-size: 0.85rem;
+  margin-top: 17px;
+}
+
+.content {
+  padding: 0.75rem 1.25rem;
+}
+
+.infoIcon {
+  min-width: 14px;
+}
+
+@media (hover: hover) {
+  .wrapper:hover .dropdown {
+    opacity: 1;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+}

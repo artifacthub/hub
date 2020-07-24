@@ -130,29 +130,37 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                Repo: 
-                              </span>
+                                Repo:
+                              </small>
                               <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-flex flex-row align-items-center"
                                 >
-                                  Stable
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Stable
+                                  </div>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -168,41 +176,56 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                     data-testid="orgInfoDropdown"
                                   />
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                                <div
+                                  class="d-flex flex-row aling-items-start text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1 undefined"
                                   >
-                                    Helm
-                                  </div>
-                                </button>
+                                    Org:
+                                  </span>
+                                  <button
+                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                    data-testid="orgLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Helm
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
+                              <div
+                                class="position-absolute"
+                              />
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
                               >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
                                 >
-                                  Stable
-                                </div>
-                              </button>
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Stable
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -385,29 +408,37 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                Repo: 
-                              </span>
+                                Repo:
+                              </small>
                               <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-flex flex-row align-items-center"
                                 >
-                                  Incubator
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Incubator
+                                  </div>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -423,41 +454,56 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                     data-testid="orgInfoDropdown"
                                   />
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                                <div
+                                  class="d-flex flex-row aling-items-start text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1 undefined"
                                   >
-                                    Helm
-                                  </div>
-                                </button>
+                                    Org:
+                                  </span>
+                                  <button
+                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                    data-testid="orgLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Helm
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
+                              <div
+                                class="position-absolute"
+                              />
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
                               >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
                                 >
-                                  Incubator
-                                </div>
-                              </button>
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Incubator
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -640,29 +686,37 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
+                            />
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
+                              <small
+                                class="mr-1 text-muted text-uppercase"
                               >
-                                Repo: 
-                              </span>
+                                Repo:
+                              </small>
                               <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-flex flex-row align-items-center"
                                 >
-                                  Stable
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Stable
+                                  </div>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -678,41 +732,56 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                     data-testid="orgInfoDropdown"
                                   />
                                 </div>
-                                <span
-                                  class="text-muted text-uppercase mr-1 undefined"
+                                <div
+                                  class="d-flex flex-row aling-items-start text-truncate"
                                 >
-                                  Org:
-                                </span>
-                                <button
-                                  class="p-0 border-0 text-dark link text-truncate mw-100"
-                                  data-testid="orgLink"
-                                >
-                                  <div
-                                    class="text-truncate"
+                                  <span
+                                    class="text-muted text-uppercase mr-1 undefined"
                                   >
-                                    Helm
-                                  </div>
-                                </button>
+                                    Org:
+                                  </span>
+                                  <button
+                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                    data-testid="orgLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Helm
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
+                              <div
+                                class="position-absolute"
+                              />
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
                               >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
                                 >
-                                  Stable
-                                </div>
-                              </button>
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      Stable
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -895,29 +964,86 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              <div
+                                class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                role="tooltip"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="content"
                                 >
-                                  falco
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      REPO: 
+                                    </span>
+                                    <img
+                                      alt="Icon"
+                                      class="mr-1 repoIcon"
+                                      src="/static/media/falco-rules.svg"
+                                    />
+                                    falco
+                                  </div>
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      URL: 
+                                    </span>
+                                    repoUrl
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
+                            >
+                              <small
+                                class="mr-1 text-muted text-uppercase"
+                              >
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    falco
+                                  </div>
+                                  <svg
+                                    class="d-none d-sm-block ml-1 infoIcon"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                    />
+                                  </svg>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -939,23 +1065,83 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
+                              <div
+                                class="position-absolute"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                  role="tooltip"
                                 >
-                                  falco
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        REPO: 
+                                      </span>
+                                      <img
+                                        alt="Icon"
+                                        class="mr-1 repoIcon"
+                                        src="/static/media/falco-rules.svg"
+                                      />
+                                      falco
+                                    </div>
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        URL: 
+                                      </span>
+                                      repoUrl
+                                    </div>
+                                  </div>
                                 </div>
-                              </button>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
+                              >
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
+                                >
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      falco
+                                    </div>
+                                    <svg
+                                      class="d-none d-sm-block ml-1 infoIcon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1132,29 +1318,86 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="text-truncate d-inline-block d-md-none text-truncate w-100 wrapper"
                           >
                             <div
-                              class="text-dark d-flex align-items-baseline text-truncate mw-100 mobileVersion"
+                              class="position-absolute"
                             >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
+                              <div
+                                class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                role="tooltip"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="content"
                                 >
-                                  opa
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      REPO: 
+                                    </span>
+                                    <img
+                                      alt="Icon"
+                                      class="mr-1 repoIcon"
+                                      src="/static/media/opa-policies.svg"
+                                    />
+                                    opa
+                                  </div>
+                                  <div
+                                    class="mt-1 d-flex flex-row align-items-baseline"
+                                  >
+                                    <span
+                                      class="text-muted text-uppercase mr-1"
+                                    >
+                                      URL: 
+                                    </span>
+                                    repoUrl
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex flex-row aling-items-start text-truncate "
+                            >
+                              <small
+                                class="mr-1 text-muted text-uppercase"
+                              >
+                                Repo:
+                              </small>
+                              <button
+                                class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                data-testid="repoLink"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-center"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    opa
+                                  </div>
+                                  <svg
+                                    class="d-none d-sm-block ml-1 infoIcon"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                    />
+                                  </svg>
                                 </div>
                               </button>
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -1176,23 +1419,83 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </button>
                             </div>
                             <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="text-truncate ml-3 d-flex flex-row align-items-baseline mx50 wrapper"
                             >
-                              <span
-                                class="text-muted text-uppercase pr-1"
-                              >
-                                Repo: 
-                              </span>
-                              <button
-                                class="text-truncate p-0 border-0 text-dark mw-100 link"
-                                data-testid="repoLink"
+                              <div
+                                class="position-absolute"
                               >
                                 <div
-                                  class="text-truncate"
+                                  class="d-none d-sm-block dropdown-menu dropdown-menu-left dropdown"
+                                  role="tooltip"
                                 >
-                                  opa
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        REPO: 
+                                      </span>
+                                      <img
+                                        alt="Icon"
+                                        class="mr-1 repoIcon"
+                                        src="/static/media/opa-policies.svg"
+                                      />
+                                      opa
+                                    </div>
+                                    <div
+                                      class="mt-1 d-flex flex-row align-items-baseline"
+                                    >
+                                      <span
+                                        class="text-muted text-uppercase mr-1"
+                                      >
+                                        URL: 
+                                      </span>
+                                      repoUrl
+                                    </div>
+                                  </div>
                                 </div>
-                              </button>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate "
+                              >
+                                <small
+                                  class="mr-1 text-muted text-uppercase"
+                                >
+                                  Repo:
+                                </small>
+                                <button
+                                  class="text-truncate flex-grow-1 p-0 border-0 text-dark mw-100 link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-center"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      opa
+                                    </div>
+                                    <svg
+                                      class="d-none d-sm-block ml-1 infoIcon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                      />
+                                    </svg>
+                                  </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>

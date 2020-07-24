@@ -86,6 +86,10 @@
   margin-top: -6px;
 }
 
+.mw50 {
+  max-width: 50%;
+}
+
 @media only screen and (max-width: 767.98px) {
   .mainContent {
     max-width: 100%;

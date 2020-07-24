@@ -111,45 +111,47 @@ const OrganizationInfo = (props: Props) => {
         </div>
       </div>
 
-      {props.visibleLegend && <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>}
+      <div className="d-flex flex-row aling-items-start text-truncate">
+        {props.visibleLegend && <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>}
 
-      <button
-        data-testid="orgLink"
-        className={`p-0 border-0 text-dark ${styles.link} ${props.btnClassName}`}
-        onClick={(e) => {
-          e.preventDefault();
-          history.push({
-            pathname: '/packages/search',
-            search: prepareQueryString({
-              pageNumber: 1,
-              filters: {
-                org: [props.organizationName!],
-              },
-              deprecated: props.deprecated,
-            }),
-          });
-        }}
-        onMouseEnter={(e) => {
-          e.preventDefault();
-          setOnLinkHover(true);
-          openOrgInfo();
-        }}
-        onMouseLeave={() => {
-          setOnLinkHover(false);
-        }}
-      >
-        <div
-          className={classnames({
-            'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
-          })}
+        <button
+          data-testid="orgLink"
+          className={`p-0 border-0 text-dark text-truncate flex-grow-1 ${styles.link} ${props.btnClassName}`}
+          onClick={(e) => {
+            e.preventDefault();
+            history.push({
+              pathname: '/packages/search',
+              search: prepareQueryString({
+                pageNumber: 1,
+                filters: {
+                  org: [props.organizationName!],
+                },
+                deprecated: props.deprecated,
+              }),
+            });
+          }}
+          onMouseEnter={(e) => {
+            e.preventDefault();
+            setOnLinkHover(true);
+            openOrgInfo();
+          }}
+          onMouseLeave={() => {
+            setOnLinkHover(false);
+          }}
         >
-          {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
-            <>{props.organizationDisplayName}</>
-          ) : (
-            <>{props.organizationName}</>
-          )}
-        </div>
-      </button>
+          <div
+            className={classnames({
+              'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
+            })}
+          >
+            {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
+              <>{props.organizationDisplayName}</>
+            ) : (
+              <>{props.organizationName}</>
+            )}
+          </div>
+        </button>
+      </div>
     </div>
   );
 };
