@@ -86,7 +86,7 @@ describe('OrganizationInfo', () => {
 
     fireEvent.mouseLeave(getByTestId('orgLink'));
     expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 200);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 50);
 
     waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');

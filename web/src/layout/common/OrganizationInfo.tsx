@@ -18,7 +18,6 @@ interface Props {
   organizationDisplayName?: string | null;
   deprecated?: null | boolean;
   className?: string;
-  labelClassName?: string;
   btnClassName?: string;
   visibleLegend: boolean;
   multiLine?: boolean;
@@ -55,7 +54,7 @@ const OrganizationInfo = (props: Props) => {
       setTimeout(() => {
         // Delay to hide the dropdown to avoid hide it if user changes from link to dropdown
         setOpenStatus(false);
-      }, 200);
+      }, 50);
     }
   }, [onLinkHover, onDropdownHover, organization, openStatus]);
 
@@ -97,8 +96,12 @@ const OrganizationInfo = (props: Props) => {
               {!isUndefined(organization.homeUrl) && !isNull(organization.homeUrl) && (
                 <div className="mt-1 text-truncate d-flex flex-row align-items-baseline">
                   <small className="text-muted text-uppercase mr-1">Homepage: </small>
-                  <ExternalLink href={organization.homeUrl} className={`text-reset ${styles.externalLink}`} btnType>
-                    {organization.homeUrl}
+                  <ExternalLink
+                    href={organization.homeUrl}
+                    className={`text-reset text-truncate ${styles.externalLink}`}
+                    btnType
+                  >
+                    <div className="text-truncate">{organization.homeUrl}</div>
                   </ExternalLink>
                 </div>
               )}
@@ -112,7 +115,11 @@ const OrganizationInfo = (props: Props) => {
       </div>
 
       <div className="d-flex flex-row aling-items-start text-truncate">
-        {props.visibleLegend && <span className={`text-muted text-uppercase mr-1 ${props.labelClassName}`}>Org:</span>}
+        {props.visibleLegend && (
+          <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
+            <small>Org:</small>
+          </div>
+        )}
 
         <button
           data-testid="orgLink"

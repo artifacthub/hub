@@ -396,7 +396,6 @@ const PackageView = (props: Props) => {
                           ) : (
                             <OrganizationInfo
                               className={`mr-2 text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
-                              labelClassName={styles.labelOrg}
                               organizationName={detail.repository.organizationName!}
                               organizationDisplayName={detail.repository.organizationDisplayName}
                               deprecated={detail.deprecated}

@@ -26,7 +26,7 @@ exports[`FalcoInstall creates snapshot 1`] = `
       >
         <div>
           <div
-            class="position-relative"
+            class="position-relative undefined"
           >
             <button
               class="btn btn-sm btn-primary rounded-circle btn"

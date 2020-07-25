@@ -31,7 +31,7 @@ exports[`HelmInstall creates snapshot 1`] = `
         </small>
         <div>
           <div
-            class="position-relative"
+            class="position-relative undefined"
           >
             <button
               class="btn btn-sm btn-primary rounded-circle btn"
@@ -86,7 +86,7 @@ exports[`HelmInstall creates snapshot 1`] = `
         </small>
         <div>
           <div
-            class="position-relative"
+            class="position-relative undefined"
           >
             <button
               class="btn btn-sm btn-primary rounded-circle btn"
