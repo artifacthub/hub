@@ -1,19 +1,10 @@
-.repoIcon {
-  height: 16px;
-  width: auto;
-}
-
 .link {
-  color: var(--gray-dark);
+  /* color: var(--gray-dark); */
   background-color: transparent;
 }
 
-.link:hover {
-  color: inherit;
-}
 .dropdown {
-  opacity: 0;
-  width: 400px;
+  width: 350px;
   white-space: normal;
   font-size: 0.85rem;
   margin-top: 17px;
@@ -23,15 +14,71 @@
   padding: 0.75rem 1.25rem;
 }
 
-.infoIcon {
-  min-width: 14px;
+.imageWrapper {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 2px solid var(--color-1-10);
+  box-shadow: 0px 0px 5px 0px var(--color-1-20);
+}
+
+.image {
+  max-width: calc(100% - 2px);
+  max-height: calc(100% - 2px);
+  font-size: 1.5rem;
+}
+
+.description {
+  font-size: 0.75rem;
+}
+
+.labelContent {
+  color: var(--gray-dark);
+  font-size: 0.85rem;
+}
+
+.urlContent {
+  word-break: break-all;
+}
+
+.repoIcon {
+  height: 16px;
+  width: auto;
+}
+
+.repoIconMini {
+  height: 12px;
+  width: auto;
+}
+
+.miniBtn {
+  background-color: transparent;
+}
+
+.arrow {
+  width: 0.8rem !important;
+  height: 0.4rem !important;
+  right: 10px !important;
+  top: -8px !important;
+}
+
+.arrow::after {
+  border-color: transparent !important;
+}
+
+.arrow::before {
+  border-bottom-color: var(--color-1-900) !important;
+}
+
+@media only screen and (max-width: 575.98px) {
+  .dropdown {
+    display: none !important;
+  }
 }
 
 @media (hover: hover) {
-  .wrapper:hover .dropdown {
-    opacity: 1;
-  }
-
   .link:hover {
     text-decoration: underline;
   }

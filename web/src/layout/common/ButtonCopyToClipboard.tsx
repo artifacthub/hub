@@ -7,7 +7,10 @@ import styles from './ButtonCopyToClipboard.module.css';
 
 interface Props {
   text: string;
+  wrapperClassName?: string;
+  arrowClassName?: string;
   className?: string;
+  tooltipClassName?: string;
   visibleBtnText?: boolean;
 }
 
@@ -34,14 +37,13 @@ const ButtonCopyToClipboard = (props: Props) => {
   }
 
   return (
-    <div className="position-relative">
+    <div className={`position-relative ${props.wrapperClassName}`}>
       {copyStatus && (
-        <div className={`tooltip bs-tooltip-bottom show ${styles.tooltip}`} role="tooltip">
-          <div className={`arrow ${styles.tooltipArrow}`} />
+        <div className={`tooltip bs-tooltip-bottom show ${styles.tooltip} ${props.tooltipClassName}`} role="tooltip">
+          <div className={`arrow ${styles.tooltipArrow} ${props.arrowClassName}`} />
           <div className={`tooltip-inner ${styles.tooltipContent}`}>Copied!</div>
         </div>
       )}
-
       <button
         data-testid="ctcBtn"
         type="button"
@@ -50,7 +52,11 @@ const ButtonCopyToClipboard = (props: Props) => {
           { [`btn-primary rounded-circle ${styles.btn}`]: isUndefined(props.className) },
           props.className
         )}
-        onClick={() => setCopyStatus(copyToClipboard(props.text))}
+        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setCopyStatus(copyToClipboard(props.text));
+        }}
       >
         <div className="d-flex flex-row align-items-center">
           <FiCopy />
