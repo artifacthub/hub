@@ -34,7 +34,7 @@ const RepositoryIcon = (props: Props) => {
     src = ICONS[props.kind][props.type];
   }
 
-  return <img alt="Icon" src={src} className={props.className} />;
+  return <img alt="Icon" src={src} className={`${props.className} repoIcon`} />;
 };
 
 export default RepositoryIcon;

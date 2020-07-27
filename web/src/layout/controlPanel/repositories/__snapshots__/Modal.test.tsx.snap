@@ -65,7 +65,7 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                       class=" css-2b097c-container"
                     >
                       <div
-                        class=" css-1dtax8q-control"
+                        class=" css-1tj094y-control"
                       >
                         <div
                           class=" css-g1d714-ValueContainer"
@@ -81,7 +81,7 @@ exports[`Repository Modal - packages section creates snapshot 1`] = `
                               >
                                 <img
                                   alt="Icon"
-                                  class="mw-100 mh-100"
+                                  class="mw-100 mh-100 repoIcon"
                                   src="/static/media/helm-chart.svg"
                                 />
                               </div>

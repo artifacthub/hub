@@ -50,6 +50,7 @@ const SelectWithIcon = (props: Props) => {
     control: (provided: any) => ({
       ...provided,
       border: '1px solid #ced4da',
+      background: 'var(--white)',
       boxShadow: 'none',
       '&:hover': {
         border: '1px solid #bed6e3',
@@ -60,8 +61,15 @@ const SelectWithIcon = (props: Props) => {
     }),
     option: (provided: any, state: any) => ({
       ...provided,
-      backgroundColor: state.isSelected ? '#b2cede' : 'white',
-      color: state.isSelected ? '#38383f' : '#38383f',
+      backgroundColor: state.isSelected ? 'var(--color-2-500)' : null,
+      color: state.isSelected ? 'var(--color-font)' : 'var(--color-font)',
+      '&:hover': {
+        backgroundColor: state.isSelected ? 'var(--color-2-500)' : 'var(--color-black-5)',
+      },
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      backgroundColor: 'var(--white)',
     }),
   };
 

@@ -89,7 +89,7 @@ const UserContext = () => {
               )}
             </div>
 
-            <div className={`position-absolute text-light ${styles.caret}`}>
+            <div className={`position-absolute textLight ${styles.caret}`}>
               <FaCaretDown />
             </div>
           </button>

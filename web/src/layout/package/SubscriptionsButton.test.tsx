@@ -19,6 +19,10 @@ const mockCtx = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -27,6 +31,10 @@ const mockNotSignedInCtx = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -35,6 +43,10 @@ const mockUndefinedUserCtx = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 

@@ -290,7 +290,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </td>
@@ -301,7 +301,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="airflow"
@@ -377,7 +377,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </td>
@@ -388,7 +388,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="cerebro"
@@ -463,7 +463,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </td>
@@ -474,7 +474,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="elastic-stack"
@@ -549,7 +549,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </td>
@@ -560,7 +560,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="ibm-redis"
@@ -636,7 +636,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/falco-rules.svg"
                       />
                     </td>
@@ -647,7 +647,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="SSH connections"
@@ -723,7 +723,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/falco-rules.svg"
                       />
                     </td>
@@ -734,7 +734,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="Traefik"
@@ -810,7 +810,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/opa-policies.svg"
                       />
                     </td>
@@ -821,7 +821,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="Trusted Registry Images"
@@ -897,7 +897,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </td>
@@ -908,7 +908,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                         class="d-flex flex-row align-items-center"
                       >
                         <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                         >
                           <img
                             alt="zookeeper"
@@ -994,7 +994,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/airflow"
                       >
@@ -1005,7 +1005,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo airflow"
@@ -1065,7 +1065,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/helm-chart.svg"
                             />
                           </div>
@@ -1131,7 +1131,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/cerebro"
                       >
@@ -1142,7 +1142,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo cerebro"
@@ -1201,7 +1201,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/helm-chart.svg"
                             />
                           </div>
@@ -1267,7 +1267,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/helm/stable/elastic-stack"
                       >
@@ -1278,7 +1278,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo elastic-stack"
@@ -1337,7 +1337,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/helm-chart.svg"
                             />
                           </div>
@@ -1403,7 +1403,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/helm/ibm-charts/ibm-redis"
                       >
@@ -1414,7 +1414,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo ibm-redis"
@@ -1474,7 +1474,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/helm-chart.svg"
                             />
                           </div>
@@ -1540,7 +1540,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/falco/falco/ssh-connections"
                       >
@@ -1551,7 +1551,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo SSH connections"
@@ -1611,7 +1611,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/falco-rules.svg"
                             />
                           </div>
@@ -1677,7 +1677,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/falco/falco/traefik"
                       >
@@ -1688,7 +1688,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo Traefik"
@@ -1748,7 +1748,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/falco-rules.svg"
                             />
                           </div>
@@ -1814,7 +1814,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/opa/opa/trusted-registry-images"
                       >
@@ -1825,7 +1825,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo Trusted Registry Images"
@@ -1885,7 +1885,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/opa-policies.svg"
                             />
                           </div>
@@ -1951,7 +1951,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                       class="card-body position-relative body"
                     >
                       <a
-                        class="text-decoration-none link"
+                        class="text-decoration-none text-reset link"
                         data-testid="packageCardLink"
                         href="/packages/helm/incubator/zookeeper"
                       >
@@ -1962,7 +1962,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             class="d-flex align-items-center flex-grow-1 truncateWrapper"
                           >
                             <div
-                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper"
+                              class="d-flex align-items-center justify-content-center overflow-hidden p-1 imageWrapper imageWrapper"
                             >
                               <img
                                 alt="Logo zookeeper"
@@ -2022,7 +2022,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                           >
                             <img
                               alt="Icon"
-                              class="icon"
+                              class="icon repoIcon"
                               src="/static/media/helm-chart.svg"
                             />
                           </div>

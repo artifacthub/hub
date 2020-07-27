@@ -80,13 +80,11 @@ describe('OrganizationInfo', () => {
     );
     expect(getByText(mockOrganization.description!)).toBeInTheDocument();
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('orgLink'));
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 50);
 
     waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
@@ -107,7 +105,9 @@ describe('OrganizationInfo', () => {
     fireEvent.mouseEnter(getByTestId('orgInfoDropdown'));
     fireEvent.mouseLeave(getByTestId('orgLink'));
 
-    expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+    waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
+    });
 
     fireEvent.mouseLeave(getByTestId('orgInfoDropdown'));
     waitFor(() => {

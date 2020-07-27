@@ -16,6 +16,10 @@ const mockCtxLoggedIn = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -24,6 +28,10 @@ const mockCtxNotLoggedIn = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -32,6 +40,10 @@ const mockUndefinedUser = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -97,7 +109,7 @@ describe('Navbar', () => {
 
   describe('when user is not signed in', () => {
     it('renders component', () => {
-      const { getByText } = render(
+      const { getByText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -107,6 +119,7 @@ describe('Navbar', () => {
 
       expect(getByText('Sign in')).toBeInTheDocument();
       expect(getByText('Sign up')).toBeInTheDocument();
+      expect(getByTestId('themeOptions')).toBeInTheDocument();
     });
 
     it('opens Sign in modal when redirect is defined', () => {

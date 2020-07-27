@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuestDropdown creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="btn-group"
+  >
+    <button
+      class="btn p-0 position-relative"
+      data-testid="guestDropdownBtn"
+      type="button"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-center"
+      >
+        <div
+          class="rounded-circle d-flex align-items-center justify-content-center textLight imageWrapper iconWrapper"
+        >
+          <svg
+            class="rounded-circle"
+            data-testid="settingsIcon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"
+            />
+          </svg>
+        </div>
+        <small
+          class="ml-1 textLight"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 320 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+            />
+          </svg>
+        </small>
+      </div>
+    </button>
+    <div
+      class="dropdown-menu dropdown-menu-right dropdown"
+      data-testid="guestDropdown"
+    >
+      <div
+        class="arrow arrow"
+      />
+      <div
+        class="my-3"
+      >
+        <div
+          class="mt-2 mb-1"
+          data-testid="smallTitle"
+        >
+          <small
+            class="card-title text-muted text-uppercase"
+          >
+            <span
+              class="px-4"
+            >
+              Theme
+            </span>
+          </small>
+        </div>
+        <div
+          data-testid="themeOptions"
+        >
+          <div
+            class="dropdown-item"
+          >
+            <div
+              class="custom-control custom-radio"
+            >
+              <input
+                class="custom-control-input input"
+                data-testid="radio-automatic"
+                id="automatic"
+                name="theme"
+                readonly=""
+                type="radio"
+                value="automatic"
+              />
+              <label
+                class="custom-control-label font-weight-bold label"
+                for="automatic"
+              >
+                <svg
+                  class="mx-1"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 14 16"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 3h1v1H5V3zM3 3h1v1H3V3zM1 3h1v1H1V3zm12 10H1V5h12v8zm0-9H7V3h6v1zm1-1c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V3z"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+                Automatic
+              </label>
+            </div>
+          </div>
+          <div
+            class="dropdown-item"
+          >
+            <div
+              class="custom-control custom-radio"
+            >
+              <input
+                checked=""
+                class="custom-control-input input"
+                data-testid="radio-light"
+                id="light"
+                name="theme"
+                readonly=""
+                type="radio"
+                value="light"
+              />
+              <label
+                class="custom-control-label font-weight-bold label"
+                for="light"
+              >
+                <svg
+                  class="mx-1"
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="5"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="1"
+                    y2="3"
+                  />
+                  <line
+                    x1="12"
+                    x2="12"
+                    y1="21"
+                    y2="23"
+                  />
+                  <line
+                    x1="4.22"
+                    x2="5.64"
+                    y1="4.22"
+                    y2="5.64"
+                  />
+                  <line
+                    x1="18.36"
+                    x2="19.78"
+                    y1="18.36"
+                    y2="19.78"
+                  />
+                  <line
+                    x1="1"
+                    x2="3"
+                    y1="12"
+                    y2="12"
+                  />
+                  <line
+                    x1="21"
+                    x2="23"
+                    y1="12"
+                    y2="12"
+                  />
+                  <line
+                    x1="4.22"
+                    x2="5.64"
+                    y1="19.78"
+                    y2="18.36"
+                  />
+                  <line
+                    x1="18.36"
+                    x2="19.78"
+                    y1="5.64"
+                    y2="4.22"
+                  />
+                </svg>
+                 Light
+              </label>
+            </div>
+          </div>
+          <div
+            class="dropdown-item"
+          >
+            <div
+              class="custom-control custom-radio"
+            >
+              <input
+                class="custom-control-input input"
+                data-testid="radio-dark"
+                id="dark"
+                name="theme"
+                readonly=""
+                type="radio"
+                value="dark"
+              />
+              <label
+                class="custom-control-label font-weight-bold label"
+                for="dark"
+              >
+                <svg
+                  class="mx-1"
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                  />
+                </svg>
+                 Dark
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

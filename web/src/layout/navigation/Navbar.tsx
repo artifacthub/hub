@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { AppCtx } from '../../context/AppCtx';
 import SearchBar from '../common/SearchBar';
+import GuestDropdown from './GuestDropdown';
 import LogIn from './LogIn';
 import MobileSettings from './MobileSettings';
 import styles from './Navbar.module.css';
@@ -74,7 +75,7 @@ const Navbar = (props: Props) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav align-items-center ml-auto">
             {isUndefined(ctx) || isUndefined(ctx.user) ? (
-              <div className="spinner-grow spinner-grow-sm text-light" role="status">
+              <div className="spinner-grow spinner-grow-sm textLight" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (
@@ -105,6 +106,10 @@ const Navbar = (props: Props) => {
                       >
                         Sign in
                       </button>
+                    </li>
+
+                    <li className="nav-item ml-4 position-relative">
+                      <GuestDropdown />
                     </li>
                   </>
                 ) : (

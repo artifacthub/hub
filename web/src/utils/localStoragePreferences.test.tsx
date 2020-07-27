@@ -1,7 +1,21 @@
 import lsPreferences from './localStoragePreferences';
 
-const defaultPrefs = { controlPanel: {}, search: { limit: 15 } };
-const initialUserPrefs = { controlPanel: {}, search: { limit: 50 } };
+const defaultPrefs = {
+  controlPanel: {},
+  search: { limit: 15 },
+  theme: {
+    configured: 'light',
+    automatic: false,
+  },
+};
+const initialUserPrefs = {
+  controlPanel: {},
+  search: { limit: 50 },
+  theme: {
+    configured: 'light',
+    automatic: false,
+  },
+};
 
 describe('localStoragePreferences', () => {
   afterAll(() => {
@@ -19,7 +33,14 @@ describe('localStoragePreferences', () => {
 
   it('updates user prefs', () => {
     expect(lsPreferences.getPrefs('user1')).toStrictEqual(initialUserPrefs);
-    const userPrefs = { controlPanel: { selectedOrg: 'testorg' }, search: { limit: 25 } };
+    const userPrefs = {
+      controlPanel: { selectedOrg: 'testorg' },
+      search: { limit: 25 },
+      theme: {
+        configured: 'light',
+        automatic: false,
+      },
+    };
     lsPreferences.setPrefs(userPrefs, 'user1');
     expect(lsPreferences.getPrefs('user1')).toStrictEqual(userPrefs);
   });
@@ -29,7 +50,14 @@ describe('localStoragePreferences', () => {
   });
 
   it('renames user', () => {
-    const userPrefs = { ...defaultPrefs, controlPanel: { selectedOrg: 'testorg1' } };
+    const userPrefs = {
+      ...defaultPrefs,
+      controlPanel: { selectedOrg: 'testorg1' },
+      theme: {
+        configured: 'light',
+        automatic: false,
+      },
+    };
     lsPreferences.setPrefs(userPrefs, 'user2');
     expect(lsPreferences.getPrefs('user2')).toStrictEqual(userPrefs);
     lsPreferences.updateAlias('user2', 'updatedUser');

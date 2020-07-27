@@ -276,7 +276,6 @@ const SearchView = (props: Props) => {
           });
         }
       } catch {
-        // TODO - show error badge
         setSearchResults({
           data: {
             facets: [],

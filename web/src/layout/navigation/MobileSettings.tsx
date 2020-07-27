@@ -11,6 +11,7 @@ import Image from '../common/Image';
 import Sidebar from '../common/Sidebar';
 import LogOut from './LogOut';
 import styles from './MobileSettings.module.css';
+import ThemeMode from './ThemeMode';
 
 interface Props {
   setOpenSignUp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +45,7 @@ const MobileSettings = (props: Props) => {
   return (
     <div className={`btn-group navbar-toggler pr-0 ml-auto ${styles.navbarToggler}`}>
       {isUndefined(ctx.user) ? (
-        <div className="spinner-grow spinner-grow-sm text-light" role="status">
+        <div className="spinner-grow spinner-grow-sm textLight" role="status">
           <span className="sr-only">Loading...</span>
         </div>
       ) : (
@@ -79,6 +80,10 @@ const MobileSettings = (props: Props) => {
               <>
                 {!isNull(ctx.user) ? (
                   <>
+                    <ThemeMode onSelection={() => setOpenSideBarStatus(false)} />
+
+                    <div className="dropdown-divider my-3" />
+
                     <Link
                       data-testid="starredPackagesLink"
                       className="dropdown-item my-2"
@@ -115,6 +120,10 @@ const MobileSettings = (props: Props) => {
                   </>
                 ) : (
                   <>
+                    <ThemeMode onSelection={() => setOpenSideBarStatus(false)} />
+
+                    <div className="dropdown-divider my-3" />
+
                     <button
                       className="dropdown-item my-2"
                       onClick={() => {

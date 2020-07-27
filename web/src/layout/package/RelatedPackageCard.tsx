@@ -22,10 +22,10 @@ const RelatedPackageCard = (props: Props) => {
   };
 
   return (
-    <div className={`card mb-2 w-100 ${styles.card}`}>
+    <div className={`card mb-2 w-100 relatedCard ${styles.card}`}>
       <Link
         data-testid="relatedPackageLink"
-        className={`text-decoration-none ${styles.link}`}
+        className={`text-decoration-none text-reset ${styles.link}`}
         to={{
           pathname: buildPackageURL(props.package),
         }}
@@ -34,7 +34,7 @@ const RelatedPackageCard = (props: Props) => {
           <div className="d-flex align-items-start justify-content-between flex-grow-1 mw-100">
             <div className={`d-flex align-items-center flex-grow-1 ${styles.truncateWrapper}`}>
               <div
-                className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
+                className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
               >
                 <Image
                   imageId={props.package.logoImageId}

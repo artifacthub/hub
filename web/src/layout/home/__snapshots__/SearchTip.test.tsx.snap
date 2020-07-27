@@ -6,7 +6,7 @@ exports[`SearchTip creates snapshot 1`] = `
     class="d-none d-md-inline w-50 mx-auto text-center position-relative"
   >
     <div
-      class="d-flex mt-2 flex-row align-items-center justify-content-center text-light tipText"
+      class="d-flex mt-2 pt-1 flex-row align-items-center justify-content-center textLight tipText"
     >
       <svg
         class="mr-1"
@@ -36,7 +36,7 @@ exports[`SearchTip creates snapshot 1`] = `
         </span>
          to refine your search. Example: 
         <a
-          class="font-weight-bold text-light p-0"
+          class="font-weight-bold textLight p-0"
           data-testid="sampleFilter"
           href="/packages/search?page=1&ts_query_web=kafka+operator"
         >

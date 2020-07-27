@@ -35,16 +35,16 @@ const SectionPanel = (props: Props) => {
                 key={`package_${section.name}`}
                 type="button"
                 className={classnames(
-                  'list-group-item list-group-item-action d-flex flex-row align-items-center',
+                  'list-group-item list-group-item-action d-flex flex-row align-items-center sectionItem',
                   styles.listItem,
-                  { [styles.isActive]: section.name === activeSection },
+                  { [`${styles.isActive} isActive`]: section.name === activeSection },
                   { disabled: section.disabled }
                 )}
                 disabled={section.disabled}
                 onClick={() => onMenuItemClick(section.name)}
               >
                 <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
-                  {!isUndefined(section.icon) && <div className={styles.icon}>{section.icon}</div>}
+                  {!isUndefined(section.icon) && <div className={`${styles.icon} sectionIcon`}>{section.icon}</div>}
                   {!isUndefined(section.shortName) ? (
                     <div className="d-none d-sm-inline ml-1 ml-sm-2">
                       <span className="d-none d-md-inline">{section.displayName}</span>

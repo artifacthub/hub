@@ -1,0 +1,173 @@
+// $theme-colors: (
+//   primary: #659dbd,
+//   secondary: #39596c,
+// );
+
+// $body-bg: #f9f9f9;
+// $body-color: #38383f;
+
+[data-theme='light'] {
+  --border-md: #eaecef;
+  --code-bg-md: #f6f8fa;
+  --body-light-bg: #f9f9f9;
+
+  --color-1-100: #f1f6fa;
+  --color-1-300: #b2cede;
+  --color-1-500: #659dbd;
+  --color-1-700: #39596c;
+  --color-1-900: #1c2c35;
+
+  --color-1-2: rgba(28, 44, 53, 0.02);
+  --color-1-5: rgba(28, 44, 53, 0.05);
+  --color-1-10: rgba(28, 44, 53, 0.1);
+  --color-1-20: rgba(28, 44, 53, 0.2);
+
+  --color-2-500: #b0cee0;
+
+  --color-2-10: rgba(176, 206, 224, 0.1);
+
+  --color-3-10: rgba(101, 157, 189, 0.1);
+
+  --color-black-5: rgba(0, 0, 0, 0.05);
+  --color-black-15: rgba(0, 0, 0, 0.15);
+  --color-black-25: rgba(0, 0, 0, 0.25);
+
+  --color-white-50: rgba(256, 256, 256, 0.5);
+
+  --logo-font: 'Archivo Black', cursive;
+
+  --color-font: #38383f;
+  --body-bg: #f9f9f9;
+
+  // $theme-colors for Bootstrap
+  $color1: #659dbd;
+  $color2: #39596c;
+
+  body {
+    background-color: var(--body-bg);
+    color: var(--color-font);
+  }
+
+  .textLight {
+    color: #f8f9fa;
+  }
+
+  .dropdown-item {
+    color: var(--color-font);
+
+    &:hover,
+    &:focus {
+      color: var(--color-font);
+    }
+  }
+
+  .was-validated .form-check-input:valid ~ .form-check-label,
+  .form-check-input.is-valid ~ .form-check-label,
+  .was-validated .custom-control-input:valid ~ .custom-control-label,
+  .custom-control-input.is-valid ~ .custom-control-label {
+    color: var(--color-font);
+  }
+
+  .page-item {
+    &.active .page-link {
+      background-color: $color1;
+      border-color: $color1;
+    }
+  }
+
+  .page-link {
+    color: $color1;
+  }
+
+  .btn-primary {
+    @include button-variant($color1, $color1);
+  }
+
+  .btn-secondary,
+  .badge-secondary {
+    @include button-variant($color2, $color2);
+  }
+
+  .btn-outline-secondary {
+    @include button-outline-variant($color2);
+  }
+
+  .text-primary {
+    color: $color1 !important;
+
+    &:hover,
+    &:focus {
+      color: darken($color1, $emphasized-link-hover-darken-percentage) !important;
+    }
+  }
+
+  .table-primary,
+  .table-primary > td,
+  .table-primary > th {
+    background-color: #d4e4ed;
+    border-color: #d4e4ed;
+  }
+
+  .table-hover .table-primary:hover,
+  .table-hover .table-primary:hover > td,
+  .table-hover .table-primary:hover > th {
+    background-color: #c2d9e5;
+  }
+
+  .alert-primary {
+    color: #355262;
+    background-color: #e0ebf2;
+    border-color: #d4e4ed;
+  }
+
+  .text-secondary {
+    color: $color2 !important;
+
+    &:hover,
+    &:focus {
+      color: $color2 !important;
+    }
+  }
+
+  .btn-link,
+  a {
+    color: $color1;
+
+    &:hover,
+    &:focus {
+      color: darken($color1, $emphasized-link-hover-darken-percentage);
+    }
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $color1;
+    border-color: $color1;
+  }
+
+  .custom-select:focus {
+    border-color: #bed6e3;
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: rgba(101, 157, 189, 0.5);
+  }
+
+  .was-validated .form-control:valid {
+    border-color: #ced4da !important;
+  }
+
+  .was-validated .custom-control-input:valid ~ .custom-control-label::before,
+  .custom-control-input.is-valid ~ .custom-control-label::before,
+  .was-validated .custom-select:valid,
+  .custom-select.is-valid,
+  .was-validated .custom-select:valid:focus,
+  .custom-select.is-valid:focus {
+    border-color: #adb5bd;
+  }
+
+  button.text-dark:hover,
+  button.text-dark:focus {
+    color: #121416 !important;
+  }
+}

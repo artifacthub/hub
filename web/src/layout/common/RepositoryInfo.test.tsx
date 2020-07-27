@@ -64,34 +64,36 @@ describe('RepositoryInfo', () => {
     });
   });
 
-  it('displays repo info to enter on link and hides on leave', async () => {
+  it('displays repo info to enter on link and hides on leave', () => {
     const { getByTestId, getAllByText, getByText } = render(<RepositoryInfo {...defaultProps} />);
     fireEvent.mouseEnter(getByTestId('repoLink'));
 
     expect(getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
     expect(getByText(defaultProps.repository.url)).toBeInTheDocument();
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('repoLink'));
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 50);
 
     waitFor(() => {
+      expect(setTimeout).toHaveBeenCalledTimes(1);
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 50);
       expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
     });
   });
 
-  it('hides repo info to leave dropdown', async () => {
+  it('hides repo info to leave dropdown', () => {
     const { getByTestId } = render(<RepositoryInfo {...defaultProps} />);
     fireEvent.mouseEnter(getByTestId('repoLink'));
 
     fireEvent.mouseEnter(getByTestId('repoInfoDropdown'));
     fireEvent.mouseLeave(getByTestId('repoLink'));
 
-    expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
+    waitFor(() => {
+      expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
+    });
 
     fireEvent.mouseLeave(getByTestId('repoInfoDropdown'));
     waitFor(() => {

@@ -1340,7 +1340,7 @@ exports[`Search index creates snapshot 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/helm/stable/undefined"
               >
@@ -1354,7 +1354,7 @@ exports[`Search index creates snapshot 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo centrifugo"
@@ -1411,7 +1411,7 @@ exports[`Search index creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1488,7 +1488,7 @@ exports[`Search index creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1547,7 +1547,7 @@ exports[`Search index creates snapshot 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
@@ -1624,7 +1624,7 @@ exports[`Search index creates snapshot 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -1675,7 +1675,7 @@ exports[`Search index creates snapshot 2`] = `
                         >
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/helm-chart.svg"
                           />
                         </div>
@@ -1700,7 +1700,7 @@ exports[`Search index creates snapshot 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </div>
@@ -1720,7 +1720,7 @@ exports[`Search index creates snapshot 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/helm/incubator/undefined"
               >
@@ -1734,7 +1734,7 @@ exports[`Search index creates snapshot 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo kafka"
@@ -1790,7 +1790,7 @@ exports[`Search index creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1867,7 +1867,7 @@ exports[`Search index creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1926,7 +1926,7 @@ exports[`Search index creates snapshot 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
@@ -2003,7 +2003,7 @@ exports[`Search index creates snapshot 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -2054,7 +2054,7 @@ exports[`Search index creates snapshot 2`] = `
                         >
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/helm-chart.svg"
                           />
                         </div>
@@ -2079,7 +2079,7 @@ exports[`Search index creates snapshot 2`] = `
                     >
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </div>

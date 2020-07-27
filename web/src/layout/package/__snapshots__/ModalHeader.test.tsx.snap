@@ -6,7 +6,7 @@ exports[`Links creates snapshot 1`] = `
     class="d-flex align-items-center"
   >
     <div
-      class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper"
+      class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper imageWrapper"
     >
       <img
         alt="Pretty name"

@@ -9,6 +9,7 @@ import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import Image from '../common/Image';
 import LogOut from './LogOut';
+import ThemeMode from './ThemeMode';
 import styles from './UserAuthDropdown.module.css';
 
 interface Props {
@@ -32,7 +33,7 @@ const UserAuthDropdown = (props: Props) => {
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
             className={classnames(
-              'rounded-circle d-flex align-items-center justify-content-center text-light',
+              'rounded-circle d-flex align-items-center justify-content-center textLight',
               styles.imageWrapper,
               { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) || isNull(ctx.user!.profileImageId) }
             )}
@@ -43,7 +44,7 @@ const UserAuthDropdown = (props: Props) => {
               <FaUser data-testid="profileIcon" className="rounded-circle" />
             )}
           </div>
-          <small className="ml-1 text-light">
+          <small className="ml-1 textLight">
             <FaCaretDown />
           </small>
         </div>
@@ -55,6 +56,10 @@ const UserAuthDropdown = (props: Props) => {
         <p className={`mt-2 mb-0 ${styles.signedInText}`}>
           Signed in as <span className="font-weight-bold">{ctx.user!.alias}</span>
         </p>
+
+        <div className="dropdown-divider my-3" />
+
+        <ThemeMode onSelection={() => setOpenStatus(false)} />
 
         <div className="dropdown-divider my-3" />
 

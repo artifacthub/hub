@@ -80,7 +80,7 @@ const MemberCard = (props: Props) => {
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
         <div className="d-flex flex-row align-items-center">
           <div
-            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper}`}
+            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
           >
             <FaUser className={styles.image} />
           </div>

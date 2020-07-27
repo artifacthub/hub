@@ -8,6 +8,7 @@
 
 .listItem {
   z-index: 0;
+  color: var(--color-font);
 }
 
 .isActive {
@@ -30,6 +31,7 @@
   height: auto;
   width: 16px;
   line-height: 1rem;
+  color: var(--color-font);
 }
 
 @media only screen and (min-width: 768px) {

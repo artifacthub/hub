@@ -47,15 +47,24 @@ const OrganizationInfo = (props: Props) => {
   };
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (!isUndefined(organization) && !openStatus && (onLinkHover || onDropdownHover)) {
-      setOpenStatus(true);
+      timeout = setTimeout(() => {
+        setOpenStatus(true);
+      }, 100);
     }
     if (openStatus && !onLinkHover && !onDropdownHover) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         // Delay to hide the dropdown to avoid hide it if user changes from link to dropdown
         setOpenStatus(false);
       }, 50);
     }
+
+    return () => {
+      if (!isUndefined(timeout)) {
+        clearTimeout(timeout);
+      }
+    };
   }, [onLinkHover, onDropdownHover, organization, openStatus]);
 
   return (
@@ -74,7 +83,7 @@ const OrganizationInfo = (props: Props) => {
             <div className={styles.content}>
               <div className="d-flex flex-row align-items-center">
                 <div
-                  className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper}`}
+                  className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
                 >
                   {!isUndefined(organization.logoImageId) ? (
                     <Image

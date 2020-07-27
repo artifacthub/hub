@@ -24,10 +24,10 @@ exports[`RelatedPackages renders correctly 2`] = `
     >
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/undefined"
           >
@@ -41,7 +41,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo centrifugo"
@@ -89,7 +89,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -103,10 +103,10 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/undefined"
           >
@@ -120,7 +120,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo kafka"
@@ -167,7 +167,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -181,10 +181,10 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/dhiatn/undefined"
           >
@@ -198,7 +198,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo kafka-topics-ui"
@@ -246,7 +246,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -260,10 +260,10 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/undefined"
           >
@@ -277,7 +277,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo nats"
@@ -325,7 +325,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -339,10 +339,10 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/stable/undefined"
           >
@@ -356,7 +356,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo rabbitmq"
@@ -404,7 +404,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -418,10 +418,10 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 card"
+          class="card mb-2 w-100 relatedCard card"
         >
           <a
-            class="text-decoration-none link"
+            class="text-decoration-none text-reset link"
             data-testid="relatedPackageLink"
             href="/packages/helm/incubator/undefined"
           >
@@ -435,7 +435,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                   class="d-flex align-items-center flex-grow-1 truncateWrapper"
                 >
                   <div
-                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper"
+                    class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
                   >
                     <img
                       alt="Logo schema-registry"
@@ -482,7 +482,7 @@ exports[`RelatedPackages renders correctly 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>

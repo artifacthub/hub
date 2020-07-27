@@ -19,7 +19,7 @@ const RSSLinkTitle = (props: Props) => (
 
     <small>
       <a
-        className={`badge badge-pill badge-secondary ml-3 ${styles.badge}`}
+        className={`badge badge-pill badge-secondary rssBadge ml-3 ${styles.badge}`}
         rel="alternate noopener noreferrer"
         role="button"
         target="_blank"

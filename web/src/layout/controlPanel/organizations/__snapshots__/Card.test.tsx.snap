@@ -13,7 +13,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
         class="d-flex flex-row align-items-center"
       >
         <div
-          class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper"
+          class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper imageWrapper"
         >
           <svg
             class="image"
@@ -70,7 +70,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
           </div>
         </button>
         <div
-          class="mx-2 my-auto d-none d-sm-inline separator"
+          class="mx-2 my-auto d-none d-sm-inline separator separator"
         />
         <button
           class="btn btn-sm btn-link text-secondary text-center btnAction"

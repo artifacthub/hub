@@ -30,7 +30,11 @@ const CapabilityLevel = (props: Props) => {
           header={<div className="h5 m-0">Capability level</div>}
         >
           <div className="my-3 mw-100">
-            <img src="/static/media/capability-level-diagram.svg" alt="Capability Level Diagram" className="mw-100" />
+            <img
+              src="/static/media/capability-level-diagram.svg"
+              alt="Capability Level Diagram"
+              className="capability-level-diagram mw-100"
+            />
           </div>
         </Modal>
       </div>
@@ -39,11 +43,11 @@ const CapabilityLevel = (props: Props) => {
         {LEVELS.map((level: string, index: number) => (
           <div
             key={`capabilityLevel-${index}`}
-            className={`d-flex flex-row align-items-center my-2 position-relative ${styles.stepWrapper}`}
+            className={`d-flex flex-row align-items-center my-2 position-relative stepWrapper ${styles.stepWrapper}`}
           >
             <div
-              className={classnames('rounded-circle text-center mr-2 text-light', styles.step, {
-                [styles.activeStep]: activeLevel >= index,
+              className={classnames('rounded-circle text-center mr-2 textLight step', styles.step, {
+                [`activeStep ${styles.activeStep}`]: activeLevel >= index,
               })}
             >
               {activeLevel >= index && <FaCheck />}

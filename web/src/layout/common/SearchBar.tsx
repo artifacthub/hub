@@ -72,7 +72,9 @@ const SearchBar = (props: Props) => {
   return (
     <>
       <div className={`position-relative ${props.formClassName}`}>
-        <div className={`d-flex align-items-strecht overflow-hidden ${styles.searchBar} ${styles[props.size]}`}>
+        <div
+          className={`d-flex align-items-strecht overflow-hidden searchBar ${styles.searchBar} ${styles[props.size]}`}
+        >
           <div
             data-testid="searchBarIcon"
             className={`d-none d-sm-flex align-items-center ${styles.iconWrapper}`}
@@ -108,7 +110,7 @@ const SearchBar = (props: Props) => {
         </div>
 
         {props.isSearching && (
-          <div className={`position-absolute text-light ${styles.loading}`}>
+          <div className={`position-absolute textLight ${styles.loading}`}>
             <span
               data-testid="searchBarSpinning"
               className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`}

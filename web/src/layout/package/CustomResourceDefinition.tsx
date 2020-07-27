@@ -1,7 +1,7 @@
 import { isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import YAML from 'yaml';
 
 import { CustomResourcesDefinition } from '../../types';
@@ -50,7 +50,7 @@ const CustomResourceDefinition = (props: Props) => {
                 </small>
 
                 <div className="mt-auto d-flex flex-column">
-                  <div className={styles.separator} />
+                  <div className={`separator ${styles.separator}`} />
 
                   <div className={`w-100 ${styles.extraInfo}`}>
                     <div className="d-flex flex-row align-items-baseline">
@@ -115,7 +115,7 @@ const CustomResourceDefinition = (props: Props) => {
               <div className="my-3">
                 <SyntaxHighlighter
                   language="yaml"
-                  style={monokai}
+                  style={tomorrowNight}
                   customStyle={{ padding: '1.5rem' }}
                   lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
                   showLineNumbers

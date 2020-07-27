@@ -84,7 +84,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/helm/stable/airflow"
               >
@@ -98,7 +98,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo airflow"
@@ -155,7 +155,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -231,7 +231,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -308,7 +308,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
@@ -384,7 +384,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -460,7 +460,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </span>
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/helm-chart.svg"
                           />
                         </div>
@@ -510,7 +510,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       </span>
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </div>
@@ -530,7 +530,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/helm/incubator/cassandra"
               >
@@ -544,7 +544,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo cassandra"
@@ -601,7 +601,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -677,7 +677,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -754,7 +754,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
@@ -830,7 +830,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -906,7 +906,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </span>
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/helm-chart.svg"
                           />
                         </div>
@@ -956,7 +956,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       </span>
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </div>
@@ -976,7 +976,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/helm/stable/prometheus"
               >
@@ -990,7 +990,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo prometheus"
@@ -1047,7 +1047,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1123,7 +1123,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1200,7 +1200,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
@@ -1276,7 +1276,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -1352,7 +1352,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </span>
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/helm-chart.svg"
                           />
                         </div>
@@ -1402,7 +1402,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       </span>
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/helm-chart.svg"
                       />
                     </div>
@@ -1422,7 +1422,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/falco/falco/traefik"
               >
@@ -1436,7 +1436,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo Traefik"
@@ -1493,7 +1493,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/falco-rules.svg"
                                       />
                                       <div
@@ -1570,7 +1570,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1629,7 +1629,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/falco-rules.svg"
                                         />
                                         <div
@@ -1706,7 +1706,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -1776,7 +1776,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </span>
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/falco-rules.svg"
                           />
                         </div>
@@ -1826,7 +1826,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       </span>
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/falco-rules.svg"
                       />
                     </div>
@@ -1846,7 +1846,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
               class="card h-100 card"
             >
               <a
-                class="text-decoration-none link"
+                class="text-decoration-none text-reset link"
                 data-testid="link"
                 href="/packages/opa/opa/trusted-registry-images"
               >
@@ -1860,7 +1860,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo Trusted Registry Images"
@@ -1917,7 +1917,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/opa-policies.svg"
                                       />
                                       <div
@@ -1994,7 +1994,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -2053,7 +2053,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         </small>
                                         <img
                                           alt="Icon"
-                                          class="mr-1 repoIconMini"
+                                          class="mr-1 repoIconMini repoIcon"
                                           src="/static/media/opa-policies.svg"
                                         />
                                         <div
@@ -2130,7 +2130,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                   </small>
                                 </div>
                                 <button
-                                  class="p-0 border-0 text-dark text-truncate link"
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                   data-testid="repoLink"
                                 >
                                   <div
@@ -2200,7 +2200,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </span>
                           <img
                             alt="Icon"
-                            class="icon"
+                            class="icon repoIcon"
                             src="/static/media/opa-policies.svg"
                           />
                         </div>
@@ -2250,7 +2250,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                       </span>
                       <img
                         alt="Icon"
-                        class="icon"
+                        class="icon repoIcon"
                         src="/static/media/opa-policies.svg"
                       />
                     </div>

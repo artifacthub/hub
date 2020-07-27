@@ -13,7 +13,7 @@ exports[`Member Card - members section creates snapshot 1`] = `
         class="d-flex flex-row align-items-center"
       >
         <div
-          class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper"
+          class="d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 imageWrapper imageWrapper"
         >
           <svg
             class="image"

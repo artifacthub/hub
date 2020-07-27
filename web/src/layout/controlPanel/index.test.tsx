@@ -25,6 +25,10 @@ const mockCtx = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -33,6 +37,10 @@ const mockCtxOrgSelected = {
   prefs: {
     controlPanel: { selectedOrg: 'orgTest' },
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 

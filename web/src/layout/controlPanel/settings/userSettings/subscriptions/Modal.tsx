@@ -115,10 +115,10 @@ const SubscriptionModal = (props: Props) => {
         </label>
         {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
           return (
-            <div className="form-check mb-3" key={`radio_${subs.name}`}>
+            <div className="custom-control custom-radio mb-3" key={`radio_${subs.name}`}>
               <input
                 data-testid={`radio_${subs.kind}`}
-                className="form-check-input"
+                className="custom-control-input"
                 type="radio"
                 name="kind"
                 id={subs.name}
@@ -128,7 +128,7 @@ const SubscriptionModal = (props: Props) => {
                 onChange={() => setEventKind(subs.kind)}
                 required
               />
-              <label className="form-check-label" htmlFor={subs.name}>
+              <label className="custom-control-label" htmlFor={subs.name}>
                 <div className="d-flex flex-row align-items-center ml-2">
                   {subs.icon}
                   <div className="ml-1">{subs.title}</div>
@@ -158,7 +158,7 @@ const SubscriptionModal = (props: Props) => {
                     </div>
 
                     <div
-                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ml-2 ml-md-0 ${styles.imageWrapper}`}
+                      className={`d-flex align-items-center justify-content-center overflow-hidden p-1 ml-2 ml-md-0 ${styles.imageWrapper} imageWrapper`}
                     >
                       <Image
                         alt={packageItem.displayName || packageItem.name}

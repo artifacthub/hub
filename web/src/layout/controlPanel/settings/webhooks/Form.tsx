@@ -446,7 +446,7 @@ const WebhookForm = (props: Props) => {
                       <td className="align-middle">
                         <div className="d-flex flex-row align-items-center">
                           <div
-                            className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
+                            className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
                           >
                             <Image
                               alt={item.displayName || item.name}
@@ -498,10 +498,10 @@ const WebhookForm = (props: Props) => {
           <div className="d-flex flex-row mb-3">
             {PAYLOAD_KINDS_LIST.map((item: PayloadKindsItem) => {
               return (
-                <div className="form-check mr-4" key={`payload_${item.kind}`}>
+                <div className="custom-control custom-radio mr-4" key={`payload_${item.kind}`}>
                   <input
                     data-testid={`${item.name}Radio`}
-                    className="form-check-input"
+                    className="custom-control-input"
                     type="radio"
                     id={`payload_${item.kind}`}
                     name="payloadKind"
@@ -519,7 +519,7 @@ const WebhookForm = (props: Props) => {
                       checkTestAvailability();
                     }}
                   />
-                  <label className="form-check-label" htmlFor={`payload_${item.kind}`}>
+                  <label className="custom-control-label" htmlFor={`payload_${item.kind}`}>
                     {item.title}
                   </label>
                 </div>
