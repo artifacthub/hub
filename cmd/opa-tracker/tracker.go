@@ -202,7 +202,7 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 		if err != nil {
 			return fmt.Errorf("error reading policy for package %s version %s: %w", md.Name, md.Version, err)
 		}
-		policies[strings.TrimPrefix(path+"/", pkgPath)] = string(policy)
+		policies[strings.TrimPrefix(path, pkgPath+"/")] = string(policy)
 		return nil
 	})
 	if err != nil {
