@@ -65,33 +65,37 @@ const OLMOperatorsDetails = (props: Props) => {
 
       <CapabilityLevel capabilityLevel={getCapabilityLevel()} />
 
-      <div>
-        <SmallTitle text="Provider" />
-        <p className="text-truncate">{props.package.provider || '-'}</p>
-      </div>
+      {props.package.provider && (
+        <>
+          <div>
+            <SmallTitle text="Provider" />
+            <p className="text-truncate">{props.package.provider}</p>
+          </div>
+        </>
+      )}
 
       <Links links={props.package.links} />
 
       <Maintainers maintainers={props.package.maintainers} />
 
-      <SmallTitle
-        text="Container Image"
-        icon={
-          <>
-            {props.package.containerImage && (
+      <License license={props.package.license} />
+
+      {props.package.containerImage && (
+        <>
+          <SmallTitle
+            text="Container Image"
+            icon={
               <div className="d-inline-block">
                 <ButtonCopyToClipboard
                   text={props.package.containerImage}
                   className="btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
                 />
               </div>
-            )}
-          </>
-        }
-      />
-      <p className={styles.containerImage}>{props.package.containerImage || '-'}</p>
-
-      <License license={props.package.license} />
+            }
+          />
+          <p className={styles.containerImage}>{props.package.containerImage}</p>
+        </>
+      )}
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

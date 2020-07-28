@@ -75,3 +75,13 @@ olmTracker:
   concurrency: 10
   repositories: []
   imageStore: pg
+
+opaTracker:
+  cronjob:
+    resources:
+      requests:
+        cpu: 2
+        memory: 2000Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg

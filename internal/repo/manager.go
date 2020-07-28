@@ -310,6 +310,7 @@ func isValidKind(kind hub.RepositoryKind) bool {
 		hub.Falco,
 		hub.Helm,
 		hub.OLM,
+		hub.OPA,
 	} {
 		if kind == validKind {
 			return true

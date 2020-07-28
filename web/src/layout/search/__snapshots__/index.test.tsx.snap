@@ -74,7 +74,7 @@ exports[`Search index creates snapshot 1`] = `
       role="main"
     >
       <div
-        class="flex-grow-1 list emptyList"
+        class="flex-grow-1 mt-3 list emptyList"
       />
     </main>
   </div>
@@ -1327,7 +1327,7 @@ exports[`Search index creates snapshot 2`] = `
         </div>
       </nav>
       <div
-        class="flex-grow-1 list"
+        class="flex-grow-1 mt-3 list"
       >
         <div
           class="row no-gutters mb-2"

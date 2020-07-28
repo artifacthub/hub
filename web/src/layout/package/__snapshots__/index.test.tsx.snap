@@ -668,23 +668,6 @@ exports[`Package index creates snapshot 2`] = `
                   class="card-title text-muted text-uppercase"
                 >
                   <span>
-                    Maintainers
-                  </span>
-                </small>
-              </div>
-              <p
-                data-testid="maintainers"
-              >
-                -
-              </p>
-              <div
-                class="mt-2 mb-1"
-                data-testid="smallTitle"
-              >
-                <small
-                  class="card-title text-muted text-uppercase"
-                >
-                  <span>
                     Keywords
                   </span>
                 </small>

@@ -54,3 +54,11 @@ jobs:
             -t artifacthub/olm-tracker:latest .
       - name: Push olm-tracker image
         run: docker push artifacthub/olm-tracker
+      - name: Build opa-tracker image
+        run: |
+          docker build \
+            -f cmd/opa-tracker/Dockerfile \
+            -t artifacthub/opa-tracker:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/opa-tracker:latest .
+      - name: Push opa-tracker image
+        run: docker push artifacthub/opa-tracker

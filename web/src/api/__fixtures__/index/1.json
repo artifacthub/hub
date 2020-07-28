@@ -154,5 +154,23 @@
         "membersCount": 1
       }
     ]
+  },
+  {
+    "entry": {
+      "data": {
+        "policies": {
+          "/lib/memory.rego": "package lib.memory\n\nkb := 1024\nmb := kb * 1024\ngb := mb * 1024",
+          "/lib/openshift.rego": "package lib.openshift\n\nimport"
+        }
+      }
+    },
+    "result": {
+      "data": {
+        "policies": {
+          "/lib/memory.rego": "package lib.memory\n\nkb := 1024\nmb := kb * 1024\ngb := mb * 1024",
+          "/lib/openshift.rego": "package lib.openshift\n\nimport"
+        }
+      }
+    }
   }
 ]

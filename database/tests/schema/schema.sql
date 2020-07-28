@@ -149,6 +149,7 @@ select columns_are('snapshot', array[
     'app_version',
     'digest',
     'readme',
+    'install',
     'links',
     'data',
     'deprecated',

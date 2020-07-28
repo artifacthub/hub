@@ -84,6 +84,7 @@ The chart installs some `cronjobs` in charge of launching periodically (every 30
 $ kubectl create job initial-falco-tracker-job --from=cronjob/falco-tracker
 $ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
 $ kubectl create job initial-olm-tracker-job --from=cronjob/olm-tracker
+$ kubectl create job initial-opa-tracker-job --from=cronjob/opa-tracker
 ```
 
 ### Uninstalling the Chart

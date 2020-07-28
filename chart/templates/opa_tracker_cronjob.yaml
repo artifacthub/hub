@@ -1,0 +1,41 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: opa-tracker
+spec:
+  schedule: "*/30 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+        {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 8 }}
+        {{- end }}
+          restartPolicy: Never
+          initContainers:
+          - name: check-db-ready
+            image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+            imagePullPolicy: {{ .Values.pullPolicy }}
+            resources:
+              {{- toYaml .Values.opaTracker.cronjob.resources | nindent 14 }}
+            env:
+              - name: PGHOST
+                value: {{ .Values.db.host }}
+              - name: PGPORT
+                value: "{{ .Values.db.port }}"
+            command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+          containers:
+          - name: opa-tracker
+            image: {{ .Values.opaTracker.cronjob.image.repository }}:{{ .Values.imageTag }}
+            imagePullPolicy: {{ .Values.pullPolicy }}
+            volumeMounts:
+            - name: opa-tracker-config
+              mountPath: "/home/opa-tracker/.cfg"
+              readOnly: true
+          volumes:
+          - name: opa-tracker-config
+            secret:
+              secretName: opa-tracker-config

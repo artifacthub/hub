@@ -3,7 +3,7 @@ name: The name of the package (only alphanum, no spaces, dashes allowed) (requir
 displayName: The name of the package nicely formatted (required)
 createdAt: The date this package was created (RFC3339 layout) (required)
 description: A short description of the package (required)
-logoURL: A URL for the package logo. Data URIs are supported (optional, but it improves your package visibility)
+logoPath: Path to the logo file within the package directory (optional, but it improves package visibility)
 digest: String that uniquely identifies this package version (optional)
 license: SPDX identifier of the package license (https://spdx.org/licenses/) (optional)
 homeURL: The URL of the project home page (optional)
@@ -14,7 +14,7 @@ operator: Whether this package is an Operator (optional, boolean)
 deprecated: Whether this package is deprecated (optional, boolean)
 keywords: # (optional)
   - A list of keywords about this package
-  - Using one or more categories names as keywords will improve your package visibility
+  - Using one or more categories names as keywords will improve package visibility
 links: # (optional)
   - name: Title of the link (required for each link)
     url: URL of the link (required for each link)
@@ -23,7 +23,7 @@ readme: | # (optional)
 
   Content added here will be rendered on Artifact Hub
 install: | # (optional)
-  Install instructions in markdown format
+  Brief install instructions in markdown format
 
   Content added here will be displayed when the INSTALL button on the package details page is clicked.
 maintainers: # (optional)

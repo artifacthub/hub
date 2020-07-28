@@ -11,12 +11,11 @@ interface Props {
   maintainers?: Maintainer[] | undefined;
 }
 
-const Maintainers = (props: Props) => (
-  <>
-    <SmallTitle text="Maintainers" />
-    {isUndefined(props.maintainers) || isNull(props.maintainers) || props.maintainers.length === 0 ? (
-      <p data-testid="maintainers">-</p>
-    ) : (
+const Maintainers = (props: Props) => {
+  if (isUndefined(props.maintainers) || isNull(props.maintainers) || props.maintainers.length === 0) return null;
+  return (
+    <>
+      <SmallTitle text="Maintainers" />
       <div data-testid="maintainers" className="mb-3">
         {props.maintainers.map((maintainer: Maintainer) => (
           <div className="mb-1" key={maintainer.email}>
@@ -29,8 +28,8 @@ const Maintainers = (props: Props) => (
           </div>
         ))}
       </div>
-    )}
-  </>
-);
+    </>
+  );
+};
 
 export default Maintainers;

@@ -79,6 +79,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
+    install,
     links,
     data,
     deprecated,
@@ -97,6 +98,7 @@ insert into snapshot (
     '12.1.0',
     'digest-package1-1.0.0',
     'readme-version-1.0.0',
+    'install-version-1.0.0',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}',
     true,
@@ -116,6 +118,7 @@ insert into snapshot (
     app_version,
     digest,
     readme,
+    install,
     links,
     data,
     created_at
@@ -129,6 +132,7 @@ insert into snapshot (
     '12.0.0',
     'digest-package1-0.0.9',
     'readme-version-0.0.9',
+    'install-version-0.0.9',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     '{"key": "value"}',
     '2020-06-16 11:20:33+02'
@@ -153,6 +157,7 @@ insert into snapshot (
     description,
     keywords,
     readme,
+    install,
     data,
     created_at
 ) values (
@@ -162,6 +167,7 @@ insert into snapshot (
     'description',
     '{"kw1", "kw2"}',
     'readme-version-1.0.0',
+    'install-version-1.0.0',
     '{"key": "value"}',
     '2020-06-16 11:20:34+02'
 );
@@ -193,6 +199,7 @@ select is(
         "keywords": ["kw1", "kw2"],
         "home_url": "home_url",
         "readme": "readme-version-1.0.0",
+        "install": "install-version-1.0.0",
         "links": [
             {
                 "name": "link1",
@@ -275,6 +282,7 @@ select is(
         "keywords": ["kw1", "kw2"],
         "home_url": "home_url",
         "readme": "readme-version-1.0.0",
+        "install": "install-version-1.0.0",
         "links": [
             {
                 "name": "link1",
@@ -358,6 +366,7 @@ select is(
         "keywords": ["kw1", "kw2", "older"],
         "home_url": "home_url (older)",
         "readme": "readme-version-0.0.9",
+        "install": "install-version-0.0.9",
         "links": [
             {
                 "name": "link1",
@@ -431,6 +440,7 @@ select is(
         "keywords": ["kw1", "kw2"],
         "home_url": null,
         "readme": "readme-version-1.0.0",
+        "install": "install-version-1.0.0",
         "links": null,
         "digest": null,
         "data": {

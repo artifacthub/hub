@@ -233,16 +233,44 @@ const RepositoryModal = (props: Props) => {
             </p>
           </small>
         );
+      case RepositoryKind.OPA:
+        return (
+          <small className="text-muted text-break mt-1">
+            <p>
+              URL where the OPA policies packages are located. At the moment only Github and Gitlab URLs are supported,
+              and they must follow the following format:
+            </p>
+            <ul className="mt-3">
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://github.com/user/repo[/path/to/packages]
+              </li>
+              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
+                https://gitlab.com/user/repo[/path/to/packages]
+              </li>
+            </ul>
+            <p className="mb-0">
+              You can have multiple packages with one or multiple versions on each repository. Each package version
+              needs a metadata file. A package version starts at the point where a metadata file is located and all
+              policies files inside that directory will belong to that package version. Please see{' '}
+              <ExternalLink
+                href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub.yaml"
+                className="text-reset"
+              >
+                the spec]
+              </ExternalLink>{' '}
+              for more details.
+            </p>
+          </small>
+        );
     }
   };
 
   const getURLPattern = (): string | undefined => {
     switch (selectedKind) {
-      case RepositoryKind.OLM:
-      case RepositoryKind.Falco:
-        return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
-      default:
+      case RepositoryKind.Helm:
         return undefined;
+      default:
+        return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
     }
   };
 
@@ -277,7 +305,7 @@ const RepositoryModal = (props: Props) => {
       error={apiError}
       cleanError={cleanApiError}
     >
-      <div className="w-100">
+      <div className={`w-100 ${styles.body}`}>
         <form
           data-testid="repoForm"
           ref={form}

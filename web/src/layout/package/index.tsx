@@ -14,6 +14,7 @@ import {
   CustomResourcesDefinition,
   CustomResourcesDefinitionExample,
   ErrorKind,
+  OPAPolicies,
   Package,
   RepositoryKind,
   SearchFiltersURL,
@@ -38,6 +39,8 @@ import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
 import ModalHeader from './ModalHeader';
 import OLMInstall from './OLMInstall';
+import OPAInstall from './OPAInstall';
+import OPAPoliciesList from './OPAPoliciesList';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
 import RelatedPackages from './RelatedPackages';
@@ -140,11 +143,10 @@ const PackageView = (props: Props) => {
   };
 
   const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element | null => {
-    // OPA policies doesn't have any installation modal info
     if (
       isNull(detail) ||
       isUndefined(detail) ||
-      detail!.repository.kind === RepositoryKind.OPA ||
+      (detail!.repository.kind === RepositoryKind.OPA && (isUndefined(detail.install) || isNull(detail.install))) ||
       (detail.repository.kind === RepositoryKind.OLM && detail.repository.name !== 'community-operators')
     ) {
       return null;
@@ -176,6 +178,8 @@ const PackageView = (props: Props) => {
                 return <HelmInstall name={detail.name} version={detail.version} repository={detail.repository} />;
               case RepositoryKind.Falco:
                 return <FalcoInstall normalizedName={detail.normalizedName!} />;
+              case RepositoryKind.OPA:
+                return <OPAInstall install={detail.install} />;
               case RepositoryKind.OLM:
                 return (
                   <OLMInstall
@@ -207,8 +211,8 @@ const PackageView = (props: Props) => {
     return rules;
   };
 
-  const getOPAPolicies = (): string | undefined => {
-    let policies: string | undefined;
+  const getOPAPolicies = (): OPAPolicies | undefined => {
+    let policies: OPAPolicies | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
@@ -216,7 +220,7 @@ const PackageView = (props: Props) => {
       !isUndefined(detail.data) &&
       !isUndefined(detail.data.policies)
     ) {
-      policies = map(detail.data.policies, 'raw').join(' ');
+      policies = detail.data.policies;
     }
     return policies;
   };
@@ -500,19 +504,13 @@ const PackageView = (props: Props) => {
                               );
 
                             case RepositoryKind.OPA:
-                              let policies: string | undefined = getOPAPolicies();
+                              let policies: OPAPolicies | undefined = getOPAPolicies();
                               return (
                                 <>
                                   {!isUndefined(policies) && (
                                     <div className={`mb-5 ${styles.codeWrapper}`}>
-                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies" />
-                                      <SyntaxHighlighter
-                                        language="rego"
-                                        style={tomorrowNightBright}
-                                        customStyle={{ padding: '1.5rem' }}
-                                      >
-                                        {policies}
-                                      </SyntaxHighlighter>
+                                      <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies files" />
+                                      <OPAPoliciesList policies={policies} />
                                     </div>
                                   )}
                                 </>

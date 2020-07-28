@@ -31,6 +31,7 @@ begin
         'keywords', s.keywords,
         'home_url', s.home_url,
         'readme', s.readme,
+        'install', s.install,
         'links', s.links,
         'data', s.data,
         'version', s.version,

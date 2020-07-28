@@ -56,6 +56,8 @@ interface FetchOptions {
   body?: any;
 }
 
+const EXCEPTIONS = ['policies'];
+
 export const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
     return r.map((v) => toCamelCase(v));
@@ -63,7 +65,7 @@ export const toCamelCase = (r: any): Result => {
     return Object.keys(r).reduce(
       (result, key) => ({
         ...result,
-        [camelCase(key)]: toCamelCase((r as Result)[key]),
+        [camelCase(key)]: EXCEPTIONS.includes(key) ? (r as Result)[key] : toCamelCase((r as Result)[key]),
       }),
       {}
     );

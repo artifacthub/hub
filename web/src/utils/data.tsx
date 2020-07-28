@@ -61,7 +61,7 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     label: 'opa',
     name: 'OPA policies',
     icon: <RepositoryIcon kind={RepositoryKind.OPA} className="mw-100 mh-100" />,
-    active: false,
+    active: true,
   },
   {
     kind: RepositoryKind.OLM,

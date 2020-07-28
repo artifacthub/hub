@@ -53,13 +53,12 @@ describe('Details', () => {
       expect(queryByText(mockPackage.appVersion)).toBeInTheDocument();
     });
 
-    it('renders placeholder when no app version', () => {
+    it("does not render app version when package hasn't", () => {
       const mockPackage = getMockPackage('3');
       const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
 
       const appVersion = queryByTestId('appVersion');
-      expect(appVersion).toBeInTheDocument();
-      expect(appVersion).toHaveTextContent('-');
+      expect(appVersion).toBeNull();
     });
   });
 
@@ -113,13 +112,12 @@ describe('Details', () => {
       expect(firstMaintainer?.closest('a')).toHaveAttribute('href', `mailto:${mockPackage.maintainers![0].email}`);
     });
 
-    it('renders placeholder when no maintainers', () => {
+    it('does not render maintaners when no maintainers', () => {
       const mockPackage = getMockPackage('8');
       const { queryByTestId } = render(<Details {...defaultProps} package={mockPackage} />);
 
       const maintainers = queryByTestId('maintainers');
-      expect(maintainers).toBeInTheDocument();
-      expect(maintainers).toHaveTextContent('-');
+      expect(maintainers).toBeNull();
     });
   });
 
