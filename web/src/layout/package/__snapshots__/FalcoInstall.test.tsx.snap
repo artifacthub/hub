@@ -68,7 +68,9 @@ exports[`FalcoInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code>
-          helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
+          <span>
+            helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
+          </span>
         </code>
       </pre>
       <div

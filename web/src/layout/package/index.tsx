@@ -6,7 +6,7 @@ import { FiDownload, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
@@ -493,7 +493,7 @@ const PackageView = (props: Props) => {
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
                                       <SyntaxHighlighter
                                         language="yaml"
-                                        style={tomorrowNightBright}
+                                        style={monokai}
                                         customStyle={{ padding: '1.5rem' }}
                                       >
                                         {rules}
