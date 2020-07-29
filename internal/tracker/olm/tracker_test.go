@@ -1,4 +1,4 @@
-package main
+package olm
 
 import (
 	"context"
@@ -228,9 +228,9 @@ func TestTracker(t *testing.T) {
 	})
 }
 
-func withRepositoryCloner(rc hub.RepositoryCloner) func(t *Tracker) {
-	return func(t *Tracker) {
-		t.rc = rc
+func withRepositoryCloner(rc hub.RepositoryCloner) func(t tracker.Tracker) {
+	return func(t tracker.Tracker) {
+		t.(*Tracker).svc.Rc = rc
 	}
 }
 
@@ -243,7 +243,7 @@ type trackerWrapper struct {
 	pm  *pkg.ManagerMock
 	is  *img.StoreMock
 	ec  *tracker.ErrorsCollectorMock
-	t   *Tracker
+	t   tracker.Tracker
 }
 
 func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
@@ -255,9 +255,17 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	pm := &pkg.ManagerMock{}
 	is := &img.StoreMock{}
 	ec := &tracker.ErrorsCollectorMock{}
+	svc := &tracker.Services{
+		Ctx: ctx,
+		Cfg: cfg,
+		Rm:  rm,
+		Pm:  pm,
+		Is:  is,
+		Ec:  ec,
+	}
 
 	wg.Add(1)
-	t := NewTracker(ctx, cfg, r, rm, pm, is, ec, withRepositoryCloner(rc))
+	t := NewTracker(svc, r, withRepositoryCloner(rc))
 
 	return &trackerWrapper{
 		ctx: ctx,

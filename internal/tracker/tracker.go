@@ -2,38 +2,31 @@ package tracker
 
 import (
 	"context"
-	"fmt"
+	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/img"
 	"github.com/spf13/viper"
 )
 
-// GetRepositories gets the repositories a tracker will process. If a list of
-// repositories names is found in the configuration provided, those will be the
-// repositories returned provided they are found. If no repositories names are
-// found in the configuration, all the repositories of the kind provided will
-// be returned.
-func GetRepositories(
-	cfg *viper.Viper,
-	rm hub.RepositoryManager,
-	kind hub.RepositoryKind,
-) ([]*hub.Repository, error) {
-	reposNames := cfg.GetStringSlice("tracker.repositoriesNames")
-	var repos []*hub.Repository
-	if len(reposNames) > 0 {
-		for _, name := range reposNames {
-			repo, err := rm.GetByName(context.Background(), name)
-			if err != nil {
-				return nil, fmt.Errorf("error getting repository %s: %w", name, err)
-			}
-			repos = append(repos, repo)
-		}
-	} else {
-		var err error
-		repos, err = rm.GetByKind(context.Background(), kind)
-		if err != nil {
-			return nil, fmt.Errorf("error getting repositories by kind: %w", err)
-		}
-	}
-	return repos, nil
+// Tracker is the interface that wraps the Track method, used to ask a tracker
+// to start running and processing packages in a repository. A call to
+// wg.Done() is expected once the tracker has completed.
+type Tracker interface {
+	Track(wg *sync.WaitGroup) error
+}
+
+// New represents a function that creates new repository trackers.
+type New func(svc *Services, r *hub.Repository, opts ...func(t Tracker)) Tracker
+
+// Services represents a set of services that must be provided to a Tracker
+// instance so that it can perform its tasks.
+type Services struct {
+	Ctx context.Context
+	Cfg *viper.Viper
+	Rc  hub.RepositoryCloner
+	Rm  hub.RepositoryManager
+	Pm  hub.PackageManager
+	Is  img.Store
+	Ec  ErrorsCollector
 }
