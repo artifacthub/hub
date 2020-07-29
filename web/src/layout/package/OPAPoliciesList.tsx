@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { OPAPolicies } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
@@ -78,7 +78,13 @@ const OPAPoliciesList = (props: Props) => {
                 </div>
 
                 <div className="my-3">
-                  <SyntaxHighlighter language="text" style={tomorrowNightBright} customStyle={{ padding: '1.5rem' }}>
+                  <SyntaxHighlighter
+                    language="text"
+                    style={monokai}
+                    customStyle={{ padding: '1.5rem' }}
+                    lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
+                    showLineNumbers
+                  >
                     {props.policies[selectedPolicy]}
                   </SyntaxHighlighter>
                 </div>

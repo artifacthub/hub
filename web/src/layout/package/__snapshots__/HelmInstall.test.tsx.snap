@@ -73,7 +73,9 @@ exports[`HelmInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code>
-          helm repo add repo http://repo.test
+          <span>
+            helm repo add repo http://repo.test
+          </span>
         </code>
       </pre>
       <div
@@ -128,7 +130,9 @@ exports[`HelmInstall creates snapshot 1`] = `
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
         <code>
-          helm install repo/packageName --version 1.0.0
+          <span>
+            helm install repo/packageName --version 1.0.0
+          </span>
         </code>
       </pre>
       <div

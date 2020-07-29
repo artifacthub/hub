@@ -1,7 +1,7 @@
-import { isUndefined } from 'lodash';
-import React from 'react';
+import { isNull, isUndefined } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { tomorrowNightBright } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import YAML from 'yaml';
 
 import { CustomResourcesDefinition } from '../../types';
@@ -14,16 +14,32 @@ interface Props {
 }
 
 const CustomResourceDefinition = (props: Props) => {
+  const [selectedCustomResourceDef, setSelectedCustomResourceDef] = useState<CustomResourcesDefinition | null>(null);
+  const [yamlExample, setYamlExample] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const getYAMLExample = (): string | undefined => {
+      let yamlExample: string | undefined;
+      if (!isNull(selectedCustomResourceDef) && !isUndefined(selectedCustomResourceDef.example)) {
+        yamlExample = YAML.stringify(selectedCustomResourceDef.example);
+      }
+
+      console.log(yamlExample);
+      return yamlExample;
+    };
+
+    if (!isNull(selectedCustomResourceDef)) {
+      setYamlExample(getYAMLExample());
+    } else {
+      setYamlExample(undefined);
+    }
+  }, [selectedCustomResourceDef]);
+
   if (isUndefined(props.resources)) return null;
 
   return (
     <div className="row mt-4">
       {props.resources.map((resourceDefinition: CustomResourcesDefinition) => {
-        let yamlExample: string | undefined;
-        if (!isUndefined(resourceDefinition.example)) {
-          yamlExample = YAML.stringify(resourceDefinition.example);
-        }
-
         return (
           <div className="col-12 col-lg-6 mb-4" key={`resourceDef_${resourceDefinition.kind}`}>
             <div className="card h-100">
@@ -54,39 +70,17 @@ const CustomResourceDefinition = (props: Props) => {
                   </div>
 
                   {!isUndefined(resourceDefinition.example) && (
-                    <div className="mt-auto ml-auto">
-                      <Modal
-                        modalDialogClassName={styles.modalDialog}
-                        className={`d-inline-block mt-1 ${styles.modal}`}
-                        buttonType="btn-link btn-sm px-0 text-secondary"
-                        buttonContent={<span className="text-capitalize">View YAML example</span>}
-                        header={
-                          <div className={`h4 m-2 ${styles.title}`}>{`${
-                            resourceDefinition.displayName || resourceDefinition.name
-                          } - YAML example`}</div>
+                    <div className="text-right mt-1">
+                      <button
+                        className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
+                        onClick={() =>
+                          setSelectedCustomResourceDef(
+                            resourceDefinition === selectedCustomResourceDef ? null : resourceDefinition
+                          )
                         }
                       >
-                        <div className="my-3 mw-100">
-                          <div className="text-right">
-                            <ButtonCopyToClipboard
-                              text={yamlExample!}
-                              className={`btn-link border-0 text-secondary font-weight-bold ${styles.copyBtn}`}
-                              visibleBtnText
-                            />
-                          </div>
-
-                          <div className="my-3">
-                            <SyntaxHighlighter
-                              language="yaml"
-                              style={tomorrowNightBright}
-                              customStyle={{ padding: '1.5rem' }}
-                              showLineNumbers
-                            >
-                              {yamlExample}
-                            </SyntaxHighlighter>
-                          </div>
-                        </div>
-                      </Modal>
+                        View YAML example
+                      </button>
                     </div>
                   )}
                 </div>
@@ -95,6 +89,44 @@ const CustomResourceDefinition = (props: Props) => {
           </div>
         );
       })}
+
+      {!isNull(selectedCustomResourceDef) && !isUndefined(yamlExample) && (
+        <div className="mt-auto ml-auto">
+          <Modal
+            modalDialogClassName={styles.modalDialog}
+            className={`d-inline-block mt-1 ${styles.modal}`}
+            header={
+              <div className={`h4 m-2 ${styles.title}`}>{`${
+                selectedCustomResourceDef.displayName || selectedCustomResourceDef.name
+              } - YAML example`}</div>
+            }
+            onClose={() => setSelectedCustomResourceDef(null)}
+            open
+          >
+            <div className="my-3 mw-100">
+              <div className="text-right">
+                <ButtonCopyToClipboard
+                  text={yamlExample}
+                  className={`btn-link border-0 text-secondary font-weight-bold ${styles.copyBtn}`}
+                  visibleBtnText
+                />
+              </div>
+
+              <div className="my-3">
+                <SyntaxHighlighter
+                  language="yaml"
+                  style={monokai}
+                  customStyle={{ padding: '1.5rem' }}
+                  lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
+                  showLineNumbers
+                >
+                  {yamlExample}
+                </SyntaxHighlighter>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
     </div>
   );
 };
