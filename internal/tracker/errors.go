@@ -7,7 +7,6 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/rs/zerolog/log"
-	"github.com/stretchr/testify/mock"
 )
 
 // ErrorsCollector interface defines the methods that an errors collector
@@ -27,8 +26,8 @@ const (
 // repositories are being processed. Once all the processing is done, the
 // collected errors can be flushed, which will store them in the database.
 type DBErrorsCollector struct {
-	ctx         context.Context
-	repoManager hub.RepositoryManager
+	ctx context.Context
+	rm  hub.RepositoryManager
 
 	mu     sync.Mutex
 	errors map[string][]error // K: repository id
@@ -41,9 +40,9 @@ func NewDBErrorsCollector(
 	repos []*hub.Repository,
 ) *DBErrorsCollector {
 	ec := &DBErrorsCollector{
-		ctx:         ctx,
-		repoManager: repoManager,
-		errors:      make(map[string][]error),
+		ctx:    ctx,
+		rm:     repoManager,
+		errors: make(map[string][]error),
 	}
 	for _, r := range repos {
 		ec.errors[r.RepositoryID] = nil
@@ -73,24 +72,9 @@ func (c *DBErrorsCollector) Flush() {
 			errStr.WriteString(err.Error())
 			errStr.WriteString("\n")
 		}
-		err := c.repoManager.SetLastTrackingResults(c.ctx, repositoryID, errStr.String())
+		err := c.rm.SetLastTrackingResults(c.ctx, repositoryID, errStr.String())
 		if err != nil {
 			log.Error().Err(err).Str("repoID", repositoryID).Send()
 		}
 	}
-}
-
-// ErrorsCollectorMock is mock ErrorsCollector implementation.
-type ErrorsCollectorMock struct {
-	mock.Mock
-}
-
-// Append implements the ErrorsCollector interface.
-func (m *ErrorsCollectorMock) Append(repositoryID string, err error) {
-	m.Called(repositoryID, err)
-}
-
-// Flush implements the ErrorsCollector interface.
-func (m *ErrorsCollectorMock) Flush() {
-	m.Called()
 }

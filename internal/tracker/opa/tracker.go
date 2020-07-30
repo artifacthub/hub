@@ -91,7 +91,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		}
 		var md *hub.PackageMetadata
 		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			t.Warn(fmt.Errorf("error unmarshaling package version metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error unmarshaling package version metadata file %s: %w", pkgPath, err))
 			return nil
 		}
 
@@ -119,7 +119,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		t.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
 		err = t.registerPackage(pkgPath, md, logoImageID)
 		if err != nil {
-			t.Warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
+			t.warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
 		}
 
 		return nil
@@ -141,19 +141,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			version := p[1]
 			t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
 			if err := t.unregisterPackage(name, version); err != nil {
-				t.Warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
+				t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
 			}
 		}
 	}
 
 	return nil
-}
-
-// Warn is a helper that sends the error provided to the errors collector and
-// logs it as a warning.
-func (t *Tracker) Warn(err error) {
-	t.svc.Ec.Append(t.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
 }
 
 // registerPackage registers a package version using the package metadata
@@ -205,4 +198,11 @@ func (t *Tracker) unregisterPackage(name, version string) error {
 		Repository: t.r,
 	}
 	return t.svc.Pm.Unregister(t.svc.Ctx, p)
+}
+
+// warn is a helper that sends the error provided to the errors collector and
+// logs it as a warning.
+func (t *Tracker) warn(err error) {
+	t.svc.Ec.Append(t.r.RepositoryID, err)
+	log.Warn().Err(err).Send()
 }

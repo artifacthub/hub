@@ -50,22 +50,22 @@ func NewTracker(
 	return t
 }
 
-// Tracker is in charge of tracking an OLM operators repository, registering
-// and unregistering operators versions as needed.
+// Tracker is in charge of tracking the packages available in a OLM operators
+// repository, registering and unregistering them as needed.
 type Tracker struct {
 	svc    *tracker.Services
 	r      *hub.Repository
 	logger zerolog.Logger
 }
 
-// Track registers or unregisters the operators versions available in the
+// Track registers or unregisters the OLM operators packages available in the
 // repository provided as needed.
 func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	defer wg.Done()
 
 	// Clone repository
 	t.logger.Debug().Msg("cloning repository")
-	tmpDir, operatorsPath, err := t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
+	tmpDir, packagesPath, err := t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
 	if err != nil {
 		return fmt.Errorf("error cloning repository: %w", err)
 	}
@@ -77,32 +77,32 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		return fmt.Errorf("error getting registered packages: %w", err)
 	}
 
-	// Register operators versions available when needed
+	// Register available packages when needed
 	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
-	operatorsFullPath := filepath.Join(tmpDir, operatorsPath)
-	operators, err := ioutil.ReadDir(operatorsFullPath)
+	basePath := filepath.Join(tmpDir, packagesPath)
+	packages, err := ioutil.ReadDir(basePath)
 	if err != nil {
-		return fmt.Errorf("error reading operators: %w", err)
+		return fmt.Errorf("error reading packages: %w", err)
 	}
-	for _, entryO := range operators {
-		if !entryO.IsDir() {
+	for _, entryP := range packages {
+		if !entryP.IsDir() {
 			continue
 		}
-		operatorPath := filepath.Join(operatorsFullPath, entryO.Name())
+		pkgPath := filepath.Join(basePath, entryP.Name())
 
-		// Get operator package manifest
-		manifest, err := t.getOperatorManifest(operatorPath)
+		// Get package manifest
+		manifest, err := t.getPackageManifest(pkgPath)
 		if err != nil {
-			t.Warn(fmt.Errorf("error getting operator manifest from %s: %w", operatorPath, err))
+			t.warn(fmt.Errorf("error getting package manifest from %s: %w", pkgPath, err))
 			continue
 		}
-		operator := manifest.PackageName
+		pkgName := manifest.PackageName
 
-		// Get versions available for the operator
-		versionsUnfiltered, err := ioutil.ReadDir(operatorPath)
+		// Get package versions available
+		versionsUnfiltered, err := ioutil.ReadDir(pkgPath)
 		if err != nil {
-			t.Warn(fmt.Errorf("error reading operator %s versions: %w", operator, err))
+			t.warn(fmt.Errorf("error reading package %s versions: %w", pkgName, err))
 			continue
 		}
 		var versions []os.FileInfo
@@ -111,7 +111,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 				continue
 			}
 			if _, err := semver.StrictNewVersion(entryV.Name()); err != nil {
-				t.Warn(fmt.Errorf("invalid operator %s version (%s): %w", operator, entryV.Name(), err))
+				t.warn(fmt.Errorf("invalid package %s version (%s): %w", pkgName, entryV.Name(), err))
 				continue
 			} else {
 				versions = append(versions, entryV)
@@ -123,7 +123,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			return vj.LessThan(vi)
 		})
 
-		// Process operator versions found
+		// Process package versions found
 		for i, entryV := range versions {
 			select {
 			case <-t.svc.Ctx.Done():
@@ -132,35 +132,35 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			}
 			version := entryV.Name()
 
-			// Get operator version CSV
-			operatorVersionPath := filepath.Join(operatorPath, version)
-			csv, err := t.getCSV(operatorVersionPath)
+			// Get package version CSV
+			pkgVersionPath := filepath.Join(pkgPath, version)
+			csv, err := t.getPackageVersionCSV(pkgVersionPath)
 			if err != nil {
-				t.Warn(fmt.Errorf("error getting operator %s version %s csv: %w", operator, version, err))
+				t.warn(fmt.Errorf("error getting package %s version %s csv: %w", pkgName, version, err))
 				continue
 			}
 
-			// Check if this operator version is already registered
-			key := fmt.Sprintf("%s@%s", operator, getOperatorVersion(csv))
+			// Check if this package version is already registered
+			key := fmt.Sprintf("%s@%s", pkgName, getPackageVersion(csv))
 			packagesAvailable[key] = struct{}{}
 			if _, ok := packagesRegistered[key]; ok && !bypassDigestCheck {
 				continue
 			}
 
-			// Register operator version
-			t.logger.Debug().Str("name", operator).Str("v", version).Msg("registering operator version")
+			// Register package version
+			t.logger.Debug().Str("name", pkgName).Str("v", version).Msg("registering package")
 			var storeLogo bool
 			if i == 0 {
 				storeLogo = true
 			}
-			err = t.registerOperatorVersion(operator, manifest, csv, storeLogo)
+			err = t.registerPackage(pkgName, manifest, csv, storeLogo)
 			if err != nil {
-				t.Warn(fmt.Errorf("error registering package %s version %s: %w", operator, version, err))
+				t.warn(fmt.Errorf("error registering package %s version %s: %w", pkgName, version, err))
 			}
 		}
 	}
 
-	// Unregister operator versions not available anymore
+	// Unregister packages not available anymore
 	for key := range packagesRegistered {
 		select {
 		case <-t.svc.Ctx.Done():
@@ -171,9 +171,9 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			p := strings.Split(key, "@")
 			name := p[0]
 			version := p[1]
-			t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering operator version")
-			if err := t.unregisterOperatorVersion(name, version); err != nil {
-				t.Warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
+			t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
+			if err := t.unregisterPackage(name, version); err != nil {
+				t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
 			}
 		}
 	}
@@ -181,16 +181,9 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	return nil
 }
 
-// Warn is a helper that sends the error provided to the errors collector and
-// logs it as a warning.
-func (t *Tracker) Warn(err error) {
-	t.svc.Ec.Append(t.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
-}
-
-// getOperatorManifest reads and parses the operator package manifest.
-func (t *Tracker) getOperatorManifest(path string) (*manifests.PackageManifest, error) {
-	// Locate operator package manifest file
+// getPackageManifest reads and parses the package manifest.
+func (t *Tracker) getPackageManifest(path string) (*manifests.PackageManifest, error) {
+	// Locate package manifest file
 	matches, err := filepath.Glob(filepath.Join(path, "*.package.yaml"))
 	if err != nil {
 		return nil, fmt.Errorf("error locating package manifest file: %w", err)
@@ -200,7 +193,7 @@ func (t *Tracker) getOperatorManifest(path string) (*manifests.PackageManifest, 
 	}
 	manifestPath := matches[0]
 
-	// Read and parse operator package manifest file
+	// Read and parse package manifest file
 	manifestData, err := ioutil.ReadFile(manifestPath)
 	if err != nil {
 		return nil, fmt.Errorf("error reading package manifest file: %w", err)
@@ -213,9 +206,9 @@ func (t *Tracker) getOperatorManifest(path string) (*manifests.PackageManifest, 
 	return manifest, nil
 }
 
-// getCSV reads, parses and validates the cluster service version file of the
-// given operator version.
-func (t *Tracker) getCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, error) {
+// getPackageVersionCSV reads, parses and validates the cluster service version
+// file of the given package version.
+func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, error) {
 	// Locate cluster service version file
 	matches, err := filepath.Glob(filepath.Join(path, "*.clusterserviceversion.yaml"))
 	if err != nil {
@@ -248,9 +241,9 @@ func (t *Tracker) getCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion,
 	return csv, nil
 }
 
-// registerOperatorVersion registers the operator version provided.
-func (t *Tracker) registerOperatorVersion(
-	operatorName string,
+// registerPackage registers the package version provided.
+func (t *Tracker) registerPackage(
+	name string,
 	manifest *manifests.PackageManifest,
 	csv *operatorsv1alpha1.ClusterServiceVersion,
 	storeLogo bool,
@@ -260,12 +253,12 @@ func (t *Tracker) registerOperatorVersion(
 	if storeLogo && len(csv.Spec.Icon) > 0 && csv.Spec.Icon[0].Data != "" {
 		data, err := base64.StdEncoding.DecodeString(csv.Spec.Icon[0].Data)
 		if err != nil {
-			errW := fmt.Errorf("error decoding operator %s logo image: %w", operatorName, err)
+			errW := fmt.Errorf("error decoding package %s logo image: %w", name, err)
 			t.svc.Ec.Append(t.r.RepositoryID, errW)
 		} else {
 			logoImageID, err = t.svc.Is.SaveImage(t.svc.Ctx, data)
 			if err != nil {
-				errW := fmt.Errorf("error saving operator %s image: %w", operatorName, err)
+				errW := fmt.Errorf("error saving package %s image: %w", name, err)
 				t.svc.Ec.Append(t.r.RepositoryID, errW)
 			}
 		}
@@ -273,13 +266,13 @@ func (t *Tracker) registerOperatorVersion(
 
 	// Prepare package from CSV content
 	p := &hub.Package{
-		Name:           operatorName,
+		Name:           name,
 		DisplayName:    csv.Spec.DisplayName,
 		LogoImageID:    logoImageID,
 		Description:    csv.Annotations["description"],
 		Keywords:       csv.Spec.Keywords,
 		Readme:         csv.Spec.Description,
-		Version:        getOperatorVersion(csv),
+		Version:        getPackageVersion(csv),
 		IsOperator:     true,
 		DefaultChannel: manifest.DefaultChannelName,
 		ContainerImage: csv.Annotations["containerImage"],
@@ -299,7 +292,7 @@ func (t *Tracker) registerOperatorVersion(
 	for _, channel := range manifest.Channels {
 		matches := channelVersionRE.FindStringSubmatch(channel.CurrentCSVName)
 		if len(matches) != 2 {
-			t.Warn(fmt.Errorf("error getting version from %s", channel.CurrentCSVName))
+			t.warn(fmt.Errorf("error getting version from %s", channel.CurrentCSVName))
 			continue
 		}
 		version := matches[1]
@@ -360,8 +353,8 @@ func (t *Tracker) registerOperatorVersion(
 	return t.svc.Pm.Register(t.svc.Ctx, p)
 }
 
-// unregisterOperatorVersion unregisters the operator version provided.
-func (t *Tracker) unregisterOperatorVersion(name, version string) error {
+// unregisterPackage unregisters the package version provided.
+func (t *Tracker) unregisterPackage(name, version string) error {
 	p := &hub.Package{
 		Name:       name,
 		Version:    version,
@@ -370,8 +363,15 @@ func (t *Tracker) unregisterOperatorVersion(name, version string) error {
 	return t.svc.Pm.Unregister(t.svc.Ctx, p)
 }
 
-// getOperatorVersion returns the operator version from the cluster service
+// warn is a helper that sends the error provided to the errors collector and
+// logs it as a warning.
+func (t *Tracker) warn(err error) {
+	t.svc.Ec.Append(t.r.RepositoryID, err)
+	log.Warn().Err(err).Send()
+}
+
+// getPackageVersion returns the package version from the cluster service
 // version provided.
-func getOperatorVersion(csv *operatorsv1alpha1.ClusterServiceVersion) string {
+func getPackageVersion(csv *operatorsv1alpha1.ClusterServiceVersion) string {
 	return csv.Spec.Version.String()
 }

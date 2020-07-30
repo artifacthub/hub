@@ -89,22 +89,22 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		// Parse package metadata file and validate it
 		data, err := ioutil.ReadFile(pkgPath)
 		if err != nil {
-			t.Warn(fmt.Errorf("error reading package metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error reading package metadata file %s: %w", pkgPath, err))
 			return nil
 		}
 		var md *PackageMetadata
 		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			t.Warn(fmt.Errorf("error unmarshaling package metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error unmarshaling package metadata file %s: %w", pkgPath, err))
 			return nil
 		}
 		if _, err := semver.StrictNewVersion(md.Version); err != nil {
-			t.Warn(fmt.Errorf("invalid package %s version (%s): %w", md.Name, md.Name, err))
+			t.warn(fmt.Errorf("invalid package %s version (%s): %w", md.Name, md.Name, err))
 			return nil
 		}
 
 		// Check if this package should be registered
 		if md.Kind != "FalcoRules" {
-			t.Warn(fmt.Errorf("invalid package %s kind (%s)", md.Name, md.Kind))
+			t.warn(fmt.Errorf("invalid package %s kind (%s)", md.Name, md.Kind))
 			return nil
 		}
 		key := fmt.Sprintf("%s@%s", md.Name, md.Version)
@@ -117,7 +117,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		t.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
 		err = t.registerPackage(md, strings.TrimPrefix(pkgPath, basePath))
 		if err != nil {
-			t.Warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
+			t.warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
 		}
 		return nil
 	})
@@ -138,19 +138,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			version := p[1]
 			t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
 			if err := t.unregisterPackage(name, version); err != nil {
-				t.Warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
+				t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
 			}
 		}
 	}
 
 	return nil
-}
-
-// Warn is a helper that sends the error provided to the errors collector and
-// logs it as a warning.
-func (t *Tracker) Warn(err error) {
-	t.svc.Ec.Append(t.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
 }
 
 // registerPackage registers a package version using the package metadata
@@ -221,6 +214,13 @@ func (t *Tracker) unregisterPackage(name, version string) error {
 		Repository: t.r,
 	}
 	return t.svc.Pm.Unregister(t.svc.Ctx, p)
+}
+
+// warn is a helper that sends the error provided to the errors collector and
+// logs it as a warning.
+func (t *Tracker) warn(err error) {
+	t.svc.Ec.Append(t.r.RepositoryID, err)
+	log.Warn().Err(err).Send()
 }
 
 // PackageMetadata represents some metadata for a Falco rules package.
