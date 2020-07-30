@@ -16,6 +16,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	ignore "github.com/sabhiram/go-gitignore"
 	"gopkg.in/yaml.v2"
 )
 
@@ -167,12 +168,20 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 	p.Repository = t.r
 
 	// Read policies files and add them to the package data field
+	ignorer, err := ignore.CompileIgnoreLines(md.Ignore...)
+	if err != nil {
+		return fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
+	}
 	policies := make(map[string]string)
 	err = filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return fmt.Errorf("error reading policy files: %w", err)
 		}
 		if info.IsDir() {
+			return nil
+		}
+		policyKey := strings.TrimPrefix(path, pkgPath+"/")
+		if ignorer.MatchesPath(policyKey) {
 			return nil
 		}
 		if !strings.HasSuffix(info.Name(), ".rego") {
@@ -182,7 +191,7 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 		if err != nil {
 			return fmt.Errorf("error reading policy for package %s version %s: %w", md.Name, md.Version, err)
 		}
-		policies[strings.TrimPrefix(path, pkgPath+"/")] = string(policy)
+		policies[policyKey] = string(policy)
 		return nil
 	})
 	if err != nil {
