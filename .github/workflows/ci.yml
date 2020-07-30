@@ -15,7 +15,7 @@ jobs:
       - name: Install golangci-lint
         run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.23.6
       - name: Run golangci-lint
-        run: ./bin/golangci-lint --timeout 3m run ./...
+        run: ./bin/golangci-lint --timeout 5m run ./...
 
   tests-database:
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
