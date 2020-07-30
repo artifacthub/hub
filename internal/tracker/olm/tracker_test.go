@@ -57,7 +57,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("no operators in path, nothing to do", func(t *testing.T) {
+	t.Run("no packages in path, nothing to do", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
@@ -82,7 +82,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("error getting operator csv", func(t *testing.T) {
+	t.Run("error getting package version csv", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path3", nil)
@@ -95,7 +95,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("error registering operator version", func(t *testing.T) {
+	t.Run("error registering package version", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -110,7 +110,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("no need to register operator version because it is already registered", func(t *testing.T) {
+	t.Run("no need to register package version because it is already registered", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -124,7 +124,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("operator version registered successfully", func(t *testing.T) {
+	t.Run("package version registered successfully", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -188,7 +188,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("error unregistering operator version", func(t *testing.T) {
+	t.Run("error unregistering package version", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
@@ -208,7 +208,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("operator version unregistered successfully", func(t *testing.T) {
+	t.Run("package version unregistered successfully", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
