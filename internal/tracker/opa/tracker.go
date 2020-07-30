@@ -94,6 +94,10 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			t.warn(fmt.Errorf("error unmarshaling package version metadata file %s: %w", pkgPath, err))
 			return nil
 		}
+		if err := pkg.ValidatePackageMetadata(md); err != nil {
+			t.warn(fmt.Errorf("error validating package version metadata file %s: %w", pkgPath, err))
+			return nil
+		}
 
 		// Check if this package version is already registered
 		key := fmt.Sprintf("%s@%s", md.Name, md.Version)
@@ -107,11 +111,13 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		if md.LogoPath != "" {
 			data, err := ioutil.ReadFile(filepath.Join(pkgPath, md.LogoPath))
 			if err != nil {
-				return fmt.Errorf("error reading package %s version %s logo: %w", md.Name, md.Version, err)
+				t.warn(fmt.Errorf("error reading package %s version %s logo: %w", md.Name, md.Version, err))
+				return nil
 			}
 			logoImageID, err = t.svc.Is.SaveImage(t.svc.Ctx, data)
 			if err != nil && !errors.Is(err, image.ErrFormat) {
-				return fmt.Errorf("error saving package %s version %s logo: %w", md.Name, md.Version, err)
+				t.warn(fmt.Errorf("error saving package %s version %s logo: %w", md.Name, md.Version, err))
+				return nil
 			}
 		}
 
@@ -181,6 +187,9 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 	})
 	if err != nil {
 		return err
+	}
+	if len(policies) == 0 {
+		return errors.New("no policies files found")
 	}
 	p.Data = map[string]interface{}{
 		"policies": policies,
