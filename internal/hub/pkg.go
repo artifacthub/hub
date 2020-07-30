@@ -103,6 +103,7 @@ type PackageMetadata struct {
 	Install        string        `yaml:"install"`
 	Maintainers    []*Maintainer `yaml:"maintainers"`
 	Provider       *Provider     `yaml:"provider"`
+	Ignore         []string      `yaml:"ignore"`
 }
 
 // Provider represents a package's provider.

@@ -31,3 +31,5 @@ maintainers: # (optional)
     email: The maintainer email (required for each maintainer)
 provider: # (optional)
   name: The name of the individual, company, or service that provides this package (optional)
+ignore: # (optional, entries use .gitignore syntax)
+  - lib
