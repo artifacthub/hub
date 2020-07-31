@@ -256,7 +256,7 @@ const RepositoryModal = (props: Props) => {
                 href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub.yaml"
                 className="text-reset"
               >
-                the spec]
+                <u>the spec</u>
               </ExternalLink>{' '}
               for more details.
             </p>
