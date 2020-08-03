@@ -81,29 +81,31 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
 	basePath := filepath.Join(tmpDir, packagesPath)
-	packages, err := ioutil.ReadDir(basePath)
-	if err != nil {
-		return fmt.Errorf("error reading packages: %w", err)
-	}
-	for _, entryP := range packages {
-		if !entryP.IsDir() {
-			continue
+	err = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
+		if err != nil {
+			return fmt.Errorf("error reading packages: %w", err)
 		}
-		pkgPath := filepath.Join(basePath, entryP.Name())
+		if !info.IsDir() {
+			return nil
+		}
 
 		// Get package manifest
 		manifest, err := t.getPackageManifest(pkgPath)
 		if err != nil {
 			t.warn(fmt.Errorf("error getting package manifest from %s: %w", pkgPath, err))
-			continue
+			return nil
 		}
-		pkgName := manifest.PackageName
+		// Package manifest not found, not a package path
+		if manifest == nil {
+			return nil
+		}
 
 		// Get package versions available
+		pkgName := manifest.PackageName
 		versionsUnfiltered, err := ioutil.ReadDir(pkgPath)
 		if err != nil {
 			t.warn(fmt.Errorf("error reading package %s versions: %w", pkgName, err))
-			continue
+			return nil
 		}
 		var versions []os.FileInfo
 		for _, entryV := range versionsUnfiltered {
@@ -158,6 +160,11 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 				t.warn(fmt.Errorf("error registering package %s version %s: %w", pkgName, version, err))
 			}
 		}
+
+		return nil
+	})
+	if err != nil {
+		return err
 	}
 
 	// Unregister packages not available anymore
@@ -189,7 +196,7 @@ func (t *Tracker) getPackageManifest(path string) (*manifests.PackageManifest, e
 		return nil, fmt.Errorf("error locating package manifest file: %w", err)
 	}
 	if len(matches) != 1 {
-		return nil, fmt.Errorf("package manifest file not found in %s", path)
+		return nil, nil
 	}
 	manifestPath := matches[0]
 

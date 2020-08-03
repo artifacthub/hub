@@ -74,7 +74,6 @@ func TestTracker(t *testing.T) {
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path2", nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
