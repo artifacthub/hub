@@ -106,7 +106,7 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `falcoTracker.bypassDigestCheck`        | Bypass digest check               | `false`                                    |
 | `helmTracker.cronjob.image.repository`  | Helm tracker image repository     | `artifacthub/helm-tracker`                 |
 | `helmTracker.cronjob.resources`         | Helm tracker requested resources  | Memory: `500Mi`, CPU: `100m`               |
-| `helmTracker.numWorkers`                | Helm tracker number of workers    | 50                                         |
+| `helmTracker.concurrency`               | Repos to process concurrently     | 10                                         |
 | `helmTracker.repositories`              | Repos names to process ([] = all) | []                                         |
 | `helmTracker.imageStore`                | Image store                       | `pg`                                       |
 | `helmTracker.bypassDigestCheck`         | Bypass digest check               | `false`                                    |

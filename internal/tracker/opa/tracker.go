@@ -20,6 +20,14 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Tracker is in charge of tracking the packages available in a OPA policies
+// repository, registering and unregistering them as needed.
+type Tracker struct {
+	svc    *tracker.Services
+	r      *hub.Repository
+	logger zerolog.Logger
+}
+
 // NewTracker creates a new Tracker instance.
 func NewTracker(
 	svc *tracker.Services,
@@ -38,14 +46,6 @@ func NewTracker(
 		t.svc.Rc = &repo.Cloner{}
 	}
 	return t
-}
-
-// Tracker is in charge of tracking the packages available in a OPA policies
-// repository, registering and unregistering them as needed.
-type Tracker struct {
-	svc    *tracker.Services
-	r      *hub.Repository
-	logger zerolog.Logger
 }
 
 // Track registers or unregisters the OPA policies packages available as needed.

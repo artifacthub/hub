@@ -52,7 +52,7 @@ func Run(newTracker New, cmdName string, repositoryKind hub.RepositoryKind) erro
 	if err != nil {
 		return fmt.Errorf("image store setup failed: %w", err)
 	}
-	repos, err := GetRepositories(cfg, rm, repositoryKind)
+	repos, err := getRepositories(cfg, rm, repositoryKind)
 	if err != nil {
 		return fmt.Errorf("error getting repositories: %w", err)
 	}
@@ -88,12 +88,12 @@ func Run(newTracker New, cmdName string, repositoryKind hub.RepositoryKind) erro
 	return nil
 }
 
-// GetRepositories gets the repositories a tracker cmd will process. If a list
+// getRepositories gets the repositories a tracker cmd will process. If a list
 // of repositories names is found in the configuration provided, those will be
 // the repositories returned provided they are found. If no repositories names
 // are found in the configuration, all the repositories of the kind provided
 // will be returned.
-func GetRepositories(
+func getRepositories(
 	cfg *viper.Viper,
 	rm hub.RepositoryManager,
 	kind hub.RepositoryKind,

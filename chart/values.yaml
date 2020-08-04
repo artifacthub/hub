@@ -91,7 +91,7 @@ helmTracker:
       requests:
         cpu: 100m
         memory: 500Mi
-  numWorkers: 50
+  concurrency: 10
   repositories: []
   imageStore: pg
   bypassDigestCheck: false

@@ -62,7 +62,7 @@ helmTracker:
       requests:
         cpu: 2
         memory: 2000Mi
-  numWorkers: 50
+  concurrency: 25
   repositories: []
   imageStore: pg
 

@@ -1,52 +1,59 @@
-package main
+package helm
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"os"
 	"sync"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
+	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"helm.sh/helm/v3/pkg/chart"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
-func TestDispatcher(t *testing.T) {
-	t.Run("error loading chart repository index file", func(t *testing.T) {
-		// Setup dispatcher and expectations
-		r := &hub.Repository{RepositoryID: "repo1"}
-		dw := newDispatcherWrapper(context.Background())
-		dw.il.On("LoadIndex", r).Return(nil, errFake)
-		dw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
+var errFake = errors.New("fake error for tests")
 
-		// Run dispatcher and check expectations
-		dw.d.Run(dw.wg, []*hub.Repository{r})
-		dw.assertExpectations(t, nil)
+func TestMain(m *testing.M) {
+	zerolog.SetGlobalLevel(zerolog.Disabled)
+	os.Exit(m.Run())
+}
+
+func TestTracker(t *testing.T) {
+	t.Run("error loading repository index file", func(t *testing.T) {
+		// Setup tracker and expectations
+		r := &hub.Repository{RepositoryID: "repo1"}
+		tw := newTrackerWrapper(r)
+		tw.il.On("LoadIndex", r).Return(nil, errFake)
+
+		// Run tracker and check expectations
+		err := tw.t.Track(tw.wg)
+		assert.Error(t, err)
+		tw.assertExpectations(t, nil)
 	})
 
 	t.Run("error loading registered packages digest", func(t *testing.T) {
-		// Setup dispatcher and expectations
+		// Setup tracker and expectations
 		r := &hub.Repository{RepositoryID: "repo1"}
-		dw := newDispatcherWrapper(context.Background())
-		dw.il.On("LoadIndex", r).Return(nil, nil)
-		dw.rm.On("GetPackagesDigest", dw.d.ctx, r.RepositoryID).Return(nil, errFake)
+		tw := newTrackerWrapper(r)
+		tw.il.On("LoadIndex", r).Return(nil, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, errFake)
 
-		// Run dispatcher and check expectations
-		dw.d.Run(dw.wg, []*hub.Repository{r})
-		dw.assertExpectations(t, nil)
+		// Run tracker and check expectations
+		err := tw.t.Track(tw.wg)
+		assert.Error(t, err)
+		tw.assertExpectations(t, nil)
 	})
 
-	t.Run("dispatcher completed successfully", func(t *testing.T) {
+	t.Run("tracker completed successfully", func(t *testing.T) {
 		repo1 := &hub.Repository{
 			RepositoryID: "repo1",
-		}
-		repo2 := &hub.Repository{
-			RepositoryID: "repo2",
 		}
 		pkg1V1 := &helmrepo.ChartVersion{
 			Metadata: &chart.Metadata{
@@ -69,26 +76,17 @@ func TestDispatcher(t *testing.T) {
 			},
 			Digest: "pkg2-1.0.0",
 		}
-		pkg3V1 := &helmrepo.ChartVersion{
-			Metadata: &chart.Metadata{
-				Name:    "pkg3",
-				Version: "1.0.0",
-			},
-			Digest: "pkg3-1.0.0",
-		}
 
 		testCases := []struct {
 			n              int
-			repos          []*hub.Repository
+			r              *hub.Repository
 			indexFile      map[string]*helmrepo.IndexFile
 			packagesDigest map[string]map[string]string
 			expectedJobs   []*Job
 		}{
 			{
 				1,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -102,17 +100,14 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind:         Register,
-						Repo:         repo1,
 						ChartVersion: pkg1V1,
-						GetLogo:      true,
+						StoreLogo:    true,
 					},
 				},
 			},
 			{
 				2,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -127,23 +122,19 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind:         Register,
-						Repo:         repo1,
 						ChartVersion: pkg1V1,
-						GetLogo:      true,
+						StoreLogo:    true,
 					},
 					{
 						Kind:         Register,
-						Repo:         repo1,
 						ChartVersion: pkg1V2,
-						GetLogo:      false,
+						StoreLogo:    false,
 					},
 				},
 			},
 			{
 				3,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -162,9 +153,7 @@ func TestDispatcher(t *testing.T) {
 			},
 			{
 				4,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -185,9 +174,7 @@ func TestDispatcher(t *testing.T) {
 			},
 			{
 				5,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -207,17 +194,14 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind:         Register,
-						Repo:         repo1,
 						ChartVersion: pkg1V2,
-						GetLogo:      false,
+						StoreLogo:    false,
 					},
 				},
 			},
 			{
 				6,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -240,71 +224,14 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind:         Register,
-						Repo:         repo1,
 						ChartVersion: pkg2V1,
-						GetLogo:      true,
+						StoreLogo:    true,
 					},
 				},
 			},
 			{
 				7,
-				[]*hub.Repository{
-					repo1,
-					repo2,
-				},
-				map[string]*helmrepo.IndexFile{
-					"repo1": {
-						Entries: map[string]helmrepo.ChartVersions{
-							"pkg1": []*helmrepo.ChartVersion{
-								pkg1V1,
-								pkg1V2,
-							},
-							"pkg2": []*helmrepo.ChartVersion{
-								pkg2V1,
-							},
-						},
-					},
-					"repo2": {
-						Entries: map[string]helmrepo.ChartVersions{
-							"pkg3": []*helmrepo.ChartVersion{
-								pkg3V1,
-							},
-						},
-					},
-				},
-				nil,
-				[]*Job{
-					{
-						Kind:         Register,
-						Repo:         repo1,
-						ChartVersion: pkg1V1,
-						GetLogo:      true,
-					},
-					{
-						Kind:         Register,
-						Repo:         repo1,
-						ChartVersion: pkg1V2,
-						GetLogo:      false,
-					},
-					{
-						Kind:         Register,
-						Repo:         repo1,
-						ChartVersion: pkg2V1,
-						GetLogo:      true,
-					},
-					{
-						Kind:         Register,
-						Repo:         repo2,
-						ChartVersion: pkg3V1,
-						GetLogo:      true,
-					},
-				},
-			},
-			{
-				8,
-				[]*hub.Repository{
-					repo1,
-				},
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: nil,
@@ -318,7 +245,6 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind: Unregister,
-						Repo: repo1,
 						ChartVersion: &helmrepo.ChartVersion{
 							Metadata: &chart.Metadata{
 								Name:    "pkg1",
@@ -329,10 +255,8 @@ func TestDispatcher(t *testing.T) {
 				},
 			},
 			{
-				9,
-				[]*hub.Repository{
-					repo1,
-				},
+				8,
+				repo1,
 				map[string]*helmrepo.IndexFile{
 					"repo1": {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -353,7 +277,6 @@ func TestDispatcher(t *testing.T) {
 				[]*Job{
 					{
 						Kind: Unregister,
-						Repo: repo1,
 						ChartVersion: &helmrepo.ChartVersion{
 							Metadata: &chart.Metadata{
 								Name:    "pkg1",
@@ -363,66 +286,9 @@ func TestDispatcher(t *testing.T) {
 					},
 					{
 						Kind: Unregister,
-						Repo: repo1,
 						ChartVersion: &helmrepo.ChartVersion{
 							Metadata: &chart.Metadata{
 								Name:    "pkg2",
-								Version: "1.0.0",
-							},
-						},
-					},
-				},
-			},
-			{
-				10,
-				[]*hub.Repository{
-					repo1,
-					repo2,
-				},
-				map[string]*helmrepo.IndexFile{
-					"repo1": {
-						Entries: map[string]helmrepo.ChartVersions{
-							"pkg1": []*helmrepo.ChartVersion{
-								pkg1V1,
-							},
-							"pkg2": []*helmrepo.ChartVersion{
-								pkg2V1,
-							},
-						},
-					},
-					"repo2": {
-						Entries: map[string]helmrepo.ChartVersions{
-							"pkg3": nil,
-						},
-					},
-				},
-				map[string]map[string]string{
-					"repo1": {
-						"pkg1@1.0.0": "pkg1-1.0.0",
-						"pkg1@2.0.0": "pkg1-2.0.0",
-						"pkg2@1.0.0": "pkg2-1.0.0",
-					},
-					"repo2": {
-						"pkg3@1.0.0": "pkg3-1.0.0",
-					},
-				},
-				[]*Job{
-					{
-						Kind: Unregister,
-						Repo: repo1,
-						ChartVersion: &helmrepo.ChartVersion{
-							Metadata: &chart.Metadata{
-								Name:    "pkg1",
-								Version: "2.0.0",
-							},
-						},
-					},
-					{
-						Kind: Unregister,
-						Repo: repo2,
-						ChartVersion: &helmrepo.ChartVersion{
-							Metadata: &chart.Metadata{
-								Name:    "pkg3",
 								Version: "1.0.0",
 							},
 						},
@@ -433,74 +299,83 @@ func TestDispatcher(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("Test case %d", tc.n), func(t *testing.T) {
-				// Setup dispatcher and expectations
-				dw := newDispatcherWrapper(context.Background())
-				for _, r := range tc.repos {
-					dw.il.On("LoadIndex", r).Return(tc.indexFile[r.RepositoryID], nil)
-					dw.rm.On("GetPackagesDigest", dw.d.ctx, r.RepositoryID).
-						Return(tc.packagesDigest[r.RepositoryID], nil)
-				}
+				// Setup tracker and expectations
+				tw := newTrackerWrapper(tc.r)
+				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], nil)
+				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
+					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
 
-				// Run dispatcher and check expectations
-				dw.d.Run(dw.wg, tc.repos)
-				dw.assertExpectations(t, tc.expectedJobs)
+				// Run tracker and check expectations
+				err := tw.t.Track(tw.wg)
+				assert.NoError(t, err)
+				tw.assertExpectations(t, tc.expectedJobs)
 			})
 		}
 	})
 }
 
-type dispatcherWrapper struct {
+type trackerWrapper struct {
+	ctx        context.Context
 	cfg        *viper.Viper
 	wg         *sync.WaitGroup
-	il         *repo.HelmIndexLoaderMock
 	rm         *repo.ManagerMock
+	il         *repo.HelmIndexLoaderMock
 	ec         *tracker.ErrorsCollectorMock
-	d          *Dispatcher
+	t          tracker.Tracker
 	queuedJobs *[]*Job
 }
 
-func newDispatcherWrapper(ctx context.Context) *dispatcherWrapper {
-	// Setup dispatcher
+func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
+	// Setup tracker
+	ctx := context.Background()
 	cfg := viper.New()
 	il := &repo.HelmIndexLoaderMock{}
 	rm := &repo.ManagerMock{}
 	ec := &tracker.ErrorsCollectorMock{}
-	d := NewDispatcher(ctx, cfg, il, rm, ec)
+	svc := &tracker.Services{
+		Ctx: ctx,
+		Cfg: cfg,
+		Rm:  rm,
+		Il:  il,
+		Ec:  ec,
+	}
+	t := NewTracker(svc, r, WithNumWorkers(-1), WithIndexLoader(il))
 
-	// Wait group used for Dispatcher.Run()
+	// Wait group used for Track()
 	var wg sync.WaitGroup
 	wg.Add(1)
 
-	// Consume queued jobs from dispatcher queue and store them
+	// Consume queued jobs from tracker queue and store them
 	var queuedJobs []*Job
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		for job := range d.Queue {
+		for job := range t.(*Tracker).queue {
 			queuedJobs = append(queuedJobs, job)
 		}
 	}()
 
-	return &dispatcherWrapper{
+	return &trackerWrapper{
+		ctx:        ctx,
 		cfg:        cfg,
 		wg:         &wg,
-		ec:         ec,
-		il:         il,
 		rm:         rm,
-		d:          d,
+		il:         il,
+		ec:         ec,
+		t:          t,
 		queuedJobs: &queuedJobs,
 	}
 }
 
-func (dw *dispatcherWrapper) assertExpectations(t *testing.T, expectedJobs []*Job) {
-	dw.wg.Wait()
+func (tw *trackerWrapper) assertExpectations(t *testing.T, expectedJobs []*Job) {
+	tw.wg.Wait()
 
-	dw.il.AssertExpectations(t)
-	dw.rm.AssertExpectations(t)
-	dw.ec.AssertExpectations(t)
+	tw.il.AssertExpectations(t)
+	tw.rm.AssertExpectations(t)
+	tw.ec.AssertExpectations(t)
 
-	assert.Equal(t, len(expectedJobs), len(*dw.queuedJobs))
-	if len(*dw.queuedJobs) > 0 {
-		assert.ElementsMatch(t, *dw.queuedJobs, expectedJobs)
+	assert.Equal(t, len(expectedJobs), len(*tw.queuedJobs))
+	if len(*tw.queuedJobs) > 0 {
+		assert.ElementsMatch(t, *tw.queuedJobs, expectedJobs)
 	}
 }
