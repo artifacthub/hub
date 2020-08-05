@@ -1,4 +1,4 @@
-package main
+package helm
 
 import (
 	"context"
@@ -15,15 +15,11 @@ import (
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/stretchr/testify/mock"
-	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
 )
 
 func TestWorker(t *testing.T) {
-	repo1 := &hub.Repository{
-		RepositoryID: "repo1",
-	}
 	logoImageURL := "http://icon.url"
 
 	t.Run("handle register job", func(t *testing.T) {
@@ -47,9 +43,8 @@ func TestWorker(t *testing.T) {
 		}
 		job := &Job{
 			Kind:         Register,
-			Repo:         repo1,
 			ChartVersion: pkg1V1,
-			GetLogo:      true,
+			StoreLogo:    true,
 		}
 
 		t.Run("error downloading chart", func(t *testing.T) {
@@ -58,7 +53,7 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, errFake)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
 			ww.w.Run(ww.wg, ww.queue)
@@ -74,7 +69,7 @@ func TestWorker(t *testing.T) {
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
 			ww.w.Run(ww.wg, ww.queue)
@@ -96,7 +91,7 @@ func TestWorker(t *testing.T) {
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
 
 			// Run worker and check expectations
@@ -122,7 +117,7 @@ func TestWorker(t *testing.T) {
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
 
 			// Run worker and check expectations
@@ -144,6 +139,7 @@ func TestWorker(t *testing.T) {
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
 			}, nil)
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
@@ -176,7 +172,7 @@ func TestWorker(t *testing.T) {
 			}, nil)
 			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("imageID", nil)
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(errFake)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
 			ww.w.Run(ww.wg, ww.queue)
@@ -214,9 +210,8 @@ func TestWorker(t *testing.T) {
 			ww := newWorkerWrapper(context.Background())
 			job := &Job{
 				Kind:         Register,
-				Repo:         repo1,
 				ChartVersion: pkg2V1,
-				GetLogo:      true,
+				StoreLogo:    true,
 			}
 			ww.queue <- job
 			close(ww.queue)
@@ -242,7 +237,6 @@ func TestWorker(t *testing.T) {
 	t.Run("handle unregister job", func(t *testing.T) {
 		job := &Job{
 			Kind: Unregister,
-			Repo: repo1,
 			ChartVersion: &repo.ChartVersion{
 				Metadata: &chart.Metadata{
 					Name:    "pkg1",
@@ -257,7 +251,7 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			ww.pm.On("Unregister", mock.Anything, mock.Anything).Return(errFake)
-			ww.ec.On("Append", job.Repo.RepositoryID, mock.Anything).Return()
+			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
 			ww.w.Run(ww.wg, ww.queue)
@@ -278,6 +272,12 @@ func TestWorker(t *testing.T) {
 	})
 }
 
+func withHTTPGetter(hg HTTPGetter) func(w *Worker) {
+	return func(w *Worker) {
+		w.hg = hg
+	}
+}
+
 type workerWrapper struct {
 	wg    *sync.WaitGroup
 	pm    *pkg.ManagerMock
@@ -294,8 +294,14 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 	is := &img.StoreMock{}
 	ec := &tracker.ErrorsCollectorMock{}
 	hg := &httpGetterMock{}
-	rl := rate.NewLimiter(rate.Inf, 0)
-	w := NewWorker(ctx, 1, pm, is, ec, hg, rl)
+	r := &hub.Repository{RepositoryID: "repo1"}
+	svc := &tracker.Services{
+		Ctx: ctx,
+		Pm:  pm,
+		Is:  is,
+		Ec:  ec,
+	}
+	w := NewWorker(svc, r, withHTTPGetter(hg))
 	queue := make(chan *Job, 100)
 
 	// Wait group used for Worker.Run()

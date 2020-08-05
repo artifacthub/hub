@@ -29,6 +29,7 @@ type Services struct {
 	Rc  hub.RepositoryCloner
 	Rm  hub.RepositoryManager
 	Pm  hub.PackageManager
+	Il  hub.HelmIndexLoader
 	Is  img.Store
 	Ec  ErrorsCollector
 }

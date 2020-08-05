@@ -30,6 +30,14 @@ var (
 	channelVersionRE = regexp.MustCompile(`^[A-Za-z0-9_-]+\.v?(.*)$`)
 )
 
+// Tracker is in charge of tracking the packages available in a OLM operators
+// repository, registering and unregistering them as needed.
+type Tracker struct {
+	svc    *tracker.Services
+	r      *hub.Repository
+	logger zerolog.Logger
+}
+
 // NewTracker creates a new Tracker instance.
 func NewTracker(
 	svc *tracker.Services,
@@ -48,14 +56,6 @@ func NewTracker(
 		t.svc.Rc = &repo.Cloner{}
 	}
 	return t
-}
-
-// Tracker is in charge of tracking the packages available in a OLM operators
-// repository, registering and unregistering them as needed.
-type Tracker struct {
-	svc    *tracker.Services
-	r      *hub.Repository
-	logger zerolog.Logger
 }
 
 // Track registers or unregisters the OLM operators packages available in the
