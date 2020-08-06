@@ -356,12 +356,12 @@ func TestDelete(t *testing.T) {
 	})
 }
 
-func TestGetByKind(t *testing.T) {
-	dbQuery := "select get_repositories_by_kind($1::int)"
+func TestGetAll(t *testing.T) {
+	dbQuery := "select get_all_repositories()"
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, dbQuery, hub.Helm).Return([]byte(`
+	db.On("QueryRow", ctx, dbQuery).Return([]byte(`
 	[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -384,7 +384,7 @@ func TestGetByKind(t *testing.T) {
 	`), nil)
 	m := NewManager(db)
 
-	r, err := m.GetByKind(ctx, hub.Helm)
+	r, err := m.GetAll(ctx)
 	require.NoError(t, err)
 	assert.Len(t, r, 3)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)

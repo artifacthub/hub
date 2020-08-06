@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"runtime/debug"
 	"strings"
 	"sync"
 	"time"
@@ -46,7 +45,7 @@ func NewWorker(
 	w := &Worker{
 		svc:    svc,
 		r:      r,
-		logger: log.With().Str("repo", r.Name).Logger(),
+		logger: log.With().Str("repoName", r.Name).Interface("repoKind", r.Kind).Logger(),
 	}
 	for _, o := range opts {
 		o(w)
@@ -67,27 +66,11 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 			if !ok {
 				return
 			}
-			md := j.ChartVersion.Metadata
-			w.logger.Debug().
-				Str("package", md.Name).
-				Str("version", md.Version).
-				Int("jobKind", int(j.Kind)).
-				Msg("handling job")
-			var err error
 			switch j.Kind {
 			case Register:
-				err = w.handleRegisterJob(j)
+				w.handleRegisterJob(j)
 			case Unregister:
-				err = w.handleUnregisterJob(j)
-			}
-			if err != nil {
-				w.svc.Ec.Append(w.r.RepositoryID, err)
-				w.logger.Error().
-					Err(err).
-					Str("package", md.Name).
-					Str("version", md.Version).
-					Int("jobKind", int(j.Kind)).
-					Msg("error handling job")
+				w.handleUnregisterJob(j)
 			}
 		case <-w.svc.Ctx.Done():
 			return
@@ -98,24 +81,14 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 // handleRegisterJob handles the provided Helm package registration job. This
 // involves downloading the chart archive, extracting its contents and register
 // the corresponding package.
-func (w *Worker) handleRegisterJob(j *Job) error {
-	defer func() {
-		if r := recover(); r != nil {
-			w.logger.Error().
-				Str("package", j.ChartVersion.Metadata.Name).
-				Str("version", j.ChartVersion.Metadata.Version).
-				Bytes("stacktrace", debug.Stack()).
-				Interface("recover", r).
-				Msg("handleRegisterJob panic")
-		}
-	}()
-
+func (w *Worker) handleRegisterJob(j *Job) {
 	// Prepare chart archive url
 	u := j.ChartVersion.URLs[0]
 	if _, err := url.ParseRequestURI(u); err != nil {
 		tmp, err := url.Parse(w.r.URL)
 		if err != nil {
-			return fmt.Errorf("invalid chart url: %w", err)
+			w.warn(fmt.Errorf("invalid chart url: %w", err))
+			return
 		}
 		tmp.Path = path.Join(tmp.Path, u)
 		u = tmp.String()
@@ -124,7 +97,8 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	// Load chart from remote archive
 	chart, err := w.loadChart(u)
 	if err != nil {
-		return fmt.Errorf("error loading chart: %w", err)
+		w.warn(fmt.Errorf("error loading chart: %w", err))
+		return
 	}
 	md := chart.Metadata
 
@@ -190,20 +164,26 @@ func (w *Worker) handleRegisterJob(j *Job) error {
 	}
 
 	// Register package
-	return w.svc.Pm.Register(w.svc.Ctx, p)
+	w.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
+	if err := w.svc.Pm.Register(w.svc.Ctx, p); err != nil {
+		w.warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
+	}
 }
 
 // handleUnregisterJob handles the provided Helm package unregistration job.
 // This involves deleting the package version corresponding to a given chart
 // version.
-func (w *Worker) handleUnregisterJob(j *Job) error {
+func (w *Worker) handleUnregisterJob(j *Job) {
 	// Unregister package
 	p := &hub.Package{
 		Name:       j.ChartVersion.Name,
 		Version:    j.ChartVersion.Version,
 		Repository: w.r,
 	}
-	return w.svc.Pm.Unregister(w.svc.Ctx, p)
+	w.logger.Debug().Str("name", p.Name).Str("v", p.Version).Msg("unregistering package")
+	if err := w.svc.Pm.Unregister(w.svc.Ctx, p); err != nil {
+		w.warn(fmt.Errorf("error unregistering package %s version %s: %w", p.Name, p.Version, err))
+	}
 }
 
 // loadChart loads a chart from a remote archive located at the url provided.
@@ -270,7 +250,7 @@ func (w *Worker) getImage(u string) ([]byte, error) {
 // logs it as a warning.
 func (w *Worker) warn(err error) {
 	w.svc.Ec.Append(w.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
+	w.logger.Warn().Err(err).Send()
 }
 
 // HTTPGetter defines the methods an HTTPGetter implementation must provide.

@@ -1,6 +1,5 @@
--- get_repositories_by_kind returns all available repositories of a given kind
--- as a json array.
-create or replace function get_repositories_by_kind(p_kind int)
+-- get_all_repositories returns all available repositories as a json array.
+create or replace function get_all_repositories()
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'repository_id', repository_id,
@@ -9,6 +8,5 @@ returns setof json as $$
         'url', url,
         'kind', repository_kind_id
     )), '[]')
-    from repository
-    where repository_kind_id = p_kind;
+    from repository;
 $$ language sql;

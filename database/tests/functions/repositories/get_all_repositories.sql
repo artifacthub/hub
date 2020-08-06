@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(3);
+select plan(2);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -11,7 +11,7 @@ select plan(3);
 
 -- No repositories at this point
 select is(
-    get_repositories_by_kind(0)::jsonb,
+    get_all_repositories()::jsonb,
     '[]'::jsonb,
     'With no repositories an empty json array is returned'
 );
@@ -28,7 +28,7 @@ values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com', 1, :'user1ID');
 
 -- Run some tests
 select is(
-    get_repositories_by_kind(0)::jsonb,
+    get_all_repositories()::jsonb,
     '[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -41,19 +41,14 @@ select is(
         "display_name": "Repo 2",
         "url": "https://repo2.com",
         "kind": 0
-    }]'::jsonb,
-    'Repositories 1 and 2 are returned'
-);
-select is(
-    get_repositories_by_kind(1)::jsonb,
-    '[{
+    }, {
         "repository_id": "00000000-0000-0000-0000-000000000003",
         "name": "repo3",
         "display_name": "Repo 3",
         "url": "https://repo3.com",
         "kind": 1
     }]'::jsonb,
-    'Repository 3 is returned'
+    'Repositories 1, 2 and 3 are returned'
 );
 
 -- Finish tests and rollback transaction

@@ -46,42 +46,12 @@ hub:
       google:
         redirectURL: https://artifacthub.io/oauth/google/callback
 
-falcoTracker:
-  cronjob:
-    resources:
-      requests:
-        cpu: 2
-        memory: 4000Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-
-helmTracker:
+tracker:
   cronjob:
     resources:
       requests:
         cpu: 2
         memory: 4000Mi
   concurrency: 25
-  repositories: []
-  imageStore: pg
-
-olmTracker:
-  cronjob:
-    resources:
-      requests:
-        cpu: 2
-        memory: 4000Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-
-opaTracker:
-  cronjob:
-    resources:
-      requests:
-        cpu: 2
-        memory: 4000Mi
-  concurrency: 10
   repositories: []
   imageStore: pg

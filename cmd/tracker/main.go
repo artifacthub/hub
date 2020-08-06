@@ -1,4 +1,4 @@
-package tracker
+package main
 
 import (
 	"context"
@@ -11,53 +11,55 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tracker"
+	"github.com/artifacthub/hub/internal/tracker/falco"
+	"github.com/artifacthub/hub/internal/tracker/helm"
+	"github.com/artifacthub/hub/internal/tracker/olm"
+	"github.com/artifacthub/hub/internal/tracker/opa"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
 
-// Run starts a tracker cmd.
-func Run(newTracker New, cmdName string, repositoryKind hub.RepositoryKind) error {
+func main() {
 	// Setup configuration and logger
-	cfg, err := util.SetupConfig(cmdName)
+	cfg, err := util.SetupConfig("tracker")
 	if err != nil {
-		return fmt.Errorf("configuration setup failed: %w", err)
+		log.Fatal().Err(err).Msg("configuration setup failed")
 	}
-	fields := map[string]interface{}{
-		"cmd": cmdName,
-	}
+	fields := map[string]interface{}{"cmd": "tracker"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
-		return fmt.Errorf("logger setup failed: %w", err)
+		log.Fatal().Err(err).Msg("logger setup failed")
 	}
 
 	// Shutdown gracefully when SIGINT or SIGTERM signal is received
-	log.Info().Int("pid", os.Getpid()).Msg(fmt.Sprintf("%s started", cmdName))
+	log.Info().Int("pid", os.Getpid()).Msg("tracker started")
 	ctx, cancel := context.WithCancel(context.Background())
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-shutdown
 		cancel()
-		log.Info().Msg(fmt.Sprintf("%s shutting down..", cmdName))
+		log.Info().Msg("tracker shutting down..")
 	}()
 
 	// Setup services
 	db, err := util.SetupDB(cfg)
 	if err != nil {
-		return fmt.Errorf("database setup failed: %w", err)
+		log.Fatal().Err(err).Msg("database setup failed")
 	}
 	rm := repo.NewManager(db)
 	pm := pkg.NewManager(db)
 	is, err := util.SetupImageStore(cfg, db)
 	if err != nil {
-		return fmt.Errorf("image store setup failed: %w", err)
+		log.Fatal().Err(err).Msg("image store setup failed")
 	}
-	repos, err := getRepositories(cfg, rm, repositoryKind)
+	repos, err := getRepositories(cfg, rm)
 	if err != nil {
-		return fmt.Errorf("error getting repositories: %w", err)
+		log.Fatal().Err(err).Msg("error getting repositories")
 	}
-	ec := NewDBErrorsCollector(ctx, rm, repos)
-	svc := &Services{
+	ec := tracker.NewDBErrorsCollector(ctx, rm, repos)
+	svc := &tracker.Services{
 		Ctx: ctx,
 		Cfg: cfg,
 		Rm:  rm,
@@ -72,31 +74,38 @@ func Run(newTracker New, cmdName string, repositoryKind hub.RepositoryKind) erro
 	for _, r := range repos {
 		limiter <- struct{}{}
 		wg.Add(1)
-		t := newTracker(svc, r)
+		var t tracker.Tracker
+		switch r.Kind {
+		case hub.Falco:
+			t = falco.NewTracker(svc, r)
+		case hub.Helm:
+			t = helm.NewTracker(svc, r)
+		case hub.OLM:
+			t = olm.NewTracker(svc, r)
+		case hub.OPA:
+			t = opa.NewTracker(svc, r)
+		}
 		go func(r *hub.Repository) {
+			log.Info().Str("repo", r.Name).Interface("kind", r.Kind).Msg("tracking repository")
 			if err := t.Track(&wg); err != nil {
 				ec.Append(r.RepositoryID, err)
-				log.Err(err).Str("repo", r.Name).Send()
+				log.Err(err).Str("repo", r.Name).Interface("kind", r.Kind).Send()
 			}
 			<-limiter
 		}(r)
 	}
 	wg.Wait()
 	ec.Flush()
-	log.Info().Msg(fmt.Sprintf("%s finished", cmdName))
-
-	return nil
+	log.Info().Msg("tracker finished")
 }
 
-// getRepositories gets the repositories a tracker cmd will process. If a list
-// of repositories names is found in the configuration provided, those will be
-// the repositories returned provided they are found. If no repositories names
-// are found in the configuration, all the repositories of the kind provided
-// will be returned.
+// getRepositories gets the repositories the tracker will process. If a list of
+// repositories names is found in the configuration provided, those will be the
+// repositories returned provided they are found. If no repositories names are
+// found in the configuration, all the repositories will be returned.
 func getRepositories(
 	cfg *viper.Viper,
 	rm hub.RepositoryManager,
-	kind hub.RepositoryKind,
 ) ([]*hub.Repository, error) {
 	reposNames := cfg.GetStringSlice("tracker.repositoriesNames")
 	var repos []*hub.Repository
@@ -110,7 +119,7 @@ func getRepositories(
 		}
 	} else {
 		var err error
-		repos, err = rm.GetByKind(context.Background(), kind)
+		repos, err = rm.GetAll(context.Background())
 		if err != nil {
 			return nil, fmt.Errorf("error getting repositories by kind: %w", err)
 		}

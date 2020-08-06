@@ -70,63 +70,24 @@ hub:
   analytics:
     gaTrackingID: ""
 
-falcoTracker:
-  cronjob:
-    image:
-      repository: artifacthub/falco-tracker
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-  bypassDigestCheck: false
-
-helmTracker:
-  cronjob:
-    image:
-      repository: artifacthub/helm-tracker
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-  bypassDigestCheck: false
-
-olmTracker:
-  cronjob:
-    image:
-      repository: artifacthub/olm-tracker
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-  bypassDigestCheck: false
-
-opaTracker:
-  cronjob:
-    image:
-      repository: artifacthub/opa-tracker
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
-  concurrency: 10
-  repositories: []
-  imageStore: pg
-  bypassDigestCheck: false
-
 dbMigrator:
   job:
     image:
       repository: artifacthub/db-migrator
   loadSampleData: true
+
+tracker:
+  cronjob:
+    image:
+      repository: artifacthub/tracker
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  concurrency: 10
+  repositories: []
+  imageStore: pg
+  bypassDigestCheck: false
 
 # Values for postgresql chart dependency
 postgresql:
