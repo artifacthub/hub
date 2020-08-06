@@ -78,13 +78,10 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 ### Populating packages
 
-The chart installs some `cronjobs` in charge of launching periodically (every 30m) the trackers, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the jobs are triggered by the cronjob, you can create some or all of them manually using the following commands:
+The chart installs one `cronjob` in charge of launching periodically (every 30m) the tracker, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the job is triggered by the cronjob, you can create one manually using the following command:
 
 ```bash
-$ kubectl create job initial-falco-tracker-job --from=cronjob/falco-tracker
-$ kubectl create job initial-helm-tracker-job --from=cronjob/helm-tracker
-$ kubectl create job initial-olm-tracker-job --from=cronjob/olm-tracker
-$ kubectl create job initial-opa-tracker-job --from=cronjob/opa-tracker
+$ kubectl create job initial-tracker-job --from=cronjob/tracker
 ```
 
 ### Uninstalling the Chart

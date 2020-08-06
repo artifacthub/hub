@@ -30,35 +30,11 @@ jobs:
             -t artifacthub/db-migrator:latest .
       - name: Push db-migrator image
         run: docker push artifacthub/db-migrator
-      - name: Build falco-tracker image
+      - name: Build tracker image
         run: |
           docker build \
-            -f cmd/falco-tracker/Dockerfile \
-            -t artifacthub/falco-tracker:${{steps.extract_tag_name.outputs.tag}} \
-            -t artifacthub/falco-tracker:latest .
-      - name: Push falco-tracker image
-        run: docker push artifacthub/falco-tracker
-      - name: Build helm-tracker image
-        run: |
-          docker build \
-            -f cmd/helm-tracker/Dockerfile \
-            -t artifacthub/helm-tracker:${{steps.extract_tag_name.outputs.tag}} \
-            -t artifacthub/helm-tracker:latest .
-      - name: Push helm-tracker image
-        run: docker push artifacthub/helm-tracker
-      - name: Build olm-tracker image
-        run: |
-          docker build \
-            -f cmd/olm-tracker/Dockerfile \
-            -t artifacthub/olm-tracker:${{steps.extract_tag_name.outputs.tag}} \
-            -t artifacthub/olm-tracker:latest .
-      - name: Push olm-tracker image
-        run: docker push artifacthub/olm-tracker
-      - name: Build opa-tracker image
-        run: |
-          docker build \
-            -f cmd/opa-tracker/Dockerfile \
-            -t artifacthub/opa-tracker:${{steps.extract_tag_name.outputs.tag}} \
-            -t artifacthub/opa-tracker:latest .
-      - name: Push opa-tracker image
-        run: docker push artifacthub/opa-tracker
+            -f cmd/tracker/Dockerfile \
+            -t artifacthub/tracker:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/tracker:latest .
+      - name: Push tracker image
+        run: docker push artifacthub/tracker

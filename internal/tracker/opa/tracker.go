@@ -37,7 +37,7 @@ func NewTracker(
 	t := &Tracker{
 		svc:    svc,
 		r:      r,
-		logger: log.With().Str("repo", r.Name).Logger(),
+		logger: log.With().Str("repoName", r.Name).Interface("repoKind", r.Kind).Logger(),
 	}
 	for _, o := range opts {
 		o(t)
@@ -222,5 +222,5 @@ func (t *Tracker) unregisterPackage(name, version string) error {
 // logs it as a warning.
 func (t *Tracker) warn(err error) {
 	t.svc.Ec.Append(t.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
+	t.logger.Warn().Err(err).Send()
 }

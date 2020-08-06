@@ -140,10 +140,10 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 	return err
 }
 
-// GetByKind returns all available repositories of the provided kind.
-func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
+// GetAll returns all available repositories.
+func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	var r []*hub.Repository
-	err := m.dbQueryUnmarshal(ctx, &r, "select get_repositories_by_kind($1::int)", kind)
+	err := m.dbQueryUnmarshal(ctx, &r, "select get_all_repositories()")
 	return r, err
 }
 

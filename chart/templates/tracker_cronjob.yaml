@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: helm-tracker
+  name: tracker
 spec:
   schedule: "*/30 * * * *"
   successfulJobsHistoryLimit: 1
@@ -20,7 +20,7 @@ spec:
             image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
             resources:
-              {{- toYaml .Values.helmTracker.cronjob.resources | nindent 14 }}
+              {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
             env:
               - name: PGHOST
                 value: {{ .Values.db.host }}
@@ -28,14 +28,14 @@ spec:
                 value: "{{ .Values.db.port }}"
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
           containers:
-          - name: helm-tracker
-            image: {{ .Values.helmTracker.cronjob.image.repository }}:{{ .Values.imageTag }}
+          - name: tracker
+            image: {{ .Values.tracker.cronjob.image.repository }}:{{ .Values.imageTag }}
             imagePullPolicy: {{ .Values.pullPolicy }}
             volumeMounts:
-            - name: helm-tracker-config
-              mountPath: "/home/helm-tracker/.cfg"
+            - name: tracker-config
+              mountPath: "/home/tracker/.cfg"
               readOnly: true
           volumes:
-          - name: helm-tracker-config
+          - name: tracker-config
             secret:
-              secretName: helm-tracker-config
+              secretName: tracker-config

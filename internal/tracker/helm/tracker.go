@@ -37,7 +37,7 @@ func NewTracker(
 	t := &Tracker{
 		svc:    svc,
 		r:      r,
-		logger: log.With().Str("repo", r.Name).Logger(),
+		logger: log.With().Str("repoName", r.Name).Interface("repoKind", r.Kind).Logger(),
 		queue:  make(chan *Job),
 	}
 	for _, o := range opts {
@@ -159,7 +159,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 // logs it as a warning.
 func (t *Tracker) warn(err error) {
 	t.svc.Ec.Append(t.r.RepositoryID, err)
-	log.Warn().Err(err).Send()
+	t.logger.Warn().Err(err).Send()
 }
 
 // JobKind represents the kind of a job, which can be register or unregister.

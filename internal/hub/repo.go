@@ -59,7 +59,7 @@ type RepositoryManager interface {
 	Add(ctx context.Context, orgName string, r *Repository) error
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	Delete(ctx context.Context, name string) error
-	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
+	GetAll(ctx context.Context) ([]*Repository, error)
 	GetByName(ctx context.Context, name string) (*Repository, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)

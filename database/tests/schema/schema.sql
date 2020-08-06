@@ -345,7 +345,7 @@ select has_function('unregister_package');
 
 select has_function('add_repository');
 select has_function('delete_repository');
-select has_function('get_repositories_by_kind');
+select has_function('get_all_repositories');
 select has_function('get_repository_by_name');
 select has_function('get_repository_packages_digest');
 select has_function('get_org_repositories');

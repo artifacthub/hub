@@ -31,9 +31,9 @@ func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 	return args.Error(0)
 }
 
-// GetByKind implements the RepositoryManager interface.
-func (m *ManagerMock) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
-	args := m.Called(ctx, kind)
+// GetAll implements the RepositoryManager interface.
+func (m *ManagerMock) GetAll(ctx context.Context) ([]*hub.Repository, error) {
+	args := m.Called(ctx)
 	data, _ := args.Get(0).([]*hub.Repository)
 	return data, args.Error(1)
 }
