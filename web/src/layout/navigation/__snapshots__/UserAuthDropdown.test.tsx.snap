@@ -14,7 +14,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center text-light imageWrapper iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center textLight imageWrapper iconWrapper"
         >
           <svg
             class="rounded-circle"
@@ -33,7 +33,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class="ml-1 text-light"
+          class="ml-1 textLight"
         >
           <svg
             fill="currentColor"
@@ -67,6 +67,194 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
           test
         </span>
       </p>
+      <div
+        class="dropdown-divider my-3"
+      />
+      <div
+        class="mt-2 mb-1"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            class="px-4"
+          >
+            Theme
+          </span>
+        </small>
+      </div>
+      <div
+        data-testid="themeOptions"
+      >
+        <div
+          class="dropdown-item"
+        >
+          <div
+            class="custom-control custom-radio"
+          >
+            <input
+              class="custom-control-input input"
+              data-testid="radio-automatic"
+              id="automatic"
+              name="theme"
+              readonly=""
+              type="radio"
+              value="automatic"
+            />
+            <label
+              class="custom-control-label font-weight-bold label"
+              for="automatic"
+            >
+              <svg
+                class="mx-1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 14 16"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 3h1v1H5V3zM3 3h1v1H3V3zM1 3h1v1H1V3zm12 10H1V5h12v8zm0-9H7V3h6v1zm1-1c0-.55-.45-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V3z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+              Automatic
+            </label>
+          </div>
+        </div>
+        <div
+          class="dropdown-item"
+        >
+          <div
+            class="custom-control custom-radio"
+          >
+            <input
+              checked=""
+              class="custom-control-input input"
+              data-testid="radio-light"
+              id="light"
+              name="theme"
+              readonly=""
+              type="radio"
+              value="light"
+            />
+            <label
+              class="custom-control-label font-weight-bold label"
+              for="light"
+            >
+              <svg
+                class="mx-1"
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="5"
+                />
+                <line
+                  x1="12"
+                  x2="12"
+                  y1="1"
+                  y2="3"
+                />
+                <line
+                  x1="12"
+                  x2="12"
+                  y1="21"
+                  y2="23"
+                />
+                <line
+                  x1="4.22"
+                  x2="5.64"
+                  y1="4.22"
+                  y2="5.64"
+                />
+                <line
+                  x1="18.36"
+                  x2="19.78"
+                  y1="18.36"
+                  y2="19.78"
+                />
+                <line
+                  x1="1"
+                  x2="3"
+                  y1="12"
+                  y2="12"
+                />
+                <line
+                  x1="21"
+                  x2="23"
+                  y1="12"
+                  y2="12"
+                />
+                <line
+                  x1="4.22"
+                  x2="5.64"
+                  y1="19.78"
+                  y2="18.36"
+                />
+                <line
+                  x1="18.36"
+                  x2="19.78"
+                  y1="5.64"
+                  y2="4.22"
+                />
+              </svg>
+               Light
+            </label>
+          </div>
+        </div>
+        <div
+          class="dropdown-item"
+        >
+          <div
+            class="custom-control custom-radio"
+          >
+            <input
+              class="custom-control-input input"
+              data-testid="radio-dark"
+              id="dark"
+              name="theme"
+              readonly=""
+              type="radio"
+              value="dark"
+            />
+            <label
+              class="custom-control-label font-weight-bold label"
+              for="dark"
+            >
+              <svg
+                class="mx-1"
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                />
+              </svg>
+               Dark
+            </label>
+          </div>
+        </div>
+      </div>
       <div
         class="dropdown-divider my-3"
       />

@@ -37,7 +37,7 @@ exports[`ChartDetails creates snapshot 1`] = `
       </div>
       <small>
         <a
-          class="badge badge-pill badge-secondary ml-3 badge"
+          class="badge badge-pill badge-secondary rssBadge ml-3 badge"
           href="/api/v1/packages/helm/stable/pr/feed/rss"
           rel="alternate noopener noreferrer"
           role="button"

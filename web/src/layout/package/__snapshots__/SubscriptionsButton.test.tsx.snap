@@ -16,7 +16,7 @@ exports[`SubscriptionsButton creates snapshot 2`] = `
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center text-primary iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper iconWrapper"
         >
           <svg
             class="rounded-circle"
@@ -60,7 +60,7 @@ exports[`SubscriptionsButton creates snapshot 2`] = `
         class="arrow arrow"
       />
       <button
-        class="dropdownItem btn p-3 rounded-0 w-100"
+        class="dropdownItem dropdownItem btn p-3 rounded-0 w-100"
         data-testid="newReleaseBtn"
       >
         <div

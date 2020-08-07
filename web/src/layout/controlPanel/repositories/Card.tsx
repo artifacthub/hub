@@ -7,7 +7,7 @@ import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa'
 import { IoMdCloseCircle } from 'react-icons/io';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -75,7 +75,7 @@ const RepositoryCard = (props: Props) => {
             header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
           >
             <div className="mt-3 mw-100">
-              <SyntaxHighlighter language="bash" style={monokai} customStyle={{ fontSize: '90%' }}>
+              <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
                 {props.repository.lastTrackingErrors}
               </SyntaxHighlighter>
             </div>
@@ -143,7 +143,7 @@ const RepositoryCard = (props: Props) => {
             </div>
           </button>
 
-          <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
+          <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
 
           <button
             data-testid="updateRepoBtn"
@@ -162,7 +162,7 @@ const RepositoryCard = (props: Props) => {
             </div>
           </button>
 
-          <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
+          <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
 
           <button
             data-testid="deleteRepoDropdownBtn"

@@ -241,7 +241,7 @@ exports[`WebhooksSection renders correctly 2`] = `
                         </div>
                       </button>
                       <div
-                        class="mx-2 my-auto d-none d-sm-inline separator"
+                        class="mx-2 my-auto d-none d-sm-inline separator separator"
                       />
                       <button
                         class="btn btn-sm btn-link text-secondary text-center btnAction"
@@ -435,7 +435,7 @@ exports[`WebhooksSection renders correctly 2`] = `
                         </div>
                       </button>
                       <div
-                        class="mx-2 my-auto d-none d-sm-inline separator"
+                        class="mx-2 my-auto d-none d-sm-inline separator separator"
                       />
                       <button
                         class="btn btn-sm btn-link text-secondary text-center btnAction"
@@ -629,7 +629,7 @@ exports[`WebhooksSection renders correctly 2`] = `
                         </div>
                       </button>
                       <div
-                        class="mx-2 my-auto d-none d-sm-inline separator"
+                        class="mx-2 my-auto d-none d-sm-inline separator separator"
                       />
                       <button
                         class="btn btn-sm btn-link text-secondary text-center btnAction"
@@ -821,7 +821,7 @@ exports[`WebhooksSection renders correctly 2`] = `
                         </div>
                       </button>
                       <div
-                        class="mx-2 my-auto d-none d-sm-inline separator"
+                        class="mx-2 my-auto d-none d-sm-inline separator separator"
                       />
                       <button
                         class="btn btn-sm btn-link text-secondary text-center btnAction"
@@ -1015,7 +1015,7 @@ exports[`WebhooksSection renders correctly 2`] = `
                         </div>
                       </button>
                       <div
-                        class="mx-2 my-auto d-none d-sm-inline separator"
+                        class="mx-2 my-auto d-none d-sm-inline separator separator"
                       />
                       <button
                         class="btn btn-sm btn-link text-secondary text-center btnAction"

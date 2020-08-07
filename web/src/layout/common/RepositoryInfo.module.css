@@ -48,6 +48,10 @@
   width: auto;
 }
 
+.infoIcon {
+  min-width: 1rem;
+}
+
 .repoIconMini {
   height: 12px;
   width: auto;

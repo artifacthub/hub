@@ -138,7 +138,7 @@ const SubscriptionsButton = (props: Props) => {
       >
         <div className="d-flex flex-row align-items-center justify-content-center">
           <div
-            className={`rounded-circle d-flex align-items-center justify-content-center text-primary ${styles.iconWrapper}`}
+            className={`rounded-circle d-flex align-items-center justify-content-center text-primary iconSubsWrapper ${styles.iconWrapper}`}
           >
             {isLoading && (
               <div className={styles.loading}>
@@ -171,7 +171,7 @@ const SubscriptionsButton = (props: Props) => {
           return (
             <button
               data-testid={`${subs.name}Btn`}
-              className={classnames(styles.dropdownItem, 'btn p-3 rounded-0 w-100', {
+              className={classnames(styles.dropdownItem, 'dropdownItem btn p-3 rounded-0 w-100', {
                 [`disabled ${styles.isDisabled}`]: !subs.enabled,
               })}
               onClick={() => changeSubscription(subs.kind, isActive)}

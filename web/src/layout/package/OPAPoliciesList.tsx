@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { OPAPolicies } from '../../types';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
@@ -38,7 +38,7 @@ const OPAPoliciesList = (props: Props) => {
                   )}
 
                   <div className="mt-auto d-flex flex-column align-items-end">
-                    <div className={styles.separator} />
+                    <div className={`separator ${styles.separator}`} />
 
                     <button
                       className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
@@ -80,7 +80,7 @@ const OPAPoliciesList = (props: Props) => {
                 <div className="my-3">
                   <SyntaxHighlighter
                     language="text"
-                    style={monokai}
+                    style={tomorrowNight}
                     customStyle={{ padding: '1.5rem' }}
                     lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
                     showLineNumbers

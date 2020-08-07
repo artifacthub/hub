@@ -6,7 +6,7 @@ import { FiDownload, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { API } from '../../api';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
@@ -335,12 +335,12 @@ const PackageView = (props: Props) => {
         {!isUndefined(detail) && (
           <>
             {!isNull(detail) && (
-              <div className={`jumbotron ${styles.jumbotron}`}>
+              <div className={`jumbotron package-detail-jumbotron ${styles.jumbotron}`}>
                 <div className="container position-relative">
                   <div className="d-flex align-items-start w-100 mb-3">
                     <div className="d-flex align-items-center flex-grow-1 mw-100">
                       <div
-                        className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper}`}
+                        className={`d-flex align-items-center justify-content-center p-1 overflow-hidden ${styles.imageWrapper} imageWrapper`}
                       >
                         <Image
                           className={styles.image}
@@ -493,7 +493,7 @@ const PackageView = (props: Props) => {
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
                                       <SyntaxHighlighter
                                         language="yaml"
-                                        style={monokai}
+                                        style={tomorrowNight}
                                         customStyle={{ padding: '1.5rem' }}
                                       >
                                         {rules}
@@ -547,7 +547,7 @@ const PackageView = (props: Props) => {
                       <>
                         {InstallationModal(false)}
 
-                        <div className={`card shadow-sm position-relative ${styles.info}`}>
+                        <div className={`card shadow-sm position-relative info ${styles.info}`}>
                           <div className="card-body">
                             <Details
                               package={detail}

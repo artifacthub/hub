@@ -28,15 +28,23 @@ const RepositoryInfo = (props: Props) => {
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (!openStatus && (onLinkHover || onDropdownHover)) {
-      setOpenStatus(true);
+      timeout = setTimeout(() => {
+        setOpenStatus(true);
+      }, 100);
     }
     if (openStatus && !onLinkHover && !onDropdownHover) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         // Delay to hide the dropdown to avoid hide it if user changes from link to dropdown
         setOpenStatus(false);
       }, 50);
     }
+    return () => {
+      if (!isUndefined(timeout)) {
+        clearTimeout(timeout);
+      }
+    };
   }, [onLinkHover, onDropdownHover, openStatus]);
 
   return (
@@ -89,7 +97,7 @@ const RepositoryInfo = (props: Props) => {
 
         <button
           data-testid="repoLink"
-          className={`p-0 border-0 text-dark text-truncate ${styles.link}`}
+          className={`d-flex flex-row p-0 border-0 text-dark text-truncate ${styles.link}`}
           onClick={(e) => {
             e.preventDefault();
             history.push({
@@ -112,11 +120,13 @@ const RepositoryInfo = (props: Props) => {
             setOnLinkHover(false);
           }}
         >
-          <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
+          <>
+            <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
+            {!isUndefined(props.repository.url) && !isUndefined(props.fromDetail) && props.fromDetail && (
+              <MdInfo className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
+            )}
+          </>
         </button>
-        {!isUndefined(props.repository.url) && !isUndefined(props.fromDetail) && props.fromDetail && (
-          <MdInfo className={`d-none d-sm-block ml-1 ${styles.infoIcon}`} />
-        )}
       </div>
     </div>
   );

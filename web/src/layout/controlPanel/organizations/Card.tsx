@@ -85,7 +85,7 @@ const OrganizationCard = (props: Props) => {
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
         <div className="d-flex flex-row align-items-center">
           <div
-            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper}`}
+            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
           >
             {!isUndefined(props.organization.logoImageId) ? (
               <Image
@@ -138,7 +138,7 @@ const OrganizationCard = (props: Props) => {
 
               {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                 <>
-                  <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
+                  <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
 
                   <button
                     data-testid="leaveOrgDropdownBtn"

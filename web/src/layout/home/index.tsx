@@ -58,7 +58,7 @@ const HomeView = (props: Props) => {
   }, [props.onOauthFailed, history]);
 
   return (
-    <div className={`d-flex flex-column flex-grow-1 ${styles.home}`}>
+    <div className={`d-flex flex-column flex-grow-1 ${styles.home} home`}>
       <div className={`jumbotron mb-0 text-center ${styles.jumbotron}`}>
         <div role="heading" className={`display-4 text-center font-weight-light ${styles.mainTitle}`}>
           Find, install and publish
@@ -73,7 +73,7 @@ const HomeView = (props: Props) => {
           <div className="d-inline-block d-md-none text-center mt-3">
             - or -
             <Link
-              className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
               to={{
                 pathname: '/packages/search',
               }}
@@ -85,7 +85,7 @@ const HomeView = (props: Props) => {
           <div className="d-none d-md-inline-block text-center mt-5">
             You can also{' '}
             <Link
-              className="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+              className="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
               to={{
                 pathname: '/packages/search',
               }}
@@ -181,7 +181,7 @@ const HomeView = (props: Props) => {
 
         <div className="d-flex align-items-center justify-content-center mt-4 mt-md-5">
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.packages} name="packages" />
-          <div className={`mx-3 mx-md-5 ${styles.separator}`} />
+          <div className={`mx-3 mx-md-5 separator ${styles.separator}`} />
           <Counter isLoading={isLoadingStats} value={isNull(stats) ? null : stats.releases} name="releases" />
         </div>
 
@@ -221,7 +221,7 @@ const HomeView = (props: Props) => {
 
       <RandomPackages />
 
-      <div className={`py-5 text-light ${styles.about}`}>
+      <div className={`py-5 textLight ${styles.about}`}>
         <div className="container py-0 py-md-5">
           <div className="text-center px-3 px-md-0">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and

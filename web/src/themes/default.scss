@@ -1,4 +1,69 @@
-$enable-rounded: false;
+@import './fonts.css';
+
+$font-family-sans-serif: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-monospace: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospace !default;
 
 @import '~bootstrap/scss/bootstrap.scss';
-@import './fonts.css';
+@import './light.scss';
+@import './dark.scss';
+
+.dropdown-item {
+  padding: 0.5rem 1.5rem;
+}
+
+.was-validated .form-control:valid {
+  background-image: none !important;
+  padding-right: 0.75rem !important;
+}
+
+.was-validated .custom-select:valid,
+.custom-select.is-valid,
+.was-validated .custom-select:valid:focus,
+.custom-select.is-valid:focus {
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e")
+    no-repeat right 0.75rem center/8px 10px;
+}
+
+.dropdown-menu .arrow {
+  position: absolute;
+  display: block;
+  width: 1rem;
+  height: 0.5rem;
+  margin: 0 0.3rem;
+  top: calc(-0.5rem - 1px);
+  right: 1rem;
+
+  &.arrow-iconBtn {
+    right: 0.18rem;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    content: '';
+    border-color: transparent;
+    border-style: solid;
+  }
+
+  &::before {
+    top: 0;
+    border-width: 0 0.5rem 0.5rem 0.5rem;
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+  }
+
+  &::after {
+    top: 1px;
+    border-width: 0 0.5rem 0.5rem 0.5rem;
+    border-bottom-color: #fff;
+  }
+}
+
+label,
+a,
+button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

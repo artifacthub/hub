@@ -29,6 +29,10 @@ const mockCtx = {
       selectedOrg: 'orgTest',
     },
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 

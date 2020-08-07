@@ -159,7 +159,7 @@ const SearchTypeahead = (props: Props) => {
                         <td className="align-middle">
                           <div className="d-flex flex-row align-items-center">
                             <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper}`}
+                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
                             >
                               <Image
                                 imageId={item.logoImageId}

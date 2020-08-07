@@ -236,12 +236,19 @@ export interface AvailabilityInfo {
 }
 
 export interface Prefs {
+  theme: ThemePrefs;
   controlPanel: {
     selectedOrg?: string;
   };
   search: {
     limit: number;
   };
+}
+
+export interface ThemePrefs {
+  configured: string;
+  efective?: string;
+  automatic: boolean;
 }
 
 export interface PackageStars {

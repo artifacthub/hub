@@ -62,7 +62,7 @@ const PackageInfo = (props: Props) => {
 
   const packageImage = (
     <div
-      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper}`}
+      className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper} imageWrapper`}
     >
       <Image
         imageId={props.package.logoImageId}
@@ -78,7 +78,7 @@ const PackageInfo = (props: Props) => {
         <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
           {props.withPackageLinks ? (
             <Link
-              className={`text-decoration-none ${styles.link}`}
+              className={`text-decoration-none text-reset ${styles.link}`}
               to={{
                 pathname: buildPackageURL(props.package),
               }}
@@ -97,7 +97,7 @@ const PackageInfo = (props: Props) => {
                 {props.withPackageLinks ? (
                   <Link
                     data-testid="packageLink"
-                    className={`${styles.link} text-truncate`}
+                    className={`${styles.link} text-reset text-truncate`}
                     to={{
                       pathname: buildPackageURL(props.package),
                     }}

@@ -3,7 +3,7 @@
 exports[`Home index creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-flex flex-column flex-grow-1 home"
+    class="d-flex flex-column flex-grow-1 home home"
   >
     <div
       class="jumbotron mb-0 text-center jumbotron"
@@ -23,7 +23,7 @@ exports[`Home index creates snapshot 1`] = `
           class="position-relative m-auto w-50 search"
         >
           <div
-            class="d-flex align-items-strecht overflow-hidden searchBar big"
+            class="d-flex align-items-strecht overflow-hidden searchBar searchBar big"
           >
             <div
               class="d-none d-sm-flex align-items-center iconWrapper"
@@ -79,7 +79,7 @@ exports[`Home index creates snapshot 1`] = `
             </button>
           </div>
           <div
-            class="position-absolute text-light loading"
+            class="position-absolute textLight loading"
           >
             <span
               class="spinner-border spinner-border-lg"
@@ -93,7 +93,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           - or -
           <a
-            class="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
           >
             <u>
@@ -106,7 +106,7 @@ exports[`Home index creates snapshot 1`] = `
         >
           You can also 
           <a
-            class="btn btn-link text-light font-weight-bold py-0 pb-1 pl-1"
+            class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
           >
             <u>
@@ -185,7 +185,7 @@ exports[`Home index creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="mx-3 mx-md-5 separator"
+          class="mx-3 mx-md-5 separator separator"
         />
         <div
           class="text-center counterWrapper"
@@ -302,7 +302,7 @@ exports[`Home index creates snapshot 1`] = `
     </div>
     <div />
     <div
-      class="py-5 text-light about"
+      class="py-5 textLight about"
     >
       <div
         class="container py-0 py-md-5"
@@ -316,22 +316,22 @@ exports[`Home index creates snapshot 1`] = `
           >
             <img
               alt="Icon"
-              class="aboutIcon"
+              class="aboutIcon repoIcon"
               src="/static/media/helm-chart-white.svg"
             />
             <img
               alt="Icon"
-              class="aboutIcon"
+              class="aboutIcon repoIcon"
               src="/static/media/falco-rules-white.svg"
             />
             <img
               alt="Icon"
-              class="aboutIcon"
+              class="aboutIcon repoIcon"
               src="/static/media/opa-policies-white.svg"
             />
             <img
               alt="Icon"
-              class="aboutIcon"
+              class="aboutIcon repoIcon"
               src="/static/media/olm-operators-white.svg"
             />
           </div>

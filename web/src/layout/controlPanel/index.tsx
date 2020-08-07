@@ -85,7 +85,7 @@ const ControlPanelView = (props: Props) => {
 
   return (
     <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
-      <div className={`pt-3 position-relative ${styles.navWrapper}`}>
+      <div className={`pt-3 position-relative navWrapper ${styles.navWrapper}`}>
         <div className="container">
           <div className="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
             <ul className="mr-auto mr-md-0 nav nav-tabs" role="tablist">
@@ -97,7 +97,7 @@ const ControlPanelView = (props: Props) => {
                       className={classnames(
                         'btn btn-link rounded-0 text-reset nav-link position-relative',
                         styles.section,
-                        { [`active ${styles.activeSection}`]: activeSection === section.name },
+                        { [`active activeSection ${styles.activeSection}`]: activeSection === section.name },
                         { disabled: section.disabled }
                       )}
                       onClick={() => onMenuItemClick(section.name)}

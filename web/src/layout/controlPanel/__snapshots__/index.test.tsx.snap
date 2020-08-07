@@ -7,7 +7,7 @@ exports[`ControlPanelView renders correctly 1`] = `
     role="main"
   >
     <div
-      class="pt-3 position-relative navWrapper"
+      class="pt-3 position-relative navWrapper navWrapper"
     >
       <div
         class="container"
@@ -24,7 +24,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               role="tab"
             >
               <button
-                class="btn btn-link rounded-0 text-reset nav-link position-relative section active activeSection"
+                class="btn btn-link rounded-0 text-reset nav-link position-relative section active activeSection activeSection"
                 type="button"
               >
                 <div
@@ -174,7 +174,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="position-absolute text-light caret"
+                    class="position-absolute textLight caret"
                   >
                     <svg
                       fill="currentColor"

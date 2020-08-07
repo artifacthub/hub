@@ -10,6 +10,10 @@ const mockCtxLoggedIn = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -48,11 +52,12 @@ describe('UserAuthDropdown', () => {
       expect(queryByAltText('User profile')).toBeNull();
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
+      expect(getByTestId('themeOptions')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 
     it('renders component with user image', () => {
-      const { getByText, getByAltText, queryByTestId } = render(
+      const { getByText, getByAltText, queryByTestId, getByTestId } = render(
         <AppCtx.Provider
           value={{
             ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
@@ -73,6 +78,7 @@ describe('UserAuthDropdown', () => {
       expect(queryByTestId('profileIcon')).toBeNull();
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
+      expect(getByTestId('themeOptions')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 

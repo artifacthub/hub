@@ -50,11 +50,11 @@ exports[`SubscriptionModal renders correctly 1`] = `
                 Events
               </label>
               <div
-                class="form-check mb-3"
+                class="custom-control custom-radio mb-3"
               >
                 <input
                   checked=""
-                  class="form-check-input"
+                  class="custom-control-input"
                   data-testid="radio_0"
                   id="newRelease"
                   name="kind"
@@ -63,7 +63,7 @@ exports[`SubscriptionModal renders correctly 1`] = `
                   value="0"
                 />
                 <label
-                  class="form-check-label"
+                  class="custom-control-label"
                   for="newRelease"
                 >
                   <div

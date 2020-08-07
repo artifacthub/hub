@@ -20,7 +20,7 @@ const PackageCard = (props: Props) => (
     <div className={`card h-100 ${styles.card}`}>
       <Link
         data-testid="link"
-        className={`text-decoration-none ${styles.link}`}
+        className={`text-decoration-none text-reset ${styles.link}`}
         onClick={() => {
           if (!isUndefined(props.saveScrollPosition)) {
             props.saveScrollPosition();

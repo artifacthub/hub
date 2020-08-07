@@ -92,7 +92,7 @@ const WebhookCard = (props: Props) => {
                 </div>
               </button>
 
-              <div className={`mx-2 my-auto d-none d-sm-inline ${styles.separator}`} />
+              <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
 
               <button
                 data-testid="deleteWebhookDropdownBtn"

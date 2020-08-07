@@ -19,6 +19,10 @@ const mockCtxLoggedIn = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -27,6 +31,10 @@ const mockCtxNotLoggedIn = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -35,6 +43,10 @@ const mockUndefinedUser = {
   prefs: {
     controlPanel: {},
     search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
   },
 };
 
@@ -57,7 +69,7 @@ describe('MobileSettings', () => {
 
   describe('when user is signed in', () => {
     it('renders component', () => {
-      const { getByText, queryByAltText } = render(
+      const { getByText, queryByAltText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtxLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <MobileSettings {...defaultProps} />
@@ -72,11 +84,12 @@ describe('MobileSettings', () => {
 
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
+      expect(getByTestId('themeOptions')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 
     it('renders profile Image', () => {
-      const { getByText, getByAltText } = render(
+      const { getByText, getByAltText, getByTestId } = render(
         <AppCtx.Provider
           value={{
             ctx: { ...mockCtxLoggedIn, user: { ...mockCtxLoggedIn.user, profileImageId: '123' } },
@@ -96,6 +109,7 @@ describe('MobileSettings', () => {
       expect(getByAltText('User profile')).toBeInTheDocument();
       expect(getByText('Starred packages')).toBeInTheDocument();
       expect(getByText('Control Panel')).toBeInTheDocument();
+      expect(getByTestId('themeOptions')).toBeInTheDocument();
       expect(getByText('Sign out')).toBeInTheDocument();
     });
 

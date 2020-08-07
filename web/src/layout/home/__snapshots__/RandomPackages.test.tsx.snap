@@ -59,7 +59,7 @@ exports[`RandomPackages creates snapshot 2`] = `
             class="pt-2"
           >
             <div
-              class="position-relative mw-100 card"
+              class="position-relative mw-100 homeCard card"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -71,11 +71,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                     class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
                     <a
-                      class="text-decoration-none link"
+                      class="text-decoration-none text-reset link"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo mosquitto"
@@ -95,7 +95,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <a
-                            class="link text-truncate"
+                            class="link text-reset text-truncate"
                             data-testid="packageLink"
                             href="/packages/helm/halkeye/undefined"
                           >
@@ -139,7 +139,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                     </small>
                                     <img
                                       alt="Icon"
-                                      class="mr-1 repoIconMini"
+                                      class="mr-1 repoIconMini repoIcon"
                                       src="/static/media/helm-chart.svg"
                                     />
                                     <div
@@ -215,7 +215,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                               </small>
                             </div>
                             <button
-                              class="p-0 border-0 text-dark text-truncate link"
+                              class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                               data-testid="repoLink"
                             >
                               <div
@@ -274,7 +274,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -350,7 +350,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -401,7 +401,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -424,7 +424,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <img
                       alt="Icon"
-                      class="icon"
+                      class="icon repoIcon"
                       src="/static/media/helm-chart.svg"
                     />
                   </div>
@@ -435,7 +435,7 @@ exports[`RandomPackages creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="position-relative mw-100 card"
+              class="position-relative mw-100 homeCard card"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -447,11 +447,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                     class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
                     <a
-                      class="text-decoration-none link"
+                      class="text-decoration-none text-reset link"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo pihole"
@@ -471,7 +471,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <a
-                            class="link text-truncate"
+                            class="link text-reset text-truncate"
                             data-testid="packageLink"
                             href="/packages/helm/halkeye/undefined"
                           >
@@ -515,7 +515,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                     </small>
                                     <img
                                       alt="Icon"
-                                      class="mr-1 repoIconMini"
+                                      class="mr-1 repoIconMini repoIcon"
                                       src="/static/media/helm-chart.svg"
                                     />
                                     <div
@@ -591,7 +591,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                               </small>
                             </div>
                             <button
-                              class="p-0 border-0 text-dark text-truncate link"
+                              class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                               data-testid="repoLink"
                             >
                               <div
@@ -650,7 +650,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -726,7 +726,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -777,7 +777,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -800,7 +800,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <img
                       alt="Icon"
-                      class="icon"
+                      class="icon repoIcon"
                       src="/static/media/helm-chart.svg"
                     />
                   </div>
@@ -811,7 +811,7 @@ exports[`RandomPackages creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="position-relative mw-100 card"
+              class="position-relative mw-100 homeCard card"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -823,11 +823,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                     class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
                     <a
-                      class="text-decoration-none link"
+                      class="text-decoration-none text-reset link"
                       href="/packages/helm/gabibbo97/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo fcgi-nginx-frontend"
@@ -846,7 +846,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <a
-                            class="link text-truncate"
+                            class="link text-reset text-truncate"
                             data-testid="packageLink"
                             href="/packages/helm/gabibbo97/undefined"
                           >
@@ -890,7 +890,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                     </small>
                                     <img
                                       alt="Icon"
-                                      class="mr-1 repoIconMini"
+                                      class="mr-1 repoIconMini repoIcon"
                                       src="/static/media/helm-chart.svg"
                                     />
                                     <div
@@ -966,7 +966,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                               </small>
                             </div>
                             <button
-                              class="p-0 border-0 text-dark text-truncate link"
+                              class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1025,7 +1025,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1101,7 +1101,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1152,7 +1152,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -1175,7 +1175,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <img
                       alt="Icon"
-                      class="icon"
+                      class="icon repoIcon"
                       src="/static/media/helm-chart.svg"
                     />
                   </div>
@@ -1186,7 +1186,7 @@ exports[`RandomPackages creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="position-relative mw-100 card"
+              class="position-relative mw-100 homeCard card"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -1198,11 +1198,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                     class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
                     <a
-                      class="text-decoration-none link"
+                      class="text-decoration-none text-reset link"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo sevendaysdie"
@@ -1222,7 +1222,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <a
-                            class="link text-truncate"
+                            class="link text-reset text-truncate"
                             data-testid="packageLink"
                             href="/packages/helm/halkeye/undefined"
                           >
@@ -1266,7 +1266,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                     </small>
                                     <img
                                       alt="Icon"
-                                      class="mr-1 repoIconMini"
+                                      class="mr-1 repoIconMini repoIcon"
                                       src="/static/media/helm-chart.svg"
                                     />
                                     <div
@@ -1342,7 +1342,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                               </small>
                             </div>
                             <button
-                              class="p-0 border-0 text-dark text-truncate link"
+                              class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1401,7 +1401,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1477,7 +1477,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1528,7 +1528,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -1551,7 +1551,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <img
                       alt="Icon"
-                      class="icon"
+                      class="icon repoIcon"
                       src="/static/media/helm-chart.svg"
                     />
                   </div>
@@ -1562,7 +1562,7 @@ exports[`RandomPackages creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="position-relative mw-100 card"
+              class="position-relative mw-100 homeCard card"
             >
               <div
                 class="card-body d-flex flex-column body"
@@ -1574,11 +1574,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                     class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                   >
                     <a
-                      class="text-decoration-none link"
+                      class="text-decoration-none text-reset link"
                       href="/packages/helm/billimek/undefined"
                     >
                       <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper"
+                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                       >
                         <img
                           alt="Logo digitalocean-dyndns"
@@ -1598,7 +1598,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center"
                         >
                           <a
-                            class="link text-truncate"
+                            class="link text-reset text-truncate"
                             data-testid="packageLink"
                             href="/packages/helm/billimek/undefined"
                           >
@@ -1642,7 +1642,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                     </small>
                                     <img
                                       alt="Icon"
-                                      class="mr-1 repoIconMini"
+                                      class="mr-1 repoIconMini repoIcon"
                                       src="/static/media/helm-chart.svg"
                                     />
                                     <div
@@ -1718,7 +1718,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                               </small>
                             </div>
                             <button
-                              class="p-0 border-0 text-dark text-truncate link"
+                              class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                               data-testid="repoLink"
                             >
                               <div
@@ -1777,7 +1777,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                       </small>
                                       <img
                                         alt="Icon"
-                                        class="mr-1 repoIconMini"
+                                        class="mr-1 repoIconMini repoIcon"
                                         src="/static/media/helm-chart.svg"
                                       />
                                       <div
@@ -1853,7 +1853,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                 </small>
                               </div>
                               <button
-                                class="p-0 border-0 text-dark text-truncate link"
+                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
                                 data-testid="repoLink"
                               >
                                 <div
@@ -1904,7 +1904,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                       >
                         <img
                           alt="Icon"
-                          class="icon"
+                          class="icon repoIcon"
                           src="/static/media/helm-chart.svg"
                         />
                       </div>
@@ -1927,7 +1927,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <img
                       alt="Icon"
-                      class="icon"
+                      class="icon repoIcon"
                       src="/static/media/helm-chart.svg"
                     />
                   </div>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PackageCard = (props: Props) => (
-  <div className={`position-relative mw-100 ${styles.card}`}>
+  <div className={`position-relative mw-100 homeCard ${styles.card}`}>
     <div className={`card-body d-flex flex-column ${styles.body}`}>
       <PackageHeader package={props.package} withPackageLinks />
     </div>
