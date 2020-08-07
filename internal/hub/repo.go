@@ -75,7 +75,8 @@ type HelmIndexLoader interface {
 	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
 }
 
-// RepositoryCloner describes the methods a Cloner implementation must provide.
+// RepositoryCloner describes the methods a RepositoryCloner implementation
+// must provide.
 type RepositoryCloner interface {
 	// CloneRepository clones the packages repository provided in a temporary
 	// dir, returning the temporary directory path and the path where the

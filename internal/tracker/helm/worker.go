@@ -45,7 +45,7 @@ func NewWorker(
 	w := &Worker{
 		svc:    svc,
 		r:      r,
-		logger: log.With().Str("repoName", r.Name).Interface("repoKind", r.Kind).Logger(),
+		logger: log.With().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Logger(),
 	}
 	for _, o := range opts {
 		o(w)

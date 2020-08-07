@@ -31,17 +31,17 @@ func main() {
 	// Setup configuration and logger
 	cfg, err := util.SetupConfig("hub")
 	if err != nil {
-		log.Fatal().Err(err).Msg("Configuration setup failed")
+		log.Fatal().Err(err).Msg("configuration setup failed")
 	}
 	fields := map[string]interface{}{"cmd": "hub"}
 	if err := util.SetupLogger(cfg, fields); err != nil {
-		log.Fatal().Err(err).Msg("Logger setup failed")
+		log.Fatal().Err(err).Msg("logger setup failed")
 	}
 
-	// Setup database and email services
+	// Setup services
 	db, err := util.SetupDB(cfg)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Database setup failed")
+		log.Fatal().Err(err).Msg("database setup failed")
 	}
 	var es hub.EmailSender
 	if s := email.NewSender(cfg); s != nil {
@@ -69,17 +69,17 @@ func main() {
 	}
 	go func() {
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {
-			log.Fatal().Err(err).Msg("Hub server ListenAndServe failed")
+			log.Fatal().Err(err).Msg("hub server ListenAndServe failed")
 		}
 	}()
-	log.Info().Str("addr", addr).Int("pid", os.Getpid()).Msg("Hub server running!")
+	log.Info().Str("addr", addr).Int("pid", os.Getpid()).Msg("hub server running!")
 
 	// Setup and launch metrics server
 	go func() {
 		http.Handle("/metrics", promhttp.Handler())
 		err := http.ListenAndServe(cfg.GetString("server.metricsAddr"), nil)
 		if err != nil {
-			log.Fatal().Err(err).Msg("Metrics server ListenAndServe failed")
+			log.Fatal().Err(err).Msg("metrics server ListenAndServe failed")
 		}
 	}()
 
@@ -113,13 +113,13 @@ func main() {
 	shutdown := make(chan os.Signal, 1)
 	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 	<-shutdown
-	log.Info().Msg("Hub server shutting down..")
+	log.Info().Msg("hub server shutting down..")
 	stop()
 	wg.Wait()
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetDuration("server.shutdownTimeout"))
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal().Err(err).Msg("Hub server shutdown failed")
+		log.Fatal().Err(err).Msg("hub server shutdown failed")
 	}
-	log.Info().Msg("Hub server stopped")
+	log.Info().Msg("hub server stopped")
 }
