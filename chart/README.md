@@ -67,6 +67,7 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `hub.deploy.image.repository`          | Hub image repository              | `artifacthub/hub`                          |
 | `hub.deploy.resources`                 | Hub requested resources           | Memory: `500Mi`, CPU: `100m`               |
 | `hub.server.baseURL`                   | Hub server base url               |                                            |
+| `hub.server.shutdownTimeout`           | Hub server shutdown timeout       | 10s                                        |
 | `hub.server.basicAuth.enabled`         | Enable basic auth                 | `false`                                    |
 | `hub.server.basicAuth.username`        | Hub basic auth username           | `hub`                                      |
 | `hub.server.basicAuth.password`        | Hub basic auth password           | `changeme`                                 |

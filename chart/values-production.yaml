@@ -40,6 +40,7 @@ hub:
         memory: 8000Mi
   server:
     baseURL: https://artifacthub.io
+    shutdownTimeout: 20s
     oauth:
       github:
         redirectURL: https://artifacthub.io/oauth/github/callback

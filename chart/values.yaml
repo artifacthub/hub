@@ -33,6 +33,7 @@ hub:
         memory: 500Mi
   server:
     baseURL: ""
+    shutdownTimeout: 10s
     basicAuth:
       enabled: false
       username: hub

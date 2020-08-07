@@ -8,7 +8,7 @@ db:
   user: postgres
 server:
   addr: localhost:8000
-  shutdownTimeout: 1m
+  shutdownTimeout: 10s
   webBuildPath: ../../web/build
   basicAuth:
     enabled: false

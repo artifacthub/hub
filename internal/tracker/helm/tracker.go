@@ -37,7 +37,7 @@ func NewTracker(
 	t := &Tracker{
 		svc:    svc,
 		r:      r,
-		logger: log.With().Str("repoName", r.Name).Interface("repoKind", r.Kind).Logger(),
+		logger: log.With().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Logger(),
 		queue:  make(chan *Job),
 	}
 	for _, o := range opts {
