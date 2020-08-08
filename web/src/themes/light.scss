@@ -49,7 +49,12 @@
   }
 
   .textLight {
-    color: #f8f9fa;
+    color: #f8f9fa !important;
+  }
+
+  a.textLight:hover,
+  a.textLight:focus {
+    color: #cbd3da !important;
   }
 
   .dropdown-item {

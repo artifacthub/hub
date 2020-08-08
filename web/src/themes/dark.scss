@@ -103,10 +103,6 @@
     @include button-variant(#275000, rgba(209, 210, 211, 0.13));
   }
 
-  .badge {
-    color: var(--color-1-500);
-  }
-
   .badge-secondary {
     border-color: var(--border-md) !important;
     background-color: var(--color-font);
@@ -224,6 +220,11 @@
   .text-muted,
   .textLight {
     color: var($font-color) !important;
+  }
+
+  a.textLight:hover,
+  a.textLight:focus {
+    color: #cbd3da !important;
   }
 
   .text-primary {
