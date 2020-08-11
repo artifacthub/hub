@@ -86,7 +86,8 @@ tracker:
         cpu: 100m
         memory: 500Mi
   concurrency: 10
-  repositories: []
+  repositoriesNames: []
+  repositoriesKinds: []
   imageStore: pg
   bypassDigestCheck: false
 

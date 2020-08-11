@@ -2,6 +2,7 @@ package hub
 
 import (
 	"context"
+	"errors"
 
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
@@ -39,6 +40,23 @@ func GetKindName(kind RepositoryKind) string {
 	}
 }
 
+// GetKindFromName returns the kind of the provided repository from the name
+// provided.
+func GetKindFromName(kind string) (RepositoryKind, error) {
+	switch kind {
+	case "helm":
+		return Helm, nil
+	case "falco":
+		return Falco, nil
+	case "olm":
+		return OLM, nil
+	case "opa":
+		return OPA, nil
+	default:
+		return -1, errors.New("invalid kind name")
+	}
+}
+
 // Repository represents a packages repository.
 type Repository struct {
 	RepositoryID            string         `json:"repository_id"`
@@ -60,6 +78,7 @@ type RepositoryManager interface {
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	Delete(ctx context.Context, name string) error
 	GetAll(ctx context.Context) ([]*Repository, error)
+	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
 	GetByName(ctx context.Context, name string) (*Repository, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)

@@ -98,7 +98,8 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `tracker.cronjob.image.repository`     | Tracker image repository          | `artifacthub/tracker`                      |
 | `tracker.cronjob.resources`            | Tracker requested resources       | Memory: `500Mi`, CPU: `100m`               |
 | `tracker.concurrency`                  | Repos to process concurrently     | 10                                         |
-| `tracker.repositories`                 | Repos names to process ([] = all) | []                                         |
+| `tracker.repositoriesNames`            | Repos names to process ([] = all) | []                                         |
+| `tracker.repositoriesKinds`            | Repos kinds to process ([] = all) | []                                         |
 | `tracker.imageStore`                   | Image store                       | `pg`                                       |
 | `tracker.bypassDigestCheck`            | Bypass digest check               | `false`                                    |
 
