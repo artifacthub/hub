@@ -147,6 +147,13 @@ func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	return r, err
 }
 
+// GetByKind returns all available repositories of the provided kind.
+func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
+	var r []*hub.Repository
+	err := m.dbQueryUnmarshal(ctx, &r, "select get_repositories_by_kind($1::int)", kind)
+	return r, err
+}
+
 // GetByName returns the repository identified by the name provided.
 func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
 	// Validate input

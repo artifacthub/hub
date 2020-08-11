@@ -54,5 +54,6 @@ tracker:
         cpu: 2
         memory: 4000Mi
   concurrency: 25
-  repositories: []
+  repositoriesNames: []
+  repositoriesKinds: []
   imageStore: pg

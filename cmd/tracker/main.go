@@ -86,7 +86,7 @@ func main() {
 			t = opa.NewTracker(svc, r)
 		}
 		go func(r *hub.Repository) {
-			log.Info().Str("repo", r.Name).Interface("kind", r.Kind).Msg("tracking repository")
+			log.Info().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Msg("tracking repository")
 			if err := t.Track(&wg); err != nil {
 				ec.Append(r.RepositoryID, err)
 				log.Err(err).Str("repo", r.Name).Interface("kind", r.Kind).Send()
@@ -99,15 +99,22 @@ func main() {
 	log.Info().Msg("tracker finished")
 }
 
-// getRepositories gets the repositories the tracker will process. If a list of
-// repositories names is found in the configuration provided, those will be the
-// repositories returned provided they are found. If no repositories names are
-// found in the configuration, all the repositories will be returned.
+// getRepositories gets the repositories the tracker will process based on the
+// configuration provided:
+//
+// - If a list of repositories names, those will be the repositories returned
+//   provided they are found.
+// - If a list of repositories kinds is provided, all repositories of those
+//   kinds will be returned.
+// - Otherwise, all the repositories will be returned.
+//
 func getRepositories(
 	cfg *viper.Viper,
 	rm hub.RepositoryManager,
 ) ([]*hub.Repository, error) {
 	reposNames := cfg.GetStringSlice("tracker.repositoriesNames")
+	reposKinds := cfg.GetStringSlice("tracker.repositoriesKinds")
+
 	var repos []*hub.Repository
 	if len(reposNames) > 0 {
 		for _, name := range reposNames {
@@ -117,11 +124,23 @@ func getRepositories(
 			}
 			repos = append(repos, repo)
 		}
+	} else if len(reposKinds) > 0 {
+		for _, kindName := range reposKinds {
+			kind, err := hub.GetKindFromName(kindName)
+			if err != nil {
+				return nil, fmt.Errorf("invalid repository kind found in config: %s", kindName)
+			}
+			kindRepos, err := rm.GetByKind(context.Background(), kind)
+			if err != nil {
+				return nil, fmt.Errorf("error getting repositories by kind (%s): %w", kindName, err)
+			}
+			repos = append(repos, kindRepos...)
+		}
 	} else {
 		var err error
 		repos, err = rm.GetAll(context.Background())
 		if err != nil {
-			return nil, fmt.Errorf("error getting repositories by kind: %w", err)
+			return nil, fmt.Errorf("error getting all repositories: %w", err)
 		}
 	}
 	return repos, nil

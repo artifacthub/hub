@@ -405,6 +405,44 @@ func TestGetAll(t *testing.T) {
 	db.AssertExpectations(t)
 }
 
+func TestGetByKind(t *testing.T) {
+	dbQuery := "select get_repositories_by_kind($1::int)"
+	ctx := context.Background()
+
+	db := &tests.DBMock{}
+	db.On("QueryRow", ctx, dbQuery, hub.Helm).Return([]byte(`
+	[{
+        "repository_id": "00000000-0000-0000-0000-000000000001",
+        "name": "repo1",
+        "display_name": "Repo 1",
+		"url": "https://repo1.com",
+		"kind": 0
+    }, {
+        "repository_id": "00000000-0000-0000-0000-000000000002",
+        "name": "repo2",
+        "display_name": "Repo 2",
+		"url": "https://repo2.com",
+		"kind": 0
+    }]
+	`), nil)
+	m := NewManager(db)
+
+	r, err := m.GetByKind(ctx, hub.Helm)
+	require.NoError(t, err)
+	assert.Len(t, r, 2)
+	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
+	assert.Equal(t, "repo1", r[0].Name)
+	assert.Equal(t, "Repo 1", r[0].DisplayName)
+	assert.Equal(t, "https://repo1.com", r[0].URL)
+	assert.Equal(t, hub.Helm, r[0].Kind)
+	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
+	assert.Equal(t, "repo2", r[1].Name)
+	assert.Equal(t, "Repo 2", r[1].DisplayName)
+	assert.Equal(t, "https://repo2.com", r[1].URL)
+	assert.Equal(t, hub.Helm, r[1].Kind)
+	db.AssertExpectations(t)
+}
+
 func TestGetByName(t *testing.T) {
 	dbQuery := "select get_repository_by_name($1::text)"
 	ctx := context.Background()
