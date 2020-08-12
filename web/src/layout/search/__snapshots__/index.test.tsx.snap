@@ -1337,7 +1337,7 @@ exports[`Search index creates snapshot 2`] = `
             role="listitem"
           >
             <div
-              class="card h-100 card"
+              class="card cardWithHover h-100 card"
             >
               <a
                 class="text-decoration-none text-reset link"
@@ -1717,7 +1717,7 @@ exports[`Search index creates snapshot 2`] = `
             role="listitem"
           >
             <div
-              class="card h-100 card"
+              class="card cardWithHover h-100 card"
             >
               <a
                 class="text-decoration-none text-reset link"

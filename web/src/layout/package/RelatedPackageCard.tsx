@@ -22,7 +22,7 @@ const RelatedPackageCard = (props: Props) => {
   };
 
   return (
-    <div className={`card mb-2 w-100 relatedCard ${styles.card}`}>
+    <div className={`card cardWithHover mb-2 w-100 relatedCard ${styles.card}`}>
       <Link
         data-testid="relatedPackageLink"
         className={`text-decoration-none text-reset ${styles.link}`}

@@ -7,6 +7,11 @@ $font-family-monospace: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospa
 @import './light.scss';
 @import './dark.scss';
 
+.form-control:disabled,
+.form-control[readonly] {
+  opacity: 0.75;
+}
+
 .dropdown-item {
   padding: 0.5rem 1.5rem;
 }

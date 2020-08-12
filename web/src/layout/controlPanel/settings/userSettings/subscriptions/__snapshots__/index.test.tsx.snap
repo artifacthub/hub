@@ -987,7 +987,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1124,7 +1124,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1260,7 +1260,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1396,7 +1396,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1533,7 +1533,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1670,7 +1670,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1807,7 +1807,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div
@@ -1944,7 +1944,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                 role="listitem"
               >
                 <div
-                  class="card h-100 card"
+                  class="card cardWithHover h-100 card"
                 >
                   <div>
                     <div

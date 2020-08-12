@@ -183,7 +183,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               role="listitem"
             >
               <div
-                class="card w-100 card"
+                class="card cardWithHover w-100 card"
               >
                 <div
                   class="card-body p-0 position-relative body"
@@ -377,7 +377,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               role="listitem"
             >
               <div
-                class="card w-100 card"
+                class="card cardWithHover w-100 card"
               >
                 <div
                   class="card-body p-0 position-relative body"
@@ -571,7 +571,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               role="listitem"
             >
               <div
-                class="card w-100 card"
+                class="card cardWithHover w-100 card"
               >
                 <div
                   class="card-body p-0 position-relative body"
@@ -763,7 +763,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               role="listitem"
             >
               <div
-                class="card w-100 card"
+                class="card cardWithHover w-100 card"
               >
                 <div
                   class="card-body p-0 position-relative body"
@@ -957,7 +957,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               role="listitem"
             >
               <div
-                class="card w-100 card"
+                class="card cardWithHover w-100 card"
               >
                 <div
                   class="card-body p-0 position-relative body"

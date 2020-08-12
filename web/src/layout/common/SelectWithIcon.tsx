@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import React from 'react';
 import Select, { components, ValueType } from 'react-select';
@@ -47,10 +48,11 @@ const SelectWithIcon = (props: Props) => {
   const selectedOption = getSelectedValue();
 
   const customStyles = {
-    control: (provided: any) => ({
+    control: (provided: any, state: any) => ({
       ...provided,
       border: '1px solid #ced4da',
-      background: 'var(--white)',
+      background: state.isDisabled ? 'var(--light-gray)' : 'var(--white)',
+      opacity: state.isDisabled ? '0.75' : '1',
       boxShadow: 'none',
       '&:hover': {
         border: '1px solid #bed6e3',
@@ -76,7 +78,7 @@ const SelectWithIcon = (props: Props) => {
   if (isUndefined(selectedOption)) return null;
 
   return (
-    <div className="mb-4">
+    <div className={classnames('mb-4', { [styles.isDisabled]: props.disabled })}>
       <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
         {props.label}
       </label>

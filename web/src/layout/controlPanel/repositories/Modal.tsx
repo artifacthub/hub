@@ -102,7 +102,7 @@ const RepositoryModal = (props: Props) => {
         const formData = new FormData(form);
         repository = {
           kind: selectedKind,
-          name: formData.get('name') as string,
+          name: !isUndefined(props.repository) ? props.repository.name : (formData.get('name') as string),
           url: formData.get('url') as string,
           displayName: formData.get('displayName') as string,
         };
@@ -346,6 +346,7 @@ const RepositoryModal = (props: Props) => {
             }}
             pattern="[a-z][a-z0-9-]*"
             autoComplete="off"
+            disabled={!isUndefined(props.repository)}
             required
           />
 
