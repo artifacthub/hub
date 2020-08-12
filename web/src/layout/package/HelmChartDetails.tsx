@@ -1,3 +1,4 @@
+import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
@@ -5,6 +6,7 @@ import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
+import Dependencies from './Dependencies';
 import Keywords from './Keywords';
 import License from './License';
 import Links from './Links';
@@ -43,6 +45,10 @@ const HelmChartDetails = (props: Props) => {
       <Maintainers maintainers={props.package.maintainers} />
 
       <License license={props.package.license} />
+
+      {!isUndefined(props.package.data) && !isNull(props.package.data) && (
+        <Dependencies dependencies={props.package.data.dependencies} />
+      )}
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

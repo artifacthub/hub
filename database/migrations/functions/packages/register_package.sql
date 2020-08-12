@@ -173,6 +173,7 @@ begin
         readme = excluded.readme,
         install = excluded.install,
         links = excluded.links,
+        data = excluded.data,
         deprecated = excluded.deprecated,
         license = excluded.license,
         signed = excluded.signed,

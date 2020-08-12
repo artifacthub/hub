@@ -162,6 +162,19 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if strings.Contains(strings.ToLower(md.Name), "operator") {
 		p.IsOperator = true
 	}
+	dependencies := make([]map[string]string, 0, len(md.Dependencies))
+	for _, dependency := range md.Dependencies {
+		dependencies = append(dependencies, map[string]string{
+			"name":       dependency.Name,
+			"version":    dependency.Version,
+			"repository": dependency.Repository,
+		})
+	}
+	if len(dependencies) > 0 {
+		p.Data = map[string]interface{}{
+			"dependencies": dependencies,
+		}
+	}
 
 	// Register package
 	w.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")

@@ -1602,6 +1602,20 @@ components:
                 type: string
               example:
                 policy1: "- macro: text\n  condition: (evt.num < 0)\n\n"
+            dependencies:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: mysql
+                version:
+                  type: string
+                  example: 1.6.4
+                repository:
+                  type: string
+                  example: http://repo.url
+              example:
+                policy1: "- macro: text\n  condition: (evt.num < 0)\n\n"
           nullable: true
     RepositoryKind:
       type: integer
