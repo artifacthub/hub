@@ -27,7 +27,7 @@ const AnchorHeader: React.ElementType = (props: Props) => {
 
   return (
     <span className={styles.header}>
-      <Tag id={anchor} className={`position-relative ${styles.headingWrapper}`}>
+      <Tag id={anchor} className={`position-relative anchorHeader ${styles.headingWrapper}`}>
         <a
           data-testid="anchorHeaderLink"
           href={`${history.location.pathname}#${anchor}`}

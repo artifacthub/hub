@@ -118,7 +118,11 @@ exports[`ChartDetails creates snapshot 1`] = `
               fill-rule="evenodd"
             />
           </svg>
-          maintainerName
+          <div
+            class="text-truncate linkText"
+          >
+            maintainerName
+          </div>
         </div>
       </a>
     </div>

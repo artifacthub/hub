@@ -9,6 +9,7 @@ interface PreferencesList {
 const LS_ITEM = 'prefs';
 const DEFAULT_SEARCH_LIMIT = 15;
 const DEFAULT_THEME = 'light';
+const LS_ACTIVE_PROFILE = 'activeProfile';
 const DEFAULT_PREFS: Prefs = {
   search: { limit: DEFAULT_SEARCH_LIMIT },
   controlPanel: {},
@@ -78,6 +79,19 @@ export class LocalStoragePreferences {
       }
     }
     return prefs;
+  }
+
+  public getActiveProfile(): Prefs {
+    const activeProfile = window.localStorage.getItem(LS_ACTIVE_PROFILE);
+    return this.getPrefs(activeProfile || undefined);
+  }
+
+  public setActiveProfile(profile?: string) {
+    try {
+      window.localStorage.setItem(LS_ACTIVE_PROFILE, profile || 'guest');
+    } catch {
+      // Incognite mode
+    }
   }
 }
 

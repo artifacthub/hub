@@ -2,15 +2,17 @@ import './App.css';
 import '../themes/default.scss';
 
 import classnames from 'classnames';
+import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaGithub, FaSlack, FaTwitter } from 'react-icons/fa';
 import { FiExternalLink, FiHexagon } from 'react-icons/fi';
 import { Route, Router, Switch } from 'react-router-dom';
 
-import { AppCtxProvider } from '../context/AppCtx';
+import { AppCtxProvider, updateActiveStyleSheet } from '../context/AppCtx';
 import buildSearchParams from '../utils/buildSearchParams';
 import history from '../utils/history';
+import lsPreferences from '../utils/localStoragePreferences';
 import styles from './App.module.css';
 import AlertController from './common/AlertController';
 import ExternalLink from './common/ExternalLink';
@@ -34,7 +36,19 @@ const getQueryParam = (query: string, param: string): string | undefined => {
 export default function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingPackage, setIsLoadingPackage] = useState(false);
+  const [activeInitialTheme, setActiveInitialTheme] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState<undefined | number>(undefined);
+
+  useEffect(() => {
+    const activeProfile = lsPreferences.getActiveProfile();
+    const theme = activeProfile.theme.efective || activeProfile.theme.configured;
+    if (!isUndefined(theme)) {
+      updateActiveStyleSheet(theme);
+      setActiveInitialTheme(theme);
+    }
+  }, []);
+
+  if (isNull(activeInitialTheme)) return null;
 
   return (
     <AppCtxProvider>

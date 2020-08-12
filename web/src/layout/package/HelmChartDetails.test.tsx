@@ -58,7 +58,7 @@ describe('ChartDetails', () => {
 
       const maintainer = queryByText('maintainerName');
       expect(maintainer).toBeInTheDocument();
-      expect(maintainer!.parentElement).toHaveProperty('href', 'mailto:main@tainer.com');
+      expect(maintainer!.closest('a')).toHaveProperty('href', 'mailto:main@tainer.com');
 
       expect(getByText('1.0.0')).toBeInTheDocument();
       expect(getAllByText('-')).toHaveLength(2);

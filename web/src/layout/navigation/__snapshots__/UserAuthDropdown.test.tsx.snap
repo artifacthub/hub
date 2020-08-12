@@ -14,7 +14,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
         class="d-flex flex-row align-items-center justify-content-center"
       >
         <div
-          class="rounded-circle d-flex align-items-center justify-content-center textLight imageWrapper iconWrapper"
+          class="rounded-circle d-flex align-items-center justify-content-center textLight userAuth imageWrapper iconWrapper"
         >
           <svg
             class="rounded-circle"

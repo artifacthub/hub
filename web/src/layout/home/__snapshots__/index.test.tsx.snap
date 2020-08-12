@@ -317,22 +317,22 @@ exports[`Home index creates snapshot 1`] = `
             <img
               alt="Icon"
               class="aboutIcon repoIcon"
-              src="/static/media/helm-chart-white.svg"
+              src="/static/media/helm-chart-light.svg"
             />
             <img
               alt="Icon"
               class="aboutIcon repoIcon"
-              src="/static/media/falco-rules-white.svg"
+              src="/static/media/falco-rules-light.svg"
             />
             <img
               alt="Icon"
               class="aboutIcon repoIcon"
-              src="/static/media/opa-policies-white.svg"
+              src="/static/media/opa-policies-light.svg"
             />
             <img
               alt="Icon"
               class="aboutIcon repoIcon"
-              src="/static/media/olm-operators-white.svg"
+              src="/static/media/olm-operators-light.svg"
             />
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.

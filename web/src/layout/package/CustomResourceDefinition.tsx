@@ -23,8 +23,6 @@ const CustomResourceDefinition = (props: Props) => {
       if (!isNull(selectedCustomResourceDef) && !isUndefined(selectedCustomResourceDef.example)) {
         yamlExample = YAML.stringify(selectedCustomResourceDef.example);
       }
-
-      console.log(yamlExample);
       return yamlExample;
     };
 
