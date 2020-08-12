@@ -88,9 +88,16 @@ export interface CustomResourcesDefinition {
   example?: CustomResourcesDefinitionExample;
 }
 
+export interface Dependency {
+  name: string;
+  version: string;
+  repository?: string;
+}
+
 export interface PackageData {
   policies?: OPAPolicies;
   rules?: { raw: string }[];
+  dependencies?: Dependency[];
   capabilities?: string;
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];

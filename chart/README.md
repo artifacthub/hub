@@ -31,8 +31,9 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 The chart installs one `cronjob` in charge of launching periodically (every 30m) the tracker, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the job is triggered by the cronjob, you can create one manually using the following command:
 
-````bash
+```bash
 $ kubectl create job initial-tracker-job --from=cronjob/tracker
+```
 
 ## Uninstalling the Chart
 
@@ -40,7 +41,7 @@ To uninstall the `hub` deployment run:
 
 ```bash
 $ helm uninstall hub
-````
+```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
