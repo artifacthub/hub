@@ -5,3 +5,8 @@
 .option {
   line-height: 1.15rem;
 }
+
+.isDisabled .option {
+  color: var(--mid-gray);
+  opacity: 0.75;
+}

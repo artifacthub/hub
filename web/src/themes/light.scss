@@ -1,11 +1,3 @@
-// $theme-colors: (
-//   primary: #659dbd,
-//   secondary: #39596c,
-// );
-
-// $body-bg: #f9f9f9;
-// $body-color: #38383f;
-
 [data-theme='light'] {
   --border-md: #eaecef;
   --code-bg-md: #f6f8fa;
@@ -38,6 +30,8 @@
 
   --color-font: #38383f;
   --body-bg: #f9f9f9;
+  --light-gray: #e9ecef;
+  --mid-gray: #495057;
 
   // $theme-colors for Bootstrap
   $color1: #659dbd;

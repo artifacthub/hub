@@ -37,8 +37,10 @@
   --body-bg: #222529;
 
   --hightlighted: #1164a3;
+  --light-gray: var(--body-bg);
+  --mid-gray: #495057;
 
-  --border-solid: #737475;
+  $border-solid: #737475;
 
   body {
     background-color: var(--body-bg);
@@ -60,7 +62,7 @@
 
     th,
     td {
-      border-color: var(--border-solid);
+      border-color: $border-solid;
     }
   }
 
@@ -69,7 +71,7 @@
   .table-primary > th {
     background-color: var(--color-1-500);
     color: var(--color-font);
-    border-color: var(--border-solid) !important;
+    border-color: $border-solid !important;
   }
 
   .table-hover .table-primary:hover,
@@ -79,7 +81,7 @@
   }
 
   .table-bordered td {
-    border-color: var(--border-solid) !important;
+    border-color: $border-solid !important;
   }
 
   .table-hover tbody tr:hover {
@@ -93,17 +95,26 @@
 
   .navbarBtn {
     color: $font-color !important;
+
+    &:hover {
+      color: $font-color-light !important;
+    }
   }
 
   .btn-primary,
   .btn-secondary,
   .btn-light,
   a.badge-secondary {
-    @include button-variant($color1, rgba(209, 210, 211, 0.13));
+    @include button-variant($color1, $border-solid);
+
+    &:hover,
+    &:focus {
+      color: $font-color-light;
+    }
   }
 
   .btn-success {
-    @include button-variant(#275000, rgba(209, 210, 211, 0.13));
+    @include button-variant(#275000, $border-solid);
   }
 
   .badge-secondary {
@@ -122,18 +133,15 @@
   }
 
   .btn-outline-secondary {
-    @include button-outline-variant($font-color);
+    @include button-variant($color1, $border-solid);
 
     img {
       filter: grayscale(100%) invert(1) brightness(2);
     }
 
-    &:hover {
-      color: var(--color-1-900) !important;
-
-      img {
-        filter: grayscale(100%) invert(1) brightness(0);
-      }
+    &:hover,
+    &:focus {
+      color: $font-color-light;
     }
   }
 
@@ -194,11 +202,15 @@
   }
 
   .activeVersion {
-    color: var(--hightlighted);
+    & > span {
+      color: var(--hightlighted);
+    }
   }
 
-  .card:hover {
-    border-color: rgba(209, 210, 211, 0.13) !important;
+  @media (hover: hover) {
+    .cardWithHover:hover {
+      border-color: var(--color-black-25) !important;
+    }
   }
 
   .btn {
@@ -207,6 +219,7 @@
 
   .text-muted {
     color: $font-color !important;
+    opacity: 0.65;
   }
 
   a.textLight,
@@ -228,7 +241,7 @@
   }
 
   .anchorHeader {
-    color: $font-color-lighter !important;
+    color: $font-color-light !important;
   }
 
   .card a.text-primary {
@@ -305,7 +318,12 @@
   .bg-light {
     background-color: var(--body-bg) !important;
     color: var(--color-font) !important;
-    border-color: var(--border-md) !important;
+    border-color: $border-solid !important;
+  }
+
+  *:disabled,
+  .disabled {
+    color: $font-color !important;
   }
 
   .text-dark {
@@ -468,11 +486,16 @@
 
   .stepWrapper {
     &:not(:last-child)::before {
-      background-color: var(--color-black-25) !important;
+      background-color: $border-solid !important;
     }
 
     .step {
       background-color: var(--color-black-25) !important;
+      border-color: $border-solid;
+
+      &.activeStep {
+        background-color: var(--hightlighted) !important;
+      }
     }
   }
 

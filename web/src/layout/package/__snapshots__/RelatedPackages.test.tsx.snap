@@ -24,7 +24,7 @@ exports[`RelatedPackages renders correctly 2`] = `
     >
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"
@@ -103,7 +103,7 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"
@@ -181,7 +181,7 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"
@@ -260,7 +260,7 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"
@@ -339,7 +339,7 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"
@@ -418,7 +418,7 @@ exports[`RelatedPackages renders correctly 2`] = `
       </div>
       <div>
         <div
-          class="card mb-2 w-100 relatedCard card"
+          class="card cardWithHover mb-2 w-100 relatedCard card"
         >
           <a
             class="text-decoration-none text-reset link"

@@ -18,7 +18,7 @@ interface Props {
 const PackageCard = (props: Props) => {
   return (
     <div className="py-2" role="listitem">
-      <div className={`card h-100 ${styles.card}`}>
+      <div className={`card cardWithHover h-100 ${styles.card}`}>
         <div>
           <div className={`card-body position-relative ${styles.body}`}>
             <Link
