@@ -121,7 +121,7 @@ function updateAutomaticTheme(currentPrefs: Prefs, enabled: boolean): Prefs {
   };
 }
 
-function updateActiveStyleSheet(current: string) {
+export function updateActiveStyleSheet(current: string) {
   document.getElementsByTagName('html')[0].setAttribute('data-theme', current);
 }
 
@@ -142,11 +142,12 @@ export function appReducer(state: AppState, action: Action) {
       const tmpUserPrefs = lsStorage.getPrefs(action.profile.alias);
       const userPrefs = { ...tmpUserPrefs, theme: getCurrentSystemActiveTheme(tmpUserPrefs.theme) };
       updateActiveStyleSheet(userPrefs.theme.efective || userPrefs.theme.configured);
-
+      lsStorage.setActiveProfile(action.profile.alias);
       return {
         user: action.profile,
         prefs: userPrefs,
       };
+
     case 'unselectOrg':
       const unselectedOrgPrefs = updateSelectedOrg(state.prefs);
       lsStorage.setPrefs(unselectedOrgPrefs, state.user!.alias);
@@ -155,11 +156,14 @@ export function appReducer(state: AppState, action: Action) {
         ...state,
         prefs: unselectedOrgPrefs,
       };
+
     case 'signOut':
       const tmpGuestPrefs = lsStorage.getPrefs();
       const guestPrefs = { ...tmpGuestPrefs, theme: getCurrentSystemActiveTheme(tmpGuestPrefs.theme) };
+      lsStorage.setActiveProfile();
       updateActiveStyleSheet(guestPrefs.theme.efective || guestPrefs.theme.configured);
       return { user: null, prefs: guestPrefs };
+
     case 'updateOrg':
       const newPrefs = updateSelectedOrg(state.prefs, action.name);
       lsStorage.setPrefs(newPrefs, state.user!.alias);
@@ -170,6 +174,7 @@ export function appReducer(state: AppState, action: Action) {
         ...state,
         prefs: newPrefs,
       };
+
     case 'updateLimit':
       const updatedPrefs = {
         ...state.prefs,
@@ -183,6 +188,7 @@ export function appReducer(state: AppState, action: Action) {
         ...state,
         prefs: updatedPrefs,
       };
+
     case 'updateTheme':
       const updatedUserPrefs = {
         ...state.prefs,
@@ -197,7 +203,6 @@ export function appReducer(state: AppState, action: Action) {
         !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined
       );
       updateActiveStyleSheet(action.theme);
-
       return {
         ...state,
         prefs: updatedUserPrefs,
@@ -216,7 +221,6 @@ export function appReducer(state: AppState, action: Action) {
         !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined
       );
       updateActiveStyleSheet(action.theme);
-
       return {
         ...state,
         prefs: updatedThemePrefs,
@@ -233,8 +237,10 @@ export function appReducer(state: AppState, action: Action) {
         ...state,
         prefs: updatedThemeUserPrefs,
       };
+
     case 'updateUser':
       lsStorage.updateAlias(state.user!.alias, action.user.alias);
+      lsStorage.setActiveProfile(action.user.alias);
       return {
         ...state,
         user: {

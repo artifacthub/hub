@@ -62,10 +62,10 @@ const Links = (props: Props) => {
         {props.homeUrl && (
           <div className="py-1 py-sm-0">
             <ExternalLink href={props.homeUrl} className="text-primary d-flex align-items-start mb-1 text-capitalize">
-              <>
+              <div className="d-flex flex-row align-items-start mw-100">
                 {getIconLink('homepage')}
-                Homepage
-              </>
+                <div className={`flex-grow-1 ${styles.linkText}`}>Homepage</div>
+              </div>
             </ExternalLink>
           </div>
         )}

@@ -86,7 +86,7 @@ const Navbar = (props: Props) => {
                       <button
                         type="button"
                         className={classnames(
-                          'btn btn-disabled pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
+                          'btn navbarBtn pl-0 pr-0 font-weight-bold text-uppercase position-relative text-nowrap',
                           styles.button
                         )}
                         onClick={() => setOpenSignUp(true)}
@@ -99,7 +99,7 @@ const Navbar = (props: Props) => {
                       <button
                         type="button"
                         className={classnames(
-                          'btn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
+                          'btn navbarBtn font-weight-bold pr-0 pl-0 text-uppercase position-relative text-nowrap',
                           styles.button
                         )}
                         onClick={() => setOpenLogIn(true)}

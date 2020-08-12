@@ -50,6 +50,8 @@
   $color2: #8c96a1;
 
   $font-color: #a3a3a6;
+  $font-color-light: #cbd3da;
+  $font-color-lighter: #f8f9fa;
 
   .table {
     background-color: var(--color-1-700) !important;
@@ -89,12 +91,13 @@
     border-color: var(--border-md) !important;
   }
 
-  .btn {
-    color: var(--color-font) !important;
+  .navbarBtn {
+    color: $font-color !important;
   }
 
   .btn-primary,
   .btn-secondary,
+  .btn-light,
   a.badge-secondary {
     @include button-variant($color1, rgba(209, 210, 211, 0.13));
   }
@@ -109,13 +112,12 @@
     color: var(--color-1-500);
   }
 
-  .rssBadge {
-    border-color: var(--border-md) !important;
+  a.rssBadge {
     background-color: var(--color-font) !important;
     color: var(--color-1-500) !important;
 
     &:hover {
-      background-color: var(--color-1-20) !important;
+      background-color: $font-color-lighter !important;
     }
   }
 
@@ -141,7 +143,7 @@
   .form-control {
     background-color: var(--body-bg);
     border-color: $color2;
-    color: var(--color-font);
+    color: $font-color;
   }
 
   .custom-control-input:checked ~ .custom-control-label::before {
@@ -157,7 +159,7 @@
   .list-group-item {
     &:hover,
     &:focus {
-      color: var(--color-font);
+      color: $font-color;
       background-color: var(--color-1-500);
     }
   }
@@ -166,26 +168,16 @@
     background-color: var(--color-1-500);
   }
 
-  .btn-link,
-  a:not(.navbar-brand) {
-    color: var(--color-font);
-
-    &:hover,
-    &:focus {
-      color: darken($font-color, 0.3) !important;
-    }
-  }
-
   .nav-item .btn:hover::before {
-    background-color: var(--color-font);
+    background-color: $font-color;
   }
 
   .navbar-brand {
-    color: lighten($font-color, 0.5);
+    color: $font-color-lighter;
 
     &:hover,
     &:focus {
-      color: inherit !important;
+      color: $font-color-lighter !important;
     }
   }
 
@@ -205,47 +197,71 @@
     color: var(--hightlighted);
   }
 
-  .card a.text-primary {
-    color: var(--color-font) !important;
-  }
-
   .card:hover {
     border-color: rgba(209, 210, 211, 0.13) !important;
   }
 
   .btn {
-    color: var(--color-font);
+    color: $font-color;
   }
 
-  .text-muted,
+  .text-muted {
+    color: $font-color !important;
+  }
+
+  a.textLight,
+  a.text-primary,
+  .anchorHeader {
+    &:hover,
+    &:focus {
+      color: $font-color;
+    }
+  }
+
   .textLight {
-    color: var($font-color) !important;
+    color: $font-color-light !important;
   }
 
-  a.textLight:hover,
-  a.textLight:focus {
-    color: #cbd3da !important;
-  }
-
-  .text-primary {
-    color: #f8f9fa !important;
-  }
-
+  .text-primary,
   .text-secondary {
     color: $font-color !important;
+  }
+
+  .anchorHeader {
+    color: $font-color-lighter !important;
+  }
+
+  .card a.text-primary {
+    color: $font-color !important;
+
+    &:hover > *,
+    &:focus > * {
+      color: $font-color-light !important;
+    }
+  }
+
+  .btn-link,
+  a.text-secondary,
+  a:not(.navbar-brand) {
+    color: $font-color;
+
+    &:hover,
+    &:focus {
+      color: $font-color-light;
+    }
   }
 
   .page-link {
     background-color: var(--color-1-300);
     color: $font-color;
-    border-color: var(--color-font);
+    border-color: $font-color;
   }
 
   .page-item {
     &.disabled .page-link {
       background-color: var(--color-black-15) !important;
       color: $font-color;
-      border-color: var(--color-font);
+      border-color: $font-color;
     }
 
     &.active .page-link {
@@ -257,7 +273,7 @@
   .dropdown-menu {
     background-color: rgba(0, 0, 0, 0.95);
     border-color: var(--border-md);
-    color: var(--color-font);
+    color: $font-color;
 
     .arrow {
       &::after,
@@ -309,6 +325,11 @@
     background-color: var(--color-1-900);
     color: var(--color-font);
     border-color: var(--border-md);
+  }
+
+  .alert-danger {
+    background-color: #921e12;
+    color: #f5c6cb;
   }
 
   // Modifiers
@@ -455,7 +476,8 @@
     }
   }
 
-  .iconSubsWrapper {
+  .iconSubsWrapper,
+  .userAuth {
     border-color: var(--border-md);
   }
 

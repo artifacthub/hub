@@ -330,7 +330,7 @@ const PackageView = (props: Props) => {
       )}
 
       <div data-testid="mainPackage" className="position-relative flex-grow-1">
-        {isLoadingPackage && <Loading />}
+        {isLoadingPackage && <Loading className="position-fixed" />}
 
         {!isUndefined(detail) && (
           <>

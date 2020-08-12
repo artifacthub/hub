@@ -124,10 +124,10 @@ describe('Details', () => {
   describe('Home url', () => {
     it('renders correctly', () => {
       const mockPackage = getMockPackage('9');
-      const { queryByText } = render(<Details {...defaultProps} package={mockPackage} />);
-      const homeUrl = queryByText('Homepage');
+      const { getByText } = render(<Details {...defaultProps} package={mockPackage} />);
+      const homeUrl = getByText('Homepage');
       expect(homeUrl).toBeInTheDocument();
-      expect(homeUrl).toHaveAttribute('href', mockPackage.homeUrl);
+      expect(homeUrl.closest('a')).toHaveAttribute('href', mockPackage.homeUrl);
     });
   });
 

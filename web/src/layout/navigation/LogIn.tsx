@@ -67,8 +67,8 @@ const LogIn = (props: Props) => {
     try {
       await API.login(user);
       setIsLoading({ status: false });
-      props.setOpenLogIn(false);
       dispatch(refreshUserProfile(dispatch, props.redirect));
+      props.setOpenLogIn(false);
     } catch (err) {
       let error = compoundErrorMessage(err, 'An error occurred signing in');
       if (err.kind === ErrorKind.Unauthorized) {

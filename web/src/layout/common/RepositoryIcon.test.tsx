@@ -38,10 +38,10 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/olm-operators.svg');
   });
 
-  it('renders Chart icon - white version', () => {
+  it('renders Chart icon - light version', () => {
     const { getByAltText } = render(<RepositoryIcon kind={RepositoryKind.Helm} type="white" />);
     const icon = getByAltText('Icon');
     expect(icon).toBeInTheDocument();
-    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-chart-white.svg');
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/helm-chart-light.svg');
   });
 });

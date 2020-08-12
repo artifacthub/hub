@@ -40,7 +40,7 @@ describe('Links', () => {
       expect(links).toHaveLength(3);
 
       const homeUrl = getByText('Homepage');
-      expect(homeUrl).toHaveProperty('href', defaultProps.homeUrl);
+      expect(homeUrl.closest('a')).toHaveProperty('href', defaultProps.homeUrl);
 
       expect(links[1]).toHaveTextContent(defaultProps.links[0].name);
       expect(links[1]).toHaveProperty('href', defaultProps.links[0].url);

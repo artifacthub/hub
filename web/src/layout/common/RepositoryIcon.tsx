@@ -12,19 +12,19 @@ interface Props {
 const ICONS = {
   [RepositoryKind.Helm]: {
     default: '/static/media/helm-chart.svg',
-    white: '/static/media/helm-chart-white.svg',
+    white: '/static/media/helm-chart-light.svg',
   },
   [RepositoryKind.Falco]: {
     default: '/static/media/falco-rules.svg',
-    white: '/static/media/falco-rules-white.svg',
+    white: '/static/media/falco-rules-light.svg',
   },
   [RepositoryKind.OPA]: {
     default: '/static/media/opa-policies.svg',
-    white: '/static/media/opa-policies-white.svg',
+    white: '/static/media/opa-policies-light.svg',
   },
   [RepositoryKind.OLM]: {
     default: '/static/media/olm-operators.svg',
-    white: '/static/media/olm-operators-white.svg',
+    white: '/static/media/olm-operators-light.svg',
   },
 };
 

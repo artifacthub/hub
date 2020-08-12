@@ -6,6 +6,7 @@ import { GiEnvelope } from 'react-icons/gi';
 import { Maintainer } from '../../types';
 import ExternalLink from '../common/ExternalLink';
 import SmallTitle from '../common/SmallTitle';
+import styles from './Maintainers.module.css';
 
 interface Props {
   maintainers?: Maintainer[] | undefined;
@@ -22,7 +23,7 @@ const Maintainers = (props: Props) => {
             <ExternalLink href={`mailto:${maintainer.email}`} className="text-primary py-1 py-sm-0">
               <div className="d-flex align-items-center">
                 <GiEnvelope className="text-muted mr-2 h6 mb-0" />
-                <>{maintainer.name || maintainer.email}</>
+                <div className={`text-truncate ${styles.linkText}`}>{maintainer.name || maintainer.email}</div>
               </div>
             </ExternalLink>
           </div>
