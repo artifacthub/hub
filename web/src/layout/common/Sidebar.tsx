@@ -66,7 +66,7 @@ const Sidebar = (props: Props) => {
       <div
         data-testid="sidebarContent"
         ref={ref}
-        className={classnames(styles.sidebar, styles[direction], { [styles.active]: openStatus })}
+        className={classnames('sidebar', styles.sidebar, styles[direction], { [styles.active]: openStatus })}
       >
         <div className="d-flex flex-column h-100">
           <div className="border-bottom p-4 pb-3">

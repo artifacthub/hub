@@ -75,7 +75,7 @@ const Navbar = (props: Props) => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav align-items-center ml-auto">
             {isUndefined(ctx) || isUndefined(ctx.user) ? (
-              <div className="spinner-grow spinner-grow-sm textLight" role="status">
+              <div className="spinner-grow spinner-grow-sm textLight pt-1" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (

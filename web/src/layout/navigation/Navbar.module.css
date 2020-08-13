@@ -1,6 +1,7 @@
 .navbar {
   background-color: var(--color-1-500);
   padding: 1rem !important;
+  min-height: 73px;
   z-index: 1001;
 }
 
@@ -45,6 +46,7 @@
 @media (max-width: 767.98px) {
   .mobileWrapper {
     width: 100%;
+    min-height: 54px;
   }
 }
 
