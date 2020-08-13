@@ -120,7 +120,7 @@ exports[`Search index creates snapshot 2`] = `
             </div>
           </button>
           <div
-            class="sidebar left"
+            class="sidebar sidebar left"
             data-testid="sidebarContent"
           >
             <div

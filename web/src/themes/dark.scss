@@ -359,6 +359,10 @@
     }
   }
 
+  .sidebar {
+    box-shadow: none !important;
+  }
+
   .homeCard:not(:last-child) {
     border-color: var(--border-md);
   }

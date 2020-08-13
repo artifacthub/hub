@@ -39,7 +39,7 @@ const ThemeMode = (props: Props) => {
               name="theme"
               id="automatic"
               value="automatic"
-              defaultChecked={automatic}
+              checked={automatic}
               readOnly
             />
             <label

@@ -17,7 +17,7 @@ const Dependencies = (props: Props) => {
     <div className="mb-3">
       <SmallTitle text="Dependencies" />
       {props.dependencies.map((dependency: Dependency, index: number) => (
-        <div key={`dependency_${index}`} className={`${styles.dependency} pb-1`}>
+        <div key={`dependency_${index}`} className={`${styles.dependency} text-truncate pb-1`}>
           <GoPackage className="text-muted mr-2 mb-0" />
           {dependency.name}
           <span className={styles.separator}>@</span>

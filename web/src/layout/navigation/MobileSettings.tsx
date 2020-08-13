@@ -45,7 +45,7 @@ const MobileSettings = (props: Props) => {
   return (
     <div className={`btn-group navbar-toggler pr-0 ml-auto ${styles.navbarToggler}`}>
       {isUndefined(ctx.user) ? (
-        <div className="spinner-grow spinner-grow-sm textLight" role="status">
+        <div className="spinner-grow spinner-grow-sm textLight pt-2" role="status">
           <span className="sr-only">Loading...</span>
         </div>
       ) : (

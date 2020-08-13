@@ -1,6 +1,7 @@
 .label {
   font-size: 0.875rem;
   width: 100%;
+  line-height: 1.5rem;
 }
 
 .input,

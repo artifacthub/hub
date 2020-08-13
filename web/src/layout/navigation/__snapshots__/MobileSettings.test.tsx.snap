@@ -37,7 +37,7 @@ exports[`MobileSettings creates snapshot 1`] = `
         </div>
       </button>
       <div
-        class="sidebar right"
+        class="sidebar sidebar right"
         data-testid="sidebarContent"
       >
         <div
