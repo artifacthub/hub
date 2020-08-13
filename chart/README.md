@@ -11,7 +11,7 @@ This chart bootstraps an Artifact Hub deployment on a [Kubernetes](http://kubern
 To install the chart with the release name `hub` run:
 
 ```bash
-$ helm repo add artifact-hub https://artifacthub.github.io/hub
+$ helm repo add artifact-hub https://artifacthub.github.io/hub/chart
 $ helm install --name hub artifact-hub/artifact-hub
 ```
 
