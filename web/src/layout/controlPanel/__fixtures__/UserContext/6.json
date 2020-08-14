@@ -1,0 +1,20 @@
+[
+  {
+    "name": "test",
+    "displayName": null,
+    "description": null,
+    "homeUrl": null,
+    "logoImageId": null,
+    "confirmed": true,
+    "membersCount": 2
+  },
+  {
+    "name": "test1",
+    "displayName": "Test name",
+    "description": "This is a org description",
+    "homeUrl": "http://test.com",
+    "logoImageId": null,
+    "confirmed": true,
+    "membersCount": 1
+  }
+]

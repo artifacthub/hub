@@ -72,6 +72,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none text-reset link"
+                      data-testid="imageLink"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
@@ -448,6 +449,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none text-reset link"
+                      data-testid="imageLink"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
@@ -824,6 +826,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none text-reset link"
+                      data-testid="imageLink"
                       href="/packages/helm/gabibbo97/undefined"
                     >
                       <div
@@ -1199,6 +1202,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none text-reset link"
+                      data-testid="imageLink"
                       href="/packages/helm/halkeye/undefined"
                     >
                       <div
@@ -1575,6 +1579,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   >
                     <a
                       class="text-decoration-none text-reset link"
+                      data-testid="imageLink"
                       href="/packages/helm/billimek/undefined"
                     >
                       <div

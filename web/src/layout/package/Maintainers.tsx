@@ -9,7 +9,7 @@ import SmallTitle from '../common/SmallTitle';
 import styles from './Maintainers.module.css';
 
 interface Props {
-  maintainers?: Maintainer[] | undefined;
+  maintainers?: Maintainer[] | null;
 }
 
 const Maintainers = (props: Props) => {

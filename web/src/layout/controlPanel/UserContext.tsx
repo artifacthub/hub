@@ -64,6 +64,7 @@ const UserContext = () => {
         <small className={`text-uppercase text-muted ${styles.legendCtx}`}>Control panel context</small>
         <div className="d-flex flex-row align-items-center">
           <button
+            data-testid="ctxBtn"
             className={`btn btn-primary badge-pill btn-sm pr-3 position-relative ${styles.ctxBtn}`}
             type="button"
             onClick={() => {
@@ -95,16 +96,20 @@ const UserContext = () => {
           </button>
         </div>
         {isLoading && (
-          <div className={`position-absolute text-secondary ${styles.loading}`}>
+          <div className={`position-absolute text-secondary ${styles.loading}`} role="status">
             <span className="spinner-border spinner-border-sm" />
           </div>
         )}
       </div>
 
-      <div ref={ref} className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}>
+      <div
+        ref={ref}
+        data-testid="ctxDropdown"
+        className={classnames('dropdown-menu dropdown-menu-right', styles.dropdown, { show: openStatus })}
+      >
         <div className={`arrow ${styles.arrow}`} />
 
-        <button className="dropdown-item" onClick={() => handleChange(alias)}>
+        <button data-testid="userCtxBtn" className="dropdown-item" onClick={() => handleChange(alias)}>
           <div className="d-flex flex-row align-items-center">
             <FaUser className="mr-2" />
             <span>{alias}</span>
@@ -114,7 +119,12 @@ const UserContext = () => {
         {!isNull(organizations) && (
           <>
             {organizations.map((org: Organization) => (
-              <button key={`opt_${org.name}`} className="dropdown-item" onClick={() => handleChange(org)}>
+              <button
+                data-testid="orgCtxBtn"
+                key={`opt_${org.name}`}
+                className="dropdown-item"
+                onClick={() => handleChange(org)}
+              >
                 <div className="d-flex flex-row align-items-center">
                   <MdBusiness className="mr-2" />
                   <span>{org.name}</span>

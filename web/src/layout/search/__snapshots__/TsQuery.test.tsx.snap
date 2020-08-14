@@ -1,0 +1,299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TsQuery creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mt-3 mt-sm-4 pt-1"
+    role="menuitem"
+  >
+    <div
+      class="mt-2 mb-1"
+      data-testid="smallTitle"
+    >
+      <small
+        class="card-title text-muted text-uppercase"
+      >
+        <span
+          class="text-secondary font-weight-bold"
+        >
+          Category
+        </span>
+      </small>
+    </div>
+    <div
+      class="mt-3"
+    >
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-database"
+          name="tsQuery"
+          type="checkbox"
+          value="database"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-database"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Database
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-integration-and-delivery"
+          name="tsQuery"
+          type="checkbox"
+          value="integration-and-delivery"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-integration-and-delivery"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Integration and Delivery
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-logging-and-tracing"
+          name="tsQuery"
+          type="checkbox"
+          value="logging-and-tracing"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-logging-and-tracing"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Logging and Tracing
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-machine-learning"
+          name="tsQuery"
+          type="checkbox"
+          value="machine-learning"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-machine-learning"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Machine learning
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-monitoring"
+          name="tsQuery"
+          type="checkbox"
+          value="monitoring"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-monitoring"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Monitoring
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-networking"
+          name="tsQuery"
+          type="checkbox"
+          value="networking"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-networking"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Networking
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-security"
+          name="tsQuery"
+          type="checkbox"
+          value="security"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-security"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Security
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-storage"
+          name="tsQuery"
+          type="checkbox"
+          value="storage"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-storage"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Storage
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-streaming-messaging"
+          name="tsQuery"
+          type="checkbox"
+          value="streaming-messaging"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-streaming-messaging"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Streaming and Messaging
+            </span>
+          </div>
+        </label>
+      </div>
+      <div
+        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+      >
+        <input
+          class="custom-control-input input"
+          data-testid="checkbox"
+          id="tsQuery-web-applications"
+          name="tsQuery"
+          type="checkbox"
+          value="web-applications"
+        />
+        <label
+          class="custom-control-label w-100 label"
+          data-testid="checkboxLabel"
+          for="tsQuery-web-applications"
+        >
+          <div
+            class="d-flex align-items-baseline mw-100"
+          >
+            <span
+              class="d-inline-block text-truncate"
+            >
+              Web applications
+            </span>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -40,7 +40,7 @@ const CustomResourceDefinition = (props: Props) => {
       {props.resources.map((resourceDefinition: CustomResourcesDefinition) => {
         return (
           <div className="col-12 col-lg-6 mb-4" key={`resourceDef_${resourceDefinition.kind}`}>
-            <div className="card h-100">
+            <div className="card h-100" data-testid="resourceDefinition">
               <div className="card-body d-flex flex-column">
                 <h6 className="card-title mb-3">{resourceDefinition.displayName || resourceDefinition.name}</h6>
                 <small className={`card-text text-muted overflow-hidden ${styles.lineClamp}`}>
@@ -70,6 +70,7 @@ const CustomResourceDefinition = (props: Props) => {
                   {!isUndefined(resourceDefinition.example) && (
                     <div className="text-right mt-1">
                       <button
+                        data-testid="resourceDefinitionBtn"
                         className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                         onClick={() =>
                           setSelectedCustomResourceDef(

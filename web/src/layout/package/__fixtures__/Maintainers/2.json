@@ -1,0 +1,13 @@
+[
+  {
+    "name": "maintainer1",
+    "email": "maintainer1@email.net"
+  },
+  {
+    "name": "maintainer2",
+    "email": "maintainer2@email.net"
+  },
+  {
+    "email": "maintainer3@email.net"
+  }
+]

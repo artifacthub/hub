@@ -7,7 +7,7 @@ interface Props {
 }
 
 const SubNavbar = (props: Props) => (
-  <nav className={`navbar navbar-expand-sm ${styles.navbar}`}>
+  <nav className={`navbar navbar-expand-sm ${styles.navbar}`} role="navigation">
     <div className="container d-flex justify-content-between flex-nowrap">{props.children}</div>
   </nav>
 );

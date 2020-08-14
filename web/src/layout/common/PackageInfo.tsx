@@ -78,6 +78,7 @@ const PackageInfo = (props: Props) => {
         <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
           {props.withPackageLinks ? (
             <Link
+              data-testid="imageLink"
               className={`text-decoration-none text-reset ${styles.link}`}
               to={{
                 pathname: buildPackageURL(props.package),
