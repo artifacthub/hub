@@ -10,6 +10,15 @@ import Card from './Card';
 jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
 
+const mockHistoryReplace = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    replace: mockHistoryReplace,
+  }),
+}));
+
 const repoMock: Repository = {
   kind: 0,
   name: 'repoTest',
@@ -24,6 +33,7 @@ const onAuthErrorMock = jest.fn();
 
 const defaultProps = {
   repository: repoMock,
+  visibleTrackingErrorLogs: false,
   setModalStatus: setModalStatusMock,
   onSuccess: jest.fn(),
   onAuthError: onAuthErrorMock,
@@ -108,6 +118,57 @@ describe('Repository Card - packages section', () => {
         expect(getByTestId('transferRepoForm')).toBeInTheDocument();
         expect(getByText('Transfer repository')).toBeInTheDocument();
       });
+    });
+
+    it('opens logs modal when visibleTrackingErrorLogs is true and repo has errors', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          lastTrackingTs: moment().unix(),
+          lastTrackingErrors: 'errors tracking',
+        },
+        visibleTrackingErrorLogs: true,
+      };
+      const { getByText, getByRole } = render(<Card {...props} />);
+
+      expect(getByText('Show errors log')).toBeInTheDocument();
+
+      const modal = getByRole('dialog');
+      expect(modal).toBeInTheDocument();
+      expect(modal).toHaveClass('d-block');
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+    });
+
+    it('opens empty errors modal with default message when visibleTrackingErrorLogs is true and repo has not errors', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          lastTrackingTs: moment().unix(),
+        },
+        visibleTrackingErrorLogs: true,
+      };
+      const { queryByText, getByText, getByRole } = render(<Card {...props} />);
+
+      expect(queryByText('Show errors log')).toBeNull();
+
+      waitFor(() => {
+        expect(getByRole('dialog')).toBeInTheDocument();
+        expect(
+          getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
+        ).toBeInTheDocument();
+        expect(
+          getByText(
+            /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
+          )
+        ).toBeInTheDocument();
+      });
+
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
   });
 

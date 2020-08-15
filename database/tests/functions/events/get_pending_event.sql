@@ -30,8 +30,9 @@ select is(
     '{
         "event_id": "00000000-0000-0000-0000-000000000001",
         "event_kind": 0,
-        "package_version": "1.0.0",
-        "package_id": "00000000-0000-0000-0000-000000000001"
+        "repository_id": null,
+        "package_id": "00000000-0000-0000-0000-000000000001",
+        "package_version": "1.0.0"
     }'::jsonb,
     'An event should be returned'
 );

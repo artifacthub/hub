@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"context"
+	"sort"
 	"strings"
 	"sync"
 
@@ -67,10 +68,22 @@ func (c *DBErrorsCollector) Flush() {
 	defer c.mu.Unlock()
 
 	for repositoryID, errors := range c.errors {
+		// Sort error lines before flushing them. Trackers can process packages in
+		// a repository concurrently, and the order the errors are produced is not
+		// guaranteed. In order to be able to notify users when something goes
+		// wrong during repositories tracking, we need to be able to compare the
+		// errors produced among tracker executions.
+		errors := errors
+		sort.Slice(errors, func(i, j int) bool {
+			return errors[i].Error() < errors[j].Error()
+		})
+
 		var errStr strings.Builder
-		for _, err := range errors {
+		for i, err := range errors {
 			errStr.WriteString(err.Error())
-			errStr.WriteString("\n")
+			if i < len(errors)-1 {
+				errStr.WriteString("\n")
+			}
 		}
 		err := c.rm.SetLastTrackingResults(c.ctx, repositoryID, errStr.String())
 		if err != nil {

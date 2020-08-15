@@ -405,6 +405,72 @@ func TestGetAll(t *testing.T) {
 	db.AssertExpectations(t)
 }
 
+func TestGetByID(t *testing.T) {
+	dbQuery := "select get_repository_by_id($1::uuid)"
+	ctx := context.Background()
+	repoID := "00000000-0000-0000-0000-000000000001"
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			repoID string
+			errStr string
+		}{
+			{
+				"",
+				"repository id not provided",
+			},
+			{
+				"invalid",
+				"invalid repository id",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errStr, func(t *testing.T) {
+				m := NewManager(nil)
+
+				_, err := m.GetByID(ctx, tc.repoID)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errStr)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, repoID).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		r, err := m.GetByID(context.Background(), repoID)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, r)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, repoID).Return([]byte(`
+		{
+			"repository_id": "00000000-0000-0000-0000-000000000001",
+			"name": "repo1",
+			"display_name": "Repo 1",
+			"url": "https://repo1.com",
+			"kind": 0
+		}
+		`), nil)
+		m := NewManager(db)
+
+		r, err := m.GetByID(context.Background(), repoID)
+		require.NoError(t, err)
+		assert.Equal(t, repoID, r.RepositoryID)
+		assert.Equal(t, "repo1", r.Name)
+		assert.Equal(t, "Repo 1", r.DisplayName)
+		assert.Equal(t, "https://repo1.com", r.URL)
+		assert.Equal(t, hub.Helm, r.Kind)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetByKind(t *testing.T) {
 	dbQuery := "select get_repositories_by_kind($1::int)"
 	ctx := context.Background()
@@ -609,11 +675,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 func TestSetLastTrackingResults(t *testing.T) {
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
-	dbQuery := `
-	update repository set
-		last_tracking_ts = current_timestamp,
-		last_tracking_errors = nullif($2, '')
-	where repository_id = $1`
+	dbQuery := "select set_last_tracking_results($1::uuid, $2::text)"
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(nil)

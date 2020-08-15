@@ -145,7 +145,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if err == nil {
 		p.Signed = hasProvenanceFile
 	} else {
-		w.logger.Warn().Err(err).Msg("error checking provenance file")
+		w.warn(fmt.Errorf("error checking provenance file: %w", err))
 	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {

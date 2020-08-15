@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(112);
+select plan(115);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -58,9 +58,10 @@ select columns_are('event', array[
     'created_at',
     'processed',
     'processed_at',
-    'package_version',
+    'event_kind_id',
     'package_id',
-    'event_kind_id'
+    'package_version',
+    'repository_id'
 ]);
 select columns_are('event_kind', array[
     'event_kind_id',
@@ -225,8 +226,7 @@ select indexes_are('email_verification_code', array[
 ]);
 select indexes_are('event', array[
     'event_pkey',
-    'event_not_processed_idx',
-    'event_package_id_package_version_event_kind_id_key'
+    'event_not_processed_idx'
 ]);
 select indexes_are('image', array[
     'image_pkey',
@@ -347,17 +347,20 @@ select has_function('add_repository');
 select has_function('delete_repository');
 select has_function('get_all_repositories');
 select has_function('get_repositories_by_kind');
+select has_function('get_repository_by_id');
 select has_function('get_repository_by_name');
 select has_function('get_repository_packages_digest');
 select has_function('get_org_repositories');
 select has_function('get_user_repositories');
+select has_function('set_last_tracking_results');
 select has_function('transfer_repository');
 select has_function('update_repository');
 
 select has_function('add_subscription');
 select has_function('delete_subscription');
-select has_function('get_package_subscriptions');
-select has_function('get_subscriptors');
+select has_function('get_package_subscriptors');
+select has_function('get_repository_subscriptors');
+select has_function('get_user_package_subscriptions');
 select has_function('get_user_subscriptions');
 
 select has_function('get_user_profile');
@@ -372,7 +375,7 @@ select has_function('delete_webhook');
 select has_function('get_webhook');
 select has_function('get_org_webhooks');
 select has_function('get_user_webhooks');
-select has_function('get_webhooks_subscribed_to');
+select has_function('get_webhooks_subscribed_to_package');
 select has_function('update_webhook');
 select has_function('user_has_access_to_webhook');
 
@@ -393,7 +396,8 @@ select results_eq(
     'select * from event_kind',
     $$ values
         (0, 'New package release'),
-        (1, 'Security alert')
+        (1, 'Security alert'),
+        (2, 'Repository tracking errors')
     $$,
     'Event kinds should exist'
 );

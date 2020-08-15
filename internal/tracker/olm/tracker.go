@@ -240,8 +240,7 @@ func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterS
 	results := validation.ClusterServiceVersionValidator.Validate(csv)
 	for _, result := range results {
 		for _, err := range result.Errors {
-			errW := fmt.Errorf("error validating csv (%s): %w", filepath.Base(csvPath), err)
-			t.svc.Ec.Append(t.r.RepositoryID, errW)
+			t.warn(fmt.Errorf("error validating csv (%s): %w", filepath.Base(csvPath), err))
 		}
 	}
 
@@ -260,13 +259,11 @@ func (t *Tracker) registerPackage(
 	if storeLogo && len(csv.Spec.Icon) > 0 && csv.Spec.Icon[0].Data != "" {
 		data, err := base64.StdEncoding.DecodeString(csv.Spec.Icon[0].Data)
 		if err != nil {
-			errW := fmt.Errorf("error decoding package %s logo image: %w", name, err)
-			t.svc.Ec.Append(t.r.RepositoryID, errW)
+			t.warn(fmt.Errorf("error decoding package %s logo image: %w", name, err))
 		} else {
 			logoImageID, err = t.svc.Is.SaveImage(t.svc.Ctx, data)
 			if err != nil {
-				errW := fmt.Errorf("error saving package %s image: %w", name, err)
-				t.svc.Ec.Append(t.r.RepositoryID, errW)
+				t.warn(fmt.Errorf("error saving package %s image: %w", name, err))
 			}
 		}
 	}

@@ -3,9 +3,10 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
-import { AppCtx } from '../../../context/AppCtx';
+import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import { ErrorKind, Repository as Repo } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
@@ -20,10 +21,12 @@ interface ModalStatus {
 
 interface Props {
   onAuthError: () => void;
+  repoName?: string;
 }
 
 const RepositoriesSection = (props: Props) => {
-  const { ctx } = useContext(AppCtx);
+  const history = useHistory();
+  const { ctx, dispatch } = useContext(AppCtx);
   const [isLoading, setIsLoading] = useState(false);
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
@@ -35,7 +38,19 @@ const RepositoriesSection = (props: Props) => {
   async function fetchRepositories() {
     try {
       setIsLoading(true);
-      setRepositories(await API.getRepositories(activeOrg));
+      const repos = await API.getRepositories(activeOrg);
+      setRepositories(repos);
+      // Check if active repo logs modal is in the available repos
+      if (!isUndefined(props.repoName)) {
+        const activeRepo = repos.find((repo: Repo) => repo.name === props.repoName);
+        // Clean query string if repo is not available
+        if (isUndefined(activeRepo)) {
+          dispatch(unselectOrg());
+          history.replace({
+            search: '',
+          });
+        }
+      }
       setApiError(null);
       setIsLoading(false);
     } catch (err) {
@@ -133,6 +148,7 @@ const RepositoriesSection = (props: Props) => {
                   <RepositoryCard
                     key={repo.name}
                     repository={repo}
+                    visibleTrackingErrorLogs={!isUndefined(props.repoName) && repo.name === props.repoName}
                     setModalStatus={setModalStatus}
                     onSuccess={fetchRepositories}
                     onAuthError={props.onAuthError}

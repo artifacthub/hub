@@ -39,12 +39,8 @@ func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 }
 
 // GetSubscribedTo implements the WebhookManager interface.
-func (m *ManagerMock) GetSubscribedTo(
-	ctx context.Context,
-	eventKind hub.EventKind,
-	packageID string,
-) ([]*hub.Webhook, error) {
-	args := m.Called(ctx, eventKind, packageID)
+func (m *ManagerMock) GetSubscribedTo(ctx context.Context, e *hub.Event) ([]*hub.Webhook, error) {
+	args := m.Called(ctx, e)
 	data, _ := args.Get(0).([]*hub.Webhook)
 	return data, args.Error(1)
 }

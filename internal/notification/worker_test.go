@@ -13,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/subscription"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/patrickmn/go-cache"
@@ -21,11 +22,16 @@ import (
 )
 
 func TestWorker(t *testing.T) {
-	e := &hub.Event{
+	e1 := &hub.Event{
 		EventID:        "eventID",
 		EventKind:      hub.NewRelease,
 		PackageID:      "packageID",
 		PackageVersion: "1.0.0",
+	}
+	e2 := &hub.Event{
+		EventID:      "eventID",
+		EventKind:    hub.RepositoryTrackingErrors,
+		RepositoryID: "repositoryID",
 	}
 	u := &hub.User{
 		Email: "user1@email.com",
@@ -36,17 +42,22 @@ func TestWorker(t *testing.T) {
 	}
 	n1 := &hub.Notification{
 		NotificationID: "notificationID",
-		Event:          e,
+		Event:          e1,
 		User:           u,
 	}
 	n2 := &hub.Notification{
 		NotificationID: "notificationID",
-		Event:          e,
+		Event:          e1,
 		Webhook:        wh,
 	}
+	n3 := &hub.Notification{
+		NotificationID: "notificationID",
+		Event:          e2,
+		User:           u,
+	}
 	gpi := &hub.GetPackageInput{
-		PackageID: e.PackageID,
-		Version:   e.PackageVersion,
+		PackageID: e1.PackageID,
+		Version:   e1.PackageVersion,
 	}
 	p := &hub.Package{
 		Name:           "package1",
@@ -57,6 +68,11 @@ func TestWorker(t *testing.T) {
 			Name:             "repo1",
 			OrganizationName: "org1",
 		},
+	}
+	r := &hub.Repository{
+		Kind:             hub.Helm,
+		Name:             "repo1",
+		OrganizationName: "org1",
 	}
 
 	t.Run("error getting pending notification", func(t *testing.T) {
@@ -82,7 +98,19 @@ func TestWorker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
-	t.Run("error sending email", func(t *testing.T) {
+	t.Run("error getting repository preparing email data", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
+		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(nil, errFake)
+		sw.tx.On("Rollback", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("error sending package notification email", func(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
@@ -96,13 +124,41 @@ func TestWorker(t *testing.T) {
 		sw.assertExpectations(t)
 	})
 
-	t.Run("email notification delivered successfully", func(t *testing.T) {
+	t.Run("error sending repository notification email", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
+		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(r, nil)
+		sw.es.On("SendEmail", mock.Anything).Return(errFake)
+		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, errFake).Return(nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("package email notification delivered successfully", func(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
 		sw.pm.On("Get", sw.ctx, gpi).Return(p, nil)
 		sw.es.On("SendEmail", mock.Anything).Return(nil)
 		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, nil).Return(nil)
+		sw.tx.On("Commit", sw.ctx).Return(nil)
+
+		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
+		go w.Run(sw.ctx, sw.wg)
+		sw.assertExpectations(t)
+	})
+
+	t.Run("repository email notification delivered successfully", func(t *testing.T) {
+		sw := newServicesWrapper()
+		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
+		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
+		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(r, nil)
+		sw.es.On("SendEmail", mock.Anything).Return(nil)
+		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, nil).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -233,7 +289,7 @@ func TestWorker(t *testing.T) {
 				sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 				sw.nm.On("GetPending", sw.ctx, sw.tx).Return(&hub.Notification{
 					NotificationID: "notificationID",
-					Event:          e,
+					Event:          e1,
 					Webhook: &hub.Webhook{
 						URL:         ts.URL,
 						ContentType: tc.contentType,
@@ -262,6 +318,7 @@ type servicesWrapper struct {
 	es         *email.SenderMock
 	nm         *ManagerMock
 	sm         *subscription.ManagerMock
+	rm         *repo.ManagerMock
 	pm         *pkg.ManagerMock
 	cache      *cache.Cache
 	hc         *httpClientMock
@@ -279,6 +336,7 @@ func newServicesWrapper() *servicesWrapper {
 	es := &email.SenderMock{}
 	nm := &ManagerMock{}
 	sm := &subscription.ManagerMock{}
+	rm := &repo.ManagerMock{}
 	pm := &pkg.ManagerMock{}
 	cache := cache.New(1*time.Minute, 5*time.Minute)
 	hc := &httpClientMock{}
@@ -292,6 +350,7 @@ func newServicesWrapper() *servicesWrapper {
 		es:         es,
 		nm:         nm,
 		sm:         sm,
+		rm:         rm,
 		pm:         pm,
 		cache:      cache,
 		hc:         hc,
@@ -300,6 +359,7 @@ func newServicesWrapper() *servicesWrapper {
 			ES:                  es,
 			NotificationManager: nm,
 			SubscriptionManager: sm,
+			RepositoryManager:   rm,
 			PackageManager:      pm,
 		},
 	}
@@ -317,6 +377,7 @@ func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.es.AssertExpectations(t)
 	sw.nm.AssertExpectations(t)
 	sw.sm.AssertExpectations(t)
+	sw.rm.AssertExpectations(t)
 	sw.pm.AssertExpectations(t)
 	sw.hc.AssertExpectations(t)
 }

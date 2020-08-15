@@ -24,6 +24,7 @@ type Services struct {
 	ES                  hub.EmailSender
 	NotificationManager hub.NotificationManager
 	SubscriptionManager hub.SubscriptionManager
+	RepositoryManager   hub.RepositoryManager
 	PackageManager      hub.PackageManager
 }
 

@@ -17,5 +17,5 @@ type SubscriptionManager interface {
 	Delete(ctx context.Context, s *Subscription) error
 	GetByPackageJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetByUserJSON(ctx context.Context) ([]byte, error)
-	GetSubscriptors(ctx context.Context, packageID string, eventKind EventKind) ([]*User, error)
+	GetSubscriptors(ctx context.Context, e *Event) ([]*User, error)
 }

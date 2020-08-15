@@ -25,6 +25,6 @@ type WebhookManager interface {
 	GetJSON(ctx context.Context, webhookID string) ([]byte, error)
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
-	GetSubscribedTo(ctx context.Context, eventKind EventKind, packageID string) ([]*Webhook, error)
+	GetSubscribedTo(ctx context.Context, e *Event) ([]*Webhook, error)
 	Update(ctx context.Context, wh *Webhook) error
 }

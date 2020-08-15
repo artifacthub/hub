@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 	"sync"
 	"text/template"
 	"time"
@@ -96,7 +97,7 @@ func (w *Worker) processNotification(ctx context.Context) error {
 		n, err := w.svc.NotificationManager.GetPending(ctx, tx)
 		if err != nil {
 			if !errors.Is(err, pgx.ErrNoRows) {
-				log.Error().Err(err).Msg("error getting pending notification")
+				log.Error().Err(err).Msg("processNotification: error getting pending notification")
 			}
 			return err
 		}
@@ -109,14 +110,14 @@ func (w *Worker) processNotification(ctx context.Context) error {
 			err = w.deliverWebhookNotification(ctx, n)
 		}
 		if errors.Is(err, ErrRetryable) {
-			log.Error().Err(err).Msg("error delivering notification")
+			log.Error().Err(err).Msg("processNotification: error delivering notification")
 			return err
 		}
 
 		// Update notification status
 		err = w.svc.NotificationManager.UpdateStatus(ctx, tx, n.NotificationID, true, err)
 		if err != nil {
-			log.Error().Err(err).Msg("error updating notification status")
+			log.Error().Err(err).Msg("processNotification: error updating notification status")
 		}
 		return nil
 	})
@@ -134,8 +135,7 @@ func (w *Worker) deliverEmailNotification(ctx context.Context, n *hub.Notificati
 		var err error
 		emailData, err = w.prepareEmailData(ctx, n.Event)
 		if err != nil {
-			log.Error().Err(err).Msg("deliverEmailNotification: error preparing email data")
-			return fmt.Errorf("%w: %v", ErrRetryable, err)
+			return fmt.Errorf("%w: error preparing email data: %v", ErrRetryable, err)
 		}
 		w.cache.SetDefault(cKey, emailData)
 	}
@@ -148,9 +148,8 @@ func (w *Worker) deliverEmailNotification(ctx context.Context, n *hub.Notificati
 // deliverWebhookNotification delivers the provided notification via webhook.
 func (w *Worker) deliverWebhookNotification(ctx context.Context, n *hub.Notification) error {
 	// Get template data
-	tmplData, err := w.prepareTemplateData(ctx, n.Event)
+	tmplData, err := w.preparePkgNotificationTemplateData(ctx, n.Event)
 	if err != nil {
-		log.Error().Err(err).Msg("error preparing template data")
 		return fmt.Errorf("%w: %v", ErrRetryable, err)
 	}
 
@@ -196,13 +195,21 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 
 	switch e.EventKind {
 	case hub.NewRelease:
-		tmplData, err := w.prepareTemplateData(ctx, e)
+		tmplData, err := w.preparePkgNotificationTemplateData(ctx, e)
 		if err != nil {
-			log.Error().Err(err).Msg("error prepating template data")
-			return email.Data{}, fmt.Errorf("%w: %v", ErrRetryable, err)
+			return email.Data{}, err
 		}
 		subject = fmt.Sprintf("%s version %s released", tmplData.Package["name"], tmplData.Package["version"])
 		if err := newReleaseEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+			return email.Data{}, err
+		}
+	case hub.RepositoryTrackingErrors:
+		tmplData, err := w.prepareRepoNotificationTemplateData(ctx, e)
+		if err != nil {
+			return email.Data{}, err
+		}
+		subject = fmt.Sprintf("Something went wrong tracking repository %s", tmplData.Repository["name"])
+		if err := trackingErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
 	}
@@ -213,8 +220,12 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 	}, nil
 }
 
-// prepareTemplateData prepares the data available to notifications templates.
-func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.NotificationTemplateData, error) {
+// preparePkgNotificationTemplateData prepares the data available to packages
+// notifications templates.
+func (w *Worker) preparePkgNotificationTemplateData(
+	ctx context.Context,
+	e *hub.Event,
+) (*hub.PackageNotificationTemplateData, error) {
 	// Get notification package (try from cache first)
 	var p *hub.Package
 	cKey := "package.%" + e.EventID
@@ -250,7 +261,7 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 		e.PackageVersion,
 	)
 
-	return &hub.NotificationTemplateData{
+	return &hub.PackageNotificationTemplateData{
 		BaseURL: w.baseURL,
 		Event: map[string]interface{}{
 			"id":   e.EventID,
@@ -266,6 +277,50 @@ func (w *Worker) prepareTemplateData(ctx context.Context, e *hub.Event) (*hub.No
 				"name":      p.Repository.Name,
 				"publisher": publisher,
 			},
+		},
+	}, nil
+}
+
+// prepareRepoNotificationTemplateData prepares the data available to
+// repositories notifications templates.
+func (w *Worker) prepareRepoNotificationTemplateData(
+	ctx context.Context,
+	e *hub.Event,
+) (*hub.RepositoryNotificationTemplateData, error) {
+	// Get notification repository (try from cache first)
+	var r *hub.Repository
+	cKey := "repository.%" + e.EventID
+	cValue, ok := w.cache.Get(cKey)
+	if ok {
+		r = cValue.(*hub.Repository)
+	} else {
+		var err error
+		r, err = w.svc.RepositoryManager.GetByID(ctx, e.RepositoryID)
+		if err != nil {
+			return nil, err
+		}
+		w.cache.SetDefault(cKey, r)
+	}
+
+	// Prepare template data
+	var eventKindStr string
+	switch e.EventKind {
+	case hub.RepositoryTrackingErrors:
+		eventKindStr = "repository.tracking-errors"
+	}
+
+	return &hub.RepositoryNotificationTemplateData{
+		BaseURL: w.baseURL,
+		Event: map[string]interface{}{
+			"id":   e.EventID,
+			"kind": eventKindStr,
+		},
+		Repository: map[string]interface{}{
+			"kind":               hub.GetKindName(r.Kind),
+			"name":               r.Name,
+			"userAlias":          r.UserAlias,
+			"organizationName":   r.OrganizationName,
+			"lastTrackingErrors": strings.Split(r.LastTrackingErrors, "\n"),
 		},
 	}, nil
 }

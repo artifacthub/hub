@@ -103,6 +103,7 @@ func main() {
 		ES:                  es,
 		NotificationManager: notification.NewManager(),
 		SubscriptionManager: subscription.NewManager(db),
+		RepositoryManager:   repo.NewManager(db),
 		PackageManager:      pkg.NewManager(db),
 	}
 	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)

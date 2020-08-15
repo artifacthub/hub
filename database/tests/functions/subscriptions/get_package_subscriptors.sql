@@ -30,7 +30,7 @@ values (:'user3ID', :'package1ID', 1);
 
 -- Run some tests
 select is(
-    get_subscriptors(:'package1ID', 0)::jsonb,
+    get_package_subscriptors(:'package1ID', 0)::jsonb,
     '[
         {
             "user_id": "00000000-0000-0000-0000-000000000001"
@@ -42,7 +42,7 @@ select is(
     'Two subscriptors expected for package1 and kind new releases'
 );
 select is(
-    get_subscriptors(:'package2ID', 0)::jsonb,
+    get_package_subscriptors(:'package2ID', 0)::jsonb,
     '[]'::jsonb,
     'No subscriptors expected for package2 and kind new releases'
 );

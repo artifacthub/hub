@@ -2,10 +2,11 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import moment from 'moment';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -26,12 +27,14 @@ interface ModalStatus {
 
 interface Props {
   repository: Repository;
+  visibleTrackingErrorLogs: boolean;
   setModalStatus: React.Dispatch<React.SetStateAction<ModalStatus>>;
   onSuccess: () => void;
   onAuthError: () => void;
 }
 
 const RepositoryCard = (props: Props) => {
+  const history = useHistory();
   const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState(false);
   const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
@@ -39,12 +42,22 @@ const RepositoryCard = (props: Props) => {
   const dropdown = useRef(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
   const hasErrors = !isUndefined(props.repository.lastTrackingErrors) && !isNull(props.repository.lastTrackingErrors);
+  const [openErrorsModal, setOpenErrorsModal] = useState<boolean>(false);
 
   const closeDropdown = () => {
     setOpenDropdownStatus(false);
   };
 
   useOutsideClick([dropdown], openDropdownStatus, closeDropdown);
+
+  useEffect(() => {
+    if (props.visibleTrackingErrorLogs) {
+      setOpenErrorsModal(true);
+      history.replace({
+        search: '',
+      });
+    }
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const getLastTracking = (): JSX.Element => {
     if (isUndefined(props.repository.lastTrackingTs) || isNull(props.repository.lastTrackingTs)) {
@@ -73,6 +86,8 @@ const RepositoryCard = (props: Props) => {
               </>
             }
             header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
+            open={openErrorsModal}
+            onClose={() => setOpenErrorsModal(false)}
           >
             <div className="mt-3 mw-100">
               <SyntaxHighlighter language="bash" style={tomorrowNight} customStyle={{ fontSize: '90%' }}>
@@ -83,7 +98,26 @@ const RepositoryCard = (props: Props) => {
         </>
       );
     } else {
-      return content;
+      return (
+        <>
+          {content}
+          {openErrorsModal && (
+            <Modal
+              className={`d-inline-block ${styles.modal}`}
+              header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
+              open
+            >
+              <div className="h5 text-center my-5 mw-100">
+                It looks like the last tracking of this repository worked fine and no errors were produced.
+                <br />
+                <br />
+                If you have arrived to this screen from an email listing some errors, please keep in mind those may have
+                been already solved.
+              </div>
+            </Modal>
+          )}
+        </>
+      );
     }
   };
 

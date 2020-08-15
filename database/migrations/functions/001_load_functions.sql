@@ -41,17 +41,20 @@
 {{ template "repositories/delete_repository.sql" }}
 {{ template "repositories/get_all_repositories.sql" }}
 {{ template "repositories/get_repositories_by_kind.sql" }}
+{{ template "repositories/get_repository_by_id.sql" }}
 {{ template "repositories/get_repository_by_name.sql" }}
 {{ template "repositories/get_repository_packages_digest.sql" }}
 {{ template "repositories/get_org_repositories.sql" }}
 {{ template "repositories/get_user_repositories.sql" }}
+{{ template "repositories/set_last_tracking_results.sql" }}
 {{ template "repositories/transfer_repository.sql" }}
 {{ template "repositories/update_repository.sql" }}
 
 {{ template "subscriptions/add_subscription.sql" }}
 {{ template "subscriptions/delete_subscription.sql" }}
-{{ template "subscriptions/get_package_subscriptions.sql" }}
-{{ template "subscriptions/get_subscriptors.sql" }}
+{{ template "subscriptions/get_package_subscriptors.sql" }}
+{{ template "subscriptions/get_repository_subscriptors.sql" }}
+{{ template "subscriptions/get_user_package_subscriptions.sql" }}
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 
 {{ template "users/get_user_profile.sql" }}
@@ -66,7 +69,7 @@
 {{ template "webhooks/get_webhook.sql" }}
 {{ template "webhooks/get_org_webhooks.sql" }}
 {{ template "webhooks/get_user_webhooks.sql" }}
-{{ template "webhooks/get_webhooks_subscribed_to.sql" }}
+{{ template "webhooks/get_webhooks_subscribed_to_package.sql" }}
 {{ template "webhooks/update_webhook.sql" }}
 {{ template "webhooks/user_has_access_to_webhook.sql" }}
 
