@@ -58,4 +58,4 @@ tracker:
   repositoriesKinds: []
   imageStore: pg
   events:
-    trackingErrors: false
+    trackingErrors: true
