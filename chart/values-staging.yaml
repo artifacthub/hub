@@ -57,3 +57,5 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   imageStore: pg
+  events:
+    trackingErrors: false

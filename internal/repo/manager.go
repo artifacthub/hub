@@ -9,6 +9,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -22,13 +23,15 @@ var (
 
 // Manager provides an API to manage repositories.
 type Manager struct {
+	cfg             *viper.Viper
 	db              hub.DB
 	helmIndexLoader hub.HelmIndexLoader
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(db hub.DB, opts ...func(m *Manager)) *Manager {
+func NewManager(cfg *viper.Viper, db hub.DB, opts ...func(m *Manager)) *Manager {
 	m := &Manager{
+		cfg:             cfg,
 		db:              db,
 		helmIndexLoader: &HelmIndexLoader{},
 	}
@@ -233,8 +236,9 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs
 	}
 
 	// Update last tracking results in database
-	query := "select set_last_tracking_results($1::uuid, $2::text)"
-	_, err := m.db.Exec(ctx, query, repositoryID, errs)
+	query := "select set_last_tracking_results($1::uuid, $2::text, $3::boolean)"
+	trackingErrorsEventsEnabled := m.cfg.GetBool("tracker.events.trackingErrors")
+	_, err := m.db.Exec(ctx, query, repositoryID, errs, trackingErrorsEventsEnabled)
 	return err
 }
 

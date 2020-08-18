@@ -10,17 +10,20 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
+
+var cfg = viper.New()
 
 func TestAdd(t *testing.T) {
 	dbQuery := "select add_repository($1::uuid, $2::text, $3::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), "orgName", nil)
 		})
@@ -128,7 +131,7 @@ func TestAdd(t *testing.T) {
 				if tc.lErr != nil {
 					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
-				m := NewManager(nil, WithIndexLoader(l))
+				m := NewManager(cfg, nil, WithIndexLoader(l))
 
 				err := m.Add(ctx, tc.orgName, tc.r)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -172,7 +175,7 @@ func TestAdd(t *testing.T) {
 				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
 				l.On("LoadIndex", tc.r).Return(nil, nil)
-				m := NewManager(db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithIndexLoader(l))
 
 				err := m.Add(ctx, "orgName", tc.r)
 				assert.Equal(t, tc.expectedError, err)
@@ -212,7 +215,7 @@ func TestAdd(t *testing.T) {
 				if tc.r.Kind == hub.Helm {
 					l.On("LoadIndex", tc.r).Return(nil, nil)
 				}
-				m := NewManager(db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithIndexLoader(l))
 
 				err := m.Add(ctx, "orgName", tc.r)
 				assert.NoError(t, err)
@@ -246,7 +249,7 @@ func TestCheckAvailability(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
-				m := NewManager(nil)
+				m := NewManager(cfg, nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -277,7 +280,7 @@ func TestCheckAvailability(t *testing.T) {
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
-				m := NewManager(db)
+				m := NewManager(cfg, db)
 
 				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value")
 				assert.NoError(t, err)
@@ -291,7 +294,7 @@ func TestCheckAvailability(t *testing.T) {
 		db := &tests.DBMock{}
 		dbQuery := `select not exists (select repository_id from repository where name = $1)`
 		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		available, err := m.CheckAvailability(ctx, "repositoryName", "value")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -305,14 +308,14 @@ func TestDelete(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_ = m.Delete(context.Background(), "repo1")
 		})
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		err := m.Delete(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -336,7 +339,7 @@ func TestDelete(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(tc.dbErr)
-				m := NewManager(db)
+				m := NewManager(cfg, db)
 
 				err := m.Delete(ctx, "repo1")
 				assert.Equal(t, tc.expectedError, err)
@@ -348,7 +351,7 @@ func TestDelete(t *testing.T) {
 	t.Run("delete repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, dbQuery, "userID", "repo1").Return(nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		err := m.Delete(ctx, "repo1")
 		assert.NoError(t, err)
@@ -382,7 +385,7 @@ func TestGetAll(t *testing.T) {
 		"kind": 1
     }]
 	`), nil)
-	m := NewManager(db)
+	m := NewManager(cfg, db)
 
 	r, err := m.GetAll(ctx)
 	require.NoError(t, err)
@@ -427,7 +430,7 @@ func TestGetByID(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errStr, func(t *testing.T) {
-				m := NewManager(nil)
+				m := NewManager(cfg, nil)
 
 				_, err := m.GetByID(ctx, tc.repoID)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -439,7 +442,7 @@ func TestGetByID(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, repoID).Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		r, err := m.GetByID(context.Background(), repoID)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -458,7 +461,7 @@ func TestGetByID(t *testing.T) {
 			"kind": 0
 		}
 		`), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		r, err := m.GetByID(context.Background(), repoID)
 		require.NoError(t, err)
@@ -491,7 +494,7 @@ func TestGetByKind(t *testing.T) {
 		"kind": 0
     }]
 	`), nil)
-	m := NewManager(db)
+	m := NewManager(cfg, db)
 
 	r, err := m.GetByKind(ctx, hub.Helm)
 	require.NoError(t, err)
@@ -514,7 +517,7 @@ func TestGetByName(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		_, err := m.GetByName(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -530,7 +533,7 @@ func TestGetByName(t *testing.T) {
 			"kind": 0
 		}
 		`), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
 		require.NoError(t, err)
@@ -545,7 +548,7 @@ func TestGetByName(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -556,7 +559,7 @@ func TestGetByName(t *testing.T) {
 	t.Run("invalid json data returned from database", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "repo1").Return([]byte("invalid json"), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		r, err := m.GetByName(context.Background(), "repo1")
 		assert.Error(t, err)
@@ -569,7 +572,7 @@ func TestGetPackagesDigest(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		_, err := m.GetPackagesDigest(context.Background(), "invalid")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -585,7 +588,7 @@ func TestGetPackagesDigest(t *testing.T) {
 			"package2@0.0.9": "digest-package2-0.0.9"
 		}
 		`), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		pd, err := m.GetPackagesDigest(ctx, "00000000-0000-0000-0000-000000000001")
 		require.NoError(t, err)
@@ -603,14 +606,14 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName")
 		})
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		_, err := m.GetOwnedByOrgJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
@@ -618,7 +621,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -629,7 +632,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	t.Run("org repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
 		assert.NoError(t, err)
@@ -643,7 +646,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByUserJSON(context.Background())
 		})
@@ -652,7 +655,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -663,7 +666,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	t.Run("user repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
 		assert.NoError(t, err)
@@ -675,18 +678,18 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 func TestSetLastTrackingResults(t *testing.T) {
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
-	dbQuery := "select set_last_tracking_results($1::uuid, $2::text)"
+	dbQuery := "select set_last_tracking_results($1::uuid, $2::text, $3::boolean)"
 
 	t.Run("invalid input", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		err := m.SetLastTrackingResults(ctx, "invalid", "errors")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, "errors").Return(nil)
-		m := NewManager(db)
+		db.On("Exec", ctx, dbQuery, repoID, "errors", false).Return(nil)
+		m := NewManager(cfg, db)
 
 		err := m.SetLastTrackingResults(ctx, repoID, "errors")
 		assert.NoError(t, err)
@@ -695,8 +698,8 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, "errors").Return(tests.ErrFakeDatabaseFailure)
-		m := NewManager(db)
+		db.On("Exec", ctx, dbQuery, repoID, "errors", false).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(cfg, db)
 
 		err := m.SetLastTrackingResults(ctx, repoID, "errors")
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
@@ -713,7 +716,7 @@ func TestTransfer(t *testing.T) {
 	orgP := &org
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_ = m.Transfer(context.Background(), "repo1", "")
 		})
@@ -732,7 +735,7 @@ func TestTransfer(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
-				m := NewManager(nil)
+				m := NewManager(cfg, nil)
 
 				err := m.Transfer(ctx, tc.repoName, "")
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -759,7 +762,7 @@ func TestTransfer(t *testing.T) {
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(tc.dbErr)
-				m := NewManager(db)
+				m := NewManager(cfg, db)
 
 				err := m.Transfer(ctx, "repo1", org)
 				assert.Equal(t, tc.expectedError, err)
@@ -771,7 +774,7 @@ func TestTransfer(t *testing.T) {
 	t.Run("transfer repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(nil)
-		m := NewManager(db)
+		m := NewManager(cfg, db)
 
 		err := m.Transfer(ctx, "repo1", org)
 		assert.NoError(t, err)
@@ -784,7 +787,7 @@ func TestUpdate(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
-		m := NewManager(nil)
+		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), nil)
 		})
@@ -837,7 +840,7 @@ func TestUpdate(t *testing.T) {
 				if tc.lErr != nil {
 					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
-				m := NewManager(nil, WithIndexLoader(l))
+				m := NewManager(cfg, nil, WithIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -880,7 +883,7 @@ func TestUpdate(t *testing.T) {
 				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
 				l.On("LoadIndex", tc.r).Return(nil, nil)
-				m := NewManager(db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.Equal(t, tc.expectedError, err)
@@ -920,7 +923,7 @@ func TestUpdate(t *testing.T) {
 				if tc.r.Kind == hub.Helm {
 					l.On("LoadIndex", tc.r).Return(nil, nil)
 				}
-				m := NewManager(db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.NoError(t, err)
