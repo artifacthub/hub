@@ -18,6 +18,15 @@ const defaultProps = {
   onAuthError: onAuthErrorMock,
 };
 
+const mockHistoryReplace = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    replace: mockHistoryReplace,
+  }),
+}));
+
 describe('Repository index', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -120,6 +129,23 @@ describe('Repository index', () => {
       expect(refreshBtn).toBeInTheDocument();
       fireEvent.click(refreshBtn);
       expect(API.getRepositories).toHaveBeenCalledTimes(2);
+
+      await waitFor(() => {});
+    });
+
+    it('calls history replace when repo name is defined and is not into repositories list', async () => {
+      const mockRepository = getMockRepository('7');
+      mocked(API).getRepositories.mockResolvedValue(mockRepository);
+
+      const { getByTestId } = render(
+        <Router>
+          <Repository {...defaultProps} repoName="repo" />
+        </Router>
+      );
+
+      await waitFor(() => getByTestId('repoList'));
+      expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+      expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
 
       await waitFor(() => {});
     });

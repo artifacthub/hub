@@ -73,7 +73,7 @@ func (w *Worker) processEvent(ctx context.Context) error {
 
 		// Register event notifications
 		// Email notifications
-		users, err := w.svc.SubscriptionManager.GetSubscriptors(ctx, e.PackageID, e.EventKind)
+		users, err := w.svc.SubscriptionManager.GetSubscriptors(ctx, e)
 		if err != nil {
 			log.Error().Err(err).Msg("error getting subscriptors")
 			return err
@@ -89,7 +89,7 @@ func (w *Worker) processEvent(ctx context.Context) error {
 			}
 		}
 		// Webhook notifications
-		webhooks, err := w.svc.WebhookManager.GetSubscribedTo(ctx, e.EventKind, e.PackageID)
+		webhooks, err := w.svc.WebhookManager.GetSubscribedTo(ctx, e)
 		if err != nil {
 			log.Error().Err(err).Msg("error getting webhooks")
 			return err

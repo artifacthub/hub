@@ -69,6 +69,7 @@ type Repository struct {
 	OrganizationID          string         `json:"organization_id"`
 	OrganizationName        string         `json:"organization_name"`
 	OrganizationDisplayName string         `json:"organization_display_name"`
+	LastTrackingErrors      string         `json:"last_tracking_errors"`
 }
 
 // RepositoryManager describes the methods an RepositoryManager
@@ -78,6 +79,7 @@ type RepositoryManager interface {
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	Delete(ctx context.Context, name string) error
 	GetAll(ctx context.Context) ([]*Repository, error)
+	GetByID(ctx context.Context, repositorID string) (*Repository, error)
 	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
 	GetByName(ctx context.Context, name string) (*Repository, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)

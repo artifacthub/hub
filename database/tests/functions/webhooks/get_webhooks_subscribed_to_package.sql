@@ -79,7 +79,7 @@ insert into webhook__package (webhook_id, package_id) values (:'webhook2ID', :'p
 
 -- Run some tests
 select is(
-    get_webhooks_subscribed_to(0, :'package1ID')::jsonb,
+    get_webhooks_subscribed_to_package(0, :'package1ID')::jsonb,
     '[
         {
             "webhook_id": "00000000-0000-0000-0000-000000000001",
@@ -123,12 +123,12 @@ select is(
     'Webhook1 should be returned when asking for kind0 and package1'
 );
 select is(
-    get_webhooks_subscribed_to(1, :'package1ID')::jsonb,
+    get_webhooks_subscribed_to_package(1, :'package1ID')::jsonb,
     '[]',
     'No webhooks should be returned for kind1 and package1'
 );
 select is(
-    get_webhooks_subscribed_to(0, :'package2ID')::jsonb,
+    get_webhooks_subscribed_to_package(0, :'package2ID')::jsonb,
     '[]',
     'No webhooks should be returned for kind0 and package2'
 );

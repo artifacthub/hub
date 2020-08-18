@@ -147,6 +147,22 @@ func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	return r, err
 }
 
+// GetByID returns the repository identified by the id provided.
+func (m *Manager) GetByID(ctx context.Context, repositoryID string) (*hub.Repository, error) {
+	// Validate input
+	if repositoryID == "" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository id not provided")
+	}
+	if _, err := uuid.FromString(repositoryID); err != nil {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
+	}
+
+	// Get repository from database
+	var r *hub.Repository
+	err := m.dbQueryUnmarshal(ctx, &r, "select get_repository_by_id($1::uuid)", repositoryID)
+	return r, err
+}
+
 // GetByKind returns all available repositories of the provided kind.
 func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
 	var r []*hub.Repository
@@ -217,11 +233,7 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs
 	}
 
 	// Update last tracking results in database
-	query := `
-	update repository set
-		last_tracking_ts = current_timestamp,
-		last_tracking_errors = nullif($2, '')
-	where repository_id = $1`
+	query := "select set_last_tracking_results($1::uuid, $2::text)"
 	_, err := m.db.Exec(ctx, query, repositoryID, errs)
 	return err
 }

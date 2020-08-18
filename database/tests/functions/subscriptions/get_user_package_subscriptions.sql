@@ -23,19 +23,19 @@ values (:'user1ID', :'package1ID', 0);
 
 -- Run some tests
 select is(
-    get_package_subscriptions(:'user1ID', :'package1ID')::jsonb,
+    get_user_package_subscriptions(:'user1ID', :'package1ID')::jsonb,
     '[{
         "event_kind": 0
     }]'::jsonb,
     'A subscription with event kind 0 should be returned'
 );
 select is(
-    get_package_subscriptions(:'user2ID', :'package1ID')::jsonb,
+    get_user_package_subscriptions(:'user2ID', :'package1ID')::jsonb,
     '[]'::jsonb,
     'No subscriptions should be returned for user2 and package1'
 );
 select is(
-    get_package_subscriptions(:'user1ID', :'package2ID')::jsonb,
+    get_user_package_subscriptions(:'user1ID', :'package2ID')::jsonb,
     '[]'::jsonb,
     'No subscriptions should be returned for user1 and package2'
 );

@@ -38,6 +38,13 @@ func (m *ManagerMock) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	return data, args.Error(1)
 }
 
+// GetByID implements the RepositoryManager interface.
+func (m *ManagerMock) GetByID(ctx context.Context, repositoryID string) (*hub.Repository, error) {
+	args := m.Called(ctx, repositoryID)
+	data, _ := args.Get(0).(*hub.Repository)
+	return data, args.Error(1)
+}
+
 // GetByKind implements the RepositoryManager interface.
 func (m *ManagerMock) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
 	args := m.Called(ctx, kind)

@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	userID    = "00000000-0000-0000-0000-000000000001"
-	packageID = "00000000-0000-0000-0000-000000000001"
+	userID       = "00000000-0000-0000-0000-000000000001"
+	packageID    = "00000000-0000-0000-0000-000000000001"
+	repositoryID = "00000000-0000-0000-0000-000000000001"
 )
 
 func TestAdd(t *testing.T) {
@@ -151,7 +152,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestGetByPackageJSON(t *testing.T) {
-	dbQuery := "select get_package_subscriptions($1::uuid, $2::uuid)"
+	dbQuery := "select get_user_package_subscriptions($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -226,50 +227,30 @@ func TestGetByUserJSON(t *testing.T) {
 }
 
 func TestGetSubscriptors(t *testing.T) {
-	dbQuery := "select get_subscriptors($1::uuid, $2::integer)"
+	dbQueryPkg := "select get_package_subscriptors($1::uuid, $2::integer)"
+	dbQueryRepo := "select get_repository_subscriptors($1::uuid)"
 	ctx := context.Background()
-
-	t.Run("invalid input", func(t *testing.T) {
-		testCases := []struct {
-			errMsg    string
-			packageID string
-			eventKind hub.EventKind
-		}{
-			{
-				"invalid package id",
-				"invalid",
-				0,
-			},
-			{
-				"invalid event kind",
-				packageID,
-				hub.EventKind(5),
-			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.errMsg, func(t *testing.T) {
-				m := NewManager(nil)
-				dataJSON, err := m.GetSubscriptors(context.Background(), tc.packageID, tc.eventKind)
-				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
-				assert.Contains(t, err.Error(), tc.errMsg)
-				assert.Nil(t, dataJSON)
-			})
-		}
-	})
+	pkgEvent := &hub.Event{
+		PackageID: packageID,
+		EventKind: hub.NewRelease,
+	}
+	repoEvent := &hub.Event{
+		RepositoryID: repositoryID,
+		EventKind:    hub.RepositoryTrackingErrors,
+	}
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, dbQueryPkg, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(ctx, packageID, hub.NewRelease)
+		subscriptors, err := m.GetSubscriptors(ctx, pkgEvent)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, subscriptors)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("database query succeeded", func(t *testing.T) {
+	t.Run("database query succeeded (pkg event)", func(t *testing.T) {
 		expectedSubscriptors := []*hub.User{
 			{
 				UserID: "00000000-0000-0000-0000-000000000001",
@@ -280,7 +261,7 @@ func TestGetSubscriptors(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, packageID, hub.EventKind(0)).Return([]byte(`
+		db.On("QueryRow", ctx, dbQueryPkg, packageID, pkgEvent.EventKind).Return([]byte(`
 		[
 			{
 				"user_id": "00000000-0000-0000-0000-000000000001"
@@ -292,7 +273,36 @@ func TestGetSubscriptors(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(context.Background(), packageID, hub.NewRelease)
+		subscriptors, err := m.GetSubscriptors(context.Background(), pkgEvent)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedSubscriptors, subscriptors)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded (repo event)", func(t *testing.T) {
+		expectedSubscriptors := []*hub.User{
+			{
+				UserID: "00000000-0000-0000-0000-000000000001",
+			},
+			{
+				UserID: "00000000-0000-0000-0000-000000000002",
+			},
+		}
+
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQueryRepo, repositoryID).Return([]byte(`
+		[
+			{
+				"user_id": "00000000-0000-0000-0000-000000000001"
+			},
+			{
+				"user_id": "00000000-0000-0000-0000-000000000002"
+			}
+		]
+		`), nil)
+		m := NewManager(db)
+
+		subscriptors, err := m.GetSubscriptors(context.Background(), repoEvent)
 		assert.NoError(t, err)
 		assert.Equal(t, expectedSubscriptors, subscriptors)
 		db.AssertExpectations(t)

@@ -44,6 +44,8 @@ const mockCtxOrgSelected = {
   },
 };
 
+const mockDispatch = jest.fn();
+
 describe('ControlPanelView', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -52,7 +54,7 @@ describe('ControlPanelView', () => {
   it('renders correctly', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
     const result = render(
-      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView />
         </Router>
@@ -65,7 +67,7 @@ describe('ControlPanelView', () => {
   it('calls history replace when section is undefined', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole } = render(
-      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView />
         </Router>
@@ -82,7 +84,7 @@ describe('ControlPanelView', () => {
   it('renders 3 sections on user context', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole, getAllByRole } = render(
-      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" />
         </Router>
@@ -102,7 +104,7 @@ describe('ControlPanelView', () => {
   it('renders 3 sections on org context', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole, getAllByRole } = render(
-      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: jest.fn() }}>
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" />
         </Router>
@@ -116,6 +118,63 @@ describe('ControlPanelView', () => {
     expect(tabs[0]).toHaveTextContent('Repositories');
     expect(tabs[1]).toHaveTextContent('Members');
     expect(tabs[2]).toHaveTextContent('Settings');
+    await waitFor(() => {});
+  });
+
+  it('calls updateOrg from ctx when organization name is defined', async () => {
+    mocked(API).getRepositories.mockResolvedValue([]);
+    const { getByRole } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
+        <Router>
+          <ControlPanelView section="repositories" organizationName="org" repoName="repo" />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    await waitFor(() => getByRole('main'));
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
+
+    await waitFor(() => {});
+  });
+
+  it('calls unselectOrg from ctx when user alias is defined', async () => {
+    mocked(API).getRepositories.mockResolvedValue([]);
+    const { getByRole } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
+        <Router>
+          <ControlPanelView section="repositories" userAlias="test" repoName="repo" />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    await waitFor(() => getByRole('main'));
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+
+    await waitFor(() => {});
+  });
+
+  it('calls history replace when org name is defined, but not repo name', async () => {
+    mocked(API).getRepositories.mockResolvedValue([]);
+    const { getByRole } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
+        <Router>
+          <ControlPanelView section="repositories" organizationName="org" />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    await waitFor(() => getByRole('main'));
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
+
+    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
+    expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
+
     await waitFor(() => {});
   });
 });

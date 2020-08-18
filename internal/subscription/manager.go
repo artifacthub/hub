@@ -54,7 +54,7 @@ func (m *Manager) GetByPackageJSON(ctx context.Context, packageID string) ([]byt
 	if _, err := uuid.FromString(packageID); err != nil {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
-	query := "select get_package_subscriptions($1::uuid, $2::uuid)"
+	query := "select get_user_package_subscriptions($1::uuid, $2::uuid)"
 	var dataJSON []byte
 	if err := m.db.QueryRow(ctx, query, userID, packageID).Scan(&dataJSON); err != nil {
 		return nil, err
@@ -74,23 +74,21 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	return dataJSON, nil
 }
 
-// GetSubscriptors returns the users subscribed to a package to receive
-// notifications for certain kind of events.
-func (m *Manager) GetSubscriptors(
-	ctx context.Context,
-	packageID string,
-	eventKind hub.EventKind,
-) ([]*hub.User, error) {
-	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
-	}
-	if eventKind != hub.NewRelease {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
-	}
-
-	query := "select get_subscriptors($1::uuid, $2::integer)"
+// GetSubscriptors returns the users subscribed to receive notifications for
+// certain kind of events.
+func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.User, error) {
 	var dataJSON []byte
-	err := m.db.QueryRow(ctx, query, packageID, eventKind).Scan(&dataJSON)
+	var err error
+	switch e.EventKind {
+	case hub.NewRelease:
+		query := "select get_package_subscriptors($1::uuid, $2::integer)"
+		err = m.db.QueryRow(ctx, query, e.PackageID, e.EventKind).Scan(&dataJSON)
+	case hub.RepositoryTrackingErrors:
+		query := "select get_repository_subscriptors($1::uuid)"
+		err = m.db.QueryRow(ctx, query, e.RepositoryID).Scan(&dataJSON)
+	default:
+		return nil, nil
+	}
 	if err != nil {
 		return nil, err
 	}

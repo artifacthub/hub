@@ -343,24 +343,24 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 }
 
 func TestGetSubscribedTo(t *testing.T) {
-	dbQuery := "select get_webhooks_subscribed_to($1::int, $2::uuid)"
+	dbQuery := "select get_webhooks_subscribed_to_package($1::int, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+	e := &hub.Event{
+		EventKind: hub.NewRelease,
+		PackageID: validUUID,
+	}
 
 	t.Run("invalid input", func(t *testing.T) {
 		testCases := []struct {
-			errMsg    string
-			eventKind hub.EventKind
-			packageID string
+			errMsg string
+			e      *hub.Event
 		}{
 			{
-				"invalid event kind",
-				hub.EventKind(9),
-				validUUID,
-			},
-			{
 				"invalid package id",
-				hub.NewRelease,
-				"invalid",
+				&hub.Event{
+					EventKind: hub.NewRelease,
+					PackageID: "invalid",
+				},
 			},
 		}
 		for _, tc := range testCases {
@@ -368,7 +368,7 @@ func TestGetSubscribedTo(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(nil)
 
-				webhooks, err := m.GetSubscribedTo(ctx, tc.eventKind, tc.packageID)
+				webhooks, err := m.GetSubscribedTo(ctx, tc.e)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
 				assert.Nil(t, webhooks)
@@ -381,7 +381,7 @@ func TestGetSubscribedTo(t *testing.T) {
 		db.On("QueryRow", ctx, dbQuery, hub.NewRelease, validUUID).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		webhooks, err := m.GetSubscribedTo(ctx, hub.NewRelease, validUUID)
+		webhooks, err := m.GetSubscribedTo(ctx, e)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, webhooks)
 		db.AssertExpectations(t)
@@ -402,7 +402,7 @@ func TestGetSubscribedTo(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		w, err := m.GetSubscribedTo(ctx, hub.NewRelease, validUUID)
+		w, err := m.GetSubscribedTo(ctx, e)
 		require.NoError(t, err)
 		require.Len(t, w, 2)
 		assert.Equal(t, "00000000-0000-0000-0000-000000000001", w[0].WebhookID)

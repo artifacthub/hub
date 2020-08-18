@@ -185,8 +185,7 @@ begin
     -- Register new release event if package's latest version has been updated
     if semver_gt(v_version, v_previous_latest_version) then
         insert into event (package_id, package_version, event_kind_id)
-        values (v_package_id, v_version, 0)
-        on conflict do nothing;
+        values (v_package_id, v_version, 0);
     end if;
 end
 $$ language plpgsql;

@@ -122,11 +122,16 @@ export default function App() {
             <Route
               path="/control-panel/:section?/:subsection?"
               exact
-              render={({ match }) => (
+              render={({ location, match }) => (
                 <>
                   <Navbar isSearching={isSearching} privateRoute />
                   <div className="d-flex flex-column flex-grow-1">
-                    <ControlPanelView {...match.params} />
+                    <ControlPanelView
+                      {...match.params}
+                      userAlias={getQueryParam(location.search, 'user-alias')}
+                      organizationName={getQueryParam(location.search, 'org-name')}
+                      repoName={getQueryParam(location.search, 'repo-name')}
+                    />
                   </div>
                 </>
               )}

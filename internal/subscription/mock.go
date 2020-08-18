@@ -38,13 +38,9 @@ func (m *ManagerMock) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	return data, args.Error(1)
 }
 
-// GetByUserJSON implements the SubscriptionManager interface.
-func (m *ManagerMock) GetSubscriptors(
-	ctx context.Context,
-	packageID string,
-	eventKind hub.EventKind,
-) ([]*hub.User, error) {
-	args := m.Called(ctx, packageID, eventKind)
+// GetSubscriptors implements the SubscriptionManager interface.
+func (m *ManagerMock) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.User, error) {
+	args := m.Called(ctx, e)
 	data, _ := args.Get(0).([]*hub.User)
 	return data, args.Error(1)
 }

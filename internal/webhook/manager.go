@@ -128,24 +128,20 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 	return m.dbQueryJSON(ctx, query, userID)
 }
 
-// GetSubscribedTo returns the webhooks subscribed to the event kind and
-// package provided.
-func (m *Manager) GetSubscribedTo(
-	ctx context.Context,
-	eventKind hub.EventKind,
-	packageID string,
-) ([]*hub.Webhook, error) {
-	// Validate input
-	if eventKind != hub.NewRelease {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
+// GetSubscribedTo returns the webhooks subscribed to the event provided.
+func (m *Manager) GetSubscribedTo(ctx context.Context, e *hub.Event) ([]*hub.Webhook, error) {
+	var dataJSON []byte
+	var err error
+	switch e.EventKind {
+	case hub.NewRelease:
+		if _, err := uuid.FromString(e.PackageID); err != nil {
+			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
+		}
+		query := "select get_webhooks_subscribed_to_package($1::int, $2::uuid)"
+		dataJSON, err = m.dbQueryJSON(ctx, query, e.EventKind, e.PackageID)
+	default:
+		return nil, nil
 	}
-	if _, err := uuid.FromString(packageID); err != nil {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
-	}
-
-	// Get webhooks from database
-	query := "select get_webhooks_subscribed_to($1::int, $2::uuid)"
-	dataJSON, err := m.dbQueryJSON(ctx, query, eventKind, packageID)
 	if err != nil {
 		return nil, err
 	}

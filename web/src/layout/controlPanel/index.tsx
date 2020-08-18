@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { AppCtx, signOut } from '../../context/AppCtx';
+import { AppCtx, signOut, unselectOrg, updateOrg } from '../../context/AppCtx';
 import { Section } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import { CONTROL_PANEL_SECTIONS } from '../../utils/data';
@@ -19,7 +19,9 @@ import UserContext from './UserContext';
 interface Props {
   section?: string;
   subsection?: string;
-  orgToConfirm?: string;
+  userAlias?: string;
+  organizationName?: string;
+  repoName?: string;
 }
 
 const DEFAULT_SECTION = 'repositories';
@@ -58,9 +60,30 @@ const ControlPanelView = (props: Props) => {
 
   useEffect(() => {
     if (!isUndefined(ctx.user) && !isNull(ctx.user)) {
-      setContext(isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org');
+      let context: 'user' | 'org' = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
+      if (
+        ctx.user.alias === props.userAlias &&
+        !isUndefined(props.userAlias) &&
+        !isUndefined(ctx.prefs.controlPanel.selectedOrg)
+      ) {
+        dispatch(unselectOrg());
+        context = 'user';
+      } else if (
+        !isUndefined(props.organizationName) &&
+        ctx.prefs.controlPanel.selectedOrg !== props.organizationName
+      ) {
+        dispatch(updateOrg(props.organizationName));
+        context = 'org';
+      }
+
+      if (isUndefined(props.repoName) && (!isUndefined(props.userAlias) || !isUndefined(props.organizationName))) {
+        history.replace({
+          search: '',
+        });
+      }
+      setContext(context);
     }
-  }, [ctx]);
+  }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (!isUndefined(ctx.user) && !isNull(ctx.user) && !isNull(context)) {

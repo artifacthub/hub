@@ -28,10 +28,18 @@ type NotificationManager interface {
 	) error
 }
 
-// NotificationTemplateData represents some details of a notification that will
-// be exposed to notification templates.
-type NotificationTemplateData struct {
+// PackageNotificationTemplateData represents some details of a notification
+// about a given package that will be exposed to notification templates.
+type PackageNotificationTemplateData struct {
 	BaseURL string                 `json:"base_url"`
 	Event   map[string]interface{} `json:"event"`
 	Package map[string]interface{} `json:"package"`
+}
+
+// RepositoryNotificationTemplateData represents some details of a notification
+// about a given repository that will be exposed to notification templates.
+type RepositoryNotificationTemplateData struct {
+	BaseURL    string                 `json:"base_url"`
+	Event      map[string]interface{} `json:"event"`
+	Repository map[string]interface{} `json:"repository"`
 }

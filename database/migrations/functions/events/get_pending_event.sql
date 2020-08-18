@@ -12,8 +12,9 @@ begin
     select event_id, json_build_object(
         'event_id', e.event_id,
         'event_kind', e.event_kind_id,
-        'package_version', e.package_version,
-        'package_id', e.package_id
+        'repository_id', e.repository_id,
+        'package_id', e.package_id,
+        'package_version', e.package_version
     ) into v_event_id, v_event
     from event e
     where e.processed = false
