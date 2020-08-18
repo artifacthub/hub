@@ -64,12 +64,14 @@ const ControlPanelView = (props: Props) => {
       if (
         ctx.user.alias === props.userAlias &&
         !isUndefined(props.userAlias) &&
+        props.userAlias !== '' &&
         !isUndefined(ctx.prefs.controlPanel.selectedOrg)
       ) {
         dispatch(unselectOrg());
         context = 'user';
       } else if (
         !isUndefined(props.organizationName) &&
+        props.organizationName !== '' &&
         ctx.prefs.controlPanel.selectedOrg !== props.organizationName
       ) {
         dispatch(updateOrg(props.organizationName));

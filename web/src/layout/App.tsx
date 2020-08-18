@@ -128,9 +128,9 @@ export default function App() {
                   <div className="d-flex flex-column flex-grow-1">
                     <ControlPanelView
                       {...match.params}
-                      userAlias={getQueryParam(location.search, 'user-alias')}
-                      organizationName={getQueryParam(location.search, 'org-name')}
-                      repoName={getQueryParam(location.search, 'repo-name')}
+                      userAlias={getQueryParam(location.search, 'user-alias') || undefined}
+                      organizationName={getQueryParam(location.search, 'org-name') || undefined}
+                      repoName={getQueryParam(location.search, 'repo-name') || undefined}
                     />
                   </div>
                 </>
