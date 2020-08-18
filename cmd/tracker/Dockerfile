@@ -1,5 +1,5 @@
 # Build tracker
-FROM golang:1.14-alpine AS builder
+FROM golang:1.15-alpine AS builder
 WORKDIR /go/src/github.com/artifacthub/hub
 COPY go.* ./
 COPY cmd/tracker cmd/tracker
