@@ -13,3 +13,5 @@ tracker:
   repositoriesKinds: []
   imageStore: pg
   bypassDigestCheck: false
+  events:
+    trackingErrors: false

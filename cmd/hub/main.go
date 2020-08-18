@@ -52,7 +52,7 @@ func main() {
 	hSvc := &handlers.Services{
 		OrganizationManager: org.NewManager(db, es),
 		UserManager:         user.NewManager(db, es),
-		RepositoryManager:   repo.NewManager(db),
+		RepositoryManager:   repo.NewManager(cfg, db),
 		PackageManager:      pkg.NewManager(db),
 		SubscriptionManager: subscription.NewManager(db),
 		WebhookManager:      webhook.NewManager(db),
@@ -103,7 +103,7 @@ func main() {
 		ES:                  es,
 		NotificationManager: notification.NewManager(),
 		SubscriptionManager: subscription.NewManager(db),
-		RepositoryManager:   repo.NewManager(db),
+		RepositoryManager:   repo.NewManager(cfg, db),
 		PackageManager:      pkg.NewManager(db),
 	}
 	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)

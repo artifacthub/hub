@@ -90,6 +90,8 @@ tracker:
   repositoriesKinds: []
   imageStore: pg
   bypassDigestCheck: false
+  events:
+    trackingErrors: false
 
 # Values for postgresql chart dependency
 postgresql:
