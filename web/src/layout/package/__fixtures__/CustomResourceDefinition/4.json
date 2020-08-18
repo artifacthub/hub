@@ -1,0 +1,90 @@
+[
+  {
+    "kind": "API",
+    "name": "apis.wso2.com",
+    "version": "v1alpha1",
+    "description": "API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode. ",
+    "displayName": "API",
+    "example": {
+      "apiVersion": "wso2.com/v1alpha1",
+      "kind": "API",
+      "metadata": { "name": "petstore" },
+      "spec": {
+        "definition": { "interceptors": {}, "swaggerConfigmapNames": ["petstore-swagger"], "type": "swagger" },
+        "mode": "privateJet",
+        "override": true,
+        "replicas": 1,
+        "updateTimeStamp": ""
+      }
+    }
+  },
+  {
+    "kind": "Security",
+    "name": "securities.wso2.com",
+    "version": "v1alpha1",
+    "description": "Security holds security-related information. You can see the API definition and data structure for Security` here. Security supports different security types: basic-auth, OAuth2, JWT, etc. The following YAML shows a sample payload for Security with JWT.",
+    "displayName": "Security",
+    "example": {
+      "apiVersion": "wso2.com/v1alpha1",
+      "kind": "Security",
+      "metadata": { "name": "petstorejwt" },
+      "spec": {
+        "type": "JWT",
+        "securityConfig": [
+          {
+            "issuer": "https://wso2apim:32001/oauth2/token",
+            "audience": "http://org.wso2.apimgt/gateway",
+            "certificate": "wso2am310-secret",
+            "validateSubscription": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "RateLimiting",
+    "name": "ratelimitings.wso2.com",
+    "version": "v1alpha1",
+    "description": "RateLimiting holds rate-limiting related information. You can see the API definition and data structure for RateLimiting here. ",
+    "displayName": "RateLimiting",
+    "example": {
+      "apiVersion": "wso2.com/v1alpha1",
+      "kind": "RateLimiting",
+      "metadata": { "name": "fivereqpolicy" },
+      "spec": {
+        "type": "advance",
+        "description": "Allow 5 requests per minute",
+        "timeUnit": "min",
+        "unitTime": 1,
+        "requestCount": { "limit": 5 }
+      }
+    }
+  },
+  {
+    "kind": "TargetEndpoint",
+    "name": "targetendpoints.wso2.com",
+    "version": "v1alpha1",
+    "description": "TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here.\n\nAPI gateway can be deployed in three patterns: shared, private-jet, and sidecar.\n\nIf your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.\n\nIf your backend service is not running, but you plan to run it in the same Kubernetes cluster, you can use TargetEndpoint with its relevant Docker image.\n\nThen APIM Operator will spin-up the corresponding Kubernetes deployment for the defined backend service itself with the microgateway.\n\nIn shared and private-jet mode, the backend can be running in separate PODs, but in sidecar mode, the gateway will run in the same POD adjacent to the backend service.",
+    "displayName": "TargetEndpoint",
+    "example": {
+      "apiVersion": "wso2.com/v1alpha1",
+      "kind": "TargetEndpoint",
+      "metadata": { "name": "products-privatejet", "labels": { "app": "wso2" } },
+      "spec": {
+        "protocol": "http",
+        "port": 80,
+        "targetPort": 9090,
+        "deploy": {
+          "name": "products-pj-service",
+          "dockerImage": "pubudu/products:1.0.0",
+          "minReplicas": 2,
+          "maxReplicas": 3,
+          "requestCPU": "60m",
+          "reqMemory": "32Mi",
+          "cpuLimit": "120m"
+        },
+        "mode": "privateJet"
+      }
+    }
+  }
+]

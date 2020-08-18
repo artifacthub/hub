@@ -27,8 +27,10 @@ describe('HelmInstall', () => {
     it('renders component', () => {
       const { getByText } = render(<HelmInstall {...defaultProps} />);
 
-      expect(getByText(`helm repo add ${repo.name} ${repo.url}`));
-      expect(getByText(`helm install ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`));
+      expect(getByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
+      expect(
+        getByText(`helm install ${repo.name}/${defaultProps.name} --version ${defaultProps.version}`)
+      ).toBeInTheDocument();
 
       const helmLink = getByText('Need Helm?');
       expect(helmLink).toBeInTheDocument();

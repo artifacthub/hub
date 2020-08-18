@@ -439,6 +439,18 @@ exports[`Repository index creates snapshot 2`] = `
               http://test.com
             </small>
           </div>
+          <div
+            class="mt-2"
+          >
+            <small
+              class="text-muted text-uppercase mr-1"
+            >
+              Last processed: 
+            </small>
+            <small>
+              Not processed yet, it will be processed automatically in less than 30m
+            </small>
+          </div>
         </li>
       </div>
     </div>

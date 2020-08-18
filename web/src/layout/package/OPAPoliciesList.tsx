@@ -14,6 +14,7 @@ interface Props {
 
 const OPAPoliciesList = (props: Props) => {
   const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
+
   return (
     <>
       <div className="row mt-4">
@@ -23,7 +24,7 @@ const OPAPoliciesList = (props: Props) => {
           const path = pathFile.join('/');
           return (
             <div className="col-12 col-lg-6 mb-4" key={`policy_${index}`}>
-              <div className={`card h-100 ${styles.card}`}>
+              <div className={`card h-100 ${styles.card}`} data-testid="policyCard">
                 <div className="card-body d-flex flex-column">
                   <div className="d-flex flex-row align-items-baseline">
                     <small className="text-muted text-uppercase mr-1">File:</small>
@@ -41,6 +42,7 @@ const OPAPoliciesList = (props: Props) => {
                     <div className={`separator ${styles.separator}`} />
 
                     <button
+                      data-testid="policyBtn"
                       className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                       onClick={() => setSelectedPolicy(policy === selectedPolicy ? null : policy)}
                     >

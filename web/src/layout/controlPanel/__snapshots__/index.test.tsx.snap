@@ -145,6 +145,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               >
                 <button
                   class="btn btn-primary badge-pill btn-sm pr-3 position-relative ctxBtn"
+                  data-testid="ctxBtn"
                   type="button"
                 >
                   <div
@@ -194,6 +195,7 @@ exports[`ControlPanelView renders correctly 1`] = `
               </div>
               <div
                 class="position-absolute text-secondary loading"
+                role="status"
               >
                 <span
                   class="spinner-border spinner-border-sm"
@@ -202,12 +204,14 @@ exports[`ControlPanelView renders correctly 1`] = `
             </div>
             <div
               class="dropdown-menu dropdown-menu-right dropdown"
+              data-testid="ctxDropdown"
             >
               <div
                 class="arrow arrow"
               />
               <button
                 class="dropdown-item"
+                data-testid="userCtxBtn"
               >
                 <div
                   class="d-flex flex-row align-items-center"

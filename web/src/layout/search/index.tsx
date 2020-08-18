@@ -413,7 +413,7 @@ const SearchView = (props: Props) => {
       </SubNavbar>
 
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
-        {(isSearching || isNull(searchResults.data.packages)) && <Loading />}
+        {(isSearching || isNull(searchResults.data.packages)) && <Loading className="position-fixed" />}
 
         <main role="main" className="container d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (

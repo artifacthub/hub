@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OPAInstall creates snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="nav nav-tabs tabs"
+  >
+    <li
+      class="nav-item"
+    >
+      <button
+        class="btn btn-link nav-item btn active btn-primary active"
+      >
+        OPA policies
+      </button>
+    </li>
+  </ul>
+  <div
+    class="tab-content mt-3"
+  >
+    <div
+      class="tab-pane fade show active"
+    >
+      <div
+        class="d-flex align-items-center justify-content-between mt-2 mb-2"
+      >
+        <small
+          class="text-muted mt-2 mb-1"
+        >
+          Install repository
+        </small>
+      </div>
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+      >
+        <code>
+          <span>
+            Instructions
+          </span>
+        </code>
+      </pre>
+    </div>
+  </div>
+</DocumentFragment>
+`;

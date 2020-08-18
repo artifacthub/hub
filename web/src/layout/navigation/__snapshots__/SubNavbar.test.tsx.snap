@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubNavbar creates snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar navbar-expand-sm navbar"
+    role="navigation"
+  >
+    <div
+      class="container d-flex justify-content-between flex-nowrap"
+    >
+      <div
+        data-testid="children"
+      >
+        Test
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

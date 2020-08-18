@@ -1,0 +1,12 @@
+[
+  {
+    "name": "postgresql",
+    "version": "8.6.4",
+    "repository": "https://kubernetes-charts.storage.googleapis.com/"
+  },
+  {
+    "name": "redis",
+    "version": "10.5.7",
+    "repository": "https://kubernetes-charts.storage.googleapis.com/"
+  }
+]

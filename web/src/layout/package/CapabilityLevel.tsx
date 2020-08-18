@@ -46,6 +46,7 @@ const CapabilityLevel = (props: Props) => {
             className={`d-flex flex-row align-items-center my-2 position-relative stepWrapper ${styles.stepWrapper}`}
           >
             <div
+              data-testid="capabilityLevelStep"
               className={classnames('rounded-circle text-center mr-2 textLight step', styles.step, {
                 [`activeStep ${styles.activeStep}`]: activeLevel >= index,
               })}

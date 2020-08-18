@@ -139,12 +139,48 @@ describe('ControlPanelView', () => {
     await waitFor(() => {});
   });
 
+  it('calls updateOrg from ctx when organization userAlias is empty', async () => {
+    mocked(API).getRepositories.mockResolvedValue([]);
+    const { getByRole } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
+        <Router>
+          <ControlPanelView section="repositories" organizationName="org" userAlias="" repoName="repo" />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    await waitFor(() => getByRole('main'));
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'updateOrg', name: 'org' });
+
+    await waitFor(() => {});
+  });
+
   it('calls unselectOrg from ctx when user alias is defined', async () => {
     mocked(API).getRepositories.mockResolvedValue([]);
     const { getByRole } = render(
       <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
         <Router>
           <ControlPanelView section="repositories" userAlias="test" repoName="repo" />
+        </Router>
+      </AppCtx.Provider>
+    );
+
+    await waitFor(() => getByRole('main'));
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'unselectOrg' });
+
+    await waitFor(() => {});
+  });
+
+  it('calls unselectOrg from ctx when user alias is defined and org name is empty', async () => {
+    mocked(API).getRepositories.mockResolvedValue([]);
+    const { getByRole } = render(
+      <AppCtx.Provider value={{ ctx: mockCtxOrgSelected, dispatch: mockDispatch }}>
+        <Router>
+          <ControlPanelView section="repositories" userAlias="test" organizationName="" repoName="repo" />
         </Router>
       </AppCtx.Provider>
     );

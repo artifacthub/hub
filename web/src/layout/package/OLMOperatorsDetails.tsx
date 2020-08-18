@@ -40,7 +40,7 @@ const OLMOperatorsDetails = (props: Props) => {
         <SmallTitle text="Channel" />
         <select
           className={`custom-select custom-select-sm bg-light mb-3 ${styles.select}`}
-          aria-label="org-select"
+          aria-label="channel-select"
           value={props.activeChannel!}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.onChannelChange(e.target.value)}
         >
