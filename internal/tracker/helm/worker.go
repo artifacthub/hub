@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"runtime/debug"
 	"strings"
 	"sync"
 	"time"
@@ -82,6 +83,17 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 // involves downloading the chart archive, extracting its contents and register
 // the corresponding package.
 func (w *Worker) handleRegisterJob(j *Job) {
+	defer func() {
+		if r := recover(); r != nil {
+			w.logger.Error().
+				Str("package", j.ChartVersion.Metadata.Name).
+				Str("version", j.ChartVersion.Metadata.Version).
+				Bytes("stacktrace", debug.Stack()).
+				Interface("recover", r).
+				Msg("handleRegisterJob panic")
+		}
+	}()
+
 	// Prepare chart archive url
 	u := j.ChartVersion.URLs[0]
 	if _, err := url.ParseRequestURI(u); err != nil {

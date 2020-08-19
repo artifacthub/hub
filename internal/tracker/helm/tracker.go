@@ -16,7 +16,7 @@ import (
 )
 
 // defaultNumWorkers is the number of workers used when none is provided.
-const defaultNumWorkers = 25
+const defaultNumWorkers = 10
 
 // Tracker is in charge of tracking the packages available in a Helm repository,
 // registering and unregistering them as needed.
