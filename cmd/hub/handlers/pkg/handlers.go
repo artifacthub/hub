@@ -195,8 +195,7 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 	_ = feed.WriteRss(w)
 }
 
-// Search is an http handler used to searchPackages for packages in the hub
-// database.
+// Search is an http handler used to search for packages in the hub database.
 func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	input, err := buildSearchInput(r.URL.Query())
 	if err != nil {
@@ -208,6 +207,20 @@ func (h *Handlers) Search(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.SearchJSON(r.Context(), input)
 	if err != nil {
 		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "Search").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
+// SearchMonocular is an http handler used to search for packages in the hub
+// database that is compatible with the Monocular search API.
+func (h *Handlers) SearchMonocular(w http.ResponseWriter, r *http.Request) {
+	baseURL := h.cfg.GetString("server.baseURL")
+	tsQueryWeb := r.FormValue("q")
+	dataJSON, err := h.pkgManager.SearchMonocularJSON(r.Context(), baseURL, tsQueryWeb)
+	if err != nil {
+		h.logger.Error().Err(err).Str("query", r.URL.RawQuery).Str("method", "SearchMonocular").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}

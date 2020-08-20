@@ -75,6 +75,7 @@ type PackageManager interface {
 	GetStatsJSON(ctx context.Context) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
+	SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error)
 	ToggleStar(ctx context.Context, packageID string) error
 	Unregister(ctx context.Context, pkg *Package) error
 }

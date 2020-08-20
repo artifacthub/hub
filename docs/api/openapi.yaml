@@ -1623,6 +1623,7 @@ components:
         - 0
         - 1
         - 2
+        - 3
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -2041,7 +2042,7 @@ components:
         type: string
         example: (automation | configuration)
       required: false
-      description: Text search query
+      description: Text search query. Search terms can be combined using the syntax allowed by the PostgreSQL websearch_to_tsquery function. See https://www.postgresql.org/docs/current/textsearch-controls.html (12.3.2. Parsing Queries) for more details.
     UsersListParam:
       in: query
       name: users

@@ -9,6 +9,10 @@
   height: 50px;
 }
 
+.topbar-wrapper img {
+  opacity: 0;
+}
+
 @media only screen and (max-width: 575.98px) {
   .opblock-section-request-body .opblock-section-header {
     flex-direction: column;

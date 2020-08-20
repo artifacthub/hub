@@ -264,6 +264,31 @@ func (h *Handlers) setupRouter() {
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
 	})
 
+	// Monocular compatible search API
+	//
+	// This endpoint provides a Monocular compatible search API that the Helm
+	// CLI search subcommand can use. The goal is to facilitate the transition
+	// from the Helm Hub to Artifact Hub, allowing the existing Helm tooling to
+	// continue working without modifications. This is a temporary solution and
+	// future Helm CLI versions should use the generic Artifact Hub search API.
+	r.Get("/api/chartsvc/v1/charts/search", h.Packages.SearchMonocular)
+
+	// Monocular charts url redirect endpoint
+	//
+	// This endpoint is a helper related to the Monocular search one above. At
+	// the moment Helm CLI builds charts urls coming from the Helm Hub using
+	// this layout. This cannot be changed for previous versions out there, so
+	// this endpoint handles the redirection to the package URL in Artifact Hub.
+	// The monocular compatible search API endpoint that we provide now returns
+	// the package url to facilitate that future versions of Helm can use it.
+	r.Get("/charts/{repoName}/{packageName}", func(w http.ResponseWriter, r *http.Request) {
+		pkgPath := fmt.Sprintf("/packages/helm/%s/%s",
+			chi.URLParam(r, "repoName"),
+			chi.URLParam(r, "packageName"),
+		)
+		http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+	})
+
 	// Oauth
 	providers := make([]string, 0, len(h.cfg.GetStringMap("server.oauth")))
 	for provider := range h.cfg.GetStringMap("server.oauth") {

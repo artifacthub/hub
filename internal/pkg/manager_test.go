@@ -640,6 +640,35 @@ func TestSearchJSON(t *testing.T) {
 	})
 }
 
+func TestSearchMonocularJSON(t *testing.T) {
+	dbQuery := "select search_packages_monocular($1::text, $2::text)"
+	ctx := context.Background()
+	baseURL := "https://artifacthub.io"
+	searchTerm := "text"
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, baseURL, searchTerm).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.SearchMonocularJSON(ctx, baseURL, searchTerm)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, baseURL, searchTerm).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		dataJSON, err := m.SearchMonocularJSON(ctx, baseURL, searchTerm)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestToggleStar(t *testing.T) {
 	dbQuery := "select toggle_star($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")

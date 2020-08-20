@@ -556,6 +556,41 @@ func TestSearch(t *testing.T) {
 	})
 }
 
+func TestSearchMonocular(t *testing.T) {
+	t.Run("search succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/?q=text", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return([]byte("dataJSON"), nil)
+		hw.h.SearchMonocular(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.pm.AssertExpectations(t)
+	})
+
+	t.Run("search failed", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/?q=text", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.h.SearchMonocular(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
 func TestToggleStar(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
