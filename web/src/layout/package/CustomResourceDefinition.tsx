@@ -67,8 +67,8 @@ const CustomResourceDefinition = (props: Props) => {
                     </div>
                   </div>
 
-                  {!isUndefined(resourceDefinition.example) && (
-                    <div className="text-right mt-1">
+                  <div className={`text-right mt-1 ${styles.example}`}>
+                    {!isUndefined(resourceDefinition.example) ? (
                       <button
                         data-testid="resourceDefinitionBtn"
                         className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
@@ -80,8 +80,10 @@ const CustomResourceDefinition = (props: Props) => {
                       >
                         View YAML example
                       </button>
-                    </div>
-                  )}
+                    ) : (
+                      <small className="text-muted font-italic">No example provided</small>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
