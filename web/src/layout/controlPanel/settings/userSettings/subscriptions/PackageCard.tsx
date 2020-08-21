@@ -93,7 +93,7 @@ const PackageCard = (props: Props) => {
                   <div className={`custom-control custom-switch ${styles.clickable}`}>
                     <input
                       data-testid={`${subs.name}MobileBtn`}
-                      id={subs.name}
+                      id={`${props.package.name}_${subs.name}`}
                       type="checkbox"
                       className={`custom-control-input ${styles.checkbox}`}
                       disabled={!subs.enabled}
@@ -110,7 +110,11 @@ const PackageCard = (props: Props) => {
                       }}
                       checked={isActive}
                     />
-                    <label data-testid={`${subs.name}_label`} className="custom-control-label" htmlFor={subs.name}>
+                    <label
+                      data-testid={`${subs.name}_label`}
+                      className="custom-control-label"
+                      htmlFor={`${props.package.name}_${subs.name}`}
+                    >
                       <div className="d-flex align-items-center">
                         {subs.icon} <span className="ml-1">{subs.title}</span>
                       </div>

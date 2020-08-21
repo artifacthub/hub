@@ -13,6 +13,14 @@
   opacity: 0;
 }
 
+.swagger-ui .topbar .download-url-wrapper .select-label select {
+  border-color: #659dbd;
+}
+
+.swagger-ui .opblock-tag {
+  margin: 0 0 25px;
+}
+
 @media only screen and (max-width: 575.98px) {
   .opblock-section-request-body .opblock-section-header {
     flex-direction: column;
@@ -45,5 +53,36 @@
 
   .opblock-summary .opblock-summary-path {
     padding: 10px 0 !important;
+  }
+
+  .swagger-ui .scheme-container .schemes {
+    display: block;
+  }
+
+  .swagger-ui .auth-wrapper {
+    justify-content: start;
+    margin-top: 10px;
+  }
+
+  .swagger-ui .response-col_links {
+    display: none;
+  }
+
+  .swagger-ui .response-col_description, .swagger-ui  .parameters-col_description {
+    font-size: 80%;
+  }
+
+  .swagger-ui  .parameters-col_description {
+    word-break: break-word;
+  }
+
+  .swagger-ui .authorization__btn.unlocked {
+    position: absolute;
+    right: 20px;
+    margin-top: 5px;
+  }
+
+  .swagger-ui .response-controls {
+    display: block;
   }
 }

@@ -706,13 +706,16 @@ paths:
                           logo_image_id: 0f5488e2-da57-486b-a20f-bfe746ed3e23
                           stars: 2
                           display_name: null
-                          description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
+                          description: >-
+                            Artifact Hub is a web-based application that enables
+                            finding, installing, and publishing Kubernetes
+                            packages.
                           version: 0.1.0
                           app_version: 0.1.0
                           deprecated: false
                           signed: null
                           repository:
-                            url: http://url.com
+                            url: "http://url.com"
                             kind: 0
                             name: artifact-hub
                             display_name: Artifact Hub
@@ -732,7 +735,7 @@ paths:
                           deprecated: false
                           signed: null
                           repository:
-                            url: http://url.com
+                            url: "http://url.com"
                             kind: 0
                             name: incubator
                             display_name: Incubator
@@ -752,7 +755,7 @@ paths:
                           deprecated: false
                           signed: null
                           repository:
-                            url: http://url.com
+                            url: "http://url.com"
                             kind: 0
                             name: stable
                             display_name: Stable
@@ -937,7 +940,7 @@ paths:
                       example: pkg1
                     logo_image_id:
                       type: string
-                      example: "12345abcde"
+                      example: 12345abcde
                     repository:
                       type: object
                       properties:
@@ -1295,9 +1298,9 @@ paths:
           description: Value to check
       responses:
         "204":
-          description: Found, the value is not available
+          description: "Found, the value is not available"
         "404":
-          description: Not found, the value is available
+          description: "Not found, the value is available"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -1471,7 +1474,7 @@ components:
             latest_version:
               type: string
               nullable: false
-              example: "2.0.0"
+              example: 2.0.0
             logo_url:
               type: string
               format: uri
@@ -1506,8 +1509,8 @@ components:
                   version:
                     type: string
                     example:
-                      - "2.0.0"
-                      - "1.0.0"
+                      - 2.0.0
+                      - 1.0.0
                   created_at:
                     type: integer
                     example: 1552082346
@@ -1538,8 +1541,8 @@ components:
                   version:
                     type: string
                     example:
-                      - "2.0.0"
-                      - "1.0.0"
+                      - 2.0.0
+                      - 1.0.0
               nullable: true
             provider:
               type: string
@@ -1550,7 +1553,7 @@ components:
             containerImage:
               type: string
               nullable: true
-              example: url.io/name/operator:v0.2.0
+              example: "url.io/name/operator:v0.2.0"
             created_at:
               type: integer
               example: 1552082346
@@ -1589,19 +1592,31 @@ components:
                   nullable: true
                 customResourcesDefinitionsExamples:
                   type: string
-                  example: "[{\"apiVersion\": v1alpha\n, \"kind\": CustomResource\n, \"spec\": {\n \"replicas\": 1\n  }\n}}]"
+                  example: |-
+                    [{"apiVersion": v1alpha
+                    , "kind": CustomResource
+                    , "spec": {
+                     "replicas": 1
+                      }
+                    }}]
                 rules:
                   type: object
                   properties:
                     Raw:
                       type: string
-                      example: "- macro: text\n  condition: (evt.num < 0)\n\n"
+                      example: |+
+                        - macro: text
+                          condition: (evt.num < 0)
+
             policies:
               type: object
               additionalProperties:
                 type: string
               example:
-                policy1: "- macro: text\n  condition: (evt.num < 0)\n\n"
+                policy1: |+
+                  - macro: text
+                    condition: (evt.num < 0)
+
             dependencies:
               type: object
               properties:
@@ -1613,9 +1628,12 @@ components:
                   example: 1.6.4
                 repository:
                   type: string
-                  example: http://repo.url
+                  example: "http://repo.url"
               example:
-                policy1: "- macro: text\n  condition: (evt.num < 0)\n\n"
+                policy1: |+
+                  - macro: text
+                    condition: (evt.num < 0)
+
           nullable: true
     RepositoryKind:
       type: integer
@@ -1658,7 +1676,7 @@ components:
           example: pkg1
         logo_image_id:
           type: string
-          example: "12345abcde"
+          example: 12345abcde
         stars:
           type: integer
           nullable: false
@@ -1671,10 +1689,10 @@ components:
           example: This is a package sample
         version:
           type: string
-          example: "1.0.0"
+          example: 1.0.0
         app_version:
           type: string
-          example: "0.1.0"
+          example: 0.1.0
         deprecated:
           type: boolean
           example: false
@@ -1741,7 +1759,7 @@ components:
           example: "http://url"
         logo_image_id:
           type: string
-          example: "12345abcde"
+          example: 12345abcde
       required:
         - name
     ResourceKindName:
@@ -1777,7 +1795,7 @@ components:
           example: jdoe@email.com
         profile_image_id:
           type: string
-          example: "12345abcde"
+          example: 12345abcde
       required:
         - alias
         - email
@@ -1836,7 +1854,9 @@ components:
           example: application/json
         template:
           type: string
-          example: '{"text": "Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}"}'
+          example: >-
+            {"text": "Package {{ .Package.name }} version {{ .Package.version }}
+            released! {{ .Package.url }}"}
         active:
           type: boolean
           nullable: false
@@ -1876,7 +1896,9 @@ components:
           example: application/json
         template:
           type: string
-          example: '{"text": "Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}"}'
+          example: >-
+            {"text": "Package {{ .Package.name }} version {{ .Package.version }}
+            released! {{ .Package.url }}"}
         event_kinds:
           type: array
           items:
@@ -2042,7 +2064,11 @@ components:
         type: string
         example: (automation | configuration)
       required: false
-      description: Text search query. Search terms can be combined using the syntax allowed by the PostgreSQL websearch_to_tsquery function. See https://www.postgresql.org/docs/current/textsearch-controls.html (12.3.2. Parsing Queries) for more details.
+      description: >-
+        Text search query. Search terms can be combined using the syntax allowed
+        by the PostgreSQL websearch_to_tsquery function. See
+        https://www.postgresql.org/docs/current/textsearch-controls.html
+        (12.3.2. Parsing Queries) for more details.
     UsersListParam:
       in: query
       name: users
@@ -2068,7 +2094,7 @@ components:
       name: version
       schema:
         type: string
-        example: "1.0.0"
+        example: 1.0.0
       required: true
       description: Package version
     WebhookIDParam:
@@ -2103,7 +2129,7 @@ components:
           schema:
             $ref: "#/components/schemas/Error"
     NoContent:
-      description: The request has succeeded, no content returned
+      description: "The request has succeeded, no content returned"
     NotFoundResponse:
       description: The requested resource was not found
       content:

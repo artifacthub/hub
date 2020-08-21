@@ -78,7 +78,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="text-right mt-1"
+              class="text-right mt-1 example"
             >
               <button
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
@@ -164,7 +164,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="text-right mt-1"
+              class="text-right mt-1 example"
             >
               <button
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
@@ -250,7 +250,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
               </div>
             </div>
             <div
-              class="text-right mt-1"
+              class="text-right mt-1 example"
             >
               <button
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
@@ -345,7 +345,7 @@ In shared and private-jet mode, the backend can be running in separate PODs, but
               </div>
             </div>
             <div
-              class="text-right mt-1"
+              class="text-right mt-1 example"
             >
               <button
                 class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"

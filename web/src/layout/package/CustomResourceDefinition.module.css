@@ -24,6 +24,11 @@
   white-space: pre !important;
 }
 
+.example {
+  height: 32px;
+  line-height: 2rem;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

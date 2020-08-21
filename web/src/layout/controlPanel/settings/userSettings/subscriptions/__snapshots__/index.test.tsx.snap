@@ -1081,13 +1081,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="airflow_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="airflow_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1217,13 +1217,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="cerebro_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="cerebro_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1353,13 +1353,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="elastic-stack_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="elastic-stack_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1490,13 +1490,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="ibm-redis_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="ibm-redis_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1627,13 +1627,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="SSH connections_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="SSH connections_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1764,13 +1764,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="Traefik_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="Traefik_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -1901,13 +1901,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="Trusted Registry Images_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="Trusted Registry Images_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
@@ -2038,13 +2038,13 @@ exports[`SubscriptionsSection renders correctly 2`] = `
                             checked=""
                             class="custom-control-input checkbox"
                             data-testid="newReleaseMobileBtn"
-                            id="newRelease"
+                            id="zookeeper_newRelease"
                             type="checkbox"
                           />
                           <label
                             class="custom-control-label"
                             data-testid="newRelease_label"
-                            for="newRelease"
+                            for="zookeeper_newRelease"
                           >
                             <div
                               class="d-flex align-items-center"
