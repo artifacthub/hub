@@ -181,6 +181,14 @@ func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput)
 	return m.dbQueryJSON(ctx, "select search_packages($1::jsonb)", inputJSON)
 }
 
+// SearchMonocularJSON returns a json object with the search results produced
+// by the input provided that is compatible with the Monocular search API. The
+// json object is built by the database.
+func (m *Manager) SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error) {
+	query := "select search_packages_monocular($1::text, $2::text)"
+	return m.dbQueryJSON(ctx, query, baseURL, tsQueryWeb)
+}
+
 // ToggleStar stars or unstars a given package for the provided user.
 func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
