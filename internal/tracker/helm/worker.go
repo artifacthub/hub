@@ -168,6 +168,16 @@ func (w *Worker) handleRegisterJob(j *Job) {
 			})
 		}
 	}
+	links := make([]*hub.Link, 0, len(md.Sources))
+	for _, sourceURL := range md.Sources {
+		links = append(links, &hub.Link{
+			Name: "source",
+			URL:  sourceURL,
+		})
+	}
+	if len(links) > 0 {
+		p.Links = links
+	}
 	if len(maintainers) > 0 {
 		p.Maintainers = maintainers
 	}
