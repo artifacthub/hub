@@ -83,11 +83,14 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 // involves downloading the chart archive, extracting its contents and register
 // the corresponding package.
 func (w *Worker) handleRegisterJob(j *Job) {
+	name := j.ChartVersion.Metadata.Name
+	version := j.ChartVersion.Metadata.Version
+
 	defer func() {
 		if r := recover(); r != nil {
 			w.logger.Error().
-				Str("package", j.ChartVersion.Metadata.Name).
-				Str("version", j.ChartVersion.Metadata.Version).
+				Str("package", name).
+				Str("version", version).
 				Bytes("stacktrace", debug.Stack()).
 				Interface("recover", r).
 				Msg("handleRegisterJob panic")
@@ -99,7 +102,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if _, err := url.ParseRequestURI(u); err != nil {
 		tmp, err := url.Parse(w.r.URL)
 		if err != nil {
-			w.warn(fmt.Errorf("invalid chart url: %w", err))
+			w.warn(name, version, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
 			return
 		}
 		tmp.Path = path.Join(tmp.Path, u)
@@ -109,7 +112,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	// Load chart from remote archive
 	chart, err := w.loadChart(u)
 	if err != nil {
-		w.warn(fmt.Errorf("error loading chart: %w", err))
+		w.warn(name, version, fmt.Errorf("error loading chart: %w", err))
 		return
 	}
 	md := chart.Metadata
@@ -120,11 +123,11 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		logoURL = md.Icon
 		data, err := w.getImage(md.Icon)
 		if err != nil {
-			w.warn(fmt.Errorf("error getting image %s: %w", md.Icon, err))
+			w.warn(name, version, fmt.Errorf("error getting image %s: %w", md.Icon, err))
 		} else {
 			logoImageID, err = w.svc.Is.SaveImage(w.svc.Ctx, data)
 			if err != nil && !errors.Is(err, image.ErrFormat) {
-				w.warn(fmt.Errorf("error saving image %s: %w", md.Icon, err))
+				w.warn(name, version, fmt.Errorf("error saving image %s: %w", md.Icon, err))
 			}
 		}
 	}
@@ -157,7 +160,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if err == nil {
 		p.Signed = hasProvenanceFile
 	} else {
-		w.warn(fmt.Errorf("error checking provenance file: %w", err))
+		w.warn(name, version, fmt.Errorf("error checking provenance file: %w", err))
 	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {
@@ -201,7 +204,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	// Register package
 	w.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
 	if err := w.svc.Pm.Register(w.svc.Ctx, p); err != nil {
-		w.warn(fmt.Errorf("error registering package %s version %s: %w", md.Name, md.Version, err))
+		w.warn(name, version, fmt.Errorf("error registering package: %w", err))
 	}
 }
 
@@ -210,14 +213,16 @@ func (w *Worker) handleRegisterJob(j *Job) {
 // version.
 func (w *Worker) handleUnregisterJob(j *Job) {
 	// Unregister package
+	name := j.ChartVersion.Name
+	version := j.ChartVersion.Version
 	p := &hub.Package{
-		Name:       j.ChartVersion.Name,
-		Version:    j.ChartVersion.Version,
+		Name:       name,
+		Version:    version,
 		Repository: w.r,
 	}
 	w.logger.Debug().Str("name", p.Name).Str("v", p.Version).Msg("unregistering package")
 	if err := w.svc.Pm.Unregister(w.svc.Ctx, p); err != nil {
-		w.warn(fmt.Errorf("error unregistering package %s version %s: %w", p.Name, p.Version, err))
+		w.warn(name, version, fmt.Errorf("error unregistering package: %w", err))
 	}
 }
 
@@ -283,7 +288,8 @@ func (w *Worker) getImage(u string) ([]byte, error) {
 
 // warn is a helper that sends the error provided to the errors collector and
 // logs it as a warning.
-func (w *Worker) warn(err error) {
+func (w *Worker) warn(name, version string, err error) {
+	err = fmt.Errorf("%s (package: %s version: %s)", err.Error(), name, version)
 	w.svc.Ec.Append(w.r.RepositoryID, err)
 	w.logger.Warn().Err(err).Send()
 }
