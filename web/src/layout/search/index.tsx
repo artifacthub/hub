@@ -88,20 +88,6 @@ const SearchView = (props: Props) => {
           cleanFilters['repo'] = [];
         }
         break;
-
-      // Remove selected users/s if a org is now selected
-      case 'org':
-        if (newFilters.length > 0) {
-          cleanFilters['user'] = [];
-        }
-        break;
-
-      // Remove selected org/s if a user is now selected
-      case 'user':
-        if (newFilters.length > 0) {
-          cleanFilters['org'] = [];
-        }
-        break;
     }
 
     return {
