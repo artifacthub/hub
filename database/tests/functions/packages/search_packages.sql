@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(22);
+select plan(23);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -765,90 +765,6 @@ select is(
     'TsQueryWeb: - Repo: repo1 | Package 1 expected - Facets not expected'
 );
 select is(
-    search_packages('{
-        "orgs": [
-            "org1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000003",
-                "name": "package3",
-                "normalized_name": "package3",
-                "logo_image_id": "00000000-0000-0000-0000-000000000003",
-                "stars": 0,
-                "display_name": "Package 3",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": null,
-                "deprecated": null,
-                "signed": null,
-                "created_at": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000003",
-                    "kind": 1,
-                    "name": "repo3",
-                    "display_name": "Repo 3",
-                    "url": "https://repo3.com",
-                    "user_alias": null,
-                    "organization_name": "org1",
-                    "organization_display_name": "Organization 1"
-                }
-            }],
-            "facets": null
-        },
-        "metadata": {
-            "limit": null,
-            "offset": null,
-            "total": 1
-        }
-    }'::jsonb,
-    'TsQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
-);
-select is(
-    search_packages('{
-        "users": [
-            "user1"
-        ]
-    }')::jsonb,
-    '{
-        "data": {
-            "packages": [{
-                "package_id": "00000000-0000-0000-0000-000000000001",
-                "name": "package1",
-                "normalized_name": "package1",
-                "logo_image_id": "00000000-0000-0000-0000-000000000001",
-                "stars": 10,
-                "display_name": "Package 1",
-                "description": "description",
-                "version": "1.0.0",
-                "app_version": "12.1.0",
-                "deprecated": null,
-                "signed": null,
-                "created_at": 1592299234,
-                "repository": {
-                    "repository_id": "00000000-0000-0000-0000-000000000001",
-                    "kind": 0,
-                    "name": "repo1",
-                    "display_name": "Repo 1",
-                    "url": "https://repo1.com",
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
-                }
-            }],
-            "facets": null
-        },
-        "metadata": {
-            "limit": null,
-            "offset": null,
-            "total": 1
-        }
-    }'::jsonb,
-    'TsQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
-);
-select is(
     search_packages(
     '{
         "facets": true,
@@ -1098,6 +1014,160 @@ select is(
         }
     }'::jsonb,
     'Facets: false TsQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
+);
+
+-- Tests with with orgs and users filters
+select is(
+    search_packages('{
+        "orgs": [
+            "org1"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000003",
+                "name": "package3",
+                "normalized_name": "package3",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                "stars": 0,
+                "display_name": "Package 3",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": null,
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000003",
+                    "kind": 1,
+                    "name": "repo3",
+                    "display_name": "Repo 3",
+                    "url": "https://repo3.com",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'TsQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
+);
+select is(
+    search_packages('{
+        "users": [
+            "user1"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'TsQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
+);
+select is(
+    search_packages('{
+        "orgs": [
+            "org1"
+        ],
+        "users": [
+            "user1"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }, {
+                "package_id": "00000000-0000-0000-0000-000000000003",
+                "name": "package3",
+                "normalized_name": "package3",
+                "logo_image_id": "00000000-0000-0000-0000-000000000003",
+                "stars": 0,
+                "display_name": "Package 3",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": null,
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000003",
+                    "kind": 1,
+                    "name": "repo3",
+                    "display_name": "Repo 3",
+                    "url": "https://repo3.com",
+                    "user_alias": null,
+                    "organization_name": "org1",
+                    "organization_display_name": "Organization 1"
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 2
+        }
+    }'::jsonb,
+    'TsQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
 );
 
 -- Tests with limit and offset

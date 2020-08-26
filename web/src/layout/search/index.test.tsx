@@ -444,60 +444,6 @@ describe('Search index', () => {
 
       await waitFor(() => {});
     });
-
-    it('calls history push with proper filters when a org is checked', async () => {
-      const mockSearchResults = getMockSearchResults('17');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getByLabelText } = render(
-        <Router>
-          <SearchView {...defaultProps} filters={{ user: ['testUser'] }} />
-        </Router>
-      );
-
-      const opt = await waitFor(() => getByLabelText(/Helm org/g));
-      fireEvent.click(opt);
-
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQuerystring({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { org: ['helmOrg'] },
-          deprecated: false,
-        }),
-      });
-
-      await waitFor(() => {});
-    });
-
-    it('calls history push with proper filters when a user is checked', async () => {
-      const mockSearchResults = getMockSearchResults('17');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getByLabelText } = render(
-        <Router>
-          <SearchView {...defaultProps} filters={{ org: ['helmOrg'] }} />
-        </Router>
-      );
-
-      const opt = await waitFor(() => getByLabelText(/testUser/g));
-      fireEvent.click(opt);
-
-      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
-      expect(mockHistoryPush).toHaveBeenCalledWith({
-        pathname: '/packages/search',
-        search: prepareQuerystring({
-          tsQueryWeb: 'test',
-          pageNumber: 1,
-          filters: { user: ['testUser'] },
-          deprecated: false,
-        }),
-      });
-
-      await waitFor(() => {});
-    });
   });
 
   describe('Expand or collapse filters logic', () => {

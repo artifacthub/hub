@@ -79,11 +79,15 @@ begin
             case when cardinality(v_repository_kinds) > 0
             then repository_kind_id = any(v_repository_kinds) else true end
         and
-            case when cardinality(v_users) > 0
-            then user_alias = any(v_users) else true end
-        and
-            case when cardinality(v_orgs) > 0
-            then organization_name = any(v_orgs) else true end
+            case
+                when cardinality(v_orgs) > 0 and cardinality(v_users) > 0 then
+                    (organization_name = any(v_orgs) or user_alias = any(v_users))
+                when cardinality(v_orgs) > 0 then
+                    organization_name = any(v_orgs)
+                when cardinality(v_users) > 0 then
+                    user_alias = any(v_users)
+                else true
+            end
         and
             case when cardinality(v_repositories) > 0
             then repository_name = any(v_repositories) else true end
