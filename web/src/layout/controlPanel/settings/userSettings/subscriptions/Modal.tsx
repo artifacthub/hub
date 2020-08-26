@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 
 import { API } from '../../../../../api';
@@ -21,6 +21,7 @@ interface Props {
 }
 
 const SubscriptionModal = (props: Props) => {
+  const searchWrapperRef = useRef<HTMLDivElement | null>(null);
   const [apiError, setApiError] = useState(null);
   const [eventKind, setEventKind] = useState<EventKind>(EventKind.NewPackageRelease);
   const [packageItem, setPackageItem] = useState<Package | null>(null);
@@ -107,6 +108,7 @@ const SubscriptionModal = (props: Props) => {
       onClose={onCloseModal}
       error={apiError}
       cleanError={() => setApiError(null)}
+      excludedRefs={[searchWrapperRef]}
       noScrollable
     >
       <div className="w-100 position-relative">
@@ -194,7 +196,7 @@ const SubscriptionModal = (props: Props) => {
               </div>
             </div>
           ) : (
-            <div className={`mt-2 ${styles.searchWrapper}`}>
+            <div className={`mt-2 ${styles.searchWrapper}`} ref={searchWrapperRef}>
               <SearchPackages disabledPackages={getSubscribedPackagesIds()} onSelection={onPackageSelection} />
             </div>
           )}

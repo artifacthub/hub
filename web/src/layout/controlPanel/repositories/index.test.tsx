@@ -63,21 +63,6 @@ describe('Repository index', () => {
       });
     });
 
-    it('displays spinner to get repositories', async () => {
-      const mockRepository = getMockRepository('3');
-      mocked(API).getRepositories.mockResolvedValue(mockRepository);
-
-      const { getByRole } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
-      );
-
-      const spinner = await waitFor(() => getByRole('status'));
-      expect(spinner).toBeTruthy();
-      await waitFor(() => {});
-    });
-
     it('displays no data component when no repositories', async () => {
       const mockRepository = getMockRepository('4');
       mocked(API).getRepositories.mockResolvedValue(mockRepository);

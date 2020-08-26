@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(116);
+select plan(121);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -22,6 +22,7 @@ select tables_are(array[
     'image_version',
     'maintainer',
     'notification',
+    'opt_out',
     'organization',
     'package',
     'package__maintainer',
@@ -90,6 +91,12 @@ select columns_are('notification', array[
     'event_id',
     'user_id',
     'webhook_id'
+]);
+select columns_are('opt_out', array[
+    'opt_out_id',
+    'user_id',
+    'repository_id',
+    'event_kind_id'
 ]);
 select columns_are('organization', array[
     'organization_id',
@@ -246,6 +253,10 @@ select indexes_are('notification', array[
     'notification_event_id_webhook_id_key',
     'notification_webhook_id_created_at_idx'
 ]);
+select indexes_are('opt_out', array[
+    'opt_out_pkey',
+    'opt_out_user_id_repository_id_event_kind_id_key'
+]);
 select indexes_are('organization', array[
     'organization_pkey',
     'organization_name_key'
@@ -357,10 +368,13 @@ select has_function('set_last_tracking_results');
 select has_function('transfer_repository');
 select has_function('update_repository');
 
+select has_function('add_opt_out');
 select has_function('add_subscription');
+select has_function('delete_opt_out');
 select has_function('delete_subscription');
 select has_function('get_package_subscriptors');
 select has_function('get_repository_subscriptors');
+select has_function('get_user_opt_out_entries');
 select has_function('get_user_package_subscriptions');
 select has_function('get_user_subscriptions');
 

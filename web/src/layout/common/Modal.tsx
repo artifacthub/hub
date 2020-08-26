@@ -26,13 +26,14 @@ interface Props {
   noScrollable?: boolean;
   disabledOpenBtn?: boolean;
   tooltipMessage?: string;
+  excludedRefs?: React.MutableRefObject<HTMLDivElement | null>[];
 }
 
 const Modal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(props.open || false);
   const ref = useRef<HTMLDivElement>(null);
   const errorWrapper = useRef<HTMLDivElement>(null);
-  useOutsideClick([ref], openStatus, () => {
+  useOutsideClick([ref, ...(!isUndefined(props.excludedRefs) ? [...props.excludedRefs] : [])], openStatus, () => {
     closeModal();
   });
   useBodyScroll(openStatus, 'modal');

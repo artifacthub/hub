@@ -961,6 +961,10 @@ paths:
                         organization_display_name:
                           type: string
                           example: Organization 1
+                    event_kinds:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/EventKindId"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -1028,6 +1032,99 @@ paths:
                       $ref: "#/components/schemas/EventKindId"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /subscriptions/opt-out:
+    get:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get user's opt-out entries
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    opt_out_id:
+                      type: string
+                      format: uuid
+                    repository:
+                      type: object
+                      properties:
+                        repository_id:
+                          type: string
+                          format: uuid
+                        kind:
+                          $ref: "#/components/schemas/RepositoryKind"
+                        name:
+                          type: string
+                          example: repo1
+                        display_name:
+                          type: string
+                          example: Repo 1
+                        user_alias:
+                          type: string
+                          example: jdoe
+                        organization_name:
+                          type: string
+                          example: org1
+                        organization_display_name:
+                          type: string
+                          example: Organization 1
+                    event_kinds:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/EventKindId"
+                      example:
+                        - 2
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+    post:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Add opt-out entry
+      requestBody:
+        $ref: "#/components/requestBodies/OptOutBody"
+      responses:
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/subscriptions/opt-out/{optOutID}":
+    delete:
+      tags:
+        - Subscriptions
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Delete opt-out entry
+      parameters:
+        - $ref: "#/components/parameters/OptOutIDParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
@@ -2012,6 +2109,14 @@ components:
         format: uuid
       required: true
       description: Package ID
+    OptOutIDParam:
+      in: path
+      name: optOutID
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: Opt-out entry ID
     RepositoryKindsListParam:
       in: query
       name: kind
@@ -2146,7 +2251,7 @@ components:
             $ref: "#/components/schemas/Error"
   requestBodies:
     SubscriptionBody:
-      description: Subscription Request body
+      description: Subscription request body
       required: true
       content:
         application/json:
@@ -2160,6 +2265,22 @@ components:
                 $ref: "#/components/schemas/EventKindId"
             required:
               - package_id
+              - event_kind
+    OptOutBody:
+      description: Opt-out entry request body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              repository_id:
+                type: string
+                format: uuid
+              event_kind:
+                $ref: "#/components/schemas/EventKindId"
+            required:
+              - repository_id
               - event_kind
     WebhookBody:
       description: Webhook body

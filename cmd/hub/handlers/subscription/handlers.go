@@ -44,6 +44,22 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// AddOptOut is an http handler that adds the provided opt-out to the database.
+func (h *Handlers) AddOptOut(w http.ResponseWriter, r *http.Request) {
+	o := &hub.OptOut{}
+	if err := json.NewDecoder(r.Body).Decode(&o); err != nil {
+		h.logger.Error().Err(err).Str("method", "AddOptOut").Msg("invalid opt-out entry")
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	if err := h.subscriptionManager.AddOptOut(r.Context(), o); err != nil {
+		h.logger.Error().Err(err).Str("method", "AddOptOut").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusCreated)
+}
+
 // Delete is an http handler that removes the provided subscription from the
 // database.
 func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +76,18 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.subscriptionManager.Delete(r.Context(), s); err != nil {
 		h.logger.Error().Err(err).Str("method", "Delete").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// DeleteOptOut is an http handler that removes the provided opt-out from the
+// database.
+func (h *Handlers) DeleteOptOut(w http.ResponseWriter, r *http.Request) {
+	optOutID := chi.URLParam(r, "optOutID")
+	if err := h.subscriptionManager.DeleteOptOut(r.Context(), optOutID); err != nil {
+		h.logger.Error().Err(err).Str("method", "DeleteOptOut").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
@@ -85,6 +113,18 @@ func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.subscriptionManager.GetByUserJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByUser").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+}
+
+// GetOptOutList is an http handler that returns the opt-out entries of the
+// user doing the request.
+func (h *Handlers) GetOptOutList(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.subscriptionManager.GetOptOutListJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetOptOutList").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}

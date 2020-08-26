@@ -271,6 +271,7 @@ export interface PackageStars {
 export enum EventKind {
   NewPackageRelease = 0,
   SecurityAlert,
+  RepositoryTrackingErrors,
 }
 
 export interface Subscription {
@@ -351,4 +352,10 @@ export enum ErrorKind {
   Other,
   NotFound,
   Unauthorized,
+}
+
+export interface OptOutItem {
+  optOutId: string;
+  repository: Repository;
+  eventKinds: EventKind[];
 }

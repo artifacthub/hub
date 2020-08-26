@@ -31,12 +31,17 @@ exports[`SubscriptionsSection renders correctly 1`] = `
         class="flex-grow-1"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
+          class="h3 pb-2 mb-2 border-bottom title"
+        >
+          Your subscriptions
+        </div>
+        <div
+          class="d-flex flex-row align-items-start justify-content-between pb-2 mt-5"
         >
           <div
-            class="h3 pb-0 title"
+            class="h4 mb-0 title"
           >
-            Your subscriptions
+            Packages
           </div>
           <div>
             <button
@@ -84,13 +89,16 @@ exports[`SubscriptionsSection renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="mx-auto mt-4 mt-md-5 wrapper"
+          class="mx-auto mt-3 mt-md-3 wrapper"
         >
           <p
             class="m-0"
           >
             You will receive an email notification when an event that matches any of the subscriptions in the list is fired.
           </p>
+          <div
+            class="mt-4 mt-md-5"
+          />
         </div>
         <div>
           <div
@@ -142,6 +150,7 @@ exports[`SubscriptionsSection renders correctly 1`] = `
             </div>
           </div>
         </div>
+        <div />
       </div>
     </main>
   </div>
@@ -161,12 +170,17 @@ exports[`SubscriptionsSection renders correctly 2`] = `
         class="flex-grow-1"
       >
         <div
-          class="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom"
+          class="h3 pb-2 mb-2 border-bottom title"
+        >
+          Your subscriptions
+        </div>
+        <div
+          class="d-flex flex-row align-items-start justify-content-between pb-2 mt-5"
         >
           <div
-            class="h3 pb-0 title"
+            class="h4 mb-0 title"
           >
-            Your subscriptions
+            Packages
           </div>
           <div>
             <button
@@ -214,7 +228,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
           </div>
         </div>
         <div
-          class="mx-auto mt-4 mt-md-5 wrapper"
+          class="mx-auto mt-3 mt-md-3 wrapper"
         >
           <p
             class="m-0"
@@ -226,6 +240,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
           >
             <div
               class="d-none d-sm-inline"
+              data-testid="packagesList"
             >
               <table
                 class="table table-bordered table-hover table"
@@ -2129,6 +2144,7 @@ exports[`SubscriptionsSection renders correctly 2`] = `
             </div>
           </div>
         </div>
+        <div />
       </div>
     </main>
   </div>

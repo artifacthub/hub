@@ -211,6 +211,11 @@ func (h *Handlers) setupRouter() {
 		// Subscriptions
 		r.Route("/subscriptions", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
+			r.Route("/opt-out", func(r chi.Router) {
+				r.Get("/", h.Subscriptions.GetOptOutList)
+				r.Post("/", h.Subscriptions.AddOptOut)
+				r.Delete("/{optOutID}", h.Subscriptions.DeleteOptOut)
+			})
 			r.Get("/{packageID}", h.Subscriptions.GetByPackage)
 			r.Get("/", h.Subscriptions.GetByUser)
 			r.Post("/", h.Subscriptions.Add)
