@@ -44,7 +44,6 @@ interface Props {
 const SearchView = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const history = useHistory();
-  const [expandedList, setExpandedList] = useState<string | undefined>(undefined);
   const [searchResults, setSearchResults] = useState<SearchResults>({
     data: {
       facets: null,
@@ -97,17 +96,12 @@ const SearchView = (props: Props) => {
     };
   };
 
-  const onFiltersChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name, value, checked } = e.target;
+  const onFiltersChange = (name: string, value: string, checked: boolean): void => {
     let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
     if (checked) {
       newFilters.push(value);
     } else {
       newFilters = newFilters.filter((el) => el !== value);
-    }
-
-    if (!isUndefined(expandedList) && name !== expandedList) {
-      setExpandedList(undefined);
     }
 
     history.push({
@@ -123,6 +117,25 @@ const SearchView = (props: Props) => {
     });
   };
 
+  const onResetSomeFilters = (filterKeys: string[]): void => {
+    let newFilters: FiltersProp = {};
+    filterKeys.forEach((fKey: string) => {
+      newFilters[fKey] = [];
+    });
+
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
+        filters: { ...props.filters, ...newFilters },
+        deprecated: props.deprecated,
+        operators: props.operators,
+      }),
+    });
+  };
+
   const onTsQueryChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value, checked } = e.target;
     let query = isUndefined(props.tsQuery) ? [] : props.tsQuery.slice();
@@ -130,10 +143,6 @@ const SearchView = (props: Props) => {
       query.push(value);
     } else {
       query = query.filter((el) => el !== value);
-    }
-
-    if (!isUndefined(expandedList)) {
-      setExpandedList(undefined);
     }
 
     history.push({
@@ -178,9 +187,6 @@ const SearchView = (props: Props) => {
   };
 
   const onResetFilters = (): void => {
-    if (!isUndefined(expandedList)) {
-      setExpandedList(undefined);
-    }
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
@@ -221,10 +227,6 @@ const SearchView = (props: Props) => {
     setScrollPosition(0);
     updateWindowScrollPosition(0);
     dispatch(updateLimit(newLimit));
-  };
-
-  const onFacetExpandableChange = (filterKey: string, open: boolean) => {
-    setExpandedList(open ? filterKey : undefined);
   };
 
   useEffect(() => {
@@ -352,6 +354,7 @@ const SearchView = (props: Props) => {
                     activeFilters={props.filters}
                     activeTsQuery={props.tsQuery}
                     onChange={onFiltersChange}
+                    onResetSomeFilters={onResetSomeFilters}
                     onTsQueryChange={onTsQueryChange}
                     deprecated={props.deprecated}
                     operators={props.operators}
@@ -359,8 +362,6 @@ const SearchView = (props: Props) => {
                     onOperatorsChange={onOperatorsChange}
                     onResetFilters={onResetFilters}
                     visibleTitle={false}
-                    onFacetExpandableChange={onFacetExpandableChange}
-                    expandedList={expandedList}
                   />
                 </Sidebar>
               )}
@@ -410,14 +411,13 @@ const SearchView = (props: Props) => {
                   activeFilters={props.filters}
                   activeTsQuery={props.tsQuery}
                   onChange={onFiltersChange}
+                  onResetSomeFilters={onResetSomeFilters}
                   onTsQueryChange={onTsQueryChange}
                   deprecated={props.deprecated}
                   operators={props.operators}
                   onDeprecatedChange={onDeprecatedChange}
                   onOperatorsChange={onOperatorsChange}
                   onResetFilters={onResetFilters}
-                  onFacetExpandableChange={onFacetExpandableChange}
-                  expandedList={expandedList}
                   visibleTitle
                 />
               </div>

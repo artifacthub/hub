@@ -16,7 +16,7 @@ import ExternalLink from '../../../common/ExternalLink';
 import Image from '../../../common/Image';
 import InputField from '../../../common/InputField';
 import RepositoryIcon from '../../../common/RepositoryIcon';
-import SearchTypeahead from '../../../common/SearchTypeahead';
+import SearchPackages from '../../../common/SearchPackages';
 import styles from './Form.module.css';
 
 interface Props {
@@ -416,7 +416,7 @@ const WebhookForm = (props: Props) => {
               </small>
             </div>
             <div className="mb-3">
-              <SearchTypeahead disabledPackages={getPackagesIds()} onSelection={addPackage} />
+              <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} />
             </div>
 
             {isValidated && selectedPackages.length === 0 && (

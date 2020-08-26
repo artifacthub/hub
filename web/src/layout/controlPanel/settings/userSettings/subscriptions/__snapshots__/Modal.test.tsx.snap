@@ -119,7 +119,7 @@ exports[`SubscriptionModal renders correctly 1`] = `
                         <input
                           autocomplete="new-input"
                           class="flex-grow-1 px-3 input"
-                          data-testid="searchTypeaheadInput"
+                          data-testid="searchPackagesInput"
                           name="searchInput"
                           spellcheck="false"
                           type="text"

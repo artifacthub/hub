@@ -1,0 +1,44 @@
+.option {
+  font-size: 0.875rem;
+}
+
+.icon {
+  font-size: 0.5rem;
+}
+
+.dropdown {
+  top: 40px;
+  width: 220px;
+  overflow-x: auto;
+}
+
+.itemsList {
+  max-height: 300px;
+  overflow-x: auto;
+}
+
+.selected {
+  background-color: var(--color-black-5);
+}
+
+.checkMark {
+  left: -18px;
+}
+
+.close {
+  right: -18px;
+}
+
+.hightlighted {
+  color: var(--hightlighted);
+}
+
+@media only screen and (max-width: 575.98px) {
+  .input {
+    font-size: 16px !important;
+  }
+
+  .dropdown {
+    max-width: 100%;
+  }
+}

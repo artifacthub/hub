@@ -173,7 +173,7 @@ describe('Search index', () => {
   });
 
   describe('Filters', () => {
-    it('renders 2 facets groups', async () => {
+    it('renders 1 facets group', async () => {
       const mockSearchResults = getMockSearchResults('7');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
@@ -186,8 +186,8 @@ describe('Search index', () => {
       const [facets, options] = await waitFor(() => [getAllByRole('menuitem'), getAllByTestId('checkbox')]);
 
       // Desktop + mobile (sidebar)
-      expect(facets).toHaveLength(2 * 3 + 2);
-      expect(options).toHaveLength(16 * 2);
+      expect(facets).toHaveLength(2 * 3);
+      expect(options).toHaveLength(13 * 2);
       await waitFor(() => {});
     });
 
@@ -446,117 +446,6 @@ describe('Search index', () => {
     });
   });
 
-  describe('Expand or collapse filters logic', () => {
-    it('collapses previous open facet when a new one is expanded', async () => {
-      const mockSearchResults = getMockSearchResults('18');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getAllByTestId, getByRole } = render(
-        <Router>
-          <SearchView {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => getByRole('main'));
-
-      const btns = getAllByTestId('expandableListBtn');
-
-      expect(btns).toHaveLength(2 * 2);
-      expect(btns[0]).toHaveTextContent('Show more...');
-      fireEvent.click(btns[0]);
-
-      expect(btns[0]).toHaveTextContent('Show less...');
-
-      expect(btns[1]).toHaveTextContent('Show more...');
-      fireEvent.click(btns[1]);
-
-      expect(btns[1]).toHaveTextContent('Show less...');
-      expect(btns[0]).toHaveTextContent('Show more...');
-      await waitFor(() => {});
-    });
-
-    it('collapses previous open facet when a filter in a different facet is clicked', async () => {
-      const mockSearchResults = getMockSearchResults('19');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getAllByTestId, getByRole, getByLabelText } = render(
-        <Router>
-          <SearchView {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => getByRole('main'));
-
-      const btns = getAllByTestId('expandableListBtn');
-
-      expect(btns).toHaveLength(2 * 2);
-      expect(btns[0]).toHaveTextContent('Show more...');
-      fireEvent.click(btns[0]);
-
-      expect(btns[0]).toHaveTextContent('Show less...');
-
-      const opt = getByLabelText(/Test 1/g);
-      fireEvent.click(opt);
-
-      expect(btns[0]).toHaveTextContent('Show more...');
-      await waitFor(() => {});
-    });
-
-    it('does not collapse open facet when a filter in the same facet is clicked', async () => {
-      const mockSearchResults = getMockSearchResults('20');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getAllByTestId, getByRole, getByLabelText } = render(
-        <Router>
-          <SearchView {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => getByRole('main'));
-
-      const btns = getAllByTestId('expandableListBtn');
-
-      expect(btns).toHaveLength(2 * 2);
-      expect(btns[0]).toHaveTextContent('Show more...');
-      fireEvent.click(btns[0]);
-
-      expect(btns[0]).toHaveTextContent('Show less...');
-
-      const opt = getByLabelText(/Org 1/g);
-      fireEvent.click(opt);
-
-      expect(btns[0]).toHaveTextContent('Show less...');
-      await waitFor(() => {});
-    });
-
-    it('collapses previous open facet when Reset btn is clicked', async () => {
-      const mockSearchResults = getMockSearchResults('21');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const { getAllByTestId, getByRole, getByTestId } = render(
-        <Router>
-          <SearchView {...defaultProps} filters={{ org: ['helm', 'falco'] }} />
-        </Router>
-      );
-
-      await waitFor(() => getByRole('main'));
-
-      const btns = getAllByTestId('expandableListBtn');
-
-      expect(btns).toHaveLength(2 * 2);
-
-      expect(btns[0]).toHaveTextContent('Show more...');
-      fireEvent.click(btns[0]);
-      expect(btns[0]).toHaveTextContent('Show less...');
-
-      const resetBtn = getByTestId('resetFiltersBtn');
-      fireEvent.click(resetBtn);
-
-      expect(btns[0]).toHaveTextContent('Show more...');
-      await waitFor(() => {});
-    });
-  });
-
   describe('Facets', () => {
     it('keeps previous facets when new ones are empty', async () => {
       const mockSearchResults1 = getMockSearchResults('22a');
@@ -584,7 +473,7 @@ describe('Search index', () => {
 
       expect(main).toBeInTheDocument();
       const checks = getAllByTestId('checkbox');
-      expect(checks).toHaveLength(36);
+      expect(checks).toHaveLength(24);
 
       rerender(
         <Router>
@@ -612,7 +501,7 @@ describe('Search index', () => {
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
-      expect(checks).toHaveLength(36);
+      expect(checks).toHaveLength(24);
 
       await waitFor(() => {});
     });

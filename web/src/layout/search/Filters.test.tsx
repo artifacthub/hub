@@ -82,6 +82,7 @@ const defaultProps = {
   facets: FacetsMock,
   visibleTitle: false,
   onChange: onChangeMock,
+  onResetSomeFilters: jest.fn(),
   onTsQueryChange: jest.fn(),
   onDeprecatedChange: onDeprecatedChangeMock,
   onOperatorsChange: jest.fn(),
@@ -105,7 +106,7 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(20);
+      expect(getAllByTestId('checkbox')).toHaveLength(15);
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -145,7 +146,7 @@ describe('Filters', () => {
     it('calls onchange mock when any checkbox is clicked', () => {
       const { getByLabelText } = render(<Filters {...defaultProps} />);
 
-      const opt = getByLabelText(/Stable/g);
+      const opt = getByLabelText(/Helm charts/g);
       expect(opt).toBeInTheDocument();
       fireEvent.click(opt);
       expect(onChangeMock).toHaveBeenCalledTimes(1);
@@ -159,8 +160,8 @@ describe('Filters', () => {
 
       expect(titles[0]).toHaveTextContent('Category');
       expect(titles[1]).toHaveTextContent('Kind');
-      expect(titles[2]).toHaveTextContent('Publisher');
-      expect(titles[3]).toHaveTextContent('Repository');
+      expect(titles[2]).toHaveTextContent('publisher');
+      expect(titles[3]).toHaveTextContent('repository');
       expect(titles[4]).toHaveTextContent('Others');
     });
   });

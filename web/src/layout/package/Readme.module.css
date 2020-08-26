@@ -6,7 +6,7 @@
 
 .md p code {
   hyphens: none;
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .md hr {
@@ -62,7 +62,7 @@
 }
 
 .md a {
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .md img {

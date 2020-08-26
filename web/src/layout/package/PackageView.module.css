@@ -41,6 +41,10 @@
   line-height: 1.15rem;
 }
 
+.description {
+  overflow-wrap: break-word;
+}
+
 .modalInstallationWrapper code,
 .codeWrapper code {
   word-wrap: normal !important;

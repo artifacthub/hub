@@ -419,7 +419,7 @@ const PackageView = (props: Props) => {
                     </div>
                   </div>
 
-                  <p className="mb-0">{detail.description}</p>
+                  <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
 
                   <div className="d-flex align-items-center justify-content-between flex-wrap d-md-none">
                     <div className="d-flex mt-3">

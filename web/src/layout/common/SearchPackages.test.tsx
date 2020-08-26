@@ -5,12 +5,12 @@ import { mocked } from 'ts-jest/utils';
 import { API } from '../../api';
 import { SearchResults } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
-import SearchTypeahead from './SearchTypeahead';
+import SearchPackages from './SearchPackages';
 jest.mock('../../api');
 jest.mock('../../utils/alertDispatcher');
 
 const getMockSearch = (fixtureId: string): SearchResults => {
-  return require(`./__fixtures__/SearchTypeahead/${fixtureId}.json`) as SearchResults;
+  return require(`./__fixtures__/SearchPackages/${fixtureId}.json`) as SearchResults;
 };
 
 const mockOnSelection = jest.fn();
@@ -20,13 +20,13 @@ const defaultProps = {
   onSelection: mockOnSelection,
 };
 
-describe('SearchTypeahead', () => {
+describe('SearchPackages', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   it('renders correctly', () => {
-    const result = render(<SearchTypeahead {...defaultProps} />);
+    const result = render(<SearchPackages {...defaultProps} />);
 
     expect(result.asFragment()).toMatchSnapshot();
   });
@@ -36,11 +36,11 @@ describe('SearchTypeahead', () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByRole } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId, getAllByRole } = render(<SearchPackages {...defaultProps} />);
 
       expect(getByTestId('searchIconBtn')).toBeInTheDocument();
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -58,9 +58,9 @@ describe('SearchTypeahead', () => {
       const mockSearch = getMockSearch('1');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByTestId } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId, getAllByTestId } = render(<SearchPackages {...defaultProps} />);
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -81,9 +81,9 @@ describe('SearchTypeahead', () => {
     it('when searchPackage fails', async () => {
       mocked(API).searchPackages.mockRejectedValue('');
 
-      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId } = render(<SearchPackages {...defaultProps} />);
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -106,10 +106,10 @@ describe('SearchTypeahead', () => {
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
       const { getByTestId, getAllByTestId } = render(
-        <SearchTypeahead {...defaultProps} disabledPackages={[mockSearch.data!.packages![0].packageId]} />
+        <SearchPackages {...defaultProps} disabledPackages={[mockSearch.data!.packages![0].packageId]} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -131,9 +131,9 @@ describe('SearchTypeahead', () => {
       const mockSearch = getMockSearch('3');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId, getAllByTestId } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId, getAllByTestId } = render(<SearchPackages {...defaultProps} />);
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -156,7 +156,7 @@ describe('SearchTypeahead', () => {
 
   describe('searchIconBtn', () => {
     it('is disabled when input if empty', () => {
-      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId } = render(<SearchPackages {...defaultProps} />);
 
       const btn = getByTestId('searchIconBtn');
       expect(btn).toBeDisabled();
@@ -166,12 +166,12 @@ describe('SearchTypeahead', () => {
       const mockSearch = getMockSearch('4');
       mocked(API).searchPackages.mockResolvedValue(mockSearch);
 
-      const { getByTestId } = render(<SearchTypeahead {...defaultProps} />);
+      const { getByTestId } = render(<SearchPackages {...defaultProps} />);
 
       const btn = getByTestId('searchIconBtn');
       expect(btn).toBeDisabled();
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
