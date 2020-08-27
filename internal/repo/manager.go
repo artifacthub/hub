@@ -43,7 +43,7 @@ func NewManager(cfg *viper.Viper, db hub.DB, opts ...func(m *Manager)) *Manager 
 
 // WithHelmIndexLoader allows providing a specific HelmIndexLoader
 // implementation for a Manager instance.
-func WithIndexLoader(l hub.HelmIndexLoader) func(m *Manager) {
+func WithHelmIndexLoader(l hub.HelmIndexLoader) func(m *Manager) {
 	return func(m *Manager) {
 		m.helmIndexLoader = l
 	}

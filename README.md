@@ -1,35 +1,18 @@
 # Artifact Hub
 
 [![CI](https://github.com/artifacthub/hub/workflows/CI/badge.svg)](https://github.com/artifacthub/hub/actions?query=workflow%3ACI)
+[![Go Report Card](https://goreportcard.com/badge/github.com/artifacthub/hub)](https://goreportcard.com/report/github.com/artifacthub/hub)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4106/badge)](https://bestpractices.coreinfrastructure.org/projects/4106)
 
 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, and OLM operators.
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
-The project, accessible at https://artifacthub.io, is currently in development in a alpha state. Support for Helm charts, Falco configurations, OPA policies and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome.
+The project, accessible at [https://artifacthub.io](https://artifacthub.io), is currently in development in a alpha state. Support for Helm charts, Falco configurations, OPA policies, and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more details.
 
-Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit http://slack.cncf.io/.
+Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit [http://slack.cncf.io/](http://slack.cncf.io/).
 
-## Community
-
-The Artifact Hub is an open source project. Aside from contributing code and feature suggestions you can also engage via:
-
-- Attending a meeting. Meetings are on the 2nd and 4th Tuesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
-- Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
-
-## Process
-
-We are in conversation with the CNCF [TOC](https://github.com/cncf/toc) on whether it makes sense for Artifact Hub to become a sandbox project or whether a working group or similar mechanism might be better.
-
-We're envisioning that Artifact Hub will have three main components:
-
-1. The software, consisting of frontend code using React, backend written in Go, and Postgres with a number of stored procedures
-2. A process by which new artifacts get added to Artifact Hub, updated, and removed. The documentation for this process is just beginning, but it needs to be publicly documented, transparent, and robust. In particular, edge cases need to be able to be reviewed by the project maintainers, with an appeal path to SIG Apps and the TOC
-3. Operational responsibilities. A number of organizations are likely to depend on Artifact Hub not to “break the build” and so the maintainers will need to provide a high level of uptime, with CNCF funding the hosting and related systems
-
-## Screenshots
-
+<br/>
 <table>
     <tr>
         <td width="33%"><img src="https://artifacthub.github.io/hub/screenshots/screenshot1.jpg"></td>
@@ -45,51 +28,34 @@ We're envisioning that Artifact Hub will have three main components:
 
 ## Getting started
 
-The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. Let's see how this can be done using Minikube locally.
+The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. For more details, please see the [Helm chart README file](./chart/README.md).
 
-### Prerequisites
+## Community
 
-Before proceeding, please make sure your system meets the following requirements:
+The Artifact Hub is an open source project. Aside from contributing code and feature suggestions you can also engage via:
 
-- Working [Minikube](https://minikube.sigs.k8s.io/docs/start/) environment
-  - Nginx Ingress controller enabled (`minikube addons enable ingress`)
-- [Helm](https://helm.sh/docs/intro/install/) installed
+- Attending a meeting. Meetings are on the 2nd and 4th Tuesday of the month at 10:30am PT / 1:30pm ET. [Meeting minutes and agenda are in Google Docs](https://docs.google.com/document/d/1nkIgFh4dNPawoDD_9fV7vicVSeKk2Zcdd0C5yovSiKQ/edit).
+- Joining [CNCF slack](https://cloud-native.slack.com) ([join link](https://slack.cncf.io/)) and joining the room #artifact-hub.
 
-### Installing the chart
+## Process
 
-To install the chart with the release name `hub` run:
+Artifact Hub is a [CNCF Sandbox Project](https://www.cncf.io/sandbox-projects/).
 
-```bash
-$ helm repo add artifact-hub https://artifacthub.github.io/hub/chart
-$ helm install --name hub artifact-hub/artifact-hub
-```
+We're envisioning that Artifact Hub will have three main components:
 
-The command deploys Artifact Hub on the Kubernetes cluster using the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
+1. The software, consisting of frontend code using React, backend written in Go, and Postgres with a number of stored procedures
+2. A process by which new artifacts get added to Artifact Hub, updated, and removed. The documentation for this process is just beginning, but it needs to be publicly documented, transparent, and robust. In particular, edge cases need to be able to be reviewed by the project maintainers, with an appeal path to SIG Apps and the TOC
+3. Operational responsibilities. A number of organizations are likely to depend on Artifact Hub not to “break the build” and so the maintainers will need to provide a high level of uptime, with CNCF funding the hosting and related systems
 
-As soon as all pods are up and running, you can access the Artifact Hub by visiting the address specified in your Ingress object in your browser (`http://192.168.64.18` in the case shown below).
+## Code of Conduct
 
-```bash
-$ kubectl get ingress
-NAME   HOSTS   ADDRESS         PORTS   AGE
-hub    *       192.168.64.18   80      6s
-```
+This project follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
 
-When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo** user and a couple of sample repositories are registered automatically. The credentials for the demo user are: `demo@artifacthub.io` / `changeme`. You can change the password from the control panel once you log in.
+## Security
 
-### Populating packages
+To report a security problem in Artifact Hub, please contact the Maintainers Team at
+<cncf-artifacthub-maintainers@lists.cncf.io>. Please see [SECURITY.md](./SECURITY.md) for more details.
 
-The chart installs one `cronjob` in charge of launching periodically (every 30m) the tracker, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the job is triggered by the cronjob, you can create one manually using the following command:
+## License
 
-```bash
-$ kubectl create job initial-tracker-job --from=cronjob/tracker
-```
-
-### Uninstalling the Chart
-
-To uninstall the `hub` deployment run:
-
-```bash
-$ helm uninstall hub
-```
-
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+Artifact Hub is an Open Source project licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
