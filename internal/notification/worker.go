@@ -20,8 +20,11 @@ import (
 )
 
 const (
-	pauseOnEmptyQueue         = 30 * time.Second
-	pauseOnError              = 10 * time.Second
+	pauseOnEmptyQueue = 30 * time.Second
+	pauseOnError      = 10 * time.Second
+
+	// DefaultPayloadContentType represents the default content type used for
+	// webhooks notifications.
 	DefaultPayloadContentType = "application/cloudevents+json"
 )
 

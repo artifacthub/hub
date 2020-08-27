@@ -131,7 +131,7 @@ func TestAdd(t *testing.T) {
 				if tc.lErr != nil {
 					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
-				m := NewManager(cfg, nil, WithIndexLoader(l))
+				m := NewManager(cfg, nil, WithHelmIndexLoader(l))
 
 				err := m.Add(ctx, tc.orgName, tc.r)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -175,7 +175,7 @@ func TestAdd(t *testing.T) {
 				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
 				l.On("LoadIndex", tc.r).Return(nil, nil)
-				m := NewManager(cfg, db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithHelmIndexLoader(l))
 
 				err := m.Add(ctx, "orgName", tc.r)
 				assert.Equal(t, tc.expectedError, err)
@@ -215,7 +215,7 @@ func TestAdd(t *testing.T) {
 				if tc.r.Kind == hub.Helm {
 					l.On("LoadIndex", tc.r).Return(nil, nil)
 				}
-				m := NewManager(cfg, db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithHelmIndexLoader(l))
 
 				err := m.Add(ctx, "orgName", tc.r)
 				assert.NoError(t, err)
@@ -840,7 +840,7 @@ func TestUpdate(t *testing.T) {
 				if tc.lErr != nil {
 					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
 				}
-				m := NewManager(cfg, nil, WithIndexLoader(l))
+				m := NewManager(cfg, nil, WithHelmIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -883,7 +883,7 @@ func TestUpdate(t *testing.T) {
 				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
 				l := &HelmIndexLoaderMock{}
 				l.On("LoadIndex", tc.r).Return(nil, nil)
-				m := NewManager(cfg, db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithHelmIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.Equal(t, tc.expectedError, err)
@@ -923,7 +923,7 @@ func TestUpdate(t *testing.T) {
 				if tc.r.Kind == hub.Helm {
 					l.On("LoadIndex", tc.r).Return(nil, nil)
 				}
-				m := NewManager(cfg, db, WithIndexLoader(l))
+				m := NewManager(cfg, db, WithHelmIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
 				assert.NoError(t, err)

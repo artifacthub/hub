@@ -2,8 +2,8 @@
 
 ## Reporting a vulnerability
 
-To report a security problem in Artifact Hub, please contact the Maintainers Team:
-<cncf-artifacthub-maintainers@lists.cncf.io>.
+To report a security problem in Artifact Hub, please contact the Maintainers Team
+at <cncf-artifacthub-maintainers@lists.cncf.io>.
 
 The team will help diagnose the severity of the issue and determine how to
 address the issue. Issues deemed to be non-critical will be filed as GitHub

@@ -97,7 +97,7 @@ func (m *TXMock) Prepare(ctx context.Context, name, sql string) (*pgconn.Stateme
 	return nil, nil
 }
 
-// QueryRow implements the pgx.Tx interface.
+// Query implements the pgx.Tx interface.
 func (m *TXMock) Query(ctx context.Context, sql string, args ...interface{}) (pgx.Rows, error) {
 	// NOTE: not used
 	return nil, nil

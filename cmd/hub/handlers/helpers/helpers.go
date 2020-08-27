@@ -12,6 +12,8 @@ import (
 )
 
 const (
+	// DefaultAPICacheMaxAge represents the default cache duration used by some
+	// API endpoints.
 	DefaultAPICacheMaxAge = 5 * time.Minute
 )
 

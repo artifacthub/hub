@@ -29,7 +29,7 @@ When the parameter `dbMigrator.loadSampleData` is set to true (default) a **demo
 
 ## Populating packages
 
-The chart installs one `cronjob` in charge of launching periodically (every 30m) the tracker, which index packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the job is triggered by the cronjob, you can create one manually using the following command:
+The chart installs one `cronjob` in charge of launching periodically (every 30m) the tracker, which indexes packages from the registered repositories. Some sample repositories are added by default when `dbMigrator.loadSampleData` is set to true. If you don't want to wait until the job is triggered by the cronjob, you can create one manually using the following command:
 
 ```bash
 $ kubectl create job initial-tracker-job --from=cronjob/tracker
