@@ -64,7 +64,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('3')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -95,7 +95,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('4')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -119,7 +119,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('5')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -143,7 +143,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('6')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -170,7 +170,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('7')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -193,7 +193,7 @@ describe('SubscriptionModal', () => {
         })`
       );
 
-      expect(queryByTestId('searchTypeaheadInput')).toBeNull();
+      expect(queryByTestId('searchPackagesInput')).toBeNull();
 
       const btn = getByTestId('addSubsModalBtn');
       fireEvent.click(btn);
@@ -218,7 +218,7 @@ describe('SubscriptionModal', () => {
         <SubscriptionModal {...defaultProps} subscriptions={getMockSubscriptions('8')} />
       );
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       expect(input).toBeInTheDocument();
       expect(input).toHaveValue('');
 
@@ -241,7 +241,7 @@ describe('SubscriptionModal', () => {
         })`
       );
 
-      expect(queryByTestId('searchTypeaheadInput')).toBeNull();
+      expect(queryByTestId('searchPackagesInput')).toBeNull();
 
       const btn = getByTestId('addSubsModalBtn');
       fireEvent.click(btn);

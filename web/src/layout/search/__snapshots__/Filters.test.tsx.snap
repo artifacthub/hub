@@ -421,229 +421,108 @@ exports[`Filters creates snapshot 1`] = `
       class="mt-3 mt-sm-4 pt-1"
     >
       <div
-        class="mt-2 mb-1"
-        data-testid="smallTitle"
+        class="position-relative"
       >
-        <small
-          class="card-title text-muted text-uppercase"
-        >
-          <span
-            class="text-secondary font-weight-bold pt-2"
-          >
-            Publisher
-          </span>
-        </small>
-      </div>
-      <div
-        class="facet mt-0 pt-0"
-        role="menuitem"
-      >
-        <small
-          class="text-muted subtitle"
-        >
-          Organization
-        </small>
-        <div
-          class=""
+        <button
+          class="btn text-left p-0 btn-block"
+          data-testid="typeaheadBtn"
         >
           <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+            class="d-flex flex-row align-items-center justify-content-between"
           >
-            <input
-              class="custom-control-input input"
-              data-testid="checkbox"
-              id="org-helmOrg"
-              name="org"
-              type="checkbox"
-              value="helmOrg"
-            />
-            <label
-              class="custom-control-label w-100 label"
-              data-testid="checkboxLabel"
-              for="org-helmOrg"
+            <div
+              class="mt-2 mb-1"
+              data-testid="smallTitle"
             >
-              <div
-                class="d-flex align-items-baseline mw-100"
+              <small
+                class="card-title text-muted text-uppercase"
               >
                 <span
-                  class="d-inline-block text-truncate"
+                  class="text-secondary font-weight-bold pt-2"
                 >
-                  Helm org
+                  publisher
                 </span>
-                <small
-                  class="pl-1"
-                >
-                  (256)
-                </small>
-              </div>
-            </label>
-          </div>
-          <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-          >
-            <input
-              class="custom-control-input input"
-              data-testid="checkbox"
-              id="org-falco"
-              name="org"
-              type="checkbox"
-              value="falco"
-            />
-            <label
-              class="custom-control-label w-100 label"
-              data-testid="checkboxLabel"
-              for="org-falco"
+              </small>
+            </div>
+            <svg
+              class="mt-2 mb-1 text-secondary"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <div
-                class="d-flex align-items-baseline mw-100"
-              >
-                <span
-                  class="d-inline-block text-truncate"
-                >
-                  Falco
-                </span>
-                <small
-                  class="pl-1"
-                >
-                  (22)
-                </small>
-              </div>
-            </label>
+              <path
+                d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+              />
+            </svg>
           </div>
-        </div>
-      </div>
-      <div
-        class="facet mt-0 pt-0"
-        role="menuitem"
-      >
-        <small
-          class="text-muted subtitle"
-        >
-          User
-        </small>
-        <div
-          class=""
-        >
-          <div
-            class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-          >
-            <input
-              class="custom-control-input input"
-              data-testid="checkbox"
-              id="user-testUser"
-              name="user"
-              type="checkbox"
-              value="testUser"
-            />
-            <label
-              class="custom-control-label w-100 label"
-              data-testid="checkboxLabel"
-              for="user-testUser"
+          <div>
+            <div
+              class="text-muted option"
             >
-              <div
-                class="d-flex align-items-baseline mw-100"
-              >
-                <span
-                  class="d-inline-block text-truncate"
-                >
-                  testUser
-                </span>
-                <small
-                  class="pl-1"
-                >
-                  (1)
-                </small>
-              </div>
-            </label>
+              <i>
+                No publisher selected
+              </i>
+            </div>
           </div>
-        </div>
+        </button>
       </div>
     </div>
     <div
-      class="facet mt-3 mt-sm-4 pt-1"
-      role="menuitem"
+      class="mt-3 mt-sm-4 pt-1"
     >
       <div
-        class="mt-2 mb-1"
-        data-testid="smallTitle"
+        class="position-relative"
       >
-        <small
-          class="card-title text-muted text-uppercase"
+        <button
+          class="btn text-left p-0 btn-block"
+          data-testid="typeaheadBtn"
         >
-          <span
-            class="text-secondary font-weight-bold"
-          >
-            Repository
-          </span>
-        </small>
-      </div>
-      <div
-        class="mt-3"
-      >
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="repo-stable"
-            name="repo"
-            type="checkbox"
-            value="stable"
-          />
-          <label
-            class="custom-control-label w-100 label"
-            data-testid="checkboxLabel"
-            for="repo-stable"
+          <div
+            class="d-flex flex-row align-items-center justify-content-between"
           >
             <div
-              class="d-flex align-items-baseline mw-100"
+              class="mt-2 mb-1"
+              data-testid="smallTitle"
             >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Stable
-              </span>
               <small
-                class="pl-1"
+                class="card-title text-muted text-uppercase"
               >
-                (203)
+                <span
+                  class="text-secondary font-weight-bold pt-2"
+                >
+                  repository
+                </span>
               </small>
             </div>
-          </label>
-        </div>
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="repo-incubator"
-            name="repo"
-            type="checkbox"
-            value="incubator"
-          />
-          <label
-            class="custom-control-label w-100 label"
-            data-testid="checkboxLabel"
-            for="repo-incubator"
-          >
+            <svg
+              class="mt-2 mb-1 text-secondary"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+              />
+            </svg>
+          </div>
+          <div>
             <div
-              class="d-flex align-items-baseline mw-100"
+              class="text-muted option"
             >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Incubator
-              </span>
-              <small
-                class="pl-1"
-              >
-                (53)
-              </small>
+              <i>
+                No repository selected
+              </i>
             </div>
-          </label>
-        </div>
+          </div>
+        </button>
       </div>
     </div>
     <div

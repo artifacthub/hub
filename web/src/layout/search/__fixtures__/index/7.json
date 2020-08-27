@@ -12,27 +12,6 @@
             "total": 7
           }
         ]
-      },
-      {
-        "title": "Repository",
-        "filterKey": "repo",
-        "options": [
-          {
-            "id": "stable",
-            "name": "Stable",
-            "total": 4
-          },
-          {
-            "id": "incubator",
-            "name": "Incubator",
-            "total": 2
-          },
-          {
-            "id": "dhiatn",
-            "name": "Dhiatn",
-            "total": 1
-          }
-        ]
       }
     ]
   },

@@ -228,7 +228,7 @@ exports[`Package index creates snapshot 2`] = `
           </div>
         </div>
         <p
-          class="mb-0"
+          class="mb-0 description"
         >
           desc
         </p>

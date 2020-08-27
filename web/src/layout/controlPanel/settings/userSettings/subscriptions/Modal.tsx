@@ -10,7 +10,7 @@ import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data'
 import Image from '../../../../common/Image';
 import Modal from '../../../../common/Modal';
 import RepositoryIcon from '../../../../common/RepositoryIcon';
-import SearchTypeahead from '../../../../common/SearchTypeahead';
+import SearchPackages from '../../../../common/SearchPackages';
 import styles from './Modal.module.css';
 
 interface Props {
@@ -195,7 +195,7 @@ const SubscriptionModal = (props: Props) => {
             </div>
           ) : (
             <div className={`mt-2 ${styles.searchWrapper}`}>
-              <SearchTypeahead disabledPackages={getSubscribedPackagesIds()} onSelection={onPackageSelection} />
+              <SearchPackages disabledPackages={getSubscribedPackagesIds()} onSelection={onPackageSelection} />
             </div>
           )}
         </div>

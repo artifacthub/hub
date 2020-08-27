@@ -14,10 +14,8 @@ interface Props {
   active: string[];
   title: string;
   options: FacetOption[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFacetExpandableChange: (filterKey: string, open: boolean) => void;
+  onChange: (name: string, value: string, checked: boolean) => void;
   displaySubtitle?: boolean;
-  isExpanded: boolean;
   notExpandable?: boolean;
 }
 
@@ -40,10 +38,6 @@ const Facet = (props: Props) => {
     setVisibleOptions(Math.max(DEFAULT_VISIBLE_ITEMS, activeOptions.length));
   }, [props.active.length, isChecked, props.options, props.filterKey]);
 
-  const onExpandableChange = (open: boolean) => {
-    props.onFacetExpandableChange(props.filterKey, open);
-  };
-
   const allOptions = props.options.map((option: FacetOption) => (
     <Checkbox
       key={`fo_${option.id}`}
@@ -53,7 +47,9 @@ const Facet = (props: Props) => {
       legend={option.total}
       label={option.name}
       checked={isChecked(option.id.toString())}
-      onChange={props.onChange}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        props.onChange(e.target.name, e.target.value, e.target.checked)
+      }
     />
   ));
 
@@ -78,12 +74,7 @@ const Facet = (props: Props) => {
         {!isUndefined(props.notExpandable) && props.notExpandable ? (
           <>{allOptions}</>
         ) : (
-          <ExpandableList
-            items={allOptions}
-            visibleItems={visibleOptions}
-            open={props.isExpanded}
-            onBtnClick={onExpandableChange}
-          />
+          <ExpandableList items={allOptions} visibleItems={visibleOptions} />
         )}
       </div>
     </div>

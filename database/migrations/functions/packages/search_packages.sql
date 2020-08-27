@@ -162,7 +162,6 @@ begin
                                             group by organization_name, organization_display_name
                                         ) as orgs
                                         order by pri asc, total desc, organization_name asc
-                                        limit 10
                                     ) as orgs_filtered
                                 )
                             )
@@ -194,7 +193,6 @@ begin
                                             group by user_alias
                                         ) as users
                                         order by pri asc, total desc, user_alias asc
-                                        limit 10
                                     ) as users_filtered
                                 )
                             )
@@ -248,7 +246,6 @@ begin
                                             group by repository_name
                                         ) as repos
                                         order by pri asc, total desc, repository_name asc
-                                        limit 10
                                     ) as repos_filtered
                                 )
                             )

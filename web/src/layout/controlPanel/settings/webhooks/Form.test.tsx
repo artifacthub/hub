@@ -410,7 +410,7 @@ describe('WebhookForm', () => {
       const urlInput = getByTestId('urlInput');
       fireEvent.change(urlInput, { target: { value: 'http://url.com' } });
 
-      const input = getByTestId('searchTypeaheadInput');
+      const input = getByTestId('searchPackagesInput');
       fireEvent.change(input, { target: { value: 'testing' } });
       fireEvent.keyDown(input, { key: 'Enter', code: 13, charCode: 13 });
 

@@ -4,14 +4,21 @@ import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
+import { FaBuilding, FaUser } from 'react-icons/fa';
+import { GoPackage } from 'react-icons/go';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
-import { Facets } from '../../types';
+import { FacetOption, Facets, Option } from '../../types';
 import CheckBox from '../common/Checkbox';
+import InputTypeahead from '../common/InputTypeahead';
 import SmallTitle from '../common/SmallTitle';
 import Facet from './Facet';
 import styles from './Filters.module.css';
 import TsQuery from './TsQuery';
+
+interface SelectedFilters {
+  [key: string]: string[];
+}
 
 interface Props {
   activeFilters: {
@@ -20,15 +27,14 @@ interface Props {
   activeTsQuery?: string[];
   facets: Facets[] | null;
   visibleTitle: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (name: string, value: string, checked: boolean) => void;
+  onResetSomeFilters: (filterKeys: string[]) => void;
   onTsQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
   onResetFilters: () => void;
-  onFacetExpandableChange: (filterKey: string, open: boolean) => void;
   deprecated?: boolean | null;
   operators?: boolean | null;
-  expandedList?: string;
 }
 
 const Filters = (props: Props) => {
@@ -38,43 +44,40 @@ const Filters = (props: Props) => {
 
   const getPublishers = (): JSX.Element | null => {
     let publishersList = null;
+    let selectedPublishers: SelectedFilters = {
+      user: [],
+      org: [],
+    };
     if (!isNull(props.facets)) {
       const user = getFacetsByFilterKey('user');
-      let userElement = null;
+      let usersList: Option[] = [];
       if (!isUndefined(user)) {
-        userElement = (
-          <Facet
-            {...user}
-            onChange={props.onChange}
-            active={props.activeFilters.hasOwnProperty(user.filterKey) ? props.activeFilters[user.filterKey] : []}
-            isExpanded={props.expandedList === user.filterKey}
-            onFacetExpandableChange={props.onFacetExpandableChange}
-            displaySubtitle
-          />
-        );
+        usersList = user.options.map((facet: FacetOption) => ({ ...facet, icon: <FaUser />, filterKey: 'user' }));
+        if (!isUndefined(props.activeFilters.user)) {
+          selectedPublishers.user = props.activeFilters.user;
+        }
       }
 
       const org = getFacetsByFilterKey('org');
-      let orgElement = null;
+      let orgsList: Option[] = [];
       if (!isUndefined(org)) {
-        orgElement = (
-          <Facet
-            {...org}
-            onChange={props.onChange}
-            active={props.activeFilters.hasOwnProperty(org.filterKey) ? props.activeFilters[org.filterKey] : []}
-            isExpanded={props.expandedList === org.filterKey}
-            onFacetExpandableChange={props.onFacetExpandableChange}
-            displaySubtitle
-          />
-        );
+        orgsList = org.options.map((facet: FacetOption) => ({ ...facet, icon: <FaBuilding />, filterKey: 'org' }));
+        if (!isUndefined(props.activeFilters.org)) {
+          selectedPublishers.org = props.activeFilters.org;
+        }
       }
 
-      if (!isNull(userElement) || !isNull(orgElement)) {
+      const options = [...usersList, ...orgsList];
+      if (options.length > 0) {
         publishersList = (
           <div className="mt-3 mt-sm-4 pt-1">
-            <SmallTitle text="Publisher" className="text-secondary font-weight-bold pt-2" />
-            {orgElement}
-            {userElement}
+            <InputTypeahead
+              label="publisher"
+              options={options}
+              selected={selectedPublishers}
+              onChange={props.onChange}
+              onResetSomeFilters={props.onResetSomeFilters}
+            />
           </div>
         );
       }
@@ -92,9 +95,6 @@ const Filters = (props: Props) => {
           {...kind}
           onChange={props.onChange}
           active={props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : []}
-          isExpanded={props.expandedList === kind.filterKey}
-          onFacetExpandableChange={props.onFacetExpandableChange}
-          notExpandable
         />
       );
     }
@@ -106,14 +106,20 @@ const Filters = (props: Props) => {
     let crElement = null;
     const repo = getFacetsByFilterKey('repo');
     if (!isUndefined(repo)) {
+      const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoPackage />, filterKey: 'repo' }));
+
       crElement = (
-        <Facet
-          {...repo}
-          onChange={props.onChange}
-          active={props.activeFilters.hasOwnProperty(repo.filterKey) ? props.activeFilters[repo.filterKey] : []}
-          isExpanded={props.expandedList === repo.filterKey}
-          onFacetExpandableChange={props.onFacetExpandableChange}
-        />
+        <div className="mt-3 mt-sm-4 pt-1">
+          <InputTypeahead
+            label="repository"
+            options={options}
+            selected={{
+              repo: props.activeFilters.repo || [],
+            }}
+            onChange={props.onChange}
+            onResetSomeFilters={props.onResetSomeFilters}
+          />
+        </div>
       );
     }
 

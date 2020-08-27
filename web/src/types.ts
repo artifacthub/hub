@@ -161,6 +161,11 @@ export interface FacetOption {
   total: number;
 }
 
+export interface Option extends FacetOption {
+  filterKey: string;
+  icon?: JSX.Element;
+}
+
 export interface UserLogin {
   email: string;
   password: string;

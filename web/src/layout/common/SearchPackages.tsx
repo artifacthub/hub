@@ -9,14 +9,14 @@ import { Package } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import Image from './Image';
 import RepositoryIcon from './RepositoryIcon';
-import styles from './SearchTypeahead.module.css';
+import styles from './SearchPackages.module.css';
 
 interface Props {
   disabledPackages: string[];
   onSelection: (packageItem: Package) => void;
 }
 
-const SearchTypeahead = (props: Props) => {
+const SearchPackages = (props: Props) => {
   const inputEl = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -78,7 +78,7 @@ const SearchTypeahead = (props: Props) => {
           className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
         >
           <input
-            data-testid="searchTypeaheadInput"
+            data-testid="searchPackagesInput"
             ref={inputEl}
             type="text"
             className={`flex-grow-1 px-3 ${styles.input}`}
@@ -198,4 +198,4 @@ const SearchTypeahead = (props: Props) => {
   );
 };
 
-export default SearchTypeahead;
+export default SearchPackages;

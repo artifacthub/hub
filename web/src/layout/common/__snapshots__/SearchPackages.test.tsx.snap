@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchTypeahead renders correctly 1`] = `
+exports[`SearchPackages renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="position-relative"
@@ -14,7 +14,7 @@ exports[`SearchTypeahead renders correctly 1`] = `
         <input
           autocomplete="new-input"
           class="flex-grow-1 px-3 input"
-          data-testid="searchTypeaheadInput"
+          data-testid="searchPackagesInput"
           name="searchInput"
           spellcheck="false"
           type="text"

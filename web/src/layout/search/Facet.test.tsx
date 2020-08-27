@@ -28,7 +28,6 @@ const optionsMock: FacetOption[] = [
 ];
 
 const onChangeMock = jest.fn();
-const onFacetExpandableChangeMock = jest.fn();
 
 const defaultProps = {
   active: [],
@@ -36,8 +35,6 @@ const defaultProps = {
   filterKey: 'repo',
   options: optionsMock,
   onChange: onChangeMock,
-  onFacetExpandableChange: onFacetExpandableChangeMock,
-  isExpanded: false,
 };
 
 interface Test {
