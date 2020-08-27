@@ -122,6 +122,14 @@ describe('InputTypeahead', () => {
     expect(opts[3]).toHaveTextContent('Option 2(17)');
   });
 
+  it('renders selected options in correct order', () => {
+    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
+
+    const opts = getAllByTestId('typeaheadSelectedItem');
+    expect(opts[0]).toHaveTextContent('Option key 2(12)');
+    expect(opts[1]).toHaveTextContent('Option key 1(7)');
+  });
+
   it('unselects option', () => {
     const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 

@@ -34,7 +34,7 @@ const InputTypeahead = (props: Props) => {
   const [hightlightedText, setHightlightedText] = useState<RegExp | null>(null);
   const [collapsed, setCollapsed] = useState<boolean>(true);
 
-  useOutsideClick([dropdownRef], !collapsed, () => setCollapsed(true));
+  useOutsideClick([dropdownRef], !collapsed, () => collapseDropdown());
 
   const getVisibleItems = useCallback((): Option[] => {
     const filteredItems: Option[] = props.options.filter((opt: Option) =>
@@ -65,7 +65,7 @@ const InputTypeahead = (props: Props) => {
         }
       });
     });
-    return selectedItems;
+    return orderBy(selectedItems, 'total', 'desc');
   }, [props.options, props.selected]);
 
   const getOptionName = (name: string): JSX.Element => {
@@ -90,6 +90,11 @@ const InputTypeahead = (props: Props) => {
     } else {
       return <>{name}</>;
     }
+  };
+
+  const collapseDropdown = () => {
+    setCollapsed(true);
+    setInputValue('');
   };
 
   const [visibleItems, setVisibleItems] = useState<Option[]>(getVisibleItems());
@@ -174,7 +179,7 @@ const InputTypeahead = (props: Props) => {
                 className="btn btn-sm btn-block"
                 onClick={() => {
                   props.onResetSomeFilters(Object.keys(props.selected));
-                  setCollapsed(true);
+                  collapseDropdown();
                 }}
               >
                 <div className="d-flex flex-row align-items-center text-muted">
@@ -203,9 +208,7 @@ const InputTypeahead = (props: Props) => {
                     className={classnames('dropdown-item', styles.option, { [styles.selected]: isSelected })}
                     onClick={() => {
                       props.onChange(opt.filterKey, opt.id.toString(), !isSelected);
-                      setCollapsed(false);
-                      setInputValue('');
-                      setCollapsed(true);
+                      collapseDropdown();
                     }}
                   >
                     <div className="d-flex flex-row align-items-center position-relative">
