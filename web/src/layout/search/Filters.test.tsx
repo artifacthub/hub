@@ -39,7 +39,12 @@ const FacetsMock: Facets[] = [
       {
         id: 0,
         name: 'Helm charts',
-        total: 256,
+        total: 1520,
+      },
+      {
+        id: 3,
+        name: 'OLM operators',
+        total: 152,
       },
       {
         id: 1,
@@ -106,7 +111,7 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(15);
+      expect(getAllByTestId('checkbox')).toHaveLength(16);
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -163,6 +168,22 @@ describe('Filters', () => {
       expect(titles[2]).toHaveTextContent('publisher');
       expect(titles[3]).toHaveTextContent('repository');
       expect(titles[4]).toHaveTextContent('Others');
+    });
+
+    it('renders all kind options', () => {
+      const { getByText } = render(<Filters {...defaultProps} />);
+
+      expect(getByText('Helm charts')).toBeInTheDocument();
+      expect(getByText('OLM operators')).toBeInTheDocument();
+      expect(getByText('Falco rules')).toBeInTheDocument();
+      expect(getByText('OPA policies')).toBeInTheDocument();
+    });
+
+    it('renders other options', () => {
+      const { getByText } = render(<Filters {...defaultProps} />);
+
+      expect(getByText('Only operators')).toBeInTheDocument();
+      expect(getByText('Include deprecated')).toBeInTheDocument();
     });
   });
 });

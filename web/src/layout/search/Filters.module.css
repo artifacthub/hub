@@ -28,3 +28,9 @@
     font-size: 1rem;
   }
 }
+
+@media only screen and (max-width: 575.98px) {
+  .facet:first-child {
+    margin-top: 0 !important;
+  }
+}

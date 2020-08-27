@@ -12,7 +12,6 @@ import { FacetOption, Facets, Option } from '../../types';
 import CheckBox from '../common/Checkbox';
 import InputTypeahead from '../common/InputTypeahead';
 import SmallTitle from '../common/SmallTitle';
-import Facet from './Facet';
 import styles from './Filters.module.css';
 import TsQuery from './TsQuery';
 
@@ -90,12 +89,31 @@ const Filters = (props: Props) => {
     let kindElement = null;
     const kind = getFacetsByFilterKey('kind');
     if (!isUndefined(kind)) {
+      const active = props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : [];
+      const isChecked = (facetOptionId: string) => {
+        return active.includes(facetOptionId.toString());
+      };
+
       kindElement = (
-        <Facet
-          {...kind}
-          onChange={props.onChange}
-          active={props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : []}
-        />
+        <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+          <SmallTitle text={kind.title} className="text-secondary font-weight-bold" />
+          <div className="mt-3">
+            {kind.options.map((option: FacetOption) => (
+              <CheckBox
+                key={`kind_${option.id.toString()}`}
+                name={kind.filterKey}
+                value={option.id.toString()}
+                className={styles.checkbox}
+                legend={option.total}
+                label={option.name}
+                checked={isChecked(option.id.toString())}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.onChange(e.target.name, e.target.value, e.target.checked)
+                }
+              />
+            ))}
+          </div>
+        </div>
       );
     }
 
