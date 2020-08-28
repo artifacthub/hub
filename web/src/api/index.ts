@@ -11,6 +11,7 @@ import {
   ErrorKind,
   EventKind,
   LogoImage,
+  OptOutItem,
   Organization,
   Package,
   PackageStars,
@@ -518,6 +519,29 @@ export const API = {
 
   deleteAPIKey: (apiKeyId: string): Promise<string | null> => {
     return apiFetch(`${API_BASE_URL}/api-keys/${apiKeyId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  getOptOutList: (): Promise<OptOutItem[]> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out`);
+  },
+
+  addOptOut: (repositoryId: string, eventKind: EventKind): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        repository_id: repositoryId,
+        event_kind: eventKind,
+      }),
+    });
+  },
+
+  deleteOptOut: (optOutId: string): Promise<string | null> => {
+    return apiFetch(`${API_BASE_URL}/subscriptions/opt-out/${optOutId}`, {
       method: 'DELETE',
     });
   },

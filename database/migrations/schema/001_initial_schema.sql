@@ -213,7 +213,7 @@ create table notification (
     processed boolean not null default false,
     processed_at timestamptz,
     error text check (error <> ''),
-    event_id uuid not null references event on delete restrict,
+    event_id uuid not null references event on delete cascade,
     user_id uuid references "user" on delete cascade,
     webhook_id uuid references webhook on delete cascade,
     check (user_id is null or webhook_id is null),
@@ -233,6 +233,14 @@ create table if not exists api_key (
 );
 
 create index api_key_user_id_idx on api_key (user_id);
+
+create table if not exists opt_out (
+    opt_out_id uuid primary key default gen_random_uuid(),
+    user_id uuid not null references "user" on delete cascade,
+    repository_id uuid not null references repository on delete cascade,
+    event_kind_id integer not null references event_kind on delete restrict,
+    unique (user_id, repository_id, event_kind_id)
+);
 
 {{ if eq .loadSampleData "true" }}
 {{ template "data/sample.sql" }}

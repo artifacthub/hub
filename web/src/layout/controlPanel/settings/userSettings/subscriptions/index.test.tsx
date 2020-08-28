@@ -8,6 +8,7 @@ import { ErrorKind, Package } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import buildPackageURL from '../../../../../utils/buildPackageURL';
 import SubscriptionsSection from './index';
+jest.mock('../optOut', () => () => <div />);
 jest.mock('../../../../../api');
 jest.mock('../../../../../utils/alertDispatcher');
 
@@ -119,32 +120,39 @@ describe('SubscriptionsSection', () => {
       const mockSubscriptions = getMockSubscriptions('4');
       mocked(API).getUserSubscriptions.mockResolvedValue(mockSubscriptions);
 
-      const { getByTestId } = render(
+      const { queryByTestId } = render(
         <Router>
           <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
+      await waitFor(() => {
+        expect(API.getUserSubscriptions).toHaveBeenCalledTimes(1);
+      });
 
-      expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent('You have not subscribed to any package yet');
+      const packagesList = queryByTestId('packagesList');
+
+      expect(packagesList).toBeNull();
 
       await waitFor(() => {});
     });
 
-    it('renders error message when getUserSubscriptions call fails with not Unauthorized error', async () => {
+    it('calls alertDispatcher when getUserSubscriptions call fails with not Unauthorized error', async () => {
       mocked(API).getUserSubscriptions.mockRejectedValue({ kind: ErrorKind.Other });
 
-      const { getByTestId } = render(
+      render(
         <Router>
           <SubscriptionsSection {...defaultProps} />
         </Router>
       );
 
-      const noData = await waitFor(() => getByTestId('noData'));
-      expect(noData).toBeInTheDocument();
-      expect(noData).toHaveTextContent(/An error occurred getting your subscriptions, please try again later./i);
+      await waitFor(() => {
+        expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+        expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+          type: 'danger',
+          message: 'An error occurred getting your subscriptions, please try again later.',
+        });
+      });
 
       await waitFor(() => {});
     });

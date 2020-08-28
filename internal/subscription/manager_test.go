@@ -15,6 +15,7 @@ const (
 	userID       = "00000000-0000-0000-0000-000000000001"
 	packageID    = "00000000-0000-0000-0000-000000000001"
 	repositoryID = "00000000-0000-0000-0000-000000000001"
+	optOutID     = "00000000-0000-0000-0000-000000000001"
 )
 
 func TestAdd(t *testing.T) {
@@ -84,6 +85,74 @@ func TestAdd(t *testing.T) {
 	})
 }
 
+func TestAddOptOut(t *testing.T) {
+	dbQuery := "select add_opt_out($1::jsonb)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.AddOptOut(context.Background(), &hub.OptOut{})
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg string
+			o      *hub.OptOut
+		}{
+			{
+				"invalid repository id",
+				&hub.OptOut{
+					RepositoryID: "invalid",
+					EventKind:    hub.RepositoryTrackingErrors,
+				},
+			},
+			{
+				"invalid event kind",
+				&hub.OptOut{
+					RepositoryID: repositoryID,
+					EventKind:    hub.EventKind(9),
+				},
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil)
+				err := m.AddOptOut(ctx, tc.o)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	o := &hub.OptOut{
+		RepositoryID: repositoryID,
+		EventKind:    hub.RepositoryTrackingErrors,
+	}
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		err := m.AddOptOut(ctx, o)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
+		m := NewManager(db)
+
+		err := m.AddOptOut(ctx, o)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestDelete(t *testing.T) {
 	dbQuery := "select delete_subscription($1::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
@@ -146,6 +215,59 @@ func TestDelete(t *testing.T) {
 		m := NewManager(db)
 
 		err := m.Delete(ctx, s)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestDeleteOptOut(t *testing.T) {
+	dbQuery := "select delete_opt_out($1::uuid, $2::uuid)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_ = m.DeleteOptOut(context.Background(), optOutID)
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg   string
+			optOutID string
+		}{
+			{
+				"invalid opt out id",
+				"invalid",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(nil)
+				err := m.DeleteOptOut(ctx, tc.optOutID)
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+				assert.Contains(t, err.Error(), tc.errMsg)
+			})
+		}
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, userID, optOutID).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		err := m.DeleteOptOut(ctx, optOutID)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, userID, optOutID).Return(nil)
+		m := NewManager(db)
+
+		err := m.DeleteOptOut(ctx, optOutID)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -226,9 +348,43 @@ func TestGetByUserJSON(t *testing.T) {
 	})
 }
 
+func TestGetOptOutListJSON(t *testing.T) {
+	dbQuery := "select get_user_opt_out_entries($1::uuid)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil)
+		assert.Panics(t, func() {
+			_, _ = m.GetOptOutListJSON(context.Background())
+		})
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, userID).Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetOptOutListJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, userID).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetOptOutListJSON(ctx)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetSubscriptors(t *testing.T) {
 	dbQueryPkg := "select get_package_subscriptors($1::uuid, $2::integer)"
-	dbQueryRepo := "select get_repository_subscriptors($1::uuid)"
+	dbQueryRepo := "select get_repository_subscriptors($1::uuid, $2::integer)"
 	ctx := context.Background()
 	pkgEvent := &hub.Event{
 		PackageID: packageID,
@@ -290,7 +446,7 @@ func TestGetSubscriptors(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQueryRepo, repositoryID).Return([]byte(`
+		db.On("QueryRow", ctx, dbQueryRepo, repositoryID, repoEvent.EventKind).Return([]byte(`
 		[
 			{
 				"user_id": "00000000-0000-0000-0000-000000000001"

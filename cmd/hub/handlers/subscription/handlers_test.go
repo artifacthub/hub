@@ -115,6 +115,96 @@ func TestAdd(t *testing.T) {
 	})
 }
 
+func TestAddOptOut(t *testing.T) {
+	t.Run("invalid opt-out entry provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			optOutJSON  string
+			smErr       error
+		}{
+			{
+				"no opt-out provided",
+				"",
+				nil,
+			},
+			{
+				"invalid json",
+				"-",
+				nil,
+			},
+			{
+				"invalid repository id",
+				`{"repository_id": "invalid"}`,
+				hub.ErrInvalidInput,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.optOutJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				if tc.smErr != nil {
+					hw.sm.On("AddOptOut", r.Context(), mock.Anything).Return(tc.smErr)
+				}
+				hw.h.AddOptOut(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.sm.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("valid opt-out entry provided", func(t *testing.T) {
+		optOutJSON := `
+		{
+			"repository_id": "00000000-0000-0000-0000-000000000001",
+			"event_kind": 2
+		}
+		`
+		o := &hub.OptOut{}
+		_ = json.Unmarshal([]byte(optOutJSON), &o)
+
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"add opt-out succeeded",
+				nil,
+				http.StatusCreated,
+			},
+			{
+				"error adding opt-out",
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("POST", "/", strings.NewReader(optOutJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+				hw := newHandlersWrapper()
+				hw.sm.On("AddOptOut", r.Context(), o).Return(tc.err)
+				hw.h.AddOptOut(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.sm.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestDelete(t *testing.T) {
 	t.Run("invalid subscription provided", func(t *testing.T) {
 		testCases := []struct {
@@ -212,6 +302,51 @@ func TestDelete(t *testing.T) {
 	})
 }
 
+func TestDeleteOptOut(t *testing.T) {
+	optOutID := "00000000-0000-0000-0000-000000000001"
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"optOutID"},
+			Values: []string{optOutID},
+		},
+	}
+
+	testCases := []struct {
+		description        string
+		err                error
+		expectedStatusCode int
+	}{
+		{
+			"delete opt-out entry succeeded",
+			nil,
+			http.StatusNoContent,
+		},
+		{
+			"error deleting opt-out entry",
+			tests.ErrFakeDatabaseFailure,
+			http.StatusInternalServerError,
+		},
+	}
+	for _, tc := range testCases {
+		tc := tc
+		t.Run(tc.description, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("DELETE", "/", nil)
+			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+			hw := newHandlersWrapper()
+			hw.sm.On("DeleteOptOut", r.Context(), optOutID).Return(tc.err)
+			hw.h.DeleteOptOut(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
+
+			assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+			hw.sm.AssertExpectations(t)
+		})
+	}
+}
+
 func TestGetByPackage(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
@@ -300,6 +435,43 @@ func TestGetByUser(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.sm.On("GetByUserJSON", r.Context()).Return([]byte("dataJSON"), nil)
 		hw.h.GetByUser(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.sm.AssertExpectations(t)
+	})
+}
+
+func TestGetOptOutList(t *testing.T) {
+	t.Run("error getting user opt-out entries", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.sm.On("GetOptOutListJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.h.GetOptOutList(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.sm.AssertExpectations(t)
+	})
+
+	t.Run("get user opt-out entries succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.sm.On("GetOptOutListJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.GetOptOutList(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 		h := resp.Header

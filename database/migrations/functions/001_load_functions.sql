@@ -51,10 +51,13 @@
 {{ template "repositories/transfer_repository.sql" }}
 {{ template "repositories/update_repository.sql" }}
 
+{{ template "subscriptions/add_opt_out.sql" }}
 {{ template "subscriptions/add_subscription.sql" }}
+{{ template "subscriptions/delete_opt_out.sql" }}
 {{ template "subscriptions/delete_subscription.sql" }}
 {{ template "subscriptions/get_package_subscriptors.sql" }}
 {{ template "subscriptions/get_repository_subscriptors.sql" }}
+{{ template "subscriptions/get_user_opt_out_entries.sql" }}
 {{ template "subscriptions/get_user_package_subscriptions.sql" }}
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 

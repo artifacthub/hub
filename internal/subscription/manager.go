@@ -34,6 +34,19 @@ func (m *Manager) Add(ctx context.Context, s *hub.Subscription) error {
 	return err
 }
 
+// AddOptOut adds an opt-out entry to the database.
+func (m *Manager) AddOptOut(ctx context.Context, o *hub.OptOut) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	o.UserID = userID
+	if err := validateOptOut(o); err != nil {
+		return err
+	}
+	query := "select add_opt_out($1::jsonb)"
+	oJSON, _ := json.Marshal(o)
+	_, err := m.db.Exec(ctx, query, oJSON)
+	return err
+}
+
 // Delete removes a subscription from the database.
 func (m *Manager) Delete(ctx context.Context, s *hub.Subscription) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -44,6 +57,17 @@ func (m *Manager) Delete(ctx context.Context, s *hub.Subscription) error {
 	query := "select delete_subscription($1::jsonb)"
 	sJSON, _ := json.Marshal(s)
 	_, err := m.db.Exec(ctx, query, sJSON)
+	return err
+}
+
+// DeleteOptOut deletes an opt-out entry from the database.
+func (m *Manager) DeleteOptOut(ctx context.Context, optOutID string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	if _, err := uuid.FromString(optOutID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid opt out id")
+	}
+	query := "select delete_opt_out($1::uuid, $2::uuid)"
+	_, err := m.db.Exec(ctx, query, userID, optOutID)
 	return err
 }
 
@@ -74,6 +98,18 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	return dataJSON, nil
 }
 
+// GetOptOutListJSON returns all the opt-out entries of the user doing the
+// request as as json array of objects.
+func (m *Manager) GetOptOutListJSON(ctx context.Context) ([]byte, error) {
+	userID := ctx.Value(hub.UserIDKey).(string)
+	query := "select get_user_opt_out_entries($1::uuid)"
+	var dataJSON []byte
+	if err := m.db.QueryRow(ctx, query, userID).Scan(&dataJSON); err != nil {
+		return nil, err
+	}
+	return dataJSON, nil
+}
+
 // GetSubscriptors returns the users subscribed to receive notifications for
 // certain kind of events.
 func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.User, error) {
@@ -84,8 +120,8 @@ func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.Use
 		query := "select get_package_subscriptors($1::uuid, $2::integer)"
 		err = m.db.QueryRow(ctx, query, e.PackageID, e.EventKind).Scan(&dataJSON)
 	case hub.RepositoryTrackingErrors:
-		query := "select get_repository_subscriptors($1::uuid)"
-		err = m.db.QueryRow(ctx, query, e.RepositoryID).Scan(&dataJSON)
+		query := "select get_repository_subscriptors($1::uuid, $2::integer)"
+		err = m.db.QueryRow(ctx, query, e.RepositoryID, e.EventKind).Scan(&dataJSON)
 	default:
 		return nil, nil
 	}
@@ -106,6 +142,18 @@ func validateSubscription(s *hub.Subscription) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
 	if s.EventKind != hub.NewRelease {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
+	}
+	return nil
+}
+
+// validateOptOut checks if the opt-out information provided is valid to be
+// used as input for some database functions calls.
+func validateOptOut(o *hub.OptOut) error {
+	if _, err := uuid.FromString(o.RepositoryID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
+	}
+	if o.EventKind != hub.RepositoryTrackingErrors {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid event kind")
 	}
 	return nil

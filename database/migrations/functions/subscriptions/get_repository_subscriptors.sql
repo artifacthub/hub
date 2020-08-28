@@ -1,8 +1,9 @@
 -- get_repository_subscriptors returns the users subscribed to the repository
 -- provided for the given event kind. At the moment, the user owning a given
 -- repository or all the users who belong to the organization which owns the
--- repository are considered to be subscribed to the repository.
-create or replace function get_repository_subscriptors(p_repository_id uuid)
+-- repository are considered to be subscribed to the repository, unless they
+-- have opted out of notifications for that repository and event.
+create or replace function get_repository_subscriptors(p_repository_id uuid, p_event_kind_id int)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'user_id', user_id
@@ -20,5 +21,11 @@ returns setof json as $$
         where repository_id = p_repository_id
         and uo.confirmed = true
         order by user_id asc
-    ) owners;
+    ) owners
+    where user_id not in (
+        select user_id
+        from opt_out
+        where repository_id = p_repository_id
+        and event_kind_id = p_event_kind_id
+    );
 $$ language sql;
