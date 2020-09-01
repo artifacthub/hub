@@ -3,14 +3,14 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
-import { TiWarning } from 'react-icons/ti';
 
-import { API } from '../../../../../api';
-import { AppCtx } from '../../../../../context/AppCtx';
-import { ErrorKind, EventKind, OptOutItem, Organization, Repository } from '../../../../../types';
-import alertDispatcher from '../../../../../utils/alertDispatcher';
-import Modal from '../../../../common/Modal';
-import RepositoryIcon from '../../../../common/RepositoryIcon';
+import { API } from '../../../../../../api';
+import { AppCtx } from '../../../../../../context/AppCtx';
+import { ErrorKind, EventKind, OptOutItem, Organization, Repository } from '../../../../../../types';
+import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
+import Modal from '../../../../../common/Modal';
+import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from './Modal.module.css';
 import SearchTypeaheadRepository from './SearchTypeaheadRepository';
 
@@ -20,6 +20,7 @@ interface Props {
   onSuccess: () => void;
   onClose: () => void;
   onAuthError: () => void;
+  getNotificationTitle: (kind: EventKind) => string;
 }
 
 const OptOutModal = (props: Props) => {
@@ -117,9 +118,9 @@ const OptOutModal = (props: Props) => {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: `An error occurred adding the opt-out entry for tracking errors notifications for repository ${
-            repoItem!.displayName || repoItem!.name
-          }, please try again later.`,
+          message: `An error occurred adding the opt-out entry for ${props.getNotificationTitle(
+            eventKind
+          )} notifications for repository ${repoItem!.displayName || repoItem!.name}, please try again later.`,
         });
       }
     }
@@ -132,7 +133,7 @@ const OptOutModal = (props: Props) => {
       modalDialogClassName={styles.modal}
       closeButton={
         <button
-          data-testid="addSubsModalBtn"
+          data-testid="addOptOutModalBtn"
           className="btn btn-secondary"
           type="button"
           disabled={isNull(repoItem) || isSending}
@@ -158,26 +159,30 @@ const OptOutModal = (props: Props) => {
         <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
           Events
         </label>
-
-        <div className="custom-control custom-radio mb-3">
-          <input
-            data-testid={`radio_trackingError`}
-            className="custom-control-input"
-            type="radio"
-            name="kind"
-            id="repositoryTrackingError"
-            value={EventKind.RepositoryTrackingErrors}
-            onChange={() => setEventKind(EventKind.RepositoryTrackingErrors)}
-            checked
-            required
-          />
-          <label className="custom-control-label" htmlFor="repositoryTrackingError">
-            <div className="d-flex flex-row align-items-center ml-2">
-              <TiWarning />
-              <div className="ml-1">Tracking errors</div>
+        {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+          return (
+            <div className="custom-control custom-radio mb-3" key={`radio_${subs.name}`}>
+              <input
+                data-testid={`radio_${subs.kind}`}
+                className="custom-control-input"
+                type="radio"
+                name="kind"
+                id={subs.name}
+                value={subs.kind}
+                disabled={!subs.enabled}
+                checked={subs.kind === eventKind}
+                onChange={() => setEventKind(subs.kind)}
+                required
+              />
+              <label className="custom-control-label" htmlFor={subs.name}>
+                <div className="d-flex flex-row align-items-center ml-2">
+                  {subs.icon}
+                  <div className="ml-1">{subs.title}</div>
+                </div>
+              </label>
             </div>
-          </label>
-        </div>
+          );
+        })}
 
         <div className="d-flex flex-column mb-3">
           <label className={`font-weight-bold ${styles.label}`} htmlFor="description">
@@ -188,7 +193,7 @@ const OptOutModal = (props: Props) => {
 
           {!isNull(repoItem) ? (
             <div
-              data-testid="activePackageItem"
+              data-testid="activeRepoItem"
               className={`border border-secondary w-100 rounded mt-1 ${styles.repoWrapper}`}
             >
               <div className="d-flex flex-row flex-nowrap align-items-stretch justify-content-between">

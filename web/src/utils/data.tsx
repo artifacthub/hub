@@ -3,6 +3,7 @@ import { FaKey, FaUserFriends } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
+import { TiWarning } from 'react-icons/ti';
 
 import RepositoryIcon from '../layout/common/RepositoryIcon';
 import { EventKind, NavSection, PayloadKind, RepositoryKind, TsQuery } from '../types';
@@ -22,13 +23,24 @@ export interface PayloadKindsItem {
   title: string;
 }
 
-export const SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
+export const PACKAGE_SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
   {
     kind: EventKind.NewPackageRelease,
     icon: <MdNewReleases />,
     name: 'newRelease',
     title: 'New releases',
     description: 'Receive a notification when a new version of this package is released.',
+    enabled: true,
+  },
+];
+
+export const REPOSITORY_SUBSCRIPTIONS_LIST: SubscriptionItem[] = [
+  {
+    kind: EventKind.RepositoryTrackingErrors,
+    icon: <TiWarning />,
+    name: 'trackingErrors',
+    title: 'Tracking errors',
+    description: 'Receive a notification when repository tracking errors.',
     enabled: true,
   },
 ];

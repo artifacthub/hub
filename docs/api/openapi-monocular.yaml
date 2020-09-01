@@ -50,6 +50,14 @@ paths:
                           properties:
                             description:
                               type: string
+                            repo:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                url:
+                                  type: string
+                                  format: uri
                         relationships:
                           type: object
                           properties:
@@ -74,6 +82,9 @@ paths:
                           description: >-
                             Chart for Barman PostgreSQL Backup and Recovery
                             Manager
+                          adfinis:
+                            name: adfinis
+                            url: https://charts.adfinis.com
                         relationships:
                           latestChartVersion:
                             data:

@@ -43,4 +43,7 @@ export const API = {
   addAPIKey: jest.fn(),
   updateAPIKey: jest.fn(),
   deleteAPIKey: jest.fn(),
+  getOptOutList: jest.fn(),
+  addOptOut: jest.fn(),
+  deleteOptOut: jest.fn(),
 };

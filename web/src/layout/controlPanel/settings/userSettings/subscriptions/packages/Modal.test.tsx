@@ -2,12 +2,12 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../../../api';
-import { Package, SearchResults } from '../../../../../types';
-import alertDispatcher from '../../../../../utils/alertDispatcher';
+import { API } from '../../../../../../api';
+import { Package, SearchResults } from '../../../../../../types';
+import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import SubscriptionModal from './Modal';
-jest.mock('../../../../../api');
-jest.mock('../../../../../utils/alertDispatcher');
+jest.mock('../../../../../../api');
+jest.mock('../../../../../../utils/alertDispatcher');
 const mockOnSuccess = jest.fn();
 const mockOnClose = jest.fn();
 
@@ -23,6 +23,7 @@ const defaultProps = {
   open: true,
   onSuccess: mockOnSuccess,
   onClose: mockOnClose,
+  getNotificationTitle: () => 'new releases',
 };
 
 describe('SubscriptionModal', () => {
@@ -254,7 +255,7 @@ describe('SubscriptionModal', () => {
       expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
       expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
         type: 'danger',
-        message: `An error occurred subscribing to New releases notification for ${
+        message: `An error occurred subscribing to new releases notification for ${
           mockSearch.data.packages![0].name
         } package, please try again later.`,
       });

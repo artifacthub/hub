@@ -4,9 +4,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 
-import useOutsideClick from '../../../../../hooks/useOutsideClick';
-import { Repository } from '../../../../../types';
-import RepositoryIcon from '../../../../common/RepositoryIcon';
+import useOutsideClick from '../../../../../../hooks/useOutsideClick';
+import { Repository } from '../../../../../../types';
+import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from './SearchTypeaheadRepository.module.css';
 
 interface Props {
@@ -93,6 +93,7 @@ const SearchTypeaheadRepository = (props: Props) => {
         className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
       >
         <input
+          data-testid="searchTypeaheadRepositoryInput"
           ref={inputEl}
           type="text"
           className={`flex-grow-1 px-3 ${styles.input}`}
@@ -113,7 +114,11 @@ const SearchTypeaheadRepository = (props: Props) => {
       </div>
 
       {!collapsed && (
-        <div ref={dropdownRef} className={`dropdown-menu p-0 w-100 shadow-sm show ${styles.dropdown}`}>
+        <div
+          ref={dropdownRef}
+          data-testid="searchTypeaheadRepositoryDropdown"
+          className={`dropdown-menu p-0 w-100 shadow-sm show ${styles.dropdown}`}
+        >
           {visibleItems.length === 0 ? (
             <p className="m-3 text-center">Sorry, not matches found</p>
           ) : (
@@ -146,7 +151,7 @@ const SearchTypeaheadRepository = (props: Props) => {
                             onSelect(repo);
                           }
                         }}
-                        key={`search_${repo.repositoryId!}`}
+                        key={`repo_${repo.repositoryId!}`}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
                           <RepositoryIcon kind={repo.kind} className={`mx-2 ${styles.icon}`} />

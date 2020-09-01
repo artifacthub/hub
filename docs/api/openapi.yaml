@@ -824,13 +824,12 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}":
+  "/packages/helm/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
-        - $ref: "#/components/parameters/RepoKindParam"
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/PackageNameParam"
       responses:
@@ -839,20 +838,83 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Package"
+                $ref: "#/components/schemas/HelmPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{^helm$|^falco$|^opa$|^olm$}/{repoName}/{packageName}/{version}":
+
+  "/packages/falco/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opa/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OPAPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/olm/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/helm/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
-        - $ref: "#/components/parameters/RepoKindParam"
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/PackageNameParam"
         - $ref: "#/components/parameters/VersionParam"
@@ -862,7 +924,73 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Package"
+                $ref: "#/components/schemas/HelmPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/falco/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opa/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OPAPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/olm/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OLMPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -1413,38 +1541,6 @@ components:
       in: cookie
       name: sid
   schemas:
-    Repository:
-      allOf:
-        - $ref: "#/components/schemas/RepositorySummary"
-        - type: object
-          properties:
-            repository_id:
-              type: string
-              format: uuid
-            last_tracking_ts:
-              type: integer
-              nullable: true
-            last_tracking_errors:
-              type: string
-              example: Error
-    RepositorySummary:
-      type: object
-      properties:
-        name:
-          type: string
-          nullable: false
-          example: repo1
-        display_name:
-          type: string
-          example: Repository 1
-        url:
-          type: string
-          format: uri
-          nullable: false
-          example: "http://repourl"
-      required:
-        - name
-        - url
     Error:
       type: object
       properties:
@@ -1487,6 +1583,42 @@ components:
           - id: artifact-hub
             name: Artifact Hub
             total: 1
+    FalcoPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                policies:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  example:
+                    policy1: |+
+                      - macro: text
+                        condition: (evt.num < 0)
+    HelmPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                dependencies:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: mysql
+                    version:
+                      type: string
+                      example: 1.6.4
+                    repository:
+                      type: string
+                      example: "http://repo.url"
     Link:
       type: object
       properties:
@@ -1526,6 +1658,69 @@ components:
           type: boolean
           nullable: false
           example: true
+    OLMPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                capabilities:
+                  type: string
+                  nullable: true
+                  example:
+                    - Basic Install
+                    - Seamless Upgrades
+                    - Full Lifecycle
+                    - Deep Insights
+                    - Auto Pilot
+                isGlobalOperator:
+                  type: boolean
+                  nullable: true
+                customResourcesDefinitions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      kind:
+                        type: string
+                      name:
+                        type: string
+                      version:
+                        type: string
+                        example: v1alpha
+                      description:
+                        type: string
+                        example: Description resource definition
+                      displayName:
+                        type: string
+                  nullable: true
+                customResourcesDefinitionsExamples:
+                  type: string
+                  example: |-
+                    [{"apiVersion": v1alpha
+                    , "kind": CustomResource
+                    , "spec": {
+                      "replicas": 1
+                      }
+                    }}]
+    OPAPackage:
+      allOf:
+        - $ref: "#/components/schemas/Package"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rules:
+                  type: object
+                  properties:
+                    Raw:
+                      type: string
+                      example: |+
+                        - macro: text
+                          condition: (evt.num < 0)
     Package:
       allOf:
         - $ref: "#/components/schemas/PackageSummary"
@@ -1605,9 +1800,7 @@ components:
                 properties:
                   version:
                     type: string
-                    example:
-                      - 2.0.0
-                      - 1.0.0
+                    example: 1.0.0
                   created_at:
                     type: integer
                     example: 1552082346
@@ -1632,21 +1825,15 @@ components:
                 properties:
                   name:
                     type: string
-                    example:
-                      - stable
-                      - alpha
+                    example: stable
                   version:
                     type: string
-                    example:
-                      - 2.0.0
-                      - 1.0.0
+                    example: 2.0.0
               nullable: true
             provider:
               type: string
               nullable: true
-              example:
-                - Provider 1
-                - Provider 2
+              example: Provider 1
             containerImage:
               type: string
               nullable: true
@@ -1654,110 +1841,6 @@ components:
             created_at:
               type: integer
               example: 1552082346
-            data:
-              type: object
-              properties:
-                capabilities:
-                  type: string
-                  nullable: true
-                  example:
-                    - Basic Install
-                    - Seamless Upgrades
-                    - Full Lifecycle
-                    - Deep Insights
-                    - Auto Pilot
-                isGlobalOperator:
-                  type: boolean
-                  nullable: true
-                customResourcesDefinitions:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      kind:
-                        type: string
-                      name:
-                        type: string
-                      version:
-                        type: string
-                        example: v1alpha
-                      description:
-                        type: string
-                        example: Description resource definition
-                      displayName:
-                        type: string
-                  nullable: true
-                customResourcesDefinitionsExamples:
-                  type: string
-                  example: |-
-                    [{"apiVersion": v1alpha
-                    , "kind": CustomResource
-                    , "spec": {
-                     "replicas": 1
-                      }
-                    }}]
-                rules:
-                  type: object
-                  properties:
-                    Raw:
-                      type: string
-                      example: |+
-                        - macro: text
-                          condition: (evt.num < 0)
-
-            policies:
-              type: object
-              additionalProperties:
-                type: string
-              example:
-                policy1: |+
-                  - macro: text
-                    condition: (evt.num < 0)
-
-            dependencies:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: mysql
-                version:
-                  type: string
-                  example: 1.6.4
-                repository:
-                  type: string
-                  example: "http://repo.url"
-              example:
-                policy1: |+
-                  - macro: text
-                    condition: (evt.num < 0)
-
-          nullable: true
-    RepositoryKind:
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-      description: |
-        Repository kind:
-          * `0` - Helm charts
-          * `1` - Falco rules
-          * `2` - OPA policies
-          * `3` - OLM operators
-    RepoKindParam:
-      type: string
-      enum:
-        - helm
-        - opa
-        - falco
-        - olm
-      description: |
-        Repository kind name:
-          * `helm` - Helm charts
-          * `falco` - Falco rules
-          * `opa` - OPA policies
-          * `olm` - OLM operators
     PackageSummary:
       type: object
       properties:
@@ -1828,6 +1911,51 @@ components:
               type: string
               example: Organization 1
           nullable: false
+    Repository:
+      allOf:
+        - $ref: "#/components/schemas/RepositorySummary"
+        - type: object
+          properties:
+            repository_id:
+              type: string
+              format: uuid
+            last_tracking_ts:
+              type: integer
+              nullable: true
+            last_tracking_errors:
+              type: string
+              example: Error
+    RepositoryKind:
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+      description: |
+        Repository kind:
+          * `0` - Helm charts
+          * `1` - Falco rules
+          * `2` - OPA policies
+          * `3` - OLM operators
+    RepositorySummary:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+          example: repo1
+        display_name:
+          type: string
+          example: Repository 1
+        url:
+          type: string
+          format: uri
+          nullable: false
+          example: "http://repourl"
+      required:
+        - name
+        - url
     Organization:
       allOf:
         - $ref: "#/components/schemas/OrganizationSummary"
@@ -1837,6 +1965,19 @@ components:
               type: integer
             confirmed:
               type: boolean
+    ResourceKindName:
+      type: string
+      enum:
+        - repositoryName
+        - repositoryURL
+        - organizationName
+        - userAlias
+      description: |
+        Resource kind name:
+          * `repositoryName` - Repository name
+          * `repositoryURL` - Repository URL
+          * `organizationName` - Organization name
+          * `userAlias` - User alias
     OrganizationSummary:
       type: object
       properties:
@@ -1859,19 +2000,6 @@ components:
           example: 12345abcde
       required:
         - name
-    ResourceKindName:
-      type: string
-      enum:
-        - repositoryName
-        - repositoryURL
-        - organizationName
-        - userAlias
-      description: |
-        Resource kind name:
-          * `repositoryName` - Repository name
-          * `repositoryURL` - Repository URL
-          * `organizationName` - Organization name
-          * `userAlias` - User alias
     User:
       type: object
       properties:
@@ -2048,13 +2176,6 @@ components:
         default: false
       required: true
       description: Whether we should get facets or not
-    RepoKindParam:
-      in: path
-      name: ^helm$|^falco$|^opa$|^olm$
-      schema:
-        $ref: "#/components/schemas/RepoKindParam"
-      required: true
-      description: Package kind name
     LimitParam:
       in: query
       name: limit
