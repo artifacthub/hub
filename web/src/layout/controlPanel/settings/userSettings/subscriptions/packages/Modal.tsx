@@ -3,14 +3,14 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 
-import { API } from '../../../../../api';
-import { ErrorKind, EventKind, Package } from '../../../../../types';
-import alertDispatcher from '../../../../../utils/alertDispatcher';
-import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
-import Image from '../../../../common/Image';
-import Modal from '../../../../common/Modal';
-import RepositoryIcon from '../../../../common/RepositoryIcon';
-import SearchPackages from '../../../../common/SearchPackages';
+import { API } from '../../../../../../api';
+import { ErrorKind, EventKind, Package } from '../../../../../../types';
+import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
+import Image from '../../../../../common/Image';
+import Modal from '../../../../../common/Modal';
+import RepositoryIcon from '../../../../../common/RepositoryIcon';
+import SearchPackages from '../../../../../common/SearchPackages';
 import styles from './Modal.module.css';
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
   subscriptions?: Package[];
   onSuccess: () => void;
   onClose: () => void;
+  getNotificationTitle: (kind: EventKind) => string;
 }
 
 const SubscriptionModal = (props: Props) => {
@@ -52,15 +53,6 @@ const SubscriptionModal = (props: Props) => {
     return selectedPackages.map((item: Package) => item.packageId);
   };
 
-  const getNotificationTitle = (kind: EventKind): string => {
-    let title = '';
-    const notif = SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
-    if (!isUndefined(notif)) {
-      title = notif.title;
-    }
-    return title;
-  };
-
   async function addSubscription() {
     try {
       setIsSending(true);
@@ -74,7 +66,7 @@ const SubscriptionModal = (props: Props) => {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: `An error occurred subscribing to ${getNotificationTitle(eventKind)} notification for ${
+          message: `An error occurred subscribing to ${props.getNotificationTitle(eventKind)} notification for ${
             packageItem!.displayName || packageItem!.name
           } package, please try again later.`,
         });
@@ -115,7 +107,7 @@ const SubscriptionModal = (props: Props) => {
         <label className={`font-weight-bold ${styles.label}`} htmlFor="kind">
           Events
         </label>
-        {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+        {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
           return (
             <div className="custom-control custom-radio mb-3" key={`radio_${subs.name}`}>
               <input

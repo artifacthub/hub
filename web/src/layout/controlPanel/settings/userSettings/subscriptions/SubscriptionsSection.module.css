@@ -64,7 +64,8 @@
   text-decoration: underline;
 }
 
-.legend {
+.legend,
+.tinyIcon {
   font-size: 85%;
 }
 

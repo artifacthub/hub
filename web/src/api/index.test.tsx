@@ -5,6 +5,7 @@ import {
   APIKey,
   CheckAvailabilityProps,
   ErrorKind,
+  OptOutItem,
   Organization,
   Package,
   PackageStars,
@@ -1430,6 +1431,61 @@ describe('index API', () => {
 
         expect(fetchMock.mock.calls.length).toEqual(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/api-keys/apiKeyId');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
+        expect(response).toBe('');
+      });
+    });
+
+    describe('getOptOutList', () => {
+      it('success', async () => {
+        const optOutList: OptOutItem[] = getData('31') as OptOutItem[];
+        fetchMock.mockResponse(JSON.stringify(optOutList), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getOptOutList();
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
+        expect(response).toEqual(methods.toCamelCase(optOutList));
+      });
+    });
+
+    describe('addOptOut', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await methods.API.addOptOut('repoId', 2);
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('POST');
+        expect(fetchMock.mock.calls[0][1]!.body).toBe(JSON.stringify({ repository_id: 'repoId', event_kind: 2 }));
+        expect(response).toBe('');
+      });
+    });
+
+    describe('deleteOptOut', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const response = await methods.API.deleteOptOut('optOutId');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/subscriptions/opt-out/optOutId');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('DELETE');
         expect(response).toBe('');
       });

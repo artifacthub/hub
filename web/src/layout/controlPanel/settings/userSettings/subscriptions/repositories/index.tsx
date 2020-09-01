@@ -3,26 +3,35 @@ import React, { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
-import { TiWarning } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 
-import { API } from '../../../../../api';
-import { ErrorKind, OptOutItem, Repository } from '../../../../../types';
-import alertDispatcher from '../../../../../utils/alertDispatcher';
-import prepareQueryString from '../../../../../utils/prepareQueryString';
-import Loading from '../../../../common/Loading';
-import RepositoryIcon from '../../../../common/RepositoryIcon';
+import { API } from '../../../../../../api';
+import { ErrorKind, EventKind, OptOutItem } from '../../../../../../types';
+import alertDispatcher from '../../../../../../utils/alertDispatcher';
+import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
+import prepareQueryString from '../../../../../../utils/prepareQueryString';
+import Loading from '../../../../../common/Loading';
+import RepositoryIcon from '../../../../../common/RepositoryIcon';
+import styles from '../SubscriptionsSection.module.css';
 import OptOutModal from './Modal';
-import styles from './OptOutSection.module.css';
 
 interface Props {
   onAuthError: () => void;
 }
 
-const OptOutSection = (props: Props) => {
+const RepositoriesSection = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [optOutList, setOptOutList] = useState<OptOutItem[] | undefined>(undefined);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
+
+  const getNotificationTitle = (kind: EventKind): string => {
+    let title = '';
+    const notif = REPOSITORY_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
+    if (!isUndefined(notif)) {
+      title = notif.title.toLowerCase();
+    }
+    return title;
+  };
 
   async function getOptOutList() {
     try {
@@ -43,19 +52,46 @@ const OptOutSection = (props: Props) => {
     }
   }
 
-  async function deleteOptOut(optOutId: string, repo: Repository) {
+  const updateOptimisticallyRepositories = (kind: EventKind, isActive: boolean, repoId: string) => {
+    const repoToUpdate = !isUndefined(optOutList)
+      ? optOutList.find((item: OptOutItem) => item.repository.repositoryId! === repoId)
+      : undefined;
+    if (!isUndefined(repoToUpdate) && !isUndefined(repoToUpdate.eventKinds)) {
+      const newOptOutList = optOutList!.filter((item: OptOutItem) => item.repository.repositoryId! !== repoId);
+      if (isActive) {
+        repoToUpdate.eventKinds = repoToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
+      } else {
+        repoToUpdate.eventKinds.push(kind);
+      }
+      setOptOutList(newOptOutList);
+    }
+  };
+
+  async function changeSubscription(
+    repoId: string,
+    kind: EventKind,
+    isActive: boolean,
+    repoName: string,
+    optOutId?: string
+  ) {
+    updateOptimisticallyRepositories(kind, isActive, repoId);
+
     try {
-      await API.deleteOptOut(optOutId);
+      if (isActive && !isUndefined(optOutId)) {
+        await API.deleteOptOut(optOutId);
+      } else {
+        await API.addOptOut(repoId, kind);
+      }
       getOptOutList();
     } catch (err) {
       if (err.kind !== ErrorKind.Unauthorized) {
         alertDispatcher.postAlert({
           type: 'danger',
-          message: `An error occurred deleting the opt-out entry for tracking errors notifications for repository ${
-            repo.displayName || repo.name
-          }, please try again later.`,
+          message: `An error occurred ${isActive ? 'deleting' : 'adding'} the opt-out entry for ${getNotificationTitle(
+            kind
+          )} notifications for repository ${repoName}, please try again later.`,
         });
-        getOptOutList(); // Get opt-out list after getting an error
+        getOptOutList(); // Get opt-out if changeSubscription fails
       } else {
         props.onAuthError();
       }
@@ -73,6 +109,7 @@ const OptOutSection = (props: Props) => {
         <div className={`h4 pb-0 ${styles.title}`}>Repositories</div>
         <div>
           <button
+            data-testid="addOptOut"
             className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
             onClick={() => setModalStatus(true)}
           >
@@ -90,9 +127,14 @@ const OptOutSection = (props: Props) => {
           opt-out of notifications for certain kinds of events that happen in any of the repositories you can manage.
         </p>
 
+        <p>
+          You will <span className="font-weight-bold">NOT</span> receive notifications when an event that matches any of
+          the repositories in the list is fired.
+        </p>
+
         <div className="mt-4 mt-md-5">
           {!isUndefined(optOutList) && optOutList.length > 0 && (
-            <table className={`table table-bordered table-hover ${styles.table}`}>
+            <table className={`table table-bordered table-hover ${styles.table}`} data-testid="repositoriesList">
               <thead>
                 <tr className={`table-primary ${styles.tableTitle}`}>
                   <th scope="col" className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}>
@@ -104,12 +146,14 @@ const OptOutSection = (props: Props) => {
                   <th scope="col" className="align-middle text-center w-50 d-none d-sm-table-cell">
                     Publisher
                   </th>
-                  <th scope="col" className={`align-middle text-nowrap ${styles.fitCell}`}>
-                    <div className="d-flex flex-row align-items-center justify-content-center">
-                      <TiWarning />
-                      <span className="d-none d-lg-inline ml-2">Tracking errors</span>
-                    </div>
-                  </th>
+                  {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => (
+                    <th scope="col" className={`align-middle text-nowrap ${styles.fitCell}`} key={`title_${subs.kind}`}>
+                      <div className="d-flex flex-row align-items-center justify-content-center">
+                        {subs.icon}
+                        <span className="d-none d-lg-inline ml-2">{subs.title}</span>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -175,18 +219,39 @@ const OptOutSection = (props: Props) => {
                         </Link>
                       )}
                     </td>
-                    <td className="align-middle text-center">
-                      <div className="custom-control custom-switch ml-2">
-                        <input
-                          id="repositoryTrackingErrors"
-                          type="checkbox"
-                          className={`custom-control-input ${styles.checkbox}`}
-                          onChange={() => deleteOptOut(item.optOutId, item.repository)}
-                          checked
-                        />
-                        <label className="custom-control-label" htmlFor="repositoryTrackingErrors" />
-                      </div>
-                    </td>
+                    {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+                      const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);
+                      const id = `subs_${item.repository.repositoryId!}_${subs.kind}`;
+
+                      return (
+                        <td className="align-middle text-center" key={`td_${item.repository.name}_${subs.kind}`}>
+                          <div className="custom-control custom-switch ml-2">
+                            <input
+                              data-testid={`${item.optOutId}_${subs.name}_input`}
+                              id={id}
+                              type="checkbox"
+                              className={`custom-control-input ${styles.checkbox}`}
+                              disabled={!subs.enabled}
+                              onChange={() =>
+                                changeSubscription(
+                                  item.repository.repositoryId!,
+                                  subs.kind,
+                                  isActive,
+                                  item.repository.name,
+                                  item.optOutId
+                                )
+                              }
+                              checked={isActive}
+                            />
+                            <label
+                              data-testid={`${item.optOutId}_${subs.name}_label`}
+                              className="custom-control-label"
+                              htmlFor={id}
+                            />
+                          </div>
+                        </td>
+                      );
+                    })}
                   </tr>
                 ))}
               </tbody>
@@ -201,6 +266,7 @@ const OptOutSection = (props: Props) => {
           onSuccess={getOptOutList}
           onClose={() => setModalStatus(false)}
           onAuthError={props.onAuthError}
+          getNotificationTitle={getNotificationTitle}
           open
         />
       )}
@@ -208,4 +274,4 @@ const OptOutSection = (props: Props) => {
   );
 };
 
-export default OptOutSection;
+export default RepositoriesSection;

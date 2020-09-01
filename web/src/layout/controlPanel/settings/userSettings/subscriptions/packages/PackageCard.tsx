@@ -3,11 +3,11 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { EventKind, Package } from '../../../../../types';
-import buildPackageURL from '../../../../../utils/buildPackageURL';
-import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../../utils/data';
-import Image from '../../../../common/Image';
-import RepositoryIcon from '../../../../common/RepositoryIcon';
+import { EventKind, Package } from '../../../../../../types';
+import buildPackageURL from '../../../../../../utils/buildPackageURL';
+import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
+import Image from '../../../../../common/Image';
+import RepositoryIcon from '../../../../../common/RepositoryIcon';
 import styles from './PackageCard.module.css';
 
 interface Props {
@@ -82,7 +82,7 @@ const PackageCard = (props: Props) => {
               </div>
             </Link>
 
-            {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+            {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
               const isActive = !isUndefined(props.package.eventKinds) && props.package.eventKinds.includes(subs.kind);
 
               return (

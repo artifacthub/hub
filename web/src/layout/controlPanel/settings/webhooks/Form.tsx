@@ -9,7 +9,12 @@ import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
 import { ErrorKind, EventKind, Package, PayloadKind, RefInputField, TestWebhook, Webhook } from '../../../../types';
 import compoundErrorMessage from '../../../../utils/compoundErrorMessage';
-import { PAYLOAD_KINDS_LIST, PayloadKindsItem, SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../../../utils/data';
+import {
+  PACKAGE_SUBSCRIPTIONS_LIST,
+  PAYLOAD_KINDS_LIST,
+  PayloadKindsItem,
+  SubscriptionItem,
+} from '../../../../utils/data';
 import AutoresizeTextarea from '../../../common/AutoresizeTextarea';
 import CheckBox from '../../../common/Checkbox';
 import ExternalLink from '../../../common/ExternalLink';
@@ -387,7 +392,7 @@ const WebhookForm = (props: Props) => {
               Events
             </label>
 
-            {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+            {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
               return (
                 <CheckBox
                   key={`check_${subs.kind}`}

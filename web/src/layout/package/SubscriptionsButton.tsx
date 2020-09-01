@@ -10,7 +10,7 @@ import { AppCtx } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, EventKind, Subscription } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
-import { SubscriptionItem, SUBSCRIPTIONS_LIST } from '../../utils/data';
+import { PACKAGE_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../utils/data';
 import styles from './SubscriptionsButton.module.css';
 
 interface Props {
@@ -28,7 +28,7 @@ const SubscriptionsButton = (props: Props) => {
 
   const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
-    const notif = SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
+    const notif = PACKAGE_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
     if (!isUndefined(notif)) {
       title = notif.title;
     }
@@ -166,7 +166,7 @@ const SubscriptionsButton = (props: Props) => {
       >
         <div className={`arrow ${styles.arrow}`} />
 
-        {SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+        {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
           const isActive = isActiveNotification(subs.kind);
           return (
             <button
