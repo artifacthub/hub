@@ -53,7 +53,11 @@ select is(
                 "packageUrl": "https://artifacthub.io/packages/helm/repo1/package1"
             },
             "attributes": {
-                "description": "description"
+                "description": "description",
+                "repo": {
+                    "name": "repo1",
+                    "url": "https://repo1.com"
+                }
             },
             "relationships": {
                 "latestChartVersion": {

@@ -14,6 +14,7 @@ begin
             s.version,
             s.app_version,
             r.name as repository_name,
+            r.url as repository_url,
             (case when p_tsquery_web <> '' then
                 ts_rank(ts_filter(tsdoc, '{a}'), v_tsquery_web, 1) +
                 ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)
@@ -43,7 +44,11 @@ begin
                     )
                 ),
                 'attributes', json_build_object(
-                    'description', description
+                    'description', description,
+                    'repo', json_build_object(
+                        'name', repository_name,
+                        'url', repository_url
+                    )
                 ),
                 'relationships', json_build_object(
                     'latestChartVersion', json_build_object(
