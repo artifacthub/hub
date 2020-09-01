@@ -98,21 +98,25 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	}()
 
 	// Prepare chart archive url
-	u := j.ChartVersion.URLs[0]
-	if _, err := url.ParseRequestURI(u); err != nil {
-		tmp, err := url.Parse(w.r.URL)
-		if err != nil {
-			w.warn(name, version, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
-			return
-		}
-		tmp.Path = path.Join(tmp.Path, u)
-		u = tmp.String()
+	u, err := url.Parse(j.ChartVersion.URLs[0])
+	if err != nil {
+		w.warn(name, version, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
+		return
 	}
+	if !u.IsAbs() {
+		repoURL, _ := url.Parse(w.r.URL)
+		u.Scheme = repoURL.Scheme
+		u.Host = repoURL.Host
+		if !strings.HasPrefix(u.Path, "/") {
+			u.Path = path.Join(repoURL.Path, u.Path)
+		}
+	}
+	chartURL := u.String()
 
 	// Load chart from remote archive
-	chart, err := w.loadChart(u)
+	chart, err := w.loadChart(chartURL)
 	if err != nil {
-		w.warn(name, version, fmt.Errorf("error loading chart: %w", err))
+		w.warn(name, version, fmt.Errorf("error loading chart (%s): %w", chartURL, err))
 		return
 	}
 	md := chart.Metadata
@@ -144,7 +148,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		AppVersion:  md.AppVersion,
 		Digest:      j.ChartVersion.Digest,
 		Deprecated:  md.Deprecated,
-		ContentURL:  u,
+		ContentURL:  chartURL,
 		CreatedAt:   j.ChartVersion.Created.Unix(),
 		Repository:  w.r,
 	}
@@ -156,7 +160,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if licenseFile != nil {
 		p.License = license.Detect(licenseFile.Data)
 	}
-	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(u)
+	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(chartURL)
 	if err == nil {
 		p.Signed = hasProvenanceFile
 	} else {
