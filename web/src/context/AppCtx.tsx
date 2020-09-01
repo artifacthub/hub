@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { API } from '../api';
 import useSystemThemeMode from '../hooks/useSystemThemeMode';
 import { Prefs, Profile, ThemePrefs, UserFullName } from '../types';
+import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import isControlPanelSectionAvailable from '../utils/isControlPanelSectionAvailable';
 import lsStorage from '../utils/localStoragePreferences';
@@ -87,10 +88,6 @@ export async function refreshUserProfile(dispatch: React.Dispatch<any>, redirect
   }
 }
 
-export const detectActiveThemeMode = (): string => {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-};
-
 function redirectToControlPanel(context: 'user' | 'org') {
   if (history.location.pathname.startsWith('/control-panel')) {
     const sections = history.location.pathname.split('/');
@@ -142,6 +139,7 @@ export function appReducer(state: AppState, action: Action) {
       const tmpUserPrefs = lsStorage.getPrefs(action.profile.alias);
       const userPrefs = { ...tmpUserPrefs, theme: getCurrentSystemActiveTheme(tmpUserPrefs.theme) };
       updateActiveStyleSheet(userPrefs.theme.efective || userPrefs.theme.configured);
+      lsStorage.setPrefs(userPrefs, action.profile.alias);
       lsStorage.setActiveProfile(action.profile.alias);
       return {
         user: action.profile,
@@ -160,6 +158,7 @@ export function appReducer(state: AppState, action: Action) {
     case 'signOut':
       const tmpGuestPrefs = lsStorage.getPrefs();
       const guestPrefs = { ...tmpGuestPrefs, theme: getCurrentSystemActiveTheme(tmpGuestPrefs.theme) };
+      lsStorage.setPrefs(guestPrefs);
       lsStorage.setActiveProfile();
       updateActiveStyleSheet(guestPrefs.theme.efective || guestPrefs.theme.configured);
       return { user: null, prefs: guestPrefs };
