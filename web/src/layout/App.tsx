@@ -11,6 +11,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 
 import { AppCtxProvider, updateActiveStyleSheet } from '../context/AppCtx';
 import buildSearchParams from '../utils/buildSearchParams';
+import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 import history from '../utils/history';
 import lsPreferences from '../utils/localStoragePreferences';
 import styles from './App.module.css';
@@ -41,7 +42,9 @@ export default function App() {
 
   useEffect(() => {
     const activeProfile = lsPreferences.getActiveProfile();
-    const theme = activeProfile.theme.efective || activeProfile.theme.configured;
+    const theme = activeProfile.theme.automatic
+      ? detectActiveThemeMode()
+      : activeProfile.theme.efective || activeProfile.theme.configured;
     if (!isUndefined(theme)) {
       updateActiveStyleSheet(theme);
       setActiveInitialTheme(theme);

@@ -1,7 +1,7 @@
 import { isNull } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { detectActiveThemeMode } from '../context/AppCtx';
+import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 
 export default function useSystemThemeMode(enabled: boolean, dispatch: React.Dispatch<any>) {
   const [mediaQuery, setMediaQuery] = useState<MediaQueryList | null>(null);
