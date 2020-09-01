@@ -19,6 +19,7 @@ const StarButton = (props: Props) => {
   const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
+  const [pkgId, setPkgId] = useState<string>(props.packageId);
 
   async function getPackageStars() {
     try {
@@ -33,14 +34,16 @@ const StarButton = (props: Props) => {
 
   useEffect(() => {
     if (
-      !isUndefined(ctx.user) &&
-      (isUndefined(packageStars) ||
-        (!isNull(ctx.user) && isNull(packageStars!.starredByUser)) ||
-        (isNull(ctx.user) && !isNull(packageStars!.starredByUser)))
+      (!isUndefined(ctx.user) &&
+        (isUndefined(packageStars) ||
+          (!isNull(ctx.user) && isNull(packageStars!.starredByUser)) ||
+          (isNull(ctx.user) && !isNull(packageStars!.starredByUser)))) ||
+      props.packageId !== pkgId
     ) {
+      setPkgId(props.packageId);
       getPackageStars();
     }
-  }, [ctx.user]); /* eslint-disable-line react-hooks/exhaustive-deps */
+  }, [ctx.user, props.packageId]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const notStarred =
     !isUndefined(ctx.user) &&
