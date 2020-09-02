@@ -1,8 +1,9 @@
-import classnames from 'classnames';
 import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import React from 'react';
+import { AiOutlineStop } from 'react-icons/ai';
 import { FaStar } from 'react-icons/fa';
+import { MdVerifiedUser } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
@@ -10,6 +11,7 @@ import buildPackageURL from '../../utils/buildPackageURL';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Image from './Image';
+import Label from './Label';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
 import RepositoryIcon from './RepositoryIcon';
@@ -46,16 +48,23 @@ const PackageInfo = (props: Props) => {
     </div>
   );
 
-  const badges = (
+  const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
     <>
+      {withVerified &&
+        !isUndefined(props.package.repository.verifiedPublisher) &&
+        props.package.repository.verifiedPublisher && (
+          <Label icon={<MdVerifiedUser />} text="Verified Publisher" className={`mr-3 d-inline ${extraStyle}`} />
+        )}
       {props.package.deprecated && (
-        <div className={`badge badge-pill text-uppercase mb-1 ${styles.deprecatedBadge}`}>Deprecated</div>
+        <Label
+          text="Deprecated"
+          icon={<AiOutlineStop />}
+          labelStyle="danger"
+          className={`d-inline mr-3 ${extraStyle}`}
+        />
       )}
       {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
-        <SignedBadge
-          signed={props.package.signed}
-          className={classnames('mb-1', { 'ml-3': !isNull(props.package.deprecated) && props.package.deprecated })}
-        />
+        <SignedBadge signed={props.package.signed} className={`d-inline ${extraStyle}`} />
       )}
     </>
   );
@@ -113,7 +122,7 @@ const PackageInfo = (props: Props) => {
                   </div>
                 )}
 
-                <div className="d-none d-lg-inline-block ml-3">{badges}</div>
+                <div className="d-none d-lg-flex ml-3">{getBadges(false)}</div>
               </div>
             </div>
 
@@ -121,10 +130,11 @@ const PackageInfo = (props: Props) => {
               <RepositoryInfo
                 repository={props.package.repository}
                 deprecated={props.package.deprecated}
-                className="d-inline-block d-md-none text-truncate w-100"
+                className="d-inline d-md-none text-truncate w-100"
+                repoLabelClassName="d-none"
               />
 
-              <div className={`d-none d-md-flex flex-row align-items-start w-100 ${styles.wrapper}`}>
+              <div className="d-none d-md-flex flex-row align-items-baseline w-100">
                 <div className={`d-flex flex-row align-items-baseline text-truncate ${styles.mx50}`}>
                   {!isUndefined(props.package.repository.organizationName) &&
                     props.package.repository.organizationName && (
@@ -166,6 +176,7 @@ const PackageInfo = (props: Props) => {
                   repository={props.package.repository}
                   deprecated={props.package.deprecated}
                   className={`ml-3 d-flex flex-row align-items-baseline ${styles.mx50}`}
+                  repoLabelClassName="d-none d-lg-inline"
                 />
               </div>
             </div>
@@ -216,7 +227,7 @@ const PackageInfo = (props: Props) => {
         {starsAndKindInfo}
       </div>
 
-      <div className="d-inline d-lg-none mt-2 mt-sm-0">{badges}</div>
+      <div className="d-flex flex-wrap d-lg-none">{getBadges(true, 'mt-2 mt-lg-0')}</div>
     </>
   );
 };

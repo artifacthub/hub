@@ -8,6 +8,7 @@ returns setof json as $$
         'display_name', r.display_name,
         'url', r.url,
         'kind', r.repository_kind_id,
+        'verified_publisher', verified_publisher,
         'last_tracking_errors', r.last_tracking_errors,
         'user_alias', u.alias,
         'organization_name', o.name

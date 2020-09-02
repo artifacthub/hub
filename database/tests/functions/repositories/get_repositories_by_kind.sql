@@ -34,13 +34,15 @@ select is(
         "name": "repo1",
         "display_name": "Repo 1",
         "url": "https://repo1.com",
-        "kind": 0
+        "kind": 0,
+        "verified_publisher": false
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
         "url": "https://repo2.com",
-        "kind": 0
+        "kind": 0,
+        "verified_publisher": false
     }]'::jsonb,
     'Repositories 1 and 2 are returned'
 );
@@ -51,7 +53,8 @@ select is(
         "name": "repo3",
         "display_name": "Repo 3",
         "url": "https://repo3.com",
-        "kind": 1
+        "kind": 1,
+        "verified_publisher": false
     }]'::jsonb,
     'Repository 3 is returned'
 );

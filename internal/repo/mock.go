@@ -89,6 +89,12 @@ func (m *ManagerMock) SetLastTrackingResults(ctx context.Context, repositoryID, 
 	return args.Error(0)
 }
 
+// SetVerifiedPublisher implements the RepositoryManager interface.
+func (m *ManagerMock) SetVerifiedPublisher(ctx context.Context, repositoryID string, verified bool) error {
+	args := m.Called(ctx, repositoryID, verified)
+	return args.Error(0)
+}
+
 // Transfer implements the RepositoryManager interface.
 func (m *ManagerMock) Transfer(ctx context.Context, name, orgName string) error {
 	args := m.Called(ctx, name, orgName)

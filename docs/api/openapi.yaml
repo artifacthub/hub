@@ -723,6 +723,7 @@ paths:
                             user_alias: null
                             organization_name: artifacthub
                             organization_display_name: Artifact Hub
+                            verified_publisher: true
                         - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
                           name: sentry-kubernetes
                           normalized_name: sentry-kubernetes
@@ -743,6 +744,7 @@ paths:
                             user_alias: null
                             organization_name: helm
                             organization_display_name: Helm
+                            verified_publisher: false
                         - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
                           name: etcd-operator
                           normalized_name: etcd-operator
@@ -763,6 +765,7 @@ paths:
                             user_alias: null
                             organization_name: helm
                             organization_display_name: Helm
+                            verified_publisher: false
                       facets:
                         - title: Organization
                           filter_key: org
@@ -1909,6 +1912,8 @@ components:
             organization_display_name:
               type: string
               example: Organization 1
+            verified_publisher:
+              type: boolean
           nullable: false
     Repository:
       allOf:

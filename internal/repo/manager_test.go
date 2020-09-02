@@ -370,19 +370,22 @@ func TestGetAll(t *testing.T) {
         "name": "repo1",
         "display_name": "Repo 1",
 		"url": "https://repo1.com",
-		"kind": 0
+		"kind": 0,
+		"verified_publisher": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
 		"url": "https://repo2.com",
-		"kind": 0
+		"kind": 0,
+		"verified_publisher": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000003",
         "name": "repo3",
         "display_name": "Repo 3",
 		"url": "https://repo3.com",
-		"kind": 1
+		"kind": 1,
+		"verified_publisher": true
     }]
 	`), nil)
 	m := NewManager(cfg, db)
@@ -395,16 +398,19 @@ func TestGetAll(t *testing.T) {
 	assert.Equal(t, "Repo 1", r[0].DisplayName)
 	assert.Equal(t, "https://repo1.com", r[0].URL)
 	assert.Equal(t, hub.Helm, r[0].Kind)
+	assert.True(t, r[0].VerifiedPublisher)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
 	assert.Equal(t, "repo2", r[1].Name)
 	assert.Equal(t, "Repo 2", r[1].DisplayName)
 	assert.Equal(t, "https://repo2.com", r[1].URL)
 	assert.Equal(t, hub.Helm, r[1].Kind)
+	assert.True(t, r[1].VerifiedPublisher)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000003", r[2].RepositoryID)
 	assert.Equal(t, "repo3", r[2].Name)
 	assert.Equal(t, "Repo 3", r[2].DisplayName)
 	assert.Equal(t, "https://repo3.com", r[2].URL)
 	assert.Equal(t, hub.Falco, r[2].Kind)
+	assert.True(t, r[1].VerifiedPublisher)
 	db.AssertExpectations(t)
 }
 
@@ -458,7 +464,8 @@ func TestGetByID(t *testing.T) {
 			"name": "repo1",
 			"display_name": "Repo 1",
 			"url": "https://repo1.com",
-			"kind": 0
+			"kind": 0,
+			"verified_publisher": true
 		}
 		`), nil)
 		m := NewManager(cfg, db)
@@ -470,6 +477,7 @@ func TestGetByID(t *testing.T) {
 		assert.Equal(t, "Repo 1", r.DisplayName)
 		assert.Equal(t, "https://repo1.com", r.URL)
 		assert.Equal(t, hub.Helm, r.Kind)
+		assert.True(t, r.VerifiedPublisher)
 		db.AssertExpectations(t)
 	})
 }
@@ -485,13 +493,15 @@ func TestGetByKind(t *testing.T) {
         "name": "repo1",
         "display_name": "Repo 1",
 		"url": "https://repo1.com",
-		"kind": 0
+		"kind": 0,
+		"verified_publisher": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
 		"url": "https://repo2.com",
-		"kind": 0
+		"kind": 0,
+		"verified_publisher": true
     }]
 	`), nil)
 	m := NewManager(cfg, db)
@@ -504,11 +514,13 @@ func TestGetByKind(t *testing.T) {
 	assert.Equal(t, "Repo 1", r[0].DisplayName)
 	assert.Equal(t, "https://repo1.com", r[0].URL)
 	assert.Equal(t, hub.Helm, r[0].Kind)
+	assert.True(t, r[0].VerifiedPublisher)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
 	assert.Equal(t, "repo2", r[1].Name)
 	assert.Equal(t, "Repo 2", r[1].DisplayName)
 	assert.Equal(t, "https://repo2.com", r[1].URL)
 	assert.Equal(t, hub.Helm, r[1].Kind)
+	assert.True(t, r[1].VerifiedPublisher)
 	db.AssertExpectations(t)
 }
 
@@ -530,7 +542,8 @@ func TestGetByName(t *testing.T) {
 			"name": "repo1",
 			"display_name": "Repo 1",
 			"url": "https://repo1.com",
-			"kind": 0
+			"kind": 0,
+			"verified_publisher": true
 		}
 		`), nil)
 		m := NewManager(cfg, db)
@@ -542,6 +555,7 @@ func TestGetByName(t *testing.T) {
 		assert.Equal(t, "Repo 1", r.DisplayName)
 		assert.Equal(t, "https://repo1.com", r.URL)
 		assert.Equal(t, hub.Helm, r.Kind)
+		assert.True(t, r.VerifiedPublisher)
 		db.AssertExpectations(t)
 	})
 
@@ -702,6 +716,38 @@ func TestSetLastTrackingResults(t *testing.T) {
 		m := NewManager(cfg, db)
 
 		err := m.SetLastTrackingResults(ctx, repoID, "errors")
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestSetVerifiedPublisher(t *testing.T) {
+	ctx := context.Background()
+	repoID := "00000000-0000-0000-0000-000000000001"
+	dbQuery := "select set_verified_publisher($1::uuid, $2::boolean)"
+
+	t.Run("invalid input", func(t *testing.T) {
+		m := NewManager(cfg, nil)
+		err := m.SetVerifiedPublisher(ctx, "invalid", true)
+		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+	})
+
+	t.Run("database update succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, repoID, true).Return(nil)
+		m := NewManager(cfg, db)
+
+		err := m.SetVerifiedPublisher(ctx, repoID, true)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, dbQuery, repoID, true).Return(tests.ErrFakeDatabaseFailure)
+		m := NewManager(cfg, db)
+
+		err := m.SetVerifiedPublisher(ctx, repoID, true)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		db.AssertExpectations(t)
 	})

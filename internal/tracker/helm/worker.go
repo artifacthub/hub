@@ -11,7 +11,6 @@ import (
 	"runtime/debug"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
@@ -33,7 +32,6 @@ var githubRL = rate.NewLimiter(2, 1)
 type Worker struct {
 	svc    *tracker.Services
 	r      *hub.Repository
-	hg     HTTPGetter
 	logger zerolog.Logger
 }
 
@@ -41,20 +39,12 @@ type Worker struct {
 func NewWorker(
 	svc *tracker.Services,
 	r *hub.Repository,
-	opts ...func(w *Worker),
 ) *Worker {
-	w := &Worker{
+	return &Worker{
 		svc:    svc,
 		r:      r,
 		logger: log.With().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Logger(),
 	}
-	for _, o := range opts {
-		o(w)
-	}
-	if w.hg == nil {
-		w.hg = &http.Client{Timeout: 10 * time.Second}
-	}
-	return w
 }
 
 // Run instructs the worker to start handling jobs. It will keep running until
@@ -237,7 +227,7 @@ func (w *Worker) loadChart(u string) (*chart.Chart, error) {
 		_ = githubRL.Wait(w.svc.Ctx)
 	}
 
-	resp, err := w.hg.Get(u)
+	resp, err := w.svc.Hg.Get(u)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +245,7 @@ func (w *Worker) loadChart(u string) (*chart.Chart, error) {
 // chartVersionHasProvenanceFile checks if a chart version has a provenance
 // file checking if a .prov file exists for the chart version url provided.
 func (w *Worker) chartVersionHasProvenanceFile(u string) (bool, error) {
-	resp, err := w.hg.Get(u + ".prov")
+	resp, err := w.svc.Hg.Get(u + ".prov")
 	if err != nil {
 		return false, err
 	}
@@ -279,7 +269,7 @@ func (w *Worker) getImage(u string) ([]byte, error) {
 	}
 
 	// Download image using url provided
-	resp, err := w.hg.Get(u)
+	resp, err := w.svc.Hg.Get(u)
 	if err != nil {
 		return nil, err
 	}
@@ -296,11 +286,6 @@ func (w *Worker) warn(name, version string, err error) {
 	err = fmt.Errorf("%s (package: %s version: %s)", err.Error(), name, version)
 	w.svc.Ec.Append(w.r.RepositoryID, err)
 	w.logger.Warn().Err(err).Send()
-}
-
-// HTTPGetter defines the methods an HTTPGetter implementation must provide.
-type HTTPGetter interface {
-	Get(url string) (*http.Response, error)
 }
 
 // getFile returns the file requested from the provided chart.

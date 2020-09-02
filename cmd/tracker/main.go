@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -66,6 +68,7 @@ func main() {
 		Pm:  pm,
 		Is:  is,
 		Ec:  ec,
+		Hg:  &http.Client{Timeout: 10 * time.Second},
 	}
 
 	// Track registered repositories

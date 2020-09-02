@@ -8,9 +8,10 @@ returns setof json as $$
         'name', r.name,
         'display_name', r.display_name,
         'url', r.url,
+        'kind', r.repository_kind_id,
+        'verified_publisher', verified_publisher,
         'last_tracking_ts', floor(extract(epoch from r.last_tracking_ts)),
-        'last_tracking_errors', r.last_tracking_errors,
-        'kind', r.repository_kind_id
+        'last_tracking_errors', r.last_tracking_errors
     )), '[]')
     from repository r
     join organization o using (organization_id)

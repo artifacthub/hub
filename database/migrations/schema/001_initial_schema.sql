@@ -64,6 +64,7 @@ create table if not exists repository (
     url text not null check (url <> '') unique,
     last_tracking_ts timestamptz,
     last_tracking_errors text,
+    verified_publisher boolean not null default false,
     repository_kind_id integer not null default 0 references repository_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,

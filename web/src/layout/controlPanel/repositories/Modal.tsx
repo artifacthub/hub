@@ -253,7 +253,7 @@ const RepositoryModal = (props: Props) => {
               needs a metadata file. A package version starts at the point where a metadata file is located and all
               policies files inside that directory will belong to that package version. Please see{' '}
               <ExternalLink
-                href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub.yaml"
+                href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml"
                 className="text-reset"
               >
                 <u>the spec</u>

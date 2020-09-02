@@ -7,7 +7,8 @@ returns setof json as $$
         'name', name,
         'display_name', display_name,
         'url', url,
-        'kind', repository_kind_id
+        'kind', repository_kind_id,
+        'verified_publisher', verified_publisher
     )
     from repository
     where name = p_name;

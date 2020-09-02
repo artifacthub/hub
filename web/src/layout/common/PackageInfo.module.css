@@ -49,7 +49,7 @@
 
 .subtitle {
   font-size: 0.9rem;
-  line-height: 1rem;
+  line-height: 20px;
 }
 
 .subtitle span {
@@ -80,12 +80,6 @@
   -webkit-box-orient: vertical;
 }
 
-.deprecatedBadge {
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  font-size: 0.5rem !important;
-}
-
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;
@@ -101,10 +95,6 @@
 
   .description {
     font-size: 0.9rem;
-  }
-
-  .deprecatedBadge {
-    font-size: 0.6rem !important;
   }
 
   .image {

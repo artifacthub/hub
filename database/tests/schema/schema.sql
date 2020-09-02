@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(121);
+select plan(122);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -132,6 +132,7 @@ select columns_are('repository', array[
     'url',
     'last_tracking_ts',
     'last_tracking_errors',
+    'verified_publisher',
     'repository_kind_id',
     'user_id',
     'organization_id'
@@ -365,6 +366,7 @@ select has_function('get_repository_packages_digest');
 select has_function('get_org_repositories');
 select has_function('get_user_repositories');
 select has_function('set_last_tracking_results');
+select has_function('set_verified_publisher');
 select has_function('transfer_repository');
 select has_function('update_repository');
 

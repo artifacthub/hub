@@ -1,7 +1,3 @@
-.badgeWrapper {
-  top: -12px;
-}
-
 .badge {
   border: 1px solid var(--success);
   color: var(--success);

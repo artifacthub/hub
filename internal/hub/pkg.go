@@ -4,6 +4,12 @@ import (
 	"context"
 )
 
+const (
+	// PackageMetadataFile represents the name of the file where the Artifact
+	// Hub metadata for a given package is stored.
+	PackageMetadataFile = "artifacthub-pkg.yml"
+)
+
 // Channel represents a package's channel.
 type Channel struct {
 	Name    string `json:"name"`

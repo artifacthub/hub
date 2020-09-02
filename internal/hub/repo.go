@@ -7,6 +7,12 @@ import (
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
+const (
+	// RepositoryMetadataFile represents the name of the file where the
+	// Artifact Hub metadata for a given repository is stored.
+	RepositoryMetadataFile = "artifacthub-repo.yml"
+)
+
 // RepositoryKind represents the kind of a given repository.
 type RepositoryKind int64
 
@@ -57,6 +63,12 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 	}
 }
 
+// HelmIndexLoader interface defines the methods a Helm index loader
+// implementation should provide.
+type HelmIndexLoader interface {
+	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
+}
+
 // Repository represents a packages repository.
 type Repository struct {
 	RepositoryID            string         `json:"repository_id"`
@@ -70,6 +82,7 @@ type Repository struct {
 	OrganizationName        string         `json:"organization_name"`
 	OrganizationDisplayName string         `json:"organization_display_name"`
 	LastTrackingErrors      string         `json:"last_tracking_errors"`
+	VerifiedPublisher       bool           `json:"verified_publisher"`
 }
 
 // RepositoryManager describes the methods an RepositoryManager
@@ -86,14 +99,9 @@ type RepositoryManager interface {
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
 	SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
+	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
 	Transfer(ctx context.Context, name, orgName string) error
 	Update(ctx context.Context, r *Repository) error
-}
-
-// HelmIndexLoader interface defines the methods a Helm index loader
-// implementation should provide.
-type HelmIndexLoader interface {
-	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
 }
 
 // RepositoryCloner describes the methods a RepositoryCloner implementation
@@ -101,7 +109,14 @@ type HelmIndexLoader interface {
 type RepositoryCloner interface {
 	// CloneRepository clones the packages repository provided in a temporary
 	// dir, returning the temporary directory path and the path where the
-	// packages are located. It's the caller's responsibility to delete them
+	// packages are located. It's the caller's responsibility to delete the
 	// temporary dir when done.
 	CloneRepository(ctx context.Context, r *Repository) (tmpDir string, packagesPath string, err error)
+}
+
+// RepositoryMetadata represents some metadata about a given repository. It's
+// usually provided by repositories publishers, to provide some extra context
+// about the repository they'd like to publish.
+type RepositoryMetadata struct {
+	RepositoryID string `yaml:"repositoryID"`
 }

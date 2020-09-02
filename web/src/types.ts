@@ -16,6 +16,7 @@ export interface Repository {
   kind: RepositoryKind;
   lastTrackingTs?: number | null;
   lastTrackingErrors?: string | null;
+  verifiedPublisher?: boolean;
 }
 
 export interface Maintainer {

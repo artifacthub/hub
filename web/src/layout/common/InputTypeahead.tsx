@@ -77,7 +77,7 @@ const InputTypeahead = (props: Props) => {
           {stringParts.map((str: string, index: number) => {
             if (str.toLowerCase() === inputValue.toLowerCase()) {
               return (
-                <span key={`${name}_${index}`} className={`font-weight-bold ${styles.hightlighted}`}>
+                <span key={`${name}_${index}`} className="font-weight-bold hightlighted">
                   {str}
                 </span>
               );

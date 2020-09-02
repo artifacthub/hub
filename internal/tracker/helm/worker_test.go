@@ -272,18 +272,12 @@ func TestWorker(t *testing.T) {
 	})
 }
 
-func withHTTPGetter(hg HTTPGetter) func(w *Worker) {
-	return func(w *Worker) {
-		w.hg = hg
-	}
-}
-
 type workerWrapper struct {
 	wg    *sync.WaitGroup
 	pm    *pkg.ManagerMock
 	is    *img.StoreMock
 	ec    *tracker.ErrorsCollectorMock
-	hg    *httpGetterMock
+	hg    *tracker.HTTPGetterMock
 	w     *Worker
 	queue chan *Job
 }
@@ -293,15 +287,16 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 	pm := &pkg.ManagerMock{}
 	is := &img.StoreMock{}
 	ec := &tracker.ErrorsCollectorMock{}
-	hg := &httpGetterMock{}
+	hg := &tracker.HTTPGetterMock{}
 	r := &hub.Repository{RepositoryID: "repo1"}
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Pm:  pm,
 		Is:  is,
 		Ec:  ec,
+		Hg:  hg,
 	}
-	w := NewWorker(svc, r, withHTTPGetter(hg))
+	w := NewWorker(svc, r)
 	queue := make(chan *Job, 100)
 
 	// Wait group used for Worker.Run()
@@ -326,14 +321,4 @@ func (ww *workerWrapper) assertExpectations(t *testing.T) {
 	ww.is.AssertExpectations(t)
 	ww.ec.AssertExpectations(t)
 	ww.hg.AssertExpectations(t)
-}
-
-type httpGetterMock struct {
-	mock.Mock
-}
-
-func (m *httpGetterMock) Get(url string) (*http.Response, error) {
-	args := m.Called(url)
-	resp, _ := args.Get(0).(*http.Response)
-	return resp, args.Error(1)
 }

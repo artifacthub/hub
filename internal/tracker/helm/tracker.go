@@ -2,6 +2,8 @@ package helm
 
 import (
 	"fmt"
+	"net/url"
+	"path"
 	"strings"
 	"sync"
 
@@ -150,6 +152,14 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 				},
 			}
 		}
+	}
+
+	// Set verified publisher flag if needed
+	u, _ := url.Parse(t.r.URL)
+	u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, u.String())
+	if err != nil {
+		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 
 	return nil

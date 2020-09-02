@@ -21,6 +21,7 @@ returns setof json as $$
             'name', r.name,
             'display_name', r.display_name,
             'url', r.url,
+            'verified_publisher', r.verified_publisher,
             'user_alias', u.alias,
             'organization_name', o.name,
             'organization_display_name', o.display_name
