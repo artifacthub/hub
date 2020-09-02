@@ -94,20 +94,6 @@ describe('InputTypeahead', () => {
     expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
   });
 
-  it('closes dropdown to click again title btn', () => {
-    const { getByTestId, queryByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
-
-    expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
-
-    fireEvent.click(btn);
-
-    expect(queryByTestId('typeaheadDropdown')).toBeNull();
-  });
-
   it('renders options in correct order', () => {
     const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 

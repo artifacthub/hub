@@ -1,6 +1,6 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
 
@@ -25,7 +25,6 @@ interface Props {
 
 const OptOutModal = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const typeaheadWrapperRef = useRef<HTMLDivElement | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [repoItem, setRepoItem] = useState<Repository | null>(null);
   const [eventKind, setEventKind] = useState<EventKind>(EventKind.RepositoryTrackingErrors);
@@ -152,7 +151,6 @@ const OptOutModal = (props: Props) => {
       onClose={onCloseModal}
       error={apiError}
       cleanError={() => setApiError(null)}
-      excludedRefs={[typeaheadWrapperRef]}
       noScrollable
     >
       <div className="w-100 position-relative">
@@ -230,7 +228,7 @@ const OptOutModal = (props: Props) => {
               </div>
             </div>
           ) : (
-            <div className={`mt-2 ${styles.searchWrapper}`} ref={typeaheadWrapperRef}>
+            <div className={`mt-2 ${styles.searchWrapper}`}>
               <SearchTypeaheadRepository
                 repositories={repositories || []}
                 disabled={getSubscribedReposIds()}

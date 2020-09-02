@@ -18,7 +18,7 @@ export default function useClickOutside(
     [refs]
   );
 
-  const onClick = useCallback(
+  const onEvent = useCallback(
     (e: MouseEvent) => {
       if (isOutside(e) && enabled) {
         setActive(true);
@@ -29,12 +29,12 @@ export default function useClickOutside(
   );
 
   useEffect(() => {
-    document.addEventListener('click', onClick);
+    document.addEventListener('mousedown', onEvent);
 
     return () => {
-      document.removeEventListener('click', onClick);
+      document.removeEventListener('mousedown', onEvent);
     };
-  }, [refs, onClickOutside, onClick]);
+  }, [refs, onClickOutside, onEvent]);
 
   return [isActive];
 }
