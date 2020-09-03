@@ -52,17 +52,12 @@ const RepositoriesSection = (props: Props) => {
     }
   }
 
-  const updateOptimisticallyRepositories = (kind: EventKind, isActive: boolean, repoId: string) => {
+  const deleteOptimisticallyRepository = (repoId: string) => {
     const repoToUpdate = !isUndefined(optOutList)
       ? optOutList.find((item: OptOutItem) => item.repository.repositoryId! === repoId)
       : undefined;
-    if (!isUndefined(repoToUpdate) && !isUndefined(repoToUpdate.eventKinds)) {
+    if (!isUndefined(repoToUpdate)) {
       const newOptOutList = optOutList!.filter((item: OptOutItem) => item.repository.repositoryId! !== repoId);
-      if (isActive) {
-        repoToUpdate.eventKinds = repoToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
-      } else {
-        repoToUpdate.eventKinds.push(kind);
-      }
       setOptOutList(newOptOutList);
     }
   };
@@ -74,7 +69,9 @@ const RepositoriesSection = (props: Props) => {
     repoName: string,
     optOutId?: string
   ) {
-    updateOptimisticallyRepositories(kind, isActive, repoId);
+    if (isActive) {
+      deleteOptimisticallyRepository(repoId);
+    }
 
     try {
       if (isActive && !isUndefined(optOutId)) {
@@ -220,7 +217,7 @@ const RepositoriesSection = (props: Props) => {
                       )}
                     </td>
                     {REPOSITORY_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-                      const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);
+                      const isActive = subs.kind === item.eventKind;
                       const id = `subs_${item.repository.repositoryId!}_${subs.kind}`;
 
                       return (

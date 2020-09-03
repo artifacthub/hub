@@ -357,5 +357,5 @@ export enum ErrorKind {
 export interface OptOutItem {
   optOutId: string;
   repository: Repository;
-  eventKinds: EventKind[];
+  eventKind: EventKind;
 }

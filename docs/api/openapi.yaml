@@ -1208,12 +1208,9 @@ paths:
                         organization_display_name:
                           type: string
                           example: Organization 1
-                    event_kinds:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/EventKindId"
-                      example:
-                        - 2
+                    event_kind:
+                      $ref: "#/components/schemas/EventKindId"
+                      example: 2
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -1551,9 +1548,11 @@ components:
       type: integer
       enum:
         - 0
+        - 2
       description: |
         Event kind:
           * `0` - New package release
+          * `2` - Repository tracking errors
     Facets:
       type: object
       properties:
@@ -2400,6 +2399,7 @@ components:
                 format: uuid
               event_kind:
                 $ref: "#/components/schemas/EventKindId"
+                example: 2
             required:
               - repository_id
               - event_kind
