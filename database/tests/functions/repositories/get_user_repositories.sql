@@ -78,17 +78,19 @@ select is(
         "name": "repo1",
         "display_name": "Repo 1",
         "url": "https://repo1.com",
+        "kind": 0,
+        "verified_publisher": false,
         "last_tracking_ts": 0,
-        "last_tracking_errors": "error1\\nerror2\\nerror3",
-        "kind": 0
+        "last_tracking_errors": "error1\\nerror2\\nerror3"
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
         "url": "https://repo2.com",
+        "kind": 0,
+        "verified_publisher": false,
         "last_tracking_ts": null,
-        "last_tracking_errors": null,
-        "kind": 0
+        "last_tracking_errors": null
     }]'::jsonb,
     'Repositories belonging to user provided are returned as a json array of objects'
 );

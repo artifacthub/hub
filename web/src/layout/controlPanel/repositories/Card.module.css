@@ -3,10 +3,6 @@
   padding: 1.25rem;
 }
 
-.listItem:hover .buttons {
-  opacity: 1;
-}
-
 .separator {
   width: 2px;
   background-color: var(--color-1-500);
@@ -23,6 +19,19 @@
   white-space: pre !important;
 }
 
+.btnDropdown {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 50% !important;
+  background-color: var(--color-1-10) !important;
+  line-height: 1rem;
+}
+
+.dropdownMenu {
+  top: 55px;
+  right: 3px;
+}
+
 .dropdown {
   width: 20rem;
 }
@@ -37,10 +46,8 @@
   height: auto;
 }
 
-@media (hover: hover) {
-  .buttons {
-    opacity: 0;
-  }
+.copyBtnWrapper {
+  margin-top: -18px;
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -63,6 +70,12 @@
 
   .titleCard {
     font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.25em 0.4em;
+    font-size: 85%;
+    line-height: 1.05rem;
   }
 }
 

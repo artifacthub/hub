@@ -242,6 +242,20 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs
 	return err
 }
 
+// SetVerifiedPublisher updates the verified publisher flag of the provided
+// repository in the database.
+func (m *Manager) SetVerifiedPublisher(ctx context.Context, repositoryID string, verified bool) error {
+	// Validate input
+	if _, err := uuid.FromString(repositoryID); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
+	}
+
+	// Update verified publisher status in database
+	query := "select set_verified_publisher($1::uuid, $2::boolean)"
+	_, err := m.db.Exec(ctx, query, repositoryID, verified)
+	return err
+}
+
 // Transfer transfers the provided repository to a different owner. A user
 // owned repo can be transferred to an organization the requesting user belongs
 // to. An org owned repo can be transfer to the requesting user, provided the

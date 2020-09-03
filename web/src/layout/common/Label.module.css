@@ -1,0 +1,75 @@
+.labelWrapper {
+  font-size: 0.72rem;
+}
+
+.labelText {
+  background-color: var(--color-1-5);
+  line-height: 0.9rem;
+  padding: 0 5px 0 10px;
+  font-weight: 700;
+  border: 1px solid var(--color-black-15);
+  border-radius: 3px;
+}
+
+.iconWrapper {
+  position: relative;
+  border: 1px solid var(--color-black-15);
+  border-radius: 3px;
+  height: 16px;
+  line-height: 0.75rem;
+  text-shadow: 0 1px var(--black);
+  color: var(--light-gray);
+  border-right: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-shadow: inset -1px 0 var(--color-black-25);
+  margin-right: -3px;
+  width: 20px;
+}
+
+.iconWrapper path {
+  stroke: var(--light-gray);
+}
+
+.iconWrapper::before {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: calc(50% - 3px);
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  box-shadow: inset -1px 0 var(--color-black-25);
+}
+
+.default .iconWrapper {
+  background-color: var(--hightlighted);
+}
+
+.default .iconWrapper::before {
+  background-color: var(--hightlighted);
+}
+
+.warning .iconWrapper {
+  background-color: var(--orange);
+}
+
+.warning .iconWrapper::before {
+  background-color: var(--orange);
+}
+
+.success .iconWrapper {
+  background-color: var(--success);
+}
+
+.success .iconWrapper::before {
+  background-color: var(--success);
+}
+
+.danger .iconWrapper {
+  background-color: var(--danger);
+}
+
+.danger .iconWrapper::before {
+  background-color: var(--danger);
+}

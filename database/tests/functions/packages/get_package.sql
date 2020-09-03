@@ -248,6 +248,7 @@ select is(
             "name": "repo1",
             "display_name": "Repo 1",
             "url": "https://repo1.com",
+            "verified_publisher": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -331,6 +332,7 @@ select is(
             "name": "repo1",
             "display_name": "Repo 1",
             "url": "https://repo1.com",
+            "verified_publisher": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -415,6 +417,7 @@ select is(
             "name": "repo1",
             "display_name": "Repo 1",
             "url": "https://repo1.com",
+            "verified_publisher": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -467,6 +470,7 @@ select is(
             "name": "repo2",
             "display_name": "Repo 2",
             "url": "https://repo2.com",
+            "verified_publisher": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"

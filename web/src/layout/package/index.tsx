@@ -2,8 +2,10 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { AiOutlineStop } from 'react-icons/ai';
 import { FiDownload, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
+import { MdVerifiedUser } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -25,6 +27,7 @@ import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
 import Image from '../common/Image';
+import Label from '../common/Label';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
@@ -251,6 +254,27 @@ const PackageView = (props: Props) => {
     return resources;
   };
 
+  const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
+    <>
+      {withVerified && !isUndefined(detail!.repository.verifiedPublisher) && detail!.repository.verifiedPublisher && (
+        <Label icon={<MdVerifiedUser />} text="Verified Publisher" className={`d-inline mr-3 ${extraStyle}`} />
+      )}
+      {detail!.deprecated && (
+        <Label
+          text="Deprecated"
+          icon={<AiOutlineStop />}
+          labelStyle="danger"
+          className={`d-inline mr-3 ${extraStyle}`}
+        />
+      )}
+      <SignedBadge
+        repositoryKind={detail!.repository.kind}
+        signed={detail!.signed}
+        className={`d-inline ${extraStyle}`}
+      />
+    </>
+  );
+
   const scrollIntoView = (id?: string) => {
     const elId = id || props.hash;
     if (!elId) return null;
@@ -352,16 +376,7 @@ const PackageView = (props: Props) => {
                       <div className="ml-3 text-truncate w-100">
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
-                          {detail.deprecated && (
-                            <div className={`badge badge-pill text-uppercase ml-3 mt-1 ${styles.deprecatedBadge}`}>
-                              Deprecated
-                            </div>
-                          )}
-                          <SignedBadge
-                            repositoryKind={detail.repository.kind}
-                            signed={detail.signed}
-                            className="ml-3 mt-1"
-                          />
+                          <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>
                         </div>
 
                         <div className="d-block d-md-none text-truncate w-100">
@@ -375,7 +390,7 @@ const PackageView = (props: Props) => {
                           </span>
                         </div>
 
-                        <div className={`d-none d-md-flex flex-row align-items-start mt-2 ${styles.subtitle}`}>
+                        <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
                           {!isNull(detail.repository.userAlias) ? (
                             <div className={`mr-2 text-truncate ${styles.mw50}`}>
                               <small className="mr-1 text-uppercase text-muted">User: </small>
@@ -411,6 +426,7 @@ const PackageView = (props: Props) => {
                             repository={detail.repository}
                             deprecated={detail.deprecated}
                             className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
+                            repoLabelClassName={styles.repoLabel}
                             fromDetail
                             visibleIcon
                           />
@@ -454,6 +470,8 @@ const PackageView = (props: Props) => {
                     <StarButton packageId={detail.packageId} />
                     <SubscriptionsButton packageId={detail.packageId} />
                   </div>
+
+                  <div className="d-flex d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
                 </div>
               </div>
             )}

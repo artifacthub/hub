@@ -86,7 +86,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		}
 
 		// Read and parse package version metadata
-		data, err := ioutil.ReadFile(filepath.Join(pkgPath, "artifacthub.yaml"))
+		data, err := ioutil.ReadFile(filepath.Join(pkgPath, hub.PackageMetadataFile))
 		if err != nil {
 			return nil
 		}
@@ -151,6 +151,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 				t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
 			}
 		}
+	}
+
+	// Set verified publisher flag if needed
+	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, filepath.Join(basePath, hub.RepositoryMetadataFile))
+	if err != nil {
+		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 
 	return nil

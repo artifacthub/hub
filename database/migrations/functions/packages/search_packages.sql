@@ -43,6 +43,7 @@ begin
             r.name as repository_name,
             r.url as repository_url,
             r.display_name as repository_display_name,
+            r.verified_publisher,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name
@@ -115,6 +116,7 @@ begin
                             'name', repository_name,
                             'display_name', repository_display_name,
                             'url', repository_url,
+                            'verified_publisher', verified_publisher,
                             'user_alias', user_alias,
                             'organization_name', organization_name,
                             'organization_display_name', organization_display_name

@@ -100,6 +100,7 @@ func TestTracker(t *testing.T) {
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, mock.Anything).Return(errFake)
 		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
@@ -117,6 +118,7 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "0123456789",
 		}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
@@ -129,6 +131,7 @@ func TestTracker(t *testing.T) {
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
 			Version:        "1.0.0",

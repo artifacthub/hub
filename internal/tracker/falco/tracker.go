@@ -143,6 +143,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		}
 	}
 
+	// Set verified publisher flag if needed
+	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, filepath.Join(basePath, hub.RepositoryMetadataFile))
+	if err != nil {
+		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
+	}
+
 	return nil
 }
 

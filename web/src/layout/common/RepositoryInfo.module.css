@@ -1,6 +1,8 @@
 .link {
   /* color: var(--gray-dark); */
   background-color: transparent;
+  position: relative;
+  top: -1px;
 }
 
 .dropdown {
@@ -46,10 +48,14 @@
 .repoIcon {
   height: 16px;
   width: auto;
+  position: relative;
+  top: 3px;
 }
 
 .infoIcon {
   min-width: 1rem;
+  position: relative;
+  top: 2px;
 }
 
 .repoIconMini {
@@ -74,6 +80,11 @@
 
 .arrow::before {
   border-bottom-color: var(--color-1-900) !important;
+}
+
+.repoLabel {
+  position: relative;
+  top: -1px;
 }
 
 @media only screen and (max-width: 575.98px) {

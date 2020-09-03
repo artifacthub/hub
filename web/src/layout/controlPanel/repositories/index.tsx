@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import { ErrorKind, Repository as Repo } from '../../../types';
+import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import RepositoryCard from './Card';
@@ -117,6 +118,20 @@ const RepositoriesSection = (props: Props) => {
         )}
 
         {(isLoading || isUndefined(repositories)) && <Loading />}
+
+        <p className="mt-5">
+          If you want your repositories to be labeled as <span className="font-weight-bold">Verified Publisher</span>,
+          you can add a{' '}
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
+            className="text-reset"
+          >
+            <u>metadata file</u>
+          </ExternalLink>{' '}
+          to each of them including the repository ID provided below. This label will let users know that you own or
+          have control over the repository. The repository metadata file must be located at the path used in the
+          repository URL.
+        </p>
 
         {!isUndefined(repositories) && (
           <>

@@ -28,9 +28,10 @@ func TestMain(m *testing.M) {
 
 func TestTracker(t *testing.T) {
 	r := &hub.Repository{
-		RepositoryID: "00000000-0000-0000-0000-000000000001",
-		Name:         "repo1",
-		URL:          "https://github.com/org1/repo1/path/to/operators",
+		RepositoryID:      "00000000-0000-0000-0000-000000000001",
+		Name:              "repo1",
+		URL:               "https://github.com/org1/repo1/path/to/operators",
+		VerifiedPublisher: false,
 	}
 	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
 
@@ -194,6 +195,7 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 		}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "test-operator",
 			Version:    "0.1.0",
@@ -214,6 +216,7 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 		}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "test-operator",
 			Version:    "0.1.0",

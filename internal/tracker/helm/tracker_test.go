@@ -4,7 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
+	"path"
 	"sync"
 	"testing"
 
@@ -52,8 +55,11 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("tracker completed successfully", func(t *testing.T) {
+		repo1ID := "00000000-0000-0000-0000-000000000001"
 		repo1 := &hub.Repository{
-			RepositoryID: "repo1",
+			RepositoryID:      repo1ID,
+			URL:               "http://localhost",
+			VerifiedPublisher: false,
 		}
 		pkg1V1 := &helmrepo.ChartVersion{
 			Metadata: &chart.Metadata{
@@ -88,7 +94,7 @@ func TestTracker(t *testing.T) {
 				1,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -109,7 +115,7 @@ func TestTracker(t *testing.T) {
 				2,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -136,7 +142,7 @@ func TestTracker(t *testing.T) {
 				3,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -145,7 +151,7 @@ func TestTracker(t *testing.T) {
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 					},
 				},
@@ -155,7 +161,7 @@ func TestTracker(t *testing.T) {
 				4,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -165,7 +171,7 @@ func TestTracker(t *testing.T) {
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 						"pkg1@2.0.0": "pkg1-2.0.0",
 					},
@@ -176,7 +182,7 @@ func TestTracker(t *testing.T) {
 				5,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -186,7 +192,7 @@ func TestTracker(t *testing.T) {
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 						"pkg1@2.0.0": "pkg1-2.0.0-updated",
 					},
@@ -203,7 +209,7 @@ func TestTracker(t *testing.T) {
 				6,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V1,
@@ -216,7 +222,7 @@ func TestTracker(t *testing.T) {
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 						"pkg1@2.0.0": "pkg1-2.0.0",
 					},
@@ -233,12 +239,12 @@ func TestTracker(t *testing.T) {
 				7,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: nil,
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 					},
 				},
@@ -258,7 +264,7 @@ func TestTracker(t *testing.T) {
 				8,
 				repo1,
 				map[string]*helmrepo.IndexFile{
-					"repo1": {
+					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
 							"pkg1": []*helmrepo.ChartVersion{
 								pkg1V2,
@@ -268,7 +274,7 @@ func TestTracker(t *testing.T) {
 					},
 				},
 				map[string]map[string]string{
-					"repo1": {
+					repo1ID: {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 						"pkg1@2.0.0": "pkg1-2.0.0",
 						"pkg2@1.0.0": "pkg2-1.0.0",
@@ -300,10 +306,18 @@ func TestTracker(t *testing.T) {
 			tc := tc
 			t.Run(fmt.Sprintf("Test case %d", tc.n), func(t *testing.T) {
 				// Setup tracker and expectations
+				mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 				tw := newTrackerWrapper(tc.r)
 				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], nil)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
 					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
+				u, _ := url.Parse(tc.r.URL)
+				u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+				tw.hg.On("Get", u.String()).Return(&http.Response{
+					Body:       mdFile,
+					StatusCode: http.StatusOK,
+				}, nil)
+				tw.rm.On("SetVerifiedPublisher", tw.ctx, tc.r.RepositoryID, true).Return(nil)
 
 				// Run tracker and check expectations
 				err := tw.t.Track(tw.wg)
@@ -321,6 +335,7 @@ type trackerWrapper struct {
 	rm         *repo.ManagerMock
 	il         *repo.HelmIndexLoaderMock
 	ec         *tracker.ErrorsCollectorMock
+	hg         *tracker.HTTPGetterMock
 	t          tracker.Tracker
 	queuedJobs *[]*Job
 }
@@ -332,12 +347,14 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	il := &repo.HelmIndexLoaderMock{}
 	rm := &repo.ManagerMock{}
 	ec := &tracker.ErrorsCollectorMock{}
+	hg := &tracker.HTTPGetterMock{}
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Cfg: cfg,
 		Rm:  rm,
 		Il:  il,
 		Ec:  ec,
+		Hg:  hg,
 	}
 	t := NewTracker(svc, r, WithNumWorkers(-1), WithIndexLoader(il))
 
@@ -362,6 +379,7 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 		rm:         rm,
 		il:         il,
 		ec:         ec,
+		hg:         hg,
 		t:          t,
 		queuedJobs: &queuedJobs,
 	}
@@ -373,6 +391,7 @@ func (tw *trackerWrapper) assertExpectations(t *testing.T, expectedJobs []*Job) 
 	tw.il.AssertExpectations(t)
 	tw.rm.AssertExpectations(t)
 	tw.ec.AssertExpectations(t)
+	tw.hg.AssertExpectations(t)
 
 	assert.Equal(t, len(expectedJobs), len(*tw.queuedJobs))
 	if len(*tw.queuedJobs) > 0 {

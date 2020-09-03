@@ -71,12 +71,6 @@
   min-width: 0;
 }
 
-.deprecatedBadge {
-  border: 1px solid var(--danger);
-  color: var(--danger);
-  font-size: 0.5rem !important;
-}
-
 .starBadge {
   font-size: 90%;
   background-color: var(--color-1-5);
@@ -105,10 +99,6 @@
 
   .body {
     padding: 1rem !important;
-  }
-
-  .deprecatedBadge {
-    font-size: 0.6rem !important;
   }
 }
 

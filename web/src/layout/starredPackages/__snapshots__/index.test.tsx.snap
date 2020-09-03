@@ -122,7 +122,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               airflow
                             </div>
                             <div
-                              class="d-none d-lg-inline-block ml-3"
+                              class="d-none d-lg-flex ml-3"
                             />
                           </div>
                         </div>
@@ -130,7 +130,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="d-inline d-md-none text-truncate w-100"
                           >
                             <div
                               class="position-absolute"
@@ -176,7 +176,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         class="text-reset urlContent labelContent"
                                       >
                                         <div
-                                          class="position-relative d-inline-block"
+                                          class="position-relative d-inline"
                                         >
                                           <button
                                             class="btn btn-sm miniBtn"
@@ -219,14 +219,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </div>
                             </div>
                             <div
-                              class="d-flex flex-row aling-items-start text-truncate"
+                              class="d-flex flex-row aling-items-baseline text-truncate"
                             >
                               <div
-                                class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                               >
-                                <small
-                                  class="mr-1"
-                                >
+                                <small>
                                   Repo:
                                 </small>
                               </div>
@@ -243,7 +241,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -329,7 +327,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           class="text-reset urlContent labelContent"
                                         >
                                           <div
-                                            class="position-relative d-inline-block"
+                                            class="position-relative d-inline"
                                           >
                                             <button
                                               class="btn btn-sm miniBtn"
@@ -372,14 +370,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                               <div
-                                class="d-flex flex-row aling-items-start text-truncate"
+                                class="d-flex flex-row aling-items-baseline text-truncate"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                 >
-                                  <small
-                                    class="mr-1"
-                                  >
+                                  <small>
                                     Repo:
                                   </small>
                                 </div>
@@ -516,7 +512,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                    class="d-flex flex-wrap d-lg-none"
                   />
                 </div>
               </a>
@@ -568,7 +564,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               cassandra
                             </div>
                             <div
-                              class="d-none d-lg-inline-block ml-3"
+                              class="d-none d-lg-flex ml-3"
                             />
                           </div>
                         </div>
@@ -576,7 +572,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="d-inline d-md-none text-truncate w-100"
                           >
                             <div
                               class="position-absolute"
@@ -622,7 +618,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         class="text-reset urlContent labelContent"
                                       >
                                         <div
-                                          class="position-relative d-inline-block"
+                                          class="position-relative d-inline"
                                         >
                                           <button
                                             class="btn btn-sm miniBtn"
@@ -665,14 +661,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </div>
                             </div>
                             <div
-                              class="d-flex flex-row aling-items-start text-truncate"
+                              class="d-flex flex-row aling-items-baseline text-truncate"
                             >
                               <div
-                                class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                               >
-                                <small
-                                  class="mr-1"
-                                >
+                                <small>
                                   Repo:
                                 </small>
                               </div>
@@ -689,7 +683,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -775,7 +769,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           class="text-reset urlContent labelContent"
                                         >
                                           <div
-                                            class="position-relative d-inline-block"
+                                            class="position-relative d-inline"
                                           >
                                             <button
                                               class="btn btn-sm miniBtn"
@@ -818,14 +812,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                               <div
-                                class="d-flex flex-row aling-items-start text-truncate"
+                                class="d-flex flex-row aling-items-baseline text-truncate"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                 >
-                                  <small
-                                    class="mr-1"
-                                  >
+                                  <small>
                                     Repo:
                                   </small>
                                 </div>
@@ -962,7 +954,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                    class="d-flex flex-wrap d-lg-none"
                   />
                 </div>
               </a>
@@ -1014,7 +1006,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               prometheus
                             </div>
                             <div
-                              class="d-none d-lg-inline-block ml-3"
+                              class="d-none d-lg-flex ml-3"
                             />
                           </div>
                         </div>
@@ -1022,7 +1014,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="d-inline d-md-none text-truncate w-100"
                           >
                             <div
                               class="position-absolute"
@@ -1068,7 +1060,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         class="text-reset urlContent labelContent"
                                       >
                                         <div
-                                          class="position-relative d-inline-block"
+                                          class="position-relative d-inline"
                                         >
                                           <button
                                             class="btn btn-sm miniBtn"
@@ -1111,14 +1103,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </div>
                             </div>
                             <div
-                              class="d-flex flex-row aling-items-start text-truncate"
+                              class="d-flex flex-row aling-items-baseline text-truncate"
                             >
                               <div
-                                class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                               >
-                                <small
-                                  class="mr-1"
-                                >
+                                <small>
                                   Repo:
                                 </small>
                               </div>
@@ -1135,7 +1125,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -1221,7 +1211,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           class="text-reset urlContent labelContent"
                                         >
                                           <div
-                                            class="position-relative d-inline-block"
+                                            class="position-relative d-inline"
                                           >
                                             <button
                                               class="btn btn-sm miniBtn"
@@ -1264,14 +1254,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                               <div
-                                class="d-flex flex-row aling-items-start text-truncate"
+                                class="d-flex flex-row aling-items-baseline text-truncate"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                 >
-                                  <small
-                                    class="mr-1"
-                                  >
+                                  <small>
                                     Repo:
                                   </small>
                                 </div>
@@ -1408,7 +1396,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                    class="d-flex flex-wrap d-lg-none"
                   />
                 </div>
               </a>
@@ -1460,7 +1448,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Traefik
                             </div>
                             <div
-                              class="d-none d-lg-inline-block ml-3"
+                              class="d-none d-lg-flex ml-3"
                             />
                           </div>
                         </div>
@@ -1468,7 +1456,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="d-inline d-md-none text-truncate w-100"
                           >
                             <div
                               class="position-absolute"
@@ -1515,7 +1503,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       >
                                         repoUrl
                                         <div
-                                          class="position-relative d-inline-block"
+                                          class="position-relative d-inline"
                                         >
                                           <button
                                             class="btn btn-sm miniBtn"
@@ -1558,14 +1546,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </div>
                             </div>
                             <div
-                              class="d-flex flex-row aling-items-start text-truncate"
+                              class="d-flex flex-row aling-items-baseline text-truncate"
                             >
                               <div
-                                class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                               >
-                                <small
-                                  class="mr-1"
-                                >
+                                <small>
                                   Repo:
                                 </small>
                               </div>
@@ -1582,7 +1568,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -1651,7 +1637,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         >
                                           repoUrl
                                           <div
-                                            class="position-relative d-inline-block"
+                                            class="position-relative d-inline"
                                           >
                                             <button
                                               class="btn btn-sm miniBtn"
@@ -1694,14 +1680,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                               <div
-                                class="d-flex flex-row aling-items-start text-truncate"
+                                class="d-flex flex-row aling-items-baseline text-truncate"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                 >
-                                  <small
-                                    class="mr-1"
-                                  >
+                                  <small>
                                     Repo:
                                   </small>
                                 </div>
@@ -1832,7 +1816,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                    class="d-flex flex-wrap d-lg-none"
                   />
                 </div>
               </a>
@@ -1884,7 +1868,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               Trusted Registry Images
                             </div>
                             <div
-                              class="d-none d-lg-inline-block ml-3"
+                              class="d-none d-lg-flex ml-3"
                             />
                           </div>
                         </div>
@@ -1892,7 +1876,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           class="card-subtitle text-truncate align-items-baseline subtitle"
                         >
                           <div
-                            class="d-inline-block d-md-none text-truncate w-100"
+                            class="d-inline d-md-none text-truncate w-100"
                           >
                             <div
                               class="position-absolute"
@@ -1939,7 +1923,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                       >
                                         repoUrl
                                         <div
-                                          class="position-relative d-inline-block"
+                                          class="position-relative d-inline"
                                         >
                                           <button
                                             class="btn btn-sm miniBtn"
@@ -1982,14 +1966,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                               </div>
                             </div>
                             <div
-                              class="d-flex flex-row aling-items-start text-truncate"
+                              class="d-flex flex-row aling-items-baseline text-truncate"
                             >
                               <div
-                                class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                               >
-                                <small
-                                  class="mr-1"
-                                >
+                                <small>
                                   Repo:
                                 </small>
                               </div>
@@ -2006,7 +1988,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             </div>
                           </div>
                           <div
-                            class="d-none d-md-flex flex-row align-items-start w-100 wrapper"
+                            class="d-none d-md-flex flex-row align-items-baseline w-100"
                           >
                             <div
                               class="d-flex flex-row align-items-baseline text-truncate mx50"
@@ -2075,7 +2057,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         >
                                           repoUrl
                                           <div
-                                            class="position-relative d-inline-block"
+                                            class="position-relative d-inline"
                                           >
                                             <button
                                               class="btn btn-sm miniBtn"
@@ -2118,14 +2100,12 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                 </div>
                               </div>
                               <div
-                                class="d-flex flex-row aling-items-start text-truncate"
+                                class="d-flex flex-row aling-items-baseline text-truncate"
                               >
                                 <div
-                                  class="d-flex flex-row align-items-start mr-1 text-muted text-uppercase"
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                 >
-                                  <small
-                                    class="mr-1"
-                                  >
+                                  <small>
                                     Repo:
                                   </small>
                                 </div>
@@ -2256,7 +2236,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-inline d-lg-none mt-2 mt-sm-0"
+                    class="d-flex flex-wrap d-lg-none"
                   />
                 </div>
               </a>
