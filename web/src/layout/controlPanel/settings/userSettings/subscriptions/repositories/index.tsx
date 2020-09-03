@@ -52,7 +52,7 @@ const RepositoriesSection = (props: Props) => {
     }
   }
 
-  const deleteOptimisticallyRepository = (repoId: string) => {
+  const deleteOptoutEntryOptimistically = (repoId: string) => {
     const repoToUpdate = !isUndefined(optOutList)
       ? optOutList.find((item: OptOutItem) => item.repository.repositoryId! === repoId)
       : undefined;
@@ -70,7 +70,7 @@ const RepositoriesSection = (props: Props) => {
     optOutId?: string
   ) {
     if (isActive) {
-      deleteOptimisticallyRepository(repoId);
+      deleteOptoutEntryOptimistically(repoId);
     }
 
     try {

@@ -58,7 +58,7 @@ describe('Organization Card - organization section', () => {
 
       expect(getByText(organizationMock.displayName!)).toBeInTheDocument();
       expect(getByTestId('editOrgBtn')).toBeInTheDocument();
-      expect(getByTestId('leaveOrgDropdownBtn')).toBeInTheDocument();
+      expect(getByTestId('leaveOrgModalBtn')).toBeInTheDocument();
       expect(getByText(organizationMock.homeUrl!)).toBeInTheDocument();
       expect(getByText(organizationMock.description!)).toBeInTheDocument();
     });
@@ -96,9 +96,9 @@ describe('Organization Card - organization section', () => {
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('leaveOrgDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('leaveOrgModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       const btn = getByTestId('leaveOrgBtn');
       fireEvent.click(btn);
@@ -134,9 +134,9 @@ describe('Organization Card - organization section', () => {
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('leaveOrgDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('leaveOrgModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       const btn = getByTestId('leaveOrgBtn');
       fireEvent.click(btn);
@@ -162,9 +162,9 @@ describe('Organization Card - organization section', () => {
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('leaveOrgDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('leaveOrgModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       const btn = getByTestId('leaveOrgBtn');
       fireEvent.click(btn);

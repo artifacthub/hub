@@ -3,14 +3,7 @@
   padding: 1.25rem;
 }
 
-.separator {
-  width: 2px;
-  background-color: var(--color-1-500);
-  height: 15px;
-}
-
-.btnIcon,
-.btnDeleteIcon {
+.btnIcon {
   font-size: 0.65rem;
 }
 
@@ -32,10 +25,6 @@
   right: 3px;
 }
 
-.dropdown {
-  width: 20rem;
-}
-
 .btnLight {
   background-color: var(--color-1-20) !important;
   border-color: var(--color-1-20) !important;
@@ -51,23 +40,6 @@
 }
 
 @media only screen and (max-width: 575.98px) {
-  .dropdown {
-    right: -14px !important;
-    top: 120% !important;
-  }
-
-  .btnIcon {
-    font-size: 0.95rem;
-  }
-
-  .btnAction {
-    margin-left: 0.6rem;
-    height: 2rem;
-    width: 2rem;
-    border-radius: 50% !important;
-    background-color: var(--color-1-10) !important;
-  }
-
   .titleCard {
     font-size: 1rem;
   }

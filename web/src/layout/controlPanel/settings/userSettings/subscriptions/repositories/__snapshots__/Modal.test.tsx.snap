@@ -120,6 +120,7 @@ exports[`OptOutModal renders correctly 1`] = `
                         class="flex-grow-1 px-3 input"
                         data-testid="searchTypeaheadRepositoryInput"
                         name="searchRepo"
+                        placeholder=""
                         spellcheck="false"
                         type="text"
                         value=""

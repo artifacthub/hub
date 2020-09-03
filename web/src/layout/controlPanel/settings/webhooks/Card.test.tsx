@@ -70,7 +70,7 @@ describe('WebhookCard', () => {
     it('renders active component', () => {
       const mockWebhook = getmockWebhook('2');
 
-      const { getByText, getAllByText, getByTestId } = render(
+      const { getByText, getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -81,12 +81,10 @@ describe('WebhookCard', () => {
       expect(getByText(mockWebhook.name)).toBeInTheDocument();
       expect(getByText(mockWebhook.url)).toBeInTheDocument();
       expect(getByText(mockWebhook.description!)).toBeInTheDocument();
-      expect(getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
       expect(getByText('Active')).toBeInTheDocument();
       expect(getByText('Edit')).toBeInTheDocument();
-      expect(getAllByText('Delete')).toHaveLength(2);
-      expect(getByTestId('deleteWebhookDropdownBtn')).toBeInTheDocument();
-      expect(getByTestId('deleteWebhookDropdown')).toBeInTheDocument();
+      expect(getByText('Delete')).toBeInTheDocument();
+      expect(getByTestId('deleteWebhookModalBtn')).toBeInTheDocument();
     });
 
     it('renders inactive component', () => {
@@ -128,7 +126,7 @@ describe('WebhookCard', () => {
 
       const mockWebhook = getmockWebhook('5');
 
-      const { getByTestId } = render(
+      const { getByTestId, queryByRole, getByRole, getByText } = render(
         <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -136,15 +134,17 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      const dropdown = getByTestId('deleteWebhookDropdown');
-      expect(dropdown).not.toHaveClass('show');
+      const modal = queryByRole('dialog');
+      expect(modal).toBeNull();
 
-      const btn = getByTestId('deleteWebhookDropdownBtn');
+      const btn = getByTestId('deleteWebhookModalBtn');
       fireEvent.click(btn);
 
-      expect(dropdown).toHaveClass('show');
+      expect(getByRole('dialog')).toHaveClass('active');
+      expect(getByText('Are you sure you want to delete this webhook?')).toBeInTheDocument();
 
       const deleteBtn = getByTestId('deleteWebhookBtn');
+      expect(deleteBtn).toBeInTheDocument();
       fireEvent.click(deleteBtn);
 
       await waitFor(() => {
@@ -160,7 +160,7 @@ describe('WebhookCard', () => {
 
       const mockWebhook = getmockWebhook('6');
 
-      const { getByTestId } = render(
+      const { getByTestId, queryByRole, getByRole } = render(
         <AppCtx.Provider value={{ ctx: mockOrgCtx, dispatch: jest.fn() }}>
           <Router>
             <WebhookCard {...defaultProps} webhook={mockWebhook} />
@@ -168,13 +168,13 @@ describe('WebhookCard', () => {
         </AppCtx.Provider>
       );
 
-      const dropdown = getByTestId('deleteWebhookDropdown');
-      expect(dropdown).not.toHaveClass('show');
+      const modal = queryByRole('dialog');
+      expect(modal).toBeNull();
 
-      const btn = getByTestId('deleteWebhookDropdownBtn');
+      const btn = getByTestId('deleteWebhookModalBtn');
       fireEvent.click(btn);
 
-      expect(dropdown).toHaveClass('show');
+      expect(getByRole('dialog')).toHaveClass('active');
 
       const deleteBtn = getByTestId('deleteWebhookBtn');
       fireEvent.click(deleteBtn);
@@ -203,7 +203,7 @@ describe('WebhookCard', () => {
           </AppCtx.Provider>
         );
 
-        const btn = getByTestId('deleteWebhookDropdownBtn');
+        const btn = getByTestId('deleteWebhookModalBtn');
         fireEvent.click(btn);
 
         const deleteBtn = getByTestId('deleteWebhookBtn');
@@ -230,7 +230,7 @@ describe('WebhookCard', () => {
           </AppCtx.Provider>
         );
 
-        const btn = getByTestId('deleteWebhookDropdownBtn');
+        const btn = getByTestId('deleteWebhookModalBtn');
         fireEvent.click(btn);
 
         const deleteBtn = getByTestId('deleteWebhookBtn');

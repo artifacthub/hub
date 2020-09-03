@@ -45,15 +45,15 @@ describe('API key Card - API keys section', () => {
       expect(getByText(APIKeyMock.name!)).toBeInTheDocument();
       expect(getByText('Created at:')).toBeInTheDocument();
       expect(getByTestId('updateAPIKeyBtn')).toBeInTheDocument();
-      expect(getByTestId('deleteAPIKeyDropdownBtn')).toBeInTheDocument();
+      expect(getByTestId('deleteAPIKeyModalBtn')).toBeInTheDocument();
     });
 
     it('calls deleteAPIKey when leave button in dropdown is clicked', async () => {
       const { getByTestId, getByText } = render(<Card {...defaultProps} />);
 
-      const dropdownBtn = getByTestId('deleteAPIKeyDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       expect(getByText('Are you sure you want to remove this API key?')).toBeInTheDocument();
 
@@ -86,9 +86,9 @@ describe('API key Card - API keys section', () => {
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 
-      const dropdownBtn = getByTestId('deleteAPIKeyDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       const btn = getByTestId('deleteAPIKeyBtn');
       fireEvent.click(btn);
@@ -110,9 +110,9 @@ describe('API key Card - API keys section', () => {
       });
       const { getByTestId } = render(<Card {...defaultProps} />);
 
-      const dropdownBtn = getByTestId('deleteAPIKeyDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('deleteAPIKeyModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       const btn = getByTestId('deleteAPIKeyBtn');
       fireEvent.click(btn);

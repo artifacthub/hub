@@ -131,15 +131,12 @@ const RepositoryCard = (props: Props) => {
       setIsDeleting(true);
       await API.deleteRepository(props.repository.name, organizationName);
       setIsDeleting(false);
-      closeDropdown();
       props.onSuccess();
     } catch (err) {
       setIsDeleting(false);
       if (err.kind === ErrorKind.Unauthorized) {
-        closeDropdown();
         props.onAuthError();
       } else {
-        closeDropdown();
         alertDispatcher.postAlert({
           type: 'danger',
           message: 'An error occurred deleting the repository, please try again later.',
@@ -186,7 +183,7 @@ const RepositoryCard = (props: Props) => {
 
                 <button
                   data-testid="deleteRepoBtn"
-                  className="btn btn-sm btn-danger"
+                  className="btn btn-sm btn-danger ml-3"
                   onClick={(e) => {
                     e.preventDefault();
                     deleteRepository();
@@ -201,7 +198,7 @@ const RepositoryCard = (props: Props) => {
                       </>
                     ) : (
                       <>
-                        <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                        <FaTrashAlt className={`mr-2 ${styles.Icon}`} />
                         <span>Delete</span>
                       </>
                     )}
@@ -247,8 +244,8 @@ const RepositoryCard = (props: Props) => {
               }}
             >
               <div className="d-flex flex-row align-items-center">
-                <RiArrowLeftRightLine className={`mr-sm-2 ${styles.btnIcon}`} />
-                <span className="d-none d-sm-inline">Transfer</span>
+                <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
+                <span>Transfer</span>
               </div>
             </button>
 
@@ -265,8 +262,8 @@ const RepositoryCard = (props: Props) => {
               }}
             >
               <div className="d-flex flex-row align-items-center">
-                <FaPencilAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                <span className="d-none d-sm-inline">Edit</span>
+                <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                <span>Edit</span>
               </div>
             </button>
 
@@ -280,8 +277,8 @@ const RepositoryCard = (props: Props) => {
               }}
             >
               <div className="d-flex flex-row align-items-center">
-                <FaTrashAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                <span className="d-none d-sm-inline">Delete</span>
+                <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                <span>Delete</span>
               </div>
             </button>
           </div>

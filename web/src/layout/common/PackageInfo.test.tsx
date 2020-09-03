@@ -115,7 +115,6 @@ describe('PackageInfo', () => {
             repo: [mockPackage.repository.name],
           },
         }),
-        state: {},
       });
     });
 

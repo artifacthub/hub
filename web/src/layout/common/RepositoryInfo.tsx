@@ -17,7 +17,7 @@ interface Props {
   deprecated: boolean | null;
   className?: string;
   repoLabelClassName?: string;
-  fromDetail?: boolean;
+  visibleInfoIcon?: boolean;
   visibleIcon?: boolean;
 }
 
@@ -112,7 +112,6 @@ const RepositoryInfo = (props: Props) => {
                   },
                   deprecated: props.deprecated,
                 }),
-                state: !isUndefined(props.fromDetail) && props.fromDetail ? { fromDetail: true } : {},
               });
             }}
             onMouseEnter={(e) => {
@@ -125,7 +124,7 @@ const RepositoryInfo = (props: Props) => {
           >
             <>
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
-              {!isUndefined(props.repository.url) && !isUndefined(props.fromDetail) && props.fromDetail && (
+              {!isUndefined(props.repository.url) && !isUndefined(props.visibleInfoIcon) && props.visibleInfoIcon && (
                 <MdInfo className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
               )}
             </>

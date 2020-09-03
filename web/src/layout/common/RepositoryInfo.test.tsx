@@ -60,7 +60,6 @@ describe('RepositoryInfo', () => {
         },
         deprecated: defaultProps.deprecated,
       }),
-      state: {},
     });
   });
 

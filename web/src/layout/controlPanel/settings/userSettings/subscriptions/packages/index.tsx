@@ -35,7 +35,7 @@ const PackagesSection = (props: Props) => {
     return title;
   };
 
-  const updateOptimisticallyPackages = (kind: EventKind, isActive: boolean, packageId: string) => {
+  const updateSubscriptionsPackagesOptimistically = (kind: EventKind, isActive: boolean, packageId: string) => {
     const packageToUpdate = !isUndefined(packages)
       ? packages.find((item: Package) => item.packageId === packageId)
       : undefined;
@@ -46,6 +46,11 @@ const PackagesSection = (props: Props) => {
       } else {
         packageToUpdate.eventKinds.push(kind);
       }
+
+      if (packageToUpdate.eventKinds.length > 0) {
+        newPackages.push(packageToUpdate);
+      }
+
       setPackages(newPackages);
     }
   };
@@ -70,7 +75,7 @@ const PackagesSection = (props: Props) => {
   }
 
   async function changeSubscription(packageId: string, kind: EventKind, isActive: boolean, packageName: string) {
-    updateOptimisticallyPackages(kind, isActive, packageId);
+    updateSubscriptionsPackagesOptimistically(kind, isActive, packageId);
 
     try {
       if (isActive) {
