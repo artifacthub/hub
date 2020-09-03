@@ -50,10 +50,7 @@ const OptOutModal = (props: Props) => {
   const getSubscribedReposIds = (): string[] => {
     if (isUndefined(props.optOutList)) return [];
 
-    const selectedRepos = props.optOutList.filter(
-      (item: OptOutItem) => !isUndefined(item.eventKinds) && item.eventKinds.includes(eventKind)
-    );
-
+    const selectedRepos = props.optOutList.filter((item: OptOutItem) => item.eventKind === eventKind);
     return selectedRepos.map((item: OptOutItem) => item.repository.repositoryId!);
   };
 

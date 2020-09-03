@@ -13,16 +13,12 @@ returns setof json as $$
             'organization_name', organization_name,
             'organization_display_name', organization_display_name
         ),
-        'event_kinds', (
-            select json_agg(distinct(event_kind_id))
-            from opt_out
-            where repository_id = ooe.repository_id
-            and user_id = p_user_id
-        )
+        'event_kind', event_kind_id
     )), '[]')
     from (
         select
             oo.opt_out_id,
+            oo.event_kind_id,
             r.repository_id,
             r.repository_kind_id,
             r.name as repository_name,
@@ -34,9 +30,7 @@ returns setof json as $$
         join repository r using (repository_id)
         left join "user" u on u.user_id = r.user_id
         left join organization o using (organization_id)
-        where r.repository_id in (
-            select distinct(repository_id) from opt_out where user_id = p_user_id
-        )
+        where oo.user_id = p_user_id
         order by r.name asc
     ) ooe;
 $$ language sql;

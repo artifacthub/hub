@@ -11,7 +11,7 @@
       "organizationDisplayName": null,
       "url": "http://url.com"
     },
-    "eventKinds": [2]
+    "eventKind": 2
   },
   {
     "optOutId": "43543trger-gvnmbvf5u6-kjfg-utyiu8",
@@ -25,7 +25,7 @@
       "organizationDisplayName": null,
       "url": "http://url1.com"
     },
-    "eventKinds": [2]
+    "eventKind": 2
   },
   {
     "optOutId": "5trurt4sf-drtyrygfe5-po09rikjtr",
@@ -39,6 +39,6 @@
       "organizationDisplayName": null,
       "url": "http://url2.com"
     },
-    "eventKinds": [2]
+    "eventKind": 2
   }
 ]
