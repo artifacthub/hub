@@ -3,23 +3,21 @@
   padding: 1.25rem;
 }
 
-.listItem:hover .buttons {
-  opacity: 1;
-}
-
-.separator {
-  width: 2px;
-  background-color: var(--color-1-500);
-  height: 15px;
-}
-
-.btnIcon,
-.btnLeaveIcon {
+.btnIcon {
   font-size: 0.65rem;
 }
 
-.dropdown {
-  width: 20rem;
+.btnDropdown {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 50% !important;
+  background-color: var(--color-1-10) !important;
+  line-height: 1rem;
+}
+
+.dropdownMenu {
+  top: 55px;
+  right: 3px;
 }
 
 .btnLight {
@@ -47,31 +45,14 @@
   font-size: 85%;
 }
 
-@media (hover: hover) {
-  .buttons {
-    opacity: 0;
-  }
-}
-
 @media only screen and (max-width: 575.98px) {
-  .dropdown {
-    right: -14px !important;
-    top: 120% !important;
-  }
-
-  .btnIcon {
-    font-size: 0.95rem;
-  }
-
-  .btnAction {
-    margin-left: 0.6rem;
-    height: 2rem;
-    width: 2rem;
-    border-radius: 50% !important;
-    background-color: var(--color-1-10) !important;
-  }
-
   .title {
     font-size: 1rem;
+  }
+
+  .btn {
+    padding: 0.25em 0.4em;
+    font-size: 85%;
+    line-height: 1.05rem;
   }
 }

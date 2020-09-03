@@ -112,7 +112,6 @@ describe('PackageCard', () => {
             repo: [mockPackage.repository.name],
           },
         }),
-        state: {},
       });
     });
   });

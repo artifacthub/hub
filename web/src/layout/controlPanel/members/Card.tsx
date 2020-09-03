@@ -2,15 +2,16 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
-import { FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { FaSignOutAlt, FaUser, FaUserMinus } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
-import { TiDelete } from 'react-icons/ti';
 
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { ErrorKind, Member } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import Modal from '../../common/Modal';
 import styles from './Card.module.css';
 
 interface Props {
@@ -23,26 +24,21 @@ interface Props {
 const MemberCard = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [isDeletingMember, setIsDeletingMember] = useState(false);
-  const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
-  const dropdown = useRef(null);
-
-  const handleDeleteMember = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    deleteMember();
-  };
+  const dropdownMenu = useRef(null);
+  const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
+  const [modalStatus, setModalStatus] = useState<boolean>(false);
 
   const closeDropdown = () => {
-    setOpenDropdownStatus(false);
+    setDropdownMenuStatus(false);
   };
 
-  useOutsideClick([dropdown], openDropdownStatus, closeDropdown);
+  useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
   async function deleteMember() {
     try {
       setIsDeletingMember(true);
       await API.deleteOrganizationMember(ctx.prefs.controlPanel.selectedOrg!, props.member.alias);
       setIsDeletingMember(false);
-      closeDropdown();
       if (props.member.alias === ctx.user!.alias) {
         dispatch(unselectOrg());
       } else {
@@ -51,7 +47,6 @@ const MemberCard = (props: Props) => {
     } catch (err) {
       setIsDeletingMember(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        closeDropdown();
         alertDispatcher.postAlert({
           type: 'danger',
           message: 'An error occurred removing member from the organization, please try again later.',
@@ -100,70 +95,106 @@ const MemberCard = (props: Props) => {
           </div>
         </div>
 
-        <div className={classnames('d-flex flex-nowrap position-relative', { [styles.buttons]: !openDropdownStatus })}>
-          {props.membersNumber > 1 && (
-            <button
-              data-testid="leaveOrRemoveDropdownBtn"
-              className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-              onClick={() => setOpenDropdownStatus(true)}
-            >
-              <div className="d-flex flex-row align-items-center">
-                {isUser ? (
-                  <FaSignOutAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                ) : (
-                  <TiDelete className={`mr-sm-2 ${styles.btnIcon}`} />
-                )}
-                <span className="d-none d-sm-inline">{isUser ? 'Leave' : 'Remove'}</span>
-              </div>
-            </button>
-          )}
-          <div
-            ref={dropdown}
-            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
-              show: openDropdownStatus,
-            })}
-          >
-            <div className={`arrow ${styles.arrow}`} />
+        {props.membersNumber > 1 && (
+          <>
+            {modalStatus && (
+              <Modal
+                className={`d-inline-block ${styles.modal}`}
+                closeButton={
+                  <>
+                    <button
+                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      onClick={() => setModalStatus(false)}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <IoMdCloseCircle className="mr-2" />
+                        <span>Cancel</span>
+                      </div>
+                    </button>
 
-            <p className="p-3 text-center mb-0">
-              {isUser
-                ? 'Are you sure you want to leave this organization?'
-                : 'Are you sure you want to remove this member from this organization?'}
-            </p>
-
-            <div className="dropdown-divider m-0" />
-
-            <div className="d-flex flex-row justify-content-between p-3">
-              <button className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`} onClick={closeDropdown}>
-                <div className="d-flex flex-row align-items-center">
-                  <IoMdCloseCircle className="mr-2" />
-                  <span>Cancel</span>
+                    <button
+                      data-testid="leaveOrRemoveBtn"
+                      className="btn btn-sm btn-danger ml-3"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteMember();
+                      }}
+                      disabled={isDeletingMember}
+                    >
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        {isDeletingMember ? (
+                          <>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                            <span className="ml-2">{isUser ? 'Leaving...' : 'Removing...'}</span>
+                          </>
+                        ) : (
+                          <>
+                            {isUser ? (
+                              <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                            ) : (
+                              <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />
+                            )}
+                            <span>{isUser ? 'Leave' : 'Remove'}</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </>
+                }
+                header={
+                  <div className={`h3 m-2 ${styles.title}`}>{isUser ? 'Leave ' : 'Remove from '} organization</div>
+                }
+                onClose={() => setModalStatus(false)}
+                open
+              >
+                <div className="mt-3 mw-100 text-center">
+                  <p>
+                    {isUser
+                      ? 'Are you sure you want to leave this organization?'
+                      : 'Are you sure you want to remove this member from this organization?'}
+                  </p>
                 </div>
-              </button>
+              </Modal>
+            )}
+
+            <div className="ml-auto">
+              <div
+                ref={dropdownMenu}
+                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                  show: dropdownMenuStatus,
+                })}
+              >
+                <div className={`arrow ${styles.arrow}`} />
+
+                <button
+                  data-testid="leaveOrRemoveModalBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setModalStatus(true);
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    {isUser ? (
+                      <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                    ) : (
+                      <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />
+                    )}
+                    <span>{isUser ? 'Leave' : 'Remove'}</span>
+                  </div>
+                </button>
+              </div>
 
               <button
-                data-testid="leaveOrRemoveBtn"
-                className="btn btn-sm btn-danger"
-                onClick={handleDeleteMember}
-                disabled={isDeletingMember}
+                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                onClick={() => setDropdownMenuStatus(true)}
               >
-                <div className="d-flex flex-row align-items-center text-uppercase">
-                  {isDeletingMember ? (
-                    <>
-                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">{isUser ? 'Leaving...' : 'Removing...'}</span>
-                    </>
-                  ) : (
-                    <>
-                      <FaSignOutAlt className={`mr-2 ${styles.btnLeaveIcon}`} />
-                      <span>{isUser ? 'Leave' : 'Remove'}</span>
-                    </>
-                  )}
-                </div>
+                <BsThreeDotsVertical />
               </button>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </li>
   );

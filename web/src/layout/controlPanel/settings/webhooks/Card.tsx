@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 
@@ -10,8 +11,10 @@ import { AppCtx } from '../../../../context/AppCtx';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 import { ErrorKind, Webhook } from '../../../../types';
 import alertDispatcher from '../../../../utils/alertDispatcher';
+import Modal from '../../../common/Modal';
 import styles from './Card.module.css';
 import LastNotificationsModal from './LastNotificationsModal';
+
 interface Props {
   webhook: Webhook;
   onEdition: () => void;
@@ -22,14 +25,15 @@ interface Props {
 const WebhookCard = (props: Props) => {
   const { ctx } = useContext(AppCtx);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
-  const dropdown = useRef(null);
+  const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
+  const dropdownMenu = useRef(null);
+  const [deletionModalStatus, setDeletionModalStatus] = useState<boolean>(false);
 
   const closeDropdown = () => {
-    setOpenDropdownStatus(false);
+    setDropdownMenuStatus(false);
   };
 
-  useOutsideClick([dropdown], openDropdownStatus, closeDropdown);
+  useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
   async function deleteWebhook() {
     try {
@@ -76,84 +80,102 @@ const WebhookCard = (props: Props) => {
               </div>
             </div>
 
-            <div
-              className={classnames('d-flex flex-nowrap position-relative', {
-                [styles.buttons]: !openDropdownStatus || isDeleting,
-              })}
-            >
-              <button
-                data-testid="editWebhookBtn"
-                className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                onClick={props.onEdition}
+            {deletionModalStatus && (
+              <Modal
+                className={`d-inline-block ${styles.modal}`}
+                closeButton={
+                  <>
+                    <button
+                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      onClick={() => setDeletionModalStatus(false)}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <IoMdCloseCircle className="mr-2" />
+                        <span>Cancel</span>
+                      </div>
+                    </button>
+
+                    <button
+                      data-testid="deleteWebhookBtn"
+                      className="btn btn-sm btn-danger ml-3"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteWebhook();
+                      }}
+                      disabled={isDeleting}
+                    >
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        {isDeleting ? (
+                          <>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                            <span className="ml-2">Deleting...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                            <span>Delete</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </>
+                }
+                header={<div className={`h3 m-2 ${styles.title}`}>Delete webhook</div>}
+                onClose={() => setDeletionModalStatus(false)}
+                open
               >
-                <div className="d-flex flex-row align-items-center">
-                  <FaPencilAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                  <span className="d-none d-sm-inline">Edit</span>
+                <div className="mt-3 mw-100 text-center">
+                  <p>Are you sure you want to delete this webhook?</p>
                 </div>
-              </button>
+              </Modal>
+            )}
 
-              <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
-
-              <button
-                data-testid="deleteWebhookDropdownBtn"
-                className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                onClick={() => setOpenDropdownStatus(true)}
-              >
-                <div className="d-flex flex-row align-items-center">
-                  <FaTrashAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                  <span className="d-none d-sm-inline">Delete</span>
-                </div>
-              </button>
-
+            <div className="ml-auto">
               <div
-                ref={dropdown}
-                data-testid="deleteWebhookDropdown"
-                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
-                  show: openDropdownStatus,
+                ref={dropdownMenu}
+                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                  show: dropdownMenuStatus,
                 })}
               >
                 <div className={`arrow ${styles.arrow}`} />
 
-                <p className="p-3 text-center mb-0">Are you sure you want to delete this webhook?</p>
+                <button
+                  data-testid="editWebhookBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    props.onEdition();
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Edit</span>
+                  </div>
+                </button>
 
-                <div className="dropdown-divider m-0" />
-
-                <div className="d-flex flex-row justify-content-between p-3">
-                  <button
-                    className={`btn btn-sm btn-light mr-3 text-uppercase ${styles.btnLight}`}
-                    onClick={closeDropdown}
-                  >
-                    <div className="d-flex flex-row align-items-center">
-                      <IoMdCloseCircle className="mr-2" />
-                      <span>Cancel</span>
-                    </div>
-                  </button>
-
-                  <button
-                    data-testid="deleteWebhookBtn"
-                    className="btn btn-sm btn-danger"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deleteWebhook();
-                    }}
-                    disabled={isDeleting}
-                  >
-                    <div className="d-flex flex-row align-items-center text-uppercase">
-                      {isDeleting ? (
-                        <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Deleting...</span>
-                        </>
-                      ) : (
-                        <>
-                          <FaTrashAlt className="mr-2" />
-                          <span>Delete</span>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </div>
+                <button
+                  data-testid="deleteWebhookModalBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setDeletionModalStatus(true);
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Delete</span>
+                  </div>
+                </button>
               </div>
+
+              <button
+                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                onClick={() => setDropdownMenuStatus(true)}
+              >
+                <BsThreeDotsVertical />
+              </button>
             </div>
           </div>
 

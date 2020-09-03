@@ -12,7 +12,7 @@ import styles from './SearchTypeaheadRepository.module.css';
 interface Props {
   isLoading: boolean;
   repositories: Repository[];
-  disabled: string[];
+  disabledList: string[];
   onSelect: (repo: Repository) => void;
 }
 
@@ -103,7 +103,12 @@ const SearchTypeaheadRepository = (props: Props) => {
           value={inputValue}
           onChange={onChange}
           spellCheck="false"
-          disabled={props.isLoading}
+          placeholder={
+            !props.isLoading && props.repositories.length === 0
+              ? `There aren't any repositories you can manage at the moment.`
+              : ''
+          }
+          disabled={props.isLoading || (!props.isLoading && props.repositories.length === 0)}
         />
 
         {props.isLoading && (
@@ -137,7 +142,7 @@ const SearchTypeaheadRepository = (props: Props) => {
                 </thead>
                 <tbody>
                   {visibleItems.map((repo: Repository) => {
-                    const isDisabled = props.disabled.includes(repo.repositoryId!);
+                    const isDisabled = props.disabledList.includes(repo.repositoryId!);
                     return (
                       <tr
                         data-testid="repoItem"

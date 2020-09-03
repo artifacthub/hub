@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaEnvelopeOpenText, FaPencilAlt, FaSignOutAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
@@ -13,6 +14,7 @@ import { ErrorKind, Organization } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ExternalLink from '../../common/ExternalLink';
 import Image from '../../common/Image';
+import Modal from '../../common/Modal';
 import styles from './Card.module.css';
 
 interface ModalStatus {
@@ -31,16 +33,18 @@ const OrganizationCard = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [isLeaving, setIsLeaving] = useState(false);
   const [isAccepting, setIsAccepting] = useState(false);
-  const [openDropdownStatus, setOpenDropdownStatus] = useState(false);
-  const dropdown = useRef(null);
+  const dropdownMenu = useRef(null);
+  const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
+  const [leaveModalStatus, setLeaveModalStatus] = useState<boolean>(false);
+
   const isMember =
     !isUndefined(props.organization.confirmed) && !isNull(props.organization.confirmed) && props.organization.confirmed;
 
   const closeDropdown = () => {
-    setOpenDropdownStatus(false);
+    setDropdownMenuStatus(false);
   };
 
-  useOutsideClick([dropdown], openDropdownStatus, closeDropdown);
+  useOutsideClick([dropdownMenu], dropdownMenuStatus, closeDropdown);
 
   async function leaveOrganization() {
     try {
@@ -110,119 +114,140 @@ const OrganizationCard = (props: Props) => {
           )}
         </div>
 
-        <div
-          className={classnames('d-flex flex-nowrap position-relative', {
-            [styles.buttons]: !openDropdownStatus || isAccepting,
-          })}
-        >
-          {!isUndefined(props.organization.confirmed) &&
-          !isNull(props.organization.confirmed) &&
-          props.organization.confirmed ? (
-            <>
-              <button
-                data-testid="editOrgBtn"
-                className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  e.preventDefault();
-                  props.setEditModalStatus({
-                    open: true,
-                    organization: props.organization,
-                  });
-                }}
-              >
-                <div className="d-flex flex-row align-items-center">
-                  <FaPencilAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                  <span className="d-none d-sm-inline">Edit</span>
-                </div>
-              </button>
+        {leaveModalStatus && (
+          <Modal
+            className={`d-inline-block ${styles.modal}`}
+            closeButton={
+              <>
+                <button
+                  className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                  onClick={() => setLeaveModalStatus(false)}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <IoMdCloseCircle className="mr-2" />
+                    <span>Cancel</span>
+                  </div>
+                </button>
 
-              {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
-                <>
-                  <div className={`mx-2 my-auto d-none d-sm-inline separator ${styles.separator}`} />
-
-                  <button
-                    data-testid="leaveOrgDropdownBtn"
-                    className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                    onClick={() => setOpenDropdownStatus(true)}
-                  >
-                    <div className="d-flex flex-row align-items-center">
-                      <FaSignOutAlt className={`mr-sm-2 ${styles.btnIcon}`} />
-                      <span className="d-none d-sm-inline">Leave</span>
-                    </div>
-                  </button>
-                </>
-              )}
-
-              <div
-                ref={dropdown}
-                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdown, {
-                  show: openDropdownStatus,
-                })}
-              >
-                <div className={`arrow ${styles.arrow}`} />
-
-                <p className="p-3 text-center mb-0">Are you sure you want to leave this organization?</p>
-
-                <div className="dropdown-divider m-0" />
-
-                <div className="d-flex flex-row justify-content-between p-3">
-                  <button className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`} onClick={closeDropdown}>
-                    <div className="d-flex flex-row align-items-center">
-                      <IoMdCloseCircle className="mr-2" />
-                      <span>Cancel</span>
-                    </div>
-                  </button>
-
-                  <button
-                    data-testid="leaveOrgBtn"
-                    className="btn btn-sm btn-danger"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      leaveOrganization();
-                    }}
-                    disabled={isLeaving}
-                  >
-                    <div className="d-flex flex-row align-items-center text-uppercase">
-                      {isLeaving ? (
-                        <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Leaving...</span>
-                        </>
-                      ) : (
-                        <>
-                          <FaSignOutAlt className={`mr-2 ${styles.btnLeaveIcon}`} />
-                          <span>Leave</span>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div>
-              <button
-                data-testid="acceptInvitationBtn"
-                className={`btn btn-sm btn-link text-secondary text-center ${styles.btnAction}`}
-                onClick={confirmOrganizationMembership}
-                disabled={isAccepting}
-              >
-                <div className="d-flex flex-row align-items-center">
-                  {isAccepting ? (
-                    <>
-                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                      <span className="ml-2">Accepting invitation...</span>
-                    </>
-                  ) : (
-                    <>
-                      <FaEnvelopeOpenText className={`mr-sm-2 ${styles.btnIcon}`} />
-                      <span className="d-none d-sm-inline">Accept invitation</span>
-                    </>
-                  )}
-                </div>
-              </button>
+                <button
+                  data-testid="leaveOrgBtn"
+                  className="btn btn-sm btn-danger ml-3"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    leaveOrganization();
+                  }}
+                  disabled={isLeaving}
+                >
+                  <div className="d-flex flex-row align-items-center text-uppercase">
+                    {isLeaving ? (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                        <span className="ml-2">Leaving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                        <span>Leave</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+              </>
+            }
+            header={<div className={`h3 m-2 ${styles.title}`}>Leave organization</div>}
+            onClose={() => setLeaveModalStatus(false)}
+            open
+          >
+            <div className="mt-3 mw-100 text-center">
+              <p>Are you sure you want to leave this organization?</p>
             </div>
-          )}
+          </Modal>
+        )}
+
+        <div className="ml-auto">
+          <div
+            ref={dropdownMenu}
+            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+              show: dropdownMenuStatus,
+            })}
+          >
+            <div className={`arrow ${styles.arrow}`} />
+
+            {!isUndefined(props.organization.confirmed) &&
+            !isNull(props.organization.confirmed) &&
+            props.organization.confirmed ? (
+              <>
+                <button
+                  data-testid="editOrgBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    props.setEditModalStatus({
+                      open: true,
+                      organization: props.organization,
+                    });
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Edit</span>
+                  </div>
+                </button>
+
+                {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
+                  <button
+                    data-testid="leaveOrgModalBtn"
+                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      closeDropdown();
+                      setLeaveModalStatus(true);
+                    }}
+                  >
+                    <div className="d-flex flex-row align-items-center">
+                      <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                      <span>Leave</span>
+                    </div>
+                  </button>
+                )}
+              </>
+            ) : (
+              <div>
+                <button
+                  data-testid="acceptInvitationBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    confirmOrganizationMembership();
+                    closeDropdown();
+                  }}
+                  disabled={isAccepting}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    {isAccepting ? (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                        <span className="ml-2">Accepting invitation...</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
+                        <span>Accept invitation</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
+
+          <button
+            className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+            onClick={() => setDropdownMenuStatus(true)}
+          >
+            <BsThreeDotsVertical />
+          </button>
         </div>
       </div>
 

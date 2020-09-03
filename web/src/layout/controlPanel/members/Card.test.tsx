@@ -58,8 +58,7 @@ describe('Member Card - members section', () => {
         </AppCtx.Provider>
       );
       expect(getByText(`${memberMock.firstName!} ${memberMock.lastName!}`)).toBeInTheDocument();
-      expect(getByTestId('leaveOrRemoveDropdownBtn')).toBeInTheDocument();
-      expect(getByTestId('leaveOrRemoveBtn')).toBeInTheDocument();
+      expect(getByTestId('leaveOrRemoveModalBtn')).toBeInTheDocument();
     });
 
     it('renders alias when user has not saved first and last name', () => {
@@ -86,13 +85,14 @@ describe('Member Card - members section', () => {
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('leaveOrRemoveDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('leaveOrRemoveModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       expect(getByText('Are you sure you want to remove this member from this organization?')).toBeInTheDocument();
 
       const btn = getByTestId('leaveOrRemoveBtn');
+      expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
 
       await waitFor(() => {});
@@ -117,9 +117,9 @@ describe('Member Card - members section', () => {
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('leaveOrRemoveDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
+      const modalBtn = getByTestId('leaveOrRemoveModalBtn');
+      expect(modalBtn).toBeInTheDocument();
+      fireEvent.click(modalBtn);
 
       expect(getByText('Are you sure you want to leave this organization?')).toBeInTheDocument();
 

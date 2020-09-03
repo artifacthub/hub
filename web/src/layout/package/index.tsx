@@ -427,7 +427,7 @@ const PackageView = (props: Props) => {
                             deprecated={detail.deprecated}
                             className={`text-truncate d-flex flex-row align-items-baseline ${styles.mw50}`}
                             repoLabelClassName={styles.repoLabel}
-                            fromDetail
+                            visibleInfoIcon
                             visibleIcon
                           />
                         </div>

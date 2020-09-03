@@ -40,7 +40,7 @@ const mockRepositories = [
 
 const defaultProps = {
   repositories: mockRepositories,
-  disabled: ['6a7563d6-2145-4039-9bdc-2730928db115'],
+  disabledList: ['6a7563d6-2145-4039-9bdc-2730928db115'],
   onSelect: onSelectMock,
   isLoading: false,
 };
@@ -108,5 +108,19 @@ describe('SearchTypeaheadRepository', () => {
 
     expect(queryAllByTestId('repoItem')).toHaveLength(0);
     expect(getByText('Sorry, not matches found')).toBeInTheDocument();
+  });
+
+  it('renders correct placeholder when any repositories', () => {
+    const props = {
+      repositories: [],
+      disabledList: [],
+      onSelect: onSelectMock,
+      isLoading: false,
+    };
+    const { getByPlaceholderText } = render(<SearchTypeaheadRepository {...props} />);
+
+    const input = getByPlaceholderText(`There aren't any repositories you can manage at the moment.`);
+    expect(input).toBeInTheDocument();
+    expect(input).toBeDisabled();
   });
 });

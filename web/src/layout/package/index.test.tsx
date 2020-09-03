@@ -201,7 +201,6 @@ describe('Package index', () => {
           },
           deprecated: mockPackage.deprecated,
         }),
-        state: { fromDetail: true },
       });
 
       await waitFor(() => {});

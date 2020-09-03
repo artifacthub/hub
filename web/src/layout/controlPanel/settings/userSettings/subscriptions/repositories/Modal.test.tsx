@@ -31,7 +31,7 @@ const mockOptOutList: OptOutItem[] = [
       organizationDisplayName: null,
       url: 'http://url2.com',
     },
-    eventKinds: [2],
+    eventKind: 2,
   },
 ];
 

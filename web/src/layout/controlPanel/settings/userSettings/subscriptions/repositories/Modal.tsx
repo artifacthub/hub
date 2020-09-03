@@ -228,7 +228,7 @@ const OptOutModal = (props: Props) => {
             <div className={`mt-2 ${styles.searchWrapper}`}>
               <SearchTypeaheadRepository
                 repositories={repositories || []}
-                disabled={getSubscribedReposIds()}
+                disabledList={getSubscribedReposIds()}
                 isLoading={isLoading}
                 onSelect={onRepoSelect}
               />
