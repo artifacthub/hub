@@ -8,7 +8,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
+	"path/filepath"
 	"regexp"
 	"time"
 
@@ -41,6 +43,7 @@ type Manager struct {
 	cfg             *viper.Viper
 	db              hub.DB
 	hg              HTTPGetter
+	rc              hub.RepositoryCloner
 	helmIndexLoader hub.HelmIndexLoader
 }
 
@@ -56,6 +59,9 @@ func NewManager(cfg *viper.Viper, db hub.DB, opts ...func(m *Manager)) *Manager 
 	}
 	if m.hg == nil {
 		m.hg = &http.Client{Timeout: 10 * time.Second}
+	}
+	if m.rc == nil {
+		m.rc = &Cloner{}
 	}
 	return m
 }
@@ -156,14 +162,25 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	}
 
 	// Get repository metadata
-	var repoURL string
-	repoURLQuery := `select url from repository where name = $1`
-	if err := m.db.QueryRow(ctx, repoURLQuery, repoName).Scan(&repoURL); err != nil {
+	r, err := m.GetByName(ctx, repoName)
+	if err != nil {
 		return err
 	}
-	u, _ := url.Parse(repoURL)
-	u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-	md, err := m.GetMetadata(u.String())
+	var mdFile string
+	switch r.Kind {
+	case hub.Helm:
+		u, _ := url.Parse(r.URL)
+		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+		mdFile = u.String()
+	case hub.Falco, hub.OLM, hub.OPA:
+		tmpDir, packagesPath, err := m.rc.CloneRepository(ctx, r)
+		if err != nil {
+			return err
+		}
+		defer os.RemoveAll(tmpDir)
+		mdFile = filepath.Join(tmpDir, packagesPath, hub.RepositoryMetadataFile)
+	}
+	md, err := m.GetMetadata(mdFile)
 	if err != nil {
 		return fmt.Errorf("%w: error getting repository metadata: %v", hub.ErrInsufficientPrivilege, err)
 	}

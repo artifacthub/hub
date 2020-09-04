@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -20,7 +21,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var cfg = viper.New()
+var (
+	cfg     = viper.New()
+	errFake = errors.New("fake error for tests")
+)
 
 func TestAdd(t *testing.T) {
 	dbQuery := "select add_repository($1::uuid, $2::text, $3::jsonb)"
@@ -308,13 +312,15 @@ func TestCheckAvailability(t *testing.T) {
 }
 
 func TestClaimOwnership(t *testing.T) {
-	repoURLQuery := `select url from repository where name = $1`
+	getRepoQuery := `select get_repository_by_name($1::text)`
 	userEmailQuery := `select email from "user" where user_id = $1`
 	transferRepoQuery := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
 	userID := "userID"
 	userIDP := &userID
 	org := "org1"
 	orgP := &org
+	helmRepoJSON := []byte(`{"kind": 0, "url": "http://repo.url"}`)
+	opaRepoJSON := []byte(`{"kind": 2, "url": "http://repo.url"}`)
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -345,9 +351,9 @@ func TestClaimOwnership(t *testing.T) {
 		}
 	})
 
-	t.Run("ownership claim failed: database error getting repository URL", func(t *testing.T) {
+	t.Run("ownership claim failed: database error getting repository", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(cfg, db)
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
@@ -357,7 +363,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
@@ -372,7 +378,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, userEmailQuery, userID).Return("", tests.ErrFakeDatabaseFailure)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
@@ -389,7 +395,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, userEmailQuery, userID).Return("user1@email.com", nil)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
@@ -404,9 +410,9 @@ func TestClaimOwnership(t *testing.T) {
 		db.AssertExpectations(t)
 	})
 
-	t.Run("ownership claim succeeded", func(t *testing.T) {
+	t.Run("ownership claim succeeded (helm)", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, userEmailQuery, userID).Return("owner1@email.com", nil)
 		db.On("Exec", ctx, transferRepoQuery, "repo1", userIDP, orgP, true).Return(nil)
 		hg := &tests.HTTPGetterMock{}
@@ -416,6 +422,36 @@ func TestClaimOwnership(t *testing.T) {
 			StatusCode: http.StatusOK,
 		}, nil)
 		m := NewManager(cfg, db, withHTTPGetter(hg))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim failed (opa): error cloning repository", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(opaRepoJSON, nil)
+		rc := &ClonerMock{}
+		var r *hub.Repository
+		_ = json.Unmarshal(opaRepoJSON, &r)
+		rc.On("CloneRepository", ctx, r).Return("", "", errFake)
+		m := NewManager(cfg, db, withRepositoryCloner(rc))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Equal(t, errFake, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim succeeded (opa)", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, userEmailQuery, userID).Return("owner1@email.com", nil)
+		db.On("Exec", ctx, transferRepoQuery, "repo1", userIDP, orgP, true).Return(nil)
+		rc := &ClonerMock{}
+		var r *hub.Repository
+		_ = json.Unmarshal(opaRepoJSON, &r)
+		rc.On("CloneRepository", ctx, r).Return(".", "testdata", nil)
+		m := NewManager(cfg, db, withRepositoryCloner(rc))
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
 		assert.Nil(t, err)
@@ -1130,5 +1166,11 @@ func TestUpdate(t *testing.T) {
 func withHTTPGetter(hg HTTPGetter) func(m *Manager) {
 	return func(m *Manager) {
 		m.hg = hg
+	}
+}
+
+func withRepositoryCloner(rc hub.RepositoryCloner) func(m *Manager) {
+	return func(m *Manager) {
+		m.rc = rc
 	}
 }
