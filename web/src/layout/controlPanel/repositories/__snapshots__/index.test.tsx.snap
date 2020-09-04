@@ -494,18 +494,22 @@ exports[`Repository index creates snapshot 2`] = `
             </div>
           </div>
           <div
-            class="mt-2 text-truncate"
+            class="mt-2 d-flex flex-row align-items-baseline"
           >
-            <small
-              class="text-muted text-uppercase mr-1"
-            >
-              ID: 
-            </small>
-            <small>
-              test
-            </small>
             <div
-              class="d-inline-block ml-1"
+              class="text-truncate"
+            >
+              <small
+                class="text-muted text-uppercase mr-1"
+              >
+                ID: 
+              </small>
+              <small>
+                test
+              </small>
+            </div>
+            <div
+              class="ml-1 copyBtn"
             >
               <div
                 class="position-absolute copyBtnWrapper"
