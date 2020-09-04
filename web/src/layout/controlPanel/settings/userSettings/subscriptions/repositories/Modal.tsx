@@ -11,8 +11,8 @@ import alertDispatcher from '../../../../../../utils/alertDispatcher';
 import { REPOSITORY_SUBSCRIPTIONS_LIST, SubscriptionItem } from '../../../../../../utils/data';
 import Modal from '../../../../../common/Modal';
 import RepositoryIcon from '../../../../../common/RepositoryIcon';
+import SearchTypeaheadRepository from '../../../../../common/SearchTypeaheadRepository';
 import styles from './Modal.module.css';
-import SearchTypeaheadRepository from './SearchTypeaheadRepository';
 
 interface Props {
   open: boolean;
@@ -207,7 +207,7 @@ const OptOutModal = (props: Props) => {
                           Publisher:{' '}
                         </small>
                         <div className={`mx-1 ${styles.tinyIcon}`}>
-                          {!isUndefined(repoItem.userAlias) ? <FaUser /> : <MdBusiness />}
+                          {repoItem.userAlias ? <FaUser /> : <MdBusiness />}
                         </div>
                         <span>
                           {repoItem.userAlias || repoItem.organizationDisplayName || repoItem.organizationName})
@@ -231,6 +231,7 @@ const OptOutModal = (props: Props) => {
                 disabledList={getSubscribedReposIds()}
                 isLoading={isLoading}
                 onSelect={onRepoSelect}
+                placeholder="There aren't any repositories you can manage at the moment."
               />
             </div>
           )}

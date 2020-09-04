@@ -113,7 +113,7 @@ exports[`OptOutModal renders correctly 1`] = `
                     class="position-relative"
                   >
                     <div
-                      class="flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative inputWrapper"
+                      class="flex-grow-1 d-flex align-items-strecht position-relative inputWrapper"
                     >
                       <input
                         autocomplete="new-input"
@@ -121,10 +121,16 @@ exports[`OptOutModal renders correctly 1`] = `
                         data-testid="searchTypeaheadRepositoryInput"
                         name="searchRepo"
                         placeholder=""
+                        required=""
                         spellcheck="false"
                         type="text"
                         value=""
                       />
+                      <div
+                        class="position-absolute invalid-feedback fieldFeedback"
+                      >
+                        This field is required
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -62,6 +62,20 @@ func (h *Handlers) CheckAvailability(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// ClaimOwnership is an http handler used to claim the ownership of a given
+// repository, transferring it to the selected entity if the requesting user
+// has permissions to do so.
+func (h *Handlers) ClaimOwnership(w http.ResponseWriter, r *http.Request) {
+	repoName := chi.URLParam(r, "repoName")
+	orgName := r.FormValue("org")
+	if err := h.repoManager.ClaimOwnership(r.Context(), repoName, orgName); err != nil {
+		h.logger.Error().Err(err).Str("method", "ClaimOwnership").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // Delete is an http handler that deletes the provided repository from the
 // database.
 func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
@@ -72,6 +86,17 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// GetAll is an http handler that returns all the repositories available.
+func (h *Handlers) GetAll(w http.ResponseWriter, r *http.Request) {
+	dataJSON, err := h.repoManager.GetAllJSON(r.Context())
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetAllJSON").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
 // GetOwnedByOrg is an http handler that returns the repositories owned by the
@@ -105,7 +130,7 @@ func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) Transfer(w http.ResponseWriter, r *http.Request) {
 	repoName := chi.URLParam(r, "repoName")
 	orgName := r.FormValue("org")
-	if err := h.repoManager.Transfer(r.Context(), repoName, orgName); err != nil {
+	if err := h.repoManager.Transfer(r.Context(), repoName, orgName, false); err != nil {
 		h.logger.Error().Err(err).Str("method", "Transfer").Send()
 		helpers.RenderErrorJSON(w, err)
 		return

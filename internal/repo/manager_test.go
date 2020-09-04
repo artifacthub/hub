@@ -4,7 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -303,6 +307,122 @@ func TestCheckAvailability(t *testing.T) {
 	})
 }
 
+func TestClaimOwnership(t *testing.T) {
+	repoURLQuery := `select url from repository where name = $1`
+	userEmailQuery := `select email from "user" where user_id = $1`
+	transferRepoQuery := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
+	userID := "userID"
+	userIDP := &userID
+	org := "org1"
+	orgP := &org
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(cfg, nil)
+		assert.Panics(t, func() {
+			_ = m.ClaimOwnership(context.Background(), "repo1", "")
+		})
+	})
+
+	t.Run("invalid input", func(t *testing.T) {
+		testCases := []struct {
+			errMsg   string
+			repoName string
+		}{
+			{
+				"repository name not provided",
+				"",
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.errMsg, func(t *testing.T) {
+				m := NewManager(cfg, nil)
+
+				err := m.ClaimOwnership(ctx, tc.repoName, "")
+				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
+			})
+		}
+	})
+
+	t.Run("ownership claim failed: database error getting repository URL", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(cfg, db)
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
+		}, nil)
+		m := NewManager(cfg, db, withHTTPGetter(hg))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Error(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, userEmailQuery, userID).Return("", tests.ErrFakeDatabaseFailure)
+		hg := &tests.HTTPGetterMock{}
+		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
+		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
+			Body:       mdFile,
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(cfg, db, withHTTPGetter(hg))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, userEmailQuery, userID).Return("user1@email.com", nil)
+		hg := &tests.HTTPGetterMock{}
+		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
+		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
+			Body:       mdFile,
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(cfg, db, withHTTPGetter(hg))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Equal(t, hub.ErrInsufficientPrivilege, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("ownership claim succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, repoURLQuery, "repo1").Return("http://repo.url", nil)
+		db.On("QueryRow", ctx, userEmailQuery, userID).Return("owner1@email.com", nil)
+		db.On("Exec", ctx, transferRepoQuery, "repo1", userIDP, orgP, true).Return(nil)
+		hg := &tests.HTTPGetterMock{}
+		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
+		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
+			Body:       mdFile,
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(cfg, db, withHTTPGetter(hg))
+
+		err := m.ClaimOwnership(ctx, "repo1", org)
+		assert.Nil(t, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestDelete(t *testing.T) {
 	dbQuery := "select delete_repository($1::uuid, $2::text)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
@@ -412,6 +532,33 @@ func TestGetAll(t *testing.T) {
 	assert.Equal(t, hub.Falco, r[2].Kind)
 	assert.True(t, r[1].VerifiedPublisher)
 	db.AssertExpectations(t)
+}
+
+func TestGetAllJSON(t *testing.T) {
+	dbQuery := "select get_all_repositories()"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(cfg, db)
+
+		dataJSON, err := m.GetAllJSON(ctx)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("all repositories data returned successfully", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
+		m := NewManager(cfg, db)
+
+		dataJSON, err := m.GetAllJSON(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
 }
 
 func TestGetByID(t *testing.T) {
@@ -754,7 +901,7 @@ func TestSetVerifiedPublisher(t *testing.T) {
 }
 
 func TestTransfer(t *testing.T) {
-	dbQuery := "select transfer_repository($1::text, $2::uuid, $3::text)"
+	dbQuery := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	userID := "userID"
 	userIDP := &userID
@@ -764,7 +911,7 @@ func TestTransfer(t *testing.T) {
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(cfg, nil)
 		assert.Panics(t, func() {
-			_ = m.Transfer(context.Background(), "repo1", "")
+			_ = m.Transfer(context.Background(), "repo1", "", false)
 		})
 	})
 
@@ -783,7 +930,7 @@ func TestTransfer(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				m := NewManager(cfg, nil)
 
-				err := m.Transfer(ctx, tc.repoName, "")
+				err := m.Transfer(ctx, tc.repoName, "", false)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 			})
 		}
@@ -807,10 +954,10 @@ func TestTransfer(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(tc.dbErr)
+				db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP, false).Return(tc.dbErr)
 				m := NewManager(cfg, db)
 
-				err := m.Transfer(ctx, "repo1", org)
+				err := m.Transfer(ctx, "repo1", org, false)
 				assert.Equal(t, tc.expectedError, err)
 				db.AssertExpectations(t)
 			})
@@ -819,10 +966,10 @@ func TestTransfer(t *testing.T) {
 
 	t.Run("transfer repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP).Return(nil)
+		db.On("Exec", ctx, dbQuery, "repo1", userIDP, orgP, false).Return(nil)
 		m := NewManager(cfg, db)
 
-		err := m.Transfer(ctx, "repo1", org)
+		err := m.Transfer(ctx, "repo1", org, false)
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
@@ -978,4 +1125,10 @@ func TestUpdate(t *testing.T) {
 			})
 		}
 	})
+}
+
+func withHTTPGetter(hg HTTPGetter) func(m *Manager) {
+	return func(m *Manager) {
+		m.hg = hg
+	}
 }

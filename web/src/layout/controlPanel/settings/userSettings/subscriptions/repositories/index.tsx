@@ -180,7 +180,7 @@ const RepositoriesSection = (props: Props) => {
                     </td>
                     <td className="align-middle position-relative d-none d-sm-table-cell">
                       <span className={`mx-1 mb-1 ${styles.tinyIcon}`}>
-                        {!isNull(item.repository.userAlias) ? <FaUser /> : <MdBusiness />}
+                        {item.repository.userAlias ? <FaUser /> : <MdBusiness />}
                       </span>{' '}
                       {!isNull(item.repository.userAlias) ? (
                         <Link

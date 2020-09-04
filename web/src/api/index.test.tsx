@@ -1490,5 +1490,129 @@ describe('index API', () => {
         expect(response).toBe('');
       });
     });
+
+    describe('getAllRepositories', () => {
+      it('success', async () => {
+        const repositories: Repository[] = getData('32') as Repository[];
+        fetchMock.mockResponse(JSON.stringify(repositories), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getAllRepositories();
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories');
+        expect(response).toEqual(methods.toCamelCase(repositories));
+      });
+    });
+
+    describe('transferRepository', () => {
+      it('from org to user', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const mockRepo = {
+          name: 'repo1',
+          displayName: null,
+          url: 'https://url.repo',
+          kind: 0,
+          verified_Publisher: false,
+          userAlias: null,
+          organizationName: 'org1',
+        };
+
+        const response = await methods.API.claimRepositoryOwnership(mockRepo);
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claimOwnership');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+
+      it('from org to org', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const mockRepo = {
+          name: 'repo1',
+          displayName: null,
+          url: 'https://url.repo',
+          kind: 0,
+          verified_Publisher: false,
+          userAlias: null,
+          organizationName: 'org1',
+        };
+
+        const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org2');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/org/org1/repo1/claimOwnership?org=org2');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+
+      it('from user to org', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const mockRepo = {
+          name: 'repo1',
+          displayName: null,
+          url: 'https://url.repo',
+          kind: 0,
+          verified_Publisher: false,
+          userAlias: 'user1',
+          organizationName: null,
+        };
+
+        const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org1');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claimOwnership?org=org1');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+
+      it('from user to user', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const mockRepo = {
+          name: 'repo1',
+          displayName: null,
+          url: 'https://url.repo',
+          kind: 0,
+          verified_Publisher: false,
+          userAlias: 'user1',
+          organizationName: null,
+        };
+
+        const response = await methods.API.claimRepositoryOwnership(mockRepo);
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claimOwnership');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(response).toBe('');
+      });
+    });
   });
 });

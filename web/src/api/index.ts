@@ -88,6 +88,11 @@ const handleErrors = async (res: any) => {
           kind: ErrorKind.NotFound,
         };
         break;
+      case 403:
+        error = {
+          kind: ErrorKind.Forbidden,
+        };
+        break;
       default:
         try {
           let text = await res.json();
@@ -246,6 +251,10 @@ export const API = {
     return apiFetch(`${API_BASE_URL}/users/profile`);
   },
 
+  getAllRepositories: (): Promise<Repository[]> => {
+    return apiFetch(`${API_BASE_URL}/repositories`);
+  },
+
   getRepositories: (fromOrgName?: string): Promise<Repository[]> => {
     return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`);
   },
@@ -282,6 +291,17 @@ export const API = {
     return apiFetch(
       `${API_BASE_URL}/repositories${getUrlContext(params.fromOrgName)}/${params.repositoryName}/transfer${
         isUndefined(params.toOrgName) ? '' : `?org=${params.toOrgName}`
+      }`,
+      {
+        method: 'PUT',
+      }
+    );
+  },
+
+  claimRepositoryOwnership: (repo: Repository, toOrgName?: string): Promise<null | string> => {
+    return apiFetch(
+      `${API_BASE_URL}/repositories${getUrlContext(repo.organizationName || undefined)}/${repo.name}/claimOwnership${
+        isUndefined(toOrgName) ? '' : `?org=${toOrgName}`
       }`,
       {
         method: 'PUT',

@@ -1,28 +1,36 @@
 -- transfer_repository transfers the ownership of the provided repository to
--- to the requesting user or an organization he belongs to.
+-- to the requesting user or an organization he belongs to. The user must own
+-- the repository transferred or belong to the organization which owns it,
+-- unless this transfer is part of an ownership claim request that has been
+-- previously authorized.
 create or replace function transfer_repository(
     p_repository_name text,
     p_user_id uuid,
-    p_org_name text
+    p_org_name text,
+    p_ownership_claim boolean
 ) returns void as $$
 declare
     v_owner_user_id uuid;
     v_owner_organization_name text;
 begin
-    -- Get user or organization owning the repository
-    select r.user_id, o.name into v_owner_user_id, v_owner_organization_name
-    from repository r
-    left join organization o using (organization_id)
-    where r.name = p_repository_name;
+    -- Validate repository ownership unless this transfer is part of an
+    -- ownership claim request
+    if not p_ownership_claim then
+        -- Get user or organization owning the repository
+        select r.user_id, o.name into v_owner_user_id, v_owner_organization_name
+        from repository r
+        left join organization o using (organization_id)
+        where r.name = p_repository_name;
 
-    -- Check if the user doing the request is the owner or belongs to the
-    -- organization which owns it
-    if v_owner_organization_name is not null then
-        if not user_belongs_to_organization(p_user_id, v_owner_organization_name) then
+        -- Check if the user doing the request is the owner or belongs to the
+        -- organization which owns it
+        if v_owner_organization_name is not null then
+            if not user_belongs_to_organization(p_user_id, v_owner_organization_name) then
+                raise insufficient_privilege;
+            end if;
+        elsif v_owner_user_id <> p_user_id then
             raise insufficient_privilege;
         end if;
-    elsif v_owner_user_id <> p_user_id then
-        raise insufficient_privilege;
     end if;
 
     -- When transferring a repository to an organization, check the requesting

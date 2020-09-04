@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import { compact, isNull, isUndefined, orderBy } from 'lodash';
+import { compact, isNull, orderBy } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness } from 'react-icons/md';
 
-import useOutsideClick from '../../../../../../hooks/useOutsideClick';
-import { Repository } from '../../../../../../types';
-import RepositoryIcon from '../../../../../common/RepositoryIcon';
+import useOutsideClick from '../../hooks/useOutsideClick';
+import { Repository } from '../../types';
+import RepositoryIcon from './RepositoryIcon';
 import styles from './SearchTypeaheadRepository.module.css';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
   repositories: Repository[];
   disabledList: string[];
   onSelect: (repo: Repository) => void;
+  placeholder?: string;
 }
 
 const SearchTypeaheadRepository = (props: Props) => {
@@ -89,9 +90,7 @@ const SearchTypeaheadRepository = (props: Props) => {
 
   return (
     <div className="position-relative">
-      <div
-        className={`flex-grow-1 d-flex align-items-strecht overflow-hidden position-relative ${styles.inputWrapper}`}
-      >
+      <div className={`flex-grow-1 d-flex align-items-strecht position-relative ${styles.inputWrapper}`}>
         <input
           data-testid="searchTypeaheadRepositoryInput"
           ref={inputEl}
@@ -104,11 +103,10 @@ const SearchTypeaheadRepository = (props: Props) => {
           onChange={onChange}
           spellCheck="false"
           placeholder={
-            !props.isLoading && props.repositories.length === 0
-              ? `There aren't any repositories you can manage at the moment.`
-              : ''
+            !props.isLoading && props.repositories.length === 0 && props.placeholder ? props.placeholder : ''
           }
           disabled={props.isLoading || (!props.isLoading && props.repositories.length === 0)}
+          required
         />
 
         {props.isLoading && (
@@ -116,6 +114,7 @@ const SearchTypeaheadRepository = (props: Props) => {
             <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
           </div>
         )}
+        <div className={`position-absolute invalid-feedback ${styles.fieldFeedback}`}>This field is required</div>
       </div>
 
       {!collapsed && (
@@ -156,7 +155,7 @@ const SearchTypeaheadRepository = (props: Props) => {
                             onSelect(repo);
                           }
                         }}
-                        key={`repo_${repo.repositoryId!}`}
+                        key={`repo_${repo.name!}`}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
                           <RepositoryIcon kind={repo.kind} className={`mx-2 ${styles.icon}`} />
@@ -167,7 +166,7 @@ const SearchTypeaheadRepository = (props: Props) => {
                         <td className="align-middle">
                           <div className="text-dark d-flex flex-row align-items-center">
                             <span className={`mx-1 ${styles.tinyIcon}`}>
-                              {!isUndefined(repo.userAlias) ? <FaUser /> : <MdBusiness />}
+                              {repo.userAlias ? <FaUser /> : <MdBusiness />}
                             </span>
                             {repo.userAlias || repo.organizationDisplayName || repo.organizationName}
                           </div>

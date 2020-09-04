@@ -353,6 +353,7 @@ export enum ErrorKind {
   Other,
   NotFound,
   Unauthorized,
+  Forbidden,
 }
 
 export interface OptOutItem {

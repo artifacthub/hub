@@ -3,6 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoMdRefresh, IoMdRefreshCircle } from 'react-icons/io';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
+import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
@@ -12,6 +13,7 @@ import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
 import RepositoryCard from './Card';
+import ClaimOwnershipRepositoryModal from './ClaimOwnershipModal';
 import RepositoryModal from './Modal';
 import styles from './Repository.module.css';
 
@@ -32,6 +34,7 @@ const RepositoriesSection = (props: Props) => {
   const [modalStatus, setModalStatus] = useState<ModalStatus>({
     open: false,
   });
+  const [openClaimRepo, setOpenClaimRepo] = useState<boolean>(false);
   const [repositories, setRepositories] = useState<Repo[] | undefined>(undefined);
   const [activeOrg, setActiveOrg] = useState<undefined | string>(ctx.prefs.controlPanel.selectedOrg);
   const [apiError, setApiError] = useState<null | string>(null);
@@ -94,6 +97,18 @@ const RepositoriesSection = (props: Props) => {
               </button>
 
               <button
+                data-testid="claimRepoBtn"
+                className={`btn btn-secondary btn-sm text-uppercase mr-0 mr-md-2 ${styles.btnAction}`}
+                onClick={() => setOpenClaimRepo(true)}
+              >
+                <div className="d-flex flex-row align-items-center justify-content-center">
+                  <RiArrowLeftRightLine className="mr-md-2" />
+                  <span className="d-none d-md-inline">Claim ownership</span>
+                </div>
+              </button>
+
+              <button
+                data-testid="addRepoBtn"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
                 onClick={() => setModalStatus({ open: true })}
               >
@@ -114,6 +129,15 @@ const RepositoriesSection = (props: Props) => {
             onSuccess={fetchRepositories}
             onAuthError={props.onAuthError}
             onClose={() => setModalStatus({ open: false })}
+          />
+        )}
+
+        {openClaimRepo && (
+          <ClaimOwnershipRepositoryModal
+            open={openClaimRepo}
+            onAuthError={props.onAuthError}
+            onClose={() => setOpenClaimRepo(false)}
+            onSuccess={fetchRepositories}
           />
         )}
 

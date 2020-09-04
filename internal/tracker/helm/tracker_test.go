@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 	"net/url"
 	"os"
 	"path"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
@@ -306,16 +306,14 @@ func TestTracker(t *testing.T) {
 			tc := tc
 			t.Run(fmt.Sprintf("Test case %d", tc.n), func(t *testing.T) {
 				// Setup tracker and expectations
-				mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 				tw := newTrackerWrapper(tc.r)
 				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], nil)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
 					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
 				u, _ := url.Parse(tc.r.URL)
 				u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-				tw.hg.On("Get", u.String()).Return(&http.Response{
-					Body:       mdFile,
-					StatusCode: http.StatusOK,
+				tw.rm.On("GetMetadata", u.String()).Return(&hub.RepositoryMetadata{
+					RepositoryID: tc.r.RepositoryID,
 				}, nil)
 				tw.rm.On("SetVerifiedPublisher", tw.ctx, tc.r.RepositoryID, true).Return(nil)
 
@@ -335,7 +333,7 @@ type trackerWrapper struct {
 	rm         *repo.ManagerMock
 	il         *repo.HelmIndexLoaderMock
 	ec         *tracker.ErrorsCollectorMock
-	hg         *tracker.HTTPGetterMock
+	hg         *tests.HTTPGetterMock
 	t          tracker.Tracker
 	queuedJobs *[]*Job
 }
@@ -347,7 +345,7 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	il := &repo.HelmIndexLoaderMock{}
 	rm := &repo.ManagerMock{}
 	ec := &tracker.ErrorsCollectorMock{}
-	hg := &tracker.HTTPGetterMock{}
+	hg := &tests.HTTPGetterMock{}
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Cfg: cfg,

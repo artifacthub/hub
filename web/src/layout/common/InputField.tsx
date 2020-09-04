@@ -105,17 +105,23 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
             resourceKind: props.checkAvailability.resourceKind,
             value: value,
           });
-          if (isAvailable) {
-            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
-          } else {
-            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+          if (!isNull(input.current)) {
+            if (isAvailable) {
+              input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+            } else {
+              input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? '' : 'Resource is not valid');
+            }
           }
         } catch {
-          input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+          if (!isNull(input.current)) {
+            input.current!.setCustomValidity(props.checkAvailability!.isAvailable ? 'Already taken' : '');
+          }
         }
         setIsCheckingAvailability(false);
       } else {
-        input.current!.setCustomValidity('');
+        if (!isNull(input.current)) {
+          input.current!.setCustomValidity('');
+        }
       }
     }
 

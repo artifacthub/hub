@@ -116,6 +116,7 @@ describe('SearchTypeaheadRepository', () => {
       disabledList: [],
       onSelect: onSelectMock,
       isLoading: false,
+      placeholder: "There aren't any repositories you can manage at the moment.",
     };
     const { getByPlaceholderText } = render(<SearchTypeaheadRepository {...props} />);
 

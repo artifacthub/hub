@@ -25,6 +25,12 @@ func (m *ManagerMock) CheckAvailability(ctx context.Context, resourceKind, value
 	return args.Bool(0), args.Error(1)
 }
 
+// ClaimOwnership implements the RepositoryManager interface.
+func (m *ManagerMock) ClaimOwnership(ctx context.Context, name, orgName string) error {
+	args := m.Called(ctx, name, orgName)
+	return args.Error(0)
+}
+
 // Delete implements the RepositoryManager interface.
 func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 	args := m.Called(ctx, name)
@@ -35,6 +41,13 @@ func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 func (m *ManagerMock) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]*hub.Repository)
+	return data, args.Error(1)
+}
+
+// GetAllJSON implements the RepositoryManager interface.
+func (m *ManagerMock) GetAllJSON(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 
@@ -56,6 +69,13 @@ func (m *ManagerMock) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([
 func (m *ManagerMock) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
 	args := m.Called(ctx, name)
 	data, _ := args.Get(0).(*hub.Repository)
+	return data, args.Error(1)
+}
+
+// GetMetadata implements the RepositoryManager interface.
+func (m *ManagerMock) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
+	args := m.Called(mdFile)
+	data, _ := args.Get(0).(*hub.RepositoryMetadata)
 	return data, args.Error(1)
 }
 
@@ -96,8 +116,8 @@ func (m *ManagerMock) SetVerifiedPublisher(ctx context.Context, repositoryID str
 }
 
 // Transfer implements the RepositoryManager interface.
-func (m *ManagerMock) Transfer(ctx context.Context, name, orgName string) error {
-	args := m.Called(ctx, name, orgName)
+func (m *ManagerMock) Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error {
+	args := m.Called(ctx, name, orgName, ownershipClaim)
 	return args.Error(0)
 }
 
