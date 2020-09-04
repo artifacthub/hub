@@ -1,2 +1,7 @@
 # Artifact Hub repository metadata file
 repositoryID: The ID of the Artifact Hub repository where the packages will be published to (optional, but it enables verified publisher)
+owners: # (optional, used to claim repository ownership)
+  - name: user1
+    email: user1@email.com
+  - name: user2
+    email: user2@email.com

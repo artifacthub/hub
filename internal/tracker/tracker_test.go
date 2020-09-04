@@ -3,12 +3,11 @@ package tracker
 import (
 	"context"
 	"errors"
-	"net/http"
-	"os"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,21 +17,6 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	// Setup some services required by tests
 	repo1ID := "00000000-0000-0000-0000-000000000001"
 
-	t.Run("verified publisher flag set to true successfully (local file)", func(t *testing.T) {
-		// Setup expectations
-		r := &hub.Repository{
-			RepositoryID:      repo1ID,
-			VerifiedPublisher: false,
-		}
-		sw := newServicesWrapper()
-		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, true).Return(nil)
-
-		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "testdata/artifacthub-repo.yml")
-		assert.Nil(t, err)
-		sw.assertExpectations(t)
-	})
-
 	t.Run("verified publisher flag set to true successfully (remote url)", func(t *testing.T) {
 		// Setup expectations
 		r := &hub.Repository{
@@ -41,14 +25,10 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 		}
 		sw := newServicesWrapper()
 		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, true).Return(nil)
-		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
-		sw.hg.On("Get", "http://remote.url/artifacthub-repo.yml").Return(&http.Response{
-			Body:       mdFile,
-			StatusCode: http.StatusOK,
-		}, nil)
+		sw.rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "http://remote.url/artifacthub-repo.yml")
+		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
 		assert.Nil(t, err)
 		sw.assertExpectations(t)
 	})
@@ -60,9 +40,10 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: true,
 		}
 		sw := newServicesWrapper()
+		sw.rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "testdata/artifacthub-repo.yml")
+		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
 		assert.Nil(t, err)
 		sw.assertExpectations(t)
 	})
@@ -74,9 +55,10 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: false,
 		}
 		sw := newServicesWrapper()
+		sw.rm.On("GetMetadata", "mdFile").Return(nil, errFake)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "testdata/artifacthub-repo-inexistent.yml")
+		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
 		assert.Nil(t, err)
 		sw.assertExpectations(t)
 	})
@@ -88,10 +70,11 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: true,
 		}
 		sw := newServicesWrapper()
+		sw.rm.On("GetMetadata", "mdFile").Return(nil, errFake)
 		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, false).Return(nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "testdata/artifacthub-repo-inexistent.yml")
+		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
 		assert.Nil(t, err)
 		sw.assertExpectations(t)
 	})
@@ -103,10 +86,11 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: false,
 		}
 		sw := newServicesWrapper()
+		sw.rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, true).Return(errFake)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(sw.svc, r, "testdata/artifacthub-repo.yml")
+		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
 		assert.True(t, errors.Is(err, errFake))
 		sw.assertExpectations(t)
 	})
@@ -115,14 +99,14 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 type servicesWrapper struct {
 	ctx context.Context
 	rm  *repo.ManagerMock
-	hg  *HTTPGetterMock
+	hg  *tests.HTTPGetterMock
 	svc *Services
 }
 
 func newServicesWrapper() *servicesWrapper {
 	ctx := context.Background()
 	rm := &repo.ManagerMock{}
-	hg := &HTTPGetterMock{}
+	hg := &tests.HTTPGetterMock{}
 	svc := &Services{
 		Ctx: ctx,
 		Rm:  rm,

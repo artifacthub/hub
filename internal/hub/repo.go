@@ -69,6 +69,12 @@ type HelmIndexLoader interface {
 	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
 }
 
+// Owner represents some details about a repository's owner.
+type Owner struct {
+	Name  string `yaml:"name"`
+	Email string `yaml:"email"`
+}
+
 // Repository represents a packages repository.
 type Repository struct {
 	RepositoryID            string         `json:"repository_id"`
@@ -90,17 +96,20 @@ type Repository struct {
 type RepositoryManager interface {
 	Add(ctx context.Context, orgName string, r *Repository) error
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
+	ClaimOwnership(ctx context.Context, name, orgName string) error
 	Delete(ctx context.Context, name string) error
 	GetAll(ctx context.Context) ([]*Repository, error)
+	GetAllJSON(ctx context.Context) ([]byte, error)
 	GetByID(ctx context.Context, repositorID string) (*Repository, error)
 	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
 	GetByName(ctx context.Context, name string) (*Repository, error)
+	GetMetadata(mdFile string) (*RepositoryMetadata, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
 	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
 	SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
 	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
-	Transfer(ctx context.Context, name, orgName string) error
+	Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error
 	Update(ctx context.Context, r *Repository) error
 }
 
@@ -118,5 +127,6 @@ type RepositoryCloner interface {
 // usually provided by repositories publishers, to provide some extra context
 // about the repository they'd like to publish.
 type RepositoryMetadata struct {
-	RepositoryID string `yaml:"repositoryID"`
+	RepositoryID string   `yaml:"repositoryID"`
+	Owners       []*Owner `yaml:"owners"`
 }

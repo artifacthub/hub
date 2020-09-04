@@ -226,6 +226,71 @@ func TestCheckAvailability(t *testing.T) {
 	})
 }
 
+func TestClaimOwnership(t *testing.T) {
+	t.Run("invalid input - missing repo name", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("PUT", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("ClaimOwnership", r.Context(), "", "").Return(hub.ErrInvalidInput)
+		hw.h.ClaimOwnership(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("valid input", func(t *testing.T) {
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"repository ownership claim succeeded",
+				nil,
+				http.StatusNoContent,
+			},
+			{
+				"error claiming repository ownership (insufficient privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error claiming repository ownership (db error)",
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/?org=org1", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"repoName"},
+						Values: []string{"repo1"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.rm.On("ClaimOwnership", r.Context(), "repo1", "org1").Return(tc.err)
+				hw.h.ClaimOwnership(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.rm.AssertExpectations(t)
+			})
+		}
+	})
+}
+
 func TestDelete(t *testing.T) {
 	rctx := &chi.Context{
 		URLParams: chi.RouteParams{
@@ -286,6 +351,43 @@ func TestDelete(t *testing.T) {
 				hw.rm.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestGetAll(t *testing.T) {
+	t.Run("get all repositories succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("GetAllJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.GetAll(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("error getting all repositories", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("GetAllJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.h.GetAll(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
 	})
 }
 
@@ -397,7 +499,7 @@ func TestTransfer(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("Transfer", r.Context(), "", "").Return(hub.ErrInvalidInput)
+		hw.rm.On("Transfer", r.Context(), "", "", false).Return(hub.ErrInvalidInput)
 		hw.h.Transfer(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -413,7 +515,7 @@ func TestTransfer(t *testing.T) {
 			expectedStatusCode int
 		}{
 			{
-				"repository transferred succeeded",
+				"repository transfer succeeded",
 				nil,
 				http.StatusNoContent,
 			},
@@ -443,7 +545,7 @@ func TestTransfer(t *testing.T) {
 				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 				hw := newHandlersWrapper()
-				hw.rm.On("Transfer", r.Context(), "repo1", "org1").Return(tc.err)
+				hw.rm.On("Transfer", r.Context(), "repo1", "org1", false).Return(tc.err)
 				hw.h.Transfer(w, r)
 				resp := w.Result()
 				defer resp.Body.Close()

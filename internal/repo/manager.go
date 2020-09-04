@@ -3,28 +3,44 @@ package repo
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"path"
 	"regexp"
+	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
+	"gopkg.in/yaml.v2"
 )
 
 var (
 	// repositoryNameRE is a regexp used to validate a repository name.
 	repositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
 
+	// ErrInvalidMetadata indicates that the repository metadata is not valid.
+	ErrInvalidMetadata = errors.New("invalid metadata")
+
 	// GitRepoURLRE is a regexp used to validate and parse a git based
 	// repository URL.
 	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
 )
 
+// HTTPGetter defines the methods an HTTPGetter implementation must provide.
+type HTTPGetter interface {
+	Get(url string) (*http.Response, error)
+}
+
 // Manager provides an API to manage repositories.
 type Manager struct {
 	cfg             *viper.Viper
 	db              hub.DB
+	hg              HTTPGetter
 	helmIndexLoader hub.HelmIndexLoader
 }
 
@@ -37,6 +53,9 @@ func NewManager(cfg *viper.Viper, db hub.DB, opts ...func(m *Manager)) *Manager 
 	}
 	for _, o := range opts {
 		o(m)
+	}
+	if m.hg == nil {
+		m.hg = &http.Client{Timeout: 10 * time.Second}
 	}
 	return m
 }
@@ -125,6 +144,47 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	return available, err
 }
 
+// ClaimOwnership allows a user to claim the ownership of a given repository.
+// The repository will be transferred to the destination entity requested if
+// the user is listed as one of the owners in the repository metadata file.
+func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if repoName == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository name not provided")
+	}
+
+	// Get repository metadata
+	var repoURL string
+	repoURLQuery := `select url from repository where name = $1`
+	if err := m.db.QueryRow(ctx, repoURLQuery, repoName).Scan(&repoURL); err != nil {
+		return err
+	}
+	u, _ := url.Parse(repoURL)
+	u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+	md, err := m.GetMetadata(u.String())
+	if err != nil {
+		return fmt.Errorf("%w: error getting repository metadata: %v", hub.ErrInsufficientPrivilege, err)
+	}
+
+	// Get requesting user email
+	var userEmail string
+	userEmailQuery := `select email from "user" where user_id = $1`
+	if err := m.db.QueryRow(ctx, userEmailQuery, userID).Scan(&userEmail); err != nil {
+		return err
+	}
+
+	// Transfer repository if the requesting user is listed as one of the
+	// repository owners in the metadata file
+	for _, owner := range md.Owners {
+		if owner.Email == userEmail {
+			return m.Transfer(ctx, repoName, orgName, true)
+		}
+	}
+	return hub.ErrInsufficientPrivilege
+}
+
 // Delete deletes the provided repository from the database.
 func (m *Manager) Delete(ctx context.Context, name string) error {
 	userID := ctx.Value(hub.UserIDKey).(string)
@@ -148,6 +208,12 @@ func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	var r []*hub.Repository
 	err := m.dbQueryUnmarshal(ctx, &r, "select get_all_repositories()")
 	return r, err
+}
+
+// GetAllJSON returns all available repositories as a json array, which is
+// built by the database.
+func (m *Manager) GetAllJSON(ctx context.Context) ([]byte, error) {
+	return m.dbQueryJSON(ctx, "select get_all_repositories()")
 }
 
 // GetByID returns the repository identified by the id provided.
@@ -184,6 +250,44 @@ func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, 
 	var r *hub.Repository
 	err := m.dbQueryUnmarshal(ctx, &r, "select get_repository_by_name($1::text)", name)
 	return r, err
+}
+
+// GetMetadata reads and parses the repository metadata file provided, which
+// can be a remote URL or a local file path.
+func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
+	var data []byte
+	u, err := url.Parse(mdFile)
+	if err != nil || u.Scheme == "" || u.Host == "" {
+		data, err = ioutil.ReadFile(mdFile)
+		if err != nil {
+			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
+		}
+	} else {
+		resp, err := m.hg.Get(mdFile)
+		if err != nil {
+			return nil, fmt.Errorf("error downloading repository metadata file: %w", err)
+		}
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+		}
+		data, err = ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
+		}
+	}
+
+	var md *hub.RepositoryMetadata
+	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
+		return nil, fmt.Errorf("error unmarshaling repository metadata file: %w", err)
+	}
+	if md.RepositoryID != "" {
+		if _, err := uuid.FromString(md.RepositoryID); err != nil {
+			return nil, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid repository id")
+		}
+	}
+
+	return md, nil
 }
 
 // GetPackagesDigest returns the digests for all packages in the repository
@@ -261,7 +365,7 @@ func (m *Manager) SetVerifiedPublisher(ctx context.Context, repositoryID string,
 // to. An org owned repo can be transfer to the requesting user, provided the
 // user belongs to the owning org, or to a different organization the user
 // belongs to.
-func (m *Manager) Transfer(ctx context.Context, repoName, orgName string) error {
+func (m *Manager) Transfer(ctx context.Context, repoName, orgName string, ownershipClaim bool) error {
 	var orgNameP *string
 	if orgName != "" {
 		orgNameP = &orgName
@@ -278,8 +382,8 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string) error 
 	}
 
 	// Update repository owner in database
-	query := "select transfer_repository($1::text, $2::uuid, $3::text)"
-	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP)
+	query := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
+	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP, ownershipClaim)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}

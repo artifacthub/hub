@@ -365,6 +365,47 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  /repositories:
+    get:
+      tags:
+        - Repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get all repositories
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    kind:
+                      $ref: "#/components/schemas/RepositoryKind"
+                    name:
+                      type: string
+                      example: repo1
+                    display_name:
+                      type: string
+                      example: Repo 1
+                    user_alias:
+                      type: string
+                      example: jdoe
+                    organization_name:
+                      type: string
+                      example: org1
+                    organization_display_name:
+                      type: string
+                      example: Organization 1
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /repositories/user:
     get:
       tags:
@@ -469,6 +510,28 @@ paths:
         - ApiKeyAuth: []
         - CookieAuth: []
       summary: Transfer user's repository ownership to an organization
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/user/{repoName}/claimOwnership":
+    put:
+      tags:
+        - Repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Claim the ownership of a given repository
       parameters:
         - $ref: "#/components/parameters/RepoNameParam"
         - $ref: "#/components/parameters/OrgNameToTransferParam"
@@ -595,6 +658,29 @@ paths:
         - ApiKeyAuth: []
         - CookieAuth: []
       summary: Transfer organization's repository to a different owner
+      parameters:
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
+      responses:
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/org/{orgName}/{repoName}/claimOwnership":
+    put:
+      tags:
+        - Repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Claim the ownership of a given repository
       parameters:
         - $ref: "#/components/parameters/OrgNameParam"
         - $ref: "#/components/parameters/RepoNameParam"

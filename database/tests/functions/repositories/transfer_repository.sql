@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(6);
+select plan(8);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -29,13 +29,16 @@ values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
 
+-- Transfers NOT part of an ownership claim request
+
 -- Try to transfer repository owned by a user to other user
 select throws_ok(
     $$
         select transfer_repository(
             'repo1',
             '00000000-0000-0000-0000-000000000002',
-            null
+            null,
+            false
         )
     $$,
     42501,
@@ -49,7 +52,8 @@ select throws_ok(
         select transfer_repository(
             'repo2',
             '00000000-0000-0000-0000-000000000002',
-            null
+            null,
+            false
         )
     $$,
     42501,
@@ -64,7 +68,8 @@ select throws_ok(
         select transfer_repository(
             'repo1',
             '00000000-0000-0000-0000-000000000001',
-            'org2'
+            'org2',
+            false
         )
     $$,
     42501,
@@ -76,7 +81,8 @@ select throws_ok(
 select transfer_repository(
     'repo2',
     '00000000-0000-0000-0000-000000000001',
-    null
+    null,
+    false
 );
 select results_eq(
     $$
@@ -92,14 +98,16 @@ select results_eq(
 select transfer_repository(
     'repo2',
     '00000000-0000-0000-0000-000000000001',
-    'org1'
+    'org1',
+    false
 );
 
 -- Transfer org owned repository to other org
 select transfer_repository(
     'repo2',
     '00000000-0000-0000-0000-000000000001',
-    'org3'
+    'org3',
+    false
 );
 select results_eq(
     $$
@@ -117,7 +125,8 @@ select results_eq(
 select transfer_repository(
     'repo1',
     '00000000-0000-0000-0000-000000000001',
-    'org1'
+    'org1',
+    false
 );
 select results_eq(
     $$
@@ -129,6 +138,46 @@ select results_eq(
         values (null::uuid, '00000000-0000-0000-0000-000000000001'::uuid)
     $$,
     'Repository should have been transferred to org1'
+);
+
+-- Transfers part of an ownership claim request
+
+-- Transfer repository owned by organization to user not belonging to it
+select transfer_repository(
+    'repo1',
+    '00000000-0000-0000-0000-000000000002',
+    null,
+    true
+);
+select results_eq(
+    $$
+        select user_id, organization_id
+        from repository
+        where name = 'repo1'
+    $$,
+    $$
+        values ('00000000-0000-0000-0000-000000000002'::uuid, null::uuid)
+    $$,
+    'Repository should have been transferred to user2'
+);
+
+-- Transfer repository owned by a user to other user
+select transfer_repository(
+    'repo1',
+    '00000000-0000-0000-0000-000000000001',
+    null,
+    true
+);
+select results_eq(
+    $$
+        select user_id, organization_id
+        from repository
+        where name = 'repo1'
+    $$,
+    $$
+        values ('00000000-0000-0000-0000-000000000001'::uuid, null::uuid)
+    $$,
+    'Repository should have been transferred to user1'
 );
 
 -- Finish tests and rollback transaction

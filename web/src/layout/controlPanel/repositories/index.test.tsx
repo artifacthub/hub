@@ -52,7 +52,7 @@ describe('Repository index', () => {
       const mockRepository = getMockRepository('2');
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
-      render(
+      const { getByTestId } = render(
         <Router>
           <Repository {...defaultProps} />
         </Router>
@@ -61,6 +61,10 @@ describe('Repository index', () => {
       await waitFor(() => {
         expect(API.getRepositories).toHaveBeenCalledTimes(1);
       });
+
+      expect(getByTestId('refreshRepoBtn')).toBeInTheDocument();
+      expect(getByTestId('claimRepoBtn')).toBeInTheDocument();
+      expect(getByTestId('addRepoBtn')).toBeInTheDocument();
     });
 
     it('displays no data component when no repositories', async () => {

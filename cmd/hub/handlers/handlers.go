@@ -171,10 +171,12 @@ func (h *Handlers) setupRouter() {
 		// Repositories
 		r.Route("/repositories", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
+			r.Get("/", h.Repositories.GetAll)
 			r.Route("/user", func(r chi.Router) {
 				r.Get("/", h.Repositories.GetOwnedByUser)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/claimOwnership", h.Repositories.ClaimOwnership)
 					r.Put("/transfer", h.Repositories.Transfer)
 					r.Put("/", h.Repositories.Update)
 					r.Delete("/", h.Repositories.Delete)
@@ -184,6 +186,7 @@ func (h *Handlers) setupRouter() {
 				r.Get("/", h.Repositories.GetOwnedByOrg)
 				r.Post("/", h.Repositories.Add)
 				r.Route("/{repoName}", func(r chi.Router) {
+					r.Put("/claimOwnership", h.Repositories.ClaimOwnership)
 					r.Put("/transfer", h.Repositories.Transfer)
 					r.Put("/", h.Repositories.Update)
 					r.Delete("/", h.Repositories.Delete)
