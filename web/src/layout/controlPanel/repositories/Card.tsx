@@ -292,10 +292,12 @@ const RepositoryCard = (props: Props) => {
         </div>
       </div>
       {!isUndefined(props.repository.repositoryId) && (
-        <div className="mt-2 text-truncate">
-          <small className="text-muted text-uppercase mr-1">ID: </small>
-          <small>{props.repository.repositoryId}</small>
-          <div className="d-inline-block ml-1">
+        <div className="mt-2 d-flex flex-row align-items-baseline">
+          <div className="text-truncate">
+            <small className="text-muted text-uppercase mr-1">ID: </small>
+            <small>{props.repository.repositoryId}</small>
+          </div>
+          <div className={`ml-1 ${styles.copyBtn}`}>
             <div className={`position-absolute ${styles.copyBtnWrapper}`}>
               <ButtonCopyToClipboard
                 text={props.repository.repositoryId}
