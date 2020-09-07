@@ -1,0 +1,24 @@
+{
+  "packageId": "id",
+  "name": "test",
+  "displayName": "Pretty name",
+  "description": "desc",
+  "logoImageId": "imageId",
+  "appVersion": "1.0.0",
+  "userAlias": null,
+  "normalizedName": "pr",
+  "deprecated": false,
+  "isOperator": false,
+  "readme": "readme",
+  "keywords": ["key1", "key2"],
+  "repository": {
+    "repositoryid": "id",
+    "kind": 0,
+    "name": "incubator",
+    "displayName": null,
+    "organizationName": "helm",
+    "organizationDisplayName": "Helm",
+    "userAlias": null,
+    "verifiedPublisher": true
+  }
+}

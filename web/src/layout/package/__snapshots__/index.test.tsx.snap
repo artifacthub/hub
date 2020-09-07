@@ -38,7 +38,7 @@ exports[`Package index creates snapshot 2`] = `
               />
             </div>
             <div
-              class="ml-3 text-truncate w-100"
+              class="ml-3 wrapperWithContentEllipsis"
             >
               <div
                 class="d-flex flex-row align-items-center titleWrapper"

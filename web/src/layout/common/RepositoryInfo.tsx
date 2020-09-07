@@ -1,16 +1,16 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
-import { MdInfo, MdVerifiedUser } from 'react-icons/md';
+import { MdInfo } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Repository } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
-import Label from './Label';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './RepositoryInfo.module.css';
+import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   repository: Repository;
@@ -124,6 +124,7 @@ const RepositoryInfo = (props: Props) => {
           >
             <>
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
+
               {!isUndefined(props.repository.url) && !isUndefined(props.visibleInfoIcon) && props.visibleInfoIcon && (
                 <MdInfo className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
               )}
@@ -131,13 +132,10 @@ const RepositoryInfo = (props: Props) => {
           </button>
         </div>
       </div>
-      {!isUndefined(props.repository.verifiedPublisher) && props.repository.verifiedPublisher && (
-        <Label
-          icon={<MdVerifiedUser />}
-          text="Verified Publisher"
-          className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
-        />
-      )}
+      <VerifiedPublisherBadge
+        verifiedPublisher={props.repository.verifiedPublisher}
+        className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+      />
     </>
   );
 };

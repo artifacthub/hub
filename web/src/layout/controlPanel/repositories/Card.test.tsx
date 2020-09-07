@@ -77,6 +77,19 @@ describe('Repository Card - packages section', () => {
       expect(getByText('Show errors log')).toBeInTheDocument();
     });
 
+    it('renders verified publisher badge', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          verifiedPublisher: true,
+        },
+      };
+      const { getAllByText } = render(<Card {...props} />);
+
+      expect(getAllByText('Verified Publisher')).toHaveLength(2);
+    });
+
     it('calls delete repo when delete button in dropdown is clicked', async () => {
       const { getByTestId } = render(<Card {...defaultProps} />);
 

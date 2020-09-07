@@ -6,7 +6,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
-import { MdVerifiedUser } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -18,9 +17,9 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
-import Label from '../../common/Label';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
+import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import styles from './Card.module.css';
 import TransferRepositoryModal from './TransferModal';
 
@@ -151,9 +150,10 @@ const RepositoryCard = (props: Props) => {
         <div className="d-flex flex-row align-items-center mb-1">
           <div className={`h5 mb-0 ${styles.titleCard}`}>{props.repository.displayName || props.repository.name}</div>
 
-          {!isUndefined(props.repository.verifiedPublisher) && props.repository.verifiedPublisher && (
-            <Label icon={<MdVerifiedUser />} text="Verified Publisher" className="ml-3 d-none d-md-inline" />
-          )}
+          <VerifiedPublisherBadge
+            verifiedPublisher={props.repository.verifiedPublisher}
+            className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+          />
         </div>
 
         {transferModalStatus && (
@@ -318,9 +318,10 @@ const RepositoryCard = (props: Props) => {
         </div>
       )}
 
-      {!isUndefined(props.repository.verifiedPublisher) && props.repository.verifiedPublisher && (
-        <Label icon={<MdVerifiedUser />} text="Verified Publisher" className="mt-3 m-md-0 d-flex d-md-none" />
-      )}
+      <VerifiedPublisherBadge
+        verifiedPublisher={props.repository.verifiedPublisher}
+        className="mt-3 m-md-0 d-flex d-md-none"
+      />
     </li>
   );
 };

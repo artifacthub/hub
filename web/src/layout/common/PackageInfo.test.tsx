@@ -156,4 +156,18 @@ describe('PackageInfo', () => {
       expect(queryByTestId('imageLink')).toBeNull();
     });
   });
+
+  describe('when repository has a verified publisher', () => {
+    it('renders correct label', () => {
+      const mockPackage = getMockPackage('10');
+
+      const { getAllByText } = render(
+        <Router>
+          <PackageInfo withPackageLinks={false} package={mockPackage} />
+        </Router>
+      );
+
+      expect(getAllByText('Verified Publisher')).toHaveLength(3);
+    });
+  });
 });

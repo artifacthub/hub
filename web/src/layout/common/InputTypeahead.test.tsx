@@ -193,6 +193,6 @@ describe('InputTypeahead', () => {
     fireEvent.change(input, { target: { value: 'test' } });
 
     expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
-    expect(getByText('Sorry, not matches found')).toBeInTheDocument();
+    expect(getByText('Sorry, no matches found')).toBeInTheDocument();
   });
 });

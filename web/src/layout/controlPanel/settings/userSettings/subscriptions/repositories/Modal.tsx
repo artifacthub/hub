@@ -203,10 +203,10 @@ const OptOutModal = (props: Props) => {
                     <div className="px-2 ml-auto w-50 text-dark text-truncate">
                       <small className="d-flex flex-row align-items-baseline ml-2">
                         (
-                        <small className={`d-none d-md-inline text-uppercase text-muted ${styles.legend}`}>
+                        <small className={`d-none d-md-inline text-uppercase text-muted mr-1 ${styles.legend}`}>
                           Publisher:{' '}
                         </small>
-                        <div className={`mx-1 ${styles.tinyIcon}`}>
+                        <div className={`mr-1 ${styles.tinyIcon}`}>
                           {repoItem.userAlias ? <FaUser /> : <MdBusiness />}
                         </div>
                         <span>

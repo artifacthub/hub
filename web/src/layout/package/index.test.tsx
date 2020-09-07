@@ -246,7 +246,7 @@ describe('Package index', () => {
       await waitFor(() => {});
     });
 
-    it('renders ir correctly', async () => {
+    it('renders it correctly', async () => {
       const mockPackage = getMockPackage('8');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
@@ -261,6 +261,25 @@ describe('Package index', () => {
       const readme = queryByTestId('readme');
       expect(readme).toBeInTheDocument();
       expect(readme).toHaveTextContent(mockPackage.readme!);
+
+      await waitFor(() => {});
+    });
+  });
+
+  describe('Labels', () => {
+    it('renders Verified Publisher label', async () => {
+      const mockPackage = getMockPackage('9');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      const { getByTestId, getAllByText } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => getByTestId('mainPackage'));
+
+      expect(getAllByText('Verified Publisher')).toHaveLength(2);
 
       await waitFor(() => {});
     });

@@ -74,6 +74,10 @@
   display: inline-flex;
 }
 
+.wrapperWithContentEllipsis {
+  min-width: 0;
+}
+
 .titleWrapper {
   margin-right: 200px;
 }
