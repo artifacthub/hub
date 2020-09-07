@@ -5,7 +5,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiDownload, FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
-import { MdVerifiedUser } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -35,6 +34,7 @@ import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
+import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import SubNavbar from '../navigation/SubNavbar';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
@@ -256,8 +256,11 @@ const PackageView = (props: Props) => {
 
   const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
     <>
-      {withVerified && !isUndefined(detail!.repository.verifiedPublisher) && detail!.repository.verifiedPublisher && (
-        <Label icon={<MdVerifiedUser />} text="Verified Publisher" className={`d-inline mr-3 ${extraStyle}`} />
+      {withVerified && (
+        <VerifiedPublisherBadge
+          verifiedPublisher={detail!.repository.verifiedPublisher}
+          className={`d-inline mr-3 ${extraStyle}`}
+        />
       )}
       {detail!.deprecated && (
         <Label
@@ -373,7 +376,7 @@ const PackageView = (props: Props) => {
                         />
                       </div>
 
-                      <div className="ml-3 text-truncate w-100">
+                      <div className={`ml-3 ${styles.wrapperWithContentEllipsis}`}>
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
                           <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>

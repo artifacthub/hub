@@ -112,7 +112,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         </div>
                       </div>
                       <div
-                        class="card-subtitle text-truncate align-items-baseline subtitle"
+                        class="card-subtitle align-items-baseline subtitle"
                       >
                         <div
                           class="d-inline d-md-none text-truncate w-100"
@@ -485,7 +485,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         </div>
                       </div>
                       <div
-                        class="card-subtitle text-truncate align-items-baseline subtitle"
+                        class="card-subtitle align-items-baseline subtitle"
                       >
                         <div
                           class="d-inline d-md-none text-truncate w-100"
@@ -857,7 +857,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         </div>
                       </div>
                       <div
-                        class="card-subtitle text-truncate align-items-baseline subtitle"
+                        class="card-subtitle align-items-baseline subtitle"
                       >
                         <div
                           class="d-inline d-md-none text-truncate w-100"
@@ -1230,7 +1230,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         </div>
                       </div>
                       <div
-                        class="card-subtitle text-truncate align-items-baseline subtitle"
+                        class="card-subtitle align-items-baseline subtitle"
                       >
                         <div
                           class="d-inline d-md-none text-truncate w-100"
@@ -1603,7 +1603,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         </div>
                       </div>
                       <div
-                        class="card-subtitle text-truncate align-items-baseline subtitle"
+                        class="card-subtitle align-items-baseline subtitle"
                       >
                         <div
                           class="d-inline d-md-none text-truncate w-100"

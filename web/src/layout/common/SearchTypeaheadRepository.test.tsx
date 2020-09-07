@@ -107,7 +107,7 @@ describe('SearchTypeaheadRepository', () => {
     fireEvent.change(input, { target: { value: 'test' } });
 
     expect(queryAllByTestId('repoItem')).toHaveLength(0);
-    expect(getByText('Sorry, not matches found')).toBeInTheDocument();
+    expect(getByText('Sorry, no matches found')).toBeInTheDocument();
   });
 
   it('renders correct placeholder when any repositories', () => {

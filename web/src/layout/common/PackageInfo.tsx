@@ -3,7 +3,6 @@ import moment from 'moment';
 import React from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FaStar } from 'react-icons/fa';
-import { MdVerifiedUser } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
@@ -17,6 +16,7 @@ import styles from './PackageInfo.module.css';
 import RepositoryIcon from './RepositoryIcon';
 import RepositoryInfo from './RepositoryInfo';
 import SignedBadge from './SignedBadge';
+import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 interface Props {
   package: Package;
@@ -50,11 +50,12 @@ const PackageInfo = (props: Props) => {
 
   const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
     <>
-      {withVerified &&
-        !isUndefined(props.package.repository.verifiedPublisher) &&
-        props.package.repository.verifiedPublisher && (
-          <Label icon={<MdVerifiedUser />} text="Verified Publisher" className={`mr-3 d-inline ${extraStyle}`} />
-        )}
+      {withVerified && (
+        <VerifiedPublisherBadge
+          verifiedPublisher={props.package.repository.verifiedPublisher}
+          className={`mr-3 d-inline ${extraStyle}`}
+        />
+      )}
       {props.package.deprecated && (
         <Label
           text="Deprecated"
@@ -64,7 +65,11 @@ const PackageInfo = (props: Props) => {
         />
       )}
       {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
-        <SignedBadge signed={props.package.signed} className={`d-inline ${extraStyle}`} />
+        <SignedBadge
+          signed={props.package.signed}
+          repositoryKind={props.package.repository.kind}
+          className={`d-inline ${extraStyle}`}
+        />
       )}
     </>
   );
@@ -126,7 +131,7 @@ const PackageInfo = (props: Props) => {
               </div>
             </div>
 
-            <div className={`card-subtitle text-truncate align-items-baseline ${styles.subtitle}`}>
+            <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
               <RepositoryInfo
                 repository={props.package.repository}
                 deprecated={props.package.deprecated}

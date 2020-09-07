@@ -3,6 +3,10 @@
   padding: 1.25rem;
 }
 
+.labelWrapper {
+  margin-top: 4px;
+}
+
 .btnIcon {
   font-size: 0.65rem;
 }

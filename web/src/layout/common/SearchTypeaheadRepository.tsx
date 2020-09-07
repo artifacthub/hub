@@ -124,7 +124,7 @@ const SearchTypeaheadRepository = (props: Props) => {
           className={`dropdown-menu p-0 w-100 shadow-sm show ${styles.dropdown}`}
         >
           {visibleItems.length === 0 ? (
-            <p className="m-3 text-center">Sorry, not matches found</p>
+            <p className="m-3 text-center">Sorry, no matches found</p>
           ) : (
             <div className={styles.tableWrapper}>
               <table className={`table table-hover table-sm mb-0 ${styles.table}`}>
@@ -158,14 +158,16 @@ const SearchTypeaheadRepository = (props: Props) => {
                         key={`repo_${repo.name!}`}
                       >
                         <td className="align-middle text-center d-none d-sm-table-cell">
-                          <RepositoryIcon kind={repo.kind} className={`mx-2 ${styles.icon}`} />
+                          <div className="mx-2">
+                            <RepositoryIcon kind={repo.kind} className={styles.icon} />
+                          </div>
                         </td>
                         <td className="align-middle">
-                          <div className="text-dark text-capitalize ml-2">{getOptionName(repo.name)}</div>
+                          <div className="text-dark text-capitalize">{getOptionName(repo.name)}</div>
                         </td>
                         <td className="align-middle">
                           <div className="text-dark d-flex flex-row align-items-center">
-                            <span className={`mx-1 ${styles.tinyIcon}`}>
+                            <span className={`mr-1 ${styles.tinyIcon}`}>
                               {repo.userAlias ? <FaUser /> : <MdBusiness />}
                             </span>
                             {repo.userAlias || repo.organizationDisplayName || repo.organizationName}

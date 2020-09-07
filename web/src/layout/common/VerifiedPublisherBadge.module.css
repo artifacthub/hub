@@ -1,5 +1,5 @@
 .tooltip {
-  width: 130px;
+  width: 150px;
   top: 0;
   left: 0;
 }
@@ -16,8 +16,6 @@
   background-color: var(--color-1-900) !important;
 }
 
-@media (hover: hover) {
-  .badgeWrapper:hover .tooltip {
-    opacity: 0.9;
-  }
+.tooltip {
+  opacity: 0.9;
 }

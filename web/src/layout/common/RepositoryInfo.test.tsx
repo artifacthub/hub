@@ -99,4 +99,16 @@ describe('RepositoryInfo', () => {
       expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
     });
   });
+
+  it('renders Verified Publisher label', () => {
+    const props = {
+      ...defaultProps,
+      repository: {
+        ...repo,
+        verifiedPublisher: true,
+      },
+    };
+    const { getByText } = render(<RepositoryInfo {...props} />);
+    expect(getByText('Verified Publisher')).toBeInTheDocument();
+  });
 });

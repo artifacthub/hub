@@ -192,7 +192,7 @@ const InputTypeahead = (props: Props) => {
 
           {visibleItems.length === 0 ? (
             <div className="p-3 text-center">
-              <small className="text-muted">Sorry, not matches found</small>
+              <small className="text-muted">Sorry, no matches found</small>
             </div>
           ) : (
             <div className={styles.itemsList}>
