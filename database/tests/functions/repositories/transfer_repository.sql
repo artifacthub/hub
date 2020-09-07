@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(8);
+select plan(13);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -95,6 +95,8 @@ select results_eq(
     $$,
     'Repository should have been transferred to user1'
 );
+select is(count(*), 0::bigint, 'No repository ownership claim events should have been registered')
+from event where repository_id=:'repo2ID' and event_kind_id = 3;
 select transfer_repository(
     'repo2',
     '00000000-0000-0000-0000-000000000001',
@@ -120,6 +122,8 @@ select results_eq(
     $$,
     'Repository should have been transferred to org3'
 );
+select is(count(*), 0::bigint, 'No repository ownership claim events should have been registered')
+from event where repository_id=:'repo2ID' and event_kind_id = 3;
 
 -- Transfer user owned repository to org
 select transfer_repository(
@@ -139,6 +143,8 @@ select results_eq(
     $$,
     'Repository should have been transferred to org1'
 );
+select is(count(*), 0::bigint, 'No repository ownership claim events should have been registered')
+from event where repository_id=:'repo1ID' and event_kind_id = 3;
 
 -- Transfers part of an ownership claim request
 
@@ -149,6 +155,7 @@ select transfer_repository(
     null,
     true
 );
+select * from event;
 select results_eq(
     $$
         select user_id, organization_id
@@ -159,6 +166,20 @@ select results_eq(
         values ('00000000-0000-0000-0000-000000000002'::uuid, null::uuid)
     $$,
     'Repository should have been transferred to user2'
+);
+select results_eq(
+    $$
+        select data
+        from event
+        where repository_id = '00000000-0000-0000-0000-000000000001'
+        and event_kind_id = 3
+    $$,
+    $$
+        values ('{
+            "subscriptors": [{"user_id": "00000000-0000-0000-0000-000000000001"}]
+        }'::jsonb)
+    $$,
+    'Repository ownership claim event should have been registered'
 );
 
 -- Transfer repository owned by a user to other user
@@ -179,6 +200,8 @@ select results_eq(
     $$,
     'Repository should have been transferred to user1'
 );
+select is(count(*), 2::bigint, 'Another repository ownership claim event should have been registered')
+from event where repository_id=:'repo1ID' and event_kind_id = 3;
 
 -- Finish tests and rollback transaction
 select * from finish();

@@ -386,13 +386,23 @@ func TestGetSubscriptors(t *testing.T) {
 	dbQueryPkg := "select get_package_subscriptors($1::uuid, $2::integer)"
 	dbQueryRepo := "select get_repository_subscriptors($1::uuid, $2::integer)"
 	ctx := context.Background()
-	pkgEvent := &hub.Event{
+	pkgNewReleaseEvent := &hub.Event{
 		PackageID: packageID,
 		EventKind: hub.NewRelease,
 	}
-	repoEvent := &hub.Event{
+	repoTrackingErrorsEvent := &hub.Event{
 		RepositoryID: repositoryID,
 		EventKind:    hub.RepositoryTrackingErrors,
+	}
+	repoOwnershipClaimEvent := &hub.Event{
+		RepositoryID: repositoryID,
+		EventKind:    hub.RepositoryOwnershipClaim,
+		Data: map[string]interface{}{
+			"subscriptors": []map[string]string{
+				{"user_id": "00000000-0000-0000-0000-000000000001"},
+				{"user_id": "00000000-0000-0000-0000-000000000002"},
+			},
+		},
 	}
 
 	t.Run("database error", func(t *testing.T) {
@@ -400,13 +410,13 @@ func TestGetSubscriptors(t *testing.T) {
 		db.On("QueryRow", ctx, dbQueryPkg, packageID, hub.EventKind(0)).Return(nil, tests.ErrFakeDatabaseFailure)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(ctx, pkgEvent)
+		subscriptors, err := m.GetSubscriptors(ctx, pkgNewReleaseEvent)
 		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
 		assert.Nil(t, subscriptors)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("database query succeeded (pkg event)", func(t *testing.T) {
+	t.Run("database query succeeded (pkg new release event)", func(t *testing.T) {
 		expectedSubscriptors := []*hub.User{
 			{
 				UserID: "00000000-0000-0000-0000-000000000001",
@@ -417,7 +427,7 @@ func TestGetSubscriptors(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQueryPkg, packageID, pkgEvent.EventKind).Return([]byte(`
+		db.On("QueryRow", ctx, dbQueryPkg, packageID, pkgNewReleaseEvent.EventKind).Return([]byte(`
 		[
 			{
 				"user_id": "00000000-0000-0000-0000-000000000001"
@@ -429,13 +439,13 @@ func TestGetSubscriptors(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(context.Background(), pkgEvent)
+		subscriptors, err := m.GetSubscriptors(context.Background(), pkgNewReleaseEvent)
 		assert.NoError(t, err)
 		assert.Equal(t, expectedSubscriptors, subscriptors)
 		db.AssertExpectations(t)
 	})
 
-	t.Run("database query succeeded (repo event)", func(t *testing.T) {
+	t.Run("database query succeeded (repo tracking errors event)", func(t *testing.T) {
 		expectedSubscriptors := []*hub.User{
 			{
 				UserID: "00000000-0000-0000-0000-000000000001",
@@ -446,7 +456,26 @@ func TestGetSubscriptors(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQueryRepo, repositoryID, repoEvent.EventKind).Return([]byte(`
+		m := NewManager(nil)
+
+		subscriptors, err := m.GetSubscriptors(context.Background(), repoOwnershipClaimEvent)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedSubscriptors, subscriptors)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded (repo ownership claim event)", func(t *testing.T) {
+		expectedSubscriptors := []*hub.User{
+			{
+				UserID: "00000000-0000-0000-0000-000000000001",
+			},
+			{
+				UserID: "00000000-0000-0000-0000-000000000002",
+			},
+		}
+
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQueryRepo, repositoryID, repoTrackingErrorsEvent.EventKind).Return([]byte(`
 		[
 			{
 				"user_id": "00000000-0000-0000-0000-000000000001"
@@ -458,7 +487,7 @@ func TestGetSubscriptors(t *testing.T) {
 		`), nil)
 		m := NewManager(db)
 
-		subscriptors, err := m.GetSubscriptors(context.Background(), repoEvent)
+		subscriptors, err := m.GetSubscriptors(context.Background(), repoTrackingErrorsEvent)
 		assert.NoError(t, err)
 		assert.Equal(t, expectedSubscriptors, subscriptors)
 		db.AssertExpectations(t)

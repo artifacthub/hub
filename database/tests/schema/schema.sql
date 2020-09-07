@@ -62,7 +62,8 @@ select columns_are('event', array[
     'event_kind_id',
     'package_id',
     'package_version',
-    'repository_id'
+    'repository_id',
+    'data'
 ]);
 select columns_are('event_kind', array[
     'event_kind_id',
@@ -414,7 +415,8 @@ select results_eq(
     $$ values
         (0, 'New package release'),
         (1, 'Security alert'),
-        (2, 'Repository tracking errors')
+        (2, 'Repository tracking errors'),
+        (3, 'Repository ownership claim')
     $$,
     'Event kinds should exist'
 );

@@ -14,7 +14,8 @@ begin
         'event_kind', e.event_kind_id,
         'repository_id', e.repository_id,
         'package_id', e.package_id,
-        'package_version', e.package_version
+        'package_version', e.package_version,
+        'data', e.data
     ) into v_event_id, v_event
     from event e
     where e.processed = false
