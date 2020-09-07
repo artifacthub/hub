@@ -20,8 +20,8 @@ insert into repository (repository_id, name, display_name, url, repository_kind_
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into package (package_id, name, latest_version, repository_id)
 values (:'package1ID', 'Package 1', '1.0.0', :'repo1ID');
-insert into event (event_id, package_version, package_id, event_kind_id)
-values (:'event1ID', '1.0.0', :'package1ID', 0);
+insert into event (event_id, package_version, package_id, event_kind_id, data)
+values (:'event1ID', '1.0.0', :'package1ID', 0, '{"k": "v"}');
 savepoint before_getting_event;
 
 -- Run some tests
@@ -32,7 +32,8 @@ select is(
         "event_kind": 0,
         "repository_id": null,
         "package_id": "00000000-0000-0000-0000-000000000001",
-        "package_version": "1.0.0"
+        "package_version": "1.0.0",
+        "data": {"k": "v"}
     }'::jsonb,
     'An event should be returned'
 );

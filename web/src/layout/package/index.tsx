@@ -376,7 +376,7 @@ const PackageView = (props: Props) => {
                         />
                       </div>
 
-                      <div className={`ml-3 ${styles.wrapperWithContentEllipsis}`}>
+                      <div className={`ml-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
                           <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
                           <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>

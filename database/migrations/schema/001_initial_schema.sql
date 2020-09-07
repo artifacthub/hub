@@ -156,6 +156,7 @@ create table if not exists event_kind (
 insert into event_kind values (0, 'New package release');
 insert into event_kind values (1, 'Security alert');
 insert into event_kind values (2, 'Repository tracking errors');
+insert into event_kind values (3, 'Repository ownership claim');
 
 create table event (
     event_id uuid primary key default gen_random_uuid(),
@@ -165,7 +166,8 @@ create table event (
     event_kind_id integer not null references event_kind on delete restrict,
     repository_id uuid references repository on delete cascade,
     package_id uuid references package on delete cascade,
-    package_version text check (package_version <> '')
+    package_version text check (package_version <> ''),
+    data jsonb
 );
 
 create index event_not_processed_idx on event (event_id) where processed = 'false';

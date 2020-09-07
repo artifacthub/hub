@@ -215,6 +215,15 @@ func (w *Worker) prepareEmailData(ctx context.Context, e *hub.Event) (email.Data
 		if err := trackingErrorsEmailTmpl.Execute(&emailBody, tmplData); err != nil {
 			return email.Data{}, err
 		}
+	case hub.RepositoryOwnershipClaim:
+		tmplData, err := w.prepareRepoNotificationTemplateData(ctx, e)
+		if err != nil {
+			return email.Data{}, err
+		}
+		subject = fmt.Sprintf("%s repository ownership has been claimed", tmplData.Repository["name"])
+		if err := ownershipClaimEmailTmpl.Execute(&emailBody, tmplData); err != nil {
+			return email.Data{}, err
+		}
 	}
 
 	return email.Data{
@@ -310,6 +319,8 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 	switch e.EventKind {
 	case hub.RepositoryTrackingErrors:
 		eventKindStr = "repository.tracking-errors"
+	case hub.RepositoryOwnershipClaim:
+		eventKindStr = "repository.ownership-claim"
 	}
 
 	return &hub.RepositoryNotificationTemplateData{

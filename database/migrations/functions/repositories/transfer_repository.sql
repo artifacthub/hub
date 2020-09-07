@@ -39,6 +39,17 @@ begin
         raise insufficient_privilege;
     end if;
 
+    -- Register repository ownership claim event if needed
+    -- We need to store the repository subscriptors before the transfer so that
+    -- we can notify them afterwards.
+    if p_ownership_claim then
+        insert into event (repository_id, event_kind_id, data)
+        select repository_id, 3, json_build_object(
+            'subscriptors', get_repository_subscriptors(repository_id, 3)
+        )
+        from repository where name = p_repository_name;
+    end if;
+
     -- Transfer repository ownership
     if p_org_name is null then
         update repository set

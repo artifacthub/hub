@@ -122,6 +122,8 @@ func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.Use
 	case hub.RepositoryTrackingErrors:
 		query := "select get_repository_subscriptors($1::uuid, $2::integer)"
 		err = m.db.QueryRow(ctx, query, e.RepositoryID, e.EventKind).Scan(&dataJSON)
+	case hub.RepositoryOwnershipClaim:
+		dataJSON, _ = json.Marshal(e.Data["subscriptors"])
 	default:
 		return nil, nil
 	}
