@@ -1,6 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
+import moment from 'moment';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
 import { FiDownload, FiPlus } from 'react-icons/fi';
@@ -304,6 +305,12 @@ const PackageView = (props: Props) => {
     }
   };
 
+  const createdAt = () => (
+    <span className={`d-block d-md-none text-muted text-nowrap ${styles.date}`}>
+      Updated {moment(detail!.createdAt * 1000).fromNow()}
+    </span>
+  );
+
   return (
     <>
       {!isUndefined(props.searchUrlReferer) && (
@@ -385,17 +392,18 @@ const PackageView = (props: Props) => {
 
                       <div className={`ml-3 flex-grow-1 ${styles.wrapperWithContentEllipsis}`}>
                         <div className={`d-flex flex-row align-items-center ${styles.titleWrapper}`}>
-                          <div className="h3 mb-0 text-nowrap text-truncate">{detail.displayName || detail.name}</div>
+                          <div className={`h3 mb-0 text-nowrap text-truncate ${styles.title}`}>
+                            {detail.displayName || detail.name}
+                          </div>
                           <div className="d-none d-md-flex ml-3">{getBadges(false, 'mt-1')}</div>
                         </div>
 
-                        <div className="d-block d-md-none text-truncate w-100">
+                        <div className={`d-flex d-md-none text-truncate mt-2 w-100 ${styles.mobileSubtitle}`}>
+                          <small className="text-muted text-uppercase">Repo: </small>
+                          <div className={`mx-1 d-inline ${styles.mobileIcon}`}>
+                            <RepositoryIcon kind={detail.repository.kind} className={styles.repoIcon} />
+                          </div>
                           <span className={`text-dark d-inline-block text-truncate mw-100 ${styles.mobileVersion}`}>
-                            {detail.repository.userAlias ||
-                              detail.repository.organizationDisplayName ||
-                              detail.repository.organizationName}
-                            <span className="px-1">/</span>
-                            <RepositoryIcon kind={detail.repository.kind} className={`mr-1 ${styles.repoIcon}`} />
                             {detail.repository.displayName || detail.repository.name}
                           </span>
                         </div>
@@ -449,11 +457,19 @@ const PackageView = (props: Props) => {
 
                   <p className={`mb-0 ${styles.description}`}>{detail.description}</p>
 
+                  <div className="d-flex flex-wrap d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
+
+                  <div className={`position-absolute d-flex flex-row align-items-center ${styles.optsWrapper}`}>
+                    {createdAt()}
+                    <StarButton packageId={detail.packageId} />
+                    <SubscriptionsButton packageId={detail.packageId} />
+                  </div>
+
                   <div className="d-flex align-items-center justify-content-between flex-wrap d-md-none">
-                    <div className="d-flex mt-3">
-                      <div className="mr-2">
+                    <div className="d-flex w-100 mt-3">
+                      <div className="pr-1 w-50">
                         <Modal
-                          buttonType="btn-outline-secondary"
+                          buttonType="btn-outline-secondary btn-sm"
                           buttonContent={
                             <>
                               <FiPlus className="mr-2" />
@@ -474,16 +490,9 @@ const PackageView = (props: Props) => {
                         </Modal>
                       </div>
 
-                      <div>{InstallationModal(true, 'btn-outline-secondary')}</div>
+                      <div className="pl-1 w-50">{InstallationModal(true, 'btn-outline-secondary btn-sm')}</div>
                     </div>
                   </div>
-
-                  <div className={`position-absolute d-flex flex-row ${styles.optsWrapper}`}>
-                    <StarButton packageId={detail.packageId} />
-                    <SubscriptionsButton packageId={detail.packageId} />
-                  </div>
-
-                  <div className="d-flex d-md-none">{getBadges(true, 'mt-3 mt-md-0')}</div>
                 </div>
               </div>
             )}

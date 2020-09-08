@@ -47,8 +47,10 @@
   height: 16px;
 }
 
-.headingWrapper:hover .headingLink {
-  opacity: 1;
+@media (hover: hover) {
+  .headingWrapper:hover .headingLink {
+    opacity: 1;
+  }
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -64,15 +66,15 @@
   }
 
   .header h1 {
-    font-size: 1.65rem;
+    font-size: 1.35rem;
   }
 
   .header h2 {
-    font-size: 1.4rem;
+    font-size: 1.25rem;
   }
 
   .header h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .header h4 {

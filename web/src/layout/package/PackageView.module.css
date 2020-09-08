@@ -41,6 +41,11 @@
   line-height: 20px;
 }
 
+.mobileSubtitle {
+  font-size: 90%;
+  line-height: 1rem;
+}
+
 .repoLabel {
   top: -2px;
 }
@@ -88,14 +93,30 @@
   padding-right: 15px;
 }
 
+.mobileIcon {
+  width: 18px;
+}
+
 .repoIcon {
   height: 16px;
   width: auto;
   margin-top: -6px;
 }
 
+.tinyIcon {
+  font-size: 0.75rem;
+}
+
+.tinyIcon svg {
+  vertical-align: baseline;
+}
+
 .mw50 {
   max-width: 50%;
+}
+
+.date {
+  font-size: 70%;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -132,6 +153,11 @@
   .deprecatedBadge {
     font-size: 0.6rem !important;
   }
+
+  .optsWrapper {
+    justify-content: space-between;
+    padding-right: 0;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -141,7 +167,20 @@
 }
 
 @media only screen and (max-width: 575.98px) {
+  .jumbotron {
+    padding: 2rem 0 !important;
+  }
+
+  .title {
+    font-size: 1.15rem !important;
+  }
+
   .codeWrapper {
     margin-left: 15px;
+  }
+
+  .repoIcon {
+    height: 14px;
+    margin-top: -3px;
   }
 }

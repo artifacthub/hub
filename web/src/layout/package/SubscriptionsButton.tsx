@@ -26,13 +26,9 @@ const SubscriptionsButton = (props: Props) => {
   const ref = useRef(null);
   useOutsideClick([ref], openStatus, () => setOpenStatus(false));
 
-  const getNotificationTitle = (kind: EventKind): string => {
-    let title = '';
+  const getNotification = (kind: EventKind): SubscriptionItem | undefined => {
     const notif = PACKAGE_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
-    if (!isUndefined(notif)) {
-      title = notif.title;
-    }
-    return title;
+    return notif;
   };
 
   const updateOptimisticallyActiveSubscriptions = (kind: EventKind, isActive: boolean) => {
@@ -110,11 +106,14 @@ const SubscriptionsButton = (props: Props) => {
       setOpenStatus(false);
     } catch (err) {
       if (err.kind !== ErrorKind.Unauthorized) {
+        const notif = getNotification(kind);
+        const title = !isUndefined(notif) ? notif.title : '';
+
         alertDispatcher.postAlert({
           type: 'danger',
-          message: `An error occurred ${isActive ? 'unsubscribing from' : 'subscribing to'} ${getNotificationTitle(
-            kind
-          )} notification, please try again later.`,
+          message: `An error occurred ${
+            isActive ? 'unsubscribing from' : 'subscribing to'
+          } ${title} notification, please try again later.`,
         });
         getSubscriptions(true); // Get subscriptions if changeSubscription fails
       }
@@ -126,7 +125,7 @@ const SubscriptionsButton = (props: Props) => {
   }
 
   return (
-    <div className="position-relative ml-3">
+    <div className="d-none d-md-block position-relative ml-3">
       <button
         data-testid="subscriptionsBtn"
         className="btn p-0 position-relative"
