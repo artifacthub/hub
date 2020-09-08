@@ -103,6 +103,7 @@ type RepositoryManager interface {
 	GetAllJSON(ctx context.Context) ([]byte, error)
 	GetByID(ctx context.Context, repositorID string) (*Repository, error)
 	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
+	GetByKindJSON(ctx context.Context, kind RepositoryKind) ([]byte, error)
 	GetByName(ctx context.Context, name string) (*Repository, error)
 	GetMetadata(mdFile string) (*RepositoryMetadata, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)

@@ -381,31 +381,39 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    kind:
-                      $ref: "#/components/schemas/RepositoryKind"
-                    name:
-                      type: string
-                      example: repo1
-                    display_name:
-                      type: string
-                      example: Repo 1
-                    user_alias:
-                      type: string
-                      example: jdoe
-                    organization_name:
-                      type: string
-                      example: org1
-                    organization_display_name:
-                      type: string
-                      example: Organization 1
+                  $ref: "#/components/schemas/RepositoryData"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  /repositories/{^helm$|^falco$|^opa$|^olm$}:
+    get:
+      tags:
+        - Repositories
+      security:
+        - ApiKeyAuth: []
+        - CookieAuth: []
+      summary: Get all available repositories of the provided kind
+      parameters:
+        - $ref: "#/components/parameters/RepoKindParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RepositoryData"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
   /repositories/user:
     get:
       tags:
@@ -1975,38 +1983,7 @@ components:
         created_at:
           type: integer
         repository:
-          type: object
-          properties:
-            repository_id:
-              type: string
-              format: uuid
-            url:
-              type: string
-              nullable: false
-              format: uri
-              example: "http://repo-url"
-            kind:
-              $ref: "#/components/schemas/RepositoryKind"
-            name:
-              type: string
-              nullable: false
-              example: repo1
-            display_name:
-              type: string
-              example: Repository 1
-            user_alias:
-              type: string
-              example: jdoe
-            organization_name:
-              type: string
-              example: org1
-            organization_display_name:
-              type: string
-              example: Organization 1
-            verified_publisher:
-              type: boolean
-            official:
-              type: boolean
+          $ref: "#/components/schemas/RepositoryData"
           nullable: false
     Repository:
       allOf:
@@ -2035,6 +2012,19 @@ components:
           * `1` - Falco rules
           * `2` - OPA policies
           * `3` - OLM operators
+    RepositoryKindParam:
+      type: string
+      enum:
+        - helm
+        - opa
+        - falco
+        - olm
+      description: |
+        Repository kind name:
+        * `helm` - Helm charts
+        * `falco` - Falco rules
+        * `opa` - OPA policies
+        * `olm` - OLM operators
     RepositorySummary:
       type: object
       properties:
@@ -2057,6 +2047,39 @@ components:
       required:
         - name
         - url
+    RepositoryData:
+      type: object
+      properties:
+        repository_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          nullable: false
+          format: uri
+          example: "http://repo-url"
+        kind:
+          $ref: "#/components/schemas/RepositoryKind"
+        name:
+          type: string
+          nullable: false
+          example: repo1
+        display_name:
+          type: string
+          example: Repository 1
+        user_alias:
+          type: string
+          example: jdoe
+        organization_name:
+          type: string
+          example: org1
+        organization_display_name:
+          type: string
+          example: Organization 1
+        verified_publisher:
+          type: boolean
+        official:
+          type: boolean
     Organization:
       allOf:
         - $ref: "#/components/schemas/OrganizationSummary"
@@ -2375,6 +2398,13 @@ components:
         example: pkg1
       required: true
       description: Package name
+    RepoKindParam:
+      in: path
+      name: ^helm$|^falco$|^opa$|^olm$
+      schema:
+        $ref: "#/components/schemas/RepositoryKindParam"
+      required: true
+      description: Package kind name
     RepoNameParam:
       in: path
       name: repoName
