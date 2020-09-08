@@ -719,6 +719,33 @@ func TestGetByKind(t *testing.T) {
 	db.AssertExpectations(t)
 }
 
+func TestGetByKindJSON(t *testing.T) {
+	dbQuery := "select get_repositories_by_kind($1::int)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, hub.OLM).Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(cfg, db)
+
+		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("all repositories data returned successfully", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, hub.OLM).Return([]byte("dataJSON"), nil)
+		m := NewManager(cfg, db)
+
+		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetByName(t *testing.T) {
 	dbQuery := "select get_repository_by_name($1::text)"
 	ctx := context.Background()

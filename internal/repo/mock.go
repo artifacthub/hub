@@ -65,6 +65,13 @@ func (m *ManagerMock) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([
 	return data, args.Error(1)
 }
 
+// GetByKindJSON implements the RepositoryManager interface.
+func (m *ManagerMock) GetByKindJSON(ctx context.Context, kind hub.RepositoryKind) ([]byte, error) {
+	args := m.Called(ctx, kind)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetByName implements the RepositoryManager interface.
 func (m *ManagerMock) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
 	args := m.Called(ctx, name)

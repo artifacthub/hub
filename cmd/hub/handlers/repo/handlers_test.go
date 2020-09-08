@@ -370,7 +370,7 @@ func TestGetAll(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
 		assert.Equal(t, "application/json", h.Get("Content-Type"))
-		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("dataJSON"), data)
 		hw.rm.AssertExpectations(t)
 	})
@@ -383,6 +383,66 @@ func TestGetAll(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.rm.On("GetAllJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
 		hw.h.GetAll(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
+	})
+}
+
+func TestGetByKind(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"kind"},
+			Values: []string{"olm"},
+		},
+	}
+
+	t.Run("invalid kind provided", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+
+		hw := newHandlersWrapper()
+		hw.h.GetByKind(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("get repositories by kind succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return([]byte("dataJSON"), nil)
+		hw.h.GetByKind(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(helpers.DefaultAPICacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.rm.AssertExpectations(t)
+	})
+
+	t.Run("error getting repositories by kind", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.h.GetByKind(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

@@ -256,6 +256,12 @@ func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hu
 	return r, err
 }
 
+// GetByKindJSON returns all available repositories of the provided kind as a
+// json array, which is built by the database.
+func (m *Manager) GetByKindJSON(ctx context.Context, kind hub.RepositoryKind) ([]byte, error) {
+	return m.dbQueryJSON(ctx, "select get_repositories_by_kind($1::int)", kind)
+}
+
 // GetByName returns the repository identified by the name provided.
 func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
 	// Validate input

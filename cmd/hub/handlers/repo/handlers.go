@@ -92,11 +92,29 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) GetAll(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.repoManager.GetAllJSON(r.Context())
 	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetAllJSON").Send()
+		h.logger.Error().Err(err).Str("method", "GetAll").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
-	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
+// GetByKind is an http handler that returns all the repositories available of
+// the kind provided.
+func (h *Handlers) GetByKind(w http.ResponseWriter, r *http.Request) {
+	kind, err := hub.GetKindFromName(chi.URLParam(r, "kind"))
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetByKind").Msg("invalid kind")
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	dataJSON, err := h.repoManager.GetByKindJSON(r.Context(), kind)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetByKind").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // GetOwnedByOrg is an http handler that returns the repositories owned by the

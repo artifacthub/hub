@@ -172,6 +172,7 @@ func (h *Handlers) setupRouter() {
 		r.Route("/repositories", func(r chi.Router) {
 			r.Use(h.Users.RequireLogin)
 			r.Get("/", h.Repositories.GetAll)
+			r.Get("/{kind:^helm$|^falco$|^olm$|^opa$}", h.Repositories.GetByKind)
 			r.Route("/user", func(r chi.Router) {
 				r.Get("/", h.Repositories.GetOwnedByUser)
 				r.Post("/", h.Repositories.Add)
