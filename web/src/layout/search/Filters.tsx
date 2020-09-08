@@ -31,9 +31,11 @@ interface Props {
   onTsQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
+  onVerifiedPublisherChange: () => void;
   onResetFilters: () => void;
   deprecated?: boolean | null;
   operators?: boolean | null;
+  verifiedPublisher?: boolean | null;
 }
 
 const Filters = (props: Props) => {
@@ -149,7 +151,11 @@ const Filters = (props: Props) => {
       {props.visibleTitle && (
         <div className="d-flex flex-row align-items-center justify-content-between pb-2 mb-4 border-bottom">
           <div className={`h6 text-uppercase mb-0 ${styles.title}`}>Filters</div>
-          {(!isEmpty(props.activeFilters) || props.deprecated || props.operators || !isEmpty(props.activeTsQuery)) && (
+          {(!isEmpty(props.activeFilters) ||
+            props.deprecated ||
+            props.operators ||
+            props.verifiedPublisher ||
+            !isEmpty(props.activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
               <button
@@ -173,6 +179,17 @@ const Filters = (props: Props) => {
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
+          <CheckBox
+            name="verifiedPublisher"
+            value="verifiedPublisher"
+            className={styles.checkbox}
+            label="Verified publishers"
+            checked={
+              !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher
+            }
+            onChange={props.onVerifiedPublisherChange}
+          />
+
           <CheckBox
             name="operators"
             value="operators"

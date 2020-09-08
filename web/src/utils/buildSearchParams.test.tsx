@@ -64,6 +64,15 @@ const tests: Test[] = [
       deprecated: true,
     },
   },
+  {
+    query: '?page=1&verified_publisher=true',
+    result: {
+      pageNumber: 1,
+      filters: {},
+      verifiedPublisher: true,
+      deprecated: false,
+    },
+  },
 ];
 
 describe('buildSearchParams', () => {

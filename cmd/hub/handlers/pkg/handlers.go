@@ -282,6 +282,16 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		kinds = append(kinds, hub.RepositoryKind(kind))
 	}
 
+	// Only display content from verified publishers
+	var verifiedPublisher bool
+	if qs.Get("verified_publisher") != "" {
+		var err error
+		verifiedPublisher, err = strconv.ParseBool(qs.Get("verified_publisher"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid verified publisher: %s", qs.Get("verified_publisher"))
+		}
+	}
+
 	// Only display operators
 	var operators bool
 	if qs.Get("operators") != "" {
@@ -303,17 +313,18 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	}
 
 	return &hub.SearchPackageInput{
-		Limit:           limit,
-		Offset:          offset,
-		Facets:          facets,
-		TsQueryWeb:      qs.Get("ts_query_web"),
-		TsQuery:         qs.Get("ts_query"),
-		Users:           qs["user"],
-		Orgs:            qs["org"],
-		Repositories:    qs["repo"],
-		RepositoryKinds: kinds,
-		Operators:       operators,
-		Deprecated:      deprecated,
+		Limit:             limit,
+		Offset:            offset,
+		Facets:            facets,
+		TsQueryWeb:        qs.Get("ts_query_web"),
+		TsQuery:           qs.Get("ts_query"),
+		Users:             qs["user"],
+		Orgs:              qs["org"],
+		Repositories:      qs["repo"],
+		RepositoryKinds:   kinds,
+		VerifiedPublisher: verifiedPublisher,
+		Operators:         operators,
+		Deprecated:        deprecated,
 	}, nil
 }
 

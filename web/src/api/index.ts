@@ -196,6 +196,9 @@ export const API = {
     if (!isUndefined(query.operators) && query.operators) {
       q.set('operators', 'true');
     }
+    if (!isUndefined(query.verifiedPublisher) && query.verifiedPublisher) {
+      q.set('verified_publisher', 'true');
+    }
     return apiFetch(`${API_BASE_URL}/packages/search?${q.toString()}`);
   },
 

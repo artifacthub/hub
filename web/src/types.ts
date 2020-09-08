@@ -118,6 +118,7 @@ export interface SearchFiltersURL {
   pageNumber: number;
   deprecated?: boolean | null;
   operators?: boolean | null;
+  verifiedPublisher?: boolean | null;
 }
 
 export interface SearchQuery {
@@ -128,6 +129,7 @@ export interface SearchQuery {
   };
   deprecated?: boolean | null;
   operators?: boolean | null;
+  verifiedPublisher?: boolean | null;
   limit: number;
   offset: number;
   total?: number;
