@@ -5,6 +5,7 @@
     "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
     "kind": 3,
     "verifiedPublisher": false,
+    "official": false,
     "userAlias": "demo",
     "organizationName": null
   },
@@ -14,6 +15,7 @@
     "url": "https://charts.teamhephy.com/",
     "kind": 0,
     "verifiedPublisher": false,
+    "official": false,
     "userAlias": "demo",
     "organizationName": null
   },
@@ -23,6 +25,7 @@
     "url": "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco",
     "kind": 1,
     "verifiedPublisher": true,
+    "official": false,
     "userAlias": "demo",
     "organizationName": null
   }

@@ -28,6 +28,7 @@ select is(
         "url": "https://repo1.com",
         "kind": 0,
         "verified_publisher": false,
+        "official": false,
         "user_alias": "user1",
         "organization_name": null,
         "last_tracking_errors": "error1\\nerror2\\n"

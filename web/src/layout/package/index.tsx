@@ -30,6 +30,7 @@ import Label from '../common/Label';
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
 import NoData from '../common/NoData';
+import OfficialBadge from '../common/OfficialBadge';
 import OrganizationInfo from '../common/OrganizationInfo';
 import RepositoryIcon from '../common/RepositoryIcon';
 import RepositoryInfo from '../common/RepositoryInfo';
@@ -70,7 +71,7 @@ const PackageView = (props: Props) => {
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher } =
+  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher, official } =
     props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string>(null);
@@ -255,13 +256,16 @@ const PackageView = (props: Props) => {
     return resources;
   };
 
-  const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
+  const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
-      {withVerified && (
-        <VerifiedPublisherBadge
-          verifiedPublisher={detail!.repository.verifiedPublisher}
-          className={`d-inline mr-3 ${extraStyle}`}
-        />
+      {withRepoInfo && (
+        <>
+          <OfficialBadge official={detail!.repository.official} className={`d-inline mr-3 ${extraStyle}`} />
+          <VerifiedPublisherBadge
+            verifiedPublisher={detail!.repository.verifiedPublisher}
+            className={`d-inline mr-3 ${extraStyle}`}
+          />
+        </>
       )}
       {detail!.deprecated && (
         <Label
@@ -318,6 +322,7 @@ const PackageView = (props: Props) => {
                   deprecated: deprecated,
                   operators: operators,
                   verifiedPublisher: verifiedPublisher,
+                  official: official,
                 }),
                 state: { fromDetail: true },
               });
@@ -412,6 +417,7 @@ const PackageView = (props: Props) => {
                                     deprecated: detail.deprecated || false,
                                     operators: detail.isOperator || false,
                                     verifiedPublisher: detail.repository.verifiedPublisher || false,
+                                    official: detail.repository.official || false,
                                   }),
                                 }}
                               >

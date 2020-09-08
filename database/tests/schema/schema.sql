@@ -134,6 +134,7 @@ select columns_are('repository', array[
     'last_tracking_ts',
     'last_tracking_errors',
     'verified_publisher',
+    'official',
     'repository_kind_id',
     'user_id',
     'organization_id'

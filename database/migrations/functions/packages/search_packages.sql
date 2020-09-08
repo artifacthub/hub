@@ -44,6 +44,7 @@ begin
             r.url as repository_url,
             r.display_name as repository_display_name,
             r.verified_publisher,
+            r.official,
             u.alias as user_alias,
             o.name as organization_name,
             o.display_name as organization_display_name
@@ -65,6 +66,12 @@ begin
         and
             case when p_input ? 'verified_publisher' and (p_input->>'verified_publisher')::boolean = true then
                 r.verified_publisher = true
+            else
+                true
+            end
+        and
+            case when p_input ? 'official' and (p_input->>'official')::boolean = true then
+                r.official = true
             else
                 true
             end
@@ -123,6 +130,7 @@ begin
                             'display_name', repository_display_name,
                             'url', repository_url,
                             'verified_publisher', verified_publisher,
+                            'official', official,
                             'user_alias', user_alias,
                             'organization_name', organization_name,
                             'organization_display_name', organization_display_name

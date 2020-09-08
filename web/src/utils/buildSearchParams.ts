@@ -2,7 +2,7 @@ import isNull from 'lodash/isNull';
 
 import { SearchFiltersURL } from '../types';
 
-const SPECIAL_KEYS = ['ts_query_web', 'ts_query', 'page', 'deprecated', 'operators', 'verified_publisher'];
+const SPECIAL_KEYS = ['ts_query_web', 'ts_query', 'page', 'deprecated', 'operators', 'verified_publisher', 'official'];
 
 interface F {
   [key: string]: string[];
@@ -28,5 +28,6 @@ export default (query: string): SearchFiltersURL => {
     deprecated: p.has('deprecated') ? p.get('deprecated') === 'true' : false,
     operators: p.has('operators') ? p.get('operators') === 'true' : undefined,
     verifiedPublisher: p.has('verified_publisher') ? p.get('verified_publisher') === 'true' : undefined,
+    official: p.has('official') ? p.get('official') === 'true' : undefined,
   };
 };

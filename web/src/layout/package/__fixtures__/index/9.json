@@ -19,6 +19,7 @@
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
     "userAlias": null,
-    "verifiedPublisher": true
+    "verifiedPublisher": true,
+    "official": false
   }
 }

@@ -32,10 +32,12 @@ interface Props {
   onDeprecatedChange: () => void;
   onOperatorsChange: () => void;
   onVerifiedPublisherChange: () => void;
+  onOfficialChange: () => void;
   onResetFilters: () => void;
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
+  official?: boolean | null;
 }
 
 const Filters = (props: Props) => {
@@ -155,6 +157,7 @@ const Filters = (props: Props) => {
             props.deprecated ||
             props.operators ||
             props.verifiedPublisher ||
+            props.official ||
             !isEmpty(props.activeTsQuery)) && (
             <div className={`d-flex align-items-center ${styles.resetBtnWrapper}`}>
               <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
@@ -179,6 +182,15 @@ const Filters = (props: Props) => {
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
+          <CheckBox
+            name="official"
+            value="official"
+            className={styles.checkbox}
+            label="Official repositories"
+            checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
+            onChange={props.onOfficialChange}
+          />
+
           <CheckBox
             name="verifiedPublisher"
             value="verifiedPublisher"

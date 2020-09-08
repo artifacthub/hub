@@ -6,6 +6,7 @@
   background-color: var(--white);
   border: 2px solid var(--color-1-10);
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
+  margin: 0.4rem 0;
 }
 
 .image {
@@ -80,6 +81,11 @@
   -webkit-box-orient: vertical;
 }
 
+.lastLine {
+  position: relative;
+  top: -1px;
+}
+
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;
@@ -91,6 +97,7 @@
     min-width: 60px;
     width: 60px;
     height: 60px;
+    margin: 0;
   }
 
   .description {

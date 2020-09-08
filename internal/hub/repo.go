@@ -89,6 +89,7 @@ type Repository struct {
 	OrganizationDisplayName string         `json:"organization_display_name"`
 	LastTrackingErrors      string         `json:"last_tracking_errors"`
 	VerifiedPublisher       bool           `json:"verified_publisher"`
+	Official                bool           `json:"official"`
 }
 
 // RepositoryManager describes the methods an RepositoryManager

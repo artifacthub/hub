@@ -527,21 +527,24 @@ func TestGetAll(t *testing.T) {
         "display_name": "Repo 1",
 		"url": "https://repo1.com",
 		"kind": 0,
-		"verified_publisher": true
+		"verified_publisher": true,
+		"official": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
 		"url": "https://repo2.com",
 		"kind": 0,
-		"verified_publisher": true
+		"verified_publisher": true,
+		"official": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000003",
         "name": "repo3",
         "display_name": "Repo 3",
 		"url": "https://repo3.com",
 		"kind": 1,
-		"verified_publisher": true
+		"verified_publisher": true,
+		"official": true
     }]
 	`), nil)
 	m := NewManager(cfg, db)
@@ -555,18 +558,21 @@ func TestGetAll(t *testing.T) {
 	assert.Equal(t, "https://repo1.com", r[0].URL)
 	assert.Equal(t, hub.Helm, r[0].Kind)
 	assert.True(t, r[0].VerifiedPublisher)
+	assert.True(t, r[0].Official)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
 	assert.Equal(t, "repo2", r[1].Name)
 	assert.Equal(t, "Repo 2", r[1].DisplayName)
 	assert.Equal(t, "https://repo2.com", r[1].URL)
 	assert.Equal(t, hub.Helm, r[1].Kind)
 	assert.True(t, r[1].VerifiedPublisher)
+	assert.True(t, r[1].Official)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000003", r[2].RepositoryID)
 	assert.Equal(t, "repo3", r[2].Name)
 	assert.Equal(t, "Repo 3", r[2].DisplayName)
 	assert.Equal(t, "https://repo3.com", r[2].URL)
 	assert.Equal(t, hub.Falco, r[2].Kind)
-	assert.True(t, r[1].VerifiedPublisher)
+	assert.True(t, r[2].VerifiedPublisher)
+	assert.True(t, r[2].Official)
 	db.AssertExpectations(t)
 }
 
@@ -648,7 +654,8 @@ func TestGetByID(t *testing.T) {
 			"display_name": "Repo 1",
 			"url": "https://repo1.com",
 			"kind": 0,
-			"verified_publisher": true
+			"verified_publisher": true,
+			"official": true
 		}
 		`), nil)
 		m := NewManager(cfg, db)
@@ -661,6 +668,7 @@ func TestGetByID(t *testing.T) {
 		assert.Equal(t, "https://repo1.com", r.URL)
 		assert.Equal(t, hub.Helm, r.Kind)
 		assert.True(t, r.VerifiedPublisher)
+		assert.True(t, r.Official)
 		db.AssertExpectations(t)
 	})
 }
@@ -677,14 +685,16 @@ func TestGetByKind(t *testing.T) {
         "display_name": "Repo 1",
 		"url": "https://repo1.com",
 		"kind": 0,
-		"verified_publisher": true
+		"verified_publisher": true,
+		"official": true
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
         "display_name": "Repo 2",
 		"url": "https://repo2.com",
 		"kind": 0,
-		"verified_publisher": true
+		"verified_publisher": true,
+		"official": true
     }]
 	`), nil)
 	m := NewManager(cfg, db)
@@ -698,12 +708,14 @@ func TestGetByKind(t *testing.T) {
 	assert.Equal(t, "https://repo1.com", r[0].URL)
 	assert.Equal(t, hub.Helm, r[0].Kind)
 	assert.True(t, r[0].VerifiedPublisher)
+	assert.True(t, r[0].Official)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000002", r[1].RepositoryID)
 	assert.Equal(t, "repo2", r[1].Name)
 	assert.Equal(t, "Repo 2", r[1].DisplayName)
 	assert.Equal(t, "https://repo2.com", r[1].URL)
 	assert.Equal(t, hub.Helm, r[1].Kind)
 	assert.True(t, r[1].VerifiedPublisher)
+	assert.True(t, r[1].Official)
 	db.AssertExpectations(t)
 }
 
@@ -726,7 +738,8 @@ func TestGetByName(t *testing.T) {
 			"display_name": "Repo 1",
 			"url": "https://repo1.com",
 			"kind": 0,
-			"verified_publisher": true
+			"verified_publisher": true,
+			"official": true
 		}
 		`), nil)
 		m := NewManager(cfg, db)
@@ -739,6 +752,7 @@ func TestGetByName(t *testing.T) {
 		assert.Equal(t, "https://repo1.com", r.URL)
 		assert.Equal(t, hub.Helm, r.Kind)
 		assert.True(t, r.VerifiedPublisher)
+		assert.True(t, r.Official)
 		db.AssertExpectations(t)
 	})
 

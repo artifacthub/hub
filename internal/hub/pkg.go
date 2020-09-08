@@ -130,6 +130,7 @@ type SearchPackageInput struct {
 	Repositories      []string         `json:"repositories,omitempty"`
 	RepositoryKinds   []RepositoryKind `json:"repository_kinds,omitempty"`
 	VerifiedPublisher bool             `json:"verified_publisher"`
+	Official          bool             `json:"official"`
 	Operators         bool             `json:"operators"`
 	Deprecated        bool             `json:"deprecated"`
 }

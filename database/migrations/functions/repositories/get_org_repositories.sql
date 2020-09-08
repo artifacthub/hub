@@ -10,6 +10,7 @@ returns setof json as $$
         'url', r.url,
         'kind', r.repository_kind_id,
         'verified_publisher', verified_publisher,
+        'official', r.official,
         'last_tracking_ts', floor(extract(epoch from r.last_tracking_ts)),
         'last_tracking_errors', r.last_tracking_errors
     )), '[]')

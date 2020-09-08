@@ -8,7 +8,8 @@ returns setof json as $$
         'display_name', display_name,
         'url', url,
         'kind', repository_kind_id,
-        'verified_publisher', verified_publisher
+        'verified_publisher', verified_publisher,
+        'official', official
     )), '[]')
     from repository
     where repository_kind_id = p_kind;

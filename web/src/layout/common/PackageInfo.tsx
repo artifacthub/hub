@@ -11,6 +11,7 @@ import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
 import Image from './Image';
 import Label from './Label';
+import OfficialBadge from './OfficialBadge';
 import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
 import RepositoryIcon from './RepositoryIcon';
@@ -48,13 +49,16 @@ const PackageInfo = (props: Props) => {
     </div>
   );
 
-  const getBadges = (withVerified: boolean, extraStyle?: string): JSX.Element => (
+  const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
-      {withVerified && (
-        <VerifiedPublisherBadge
-          verifiedPublisher={props.package.repository.verifiedPublisher}
-          className={`mr-3 d-inline ${extraStyle}`}
-        />
+      {withRepoInfo && (
+        <>
+          <OfficialBadge official={props.package.repository.official} className={`mr-3 d-inline ${extraStyle}`} />
+          <VerifiedPublisherBadge
+            verifiedPublisher={props.package.repository.verifiedPublisher}
+            className={`mr-3 d-inline ${extraStyle}`}
+          />
+        </>
       )}
       {props.package.deprecated && (
         <Label
@@ -131,63 +135,71 @@ const PackageInfo = (props: Props) => {
               </div>
             </div>
 
-            <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
-              <RepositoryInfo
-                repository={props.package.repository}
-                deprecated={props.package.deprecated}
-                className="d-inline d-md-none text-truncate w-100"
-                repoLabelClassName="d-none"
-              />
-
-              <div className="d-none d-md-flex flex-row align-items-baseline w-100">
-                <div className={`d-flex flex-row align-items-baseline text-truncate ${styles.mx50}`}>
-                  {!isUndefined(props.package.repository.organizationName) &&
-                    props.package.repository.organizationName && (
-                      <OrganizationInfo
-                        className="mr-0 d-flex flex-row align-items-baseline mw-100"
-                        btnClassName="text-truncate mw-100"
-                        organizationName={props.package.repository.organizationName}
-                        organizationDisplayName={props.package.repository.organizationDisplayName}
-                        deprecated={props.package.deprecated}
-                        visibleLegend
-                      />
-                    )}
-
-                  {!isNull(props.package.repository.userAlias) && (
-                    <>
-                      <span className="text-muted text-uppercase mr-1">User: </span>
-                      <button
-                        data-testid="userLink"
-                        className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          history.push({
-                            pathname: '/packages/search',
-                            search: prepareQueryString({
-                              pageNumber: 1,
-                              filters: {
-                                user: [props.package.repository.userAlias!],
-                              },
-                            }),
-                          });
-                        }}
-                      >
-                        <div className="text-truncate">{props.package.repository.userAlias}</div>
-                      </button>
-                    </>
-                  )}
-                </div>
+            <div className="d-block d-md-none">
+              <div className={`card-subtitle align-items-baseline ${styles.subtitle}`}>
                 <RepositoryInfo
                   repository={props.package.repository}
                   deprecated={props.package.deprecated}
-                  className={`ml-3 d-flex flex-row align-items-baseline ${styles.mx50}`}
+                  className="d-inline d-md-none text-truncate w-100"
+                  repoLabelClassName="d-none"
+                />
+              </div>
+            </div>
+
+            <div className={`d-none d-md-block card-subtitle align-items-baseline ${styles.subtitle}`}>
+              <div className="d-flex flex-row align-items-baseline">
+                {!isUndefined(props.package.repository.organizationName) &&
+                  props.package.repository.organizationName && (
+                    <OrganizationInfo
+                      className="mr-0 d-flex flex-row align-items-baseline mw-100"
+                      btnClassName="text-truncate mw-100"
+                      organizationName={props.package.repository.organizationName}
+                      organizationDisplayName={props.package.repository.organizationDisplayName}
+                      deprecated={props.package.deprecated}
+                      visibleLegend
+                    />
+                  )}
+
+                {!isNull(props.package.repository.userAlias) && (
+                  <>
+                    <span className="text-muted text-uppercase mr-1">User: </span>
+                    <button
+                      data-testid="userLink"
+                      className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        history.push({
+                          pathname: '/packages/search',
+                          search: prepareQueryString({
+                            pageNumber: 1,
+                            filters: {
+                              user: [props.package.repository.userAlias!],
+                            },
+                          }),
+                        });
+                      }}
+                    >
+                      <div className="text-truncate">{props.package.repository.userAlias}</div>
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className={`d-none d-md-block card-subtitle align-items-baseline ${styles.subtitle}`}>
+              <div className="d-flex flex-row align-items-baseline">
+                <RepositoryInfo
+                  repository={props.package.repository}
+                  deprecated={props.package.deprecated}
+                  className={`d-flex flex-row align-items-baseline ${styles.truncateWrapper}`}
                   repoLabelClassName="d-none d-lg-inline"
                 />
               </div>
             </div>
 
-            <div className={`d-none d-md-block card-subtitle text-truncate align-items-center ${styles.subtitle}`}>
-              <div className="text-truncate mb-1">
+            <div
+              className={`d-none d-md-block card-subtitle text-truncate align-items-baseline ${styles.subtitle} ${styles.lastLine}`}
+            >
+              <div className="text-truncate">
                 <span className="text-muted text-uppercase mr-1">Version: </span>
                 {props.package.version || '-'}
 

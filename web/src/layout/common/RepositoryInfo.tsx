@@ -8,6 +8,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 import { Repository } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
+import OfficialBadge from './OfficialBadge';
 import RepositoryIcon from './RepositoryIcon';
 import styles from './RepositoryInfo.module.css';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
@@ -132,6 +133,10 @@ const RepositoryInfo = (props: Props) => {
           </button>
         </div>
       </div>
+      <OfficialBadge
+        official={props.repository.official}
+        className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+      />
       <VerifiedPublisherBadge
         verifiedPublisher={props.repository.verifiedPublisher}
         className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}

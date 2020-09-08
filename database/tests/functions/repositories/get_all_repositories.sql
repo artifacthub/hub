@@ -36,6 +36,7 @@ select is(
         "url": "https://repo1.com",
         "kind": 0,
         "verified_publisher": false,
+        "official": false,
         "user_alias": "user1",
         "organization_name": null
     }, {
@@ -45,6 +46,7 @@ select is(
         "url": "https://repo2.com",
         "kind": 0,
         "verified_publisher": false,
+        "official": false,
         "user_alias": "user1",
         "organization_name": null
     }, {
@@ -54,6 +56,7 @@ select is(
         "url": "https://repo3.com",
         "kind": 1,
         "verified_publisher": false,
+        "official": false,
         "user_alias": "user1",
         "organization_name": null
     }]'::jsonb,
