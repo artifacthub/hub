@@ -81,6 +81,7 @@ const onResetFiltersMock = jest.fn();
 const onChangeMock = jest.fn();
 const onFacetExpandableChangeMock = jest.fn();
 const onVerifiedPublisherChangeMock = jest.fn();
+const onOfficialChangeMock = jest.fn();
 
 const defaultProps = {
   activeFilters: {},
@@ -93,11 +94,13 @@ const defaultProps = {
   onDeprecatedChange: onDeprecatedChangeMock,
   onOperatorsChange: jest.fn(),
   onVerifiedPublisherChange: onVerifiedPublisherChangeMock,
+  onOfficialChange: onOfficialChangeMock,
   onResetFilters: onResetFiltersMock,
   onFacetExpandableChange: onFacetExpandableChangeMock,
   deprecated: false,
   operators: false,
   verifiedPublisher: false,
+  official: false,
 };
 
 describe('Filters', () => {
@@ -115,7 +118,7 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(17);
+      expect(getAllByTestId('checkbox')).toHaveLength(18);
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -152,13 +155,22 @@ describe('Filters', () => {
       expect(onDeprecatedChangeMock).toHaveBeenCalledTimes(1);
     });
 
-    it('calls verifiedPublisherChange mock when deprecated checkbox is clicked', () => {
+    it('calls verifiedPublisherChange mock when verified publisher checkbox is clicked', () => {
       const { getByLabelText } = render(<Filters {...defaultProps} />);
 
       const opt = getByLabelText('Verified publishers');
       expect(opt).toBeInTheDocument();
       fireEvent.click(opt);
       expect(onVerifiedPublisherChangeMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls officalChange mock when official repositories checkbox is clicked', () => {
+      const { getByLabelText } = render(<Filters {...defaultProps} />);
+
+      const opt = getByLabelText('Official repositories');
+      expect(opt).toBeInTheDocument();
+      fireEvent.click(opt);
+      expect(onOfficialChangeMock).toHaveBeenCalledTimes(1);
     });
 
     it('calls onchange mock when any checkbox is clicked', () => {

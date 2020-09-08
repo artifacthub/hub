@@ -127,161 +127,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-block d-md-none"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="card-subtitle align-items-baseline subtitle"
                           >
                             <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
-                              >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        Stable
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="mt-2 d-flex flex-row align-items-baseline"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Url: 
-                                      </small>
-                                      <div
-                                        class="text-reset urlContent labelContent"
-                                      >
-                                        <div
-                                          class="position-relative d-inline"
-                                        >
-                                          <button
-                                            class="btn btn-sm miniBtn"
-                                            data-testid="ctcBtn"
-                                            type="button"
-                                          >
-                                            <div
-                                              class="d-flex flex-row align-items-center"
-                                            >
-                                              <svg
-                                                fill="none"
-                                                height="1em"
-                                                stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                width="1em"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <rect
-                                                  height="13"
-                                                  rx="2"
-                                                  ry="2"
-                                                  width="13"
-                                                  x="9"
-                                                  y="9"
-                                                />
-                                                <path
-                                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  Stable
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-baseline text-truncate mx50"
-                            >
-                              <div
-                                class="mr-0 d-flex flex-row align-items-baseline mw-100"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <div
-                                  class="d-flex flex-row aling-items-start text-truncate"
-                                >
-                                  <div
-                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                  >
-                                    <small>
-                                      Org:
-                                    </small>
-                                  </div>
-                                  <button
-                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
-                                    data-testid="orgLink"
-                                  >
-                                    <div
-                                      class="text-truncate"
-                                    >
-                                      Helm
-                                    </div>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="d-inline d-md-none text-truncate w-100"
                             >
                               <div
                                 class="position-absolute"
@@ -394,10 +246,170 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
                         >
                           <div
-                            class="text-truncate mb-1"
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="mr-0 d-flex flex-row align-items-baseline mw-100"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Org:
+                                  </small>
+                                </div>
+                                <button
+                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline truncateWrapper"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="repoInfoDropdown"
+                                >
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="d-flex flex-column"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Repo: 
+                                        </small>
+                                        <img
+                                          alt="Icon"
+                                          class="mr-1 repoIconMini repoIcon"
+                                          src="/static/media/helm-chart.svg"
+                                        />
+                                        <div
+                                          class="text-reset labelContent"
+                                        >
+                                          Stable
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex flex-row align-items-baseline"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Url: 
+                                        </small>
+                                        <div
+                                          class="text-reset urlContent labelContent"
+                                        >
+                                          <div
+                                            class="position-relative d-inline"
+                                          >
+                                            <button
+                                              class="btn btn-sm miniBtn"
+                                              data-testid="ctcBtn"
+                                              type="button"
+                                            >
+                                              <div
+                                                class="d-flex flex-row align-items-center"
+                                              >
+                                                <svg
+                                                  fill="none"
+                                                  height="1em"
+                                                  stroke="currentColor"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  viewBox="0 0 24 24"
+                                                  width="1em"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <rect
+                                                    height="13"
+                                                    rx="2"
+                                                    ry="2"
+                                                    width="13"
+                                                    x="9"
+                                                    y="9"
+                                                  />
+                                                  <path
+                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                  />
+                                                </svg>
+                                              </div>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-baseline text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Repo:
+                                  </small>
+                                </div>
+                                <button
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Stable
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                        >
+                          <div
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -569,161 +581,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-block d-md-none"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="card-subtitle align-items-baseline subtitle"
                           >
                             <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
-                              >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        Incubator
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="mt-2 d-flex flex-row align-items-baseline"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Url: 
-                                      </small>
-                                      <div
-                                        class="text-reset urlContent labelContent"
-                                      >
-                                        <div
-                                          class="position-relative d-inline"
-                                        >
-                                          <button
-                                            class="btn btn-sm miniBtn"
-                                            data-testid="ctcBtn"
-                                            type="button"
-                                          >
-                                            <div
-                                              class="d-flex flex-row align-items-center"
-                                            >
-                                              <svg
-                                                fill="none"
-                                                height="1em"
-                                                stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                width="1em"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <rect
-                                                  height="13"
-                                                  rx="2"
-                                                  ry="2"
-                                                  width="13"
-                                                  x="9"
-                                                  y="9"
-                                                />
-                                                <path
-                                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  Incubator
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-baseline text-truncate mx50"
-                            >
-                              <div
-                                class="mr-0 d-flex flex-row align-items-baseline mw-100"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <div
-                                  class="d-flex flex-row aling-items-start text-truncate"
-                                >
-                                  <div
-                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                  >
-                                    <small>
-                                      Org:
-                                    </small>
-                                  </div>
-                                  <button
-                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
-                                    data-testid="orgLink"
-                                  >
-                                    <div
-                                      class="text-truncate"
-                                    >
-                                      Helm
-                                    </div>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="d-inline d-md-none text-truncate w-100"
                             >
                               <div
                                 class="position-absolute"
@@ -836,10 +700,170 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
                         >
                           <div
-                            class="text-truncate mb-1"
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="mr-0 d-flex flex-row align-items-baseline mw-100"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Org:
+                                  </small>
+                                </div>
+                                <button
+                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline truncateWrapper"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="repoInfoDropdown"
+                                >
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="d-flex flex-column"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Repo: 
+                                        </small>
+                                        <img
+                                          alt="Icon"
+                                          class="mr-1 repoIconMini repoIcon"
+                                          src="/static/media/helm-chart.svg"
+                                        />
+                                        <div
+                                          class="text-reset labelContent"
+                                        >
+                                          Incubator
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex flex-row align-items-baseline"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Url: 
+                                        </small>
+                                        <div
+                                          class="text-reset urlContent labelContent"
+                                        >
+                                          <div
+                                            class="position-relative d-inline"
+                                          >
+                                            <button
+                                              class="btn btn-sm miniBtn"
+                                              data-testid="ctcBtn"
+                                              type="button"
+                                            >
+                                              <div
+                                                class="d-flex flex-row align-items-center"
+                                              >
+                                                <svg
+                                                  fill="none"
+                                                  height="1em"
+                                                  stroke="currentColor"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  viewBox="0 0 24 24"
+                                                  width="1em"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <rect
+                                                    height="13"
+                                                    rx="2"
+                                                    ry="2"
+                                                    width="13"
+                                                    x="9"
+                                                    y="9"
+                                                  />
+                                                  <path
+                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                  />
+                                                </svg>
+                                              </div>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-baseline text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Repo:
+                                  </small>
+                                </div>
+                                <button
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Incubator
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                        >
+                          <div
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1011,161 +1035,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-block d-md-none"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="card-subtitle align-items-baseline subtitle"
                           >
                             <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
-                              >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        Stable
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="mt-2 d-flex flex-row align-items-baseline"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Url: 
-                                      </small>
-                                      <div
-                                        class="text-reset urlContent labelContent"
-                                      >
-                                        <div
-                                          class="position-relative d-inline"
-                                        >
-                                          <button
-                                            class="btn btn-sm miniBtn"
-                                            data-testid="ctcBtn"
-                                            type="button"
-                                          >
-                                            <div
-                                              class="d-flex flex-row align-items-center"
-                                            >
-                                              <svg
-                                                fill="none"
-                                                height="1em"
-                                                stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                width="1em"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <rect
-                                                  height="13"
-                                                  rx="2"
-                                                  ry="2"
-                                                  width="13"
-                                                  x="9"
-                                                  y="9"
-                                                />
-                                                <path
-                                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  Stable
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-baseline text-truncate mx50"
-                            >
-                              <div
-                                class="mr-0 d-flex flex-row align-items-baseline mw-100"
-                              >
-                                <div
-                                  class="position-absolute"
-                                >
-                                  <div
-                                    class="dropdown-menu dropdown-menu-left dropdown"
-                                    data-testid="orgInfoDropdown"
-                                  />
-                                </div>
-                                <div
-                                  class="d-flex flex-row aling-items-start text-truncate"
-                                >
-                                  <div
-                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                  >
-                                    <small>
-                                      Org:
-                                    </small>
-                                  </div>
-                                  <button
-                                    class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
-                                    data-testid="orgLink"
-                                  >
-                                    <div
-                                      class="text-truncate"
-                                    >
-                                      Helm
-                                    </div>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="d-inline d-md-none text-truncate w-100"
                             >
                               <div
                                 class="position-absolute"
@@ -1278,10 +1154,170 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
                         >
                           <div
-                            class="text-truncate mb-1"
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="mr-0 d-flex flex-row align-items-baseline mw-100"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="orgInfoDropdown"
+                                />
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-start text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Org:
+                                  </small>
+                                </div>
+                                <button
+                                  class="p-0 border-0 text-dark text-truncate flex-grow-1 link text-truncate mw-100"
+                                  data-testid="orgLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Helm
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline truncateWrapper"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="repoInfoDropdown"
+                                >
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="d-flex flex-column"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Repo: 
+                                        </small>
+                                        <img
+                                          alt="Icon"
+                                          class="mr-1 repoIconMini repoIcon"
+                                          src="/static/media/helm-chart.svg"
+                                        />
+                                        <div
+                                          class="text-reset labelContent"
+                                        >
+                                          Stable
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex flex-row align-items-baseline"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Url: 
+                                        </small>
+                                        <div
+                                          class="text-reset urlContent labelContent"
+                                        >
+                                          <div
+                                            class="position-relative d-inline"
+                                          >
+                                            <button
+                                              class="btn btn-sm miniBtn"
+                                              data-testid="ctcBtn"
+                                              type="button"
+                                            >
+                                              <div
+                                                class="d-flex flex-row align-items-center"
+                                              >
+                                                <svg
+                                                  fill="none"
+                                                  height="1em"
+                                                  stroke="currentColor"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  viewBox="0 0 24 24"
+                                                  width="1em"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <rect
+                                                    height="13"
+                                                    rx="2"
+                                                    ry="2"
+                                                    width="13"
+                                                    x="9"
+                                                    y="9"
+                                                  />
+                                                  <path
+                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                  />
+                                                </svg>
+                                              </div>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-baseline text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Repo:
+                                  </small>
+                                </div>
+                                <button
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    Stable
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                        >
+                          <div
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1453,144 +1489,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-block d-md-none"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="card-subtitle align-items-baseline subtitle"
                           >
                             <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
-                              >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/falco-rules.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        falco
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="mt-2 d-flex flex-row align-items-baseline"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Url: 
-                                      </small>
-                                      <div
-                                        class="text-reset urlContent labelContent"
-                                      >
-                                        repoUrl
-                                        <div
-                                          class="position-relative d-inline"
-                                        >
-                                          <button
-                                            class="btn btn-sm miniBtn"
-                                            data-testid="ctcBtn"
-                                            type="button"
-                                          >
-                                            <div
-                                              class="d-flex flex-row align-items-center"
-                                            >
-                                              <svg
-                                                fill="none"
-                                                height="1em"
-                                                stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                width="1em"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <rect
-                                                  height="13"
-                                                  rx="2"
-                                                  ry="2"
-                                                  width="13"
-                                                  x="9"
-                                                  y="9"
-                                                />
-                                                <path
-                                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  falco
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-baseline text-truncate mx50"
-                            >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                User: 
-                              </span>
-                              <button
-                                class="p-0 border-0 text-truncate text-dark mw-100 link"
-                                data-testid="userLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  user
-                                </div>
-                              </button>
-                            </div>
-                            <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="d-inline d-md-none text-truncate w-100"
                             >
                               <div
                                 class="position-absolute"
@@ -1704,10 +1609,153 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
                         >
                           <div
-                            class="text-truncate mb-1"
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                user
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline truncateWrapper"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="repoInfoDropdown"
+                                >
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="d-flex flex-column"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Repo: 
+                                        </small>
+                                        <img
+                                          alt="Icon"
+                                          class="mr-1 repoIconMini repoIcon"
+                                          src="/static/media/falco-rules.svg"
+                                        />
+                                        <div
+                                          class="text-reset labelContent"
+                                        >
+                                          falco
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex flex-row align-items-baseline"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Url: 
+                                        </small>
+                                        <div
+                                          class="text-reset urlContent labelContent"
+                                        >
+                                          repoUrl
+                                          <div
+                                            class="position-relative d-inline"
+                                          >
+                                            <button
+                                              class="btn btn-sm miniBtn"
+                                              data-testid="ctcBtn"
+                                              type="button"
+                                            >
+                                              <div
+                                                class="d-flex flex-row align-items-center"
+                                              >
+                                                <svg
+                                                  fill="none"
+                                                  height="1em"
+                                                  stroke="currentColor"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  viewBox="0 0 24 24"
+                                                  width="1em"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <rect
+                                                    height="13"
+                                                    rx="2"
+                                                    ry="2"
+                                                    width="13"
+                                                    x="9"
+                                                    y="9"
+                                                  />
+                                                  <path
+                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                  />
+                                                </svg>
+                                              </div>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-baseline text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Repo:
+                                  </small>
+                                </div>
+                                <button
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    falco
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                        >
+                          <div
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"
@@ -1873,144 +1921,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-block d-md-none"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="card-subtitle align-items-baseline subtitle"
                           >
                             <div
-                              class="position-absolute"
-                            >
-                              <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
-                              >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/opa-policies.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        opa
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="mt-2 d-flex flex-row align-items-baseline"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Url: 
-                                      </small>
-                                      <div
-                                        class="text-reset urlContent labelContent"
-                                      >
-                                        repoUrl
-                                        <div
-                                          class="position-relative d-inline"
-                                        >
-                                          <button
-                                            class="btn btn-sm miniBtn"
-                                            data-testid="ctcBtn"
-                                            type="button"
-                                          >
-                                            <div
-                                              class="d-flex flex-row align-items-center"
-                                            >
-                                              <svg
-                                                fill="none"
-                                                height="1em"
-                                                stroke="currentColor"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                viewBox="0 0 24 24"
-                                                width="1em"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                              >
-                                                <rect
-                                                  height="13"
-                                                  rx="2"
-                                                  ry="2"
-                                                  width="13"
-                                                  x="9"
-                                                  y="9"
-                                                />
-                                                <path
-                                                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                />
-                                              </svg>
-                                            </div>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  opa
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                          <div
-                            class="d-none d-md-flex flex-row align-items-baseline w-100"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-baseline text-truncate mx50"
-                            >
-                              <span
-                                class="text-muted text-uppercase mr-1"
-                              >
-                                User: 
-                              </span>
-                              <button
-                                class="p-0 border-0 text-truncate text-dark mw-100 link"
-                                data-testid="userLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  user1
-                                </div>
-                              </button>
-                            </div>
-                            <div
-                              class="ml-3 d-flex flex-row align-items-baseline mx50"
+                              class="d-inline d-md-none text-truncate w-100"
                             >
                               <div
                                 class="position-absolute"
@@ -2124,10 +2041,153 @@ exports[`StarredPackagesView renders correctly 2`] = `
                           </div>
                         </div>
                         <div
-                          class="d-none d-md-block card-subtitle text-truncate align-items-center subtitle"
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
                         >
                           <div
-                            class="text-truncate mb-1"
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <span
+                              class="text-muted text-uppercase mr-1"
+                            >
+                              User: 
+                            </span>
+                            <button
+                              class="p-0 border-0 text-truncate text-dark mw-100 link"
+                              data-testid="userLink"
+                            >
+                              <div
+                                class="text-truncate"
+                              >
+                                user1
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-baseline"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline truncateWrapper"
+                            >
+                              <div
+                                class="position-absolute"
+                              >
+                                <div
+                                  class="dropdown-menu dropdown-menu-left dropdown"
+                                  data-testid="repoInfoDropdown"
+                                >
+                                  <div
+                                    class="content"
+                                  >
+                                    <div
+                                      class="d-flex flex-column"
+                                    >
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Repo: 
+                                        </small>
+                                        <img
+                                          alt="Icon"
+                                          class="mr-1 repoIconMini repoIcon"
+                                          src="/static/media/opa-policies.svg"
+                                        />
+                                        <div
+                                          class="text-reset labelContent"
+                                        >
+                                          opa
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex flex-row align-items-baseline"
+                                      >
+                                        <small
+                                          class="text-muted text-uppercase mr-1"
+                                        >
+                                          Url: 
+                                        </small>
+                                        <div
+                                          class="text-reset urlContent labelContent"
+                                        >
+                                          repoUrl
+                                          <div
+                                            class="position-relative d-inline"
+                                          >
+                                            <button
+                                              class="btn btn-sm miniBtn"
+                                              data-testid="ctcBtn"
+                                              type="button"
+                                            >
+                                              <div
+                                                class="d-flex flex-row align-items-center"
+                                              >
+                                                <svg
+                                                  fill="none"
+                                                  height="1em"
+                                                  stroke="currentColor"
+                                                  stroke-linecap="round"
+                                                  stroke-linejoin="round"
+                                                  stroke-width="2"
+                                                  viewBox="0 0 24 24"
+                                                  width="1em"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <rect
+                                                    height="13"
+                                                    rx="2"
+                                                    ry="2"
+                                                    width="13"
+                                                    x="9"
+                                                    y="9"
+                                                  />
+                                                  <path
+                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                  />
+                                                </svg>
+                                              </div>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex flex-row aling-items-baseline text-truncate"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                >
+                                  <small>
+                                    Repo:
+                                  </small>
+                                </div>
+                                <button
+                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                  data-testid="repoLink"
+                                >
+                                  <div
+                                    class="text-truncate"
+                                  >
+                                    opa
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                        >
+                          <div
+                            class="text-truncate"
                           >
                             <span
                               class="text-muted text-uppercase mr-1"

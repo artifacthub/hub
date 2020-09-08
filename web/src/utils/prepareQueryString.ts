@@ -20,6 +20,9 @@ export default (query: SearchFiltersURL): string => {
   if (query.verifiedPublisher) {
     p.set('verified_publisher', 'true');
   }
+  if (query.official) {
+    p.set('official', 'true');
+  }
   Object.keys(query.filters).forEach((filterId: string) => {
     return query.filters[filterId].forEach((id: string) => {
       p.append(filterId, id);

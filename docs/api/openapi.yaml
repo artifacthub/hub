@@ -753,6 +753,7 @@ paths:
         - $ref: "#/components/parameters/DeprecatedParam"
         - $ref: "#/components/parameters/OperatorsParam"
         - $ref: "#/components/parameters/VerifiedPublisherParam"
+        - $ref: "#/components/parameters/OfficialParam"
       responses:
         "200":
           description: ""
@@ -811,6 +812,7 @@ paths:
                             organization_name: artifacthub
                             organization_display_name: Artifact Hub
                             verified_publisher: true
+                            official: true
                         - package_id: 3af7b6a1-adbd-41f1-ad96-e1eb3350b019
                           name: sentry-kubernetes
                           normalized_name: sentry-kubernetes
@@ -832,6 +834,7 @@ paths:
                             organization_name: helm
                             organization_display_name: Helm
                             verified_publisher: false
+                            official: false
                         - package_id: 0d38123f-fb60-41f0-bd00-76fb331bf7ed
                           name: etcd-operator
                           normalized_name: etcd-operator
@@ -853,6 +856,7 @@ paths:
                             organization_name: helm
                             organization_display_name: Helm
                             verified_publisher: false
+                            official: false
                       facets:
                         - title: Organization
                           filter_key: org
@@ -2001,6 +2005,8 @@ components:
               example: Organization 1
             verified_publisher:
               type: boolean
+            official:
+              type: boolean
           nullable: false
     Repository:
       allOf:
@@ -2044,6 +2050,10 @@ components:
           format: uri
           nullable: false
           example: "http://repourl"
+        verified_publisher:
+          type: boolean
+        official:
+          type: boolean
       required:
         - name
         - url
@@ -2259,6 +2269,13 @@ components:
         type: boolean
       required: false
       description: Whether to get only verified publisher
+    OfficialParam:
+      in: query
+      name: official
+      schema:
+        type: boolean
+      required: false
+      description: Whether to get only official repositoties
     EventKindParam:
       in: query
       name: event_kind

@@ -39,6 +39,7 @@ interface Props {
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
+  official?: boolean | null;
   fromDetail: boolean;
 }
 
@@ -115,6 +116,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -135,6 +137,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -158,6 +161,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -173,6 +177,7 @@ const SearchView = (props: Props) => {
         deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -188,6 +193,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -204,6 +210,23 @@ const SearchView = (props: Props) => {
         operators: props.operators,
         verifiedPublisher:
           !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
+        official: props.official,
+      }),
+    });
+  };
+
+  const onOfficialChange = (): void => {
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        tsQueryWeb: props.tsQueryWeb,
+        tsQuery: props.tsQuery,
+        filters: props.filters,
+        deprecated: props.deprecated,
+        operators: props.operators,
+        verifiedPublisher: props.verifiedPublisher,
+        official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
       }),
     });
   };
@@ -231,6 +254,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
   };
@@ -246,6 +270,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       }),
     });
     setScrollPosition(0);
@@ -265,6 +290,7 @@ const SearchView = (props: Props) => {
         deprecated: props.deprecated,
         operators: props.operators,
         verifiedPublisher: props.verifiedPublisher,
+        official: props.official,
       };
 
       try {
@@ -330,6 +356,7 @@ const SearchView = (props: Props) => {
     props.deprecated,
     props.operators,
     props.verifiedPublisher,
+    props.official,
     ctx.prefs.search.limit,
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -338,6 +365,7 @@ const SearchView = (props: Props) => {
     props.deprecated ||
     props.operators ||
     props.verifiedPublisher ||
+    props.official ||
     !isUndefined(props.tsQuery) ||
     !isEmpty(props.filters);
 
@@ -390,9 +418,11 @@ const SearchView = (props: Props) => {
                     deprecated={props.deprecated}
                     operators={props.operators}
                     verifiedPublisher={props.verifiedPublisher}
+                    official={props.official}
                     onDeprecatedChange={onDeprecatedChange}
                     onOperatorsChange={onOperatorsChange}
                     onVerifiedPublisherChange={onVerifiedPublisherChange}
+                    onOfficialChange={onOfficialChange}
                     onResetFilters={onResetFilters}
                     visibleTitle={false}
                   />
@@ -449,9 +479,11 @@ const SearchView = (props: Props) => {
                   deprecated={props.deprecated}
                   operators={props.operators}
                   verifiedPublisher={props.verifiedPublisher}
+                  official={props.official}
                   onDeprecatedChange={onDeprecatedChange}
                   onOperatorsChange={onOperatorsChange}
                   onVerifiedPublisherChange={onVerifiedPublisherChange}
+                  onOfficialChange={onOfficialChange}
                   onResetFilters={onResetFilters}
                   visibleTitle
                 />
@@ -612,6 +644,7 @@ const SearchView = (props: Props) => {
                             deprecated: props.deprecated,
                             operators: props.operators,
                             verifiedPublisher: props.verifiedPublisher,
+                            official: props.official,
                           }}
                           saveScrollPosition={saveScrollPosition}
                           visibleSignedBadge

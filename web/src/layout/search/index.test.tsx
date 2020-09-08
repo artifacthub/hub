@@ -187,7 +187,7 @@ describe('Search index', () => {
 
       // Desktop + mobile (sidebar)
       expect(facets).toHaveLength(2 * 3);
-      expect(options).toHaveLength(14 * 2);
+      expect(options).toHaveLength(15 * 2);
       await waitFor(() => {});
     });
 
@@ -473,7 +473,7 @@ describe('Search index', () => {
 
       expect(main).toBeInTheDocument();
       const checks = getAllByTestId('checkbox');
-      expect(checks).toHaveLength(26);
+      expect(checks).toHaveLength(28);
 
       rerender(
         <Router>
@@ -501,7 +501,7 @@ describe('Search index', () => {
       expect(noData).toHaveTextContent(
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
-      expect(checks).toHaveLength(26);
+      expect(checks).toHaveLength(28);
 
       await waitFor(() => {});
     });

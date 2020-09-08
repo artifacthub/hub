@@ -576,6 +576,9 @@ exports[`Repository index creates snapshot 2`] = `
               Not processed yet, it will be processed automatically in less than 30m
             </small>
           </div>
+          <div
+            class="mt-3 m-md-0 d-flex flex-row d-md-none"
+          />
         </li>
       </div>
     </div>

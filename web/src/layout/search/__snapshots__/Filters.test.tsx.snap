@@ -584,6 +584,33 @@ exports[`Filters creates snapshot 1`] = `
           <input
             class="custom-control-input input"
             data-testid="checkbox"
+            id="official-official"
+            name="official"
+            type="checkbox"
+            value="official"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="official-official"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                Official repositories
+              </span>
+            </div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
             id="verifiedPublisher-verifiedPublisher"
             name="verifiedPublisher"
             type="checkbox"

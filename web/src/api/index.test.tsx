@@ -1523,7 +1523,7 @@ describe('index API', () => {
           displayName: null,
           url: 'https://url.repo',
           kind: 0,
-          verified_Publisher: false,
+          verified_publisher: false,
           userAlias: null,
           organizationName: 'org1',
         };
@@ -1549,7 +1549,7 @@ describe('index API', () => {
           displayName: null,
           url: 'https://url.repo',
           kind: 0,
-          verified_Publisher: false,
+          verified_publisher: false,
           userAlias: null,
           organizationName: 'org1',
         };
@@ -1575,7 +1575,7 @@ describe('index API', () => {
           displayName: null,
           url: 'https://url.repo',
           kind: 0,
-          verified_Publisher: false,
+          verified_publisher: false,
           userAlias: 'user1',
           organizationName: null,
         };
@@ -1601,7 +1601,7 @@ describe('index API', () => {
           displayName: null,
           url: 'https://url.repo',
           kind: 0,
-          verified_Publisher: false,
+          verified_publisher: false,
           userAlias: 'user1',
           organizationName: null,
         };

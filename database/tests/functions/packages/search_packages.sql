@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(24);
+select plan(25);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -38,8 +38,8 @@ select is(
 insert into "user" (user_id, alias, email) values (:'user1ID', 'user1', 'user1@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
-insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id, verified_publisher)
-values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID', true);
+insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id, verified_publisher, official)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID', true, true);
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
@@ -237,6 +237,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -261,6 +262,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -285,6 +287,7 @@ select is(
                     "display_name": "Repo 3",
                     "url": "https://repo3.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -371,6 +374,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -395,6 +399,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -419,6 +424,7 @@ select is(
                     "display_name": "Repo 3",
                     "url": "https://repo3.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -460,6 +466,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -501,6 +508,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -515,6 +523,48 @@ select is(
         }
     }'::jsonb,
     'VerifiedPublisher: true | Package 1 expected - No facets expected'
+);
+select is(
+    search_packages('{
+        "official": true
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'Official: true | Package 1 expected - No facets expected'
 );
 select is(
     search_packages('{
@@ -544,6 +594,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -568,6 +619,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -611,6 +663,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -635,6 +688,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -713,6 +767,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -803,6 +858,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -850,6 +906,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -1100,6 +1157,7 @@ select is(
                     "display_name": "Repo 3",
                     "url": "https://repo3.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -1143,6 +1201,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -1189,6 +1248,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -1213,6 +1273,7 @@ select is(
                     "display_name": "Repo 3",
                     "url": "https://repo3.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -1259,6 +1320,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -1283,6 +1345,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
@@ -1327,6 +1390,7 @@ select is(
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
                     "verified_publisher": true,
+                    "official": true,
                     "user_alias": "user1",
                     "organization_name": null,
                     "organization_display_name": null
@@ -1391,6 +1455,7 @@ select is(
                     "display_name": "Repo 2",
                     "url": "https://repo2.com",
                     "verified_publisher": false,
+                    "official": false,
                     "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"

@@ -20,6 +20,8 @@ const repo = {
   displayName: 'Stable',
   url: 'http://repoUrl.com',
   userAlias: 'user',
+  verifiedPublisher: false,
+  official: false,
 };
 
 const defaultProps = {
@@ -110,5 +112,17 @@ describe('RepositoryInfo', () => {
     };
     const { getByText } = render(<RepositoryInfo {...props} />);
     expect(getByText('Verified Publisher')).toBeInTheDocument();
+  });
+
+  it('renders Official label', () => {
+    const props = {
+      ...defaultProps,
+      repository: {
+        ...repo,
+        official: true,
+      },
+    };
+    const { getByText } = render(<RepositoryInfo {...props} />);
+    expect(getByText('Official')).toBeInTheDocument();
   });
 });

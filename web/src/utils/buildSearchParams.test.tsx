@@ -73,6 +73,15 @@ const tests: Test[] = [
       deprecated: false,
     },
   },
+  {
+    query: '?page=1&official=true',
+    result: {
+      pageNumber: 1,
+      filters: {},
+      official: true,
+      deprecated: false,
+    },
+  },
 ];
 
 describe('buildSearchParams', () => {

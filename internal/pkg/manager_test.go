@@ -101,6 +101,8 @@ func TestGet(t *testing.T) {
 				Name:                    "repo1",
 				DisplayName:             "Repo 1",
 				URL:                     "https://repo1.com",
+				VerifiedPublisher:       true,
+				Official:                true,
 				UserAlias:               "user1",
 				OrganizationName:        "org1",
 				OrganizationDisplayName: "Organization 1",
@@ -177,6 +179,8 @@ func TestGet(t *testing.T) {
 				"name": "repo1",
 				"display_name": "Repo 1",
 				"url": "https://repo1.com",
+				"verified_publisher": true,
+				"official": true,
 				"user_alias": "user1",
 				"organization_name": "org1",
 				"organization_display_name": "Organization 1"

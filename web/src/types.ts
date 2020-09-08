@@ -17,6 +17,7 @@ export interface Repository {
   lastTrackingTs?: number | null;
   lastTrackingErrors?: string | null;
   verifiedPublisher?: boolean;
+  official?: boolean;
 }
 
 export interface Maintainer {
@@ -119,6 +120,7 @@ export interface SearchFiltersURL {
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
+  official?: boolean | null;
 }
 
 export interface SearchQuery {
@@ -130,6 +132,7 @@ export interface SearchQuery {
   deprecated?: boolean | null;
   operators?: boolean | null;
   verifiedPublisher?: boolean | null;
+  official?: boolean | null;
   limit: number;
   offset: number;
   total?: number;

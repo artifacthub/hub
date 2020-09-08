@@ -85,6 +85,7 @@ select is(
         "url": "https://repo1.com",
         "kind": 0,
         "verified_publisher": false,
+        "official": false,
         "last_tracking_ts": 0,
         "last_tracking_errors": "error1\\nerror2\\nerror3"
     }, {
@@ -94,6 +95,7 @@ select is(
         "url": "https://repo2.com",
         "kind": 0,
         "verified_publisher": false,
+        "official": false,
         "last_tracking_ts": null,
         "last_tracking_errors": null
     }]'::jsonb,

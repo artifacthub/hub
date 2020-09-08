@@ -292,6 +292,16 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		}
 	}
 
+	// Only display content from official repositories
+	var official bool
+	if qs.Get("official") != "" {
+		var err error
+		official, err = strconv.ParseBool(qs.Get("official"))
+		if err != nil {
+			return nil, fmt.Errorf("invalid official: %s", qs.Get("official"))
+		}
+	}
+
 	// Only display operators
 	var operators bool
 	if qs.Get("operators") != "" {
@@ -323,6 +333,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Repositories:      qs["repo"],
 		RepositoryKinds:   kinds,
 		VerifiedPublisher: verifiedPublisher,
+		Official:          official,
 		Operators:         operators,
 		Deprecated:        deprecated,
 	}, nil

@@ -8,6 +8,7 @@ returns setof json as $$
         'url', r.url,
         'kind', r.repository_kind_id,
         'verified_publisher', r.verified_publisher,
+        'official', r.official,
         'user_alias', u.alias,
         'organization_name', o.name
     )), '[]')

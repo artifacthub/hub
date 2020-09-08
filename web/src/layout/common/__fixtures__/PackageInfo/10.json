@@ -13,6 +13,7 @@
     "displayName": null,
     "url": "repoUrl",
     "userAlias": "user",
-    "verifiedPublisher": true
+    "verifiedPublisher": true,
+    "official": false
   }
 }

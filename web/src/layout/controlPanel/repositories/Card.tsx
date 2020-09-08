@@ -18,6 +18,7 @@ import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import Modal from '../../common/Modal';
+import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIcon from '../../common/RepositoryIcon';
 import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import styles from './Card.module.css';
@@ -149,6 +150,11 @@ const RepositoryCard = (props: Props) => {
       <div className="d-flex flex-row w-100 justify-content-between">
         <div className="d-flex flex-row align-items-center mb-1">
           <div className={`h5 mb-0 ${styles.titleCard}`}>{props.repository.displayName || props.repository.name}</div>
+
+          <OfficialBadge
+            official={props.repository.official}
+            className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+          />
 
           <VerifiedPublisherBadge
             verifiedPublisher={props.repository.verifiedPublisher}
@@ -318,10 +324,10 @@ const RepositoryCard = (props: Props) => {
         </div>
       )}
 
-      <VerifiedPublisherBadge
-        verifiedPublisher={props.repository.verifiedPublisher}
-        className="mt-3 m-md-0 d-flex d-md-none"
-      />
+      <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
+        <OfficialBadge official={props.repository.official} className="mr-3" />
+        <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} />
+      </div>
     </li>
   );
 };

@@ -26,6 +26,8 @@ const repoMock: Repository = {
   url: 'http://test.repo',
   lastTrackingTs: null,
   userAlias: 'user',
+  verifiedPublisher: false,
+  official: false,
 };
 
 const setModalStatusMock = jest.fn();
@@ -88,6 +90,19 @@ describe('Repository Card - packages section', () => {
       const { getAllByText } = render(<Card {...props} />);
 
       expect(getAllByText('Verified Publisher')).toHaveLength(2);
+    });
+
+    it('renders Official badge', () => {
+      const props = {
+        ...defaultProps,
+        repository: {
+          ...repoMock,
+          official: true,
+        },
+      };
+      const { getAllByText } = render(<Card {...props} />);
+
+      expect(getAllByText('Official')).toHaveLength(2);
     });
 
     it('calls delete repo when delete button in dropdown is clicked', async () => {

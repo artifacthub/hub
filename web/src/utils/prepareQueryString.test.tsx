@@ -63,6 +63,14 @@ const tests: Test[] = [
     },
     result: '?page=1&verified_publisher=true',
   },
+  {
+    query: {
+      pageNumber: 1,
+      filters: {},
+      official: true,
+    },
+    result: '?page=1&official=true',
+  },
 ];
 
 describe('prepareQueryString', () => {
