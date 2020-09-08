@@ -752,6 +752,7 @@ paths:
         - $ref: "#/components/parameters/RepositoriesListParam"
         - $ref: "#/components/parameters/DeprecatedParam"
         - $ref: "#/components/parameters/OperatorsParam"
+        - $ref: "#/components/parameters/VerifiedPublisherParam"
       responses:
         "200":
           description: ""
@@ -2250,7 +2251,14 @@ components:
       schema:
         type: boolean
       required: false
-      description: Whether to include only operators or not
+      description: Whether to get only operators
+    VerifiedPublisherParam:
+      in: query
+      name: verified_publisher
+      schema:
+        type: boolean
+      required: false
+      description: Whether to get only verified publisher
     EventKindParam:
       in: query
       name: event_kind

@@ -55,6 +55,14 @@ const tests: Test[] = [
     },
     result: '?page=10&deprecated=true&user=user1&user=user2',
   },
+  {
+    query: {
+      pageNumber: 1,
+      filters: {},
+      verifiedPublisher: true,
+    },
+    result: '?page=1&verified_publisher=true',
+  },
 ];
 
 describe('prepareQueryString', () => {

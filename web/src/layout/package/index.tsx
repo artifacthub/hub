@@ -70,7 +70,8 @@ const PackageView = (props: Props) => {
   const [repositoryName, setRepositoryName] = useState(props.repositoryName);
   const [version, setVersion] = useState(props.version);
   const [detail, setDetail] = useState<Package | null | undefined>(undefined);
-  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators } = props.searchUrlReferer || {};
+  const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher } =
+    props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
   const [apiError, setApiError] = useState<null | string>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
@@ -316,6 +317,7 @@ const PackageView = (props: Props) => {
                   filters: filters || {},
                   deprecated: deprecated,
                   operators: operators,
+                  verifiedPublisher: verifiedPublisher,
                 }),
                 state: { fromDetail: true },
               });
@@ -409,6 +411,7 @@ const PackageView = (props: Props) => {
                                     },
                                     deprecated: detail.deprecated || false,
                                     operators: detail.isOperator || false,
+                                    verifiedPublisher: detail.repository.verifiedPublisher || false,
                                   }),
                                 }}
                               >

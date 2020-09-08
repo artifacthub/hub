@@ -120,17 +120,18 @@ type Provider struct {
 
 // SearchPackageInput represents the query input when searching for packages.
 type SearchPackageInput struct {
-	Limit           int              `json:"limit,omitempty"`
-	Offset          int              `json:"offset,omitempty"`
-	Facets          bool             `json:"facets"`
-	TsQueryWeb      string           `json:"ts_query_web,omitempty"`
-	TsQuery         string           `json:"ts_query,omitempty"`
-	Users           []string         `json:"users,omitempty"`
-	Orgs            []string         `json:"orgs,omitempty"`
-	Repositories    []string         `json:"repositories,omitempty"`
-	RepositoryKinds []RepositoryKind `json:"repository_kinds,omitempty"`
-	Operators       bool             `json:"operators"`
-	Deprecated      bool             `json:"deprecated"`
+	Limit             int              `json:"limit,omitempty"`
+	Offset            int              `json:"offset,omitempty"`
+	Facets            bool             `json:"facets"`
+	TsQueryWeb        string           `json:"ts_query_web,omitempty"`
+	TsQuery           string           `json:"ts_query,omitempty"`
+	Users             []string         `json:"users,omitempty"`
+	Orgs              []string         `json:"orgs,omitempty"`
+	Repositories      []string         `json:"repositories,omitempty"`
+	RepositoryKinds   []RepositoryKind `json:"repository_kinds,omitempty"`
+	VerifiedPublisher bool             `json:"verified_publisher"`
+	Operators         bool             `json:"operators"`
+	Deprecated        bool             `json:"deprecated"`
 }
 
 // Version represents a package's version

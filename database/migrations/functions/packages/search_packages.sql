@@ -63,6 +63,12 @@ begin
                 v_tsquery @@ p.tsdoc
             else true end
         and
+            case when p_input ? 'verified_publisher' and (p_input->>'verified_publisher')::boolean = true then
+                r.verified_publisher = true
+            else
+                true
+            end
+        and
             case when p_input ? 'operators' and (p_input->>'operators')::boolean = true then
                 p.is_operator = true
             else
