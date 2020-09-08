@@ -49,7 +49,7 @@ describe('StarButton', () => {
         mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: false });
         mocked(API).toggleStar.mockResolvedValue('');
 
-        const { getByText, getByTestId, getByRole, queryByRole } = render(
+        const { getByText, getByTestId, getByRole, queryByRole, getAllByText } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
@@ -65,7 +65,7 @@ describe('StarButton', () => {
         });
 
         expect(getByText('Star')).toBeInTheDocument();
-        expect(getByText('4')).toBeInTheDocument();
+        expect(getAllByText('4')).toHaveLength(2);
         expect(queryByRole('status')).toBeNull();
 
         const btn = getByTestId('toggleStarBtn');

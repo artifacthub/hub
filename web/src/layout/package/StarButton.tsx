@@ -68,37 +68,48 @@ const StarButton = (props: Props) => {
   if (isUndefined(ctx.user) || isUndefined(packageStars) || isNull(packageStars)) return null;
 
   return (
-    <div className={`d-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
-      <button
-        data-testid="toggleStarBtn"
-        className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
-        type="button"
-        disabled={isUndefined(ctx.user) || isNull(ctx.user) || isGettingIfStarred}
-        onClick={handleToggleStar}
-      >
-        <div className="d-flex align-items-center">
-          {notStarred ? <FaStar /> : <FaRegStar />}
-          <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
-        </div>
-      </button>
-
-      <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
-        {isNull(packageStars.stars) ? '-' : prettifyNumber(packageStars.stars)}
-      </span>
-
-      {isNull(ctx.user) && (
-        <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
-          <div className={`arrow ${styles.tooltipArrow}`}></div>
-          <div className="tooltip-inner">You must be signed in to star a package</div>
+    <>
+      {!isNull(packageStars.stars) && (
+        <div className={`d-inline d-md-none badge badge-pill badge-light ${styles.mobileStarBadge}`}>
+          <div className="d-flex align-items-center">
+            <FaStar className="mr-1" />
+            <div>{prettifyNumber(packageStars.stars)}</div>
+          </div>
         </div>
       )}
 
-      {(isSending || isGettingIfStarred) && (
-        <div className={`position-absolute ${styles.spinner}`} role="status">
-          <span className="spinner-border spinner-border-sm text-primary" />
-        </div>
-      )}
-    </div>
+      <div className={`d-none d-md-flex flex-row align-items-center position-relative ${styles.wrapper}`}>
+        <button
+          data-testid="toggleStarBtn"
+          className={`btn btn-sm btn-primary px-3 ${styles.starBtn}`}
+          type="button"
+          disabled={isUndefined(ctx.user) || isNull(ctx.user) || isGettingIfStarred}
+          onClick={handleToggleStar}
+        >
+          <div className="d-flex align-items-center">
+            {notStarred ? <FaStar /> : <FaRegStar />}
+            <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
+          </div>
+        </button>
+
+        <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
+          {isNull(packageStars.stars) ? '-' : prettifyNumber(packageStars.stars)}
+        </span>
+
+        {isNull(ctx.user) && (
+          <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
+            <div className={`arrow ${styles.tooltipArrow}`}></div>
+            <div className="tooltip-inner">You must be signed in to star a package</div>
+          </div>
+        )}
+
+        {(isSending || isGettingIfStarred) && (
+          <div className={`position-absolute ${styles.spinner}`} role="status">
+            <span className="spinner-border spinner-border-sm text-primary" />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

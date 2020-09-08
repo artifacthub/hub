@@ -1,5 +1,7 @@
 .link {
   background-color: transparent;
+  position: relative;
+  top: -1px;
 }
 
 .dropdown {

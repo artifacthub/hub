@@ -34,8 +34,15 @@
   left: calc(50% - 4px);
 }
 
-.wrapper:hover .tooltip {
-  opacity: 1;
+.mobileStarBadge {
+  background-color: var(--color-1-5);
+  border: 1px solid var(--color-1-10);
+}
+
+@media (hover: hover) {
+  .wrapper:hover .tooltip {
+    opacity: 1;
+  }
 }
 
 .spinner {
