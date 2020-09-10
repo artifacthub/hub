@@ -4,11 +4,6 @@
   hyphens: auto;
 }
 
-.md p code {
-  hyphens: none;
-  overflow-wrap: break-word;
-}
-
 .md hr {
   height: 0.25em;
   padding: 0;
@@ -31,6 +26,13 @@
   word-wrap: normal;
   white-space: pre;
   color: var(--color-1-700);
+}
+
+.md p code,
+.md li code {
+  hyphens: none;
+  white-space: normal !important;
+  word-wrap: break-word;
 }
 
 .md h3 code {
