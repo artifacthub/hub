@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Repository Modal - packages section creates snapshot 1`] = `
+exports[`Repository Modal - repositories section creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div

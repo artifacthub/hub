@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
+import { MdLabel } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -21,6 +22,7 @@ import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIcon from '../../common/RepositoryIcon';
 import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
+import BadgeModal from './BadgeModal';
 import styles from './Card.module.css';
 import TransferRepositoryModal from './TransferModal';
 
@@ -44,6 +46,7 @@ const RepositoryCard = (props: Props) => {
   const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
   const [transferModalStatus, setTransferModalStatus] = useState<boolean>(false);
   const [deletionModalStatus, setDeletionModalStatus] = useState<boolean>(false);
+  const [badgeModalStatus, setBadgeModalStatus] = useState<boolean>(false);
   const dropdownMenu = useRef(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
   const hasErrors = !isUndefined(props.repository.lastTrackingErrors) && !isNull(props.repository.lastTrackingErrors);
@@ -227,6 +230,14 @@ const RepositoryCard = (props: Props) => {
           </Modal>
         )}
 
+        {badgeModalStatus && (
+          <BadgeModal
+            repository={props.repository}
+            onClose={() => setBadgeModalStatus(false)}
+            open={badgeModalStatus}
+          />
+        )}
+
         <div className="ml-auto">
           <RepositoryIcon kind={props.repository.kind} className={styles.kindIcon} />
         </div>
@@ -239,6 +250,21 @@ const RepositoryCard = (props: Props) => {
             })}
           >
             <div className={`arrow ${styles.arrow}`} />
+
+            <button
+              data-testid="getBadgeBtn"
+              className="dropdown-item btn btn-sm rounded-0 text-secondary"
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                closeDropdown();
+                setBadgeModalStatus(true);
+              }}
+            >
+              <div className="d-flex flex-row align-items-center">
+                <MdLabel className={`mr-2 ${styles.btnIcon}`} />
+                <span>Get badge</span>
+              </div>
+            </button>
 
             <button
               data-testid="transferRepoBtn"

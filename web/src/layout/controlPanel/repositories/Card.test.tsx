@@ -57,6 +57,7 @@ describe('Repository Card - packages section', () => {
       const { getByText, getByTestId } = render(<Card {...defaultProps} />);
 
       expect(getByText(repoMock.displayName!)).toBeInTheDocument();
+      expect(getByTestId('getBadgeBtn')).toBeInTheDocument();
       expect(getByTestId('updateRepoBtn')).toBeInTheDocument();
       expect(getByTestId('transferRepoBtn')).toBeInTheDocument();
       expect(getByTestId('deleteRepoDropdownBtn')).toBeInTheDocument();
@@ -117,6 +118,19 @@ describe('Repository Card - packages section', () => {
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it('opens Get Badge Modal when Get badge button is clicked', () => {
+      const { getByTestId } = render(<Card {...defaultProps} />);
+
+      const btn = getByTestId('getBadgeBtn');
+      expect(btn).toBeInTheDocument();
+
+      fireEvent.click(btn);
+
+      waitFor(() => {
+        expect(getByTestId('badgeModalContent')).toBeInTheDocument();
       });
     });
 
