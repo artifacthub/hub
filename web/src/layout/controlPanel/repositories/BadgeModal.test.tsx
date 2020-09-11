@@ -34,14 +34,16 @@ describe('Badge Modal - repositories section', () => {
 
       expect(getByText('Get badge')).toBeInTheDocument();
       expect(getByTestId('badgeModalContent')).toBeInTheDocument();
-      expect(getByAltText('Artifact HUB badge')).toBeInTheDocument();
-      expect(getByAltText('Artifact HUB badge')).toHaveProperty(
+
+      const badge = getByAltText('Artifact HUB badge');
+      expect(badge).toBeInTheDocument();
+      expect(badge).toHaveProperty(
         'src',
-        `https://img.shields.io/static/v1?style=flat&label=Artifact%20HUB&labelColor=659dbd&color=39596c&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWhleGFnb24iPjxwYXRoIGQ9Ik0yMSAxNlY4YTIgMiAwIDAgMC0xLTEuNzNsLTctNGEyIDIgMCAwIDAtMiAwbC03IDRBMiAyIDAgMCAwIDMgOHY4YTIgMiAwIDAgMCAxIDEuNzNsNyA0YTIgMiAwIDAgMCAyIDBsNy00QTIgMiAwIDAgMCAyMSAxNnoiPjwvcGF0aD48L3N2Zz4K&logoWidth=18&message=${repoMock.name}`
+        `https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name}`
       );
       expect(
         getByText(
-          `[![Artifact HUB](https://img.shields.io/static/v1?style=flat&label=Artifact%20HUB&labelColor=659dbd&color=39596c&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWhleGFnb24iPjxwYXRoIGQ9Ik0yMSAxNlY4YTIgMiAwIDAgMC0xLTEuNzNsLTctNGEyIDIgMCAwIDAtMiAwbC03IDRBMiAyIDAgMCAwIDMgOHY4YTIgMiAwIDAgMCAxIDEuNzNsNyA0YTIgMiAwIDAgMCAyIDBsNy00QTIgMiAwIDAgMCAyMSAxNnoiPjwvcGF0aD48L3N2Zz4K&logoWidth=18&message=${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
+          `[![Artifact HUB](https://img.shields.io/endpoint?url=http://localhost/badge/repository/${repoMock.name})](http://localhost/packages/search?repo=${repoMock.name})`
         )
       ).toBeInTheDocument();
     });

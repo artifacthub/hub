@@ -318,6 +318,9 @@ func (h *Handlers) setupRouter() {
 		})
 	})
 
+	// Badges
+	r.Get("/badge/repository/{repoName}", h.Repositories.Badge)
+
 	// Static files and index
 	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
 	static.FileServer(r, "/static", http.Dir(staticFilesPath))
