@@ -11,6 +11,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const (
+	logoSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hexagon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>`
+)
+
 // Handlers represents a group of http handlers in charge of handling
 // repositories operations.
 type Handlers struct {
@@ -41,6 +45,28 @@ func (h *Handlers) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
+}
+
+// Badge is an http handler that returns the information needed to render the
+// repository badge.
+func (h *Handlers) Badge(w http.ResponseWriter, r *http.Request) {
+	data := map[string]interface{}{
+		"color":         "39596c",
+		"label":         "Artifact Hub",
+		"labelColor":    "659dbd",
+		"logoSvg":       logoSVG,
+		"logoWidth":     18,
+		"message":       chi.URLParam(r, "repoName"),
+		"schemaVersion": 1,
+		"style":         "flat",
+	}
+	dataJSON, err := json.Marshal(data)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "Badge").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
 // CheckAvailability is an http handler that checks the availability of a given
