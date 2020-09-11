@@ -3,6 +3,7 @@
 [![CI](https://github.com/artifacthub/hub/workflows/CI/badge.svg)](https://github.com/artifacthub/hub/actions?query=workflow%3ACI)
 [![Go Report Card](https://goreportcard.com/badge/github.com/artifacthub/hub)](https://goreportcard.com/report/github.com/artifacthub/hub)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4106/badge)](https://bestpractices.coreinfrastructure.org/projects/4106)
+[![Artifact HUB](https://img.shields.io/static/v1?style=flat&label=Artifact%20HUB&labelColor=659dbd&color=39596c&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWhleGFnb24iPjxwYXRoIGQ9Ik0yMSAxNlY4YTIgMiAwIDAgMC0xLTEuNzNsLTctNGEyIDIgMCAwIDAtMiAwbC03IDRBMiAyIDAgMCAwIDMgOHY4YTIgMiAwIDAgMCAxIDEuNzNsNyA0YTIgMiAwIDAgMCAyIDBsNy00QTIgMiAwIDAgMCAyMSAxNnoiPjwvcGF0aD48L3N2Zz4K&logoWidth=18&message=artifact-hub)](https://artifacthub.io/packages/search?repo=artifact-hub)
 
 Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, and OLM operators.
 

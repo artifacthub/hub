@@ -42,7 +42,7 @@ const mockCtx = {
   },
 };
 
-describe('Repository Modal - packages section', () => {
+describe('Repository Modal - repositories section', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
