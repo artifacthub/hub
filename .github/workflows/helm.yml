@@ -5,13 +5,11 @@ on:
       - 'chart/**'
       - '!chart/README.md'
       - '!chart/.helmignore'
-      - '.github/workflows/helm.yml'
   pull_request:
     paths:
       - 'chart/**'
       - '!chart/README.md'
       - '!chart/.helmignore'
-      - '.github/workflows/helm.yml'
 jobs:
   lint:
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
@@ -26,6 +24,7 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0
         with:
           command: lint
+          config: .ct.yaml
   test:
     needs: lint
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production' && needs.lint.outputs.changed == 'true'
@@ -39,3 +38,4 @@ jobs:
         uses: helm/chart-testing-action@v1.0.0
         with:
           command: install
+          config: .ct.yaml
