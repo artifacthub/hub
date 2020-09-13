@@ -27,8 +27,8 @@ jobs:
         with:
           command: lint
   test:
-    needs: linter-chart
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production' && needs.linter-chart.outputs.changed == 'true'
+    needs: lint
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production' && needs.lint.outputs.changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
