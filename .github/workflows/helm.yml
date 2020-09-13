@@ -20,7 +20,7 @@ jobs:
       changed: ${{ steps.lint.outputs.changed }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Lint chart
         id: lint
         uses: helm/chart-testing-action@v1.0.0
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: Create kind cluster
         uses: helm/kind-action@v1.0.0
       - name: Install chart
