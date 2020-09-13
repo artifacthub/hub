@@ -1,0 +1,41 @@
+name: Helm CI
+on:
+  push:
+    paths:
+      - 'chart/**'
+      - '!chart/README.md'
+      - '!chart/.helmignore'
+      - '.github/workflows/helm.yml'
+  pull_request:
+    paths:
+      - 'chart/**'
+      - '!chart/README.md'
+      - '!chart/.helmignore'
+      - '.github/workflows/helm.yml'
+jobs:
+  lint:
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.lint.outputs.changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Lint chart
+        id: lint
+        uses: helm/chart-testing-action@v1.0.0
+        with:
+          command: lint
+  test:
+    needs: linter-chart
+    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production' && needs.linter-chart.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.0.0
+      - name: Install chart
+        uses: helm/chart-testing-action@v1.0.0
+        with:
+          command: install
