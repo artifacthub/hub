@@ -48,7 +48,7 @@ const OrganizationInfo = (props: Props) => {
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    if (!isUndefined(organization) && !openStatus && (onLinkHover || onDropdownHover)) {
+    if (organization && !openStatus && (onLinkHover || onDropdownHover)) {
       timeout = setTimeout(() => {
         setOpenStatus(true);
       }, 100);

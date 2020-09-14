@@ -13,7 +13,7 @@ const getMockPackage = (fixtureId: string): Package => {
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
   }),
@@ -93,7 +93,7 @@ describe('PackageCard', () => {
   });
 
   describe('Detail', () => {
-    it('opens detail page', () => {
+    it('detail page link', () => {
       const mockPackage = getMockPackage('9');
 
       const { getByTestId } = render(
@@ -103,8 +103,7 @@ describe('PackageCard', () => {
       );
       const link = getByTestId('packageCardLink');
       expect(link).toBeInTheDocument();
-      fireEvent.click(link);
-      expect(window.location.pathname).toBe(buildPackageURL(mockPackage));
+      expect(link).toHaveProperty('href', `http://localhost${buildPackageURL(mockPackage)}`);
     });
   });
 

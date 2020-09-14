@@ -11,7 +11,7 @@ const getMockPackage = (fixtureId: string): Package => {
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
   }),

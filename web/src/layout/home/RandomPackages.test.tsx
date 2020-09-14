@@ -63,7 +63,7 @@ describe('RandomPackages', () => {
       });
 
       expect(queryByTestId('randomPackagesList')).toBeNull();
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

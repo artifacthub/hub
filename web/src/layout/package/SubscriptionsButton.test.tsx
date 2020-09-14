@@ -161,7 +161,7 @@ describe('SubscriptionsButton', () => {
           expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(0);
         });
 
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
       });
 
       it('when user is not signed in', async () => {
@@ -175,7 +175,7 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(0);
         });
 
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
       });
 
       it('when ctx.user is not initialized', async () => {
@@ -189,7 +189,7 @@ describe('SubscriptionsButton', () => {
           expect(API.getPackageSubscriptions).toHaveBeenCalledTimes(0);
         });
 
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
       });
     });
 

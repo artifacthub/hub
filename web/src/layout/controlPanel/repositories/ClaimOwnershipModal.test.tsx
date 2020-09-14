@@ -300,11 +300,13 @@ describe('Claim Repository Modal - packages section', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByTestId, getAllByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
@@ -324,10 +326,10 @@ describe('Claim Repository Modal - packages section', () => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred claiming the repository, please try again later.')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred claiming the repository, please try again later.')).toBeInTheDocument();
       });
 
       it('with custom error message', async () => {
@@ -340,11 +342,13 @@ describe('Claim Repository Modal - packages section', () => {
           message: 'custom error',
         });
 
-        const { getByTestId, getAllByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
@@ -364,10 +368,10 @@ describe('Claim Repository Modal - packages section', () => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred claiming the repository: custom error')).toBeInTheDocument();
       });
 
       it('with Forbidden error', async () => {
@@ -379,11 +383,13 @@ describe('Claim Repository Modal - packages section', () => {
           kind: ErrorKind.Forbidden,
         });
 
-        const { getByTestId, getAllByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { getByTestId, getAllByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
@@ -403,14 +409,14 @@ describe('Claim Repository Modal - packages section', () => {
           expect(API.claimRepositoryOwnership).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(
-            getByText(
-              'You do not have permissions to claim this repository ownership. Please make sure your metadata file has been setup correctly.'
-            )
-          ).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(
+          getByText(
+            'You do not have permissions to claim this repository ownership. Please make sure your metadata file has been setup correctly.'
+          )
+        ).toBeInTheDocument();
       });
     });
 
@@ -440,22 +446,22 @@ describe('Claim Repository Modal - packages section', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
 
+        const { getByText, rerender } = render(component);
+
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(
-            getByText('An error occurred getting your organizations, please try again later.')
-          ).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred getting your organizations, please try again later.')).toBeInTheDocument();
       });
     });
 
@@ -487,20 +493,22 @@ describe('Claim Repository Modal - packages section', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <ClaimModal {...defaultProps} />
           </AppCtx.Provider>
         );
 
+        const { getByText, rerender } = render(component);
+
         await waitFor(() => {
           expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred getting the repositories, please try again later.')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred getting the repositories, please try again later.')).toBeInTheDocument();
       });
     });
   });

@@ -33,7 +33,9 @@ exports[`OPAInstall creates snapshot 1`] = `
       <pre
         style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
       >
-        <code>
+        <code
+          class="language-bash"
+        >
           <span>
             Instructions
           </span>

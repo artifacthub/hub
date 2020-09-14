@@ -9,11 +9,12 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
+jest.mock('./TransferModal', () => () => <div>Transfer repository</div>);
 
 const mockHistoryReplace = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     replace: mockHistoryReplace,
   }),
@@ -139,7 +140,6 @@ describe('Repository Card - packages section', () => {
 
       const btn = getByTestId('updateRepoBtn');
       expect(btn).toBeInTheDocument();
-
       fireEvent.click(btn);
       expect(setModalStatusMock).toHaveBeenCalledTimes(1);
       expect(setModalStatusMock).toHaveBeenCalledWith({
@@ -156,10 +156,7 @@ describe('Repository Card - packages section', () => {
 
       fireEvent.click(btn);
 
-      waitFor(() => {
-        expect(getByTestId('transferRepoForm')).toBeInTheDocument();
-        expect(getByText('Transfer repository')).toBeInTheDocument();
-      });
+      expect(getByText('Transfer repository')).toBeInTheDocument();
     });
 
     it('opens logs modal when visibleTrackingErrorLogs is true and repo has errors', () => {
@@ -172,14 +169,15 @@ describe('Repository Card - packages section', () => {
         },
         visibleTrackingErrorLogs: true,
       };
-      const { getByText, getByRole } = render(<Card {...props} />);
+
+      const component = <Card {...props} />;
+      const { getByText, getByRole, rerender } = render(component);
 
       expect(getByText('Show errors log')).toBeInTheDocument();
 
-      const modal = getByRole('dialog');
-      expect(modal).toBeInTheDocument();
-      expect(modal).toHaveClass('d-block');
+      rerender(component);
 
+      expect(getByRole('dialog')).toBeInTheDocument();
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
     });
@@ -193,21 +191,21 @@ describe('Repository Card - packages section', () => {
         },
         visibleTrackingErrorLogs: true,
       };
-      const { queryByText, getByText, getByRole } = render(<Card {...props} />);
+      const { queryByText, getByText, getByRole, rerender } = render(<Card {...props} />);
 
       expect(queryByText('Show errors log')).toBeNull();
 
-      waitFor(() => {
-        expect(getByRole('dialog')).toBeInTheDocument();
-        expect(
-          getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
-        ).toBeInTheDocument();
-        expect(
-          getByText(
-            /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
-          )
-        ).toBeInTheDocument();
-      });
+      rerender(<Card {...props} />);
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+      expect(
+        getByText(/It looks like the last tracking of this repository worked fine and no errors were produced./g)
+      ).toBeInTheDocument();
+      expect(
+        getByText(
+          /If you have arrived to this screen from an email listing some errors, please keep in mind those may have been already solved./g
+        )
+      ).toBeInTheDocument();
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });

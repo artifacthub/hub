@@ -10,7 +10,7 @@ jest.mock('../../api');
 
 const mockHistoryReplace = jest.fn();
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     replace: mockHistoryReplace,
   }),
@@ -84,11 +84,12 @@ describe('LogIn', () => {
         kind: ErrorKind.Unauthorized,
       });
 
-      const { getByTestId, getByText } = render(
+      const component = (
         <Router>
           <LogIn {...defaultProps} />
         </Router>
       );
+      const { getByTestId, getByText, rerender } = render(component);
 
       const password = getByTestId('passwordInput') as HTMLInputElement;
       const email = getByTestId('emailInput') as HTMLInputElement;
@@ -101,9 +102,13 @@ describe('LogIn', () => {
       fireEvent.click(btn);
 
       await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
+        expect(API.login).toHaveBeenCalledTimes(1);
       });
+
+      rerender(component);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      expect(getByText('Authentication failed. Please check your credentials.')).toBeInTheDocument();
     });
 
     it('with custom error message', async () => {
@@ -112,11 +117,12 @@ describe('LogIn', () => {
         message: 'Password not provided',
       });
 
-      const { getByTestId, getByText } = render(
+      const component = (
         <Router>
           <LogIn {...defaultProps} />
         </Router>
       );
+      const { getByTestId, getByText, rerender } = render(component);
 
       const password = getByTestId('passwordInput') as HTMLInputElement;
       const email = getByTestId('emailInput') as HTMLInputElement;
@@ -129,9 +135,13 @@ describe('LogIn', () => {
       fireEvent.click(btn);
 
       await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred signing in: Password not provided')).toBeInTheDocument();
+        expect(API.login).toHaveBeenCalledTimes(1);
       });
+
+      rerender(component);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      expect(getByText('An error occurred signing in: Password not provided')).toBeInTheDocument();
     });
 
     it('displays common login error', async () => {
@@ -139,11 +149,12 @@ describe('LogIn', () => {
         kind: ErrorKind.Other,
       });
 
-      const { getByTestId, getByText } = render(
+      const component = (
         <Router>
           <LogIn {...defaultProps} />
         </Router>
       );
+      const { getByTestId, getByText, rerender } = render(component);
 
       const password = getByTestId('passwordInput') as HTMLInputElement;
       const email = getByTestId('emailInput') as HTMLInputElement;
@@ -156,9 +167,13 @@ describe('LogIn', () => {
       fireEvent.click(btn);
 
       await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
+        expect(API.login).toHaveBeenCalledTimes(1);
       });
+
+      rerender(component);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      expect(getByText('An error occurred signing in, please try again later.')).toBeInTheDocument();
     });
 
     it('calls history replace on close modal when redirect is not undefined', async () => {

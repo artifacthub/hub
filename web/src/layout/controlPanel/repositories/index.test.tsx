@@ -21,7 +21,7 @@ const defaultProps = {
 const mockHistoryReplace = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     replace: mockHistoryReplace,
   }),

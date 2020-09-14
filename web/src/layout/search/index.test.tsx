@@ -18,7 +18,7 @@ const mockHistoryPush = jest.fn();
 const mockHistoryReplace = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
     replace: mockHistoryReplace,
@@ -73,27 +73,6 @@ describe('Search index', () => {
       await waitFor(() => {
         expect(API.searchPackages).toHaveBeenCalledTimes(1);
       });
-    });
-
-    it('displays loading spinner', async () => {
-      const mockSearchResults = getMockSearchResults('3');
-      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
-
-      const props = {
-        ...defaultProps,
-        isSearching: true,
-      };
-
-      const { getByRole } = render(
-        <Router>
-          <SearchView {...props} />
-        </Router>
-      );
-
-      const spinner = await waitFor(() => getByRole('status'));
-
-      expect(spinner).toBeInTheDocument();
-      await waitFor(() => {});
     });
 
     it('displays correct search results text', async () => {

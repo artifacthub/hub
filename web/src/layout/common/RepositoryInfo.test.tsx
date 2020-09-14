@@ -7,7 +7,7 @@ import RepositoryInfo from './RepositoryInfo';
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
   }),
@@ -36,6 +36,8 @@ describe('RepositoryInfo', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it('creates snapshot', () => {
@@ -65,39 +67,36 @@ describe('RepositoryInfo', () => {
     });
   });
 
-  it('displays repo info to enter on link and hides on leave', () => {
+  it('displays repo info to enter on link and hides on leave', async () => {
     const { getByTestId, getAllByText, getByText } = render(<RepositoryInfo {...defaultProps} />);
-    fireEvent.mouseEnter(getByTestId('repoLink'));
-
     expect(getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
     expect(getByText(defaultProps.repository.url)).toBeInTheDocument();
 
-    waitFor(() => {
+    fireEvent.mouseEnter(getByTestId('repoLink'));
+
+    await waitFor(() => {
       expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('repoLink'));
 
-    waitFor(() => {
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 50);
+    await waitFor(() => {
       expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
     });
   });
 
-  it('hides repo info to leave dropdown', () => {
+  it('hides repo info to leave dropdown', async () => {
     const { getByTestId } = render(<RepositoryInfo {...defaultProps} />);
     fireEvent.mouseEnter(getByTestId('repoLink'));
 
     fireEvent.mouseEnter(getByTestId('repoInfoDropdown'));
     fireEvent.mouseLeave(getByTestId('repoLink'));
-
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('repoInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('repoInfoDropdown'));
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('repoInfoDropdown')).not.toHaveClass('show');
     });
   });

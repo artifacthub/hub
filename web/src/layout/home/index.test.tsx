@@ -1,4 +1,4 @@
-import { render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -48,27 +48,6 @@ describe('Home index', () => {
         </Router>
       );
       expect(API.getStats).toHaveBeenCalledTimes(1);
-      await waitFor(() => {});
-    });
-
-    it('removes loading spinner after getting package', async () => {
-      const mockStats = getMockStats('3');
-      mocked(API).getStats.mockResolvedValue(mockStats);
-
-      const props = {
-        ...defaultProps,
-        isSearching: true,
-      };
-
-      const { getAllByRole } = render(
-        <Router>
-          <HomeView {...props} />
-        </Router>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => getAllByRole('status'));
-
-      expect(spinner).toBeTruthy();
       await waitFor(() => {});
     });
 

@@ -147,13 +147,14 @@ describe('Navbar', () => {
 
       const btn = getByText('Sign in');
       fireEvent.click(btn);
+
       waitFor(() => {
         expect(getByTestId('loginForm')).toBeInTheDocument();
       });
     });
 
     it('opens Sign up modal to click Sign up button', () => {
-      const { getByText, getByTestId } = render(
+      const { getByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtxNotLoggedIn, dispatch: jest.fn() }}>
           <Router>
             <Navbar {...defaultProps} />
@@ -163,10 +164,8 @@ describe('Navbar', () => {
 
       const btn = getByText('Sign up');
       fireEvent.click(btn);
-      waitFor(() => {
-        expect(getByText('Create your account using your email')).toBeInTheDocument();
-        expect(getByTestId('createAnAccountForm')).toBeInTheDocument();
-      });
+
+      expect(getByText('Create your account using your email')).toBeInTheDocument();
     });
   });
 

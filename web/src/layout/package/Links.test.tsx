@@ -55,7 +55,7 @@ describe('Links', () => {
         </Router>
       );
 
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

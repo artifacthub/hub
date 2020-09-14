@@ -141,7 +141,9 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).addRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+
+        const component = <Modal {...defaultProps} />;
+        const { getByTestId, getByText, rerender } = render(component);
 
         fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
         fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
@@ -152,10 +154,10 @@ describe('Repository Modal - repositories section', () => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred adding the repository, please try again later.')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred adding the repository, please try again later.')).toBeInTheDocument();
       });
 
       it('displays custom Api error', async () => {
@@ -165,7 +167,9 @@ describe('Repository Modal - repositories section', () => {
           kind: ErrorKind.Other,
           message: 'custom error',
         });
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+
+        const component = <Modal {...defaultProps} />;
+        const { getByTestId, getByText, rerender } = render(component);
 
         fireEvent.change(getByTestId('nameInput'), { target: { value: 'name2' } });
         fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
@@ -176,10 +180,10 @@ describe('Repository Modal - repositories section', () => {
           expect(API.addRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred adding the repository: custom error')).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -262,7 +266,9 @@ describe('Repository Modal - repositories section', () => {
         mocked(API).updateRepository.mockRejectedValue({
           kind: ErrorKind.Other,
         });
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
+
+        const component = <Modal {...defaultProps} repository={repoMock} />;
+        const { getByTestId, getByText, rerender } = render(component);
 
         fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
         fireEvent.click(getByTestId('repoBtn'));
@@ -271,10 +277,10 @@ describe('Repository Modal - repositories section', () => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred updating the repository, please try again later.')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred updating the repository, please try again later.')).toBeInTheDocument();
       });
 
       it('displays custom Api error message', async () => {
@@ -284,7 +290,9 @@ describe('Repository Modal - repositories section', () => {
           kind: ErrorKind.Other,
           message: 'custom error',
         });
-        const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
+
+        const component = <Modal {...defaultProps} repository={repoMock} />;
+        const { getByTestId, getByText, rerender } = render(component);
 
         fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
         fireEvent.click(getByTestId('repoBtn'));
@@ -293,10 +301,10 @@ describe('Repository Modal - repositories section', () => {
           expect(API.updateRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred updating the repository: custom error')).toBeInTheDocument();
       });
 
       it('calls onAuthError when error is UnauthorizedError', async () => {

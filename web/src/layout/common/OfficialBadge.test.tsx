@@ -27,6 +27,6 @@ describe('OfficialBadge', () => {
 
   it('does not render label', () => {
     const { container } = render(<OfficialBadge official={false} />);
-    expect(container).toBeEmpty();
+    expect(container).toBeEmptyDOMElement();
   });
 });
