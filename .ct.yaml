@@ -1,4 +1,4 @@
 helm-extra-args: --timeout 600s
 charts: chart
 chart-repos:
-  - artifact-hub=https://artifacthub.github.io/hub/chart
+  - stable=https://kubernetes-charts.storage.googleapis.com/
