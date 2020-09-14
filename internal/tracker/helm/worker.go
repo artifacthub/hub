@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"path"
 	"runtime/debug"
+	"strconv"
 	"strings"
 	"sync"
 
@@ -19,8 +20,15 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
 	"golang.org/x/time/rate"
+	"gopkg.in/yaml.v2"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
+)
+
+const (
+	operatorAnnotation    = "artifacthub.io/operator"
+	linksAnnotation       = "artifacthub.io/links"
+	maintainersAnnotation = "artifacthub.io/maintainers"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -195,6 +203,11 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		}
 	}
 
+	// Enrich package with information from annotations
+	if err := enrichPackageFromAnnotations(p, md.Annotations); err != nil {
+		w.warn(name, version, fmt.Errorf("error enriching package: %w", err))
+	}
+
 	// Register package
 	w.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
 	if err := w.svc.Pm.Register(w.svc.Ctx, p); err != nil {
@@ -295,5 +308,78 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 			return file
 		}
 	}
+	return nil
+}
+
+// enrichPackageFromAnnotations adds some extra information to the package from
+// the provided annotations.
+//
+// The annotations supported at the moment are:
+//
+// - artifacthub.io/operator
+// - artifacthub.io/links
+// - artifacthub.io/maintainers
+//
+// Example:
+//
+// annotations:
+//   "artifacthub.io/operator": true
+//   "artifacthub.io/links": |
+//     - name: link1
+//       url: https://link1.url
+//     - name: link2
+//       url: https://link2.url
+//   "artifacthub.io/maintainers": |
+//     - name: user1
+//       email: user1@email.com
+//     - name: user2
+//       email: user2@email.com
+//
+func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+	// Operator flag
+	if v, ok := annotations[operatorAnnotation]; ok {
+		isOperator, err := strconv.ParseBool(v)
+		if err != nil {
+			return errors.New("invalid operator value")
+		}
+		p.IsOperator = isOperator
+	}
+
+	// Links
+	if v, ok := annotations[linksAnnotation]; ok {
+		var links []*hub.Link
+		if err := yaml.Unmarshal([]byte(v), &links); err != nil {
+			return fmt.Errorf("invalid links value: %s", v)
+		}
+	LL:
+		for _, link := range links {
+			for _, pLink := range p.Links {
+				if link.URL == pLink.URL {
+					pLink.Name = link.Name
+					continue LL
+				}
+			}
+			p.Links = append(p.Links, link)
+		}
+	}
+
+	// Maintainers
+	if v, ok := annotations[maintainersAnnotation]; ok {
+		var maintainers []*hub.Maintainer
+		if err := yaml.Unmarshal([]byte(v), &maintainers); err != nil {
+			return fmt.Errorf("invalid maintainers value: %s", v)
+		}
+	ML:
+		for _, maintainer := range maintainers {
+			for _, pMaintainer := range p.Maintainers {
+				if maintainer.Email == pMaintainer.Email {
+					pMaintainer.Name = maintainer.Name
+					continue ML
+				}
+			}
+			p.Maintainers = append(p.Maintainers, maintainer)
+		}
+	}
+
 	return nil
 }
