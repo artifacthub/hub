@@ -29,7 +29,7 @@ Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. T
 
 ## Getting started
 
-The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. For more details, please see the [Helm chart README file](charts/hub/README.md).
+The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. For more details, please see the [Helm chart README file](charts/artifacthub/README.md).
 
 ## Community
 

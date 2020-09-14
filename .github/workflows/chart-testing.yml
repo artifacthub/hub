@@ -2,7 +2,7 @@ name: Helm CI
 on:
   pull_request:
     paths:
-      - 'chart/**'
+      - 'charts/**'
 jobs:
   lint-and-test:
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
