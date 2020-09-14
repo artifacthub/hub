@@ -112,7 +112,7 @@ server:
     secure: false
 ```
 
-This sample configuration does not use all options available. For more information please see [the Chart configuration options](./chart/README.md#configuration) and [the Chart hub secret template file](./chart/templates/hub_secret.yaml).
+This sample configuration does not use all options available. For more information please see [the Chart configuration options](charts/hub/README.md#configuration) and [the Chart hub secret template file](charts/hub/templates/hub_secret.yaml).
 
 Now you can run the `hub` server:
 

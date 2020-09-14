@@ -18,7 +18,7 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates && addgroup -S hub && adduser -S hub -G hub
 USER hub
 WORKDIR /home/hub
-COPY --from=backend-builder /hub ./
+COPY --from=backend-builder /charts/hub ./
 COPY --from=frontend-builder /web/build ./web
 CMD ["./hub"]
 EXPOSE 8000
