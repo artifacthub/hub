@@ -9,7 +9,6 @@ log:
   pretty: false
 
 db:
-  host: hub-postgresql.default.svc.cluster.local
   port: "5432"
   database: hub
   user: postgres
