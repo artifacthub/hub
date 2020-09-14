@@ -1,9 +1,9 @@
-//@ts-ignore
+// @ts-ignore
 import googleAnalytics from '@analytics/google-analytics';
 import Analytics from 'analytics';
 import isUndefined from 'lodash/isUndefined';
 
-const getPlugins = (): object[] | undefined => {
+const getPlugins = (): object[] => {
   let plugins: object[] = [];
   const analyticsConfig = (window as any).analyticsConfig;
   if (!isUndefined(analyticsConfig)) {

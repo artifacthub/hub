@@ -34,7 +34,7 @@ describe('Dependencies', () => {
 
     it('does not render component when dependencies are undefined', () => {
       const { container } = render(<Dependencies />);
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

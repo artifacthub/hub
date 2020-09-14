@@ -185,11 +185,15 @@ describe('StarButton', () => {
       it('does not render component', async () => {
         mocked(API).getStars.mockRejectedValue({ kind: ErrorKind.Other });
 
-        const { queryByTestId, queryByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { queryByTestId, queryByText, rerender } = render(component);
+
+        rerender(component);
 
         await waitFor(() => {
           expect(API.getStars).toHaveBeenCalledTimes(1);

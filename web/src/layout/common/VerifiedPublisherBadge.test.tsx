@@ -25,6 +25,6 @@ describe('VerifiedPublisherBadge', () => {
 
   it('does not render label', () => {
     const { container } = render(<VerifiedPublisherBadge verifiedPublisher={false} />);
-    expect(container).toBeEmpty();
+    expect(container).toBeEmptyDOMElement();
   });
 });

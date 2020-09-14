@@ -28,7 +28,7 @@ describe('LabelWithTooltip', () => {
       active: false,
     };
     const { container } = render(<LabelWithTooltip {...props} />);
-    expect(container).toBeEmpty();
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('displays tootltip', () => {

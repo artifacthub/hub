@@ -86,11 +86,13 @@ describe('Members Modal - members section', () => {
       mocked(API).addOrganizationMember.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId, getByText } = render(
+
+      const component = (
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <MemberModal {...defaultProps} />
         </AppCtx.Provider>
       );
+      const { getByTestId, getByText, rerender } = render(component);
 
       const input = getByTestId('aliasInput');
       fireEvent.change(input, { target: { value: 'test' } });
@@ -99,6 +101,8 @@ describe('Members Modal - members section', () => {
       await waitFor(() => {
         expect(API.addOrganizationMember).toHaveBeenCalledTimes(1);
       });
+
+      rerender(component);
 
       expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
       expect(getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();

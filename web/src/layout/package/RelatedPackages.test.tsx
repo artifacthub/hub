@@ -113,7 +113,7 @@ describe('RelatedPackages', () => {
 
         expect(mockPackages.data.packages).toHaveLength(0);
         await waitFor(() => {
-          expect(container).toBeEmpty();
+          expect(container).toBeEmptyDOMElement();
         });
       });
 
@@ -129,7 +129,7 @@ describe('RelatedPackages', () => {
 
         expect(mockPackages.data.packages).toHaveLength(1);
         await waitFor(() => {
-          expect(container).toBeEmpty();
+          expect(container).toBeEmptyDOMElement();
         });
       });
 
@@ -143,7 +143,7 @@ describe('RelatedPackages', () => {
         );
 
         await waitFor(() => {
-          expect(container).toBeEmpty();
+          expect(container).toBeEmptyDOMElement();
         });
       });
     });

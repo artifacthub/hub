@@ -287,11 +287,13 @@ describe('Transfer Repository Modal - packages section', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { getByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
@@ -304,12 +306,10 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(
-            getByText('An error occurred transfering the repository, please try again later.')
-          ).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred transfering the repository, please try again later.')).toBeInTheDocument();
       });
 
       it('with custom error message', async () => {
@@ -320,11 +320,13 @@ describe('Transfer Repository Modal - packages section', () => {
           message: 'custom error',
         });
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
         );
+
+        const { getByTestId, getByText, rerender } = render(component);
 
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
@@ -337,10 +339,10 @@ describe('Transfer Repository Modal - packages section', () => {
           expect(API.transferRepository).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred transfering the repository: custom error')).toBeInTheDocument();
       });
     });
 
@@ -368,22 +370,22 @@ describe('Transfer Repository Modal - packages section', () => {
           kind: ErrorKind.Other,
         });
 
-        const { getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockWithSelectedOrgCtx, dispatch: jest.fn() }}>
             <TransferModal {...defaultProps} />
           </AppCtx.Provider>
         );
 
+        const { getByText, rerender } = render(component);
+
         await waitFor(() => {
           expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
         });
 
-        await waitFor(() => {
-          expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-          expect(
-            getByText('An error occurred getting your organizations, please try again later.')
-          ).toBeInTheDocument();
-        });
+        rerender(component);
+
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred getting your organizations, please try again later.')).toBeInTheDocument();
       });
     });
   });

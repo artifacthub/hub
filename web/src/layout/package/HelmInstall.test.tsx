@@ -39,7 +39,7 @@ describe('HelmInstall', () => {
 
     it('does not render content when version is undefined', () => {
       const { container } = render(<HelmInstall {...defaultProps} version={undefined} />);
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

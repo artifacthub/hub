@@ -39,6 +39,6 @@ describe('SignedBadge', () => {
 
   it('does not render label', () => {
     const { container } = render(<SignedBadge repositoryKind={0} signed={false} />);
-    expect(container).toBeEmpty();
+    expect(container).toBeEmptyDOMElement();
   });
 });

@@ -91,7 +91,9 @@ describe('APIKeyModal - API keys section', () => {
       mocked(API).addAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+
+      const component = <Modal {...defaultProps} />;
+      const { getByTestId, getByText, rerender } = render(component);
 
       fireEvent.change(getByTestId('nameInput'), { target: { value: 'test2' } });
       fireEvent.click(getByTestId('apiKeyFormBtn'));
@@ -100,10 +102,10 @@ describe('APIKeyModal - API keys section', () => {
         expect(API.addAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
-      });
+      rerender(component);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      expect(getByText('An error occurred adding the API key, please try again later.')).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {
@@ -145,7 +147,9 @@ describe('APIKeyModal - API keys section', () => {
       mocked(API).updateAPIKey.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId, getByText } = render(<Modal {...defaultProps} apiKey={APIKeyMock} />);
+
+      const component = <Modal {...defaultProps} apiKey={APIKeyMock} />;
+      const { getByTestId, getByText, rerender } = render(component);
 
       fireEvent.change(getByTestId('nameInput'), { target: { value: 'key1-a' } });
       fireEvent.click(getByTestId('apiKeyFormBtn'));
@@ -154,10 +158,10 @@ describe('APIKeyModal - API keys section', () => {
         expect(API.updateAPIKey).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
-        expect(getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
-      });
+      rerender(component);
+
+      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      expect(getByText('An error occurred updating the API key, please try again later.')).toBeInTheDocument();
     });
 
     it('calls onAuthError when error is UnauthorizedError', async () => {

@@ -16,7 +16,7 @@ const defaultProps = {
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as {}),
   useHistory: () => ({
     push: mockHistoryPush,
   }),
@@ -33,6 +33,8 @@ describe('OrganizationInfo', () => {
 
   afterEach(() => {
     jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it('creates snapshot', () => {
@@ -80,13 +82,13 @@ describe('OrganizationInfo', () => {
     );
     expect(getByText(mockOrganization.description!)).toBeInTheDocument();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('orgLink'));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
     });
   });
@@ -105,12 +107,12 @@ describe('OrganizationInfo', () => {
     fireEvent.mouseEnter(getByTestId('orgInfoDropdown'));
     fireEvent.mouseLeave(getByTestId('orgLink'));
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).toHaveClass('show');
     });
 
     fireEvent.mouseLeave(getByTestId('orgInfoDropdown'));
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByTestId('orgInfoDropdown')).not.toHaveClass('show');
     });
   });
@@ -121,9 +123,12 @@ describe('OrganizationInfo', () => {
     const { getByTestId } = render(<OrganizationInfo {...defaultProps} />);
     fireEvent.mouseEnter(getByTestId('orgLink'));
 
-    expect(API.getOrganization).toHaveBeenCalledTimes(1);
     await waitFor(() => {
-      expect(getByTestId('orgInfoDropdown')).toBeEmpty();
+      expect(API.getOrganization).toHaveBeenCalledTimes(1);
+    });
+
+    await waitFor(() => {
+      expect(getByTestId('orgInfoDropdown')).toBeEmptyDOMElement();
     });
   });
 });

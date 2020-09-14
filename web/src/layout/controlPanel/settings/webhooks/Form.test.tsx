@@ -486,13 +486,14 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('6');
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
             </Router>
           </AppCtx.Provider>
         );
+        const { getByTestId, getByText, rerender } = render(component);
 
         const input = getByTestId('nameInput');
         fireEvent.change(input, { target: { value: 'test' } });
@@ -511,24 +512,24 @@ describe('WebhookForm', () => {
           );
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
-        });
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred updating the webhook: message error')).toBeInTheDocument();
       });
 
       it('without error message', async () => {
         mocked(API).updateWebhook.mockRejectedValue({ kind: ErrorKind.Other });
         const mockWebhook = getMockWebhook('7');
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
             </Router>
           </AppCtx.Provider>
         );
+        const { getByTestId, getByText, rerender } = render(component);
 
         const input = getByTestId('nameInput');
         fireEvent.change(input, { target: { value: 'test' } });
@@ -547,11 +548,10 @@ describe('WebhookForm', () => {
           );
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
-        });
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred updating the webhook, please try again later.')).toBeInTheDocument();
       });
     });
 
@@ -707,13 +707,14 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('12');
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
             </Router>
           </AppCtx.Provider>
         );
+        const { getByTestId, getByText, rerender } = render(component);
 
         const btn = getByTestId('testWebhookBtn');
         fireEvent.click(btn);
@@ -726,11 +727,10 @@ describe('WebhookForm', () => {
           });
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
-        });
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred testing the webhook: custom error')).toBeInTheDocument();
       });
 
       it('default error', async () => {
@@ -739,13 +739,14 @@ describe('WebhookForm', () => {
         });
         const mockWebhook = getMockWebhook('13');
 
-        const { getByTestId, getByText } = render(
+        const component = (
           <AppCtx.Provider value={{ ctx: mockUserCtx, dispatch: jest.fn() }}>
             <Router>
               <WebhookForm {...defaultProps} webhook={{ ...mockWebhook, contentType: null, template: null }} />
             </Router>
           </AppCtx.Provider>
         );
+        const { getByTestId, getByText, rerender } = render(component);
 
         const btn = getByTestId('testWebhookBtn');
         fireEvent.click(btn);
@@ -758,11 +759,10 @@ describe('WebhookForm', () => {
           });
         });
 
-        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        rerender(component);
 
-        await waitFor(() => {
-          expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
-        });
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+        expect(getByText('An error occurred testing the webhook, please try again later.')).toBeInTheDocument();
       });
     });
   });

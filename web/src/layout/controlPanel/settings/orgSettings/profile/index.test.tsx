@@ -1,4 +1,4 @@
-import { render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
@@ -71,24 +71,6 @@ describe('Organization settings index', () => {
       await waitFor(() => {
         expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
-    });
-
-    it('removes loading spinner after getting organization details', async () => {
-      const mockOrganization = getMockOrganization('3');
-      mocked(API).getOrganization.mockResolvedValue(mockOrganization);
-
-      const { getByRole } = render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Router>
-            <DetailsSection {...defaultProps} />
-          </Router>
-        </AppCtx.Provider>
-      );
-
-      const spinner = await waitForElementToBeRemoved(() => getByRole('status'));
-
-      expect(spinner).toBeTruthy();
-      await waitFor(() => {});
     });
 
     it('renders organization details in form', async () => {

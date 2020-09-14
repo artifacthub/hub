@@ -39,13 +39,13 @@ describe('License', () => {
     it('does not render component when license is undefined', () => {
       const { container } = render(<License />);
 
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
 
     it('does not render component when license is null', () => {
       const { container } = render(<License license={null} />);
 
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

@@ -36,7 +36,7 @@ describe('Maintainers', () => {
 
     it('does not render component when maintainers are undefined', () => {
       const { container } = render(<Maintainers />);
-      expect(container).toBeEmpty();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });
