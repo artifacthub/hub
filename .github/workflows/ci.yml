@@ -171,7 +171,7 @@ jobs:
           mkdir $HOME/.kube
           echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
       - name: Upgrade deployment
-        working-directory: ./charts/artifacthub
+        working-directory: ./charts/artifact-hub
         run: |
           helm dep update
           helm upgrade --namespace staging --reuse-values --values values-staging.yaml --set imageTag=$GITHUB_SHA artifact-hub .
