@@ -300,7 +300,7 @@ exports[`Organizations section index creates snapshot 2`] = `
               <small
                 class="text-muted text-uppercase mr-1"
               >
-                Homepage:
+                Homepage: 
               </small>
               <a
                 class="link text-reset link"
@@ -421,7 +421,7 @@ exports[`Organizations section index creates snapshot 2`] = `
               <small
                 class="text-muted text-uppercase mr-1"
               >
-                Homepage:
+                Homepage: 
               </small>
               <a
                 class="link text-reset link"

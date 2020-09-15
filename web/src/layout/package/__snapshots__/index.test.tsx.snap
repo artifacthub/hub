@@ -58,7 +58,7 @@ exports[`Package index creates snapshot 2`] = `
                 <small
                   class="text-muted text-uppercase"
                 >
-                  Repo:
+                  Repo: 
                 </small>
                 <div
                   class="mx-1 d-inline mobileIcon"
@@ -133,7 +133,7 @@ exports[`Package index creates snapshot 2`] = `
                             <small
                               class="text-muted text-uppercase mr-1"
                             >
-                              Repo:
+                              Repo: 
                             </small>
                             <img
                               alt="Icon"
@@ -152,7 +152,7 @@ exports[`Package index creates snapshot 2`] = `
                             <small
                               class="text-muted text-uppercase mr-1"
                             >
-                              Url:
+                              Url: 
                             </small>
                             <div
                               class="text-reset urlContent labelContent"

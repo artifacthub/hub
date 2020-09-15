@@ -103,7 +103,7 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
       <small
         class="text-muted text-uppercase mr-1"
       >
-        Created at:
+        Created at: 
       </small>
       <small>
         2020/06/18 16:35:39 (+00:00)

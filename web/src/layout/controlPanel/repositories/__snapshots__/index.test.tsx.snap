@@ -161,13 +161,13 @@ exports[`Repository index creates snapshot 1`] = `
       <p
         class="mt-5"
       >
-        If you want your repositories to be labeled as
+        If you want your repositories to be labeled as 
         <span
           class="font-weight-bold"
         >
           Verified Publisher
         </span>
-        , you can add a
+        , you can add a 
         <a
           class="link text-reset"
           href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
@@ -329,13 +329,13 @@ exports[`Repository index creates snapshot 2`] = `
       <p
         class="mt-5"
       >
-        If you want your repositories to be labeled as
+        If you want your repositories to be labeled as 
         <span
           class="font-weight-bold"
         >
           Verified Publisher
         </span>
-        , you can add a
+        , you can add a 
         <a
           class="link text-reset"
           href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"
@@ -528,7 +528,7 @@ exports[`Repository index creates snapshot 2`] = `
               <small
                 class="text-muted text-uppercase mr-1"
               >
-                ID:
+                ID: 
               </small>
               <small>
                 test
@@ -586,7 +586,7 @@ exports[`Repository index creates snapshot 2`] = `
             <small
               class="text-muted text-uppercase mr-1"
             >
-              Url:
+              Url: 
             </small>
             <small>
               http://test.com
@@ -596,7 +596,7 @@ exports[`Repository index creates snapshot 2`] = `
             <small
               class="text-muted text-uppercase mr-1"
             >
-              Last processed:
+              Last processed: 
             </small>
             <small>
               Not processed yet, it will be processed automatically in less than 30m

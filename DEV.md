@@ -112,7 +112,7 @@ server:
     secure: false
 ```
 
-This sample configuration does not use all options available. For more information please see [the Chart configuration options](charts/artifact-hub/README.md#configuration) and [the Chart hub secret template file](charts/artifact-hub/templates/hub_secret.yaml).
+This sample configuration does not use all options available. For more information please see [the Chart configuration options](charts/artifacthub/README.md#configuration) and [the Chart hub secret template file](charts/artifacthub/templates/hub_secret.yaml).
 
 Now you can run the `hub` server:
 

@@ -53,7 +53,7 @@ exports[`MobileSettings creates snapshot 1`] = `
                 <div
                   class="h6 mb-0 text-dark"
                 >
-                  Signed in as
+                  Signed in as 
                   <span
                     class="font-weight-bold"
                   >

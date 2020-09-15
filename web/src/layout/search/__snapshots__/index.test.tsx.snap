@@ -752,13 +752,13 @@ exports[`Search index creates snapshot 2`] = `
           <span
             class="pr-1"
           >
-            1 - 7 of
+            1 - 7 of 
           </span>
           7
           <span
             class="pl-1"
           >
-             results
+             results 
           </span>
           <span
             class="d-none d-sm-inline pl-1"
@@ -1454,7 +1454,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo:
+                                          Repo: 
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1473,7 +1473,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url:
+                                          Url: 
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1555,7 +1555,7 @@ exports[`Search index creates snapshot 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              User:
+                              User: 
                             </span>
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -1597,7 +1597,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo:
+                                          Repo: 
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1616,7 +1616,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url:
+                                          Url: 
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1698,13 +1698,13 @@ exports[`Search index creates snapshot 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version:
+                              Version: 
                             </span>
                             -
                             <span
                               class="text-muted text-uppercase mr-1 ml-3"
                             >
-                              App Version:
+                              App Version: 
                             </span>
                             2.1.0
                           </div>
@@ -1841,7 +1841,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo:
+                                          Repo: 
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1860,7 +1860,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url:
+                                          Url: 
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1942,7 +1942,7 @@ exports[`Search index creates snapshot 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              User:
+                              User: 
                             </span>
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -1984,7 +1984,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo:
+                                          Repo: 
                                         </small>
                                         <img
                                           alt="Icon"
@@ -2003,7 +2003,7 @@ exports[`Search index creates snapshot 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url:
+                                          Url: 
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -2085,13 +2085,13 @@ exports[`Search index creates snapshot 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version:
+                              Version: 
                             </span>
                             -
                             <span
                               class="text-muted text-uppercase mr-1 ml-3"
                             >
-                              App Version:
+                              App Version: 
                             </span>
                             5.0.1
                           </div>

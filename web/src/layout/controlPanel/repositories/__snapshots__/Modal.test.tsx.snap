@@ -245,7 +245,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                         Base URL of the repository where the index.yaml and optionally some package charts are hosted.
                       </p>
                       <p>
-                        If you host your charts in Github, you can use
+                        If you host your charts in Github, you can use 
                         <a
                           class="link text-reset"
                           href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
@@ -267,7 +267,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                       <p
                         class="mb-0"
                       >
-                        For more information about how to create and host your own chart repository please visit the
+                        For more information about how to create and host your own chart repository please visit the 
                         <a
                           class="link text-reset"
                           href="https://helm.sh/docs/topics/chart_repository/"

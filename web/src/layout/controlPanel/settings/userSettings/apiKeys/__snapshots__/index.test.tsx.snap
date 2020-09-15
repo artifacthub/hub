@@ -317,7 +317,7 @@ exports[`API keys section index creates snapshot 2`] = `
                   <small
                     class="text-muted text-uppercase mr-1"
                   >
-                    Created at:
+                    Created at: 
                   </small>
                   <small>
                     2020/06/18 16:35:39 (+00:00)
@@ -425,7 +425,7 @@ exports[`API keys section index creates snapshot 2`] = `
                   <small
                     class="text-muted text-uppercase mr-1"
                   >
-                    Created at:
+                    Created at: 
                   </small>
                   <small>
                     2020/06/18 16:35:39 (+00:00)

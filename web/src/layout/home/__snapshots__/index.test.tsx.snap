@@ -104,7 +104,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="d-none d-md-inline-block text-center mt-5"
         >
-          You can also
+          You can also 
           <a
             class="btn btn-link textLight font-weight-bold py-0 pb-1 pl-1"
             href="/packages/search"
@@ -113,7 +113,7 @@ exports[`Home index creates snapshot 1`] = `
               browse all packages
             </u>
           </a>
-           - or -
+           - or - 
           <span
             class="ml-3"
           >
@@ -208,7 +208,7 @@ exports[`Home index creates snapshot 1`] = `
       <div
         class="text-center h5 my-4 mt-md-5 legend"
       >
-        Artifact Hub is an
+        Artifact Hub is an 
         <b>
           Open Source
         </b>
@@ -356,7 +356,7 @@ exports[`Home index creates snapshot 1`] = `
           <div
             class="px-3 pt-4"
           >
-            Artifact Hub is a
+            Artifact Hub is a 
             <a
               class="link font-weight-bold text-primary"
               href="https://www.cncf.io/sandbox-projects/"
