@@ -6,7 +6,7 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
-- **artifacthub.io/operator** *(boolean)*
+- **artifacthub.io/operator** *(boolean string, see example below)*
 
 Use this annotation to indicate that your chart represents an operator. Artifact Hub at the moment also considers your chart to represent an operator if the word *operator* appears in the chart name.
 
@@ -20,11 +20,11 @@ This annotation can be used if you want to display a different name for a given 
 
 ## Example
 
-Artifact Hub annotations in`Chart.yaml`:
+Artifact Hub annotations in `Chart.yaml`:
 
 ```yaml
 annotations:
-  "artifacthub.io/operator": true
+  "artifacthub.io/operator": "true"
   "artifacthub.io/links": |
     - name: link1
       url: https://link1.url
