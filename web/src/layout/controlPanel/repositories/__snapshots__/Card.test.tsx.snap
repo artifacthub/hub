@@ -174,7 +174,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
       <small
         class="text-muted text-uppercase mr-1"
       >
-        Url: 
+        Url:
       </small>
       <small>
         http://test.repo
@@ -184,7 +184,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
       <small
         class="text-muted text-uppercase mr-1"
       >
-        Last processed: 
+        Last processed:
       </small>
       <small>
         Not processed yet, it will be processed automatically in less than 30m

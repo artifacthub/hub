@@ -23,7 +23,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <small
             class="card-text text-muted overflow-hidden lineClamp"
           >
-            API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode. 
+            API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode.
           </small>
           <div
             class="mt-auto d-flex flex-column"
@@ -195,7 +195,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <small
             class="card-text text-muted overflow-hidden lineClamp"
           >
-            RateLimiting holds rate-limiting related information. You can see the API definition and data structure for RateLimiting here. 
+            RateLimiting holds rate-limiting related information. You can see the API definition and data structure for RateLimiting here.
           </small>
           <div
             class="mt-auto d-flex flex-column"
@@ -281,7 +281,7 @@ exports[`CustomResourceDefinition creates snapshot 1`] = `
           <small
             class="card-text text-muted overflow-hidden lineClamp"
           >
-            TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here. 
+            TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here.
 API gateway can be deployed in three patterns: shared, private-jet, and sidecar.
 
 If your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.

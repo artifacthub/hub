@@ -126,7 +126,7 @@ exports[`Navbar creates snapshot 1`] = `
                 <p
                   class="mt-2 mb-0 signedInText"
                 >
-                  Signed in as 
+                  Signed in as
                   <span
                     class="font-weight-bold"
                   >

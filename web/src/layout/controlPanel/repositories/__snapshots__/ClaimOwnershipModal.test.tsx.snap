@@ -47,7 +47,7 @@ exports[`Claim Repository Modal - packages section creates snapshot 1`] = `
                 class="mt-4"
               >
                 <p>
-                  Before claiming a repository ownership, we need to verify that you actually own it. To prove that, you need to add a 
+                  Before claiming a repository ownership, we need to verify that you actually own it. To prove that, you need to add a
                   <a
                     class="link text-reset"
                     href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml"

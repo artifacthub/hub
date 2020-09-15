@@ -127,7 +127,7 @@ exports[`Organization Card - organization section creates snapshot 1`] = `
       <small
         class="text-muted text-uppercase mr-1"
       >
-        Homepage: 
+        Homepage:
       </small>
       <a
         class="link text-reset link"

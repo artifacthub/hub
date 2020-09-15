@@ -28,13 +28,13 @@ exports[`SearchTip creates snapshot 1`] = `
         >
           Tip:
         </span>
-        Use 
+        Use
         <span
           class="font-weight-bold"
         >
           multiple words
         </span>
-         to refine your search. Example: 
+         to refine your search. Example:
         <a
           class="font-weight-bold textLight p-0"
           data-testid="sampleFilter"

@@ -154,7 +154,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -173,7 +173,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -314,7 +314,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -333,7 +333,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -414,13 +414,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version: 
+                              Version:
                             </span>
                             6.6.0
                             <span
                               class="text-muted text-uppercase mr-1 ml-3"
                             >
-                              App Version: 
+                              App Version:
                             </span>
                             1.10.4
                           </div>
@@ -608,7 +608,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -627,7 +627,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -768,7 +768,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -787,7 +787,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -868,13 +868,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version: 
+                              Version:
                             </span>
                             0.15.0
                             <span
                               class="text-muted text-uppercase mr-1 ml-3"
                             >
-                              App Version: 
+                              App Version:
                             </span>
                             3.11.6
                           </div>
@@ -1062,7 +1062,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1081,7 +1081,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1222,7 +1222,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1241,7 +1241,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1322,13 +1322,13 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version: 
+                              Version:
                             </span>
                             11.1.0
                             <span
                               class="text-muted text-uppercase mr-1 ml-3"
                             >
-                              App Version: 
+                              App Version:
                             </span>
                             2.16.0
                           </div>
@@ -1516,7 +1516,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1535,7 +1535,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1617,7 +1617,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              User: 
+                              User:
                             </span>
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -1659,7 +1659,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1678,7 +1678,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -1760,7 +1760,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version: 
+                              Version:
                             </span>
                             1.0.0
                           </div>
@@ -1948,7 +1948,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -1967,7 +1967,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -2049,7 +2049,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              User: 
+                              User:
                             </span>
                             <button
                               class="p-0 border-0 text-truncate text-dark mw-100 link"
@@ -2091,7 +2091,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Repo: 
+                                          Repo:
                                         </small>
                                         <img
                                           alt="Icon"
@@ -2110,7 +2110,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                         <small
                                           class="text-muted text-uppercase mr-1"
                                         >
-                                          Url: 
+                                          Url:
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
@@ -2192,7 +2192,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                             <span
                               class="text-muted text-uppercase mr-1"
                             >
-                              Version: 
+                              Version:
                             </span>
                             0.1.0
                           </div>

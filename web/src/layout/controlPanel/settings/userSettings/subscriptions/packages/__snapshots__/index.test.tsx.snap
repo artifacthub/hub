@@ -216,7 +216,7 @@ exports[`PackagesSection renders correctly 1`] = `
             class="mt-3 mt-md-3"
           >
             <p>
-              Repositories notifications are 
+              Repositories notifications are
               <span
                 class="font-weight-bold"
               >
@@ -225,7 +225,7 @@ exports[`PackagesSection renders correctly 1`] = `
               . However, you can opt-out of notifications for certain kinds of events that happen in any of the repositories you can manage.
             </p>
             <p>
-              You will 
+              You will
               <span
                 class="font-weight-bold"
               >
@@ -438,7 +438,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -524,7 +524,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -610,7 +610,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -697,7 +697,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -784,7 +784,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -871,7 +871,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -958,7 +958,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -1045,7 +1045,7 @@ exports[`PackagesSection renders correctly 2`] = `
                         <span
                           class="text-uppercase text-muted legend"
                         >
-                          Repo: 
+                          Repo:
                         </span>
                         <a
                           class="text-dark"
@@ -1207,7 +1207,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -1343,7 +1343,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -1479,7 +1479,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -1616,7 +1616,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -1753,7 +1753,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -1890,7 +1890,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -2027,7 +2027,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -2164,7 +2164,7 @@ exports[`PackagesSection renders correctly 2`] = `
                                   d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
                                 />
                               </svg>
-                               
+
                               <span
                                 class="ml-1"
                               >
@@ -2297,7 +2297,7 @@ exports[`PackagesSection renders correctly 2`] = `
             class="mt-3 mt-md-3"
           >
             <p>
-              Repositories notifications are 
+              Repositories notifications are
               <span
                 class="font-weight-bold"
               >
@@ -2306,7 +2306,7 @@ exports[`PackagesSection renders correctly 2`] = `
               . However, you can opt-out of notifications for certain kinds of events that happen in any of the repositories you can manage.
             </p>
             <p>
-              You will 
+              You will
               <span
                 class="font-weight-bold"
               >
