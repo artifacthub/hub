@@ -323,7 +323,7 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 // Example:
 //
 // annotations:
-//   "artifacthub.io/operator": true
+//   "artifacthub.io/operator": "true"
 //   "artifacthub.io/links": |
 //     - name: link1
 //       url: https://link1.url
