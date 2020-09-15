@@ -146,7 +146,7 @@ const UpdatePassword = () => {
         label="Confirm new password"
         labelLegend={<small className="ml-1 font-italic">(Required)</small>}
         name="confirmPassword"
-        pattern={password.value}
+        pattern={password.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}
         invalidText={{
           default: 'This field is required',
           patternMismatch: "Passwords don't match",
