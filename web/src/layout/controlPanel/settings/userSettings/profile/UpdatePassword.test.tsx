@@ -52,6 +52,27 @@ describe('Update password - user settings', () => {
       expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass');
     });
 
+    it('escapes password properly', async () => {
+      const { getByTestId } = render(<UpdatePassword />);
+
+      const oldPassword = getByTestId('oldPasswordInput') as HTMLInputElement;
+      const newPassword = getByTestId('passwordInput') as HTMLInputElement;
+      const repeatNewPassword = getByTestId('confirmPasswordInput') as HTMLInputElement;
+
+      fireEvent.change(oldPassword, { target: { value: 'oldpass' } });
+      fireEvent.change(newPassword, { target: { value: 'newpass$^' } });
+      fireEvent.change(repeatNewPassword, { target: { value: 'newpass$^' } });
+
+      const btn = getByTestId('updatePasswordBtn');
+      expect(btn).toBeInTheDocument();
+      fireEvent.click(btn);
+
+      await waitFor(() => {});
+
+      expect(API.updatePassword).toBeCalledTimes(1);
+      expect(API.updatePassword).toHaveBeenCalledWith('oldpass', 'newpass$^');
+    });
+
     it("doesn`t pass form validation when passwords don't match", async () => {
       const { getByTestId } = render(<UpdatePassword />);
 
