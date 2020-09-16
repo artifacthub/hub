@@ -7,5 +7,5 @@ yarn-error.log*
 node_modules/
 web/build
 web/coverage
-chart/charts
+charts/artifact-hub/charts
 Chart.lock

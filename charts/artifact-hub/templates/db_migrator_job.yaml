@@ -1,3 +1,4 @@
+{{- $fullName := include "chart.fullname" . -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -20,7 +21,7 @@ spec:
         imagePullPolicy: {{ .Values.pullPolicy }}
         env:
           - name: PGHOST
-            value: {{ .Values.db.host }}
+            value: {{ default (printf "%s-postgresql.%s" $fullName .Release.Namespace) .Values.db.host }}
           - name: PGPORT
             value: "{{ .Values.db.port }}"
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']

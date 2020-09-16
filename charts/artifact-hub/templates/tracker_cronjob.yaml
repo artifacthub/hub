@@ -1,3 +1,4 @@
+{{- $fullName := include "chart.fullname" . -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -23,7 +24,7 @@ spec:
               {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
             env:
               - name: PGHOST
-                value: {{ .Values.db.host }}
+                value: {{ default (printf "%s-postgresql.%s" $fullName .Release.Namespace) .Values.db.host }}
               - name: PGPORT
                 value: "{{ .Values.db.port }}"
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']

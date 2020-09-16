@@ -1,0 +1,3 @@
+helm-extra-args: --timeout 180s
+chart-repos:
+  - stable=https://kubernetes-charts.storage.googleapis.com/

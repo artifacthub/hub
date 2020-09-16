@@ -1,0 +1,3 @@
+fullnameOverride: hub
+postgresql:
+  fullnameOverride: hub-postgresql
