@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(122);
+select plan(126);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -106,7 +106,11 @@ select columns_are('organization', array[
     'description',
     'home_url',
     'logo_image_id',
-    'created_at'
+    'created_at',
+    'authorization_enabled',
+    'predefined_policy',
+    'custom_policy',
+    'policy_data'
 ]);
 select columns_are('package', array[
     'package_id',
@@ -318,31 +322,37 @@ select indexes_are('webhook__package', array[
 ]);
 
 -- Check expected functions exist
+-- API keys
 select has_function('add_api_key');
 select has_function('delete_api_key');
 select has_function('get_api_key');
 select has_function('get_user_api_keys');
 select has_function('update_api_key');
-
+-- Authz
+select has_function('notify_authorization_policies_updates');
+-- Events
 select has_function('get_pending_event');
-
+-- Images
 select has_function('get_image');
 select has_function('register_image');
-
+-- Notifications
 select has_function('add_notification');
 select has_function('get_pending_notification');
 select has_function('update_notification_status');
-
+-- Organizations
 select has_function('add_organization');
 select has_function('add_organization_member');
 select has_function('confirm_organization_membership');
 select has_function('delete_organization_member');
+select has_function('get_authorization_policies');
+select has_function('get_authorization_policy');
 select has_function('get_organization');
 select has_function('get_organization_members');
 select has_function('get_user_organizations');
+select has_function('update_authorization_policy');
 select has_function('update_organization');
 select has_function('user_belongs_to_organization');
-
+-- Packages
 select has_function('generate_package_tsdoc');
 select has_function('get_package');
 select has_function('get_package_summary');
@@ -357,7 +367,7 @@ select has_function('semver_gt');
 select has_function('semver_gte');
 select has_function('toggle_star');
 select has_function('unregister_package');
-
+-- Repositories
 select has_function('add_repository');
 select has_function('delete_repository');
 select has_function('get_all_repositories');
@@ -371,7 +381,7 @@ select has_function('set_last_tracking_results');
 select has_function('set_verified_publisher');
 select has_function('transfer_repository');
 select has_function('update_repository');
-
+-- Subscriptions
 select has_function('add_opt_out');
 select has_function('add_subscription');
 select has_function('delete_opt_out');
@@ -381,14 +391,14 @@ select has_function('get_repository_subscriptors');
 select has_function('get_user_opt_out_entries');
 select has_function('get_user_package_subscriptions');
 select has_function('get_user_subscriptions');
-
+-- Users
 select has_function('get_user_profile');
 select has_function('register_session');
 select has_function('register_user');
 select has_function('update_user_password');
 select has_function('update_user_profile');
 select has_function('verify_email');
-
+-- Webhooks
 select has_function('add_webhook');
 select has_function('delete_webhook');
 select has_function('get_webhook');

@@ -105,7 +105,6 @@ const OrganizationsSection = (props: Props) => {
                       organization={org}
                       onAuthError={props.onAuthError}
                       onSuccess={fetchOrganizations}
-                      setEditModalStatus={setModalStatus}
                     />
                   ))}
                 </div>

@@ -18,6 +18,10 @@ const defaultProps = {
 };
 
 describe('SectionPanel', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<SectionPanel {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();

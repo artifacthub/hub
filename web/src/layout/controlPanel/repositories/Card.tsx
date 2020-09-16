@@ -15,13 +15,14 @@ import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ErrorKind, Repository } from '../../../types';
+import { AuthorizerAction, ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIcon from '../../common/RepositoryIcon';
 import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
+import ActionBtn from '../ActionBtn';
 import BadgeModal from './BadgeModal';
 import styles from './Card.module.css';
 import TransferRepositoryModal from './TransferModal';
@@ -140,9 +141,13 @@ const RepositoryCard = (props: Props) => {
       if (err.kind === ErrorKind.Unauthorized) {
         props.onAuthError();
       } else {
+        let errorMessage = 'An error occurred deleting the repository, please try again later.';
+        if (!isUndefined(organizationName) && err.kind === ErrorKind.Forbidden) {
+          errorMessage = 'You do not have permissions to delete the repository from the organization.';
+        }
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred deleting the repository, please try again later.',
+          message: errorMessage,
         });
       }
     }
@@ -266,23 +271,24 @@ const RepositoryCard = (props: Props) => {
               </div>
             </button>
 
-            <button
-              data-testid="transferRepoBtn"
+            <ActionBtn
+              testId="transferRepoBtn"
               className="dropdown-item btn btn-sm rounded-0 text-secondary"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 closeDropdown();
                 setTransferModalStatus(true);
               }}
+              action={AuthorizerAction.TransferOrganizationRepository}
             >
-              <div className="d-flex flex-row align-items-center">
+              <>
                 <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
                 <span>Transfer</span>
-              </div>
-            </button>
+              </>
+            </ActionBtn>
 
-            <button
-              data-testid="updateRepoBtn"
+            <ActionBtn
+              testId="updateRepoBtn"
               className="dropdown-item btn btn-sm rounded-0 text-secondary"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
@@ -292,27 +298,29 @@ const RepositoryCard = (props: Props) => {
                   repository: props.repository,
                 });
               }}
+              action={AuthorizerAction.UpdateOrganizationRepository}
             >
-              <div className="d-flex flex-row align-items-center">
+              <>
                 <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
                 <span>Edit</span>
-              </div>
-            </button>
+              </>
+            </ActionBtn>
 
-            <button
-              data-testid="deleteRepoDropdownBtn"
+            <ActionBtn
+              testId="deleteRepoDropdownBtn"
               className="dropdown-item btn btn-sm rounded-0 text-secondary"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 closeDropdown();
                 setDeletionModalStatus(true);
               }}
+              action={AuthorizerAction.DeleteOrganizationRepository}
             >
-              <div className="d-flex flex-row align-items-center">
+              <>
                 <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
                 <span>Delete</span>
-              </div>
-            </button>
+              </>
+            </ActionBtn>
           </div>
 
           <button

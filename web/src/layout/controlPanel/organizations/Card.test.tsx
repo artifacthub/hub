@@ -47,17 +47,24 @@ describe('Organization Card - organization section', () => {
   });
 
   it('creates snapshot', () => {
-    const result = render(<Card {...defaultProps} />);
+    const result = render(
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <Card {...defaultProps} />
+      </AppCtx.Provider>
+    );
 
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(<Card {...defaultProps} />);
+      const { getByText, getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       expect(getByText(organizationMock.displayName!)).toBeInTheDocument();
-      expect(getByTestId('editOrgBtn')).toBeInTheDocument();
       expect(getByTestId('leaveOrgModalBtn')).toBeInTheDocument();
       expect(getByText(organizationMock.homeUrl!)).toBeInTheDocument();
       expect(getByText(organizationMock.description!)).toBeInTheDocument();
@@ -106,20 +113,6 @@ describe('Organization Card - organization section', () => {
       await waitFor(() => {});
       expect(API.deleteOrganizationMember).toHaveBeenCalledTimes(1);
       expect(API.deleteOrganizationMember).toHaveBeenCalledWith(organizationMock.name, mockCtx.user.alias);
-    });
-
-    it('calls setEditModalStatusMock when Edit button is clicked', () => {
-      const { getByTestId } = render(<Card {...defaultProps} />);
-
-      const btn = getByTestId('editOrgBtn');
-      expect(btn).toBeInTheDocument();
-
-      fireEvent.click(btn);
-      expect(setEditModalStatusMock).toHaveBeenCalledTimes(1);
-      expect(setEditModalStatusMock).toHaveBeenCalledWith({
-        open: true,
-        organization: organizationMock,
-      });
     });
   });
 

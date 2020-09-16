@@ -11,14 +11,13 @@ import (
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
+	"github.com/artifacthub/hub/internal/tests"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/rs/zerolog"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
-
-var errFake = errors.New("fake error for tests")
 
 func TestMain(m *testing.M) {
 	zerolog.SetGlobalLevel(zerolog.Disabled)
@@ -36,11 +35,11 @@ func TestTracker(t *testing.T) {
 	t.Run("error cloning repository", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", errFake)
+		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
-		assert.True(t, errors.Is(err, errFake))
+		assert.True(t, errors.Is(err, tests.ErrFake))
 		tw.assertExpectations(t)
 	})
 
@@ -48,11 +47,11 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, errFake)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
-		assert.True(t, errors.Is(err, errFake))
+		assert.True(t, errors.Is(err, tests.ErrFake))
 		tw.assertExpectations(t)
 	})
 
@@ -104,7 +103,7 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r.RepositoryID}, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
-		tw.pm.On("Register", tw.ctx, mock.Anything).Return(errFake)
+		tw.pm.On("Register", tw.ctx, mock.Anything).Return(tests.ErrFake)
 		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -177,7 +176,7 @@ func TestTracker(t *testing.T) {
 			Name:       "test",
 			Version:    "0.1.0",
 			Repository: r,
-		}).Return(errFake)
+		}).Return(tests.ErrFake)
 		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations

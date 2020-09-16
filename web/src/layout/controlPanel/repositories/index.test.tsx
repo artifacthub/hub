@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
+import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository as Repo } from '../../../types';
 import Repository from './index';
 jest.mock('../../../api');
@@ -27,6 +28,18 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+const mockCtx = {
+  user: { alias: 'test', email: 'test@test.com' },
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
+  },
+};
+
 describe('Repository index', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -37,9 +50,11 @@ describe('Repository index', () => {
     mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
     const result = render(
-      <Router>
-        <Repository {...defaultProps} />
-      </Router>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <Router>
+          <Repository {...defaultProps} />
+        </Router>
+      </AppCtx.Provider>
     );
 
     await waitFor(() => {
@@ -53,9 +68,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => {
@@ -72,9 +89,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId, getByText } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const noData = await waitFor(() => getByTestId('noData'));
@@ -91,9 +110,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId, getAllByTestId } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const list = await waitFor(() => getByTestId('repoList'));
@@ -109,9 +130,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const refreshBtn = await waitFor(() => getByTestId('refreshRepoBtn'));
@@ -127,9 +150,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockResolvedValue(mockRepository);
 
       const { getByTestId } = render(
-        <Router>
-          <Repository {...defaultProps} repoName="repo" />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} repoName="repo" />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => getByTestId('repoList'));
@@ -147,9 +172,11 @@ describe('Repository index', () => {
       });
 
       render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => {
@@ -163,9 +190,11 @@ describe('Repository index', () => {
       mocked(API).getRepositories.mockRejectedValue({ kind: ErrorKind.Other });
 
       const { getByTestId } = render(
-        <Router>
-          <Repository {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <Repository {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => {

@@ -2,7 +2,6 @@ package event
 
 import (
 	"context"
-	"errors"
 	"os"
 	"testing"
 
@@ -12,8 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-var errFake = errors.New("fake error for tests")
 
 func TestMain(m *testing.M) {
 	zerolog.SetGlobalLevel(zerolog.Disabled)

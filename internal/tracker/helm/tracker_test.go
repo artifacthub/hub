@@ -2,7 +2,6 @@ package helm
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/url"
 	"os"
@@ -21,8 +20,6 @@ import (
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
-var errFake = errors.New("fake error for tests")
-
 func TestMain(m *testing.M) {
 	zerolog.SetGlobalLevel(zerolog.Disabled)
 	os.Exit(m.Run())
@@ -33,7 +30,7 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		r := &hub.Repository{RepositoryID: "repo1"}
 		tw := newTrackerWrapper(r)
-		tw.il.On("LoadIndex", r).Return(nil, errFake)
+		tw.il.On("LoadIndex", r).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
@@ -46,7 +43,7 @@ func TestTracker(t *testing.T) {
 		r := &hub.Repository{RepositoryID: "repo1"}
 		tw := newTrackerWrapper(r)
 		tw.il.On("LoadIndex", r).Return(nil, nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, errFake)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)

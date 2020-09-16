@@ -78,7 +78,7 @@ func TestWorker(t *testing.T) {
 	t.Run("error getting pending notification", func(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
-		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, errFake)
+		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -90,7 +90,7 @@ func TestWorker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
-		sw.pm.On("Get", sw.ctx, gpi).Return(nil, errFake)
+		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -102,7 +102,7 @@ func TestWorker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
-		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(nil, errFake)
+		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -115,8 +115,8 @@ func TestWorker(t *testing.T) {
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
 		sw.pm.On("Get", sw.ctx, gpi).Return(p, nil)
-		sw.es.On("SendEmail", mock.Anything).Return(errFake)
-		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, errFake).Return(nil)
+		sw.es.On("SendEmail", mock.Anything).Return(tests.ErrFake)
+		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n1.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -129,8 +129,8 @@ func TestWorker(t *testing.T) {
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
 		sw.rm.On("GetByID", sw.ctx, "repositoryID").Return(r, nil)
-		sw.es.On("SendEmail", mock.Anything).Return(errFake)
-		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, errFake).Return(nil)
+		sw.es.On("SendEmail", mock.Anything).Return(tests.ErrFake)
+		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n3.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -170,7 +170,7 @@ func TestWorker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
-		sw.pm.On("Get", sw.ctx, gpi).Return(nil, errFake)
+		sw.pm.On("Get", sw.ctx, gpi).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)
@@ -183,8 +183,8 @@ func TestWorker(t *testing.T) {
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
 		sw.pm.On("Get", sw.ctx, gpi).Return(p, nil)
-		sw.hc.On("Do", mock.Anything).Return(nil, errFake)
-		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, errFake).Return(nil)
+		sw.hc.On("Do", mock.Anything).Return(nil, tests.ErrFake)
+		sw.nm.On("UpdateStatus", sw.ctx, sw.tx, n2.NotificationID, true, tests.ErrFake).Return(nil)
 		sw.tx.On("Commit", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc, sw.cache, "", sw.hc)

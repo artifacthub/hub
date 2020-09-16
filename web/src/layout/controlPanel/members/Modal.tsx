@@ -53,7 +53,11 @@ const MemberModal = (props: Props) => {
     } catch (err) {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
-        setApiError('An error occurred adding the new member, please try again later.');
+        let errorMessage = 'An error occurred adding the new member, please try again later.';
+        if (err.kind === ErrorKind.Forbidden) {
+          errorMessage = 'You do not have permissions to add a new member to the organization.';
+        }
+        setApiError(errorMessage);
       } else {
         props.onAuthError();
       }

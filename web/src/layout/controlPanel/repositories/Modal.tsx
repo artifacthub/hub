@@ -73,6 +73,12 @@ const RepositoryModal = (props: Props) => {
           `An error occurred ${isUndefined(props.repository) ? 'adding' : 'updating'} the repository`
         );
 
+        if (!isUndefined(organizationName) && err.kind === ErrorKind.Forbidden) {
+          error = `You do not have permissions to ${isUndefined(props.repository) ? 'add' : 'update'} the repository  ${
+            isUndefined(props.repository) ? 'to' : 'from'
+          } the organization.`;
+        }
+
         setApiError(error);
       } else {
         props.onAuthError();

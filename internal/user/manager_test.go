@@ -154,7 +154,13 @@ func TestCheckAvailability(t *testing.T) {
 }
 
 func TestCheckCredentials(t *testing.T) {
-	dbQuery := `select user_id, password from "user" where email = $1 and password is not null`
+	dbQuery := `
+	select user_id, password
+	from "user"
+	where email = $1
+	and password is not null
+	and email_verified = true
+	`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -384,6 +390,56 @@ func TestDeleteSession(t *testing.T) {
 				db.AssertExpectations(t)
 			})
 		}
+	})
+}
+
+func TestGetProfile(t *testing.T) {
+	dbQuery := "select get_user_profile($1::uuid)"
+	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
+
+	t.Run("user id not found in ctx", func(t *testing.T) {
+		m := NewManager(nil, nil)
+		assert.Panics(t, func() {
+			_, _ = m.GetProfile(context.Background())
+		})
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		m := NewManager(db, nil)
+
+		profile, err := m.GetProfile(ctx)
+		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Nil(t, profile)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		expectedProfile := &hub.User{
+			Alias:          "alias",
+			FirstName:      "first_name",
+			LastName:       "last_name",
+			Email:          "email",
+			ProfileImageID: "profile_image_id",
+		}
+
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte(`
+		{
+			"alias": "alias",
+			"first_name": "first_name",
+			"last_name": "last_name",
+			"email": "email",
+			"profile_image_id": "profile_image_id"
+		}
+		`), nil)
+		m := NewManager(db, nil)
+
+		profile, err := m.GetProfile(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, expectedProfile, profile)
+		db.AssertExpectations(t)
 	})
 }
 

@@ -112,7 +112,13 @@ func (m *Manager) CheckCredentials(
 
 	// Get password for email provided from database
 	var userID, hashedPassword string
-	query := `select user_id, password from "user" where email = $1 and password is not null`
+	query := `
+	select user_id, password
+	from "user"
+	where email = $1
+	and password is not null
+	and email_verified = true
+	`
 	err := m.db.QueryRow(ctx, query, email).Scan(&userID, &hashedPassword)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -185,7 +191,21 @@ func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
 	return err
 }
 
-// GetProfileJSON returns the profile of the user doing the request.
+// GetProfile returns the profile of the user doing the request.
+func (m *Manager) GetProfile(ctx context.Context) (*hub.User, error) {
+	dataJSON, err := m.GetProfileJSON(ctx)
+	if err != nil {
+		return nil, err
+	}
+	u := &hub.User{}
+	if err := json.Unmarshal(dataJSON, &u); err != nil {
+		return nil, err
+	}
+	return u, nil
+}
+
+// GetProfileJSON returns the profile of the user doing the request as a json
+// object.
 func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 	var profile []byte

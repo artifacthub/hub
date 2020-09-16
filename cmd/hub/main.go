@@ -11,6 +11,7 @@ import (
 
 	"github.com/artifacthub/hub/cmd/hub/handlers"
 	"github.com/artifacthub/hub/internal/apikey"
+	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/event"
 	"github.com/artifacthub/hub/internal/hub"
@@ -47,17 +48,22 @@ func main() {
 	if s := email.NewSender(cfg); s != nil {
 		es = s
 	}
+	az, err := authz.NewAuthorizer(db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("authorizer setup failed")
+	}
 
 	// Setup and launch http server
 	hSvc := &handlers.Services{
-		OrganizationManager: org.NewManager(db, es),
+		OrganizationManager: org.NewManager(db, es, az),
 		UserManager:         user.NewManager(db, es),
-		RepositoryManager:   repo.NewManager(cfg, db),
+		RepositoryManager:   repo.NewManager(cfg, db, az),
 		PackageManager:      pkg.NewManager(db),
 		SubscriptionManager: subscription.NewManager(db),
 		WebhookManager:      webhook.NewManager(db),
 		APIKeyManager:       apikey.NewManager(db),
 		ImageStore:          pg.NewImageStore(db),
+		Authorizer:          az,
 	}
 	addr := cfg.GetString("server.addr")
 	srv := &http.Server{
@@ -103,7 +109,7 @@ func main() {
 		ES:                  es,
 		NotificationManager: notification.NewManager(),
 		SubscriptionManager: subscription.NewManager(db),
-		RepositoryManager:   repo.NewManager(cfg, db),
+		RepositoryManager:   repo.NewManager(cfg, db, az),
 		PackageManager:      pkg.NewManager(db),
 	}
 	notificationsDispatcher := notification.NewDispatcher(cfg, nSvc)

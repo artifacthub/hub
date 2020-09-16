@@ -27,6 +27,7 @@ require (
 	github.com/jackc/pgx/v4 v4.8.1
 	github.com/mailru/easyjson v0.7.2 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
+	github.com/open-policy-agent/opa v0.23.2
 	github.com/operator-framework/api v0.3.11
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pelletier/go-toml v1.8.0 // indirect

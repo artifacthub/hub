@@ -45,14 +45,16 @@ type Manager struct {
 	hg              HTTPGetter
 	rc              hub.RepositoryCloner
 	helmIndexLoader hub.HelmIndexLoader
+	az              hub.Authorizer
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(cfg *viper.Viper, db hub.DB, opts ...func(m *Manager)) *Manager {
+func NewManager(cfg *viper.Viper, db hub.DB, az hub.Authorizer, opts ...func(m *Manager)) *Manager {
 	m := &Manager{
 		cfg:             cfg,
 		db:              db,
 		helmIndexLoader: &HelmIndexLoader{},
+		az:              az,
 	}
 	for _, o := range opts {
 		o(m)
@@ -99,6 +101,17 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if r.Kind == hub.Helm {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+		}
+	}
+
+	// Authorize action if the repository will be added to an organization
+	if orgName != "" {
+		if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+			OrganizationName: orgName,
+			UserID:           userID,
+			Action:           hub.AddOrganizationRepository,
+		}); err != nil {
+			return err
 		}
 	}
 
@@ -211,9 +224,24 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
 
+	// Authorize action if the repository is owned by an organization
+	r, err := m.GetByName(ctx, name)
+	if err != nil {
+		return err
+	}
+	if r.OrganizationName != "" {
+		if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+			OrganizationName: r.OrganizationName,
+			UserID:           userID,
+			Action:           hub.DeleteOrganizationRepository,
+		}); err != nil {
+			return err
+		}
+	}
+
 	// Delete repository from database
 	query := "select delete_repository($1::uuid, $2::text)"
-	_, err := m.db.Exec(ctx, query, userID, name)
+	_, err = m.db.Exec(ctx, query, userID, name)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -404,6 +432,24 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string, owners
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository name not provided")
 	}
 
+	// Authorize action if this is not an ownership claim operation and the
+	// repository is owned by an organization
+	if !ownershipClaim {
+		r, err := m.GetByName(ctx, repoName)
+		if err != nil {
+			return err
+		}
+		if r.OrganizationName != "" {
+			if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+				OrganizationName: r.OrganizationName,
+				UserID:           userID,
+				Action:           hub.TransferOrganizationRepository,
+			}); err != nil {
+				return err
+			}
+		}
+	}
+
 	// Update repository owner in database
 	query := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
 	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP, ownershipClaim)
@@ -435,10 +481,25 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 		}
 	}
 
+	// Authorize action if the repository is owned by an organization
+	rBefore, err := m.GetByName(ctx, r.Name)
+	if err != nil {
+		return err
+	}
+	if rBefore.OrganizationName != "" {
+		if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+			OrganizationName: rBefore.OrganizationName,
+			UserID:           userID,
+			Action:           hub.UpdateOrganizationRepository,
+		}); err != nil {
+			return err
+		}
+	}
+
 	// Update repository in database
 	query := "select update_repository($1::uuid, $2::jsonb)"
 	rJSON, _ := json.Marshal(r)
-	_, err := m.db.Exec(ctx, query, userID, rJSON)
+	_, err = m.db.Exec(ctx, query, userID, rJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}

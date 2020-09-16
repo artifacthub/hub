@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
 	"github.com/artifacthub/hub/internal/repo"
@@ -50,7 +51,11 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("database setup failed")
 	}
-	rm := repo.NewManager(cfg, db)
+	az, err := authz.NewAuthorizer(db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("authorizer setup failed")
+	}
+	rm := repo.NewManager(cfg, db, az)
 	pm := pkg.NewManager(db)
 	is, err := util.SetupImageStore(cfg, db)
 	if err != nil {

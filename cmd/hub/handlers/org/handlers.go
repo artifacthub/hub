@@ -16,14 +16,16 @@ import (
 // organizations operations.
 type Handlers struct {
 	orgManager hub.OrganizationManager
+	az         hub.Authorizer
 	cfg        *viper.Viper
 	logger     zerolog.Logger
 }
 
 // NewHandlers creates a new Handlers instance.
-func NewHandlers(orgManager hub.OrganizationManager, cfg *viper.Viper) *Handlers {
+func NewHandlers(orgManager hub.OrganizationManager, az hub.Authorizer, cfg *viper.Viper) *Handlers {
 	return &Handlers{
 		orgManager: orgManager,
+		az:         az,
 		cfg:        cfg,
 		logger:     log.With().Str("handlers", "org").Logger(),
 	}
@@ -115,6 +117,19 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }
 
+// GetAuthorizationPolicy is an http handler that returns the organization's
+// authorization policy.
+func (h *Handlers) GetAuthorizationPolicy(w http.ResponseWriter, r *http.Request) {
+	orgName := chi.URLParam(r, "orgName")
+	dataJSON, err := h.orgManager.GetAuthorizationPolicyJSON(r.Context(), orgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetAuthorizationPolicy").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
+}
+
 // GetByUser is an http handler that returns the organizations the user doing
 // the request belongs to.
 func (h *Handlers) GetByUser(w http.ResponseWriter, r *http.Request) {
@@ -156,4 +171,37 @@ func (h *Handlers) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+// UpdateAuthorizationPolicy is an http handler that updates organization's
+// authorization policy in the database.
+func (h *Handlers) UpdateAuthorizationPolicy(w http.ResponseWriter, r *http.Request) {
+	policy := &hub.AuthorizationPolicy{}
+	if err := json.NewDecoder(r.Body).Decode(&policy); err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdateAuthorizationPolicy").Msg("invalid authorization policy")
+		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
+		return
+	}
+	orgName := chi.URLParam(r, "orgName")
+	if err := h.orgManager.UpdateAuthorizationPolicy(r.Context(), orgName, policy); err != nil {
+		h.logger.Error().Err(err).Str("method", "UpdateAuthorizationPolicy").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// GetUserAllowedActions is an http handler that returns the actions the
+// requesting user is allowed to perform in the provided organization.
+func (h *Handlers) GetUserAllowedActions(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value(hub.UserIDKey).(string)
+	orgName := chi.URLParam(r, "orgName")
+	actions, err := h.az.GetAllowedActions(r.Context(), userID, orgName)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetUserAllowedActions").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	dataJSON, _ := json.Marshal(actions)
+	helpers.RenderJSON(w, dataJSON, 0, http.StatusOK)
 }

@@ -236,6 +236,10 @@ export interface RefInputField {
   updateValue: (value: string) => void;
 }
 
+export interface RefActionBtn {
+  reRender: () => void;
+}
+
 export interface Alert {
   type: 'success' | 'danger' | 'warning';
   message: string;
@@ -319,6 +323,7 @@ export interface Section {
   displayName: string;
   shortName?: string;
   disabled: boolean;
+  onlyDesktop?: boolean;
   icon?: JSX.Element;
   subsections?: Section[];
 }
@@ -365,4 +370,55 @@ export interface OptOutItem {
   optOutId: string;
   repository: Repository;
   eventKind: EventKind;
+}
+
+export enum AuthorizerAction {
+  AddOrganizationMember = 'addOrganizationMember',
+  AddOrganizationRepository = 'addOrganizationRepository',
+  DeleteOrganizationMember = 'deleteOrganizationMember',
+  DeleteOrganizationRepository = 'deleteOrganizationRepository',
+  GetAuthorizationPolicy = 'getAuthorizationPolicy',
+  TransferOrganizationRepository = 'transferOrganizationRepository',
+  UpdateAuthorizationPolicy = 'updateAuthorizationPolicy',
+  UpdateOrganization = 'updateOrganization',
+  UpdateOrganizationRepository = 'updateOrganizationRepository',
+}
+
+export interface AuthorizerInput {
+  action: AuthorizerAction;
+  organizationName?: string;
+  user: string;
+  onCompletion?: () => void;
+}
+
+export interface RegoPlaygroundPolicy {
+  rego_modules: {
+    'policy.rego': string;
+  };
+  input: {
+    [key: string]: string | string[];
+  };
+  data: {
+    [key: string]: any;
+  };
+}
+
+export interface RegoPlaygroundResult {
+  result: string;
+}
+
+export interface OrganizationPolicy {
+  authorizationEnabled: boolean;
+  predefinedPolicy: string | null;
+  customPolicy: string | null;
+  policyData: string | null;
+}
+
+export interface AuthorizationPolicy {
+  name: string;
+  label: string;
+  policy: string;
+  data: {
+    [key: string]: any;
+  };
 }

@@ -11,6 +11,7 @@ import { API } from '../../api';
 import { AppCtx, unselectOrg, updateOrg } from '../../context/AppCtx';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { ErrorKind, Organization } from '../../types';
+import authorizer from '../../utils/authorizer';
 import styles from './UserContext.module.css';
 
 const UserContext = () => {
@@ -25,8 +26,10 @@ const UserContext = () => {
   const handleChange = (value: string | Organization): void => {
     if (isString(value)) {
       dispatch(unselectOrg());
+      authorizer.updateCtx();
     } else {
       dispatch(updateOrg(value.name));
+      authorizer.updateCtx(value.name);
     }
     setOpenStatus(false);
   };
@@ -42,6 +45,8 @@ const UserContext = () => {
         );
         if (isUndefined(selectedOrg)) {
           dispatch(unselectOrg());
+        } else {
+          authorizer.updateCtx(ctx.prefs.controlPanel.selectedOrg);
         }
       }
       setOrganizations(confirmedOrganizations);
@@ -56,6 +61,7 @@ const UserContext = () => {
 
   useEffect(() => {
     fetchOrganizations();
+    authorizer.init(ctx.prefs.controlPanel.selectedOrg);
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (

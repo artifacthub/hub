@@ -55,7 +55,7 @@ func TestWorker(t *testing.T) {
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
 			close(ww.queue)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, errFake)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, tests.ErrFake)
 			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
@@ -89,7 +89,7 @@ func TestWorker(t *testing.T) {
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(nil, errFake)
+			ww.hg.On("Get", logoImageURL).Return(nil, tests.ErrFake)
 			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
@@ -147,7 +147,7 @@ func TestWorker(t *testing.T) {
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
-			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("", errFake)
+			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("", tests.ErrFake)
 			ww.pm.On("Register", mock.Anything, mock.Anything).Return(nil)
 
 			// Run worker and check expectations
@@ -174,7 +174,7 @@ func TestWorker(t *testing.T) {
 				StatusCode: http.StatusNotFound,
 			}, nil)
 			ww.is.On("SaveImage", mock.Anything, []byte("imageData")).Return("imageID", nil)
-			ww.pm.On("Register", mock.Anything, mock.Anything).Return(errFake)
+			ww.pm.On("Register", mock.Anything, mock.Anything).Return(tests.ErrFake)
 			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
@@ -286,7 +286,7 @@ func TestWorker(t *testing.T) {
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
 			close(ww.queue)
-			ww.pm.On("Unregister", mock.Anything, mock.Anything).Return(errFake)
+			ww.pm.On("Unregister", mock.Anything, mock.Anything).Return(tests.ErrFake)
 			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations

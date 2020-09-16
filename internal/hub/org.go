@@ -1,6 +1,8 @@
 package hub
 
-import "context"
+import (
+	"context"
+)
 
 // Organization represents an entity with one or more users associated that can
 // own repositories and other entities like webhooks.
@@ -23,6 +25,8 @@ type OrganizationManager interface {
 	DeleteMember(ctx context.Context, orgName, userAlias string) error
 	GetJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetByUserJSON(ctx context.Context) ([]byte, error)
+	GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error)
 	GetMembersJSON(ctx context.Context, orgName string) ([]byte, error)
 	Update(ctx context.Context, org *Organization) error
+	UpdateAuthorizationPolicy(ctx context.Context, orgName string, policy *AuthorizationPolicy) error
 }

@@ -49,6 +49,13 @@ func (m *ManagerMock) GetJSON(ctx context.Context, orgName string) ([]byte, erro
 	return data, args.Error(1)
 }
 
+// GetAuthorizationPolicyJSON implements the OrganizationManager interface.
+func (m *ManagerMock) GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error) {
+	args := m.Called(ctx, orgName)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetByUserJSON implements the OrganizationManager interface.
 func (m *ManagerMock) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
@@ -66,5 +73,15 @@ func (m *ManagerMock) GetMembersJSON(ctx context.Context, orgName string) ([]byt
 // Update implements the OrganizationManager interface.
 func (m *ManagerMock) Update(ctx context.Context, org *hub.Organization) error {
 	args := m.Called(ctx, org)
+	return args.Error(0)
+}
+
+// UpdateAuthorizationPolicy implements the OrganizationManager interface.
+func (m *ManagerMock) UpdateAuthorizationPolicy(
+	ctx context.Context,
+	orgName string,
+	policy *hub.AuthorizationPolicy,
+) error {
+	args := m.Called(ctx, orgName, policy)
 	return args.Error(0)
 }

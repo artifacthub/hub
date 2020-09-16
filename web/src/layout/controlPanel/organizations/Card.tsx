@@ -3,7 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { FaEnvelopeOpenText, FaPencilAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaEnvelopeOpenText, FaSignOutAlt } from 'react-icons/fa';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdBusiness } from 'react-icons/md';
 
@@ -26,7 +26,6 @@ interface Props {
   organization: Organization;
   onAuthError: () => void;
   onSuccess: () => void;
-  setEditModalStatus: (modalStatus: ModalStatus) => void;
 }
 
 const OrganizationCard = (props: Props) => {
@@ -83,6 +82,14 @@ const OrganizationCard = (props: Props) => {
       setIsAccepting(false);
     }
   }
+
+  const hasDropdownContent =
+    !isUndefined(props.organization) &&
+    (!props.organization.confirmed ||
+      (props.organization.confirmed &&
+        isMember &&
+        props.organization.membersCount &&
+        props.organization.membersCount > 1));
 
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="organizationCard">
@@ -177,24 +184,6 @@ const OrganizationCard = (props: Props) => {
             !isNull(props.organization.confirmed) &&
             props.organization.confirmed ? (
               <>
-                <button
-                  data-testid="editOrgBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    e.preventDefault();
-                    closeDropdown();
-                    props.setEditModalStatus({
-                      open: true,
-                      organization: props.organization,
-                    });
-                  }}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
-                    <span>Edit</span>
-                  </div>
-                </button>
-
                 {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                   <button
                     data-testid="leaveOrgModalBtn"
@@ -242,12 +231,14 @@ const OrganizationCard = (props: Props) => {
             )}
           </div>
 
-          <button
-            className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
-            onClick={() => setDropdownMenuStatus(true)}
-          >
-            <BsThreeDotsVertical />
-          </button>
+          {hasDropdownContent && (
+            <button
+              className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+              onClick={() => setDropdownMenuStatus(true)}
+            >
+              <BsThreeDotsVertical />
+            </button>
+          )}
         </div>
       </div>
 

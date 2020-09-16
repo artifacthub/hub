@@ -213,13 +213,21 @@ exports[`Organization settings index creates snapshot 2`] = `
       <div
         class="mt-4"
       >
-        <button
-          class="btn btn-secondary"
-          data-testid="updateOrgBtn"
-          type="button"
+        <span
+          class="position-relative"
         >
-          Update
-        </button>
+          <button
+            class="btn btn-secondary"
+            data-testid="updateOrgBtn"
+            type="button"
+          >
+            <div
+              class="d-flex flex-row align-items-center undefined"
+            >
+              Update
+            </div>
+          </button>
+        </span>
       </div>
     </div>
   </main>

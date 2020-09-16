@@ -63,6 +63,9 @@ const TransferRepositoryModal = (props: Props) => {
       setIsSending(false);
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, 'An error occurred transfering the repository');
+        if (!isUndefined(organizationName) && err.kind === ErrorKind.Forbidden) {
+          error = 'You do not have permissions to transfer a repository to the organization.';
+        }
         setApiError(error);
       } else {
         props.onAuthError();

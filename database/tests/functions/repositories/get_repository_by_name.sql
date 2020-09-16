@@ -28,7 +28,9 @@ select is(
         "url": "https://repo1.com",
         "kind": 0,
         "verified_publisher": false,
-        "official": false
+        "official": false,
+        "user_alias": "user1",
+        "organization_name": null
     }'::jsonb,
     'Repository just seeded is returned as a json object'
 );

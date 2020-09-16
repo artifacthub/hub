@@ -11,8 +11,30 @@ create table if not exists organization (
     description text check (description <> ''),
     home_url text check (home_url <> ''),
     logo_image_id uuid,
-    created_at timestamptz default current_timestamp not null
+    created_at timestamptz default current_timestamp not null,
+    authorization_enabled boolean not null default false,
+    predefined_policy text,
+    custom_policy text,
+    policy_data jsonb
 );
+
+create or replace function notify_authorization_policies_updates()
+returns trigger as $$
+begin
+    perform pg_notify('authorization_policies_updated', '');
+    return null;
+end
+$$ language plpgsql;
+
+create trigger trigger_authorization_policies_updated
+after update on organization
+for each row
+when (
+    (old.authorization_enabled, old.predefined_policy, old.custom_policy, old.policy_data)
+    is distinct from
+    (new.authorization_enabled, new.predefined_policy, new.custom_policy, new.policy_data)
+)
+execute function notify_authorization_policies_updates();
 
 create table if not exists "user" (
     user_id uuid primary key default gen_random_uuid(),

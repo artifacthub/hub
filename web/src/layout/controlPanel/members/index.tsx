@@ -5,9 +5,10 @@ import { MdAdd, MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Member } from '../../../types';
+import { AuthorizerAction, ErrorKind, Member } from '../../../types';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
+import ActionBtn from '../ActionBtn';
 import MemberCard from './Card';
 import styles from './MembersSection.module.css';
 import MemberModal from './Modal';
@@ -61,17 +62,22 @@ const MembersSection = (props: Props) => {
             <div className={`h3 pb-0 ${styles.title}`}>Members</div>
 
             <div>
-              <button
+              <ActionBtn
+                testId="addMemberBtn"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-                onClick={() => setModalMemberOpen(true)}
-                data-testid="addMemberBtn"
+                contentClassName="justify-content-center"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  setModalMemberOpen(true);
+                }}
+                action={AuthorizerAction.AddOrganizationMember}
               >
-                <div className="d-flex flex-row align-items-center justify-content-center">
+                <>
                   <MdAdd className="d-inline d-md-none" />
                   <MdAddCircle className="d-none d-md-inline mr-2" />
                   <span className="d-none d-md-inline">Invite</span>
-                </div>
-              </button>
+                </>
+              </ActionBtn>
             </div>
           </div>
         </div>

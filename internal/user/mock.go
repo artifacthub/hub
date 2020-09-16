@@ -54,6 +54,13 @@ func (m *ManagerMock) DeleteSession(ctx context.Context, sessionID []byte) error
 	return args.Error(0)
 }
 
+// GetProfile implements the UserManager interface.
+func (m *ManagerMock) GetProfile(ctx context.Context) (*hub.User, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).(*hub.User)
+	return data, args.Error(1)
+}
+
 // GetProfileJSON implements the UserManager interface.
 func (m *ManagerMock) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
