@@ -23,7 +23,7 @@ interface Props {
   onSuccess?: () => void;
   onAuthError: () => void;
   setIsSending: (status: boolean) => void;
-  setApiError?: React.Dispatch<React.SetStateAction<null>>;
+  setApiError?: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
@@ -71,8 +71,8 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           `An error occurred ${isUndefined(props.organization) ? 'adding' : 'updating'} the organization`
         );
         setApiError(error);
-        if (!isUndefined(setApiError)) {
-          setApiError(error);
+        if (!isUndefined(props.setApiError)) {
+          props.setApiError(error);
         }
       } else {
         props.onAuthError();

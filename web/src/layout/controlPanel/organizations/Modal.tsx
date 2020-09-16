@@ -17,7 +17,7 @@ interface Props {
 const OrganizationModal = (props: Props) => {
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
-  const [apiError, setApiError] = useState(null);
+  const [apiError, setApiError] = useState<null | string>(null);
 
   const onCloseModal = () => {
     props.onClose();
