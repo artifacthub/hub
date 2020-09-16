@@ -40,34 +40,25 @@ const SearchBar = (props: Props) => {
     }
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      forceBlur();
+
+      history.push({
+        pathname: '/packages/search',
+        search: prepareQueryString({
+          pageNumber: 1,
+          tsQueryWeb: value || undefined,
+          filters: {},
+        }),
+      });
+    }
+  };
+
   useEffect(() => {
     setValue(props.tsQueryWeb || '');
   }, [props.tsQueryWeb]);
-
-  useEffect(() => {
-    const downHandler = (e: KeyboardEvent) => {
-      // When return key is pressed
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        forceBlur();
-
-        history.push({
-          pathname: '/packages/search',
-          search: prepareQueryString({
-            pageNumber: 1,
-            tsQueryWeb: value || undefined,
-            filters: {},
-          }),
-        });
-      }
-    };
-
-    window.addEventListener('keydown', downHandler);
-
-    return () => {
-      window.removeEventListener('keydown', downHandler);
-    };
-  }, [history, value]);
 
   return (
     <>
@@ -95,6 +86,7 @@ const SearchBar = (props: Props) => {
             aria-label="Search"
             value={value}
             onChange={onChange}
+            onKeyDown={onKeyDown}
             disabled={props.isSearching}
           />
 
