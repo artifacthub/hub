@@ -13,8 +13,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-let keyDownHandler: any;
-
 describe('SearchBar', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -65,21 +63,12 @@ describe('SearchBar', () => {
   });
 
   describe('History push', () => {
-    beforeEach(() => {
-      const mockListener = jest.fn((e, handler) => {
-        if (e === 'keydown') {
-          keyDownHandler = handler;
-        }
-      });
-      window.addEventListener = mockListener;
-    });
-
     it('calls on Enter key press', () => {
       const { getByPlaceholderText } = render(<SearchBar tsQueryWeb="test" size="big" isSearching={false} />);
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: 'testing' } });
-      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
       expect(input).not.toBe(document.activeElement);
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
@@ -97,7 +86,7 @@ describe('SearchBar', () => {
 
       const input = getByPlaceholderText('Search packages') as HTMLInputElement;
       fireEvent.change(input, { target: { value: '' } });
-      keyDownHandler({ keyCode: 13, preventDefault: jest.fn() });
+      fireEvent.keyDown(input, { key: 'Enter', code: 13 });
       expect(mockHistoryPush).toHaveBeenCalledTimes(1);
       expect(mockHistoryPush).toHaveBeenCalledWith({
         pathname: '/packages/search',
