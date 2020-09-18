@@ -78,7 +78,7 @@ begin
             -- Register maintainer if needed
             insert into maintainer (name, email)
             values (v_maintainer->>'name', v_maintainer->>'email')
-            on conflict (email) do nothing
+            on conflict (email) do update set name = v_maintainer->>'name'
             returning maintainer_id into v_maintainer_id;
 
             -- If maintainer was already registered, get maintainer id
