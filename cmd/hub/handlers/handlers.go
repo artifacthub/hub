@@ -41,6 +41,7 @@ type Services struct {
 	WebhookManager      hub.WebhookManager
 	APIKeyManager       hub.APIKeyManager
 	ImageStore          img.Store
+	Authorizer          hub.Authorizer
 }
 
 // Metrics groups some metrics collected from a Handlers instance.
@@ -75,7 +76,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		metrics: setupMetrics(),
 		logger:  log.With().Str("handlers", "root").Logger(),
 
-		Organizations: org.NewHandlers(svc.OrganizationManager, cfg),
+		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
 		Users:         user.NewHandlers(svc.UserManager, cfg),
 		Repositories:  repo.NewHandlers(svc.RepositoryManager),
 		Packages:      pkg.NewHandlers(svc.PackageManager, cfg),
@@ -158,12 +159,17 @@ func (h *Handlers) setupRouter() {
 				r.Group(func(r chi.Router) {
 					r.Use(h.Users.RequireLogin)
 					r.Put("/", h.Organizations.Update)
+					r.Route("/authorizationPolicy", func(r chi.Router) {
+						r.Get("/", h.Organizations.GetAuthorizationPolicy)
+						r.Put("/", h.Organizations.UpdateAuthorizationPolicy)
+					})
 					r.Get("/accept-invitation", h.Organizations.ConfirmMembership)
 					r.Get("/members", h.Organizations.GetMembers)
 					r.Route("/member/{userAlias}", func(r chi.Router) {
 						r.Post("/", h.Organizations.AddMember)
 						r.Delete("/", h.Organizations.DeleteMember)
 					})
+					r.Get("/userAllowedActions", h.Organizations.GetUserAllowedActions)
 				})
 			})
 		})

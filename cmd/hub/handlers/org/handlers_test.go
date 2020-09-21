@@ -12,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
+	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/org"
 	"github.com/artifacthub/hub/internal/tests"
@@ -430,6 +431,70 @@ func TestGet(t *testing.T) {
 	})
 }
 
+func TestGetAuthorizationPolicy(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
+	t.Run("error getting authorization policy", func(t *testing.T) {
+		testCases := []struct {
+			omErr              error
+			expectedStatusCode int
+		}{
+			{
+				hub.ErrInvalidInput,
+				http.StatusBadRequest,
+			},
+			{
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("GET", "/", nil)
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.om.On("GetAuthorizationPolicyJSON", r.Context(), "org1").Return(nil, tc.omErr)
+				hw.h.GetAuthorizationPolicy(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.om.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("get authorization policy succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.om.On("GetAuthorizationPolicyJSON", r.Context(), "org1").Return([]byte("dataJSON"), nil)
+		hw.h.GetAuthorizationPolicy(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.om.AssertExpectations(t)
+	})
+}
+
 func TestGetByUser(t *testing.T) {
 	t.Run("get user organizations succeeded", func(t *testing.T) {
 		w := httptest.NewRecorder()
@@ -634,9 +699,171 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
+func TestUpdateAuthorizationPolicy(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
+	t.Run("invalid authorization policy provided", func(t *testing.T) {
+		testCases := []struct {
+			description string
+			policyJSON  string
+			omErr       error
+		}{
+			{
+				"no authorization policy provided",
+				"",
+				nil,
+			},
+			{
+				"invalid json",
+				"-",
+				nil,
+			},
+			{
+				"invalid policy data",
+				`{"policy_data": "invalid"}`,
+				hub.ErrInvalidInput,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.policyJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				if tc.omErr != nil {
+					hw.om.On("UpdateAuthorizationPolicy", r.Context(), "org1", mock.Anything).Return(tc.omErr)
+				}
+				hw.h.UpdateAuthorizationPolicy(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, http.StatusBadRequest, resp.StatusCode)
+				hw.om.AssertExpectations(t)
+			})
+		}
+	})
+
+	t.Run("valid authorization policy provided", func(t *testing.T) {
+		policyJSON := `
+		{
+			"authorization_enabled": true,
+			"predefined_policy": "rbac.v1",
+			"custom_policy": "",
+			"policy_data": "{\"k\": \"v\"}"
+		}
+		`
+		policy := &hub.AuthorizationPolicy{}
+		_ = json.Unmarshal([]byte(policyJSON), &policy)
+
+		testCases := []struct {
+			description        string
+			err                error
+			expectedStatusCode int
+		}{
+			{
+				"authorization policy update succeeded",
+				nil,
+				http.StatusNoContent,
+			},
+			{
+				"error updating organization policy (insufficiente privilege)",
+				hub.ErrInsufficientPrivilege,
+				http.StatusForbidden,
+			},
+			{
+				"error updating organization policy (db error)",
+				tests.ErrFakeDatabaseFailure,
+				http.StatusInternalServerError,
+			},
+		}
+		for _, tc := range testCases {
+			tc := tc
+			t.Run(tc.description, func(t *testing.T) {
+				w := httptest.NewRecorder()
+				r, _ := http.NewRequest("PUT", "/", strings.NewReader(policyJSON))
+				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+				rctx := &chi.Context{
+					URLParams: chi.RouteParams{
+						Keys:   []string{"orgName"},
+						Values: []string{"org1"},
+					},
+				}
+				r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+				hw := newHandlersWrapper()
+				hw.om.On("UpdateAuthorizationPolicy", r.Context(), "org1", policy).Return(tc.err)
+				hw.h.UpdateAuthorizationPolicy(w, r)
+				resp := w.Result()
+				defer resp.Body.Close()
+
+				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
+				hw.om.AssertExpectations(t)
+			})
+		}
+	})
+}
+
+func TestGetUserAllowedActions(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"orgName"},
+			Values: []string{"org1"},
+		},
+	}
+
+	t.Run("get allowed actions failed", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.az.On("GetAllowedActions", r.Context(), "userID", "org1").Return(nil, tests.ErrFake)
+		hw.h.GetUserAllowedActions(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.om.AssertExpectations(t)
+	})
+
+	t.Run("get allowed actions succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.az.On("GetAllowedActions", r.Context(), "userID", "org1").Return([]hub.Action{
+			hub.AddOrganizationMember,
+			hub.DeleteOrganizationMember,
+		}, nil)
+		hw.h.GetUserAllowedActions(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(0), h.Get("Cache-Control"))
+		assert.Equal(t, []byte(`["addOrganizationMember","deleteOrganizationMember"]`), data)
+		hw.om.AssertExpectations(t)
+	})
+}
+
 type handlersWrapper struct {
 	cfg *viper.Viper
 	om  *org.ManagerMock
+	az  *authz.AuthorizerMock
 	h   *Handlers
 }
 
@@ -644,10 +871,12 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "baseURL")
 	om := &org.ManagerMock{}
+	az := &authz.AuthorizerMock{}
 
 	return &handlersWrapper{
 		cfg: cfg,
 		om:  om,
-		h:   NewHandlers(om, cfg),
+		az:  az,
+		h:   NewHandlers(om, az, cfg),
 	}
 }

@@ -5,6 +5,7 @@ import { Section } from '../../../../types';
 import { CONTROL_PANEL_SECTIONS } from '../../../../utils/data';
 import SectionPanel from '../../../common/SectionPanel';
 import WebhooksSection from '../webhooks';
+import AuthorizationSection from './authorization';
 import ProfileSection from './profile';
 
 interface Props {
@@ -22,7 +23,11 @@ const OrganizationSettingsSection = (props: Props) => {
       defaultSection={props.subsection || 'profile'}
       onSectionChange={props.onSubMenuItemClick}
       sections={section.subsections}
-      content={{ profile: <ProfileSection {...props} />, webhooks: <WebhooksSection {...props} /> }}
+      content={{
+        profile: <ProfileSection {...props} />,
+        webhooks: <WebhooksSection {...props} />,
+        authorization: <AuthorizationSection {...props} />,
+      }}
     />
   );
 };

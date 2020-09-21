@@ -6,6 +6,7 @@ import isUndefined from 'lodash/isUndefined';
 import {
   APIKey,
   APIKeyCode,
+  AuthorizerAction,
   CheckAvailabilityProps,
   Error,
   ErrorKind,
@@ -13,9 +14,12 @@ import {
   LogoImage,
   OptOutItem,
   Organization,
+  OrganizationPolicy,
   Package,
   PackageStars,
   Profile,
+  RegoPlaygroundPolicy,
+  RegoPlaygroundResult,
   Repository,
   SearchQuery,
   SearchResults,
@@ -57,7 +61,7 @@ interface FetchOptions {
   body?: any;
 }
 
-const EXCEPTIONS = ['policies'];
+const EXCEPTIONS = ['policies', 'policyData', 'roles'];
 
 export const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
@@ -569,6 +573,45 @@ export const API = {
   deleteOptOut: (optOutId: string): Promise<string | null> => {
     return apiFetch(`${API_BASE_URL}/subscriptions/opt-out/${optOutId}`, {
       method: 'DELETE',
+    });
+  },
+
+  getAuthorizationPolicy: (orgName: string): Promise<OrganizationPolicy> => {
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorizationPolicy`);
+  },
+
+  updateAuthorizationPolicy: (orgName: string, policy: OrganizationPolicy): Promise<string | null> => {
+    const formattedPolicy = renameKeysInObject(
+      { ...policy },
+      {
+        authorizationEnabled: 'authorization_enabled',
+        predefinedPolicy: 'predefined_policy',
+        customPolicy: 'custom_policy',
+        policyData: 'policy_data',
+      }
+    );
+
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/authorizationPolicy`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formattedPolicy),
+    });
+  },
+
+  getUserAllowedActions: (orgName: string): Promise<AuthorizerAction[]> => {
+    return apiFetch(`${API_BASE_URL}/orgs/${orgName}/userAllowedActions`);
+  },
+
+  // External API call
+  triggerTestInRegoPlayground: (data: RegoPlaygroundPolicy): Promise<RegoPlaygroundResult> => {
+    return apiFetch('https://play.openpolicyagent.org/v1/share', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
   },
 };

@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
+import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization } from '../../../types';
 import OrganizationsSection from './index';
 jest.mock('../../../api');
@@ -18,6 +19,18 @@ const defaultProps = {
   onAuthError: onAuthErrorMock,
 };
 
+const mockCtx = {
+  user: { alias: 'userAlias', email: 'jsmith@email.com' },
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
+  },
+};
+
 describe('Organizations section index', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -28,9 +41,11 @@ describe('Organizations section index', () => {
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
     const result = render(
-      <Router>
-        <OrganizationsSection {...defaultProps} />
-      </Router>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <Router>
+          <OrganizationsSection {...defaultProps} />
+        </Router>
+      </AppCtx.Provider>
     );
 
     await waitFor(() => {
@@ -44,9 +59,11 @@ describe('Organizations section index', () => {
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => {
@@ -59,9 +76,11 @@ describe('Organizations section index', () => {
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       const { getByTestId, getByText } = render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const noData = await waitFor(() => getByTestId('noData'));
@@ -78,9 +97,11 @@ describe('Organizations section index', () => {
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       const { getByTestId, queryByText } = render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const noData = await waitFor(() => getByTestId('noData'));
@@ -106,9 +127,11 @@ describe('Organizations section index', () => {
       mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
       const { getByTestId, queryByText } = render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       const addBtn = await waitFor(() => getByTestId('addOrgButton'));
@@ -134,9 +157,11 @@ describe('Organizations section index', () => {
     mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
 
     const { getAllByTestId } = render(
-      <Router>
-        <OrganizationsSection {...defaultProps} />
-      </Router>
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <Router>
+          <OrganizationsSection {...defaultProps} />
+        </Router>
+      </AppCtx.Provider>
     );
 
     const cards = await waitFor(() => getAllByTestId('organizationCard'));
@@ -151,9 +176,11 @@ describe('Organizations section index', () => {
       });
 
       render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));
@@ -165,9 +192,11 @@ describe('Organizations section index', () => {
       mocked(API).getUserOrganizations.mockRejectedValue({ kind: ErrorKind.Other, message: 'error' });
 
       const { getByTestId, getByText } = render(
-        <Router>
-          <OrganizationsSection {...defaultProps} />
-        </Router>
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Router>
+            <OrganizationsSection {...defaultProps} />
+          </Router>
+        </AppCtx.Provider>
       );
 
       await waitFor(() => expect(API.getUserOrganizations).toHaveBeenCalledTimes(1));

@@ -8,9 +8,11 @@ import (
 	"net/url"
 	"regexp"
 
+	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/open-policy-agent/opa/ast"
 	"github.com/satori/uuid"
 )
 
@@ -23,13 +25,15 @@ var (
 type Manager struct {
 	db hub.DB
 	es hub.EmailSender
+	az hub.Authorizer
 }
 
 // NewManager creates a new Manager instance.
-func NewManager(db hub.DB, es hub.EmailSender) *Manager {
+func NewManager(db hub.DB, es hub.EmailSender, az hub.Authorizer) *Manager {
 	return &Manager{
 		db: db,
 		es: es,
+		az: az,
 	}
 }
 
@@ -77,6 +81,15 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	u, err := url.Parse(baseURL)
 	if err != nil || u.Scheme == "" || u.Host == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid base url")
+	}
+
+	// Authorize action
+	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+		OrganizationName: orgName,
+		UserID:           userID,
+		Action:           hub.AddOrganizationMember,
+	}); err != nil {
+		return err
 	}
 
 	// Add organization member to database
@@ -181,13 +194,59 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "user alias not provided")
 	}
 
+	// Authorize action
+	var requestingUserAlias string
+	aliasQuery := `select alias from "user" where user_id = $1`
+	if err := m.db.QueryRow(ctx, aliasQuery, userID).Scan(&requestingUserAlias); err != nil {
+		return err
+	}
+	if requestingUserAlias != userAlias { // User is always allowed to leave
+		if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+			OrganizationName: orgName,
+			UserID:           userID,
+			Action:           hub.DeleteOrganizationMember,
+		}); err != nil {
+			return err
+		}
+	}
+
 	// Delete organization member from database
-	query := "select delete_organization_member($1::uuid, $2::text, $3::text)"
-	_, err := m.db.Exec(ctx, query, userID, orgName, userAlias)
+	deleteQuery := "select delete_organization_member($1::uuid, $2::text, $3::text)"
+	_, err := m.db.Exec(ctx, deleteQuery, userID, orgName, userAlias)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
+}
+
+// GetJSON returns the organization's authorization policy as a json object.
+func (m *Manager) GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error) {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
+	}
+
+	// Authorize action
+	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+		OrganizationName: orgName,
+		UserID:           userID,
+		Action:           hub.GetAuthorizationPolicy,
+	}); err != nil {
+		return nil, err
+	}
+
+	// Get organization from database
+	query := "select get_authorization_policy($1::uuid, $2::text)"
+	dataJSON, err := m.dbQueryJSON(ctx, query, userID, orgName)
+	if err != nil {
+		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+			return nil, hub.ErrInsufficientPrivilege
+		}
+		return nil, err
+	}
+	return dataJSON, nil
 }
 
 // GetByUserJSON returns the organizations the user doing the request belongs
@@ -243,10 +302,81 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 		}
 	}
 
+	// Authorize action
+	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+		OrganizationName: org.Name,
+		UserID:           userID,
+		Action:           hub.UpdateOrganization,
+	}); err != nil {
+		return err
+	}
+
 	// Update organization in database
 	query := "select update_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
 	_, err := m.db.Exec(ctx, query, userID, orgJSON)
+	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
+		return hub.ErrInsufficientPrivilege
+	}
+	return err
+}
+
+// Update organization's authorization policy in the database.
+func (m *Manager) UpdateAuthorizationPolicy(
+	ctx context.Context,
+	orgName string,
+	p *hub.AuthorizationPolicy,
+) error {
+	userID := ctx.Value(hub.UserIDKey).(string)
+
+	// Validate input
+	if orgName == "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
+	}
+	if p == nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "authorization policy not provided")
+	}
+	if p.PredefinedPolicy != "" && p.CustomPolicy != "" {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "both predefined and custom policies were provided")
+	}
+	if p.AuthorizationEnabled {
+		if p.PredefinedPolicy == "" && p.CustomPolicy == "" {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "a predefined or custom policy must be provided")
+		}
+	}
+	if p.PredefinedPolicy != "" && !authz.IsPredefinedPolicyValid(p.PredefinedPolicy) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid predefined policy")
+	}
+	if p.CustomPolicy != "" {
+		compiler, err := ast.CompileModules(map[string]string{"tmp.rego": p.CustomPolicy})
+		if err != nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid custom policy")
+		}
+		if compiler.GetRules(authz.AllowQueryRef) == nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "allow rule not found in custom policy")
+		}
+		if compiler.GetRules(authz.AllowedActionsQueryRef) == nil {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "allowed actions rule not found in custom policy")
+		}
+	}
+	var tmp interface{}
+	if json.Unmarshal(p.PolicyData, &tmp) != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid policy data")
+	}
+
+	// Authorize action
+	if err := m.az.Authorize(ctx, &hub.AuthorizeInput{
+		OrganizationName: orgName,
+		UserID:           userID,
+		Action:           hub.UpdateAuthorizationPolicy,
+	}); err != nil {
+		return err
+	}
+
+	// Update authorization policy in database
+	query := "select update_authorization_policy($1::uuid, $2::text, $3::jsonb)"
+	policyJSON, _ := json.Marshal(p)
+	_, err := m.db.Exec(ctx, query, userID, orgName, policyJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}

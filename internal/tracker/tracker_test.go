@@ -11,8 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var errFake = errors.New("fake error for tests")
-
 func TestSetVerifiedPublisherFlag(t *testing.T) {
 	// Setup some services required by tests
 	repo1ID := "00000000-0000-0000-0000-000000000001"
@@ -55,7 +53,7 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: false,
 		}
 		sw := newServicesWrapper()
-		sw.rm.On("GetMetadata", "mdFile").Return(nil, errFake)
+		sw.rm.On("GetMetadata", "mdFile").Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
 		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
@@ -70,7 +68,7 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: true,
 		}
 		sw := newServicesWrapper()
-		sw.rm.On("GetMetadata", "mdFile").Return(nil, errFake)
+		sw.rm.On("GetMetadata", "mdFile").Return(nil, tests.ErrFake)
 		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, false).Return(nil)
 
 		// Run test and check expectations
@@ -87,11 +85,11 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 		}
 		sw := newServicesWrapper()
 		sw.rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
-		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, true).Return(errFake)
+		sw.rm.On("SetVerifiedPublisher", sw.ctx, r.RepositoryID, true).Return(tests.ErrFake)
 
 		// Run test and check expectations
 		err := SetVerifiedPublisherFlag(sw.svc, r, "mdFile")
-		assert.True(t, errors.Is(err, errFake))
+		assert.True(t, errors.Is(err, tests.ErrFake))
 		sw.assertExpectations(t)
 	})
 }

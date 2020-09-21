@@ -1,12 +1,20 @@
 import React from 'react';
-import { FaKey, FaUserFriends } from 'react-icons/fa';
+import { FaKey, FaScroll, FaUserFriends } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import { GrConnect } from 'react-icons/gr';
 import { MdBusiness, MdNewReleases, MdNotificationsActive, MdSettings } from 'react-icons/md';
 import { TiWarning } from 'react-icons/ti';
 
 import RepositoryIcon from '../layout/common/RepositoryIcon';
-import { EventKind, NavSection, PayloadKind, RepositoryKind, TsQuery } from '../types';
+import {
+  AuthorizationPolicy,
+  AuthorizerAction,
+  EventKind,
+  NavSection,
+  PayloadKind,
+  RepositoryKind,
+  TsQuery,
+} from '../types';
 
 export interface SubscriptionItem {
   kind: EventKind;
@@ -145,6 +153,13 @@ export const CONTROL_PANEL_SECTIONS: NavSection = {
       subsections: [
         { displayName: 'Profile', name: 'profile', icon: <MdBusiness />, disabled: false },
         { displayName: 'Webhooks', name: 'webhooks', icon: <GrConnect />, disabled: false },
+        {
+          displayName: 'Authorization',
+          name: 'authorization',
+          icon: <FaScroll />,
+          disabled: false,
+          onlyDesktop: true,
+        },
       ],
     },
   ],
@@ -200,5 +215,64 @@ export const TS_QUERY: TsQuery[] = [
     name: 'Web applications',
     label: 'web-applications',
     value: '(web <-> application)',
+  },
+];
+
+export const PREDEFINED_POLICIES: AuthorizationPolicy[] = [
+  {
+    name: 'rbac.v1',
+    label: 'rbac.v1',
+    policy: `package artifacthub.authz
+
+# By default, deny requests
+default allow = false
+
+# Allow the action if the user is allowed to perform it
+allow {
+  # Allow if user's role is owner
+  data.roles.owner.users[_] == input.user
+}
+allow {
+  # Allow if user's role is allowed to perform this action
+  allowed_actions[_] == input.action
+}
+
+# Get user allowed actions
+allowed_actions[action] {
+  # Owner can perform all actions
+  user_roles[_] == "owner"
+  action := "all"
+}
+allowed_actions[action] {
+  # Users can perform actions allowed for their roles
+  action := data.roles[role].allowed_actions[_]
+  user_roles[_] == role
+}
+
+# Get user roles
+user_roles[role] {
+  data.roles[role].users[_] == input.user
+}`,
+    data: {
+      roles: {
+        owner: {
+          users: ['user1'],
+        },
+        customRole1: {
+          users: [],
+          allowed_actions: [
+            AuthorizerAction.AddOrganizationMember,
+            AuthorizerAction.AddOrganizationRepository,
+            AuthorizerAction.DeleteOrganizationMember,
+            AuthorizerAction.DeleteOrganizationRepository,
+            AuthorizerAction.GetAuthorizationPolicy,
+            AuthorizerAction.TransferOrganizationRepository,
+            AuthorizerAction.UpdateAuthorizationPolicy,
+            AuthorizerAction.UpdateOrganization,
+            AuthorizerAction.UpdateOrganizationRepository,
+          ],
+        },
+      },
+    },
   },
 ];

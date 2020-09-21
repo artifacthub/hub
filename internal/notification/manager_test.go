@@ -16,8 +16,6 @@ import (
 
 const validUUID = "00000000-0000-0000-0000-000000000001"
 
-var errFake = errors.New("fake error for tests")
-
 func TestMain(m *testing.M) {
 	zerolog.SetGlobalLevel(zerolog.Disabled)
 	os.Exit(m.Run())

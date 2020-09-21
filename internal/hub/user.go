@@ -56,6 +56,7 @@ type UserManager interface {
 	CheckCredentials(ctx context.Context, email, password string) (*CheckCredentialsOutput, error)
 	CheckSession(ctx context.Context, sessionID []byte, duration time.Duration) (*CheckSessionOutput, error)
 	DeleteSession(ctx context.Context, sessionID []byte) error
+	GetProfile(ctx context.Context) (*User, error)
 	GetProfileJSON(ctx context.Context) ([]byte, error)
 	GetUserID(ctx context.Context, email string) (string, error)
 	RegisterSession(ctx context.Context, session *Session) ([]byte, error)

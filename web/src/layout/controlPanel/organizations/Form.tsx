@@ -70,6 +70,9 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           err,
           `An error occurred ${isUndefined(props.organization) ? 'adding' : 'updating'} the organization`
         );
+        if (err.kind === ErrorKind.Forbidden && !isUndefined(props.organization)) {
+          error = `You do not have permissions to update the organization.`;
+        }
         setApiError(error);
         if (!isUndefined(props.setApiError)) {
           props.setApiError(error);

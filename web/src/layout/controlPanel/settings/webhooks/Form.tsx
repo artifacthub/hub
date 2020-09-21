@@ -121,6 +121,11 @@ const WebhookForm = (props: Props) => {
           err,
           `An error occurred ${isUndefined(props.webhook) ? 'adding' : 'updating'} the webhook`
         );
+        if (!isUndefined(props.webhook) && err.kind === ErrorKind.Forbidden) {
+          error = `You do not have permissions to ${isUndefined(props.webhook) ? 'add' : 'update'} the webhook ${
+            isUndefined(props.webhook) ? 'to' : 'from'
+          } the organization.`;
+        }
         setApiError(error);
         errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {

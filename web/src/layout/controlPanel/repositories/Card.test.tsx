@@ -4,6 +4,7 @@ import React from 'react';
 import { mocked } from 'ts-jest/utils';
 
 import { API } from '../../../api';
+import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
@@ -42,20 +43,46 @@ const defaultProps = {
   onAuthError: onAuthErrorMock,
 };
 
+const mockCtx = {
+  user: { alias: 'test', email: 'test@test.com' },
+  prefs: {
+    controlPanel: {},
+    search: { limit: 25 },
+    theme: {
+      configured: 'light',
+      automatic: false,
+    },
+  },
+};
+
 describe('Repository Card - packages section', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
   });
 
   it('creates snapshot', () => {
-    const result = render(<Card {...defaultProps} />);
+    const result = render(
+      <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+        <Card {...defaultProps} />
+      </AppCtx.Provider>
+    );
 
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getByTestId } = render(<Card {...defaultProps} />);
+      const { getByText, getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       expect(getByText(repoMock.displayName!)).toBeInTheDocument();
       expect(getByTestId('getBadgeBtn')).toBeInTheDocument();
@@ -75,7 +102,11 @@ describe('Repository Card - packages section', () => {
           lastTrackingErrors: 'errors tracking',
         },
       };
-      const { getByText } = render(<Card {...props} />);
+      const { getByText } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
 
       expect(getByText('a few seconds ago')).toBeInTheDocument();
       expect(getByText('Show errors log')).toBeInTheDocument();
@@ -89,7 +120,11 @@ describe('Repository Card - packages section', () => {
           verifiedPublisher: true,
         },
       };
-      const { getAllByText } = render(<Card {...props} />);
+      const { getAllByText } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
 
       expect(getAllByText('Verified Publisher')).toHaveLength(2);
     });
@@ -102,13 +137,21 @@ describe('Repository Card - packages section', () => {
           official: true,
         },
       };
-      const { getAllByText } = render(<Card {...props} />);
+      const { getAllByText } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
 
       expect(getAllByText('Official')).toHaveLength(2);
     });
 
     it('calls delete repo when delete button in dropdown is clicked', async () => {
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
       expect(dropdownBtn).toBeInTheDocument();
@@ -122,41 +165,56 @@ describe('Repository Card - packages section', () => {
       });
     });
 
-    it('opens Get Badge Modal when Get badge button is clicked', () => {
-      const { getByTestId } = render(<Card {...defaultProps} />);
+    it('opens Get Badge Modal when Get badge button is clicked', async () => {
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const btn = getByTestId('getBadgeBtn');
       expect(btn).toBeInTheDocument();
-
       fireEvent.click(btn);
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(getByTestId('badgeModalContent')).toBeInTheDocument();
       });
     });
 
-    it('calls setModalStatus when Edit button is clicked', () => {
-      const { getByTestId } = render(<Card {...defaultProps} />);
+    it('calls setModalStatus when Edit button is clicked', async () => {
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const btn = getByTestId('updateRepoBtn');
       expect(btn).toBeInTheDocument();
       fireEvent.click(btn);
-      expect(setModalStatusMock).toHaveBeenCalledTimes(1);
-      expect(setModalStatusMock).toHaveBeenCalledWith({
-        open: true,
-        repository: repoMock,
+
+      await waitFor(() => {
+        expect(setModalStatusMock).toHaveBeenCalledTimes(1);
+        expect(setModalStatusMock).toHaveBeenCalledWith({
+          open: true,
+          repository: repoMock,
+        });
       });
     });
 
-    it('opens Transfer Repo when Transfer button is clicked', () => {
-      const { getByTestId, getByText } = render(<Card {...defaultProps} />);
+    it('opens Transfer Repo when Transfer button is clicked', async () => {
+      const { getByTestId, getByText } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const btn = getByTestId('transferRepoBtn');
       expect(btn).toBeInTheDocument();
-
       fireEvent.click(btn);
 
-      expect(getByText('Transfer repository')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(getByText('Transfer repository')).toBeInTheDocument();
+      });
     });
 
     it('opens logs modal when visibleTrackingErrorLogs is true and repo has errors', () => {
@@ -170,7 +228,11 @@ describe('Repository Card - packages section', () => {
         visibleTrackingErrorLogs: true,
       };
 
-      const component = <Card {...props} />;
+      const component = (
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
       const { getByText, getByRole, rerender } = render(component);
 
       expect(getByText('Show errors log')).toBeInTheDocument();
@@ -191,11 +253,16 @@ describe('Repository Card - packages section', () => {
         },
         visibleTrackingErrorLogs: true,
       };
-      const { queryByText, getByText, getByRole, rerender } = render(<Card {...props} />);
+      const component = (
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...props} />
+        </AppCtx.Provider>
+      );
+      const { queryByText, getByText, getByRole, rerender } = render(component);
 
       expect(queryByText('Show errors log')).toBeNull();
 
-      rerender(<Card {...props} />);
+      rerender(component);
 
       expect(getByRole('dialog')).toBeInTheDocument();
       expect(
@@ -217,7 +284,11 @@ describe('Repository Card - packages section', () => {
       mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Other,
       });
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
       expect(dropdownBtn).toBeInTheDocument();
@@ -241,14 +312,20 @@ describe('Repository Card - packages section', () => {
       mocked(API).deleteRepository.mockRejectedValue({
         kind: ErrorKind.Unauthorized,
       });
-      const { getByTestId } = render(<Card {...defaultProps} />);
+      const { getByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+          <Card {...defaultProps} />
+        </AppCtx.Provider>
+      );
 
       const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
       expect(dropdownBtn).toBeInTheDocument();
       fireEvent.click(dropdownBtn);
 
-      const btn = getByTestId('deleteRepoBtn');
-      fireEvent.click(btn);
+      await waitFor(() => {
+        const btn = getByTestId('deleteRepoBtn');
+        fireEvent.click(btn);
+      });
 
       await waitFor(() => {
         expect(API.deleteRepository).toHaveBeenCalledTimes(1);

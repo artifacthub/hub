@@ -6,10 +6,12 @@ import (
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 // DB defines the methods the database handler must provide.
 type DB interface {
+	Acquire(ctx context.Context) (*pgxpool.Conn, error)
 	Begin(ctx context.Context) (pgx.Tx, error)
 	Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error)
 	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row

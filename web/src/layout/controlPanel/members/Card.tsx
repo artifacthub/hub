@@ -9,9 +9,10 @@ import { IoMdCloseCircle } from 'react-icons/io';
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { ErrorKind, Member } from '../../../types';
+import { AuthorizerAction, ErrorKind, Member } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Modal from '../../common/Modal';
+import ActionBtn from '../ActionBtn';
 import styles from './Card.module.css';
 
 interface Props {
@@ -47,9 +48,13 @@ const MemberCard = (props: Props) => {
     } catch (err) {
       setIsDeletingMember(false);
       if (err.kind !== ErrorKind.Unauthorized) {
+        let errorMessage = 'An error occurred removing member from the organization, please try again later.';
+        if (err.kind === ErrorKind.Forbidden) {
+          errorMessage = 'You do not have permissions to remove members from the organization.';
+        }
         alertDispatcher.postAlert({
           type: 'danger',
-          message: 'An error occurred removing member from the organization, please try again later.',
+          message: errorMessage,
         });
       } else {
         props.onAuthError();
@@ -166,24 +171,38 @@ const MemberCard = (props: Props) => {
               >
                 <div className={`arrow ${styles.arrow}`} />
 
-                <button
-                  data-testid="leaveOrRemoveModalBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    e.preventDefault();
-                    closeDropdown();
-                    setModalStatus(true);
-                  }}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    {isUser ? (
+                {isUser ? (
+                  <button
+                    data-testid="leaveOrRemoveModalBtn"
+                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      closeDropdown();
+                      setModalStatus(true);
+                    }}
+                  >
+                    <div className="d-flex flex-row align-items-center">
                       <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
-                    ) : (
+                      <span>Leave</span>
+                    </div>
+                  </button>
+                ) : (
+                  <ActionBtn
+                    testId="leaveOrRemoveModalBtn"
+                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      closeDropdown();
+                      setModalStatus(true);
+                    }}
+                    action={AuthorizerAction.DeleteOrganizationMember}
+                  >
+                    <>
                       <FaUserMinus className={`mr-2 ${styles.btnIcon}`} />
-                    )}
-                    <span>{isUser ? 'Leave' : 'Remove'}</span>
-                  </div>
-                </button>
+                      <span>Remove</span>
+                    </>
+                  </ActionBtn>
+                )}
               </div>
 
               <button

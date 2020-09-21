@@ -36,7 +36,7 @@ func TestWorker(t *testing.T) {
 	t.Run("error getting pending event", func(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
-		sw.em.On("GetPending", sw.ctx, sw.tx).Return(nil, errFake)
+		sw.em.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
@@ -48,7 +48,7 @@ func TestWorker(t *testing.T) {
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
-		sw.sm.On("GetSubscriptors", sw.ctx, e).Return(nil, errFake)
+		sw.sm.On("GetSubscriptors", sw.ctx, e).Return(nil, tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
@@ -74,7 +74,7 @@ func TestWorker(t *testing.T) {
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
 		sw.sm.On("GetSubscriptors", sw.ctx, e).Return([]*hub.User{u1}, nil)
-		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u1}).Return(errFake)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, User: u1}).Return(tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)
@@ -117,7 +117,7 @@ func TestWorker(t *testing.T) {
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
 		sw.sm.On("GetSubscriptors", sw.ctx, e).Return([]*hub.User{}, nil)
 		sw.wm.On("GetSubscribedTo", sw.ctx, e).Return([]*hub.Webhook{wh1}, nil)
-		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh1}).Return(errFake)
+		sw.nm.On("Add", sw.ctx, sw.tx, &hub.Notification{Event: e, Webhook: wh1}).Return(tests.ErrFake)
 		sw.tx.On("Rollback", sw.ctx).Return(nil)
 
 		w := NewWorker(sw.svc)

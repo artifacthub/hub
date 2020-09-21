@@ -4,9 +4,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
-import { ErrorKind, Organization } from '../../../../../types';
+import { AuthorizerAction, ErrorKind, Organization } from '../../../../../types';
 import Loading from '../../../../common/Loading';
 import NoData from '../../../../common/NoData';
+import ActionBtn from '../../../ActionBtn';
 import OrganizationForm from '../../../organizations/Form';
 import styles from './ProfileSection.module.css';
 
@@ -94,22 +95,26 @@ const ProfileSection = (props: Props) => {
                 )}
 
                 <div className="mt-4">
-                  <button
+                  <ActionBtn
+                    testId="updateOrgBtn"
                     className="btn btn-secondary"
-                    type="button"
-                    disabled={isSending}
-                    onClick={submitForm}
-                    data-testid="updateOrgBtn"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      submitForm();
+                    }}
+                    action={AuthorizerAction.UpdateOrganization}
                   >
-                    {isSending ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Updating organization</span>
-                      </>
-                    ) : (
-                      <>Update</>
-                    )}
-                  </button>
+                    <>
+                      {isSending ? (
+                        <>
+                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                          <span className="ml-2">Updating organization</span>
+                        </>
+                      ) : (
+                        <>Update</>
+                      )}
+                    </>
+                  </ActionBtn>
                 </div>
               </>
             )}

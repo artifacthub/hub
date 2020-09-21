@@ -19,48 +19,53 @@ exports[`Members section index creates snapshot 1`] = `
             Members
           </div>
           <div>
-            <button
-              class="btn btn-secondary btn-sm text-uppercase btnAction"
-              data-testid="addMemberBtn"
+            <span
+              class="position-relative"
             >
-              <div
-                class="d-flex flex-row align-items-center justify-content-center"
+              <button
+                class="btn btn-secondary btn-sm text-uppercase btnAction"
+                data-testid="addMemberBtn"
+                type="button"
               >
-                <svg
-                  class="d-inline d-md-none"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="d-flex flex-row align-items-center justify-content-center"
                 >
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                <svg
-                  class="d-none d-md-inline mr-2"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
-                  />
-                </svg>
-                <span
-                  class="d-none d-md-inline"
-                >
-                  Invite
-                </span>
-              </div>
-            </button>
+                  <svg
+                    class="d-inline d-md-none"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  <svg
+                    class="d-none d-md-inline mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                    />
+                  </svg>
+                  <span
+                    class="d-none d-md-inline"
+                  >
+                    Invite
+                  </span>
+                </div>
+              </button>
+            </span>
           </div>
         </div>
       </div>
@@ -109,48 +114,53 @@ exports[`Members section index creates snapshot 2`] = `
             Members
           </div>
           <div>
-            <button
-              class="btn btn-secondary btn-sm text-uppercase btnAction"
-              data-testid="addMemberBtn"
+            <span
+              class="position-relative"
             >
-              <div
-                class="d-flex flex-row align-items-center justify-content-center"
+              <button
+                class="btn btn-secondary btn-sm text-uppercase btnAction"
+                data-testid="addMemberBtn"
+                type="button"
               >
-                <svg
-                  class="d-inline d-md-none"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="d-flex flex-row align-items-center justify-content-center"
                 >
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                <svg
-                  class="d-none d-md-inline mr-2"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
-                  />
-                </svg>
-                <span
-                  class="d-none d-md-inline"
-                >
-                  Invite
-                </span>
-              </div>
-            </button>
+                  <svg
+                    class="d-inline d-md-none"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  <svg
+                    class="d-none d-md-inline mr-2"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                    />
+                  </svg>
+                  <span
+                    class="d-none d-md-inline"
+                  >
+                    Invite
+                  </span>
+                </div>
+              </button>
+            </span>
           </div>
         </div>
       </div>
@@ -317,32 +327,37 @@ exports[`Members section index creates snapshot 2`] = `
                   <div
                     class="arrow arrow"
                   />
-                  <button
-                    class="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    data-testid="leaveOrRemoveModalBtn"
+                  <span
+                    class="position-relative"
                   >
-                    <div
-                      class="d-flex flex-row align-items-center"
+                    <button
+                      class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                      data-testid="leaveOrRemoveModalBtn"
+                      type="button"
                     >
-                      <svg
-                        class="mr-2 btnIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 640 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <div
+                        class="d-flex flex-row align-items-center undefined"
                       >
-                        <path
-                          d="M624 208H432c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h192c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                        />
-                      </svg>
-                      <span>
-                        Remove
-                      </span>
-                    </div>
-                  </button>
+                        <svg
+                          class="mr-2 btnIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 640 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M624 208H432c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h192c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                          />
+                        </svg>
+                        <span>
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </span>
                 </div>
                 <button
                   class="btn btn-light p-0 text-secondary text-center btnDropdown"

@@ -6,6 +6,7 @@ import (
 
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -15,6 +16,12 @@ var ErrFakeDatabaseFailure = errors.New("fake database failure")
 // DBMock is a mock implementation of the DB interface.
 type DBMock struct {
 	mock.Mock
+}
+
+// Acquire implements the DB interface.
+func (m *DBMock) Acquire(ctx context.Context) (*pgxpool.Conn, error) {
+	args := m.Called(ctx)
+	return nil, args.Error(1)
 }
 
 // Begin implements the DB interface.

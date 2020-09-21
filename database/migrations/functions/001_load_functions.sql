@@ -17,9 +17,12 @@
 {{ template "organizations/add_organization.sql" }}
 {{ template "organizations/confirm_organization_membership.sql" }}
 {{ template "organizations/delete_organization_member.sql" }}
+{{ template "organizations/get_authorization_policies.sql" }}
+{{ template "organizations/get_authorization_policy.sql" }}
 {{ template "organizations/get_organization.sql" }}
 {{ template "organizations/get_organization_members.sql" }}
 {{ template "organizations/get_user_organizations.sql" }}
+{{ template "organizations/update_authorization_policy.sql" }}
 {{ template "organizations/update_organization.sql" }}
 {{ template "organizations/user_belongs_to_organization.sql" }}
 

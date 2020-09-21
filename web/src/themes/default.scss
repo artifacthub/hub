@@ -29,7 +29,7 @@ $font-family-monospace: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospa
     no-repeat right 0.75rem center/8px 10px;
 }
 
-.dropdown-menu .arrow {
+.dropdown-menu > .arrow {
   position: absolute;
   display: block;
   width: 1rem;
@@ -102,4 +102,9 @@ button {
   .header h6 {
     font-size: 1rem;
   }
+}
+
+//  Codemirror
+.CodeMirror-scroll {
+  min-height: 200px;
 }

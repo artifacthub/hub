@@ -1,0 +1,23 @@
+.label {
+  font-size: 0.875rem;
+}
+
+.alertWrapper {
+  transition: max-height 1s;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.isAlertActive {
+  max-height: 300px;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.5rem;
+  }
+}

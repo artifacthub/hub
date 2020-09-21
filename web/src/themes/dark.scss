@@ -292,7 +292,7 @@
     border-color: var(--border-md);
     color: $font-color;
 
-    .arrow {
+    & > .arrow {
       &::after,
       &::before {
         border-bottom-color: var(--border-md);

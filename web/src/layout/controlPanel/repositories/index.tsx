@@ -8,10 +8,11 @@ import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
 import { AppCtx, unselectOrg } from '../../../context/AppCtx';
-import { ErrorKind, Repository as Repo } from '../../../types';
+import { AuthorizerAction, ErrorKind, Repository as Repo } from '../../../types';
 import ExternalLink from '../../common/ExternalLink';
 import Loading from '../../common/Loading';
 import NoData from '../../common/NoData';
+import ActionBtn from '../ActionBtn';
 import RepositoryCard from './Card';
 import ClaimOwnershipRepositoryModal from './ClaimOwnershipModal';
 import RepositoryModal from './Modal';
@@ -107,17 +108,22 @@ const RepositoriesSection = (props: Props) => {
                 </div>
               </button>
 
-              <button
-                data-testid="addRepoBtn"
+              <ActionBtn
+                testId="addRepoBtn"
                 className={`btn btn-secondary btn-sm text-uppercase ${styles.btnAction}`}
-                onClick={() => setModalStatus({ open: true })}
+                contentClassName="justify-content-center"
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.preventDefault();
+                  setModalStatus({ open: true });
+                }}
+                action={AuthorizerAction.AddOrganizationRepository}
               >
-                <div className="d-flex flex-row align-items-center justify-content-center">
+                <>
                   <MdAdd className="d-inline d-md-none" />
                   <MdAddCircle className="d-none d-md-inline mr-2" />
                   <span className="d-none d-md-inline">Add</span>
-                </div>
-              </button>
+                </>
+              </ActionBtn>
             </div>
           </div>
         </div>
@@ -165,17 +171,20 @@ const RepositoriesSection = (props: Props) => {
                   <>
                     <p className="h6 my-4">Add your first repository!</p>
 
-                    <button
-                      data-testid="addFirstRepoBtn"
-                      type="button"
+                    <ActionBtn
+                      testId="addFirstRepoBtn"
                       className="btn btn-secondary"
-                      onClick={() => setModalStatus({ open: true })}
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.preventDefault();
+                        setModalStatus({ open: true });
+                      }}
+                      action={AuthorizerAction.AddOrganizationRepository}
                     >
-                      <div className="d-flex flex-row align-items-center">
+                      <>
                         <MdAddCircle className="mr-2" />
                         <span>Add repository</span>
-                      </div>
-                    </button>
+                      </>
+                    </ActionBtn>
                   </>
                 ) : (
                   <>{apiError}</>
