@@ -50,6 +50,7 @@ export class Authorizer {
       try {
         this.gettingActions = true;
         this.allowedActions = await API.getUserAllowedActions(this.selectedOrg!);
+        this.gettingActions = false;
         if (!isUndefined(onCompletion)) {
           onCompletion();
         }
@@ -57,7 +58,6 @@ export class Authorizer {
           this.pendingActions.forEach((action: () => void) => action());
           this.pendingActions = [];
         }
-        this.gettingActions = false;
       } catch (err) {
         this.allowedActions = ['all'];
         this.gettingActions = false;
