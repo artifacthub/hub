@@ -219,7 +219,8 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 	return err
 }
 
-// GetJSON returns the organization's authorization policy as a json object.
+// GetAuthorizationPolicyJSON returns the organization's authorization policy
+// as a json object.
 func (m *Manager) GetAuthorizationPolicyJSON(ctx context.Context, orgName string) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
@@ -321,7 +322,8 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 	return err
 }
 
-// Update organization's authorization policy in the database.
+// UpdateAuthorizationPolicy updates the organization's authorization policy in
+// the database.
 func (m *Manager) UpdateAuthorizationPolicy(
 	ctx context.Context,
 	orgName string,

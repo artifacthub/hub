@@ -5,7 +5,6 @@ linters:
     - deadcode
     - errcheck
     - goconst
-    - gocyclo
     - goimports
     - golint
     - gosec

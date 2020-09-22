@@ -2,12 +2,13 @@ package user
 
 import (
 	"context"
+	"crypto/rand"
 	"crypto/subtle"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"math/rand"
+	"math/big"
 	"net"
 	"net/http"
 	"strconv"
@@ -51,8 +52,6 @@ type Handlers struct {
 
 // NewHandlers creates a new Handlers instance.
 func NewHandlers(userManager hub.UserManager, cfg *viper.Viper) *Handlers {
-	rand.Seed(time.Now().UTC().UnixNano())
-
 	// Setup secure cookie instance
 	sc := securecookie.New([]byte(cfg.GetString("server.cookie.hashKey")), nil)
 	sc.MaxAge(int(sessionDuration.Seconds()))
@@ -291,7 +290,11 @@ func (h *Handlers) newUserFromGithubProfile(
 		return nil, err
 	}
 	if !available {
-		alias += strconv.Itoa(rand.Intn(1000))
+		randomSuffix, err := getRandomSuffix()
+		if err != nil {
+			return nil, err
+		}
+		alias += randomSuffix
 	}
 
 	// Get user's primary email and check if it has been verified
@@ -351,7 +354,11 @@ func (h *Handlers) newUserFromGoogleProfile(
 		return nil, err
 	}
 	if !available {
-		alias += strconv.Itoa(rand.Intn(1000))
+		randomSuffix, err := getRandomSuffix()
+		if err != nil {
+			return nil, err
+		}
+		alias += randomSuffix
 	}
 
 	return &hub.User{
@@ -706,4 +713,14 @@ func NewOauthState(s string) (*OauthState, error) {
 		return nil, err
 	}
 	return state, nil
+}
+
+// getRandomSuffix is a helper function that returns a random numerical suffix
+// to be used in user aliases when the selected alias is already taken.
+func getRandomSuffix() (string, error) {
+	nBig, err := rand.Int(rand.Reader, big.NewInt(1000))
+	if err != nil {
+		return "", err
+	}
+	return strconv.FormatInt(nBig.Int64(), 10), nil
 }

@@ -30,7 +30,7 @@ func TestGenerateImageVersions(t *testing.T) {
 		// Update image1 versions in testdata
 		for _, iv := range imgVersions {
 			name := fmt.Sprintf("testdata/valid@%s.png", iv.Version)
-			err := ioutil.WriteFile(name, iv.Data, 0644)
+			err := ioutil.WriteFile(name, iv.Data, 0600)
 			require.NoError(t, err)
 		}
 	}
