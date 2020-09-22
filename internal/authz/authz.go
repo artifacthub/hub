@@ -19,14 +19,22 @@ import (
 )
 
 const (
-	AllowQuery          = "data.artifacthub.authz.allow"
+	// AllowQuery represents the authorization's policy query used to check if
+	// a user is allowed to perform a given action.
+	AllowQuery = "data.artifacthub.authz.allow"
+
+	// AllowedActionsQuery represents the authorization's policy query used to
+	// get the actions a given user is allowed to perform.
 	AllowedActionsQuery = "data.artifacthub.authz.allowed_actions"
 
 	pauseOnError = 10 * time.Second
 )
 
 var (
-	AllowQueryRef          = ast.MustParseRef(AllowQuery)
+	// AllowQueryRef represents a reference to AllowQuery.
+	AllowQueryRef = ast.MustParseRef(AllowQuery)
+
+	// AllowedActionsQueryRef represents a reference to AllowedActionsQuery.
 	AllowedActionsQueryRef = ast.MustParseRef(AllowedActionsQuery)
 
 	validPredefinedPolicies = []string{

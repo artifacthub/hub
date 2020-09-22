@@ -8,14 +8,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Setup Go
-        uses: actions/setup-go@v1
-        with:
-          go-version: 1.15
-      - name: Install golangci-lint
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.23.6
       - name: Run golangci-lint
-        run: ./bin/golangci-lint --timeout 5m run ./...
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.31
+          args: --timeout 5m
 
   tests-database:
     if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
