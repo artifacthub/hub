@@ -214,7 +214,7 @@ select register_package('
     "created_at": 1592299235,
     "maintainers": [
         {
-            "name": "name1",
+            "name": "name1 updated",
             "email": "email1"
         }
     ],
@@ -287,9 +287,10 @@ select results_eq(
             where p.name = 'package1'
         )
     $$,
-    $$ values ('name1', 'email1') $$,
+    $$ values ('name1 updated', 'email1') $$,
     'Package maintainers should have been updated'
 );
+select * from maintainer;
 select is_empty(
     $$
         select *
@@ -411,7 +412,7 @@ select results_eq(
             where p.name = 'package1'
         )
     $$,
-    $$ values ('name1', 'email1') $$,
+    $$ values ('name1 updated', 'email1') $$,
     'Package maintainers should not have been updated'
 );
 select is_empty(
