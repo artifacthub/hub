@@ -63,6 +63,32 @@ func TestWorker(t *testing.T) {
 			ww.assertExpectations(t)
 		})
 
+		t.Run("error downloading chart (deprecated chart)", func(t *testing.T) {
+			// Setup worker and expectations
+			ww := newWorkerWrapper(context.Background())
+			job := &Job{
+				Kind: Register,
+				ChartVersion: &repo.ChartVersion{
+					Metadata: &chart.Metadata{
+						Name:       "pkg1",
+						Version:    "1.0.0",
+						Deprecated: true,
+					},
+					URLs: []string{
+						"http://tests/pkg1-1.0.0.tgz",
+					},
+				},
+				StoreLogo: true,
+			}
+			ww.queue <- job
+			close(ww.queue)
+			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, tests.ErrFake)
+
+			// Run worker and check expectations
+			ww.w.Run(ww.wg, ww.queue)
+			ww.assertExpectations(t)
+		})
+
 		t.Run("unexpected status downloading chart", func(t *testing.T) {
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())

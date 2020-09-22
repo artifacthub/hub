@@ -81,14 +81,13 @@ func (w *Worker) Run(wg *sync.WaitGroup, queue chan *Job) {
 // involves downloading the chart archive, extracting its contents and register
 // the corresponding package.
 func (w *Worker) handleRegisterJob(j *Job) {
-	name := j.ChartVersion.Metadata.Name
-	version := j.ChartVersion.Metadata.Version
+	md := j.ChartVersion.Metadata
 
 	defer func() {
 		if r := recover(); r != nil {
 			w.logger.Error().
-				Str("package", name).
-				Str("version", version).
+				Str("package", md.Name).
+				Str("version", md.Version).
 				Bytes("stacktrace", debug.Stack()).
 				Interface("recover", r).
 				Msg("handleRegisterJob panic")
@@ -98,7 +97,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	// Prepare chart archive url
 	u, err := url.Parse(j.ChartVersion.URLs[0])
 	if err != nil {
-		w.warn(name, version, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
+		w.warn(md, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
 		return
 	}
 	if !u.IsAbs() {
@@ -114,10 +113,10 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	// Load chart from remote archive
 	chart, err := w.loadChart(chartURL)
 	if err != nil {
-		w.warn(name, version, fmt.Errorf("error loading chart (%s): %w", chartURL, err))
+		w.warn(md, fmt.Errorf("error loading chart (%s): %w", chartURL, err))
 		return
 	}
-	md := chart.Metadata
+	md = chart.Metadata
 
 	// Store logo when available if requested
 	var logoURL, logoImageID string
@@ -125,11 +124,11 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		logoURL = md.Icon
 		data, err := w.getImage(md.Icon)
 		if err != nil {
-			w.warn(name, version, fmt.Errorf("error getting image %s: %w", md.Icon, err))
+			w.warn(md, fmt.Errorf("error getting image %s: %w", md.Icon, err))
 		} else {
 			logoImageID, err = w.svc.Is.SaveImage(w.svc.Ctx, data)
 			if err != nil && !errors.Is(err, image.ErrFormat) {
-				w.warn(name, version, fmt.Errorf("error saving image %s: %w", md.Icon, err))
+				w.warn(md, fmt.Errorf("error saving image %s: %w", md.Icon, err))
 			}
 		}
 	}
@@ -162,7 +161,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if err == nil {
 		p.Signed = hasProvenanceFile
 	} else {
-		w.warn(name, version, fmt.Errorf("error checking provenance file: %w", err))
+		w.warn(md, fmt.Errorf("error checking provenance file: %w", err))
 	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {
@@ -205,13 +204,13 @@ func (w *Worker) handleRegisterJob(j *Job) {
 
 	// Enrich package with information from annotations
 	if err := enrichPackageFromAnnotations(p, md.Annotations); err != nil {
-		w.warn(name, version, fmt.Errorf("error enriching package: %w", err))
+		w.warn(md, fmt.Errorf("error enriching package: %w", err))
 	}
 
 	// Register package
 	w.logger.Debug().Str("name", md.Name).Str("v", md.Version).Msg("registering package")
 	if err := w.svc.Pm.Register(w.svc.Ctx, p); err != nil {
-		w.warn(name, version, fmt.Errorf("error registering package: %w", err))
+		w.warn(md, fmt.Errorf("error registering package: %w", err))
 	}
 }
 
@@ -219,17 +218,17 @@ func (w *Worker) handleRegisterJob(j *Job) {
 // This involves deleting the package version corresponding to a given chart
 // version.
 func (w *Worker) handleUnregisterJob(j *Job) {
+	md := j.ChartVersion.Metadata
+
 	// Unregister package
-	name := j.ChartVersion.Name
-	version := j.ChartVersion.Version
 	p := &hub.Package{
-		Name:       name,
-		Version:    version,
+		Name:       md.Name,
+		Version:    md.Version,
 		Repository: w.r,
 	}
 	w.logger.Debug().Str("name", p.Name).Str("v", p.Version).Msg("unregistering package")
 	if err := w.svc.Pm.Unregister(w.svc.Ctx, p); err != nil {
-		w.warn(name, version, fmt.Errorf("error unregistering package: %w", err))
+		w.warn(md, fmt.Errorf("error unregistering package: %w", err))
 	}
 }
 
@@ -295,10 +294,12 @@ func (w *Worker) getImage(u string) ([]byte, error) {
 
 // warn is a helper that sends the error provided to the errors collector and
 // logs it as a warning.
-func (w *Worker) warn(name, version string, err error) {
-	err = fmt.Errorf("%s (package: %s version: %s)", err.Error(), name, version)
-	w.svc.Ec.Append(w.r.RepositoryID, err)
+func (w *Worker) warn(md *chart.Metadata, err error) {
+	err = fmt.Errorf("%s (package: %s version: %s)", err.Error(), md.Name, md.Version)
 	w.logger.Warn().Err(err).Send()
+	if !md.Deprecated {
+		w.svc.Ec.Append(w.r.RepositoryID, err)
+	}
 }
 
 // getFile returns the file requested from the provided chart.
