@@ -75,10 +75,12 @@ begin
         -- Maintainers
         for v_maintainer in select * from jsonb_array_elements(nullif(p_pkg->'maintainers', 'null'::jsonb))
         loop
-            -- Register maintainer if needed
+            -- Register or update maintainer if needed
             insert into maintainer (name, email)
             values (v_maintainer->>'name', v_maintainer->>'email')
-            on conflict (email) do update set name = v_maintainer->>'name'
+            on conflict (email) do
+                update set name = v_maintainer->>'name'
+                where maintainer.name <> v_maintainer->>'name'
             returning maintainer_id into v_maintainer_id;
 
             -- If maintainer was already registered, get maintainer id
