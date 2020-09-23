@@ -76,7 +76,7 @@ describe('Navbar', () => {
 
       expect(getByText('Artifact')).toBeInTheDocument();
       expect(getByText('HUB')).toBeInTheDocument();
-      expect(getByText('Alpha')).toBeInTheDocument();
+      expect(getByText('Beta')).toBeInTheDocument();
     });
 
     it('goes to Homepage to click brand link', () => {
