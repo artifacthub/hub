@@ -51,7 +51,7 @@ const Navbar = (props: Props) => {
               <span
                 className={`text-uppercase badge badge-pill badge-secondary d-flex align-items-center ${styles.badge}`}
               >
-                Alpha
+                Beta
               </span>
             </div>
           </Link>

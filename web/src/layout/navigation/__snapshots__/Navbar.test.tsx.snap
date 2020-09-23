@@ -52,7 +52,7 @@ exports[`Navbar creates snapshot 1`] = `
             <span
               class="text-uppercase badge badge-pill badge-secondary d-flex align-items-center badge"
             >
-              Alpha
+              Beta
             </span>
           </div>
         </a>
