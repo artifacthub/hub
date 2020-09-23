@@ -889,6 +889,79 @@ func TestGetByName(t *testing.T) {
 	})
 }
 
+func TestGetMetadata(t *testing.T) {
+	t.Run("local file: error reading repository metadata file", func(t *testing.T) {
+		m := NewManager(nil, nil, nil)
+		_, err := m.GetMetadata("testdata/not-exists.yaml")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error reading repository metadata file")
+	})
+
+	t.Run("remote file: error downloading repository metadata file", func(t *testing.T) {
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://url.test/not-found").Return(nil, tests.ErrFake)
+		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		_, err := m.GetMetadata("http://url.test/not-found")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error downloading repository metadata file")
+	})
+
+	t.Run("remote file: unexpected status code received", func(t *testing.T) {
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://url.test/not-found").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
+		}, nil)
+		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		_, err := m.GetMetadata("http://url.test/not-found")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "unexpected status code received")
+	})
+
+	t.Run("remote file: error reading repository metadata file", func(t *testing.T) {
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://url.test/not-found").Return(&http.Response{
+			Body:       ioutil.NopCloser(tests.ErrReader(0)),
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		_, err := m.GetMetadata("http://url.test/not-found")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error reading repository metadata file")
+	})
+
+	t.Run("error unmarshaling repository metadata file", func(t *testing.T) {
+		m := NewManager(nil, nil, nil)
+		_, err := m.GetMetadata("testdata/invalid.yml")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error unmarshaling repository metadata file")
+	})
+
+	t.Run("invalid repository id", func(t *testing.T) {
+		m := NewManager(nil, nil, nil)
+		_, err := m.GetMetadata("testdata/invalid-repo-id.yml")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "invalid repository id")
+	})
+
+	t.Run("local file: success", func(t *testing.T) {
+		m := NewManager(nil, nil, nil)
+		_, err := m.GetMetadata("testdata/artifacthub-repo.yml")
+		assert.NoError(t, err)
+	})
+
+	t.Run("remote file: success", func(t *testing.T) {
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://url.test/ok").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
+			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		_, err := m.GetMetadata("http://url.test/ok")
+		assert.NoError(t, err)
+	})
+}
+
 func TestGetPackagesDigest(t *testing.T) {
 	ctx := context.Background()
 

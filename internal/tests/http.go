@@ -17,3 +17,12 @@ func (m *HTTPGetterMock) Get(url string) (*http.Response, error) {
 	resp, _ := args.Get(0).(*http.Response)
 	return resp, args.Error(1)
 }
+
+// ErrReader represents a faulty reader implementation. It can be handy to
+// simulate faulty requests bodies (ioutil.NopCloser(tests.ErrReader(0))).
+type ErrReader int
+
+// Read implements the io.Reader interface.
+func (ErrReader) Read(p []byte) (n int, err error) {
+	return 0, ErrFake
+}
