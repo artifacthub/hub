@@ -43,9 +43,12 @@ select is(
         "opt_out_id": "00000000-0000-0000-0000-000000000001",
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -55,9 +58,12 @@ select is(
         "opt_out_id": "00000000-0000-0000-0000-000000000002",
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -67,9 +73,12 @@ select is(
         "opt_out_id": "00000000-0000-0000-0000-000000000003",
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000002",
-            "kind": 0,
             "name": "repo2",
             "display_name": "Repo 2",
+            "url": "https://repo2.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
@@ -84,9 +93,12 @@ select is(
         "opt_out_id": "00000000-0000-0000-0000-000000000004",
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
-            "kind": 0,
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null

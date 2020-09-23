@@ -29,8 +29,11 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
         "user_alias": "user1",
-        "organization_name": null
+        "organization_name": null,
+        "organization_display_name": null
     }'::jsonb,
     'Repository just seeded is returned as a json object'
 );

@@ -44,9 +44,13 @@ select is(
         "normalized_name": "package-1",
         "logo_image_id": "00000000-0000-0000-0000-000000000001",
         "repository": {
-            "kind": 0,
+            "repository_id": "00000000-0000-0000-0000-000000000001",
             "name": "repo1",
             "display_name": "Repo 1",
+            "url": "https://repo1.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": "user1",
             "organization_name": null,
             "organization_display_name": null
@@ -58,9 +62,13 @@ select is(
         "normalized_name": "package-2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
         "repository": {
-            "kind": 0,
+            "repository_id": "00000000-0000-0000-0000-000000000002",
             "name": "repo2",
             "display_name": "Repo 2",
+            "url": "https://repo2.com",
+            "kind": 0,
+            "verified_publisher": false,
+            "official": false,
             "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"

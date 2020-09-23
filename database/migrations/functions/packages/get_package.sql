@@ -60,24 +60,11 @@ begin
             join package__maintainer pm using (maintainer_id)
             where pm.package_id = v_package_id
         ),
-        'repository', jsonb_build_object(
-            'repository_id', r.repository_id,
-            'kind', r.repository_kind_id,
-            'name', r.name,
-            'display_name', r.display_name,
-            'url', r.url,
-            'verified_publisher', r.verified_publisher,
-            'official', r.official,
-            'user_alias', u.alias,
-            'organization_name', o.name,
-            'organization_display_name', o.display_name
-        )
+        'repository', (select get_repository_summary(r.repository_id))
     )
     from package p
     join snapshot s using (package_id)
     join repository r using (repository_id)
-    left join "user" u using (user_id)
-    left join organization o using (organization_id)
     where p.package_id = v_package_id
     and
         case when p_input->>'version' <> '' then

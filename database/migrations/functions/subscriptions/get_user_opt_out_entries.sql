@@ -4,15 +4,7 @@ create or replace function get_user_opt_out_entries(p_user_id uuid)
 returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'opt_out_id', opt_out_id,
-        'repository', jsonb_build_object(
-            'repository_id', repository_id,
-            'kind', repository_kind_id,
-            'name', repository_name,
-            'display_name', repository_display_name,
-            'user_alias', user_alias,
-            'organization_name', organization_name,
-            'organization_display_name', organization_display_name
-        ),
+        'repository', (select get_repository_summary(repository_id)),
         'event_kind', event_kind_id
     )), '[]')
     from (

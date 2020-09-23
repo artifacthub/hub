@@ -1,3 +1,6 @@
+{{ template "repositories/get_repository_by_id.sql" }}
+{{ template "repositories/get_repository_summary.sql" }}
+
 {{ template "api_keys/add_api_key.sql" }}
 {{ template "api_keys/delete_api_key.sql" }}
 {{ template "api_keys/get_api_key.sql" }}
@@ -45,7 +48,6 @@
 {{ template "repositories/delete_repository.sql" }}
 {{ template "repositories/get_all_repositories.sql" }}
 {{ template "repositories/get_repositories_by_kind.sql" }}
-{{ template "repositories/get_repository_by_id.sql" }}
 {{ template "repositories/get_repository_by_name.sql" }}
 {{ template "repositories/get_repository_packages_digest.sql" }}
 {{ template "repositories/get_org_repositories.sql" }}
