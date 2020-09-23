@@ -23,9 +23,9 @@ exports[`ControlPanelView renders correctly 1`] = `
               class="nav-item mx-1 navItem"
               role="tab"
             >
-              <button
+              <a
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section active activeSection activeSection"
-                type="button"
+                href="/control-panel/repositories"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -54,15 +54,15 @@ exports[`ControlPanelView renders correctly 1`] = `
                     Repositories
                   </span>
                 </div>
-              </button>
+              </a>
             </li>
             <li
               class="nav-item mx-1 navItem"
               role="tab"
             >
-              <button
+              <a
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section"
-                type="button"
+                href="/control-panel/organizations"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -90,15 +90,15 @@ exports[`ControlPanelView renders correctly 1`] = `
                     Organizations
                   </span>
                 </div>
-              </button>
+              </a>
             </li>
             <li
               class="nav-item mx-1 navItem"
               role="tab"
             >
-              <button
+              <a
                 class="btn btn-link rounded-0 text-reset nav-link position-relative section"
-                type="button"
+                href="/control-panel/settings"
               >
                 <div
                   class="d-flex flex-row align-items-center"
@@ -126,7 +126,7 @@ exports[`ControlPanelView renders correctly 1`] = `
                     Settings
                   </span>
                 </div>
-              </button>
+              </a>
             </li>
           </ul>
           <div

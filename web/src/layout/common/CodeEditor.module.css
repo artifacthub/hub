@@ -7,7 +7,7 @@
   opacity: 0.75;
 }
 
-.disabled::before {
+.disabled > div::before {
   content: '';
   position: absolute;
   top: 0;

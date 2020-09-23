@@ -9,9 +9,9 @@ import AuthorizationSection from './authorization';
 import ProfileSection from './profile';
 
 interface Props {
+  activeSection?: string;
   subsection?: string;
   onAuthError: () => void;
-  onSubMenuItemClick: (name: string) => void;
 }
 
 const OrganizationSettingsSection = (props: Props) => {
@@ -21,7 +21,8 @@ const OrganizationSettingsSection = (props: Props) => {
   return (
     <SectionPanel
       defaultSection={props.subsection || 'profile'}
-      onSectionChange={props.onSubMenuItemClick}
+      pathPrefix={`/control-panel${!isUndefined(props.activeSection) ? `/${props.activeSection}` : ''}`}
+      activeSection={props.subsection}
       sections={section.subsections}
       content={{
         profile: <ProfileSection {...props} />,

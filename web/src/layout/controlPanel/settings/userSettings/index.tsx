@@ -10,9 +10,9 @@ import ProfileSection from './profile';
 import SubscriptionsSection from './subscriptions';
 
 interface Props {
+  activeSection?: string;
   subsection?: string;
   onAuthError: () => void;
-  onSubMenuItemClick: (name: string) => void;
 }
 
 const UserSettingsSection = (props: Props) => {
@@ -21,8 +21,9 @@ const UserSettingsSection = (props: Props) => {
 
   return (
     <SectionPanel
-      onSectionChange={props.onSubMenuItemClick}
       defaultSection={props.subsection || 'profile'}
+      pathPrefix={`/control-panel${!isUndefined(props.activeSection) ? `/${props.activeSection}` : ''}`}
+      activeSection={props.subsection}
       sections={section.subsections}
       content={{
         profile: <ProfileSection {...props} />,
