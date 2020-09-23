@@ -2,15 +2,12 @@
 -- as a json array.
 create or replace function get_repositories_by_kind(p_kind int)
 returns setof json as $$
-    select coalesce(json_agg(json_build_object(
-        'repository_id', repository_id,
-        'name', name,
-        'display_name', display_name,
-        'url', url,
-        'kind', repository_kind_id,
-        'verified_publisher', verified_publisher,
-        'official', official
-    )), '[]')
-    from repository
-    where repository_kind_id = p_kind;
+    select coalesce(json_agg(rJSON), '[]')
+    from (
+        select rJSON
+        from repository r
+        cross join get_repository_by_id(r.repository_id) as rJSON
+        where r.repository_kind_id = p_kind
+        order by r.name asc
+    ) rs;
 $$ language sql;

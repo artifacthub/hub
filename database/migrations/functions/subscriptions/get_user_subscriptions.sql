@@ -7,14 +7,7 @@ returns setof json as $$
         'name', name,
         'normalized_name', normalized_name,
         'logo_image_id', logo_image_id,
-        'repository', jsonb_build_object(
-            'kind', repository_kind_id,
-            'name', repository_name,
-            'display_name', repository_display_name,
-            'user_alias', user_alias,
-            'organization_name', organization_name,
-            'organization_display_name', organization_display_name
-        ),
+        'repository', (select get_repository_summary(repository_id)),
         'event_kinds', (
             select json_agg(distinct(event_kind_id))
             from subscription
@@ -28,16 +21,9 @@ returns setof json as $$
             p.name,
             p.normalized_name,
             p.logo_image_id,
-            r.repository_kind_id,
-            r.name as repository_name,
-            r.display_name as repository_display_name,
-            u.alias as user_alias,
-            o.name as organization_name,
-            o.display_name as organization_display_name
+            r.repository_id
         from package p
         join repository r using (repository_id)
-        left join "user" u using (user_id)
-        left join organization o using (organization_id)
         where p.package_id in (
             select distinct(package_id) from subscription where user_id = p_user_id
         )

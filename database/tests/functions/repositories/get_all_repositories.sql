@@ -37,8 +37,11 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
         "user_alias": "user1",
-        "organization_name": null
+        "organization_name": null,
+        "organization_display_name": null
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
@@ -47,8 +50,11 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
         "user_alias": "user1",
-        "organization_name": null
+        "organization_name": null,
+        "organization_display_name": null
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000003",
         "name": "repo3",
@@ -57,8 +63,11 @@ select is(
         "kind": 1,
         "verified_publisher": false,
         "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
         "user_alias": "user1",
-        "organization_name": null
+        "organization_name": null,
+        "organization_display_name": null
     }]'::jsonb,
     'Repositories 1, 2 and 3 are returned'
 );

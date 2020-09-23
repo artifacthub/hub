@@ -464,7 +464,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RepositoryData"
+                  $ref: "#/components/schemas/Repository"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -489,7 +489,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RepositoryData"
+                  $ref: "#/components/schemas/Repository"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -531,7 +531,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RepositorySummary"
+              $ref: "#/components/requestBodies/RepositoryBody"
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -558,7 +558,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RepositorySummary"
+              $ref: "#/components/requestBodies/RepositoryBody"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -675,7 +675,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RepositorySummary"
+              $ref: "#/components/requestBodies/RepositoryBody"
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -705,7 +705,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RepositorySummary"
+              $ref: "#/components/requestBodies/RepositoryBody"
       responses:
         "204":
           $ref: "#/components/responses/NoContent"
@@ -1253,25 +1253,7 @@ paths:
                       type: string
                       example: 12345abcde
                     repository:
-                      type: object
-                      properties:
-                        kind:
-                          $ref: "#/components/schemas/RepositoryKind"
-                        name:
-                          type: string
-                          example: repo1
-                        display_name:
-                          type: string
-                          example: Repo 1
-                        user_alias:
-                          type: string
-                          example: jdoe
-                        organization_name:
-                          type: string
-                          example: org1
-                        organization_display_name:
-                          type: string
-                          example: Organization 1
+                      $ref: "#/components/schemas/RepositorySummary"
                     event_kinds:
                       type: array
                       items:
@@ -1369,28 +1351,7 @@ paths:
                       type: string
                       format: uuid
                     repository:
-                      type: object
-                      properties:
-                        repository_id:
-                          type: string
-                          format: uuid
-                        kind:
-                          $ref: "#/components/schemas/RepositoryKind"
-                        name:
-                          type: string
-                          example: repo1
-                        display_name:
-                          type: string
-                          example: Repo 1
-                        user_alias:
-                          type: string
-                          example: jdoe
-                        organization_name:
-                          type: string
-                          example: org1
-                        organization_display_name:
-                          type: string
-                          example: Organization 1
+                      $ref: "#/components/schemas/RepositorySummary"
                     event_kind:
                       $ref: "#/components/schemas/EventKindId"
                       example: 2
@@ -2006,35 +1967,7 @@ components:
               type: boolean
               nullable: true
             repository:
-              type: object
-              properties:
-                repository_id:
-                  type: string
-                  format: uuid
-                kind:
-                  $ref: "#/components/schemas/RepositoryKind"
-                name:
-                  type: string
-                  nullable: false
-                  example: repo1
-                display_name:
-                  type: string
-                  example: Repository 1
-                url:
-                  type: string
-                  nullable: false
-                  format: uri
-                  example: "http://repo-url"
-                user_alias:
-                  type: string
-                  example: jdoe
-                organization_name:
-                  type: string
-                  example: org1
-                organization_display_name:
-                  type: string
-                  example: Organization 1
-              nullable: false
+              $ref: "#/components/schemas/RepositorySummary"
             is_operator:
               type: boolean
               example: false
@@ -2158,16 +2091,13 @@ components:
         created_at:
           type: integer
         repository:
-          $ref: "#/components/schemas/RepositoryData"
+          $ref: "#/components/schemas/RepositorySummary"
           nullable: false
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
         - type: object
           properties:
-            repository_id:
-              type: string
-              format: uuid
             last_tracking_ts:
               type: integer
               nullable: true
@@ -2203,6 +2133,11 @@ components:
     RepositorySummary:
       type: object
       properties:
+        repository_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/RepositoryKind"
         name:
           type: string
           nullable: false
@@ -2225,42 +2160,9 @@ components:
         organization_name:
           type: string
           example: org1
-      required:
-        - name
-        - url
-    RepositoryData:
-      type: object
-      properties:
-        repository_id:
-          type: string
-          format: uuid
-        url:
-          type: string
-          nullable: false
-          format: uri
-          example: "http://repo-url"
-        kind:
-          $ref: "#/components/schemas/RepositoryKind"
-        name:
-          type: string
-          nullable: false
-          example: repo1
-        display_name:
-          type: string
-          example: Repository 1
-        user_alias:
-          type: string
-          example: jdoe
-        organization_name:
-          type: string
-          example: org1
         organization_display_name:
           type: string
           example: Organization 1
-        verified_publisher:
-          type: boolean
-        official:
-          type: boolean
     Organization:
       allOf:
         - $ref: "#/components/schemas/OrganizationSummary"
@@ -2730,6 +2632,25 @@ components:
             required:
               - repository_id
               - event_kind
+    RepositoryBody:
+      description: Repository request body
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              kind:
+                $ref: "#/components/schemas/RepositoryKind"
+              name:
+                type: string
+                example: repo1
+              display_name:
+                type: string
+                example: Repo 1
+              url:
+                type: string
+                example: http://repo-url.com
     WebhookBody:
       description: Webhook body
       required: true

@@ -8,7 +8,7 @@ select plan(2);
 
 -- Non existing repository
 select is_empty(
-    $$ select get_repository_by_id('00000000-0000-0000-0000-000000000001') $$,
+    $$ select get_repository_summary('00000000-0000-0000-0000-000000000001') $$,
     'If repository requested does not exist no rows are returned'
 );
 
@@ -21,9 +21,7 @@ insert into repository (
     display_name,
     url,
     repository_kind_id,
-    user_id,
-    last_tracking_ts,
-    last_tracking_errors
+    user_id
 )
 values (
     :'repo1ID',
@@ -31,14 +29,12 @@ values (
     'Repo 1',
     'https://repo1.com',
     0,
-    :'user1ID',
-    '2020-06-16 11:20:34+02',
-    'error1\nerror2\n'
+    :'user1ID'
 );
 
 -- One repository has just been seeded
 select is(
-    get_repository_by_id('00000000-0000-0000-0000-000000000001')::jsonb,
+    get_repository_summary('00000000-0000-0000-0000-000000000001')::jsonb,
     '{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -47,8 +43,6 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
-        "last_tracking_ts": 1592299234,
-        "last_tracking_errors": "error1\\nerror2\\n",
         "user_alias": "user1",
         "organization_name": null,
         "organization_display_name": null

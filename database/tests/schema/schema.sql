@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(126);
+select plan(127);
 
 -- Check default_text_search_config is correct
 select results_eq(
@@ -375,6 +375,7 @@ select has_function('get_repositories_by_kind');
 select has_function('get_repository_by_id');
 select has_function('get_repository_by_name');
 select has_function('get_repository_packages_digest');
+select has_function('get_repository_summary');
 select has_function('get_org_repositories');
 select has_function('get_user_repositories');
 select has_function('set_last_tracking_results');

@@ -36,7 +36,12 @@ select is(
         "url": "https://repo1.com",
         "kind": 0,
         "verified_publisher": false,
-        "official": false
+        "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
+        "user_alias": "user1",
+        "organization_name": null,
+        "organization_display_name": null
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
@@ -44,7 +49,12 @@ select is(
         "url": "https://repo2.com",
         "kind": 0,
         "verified_publisher": false,
-        "official": false
+        "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
+        "user_alias": "user1",
+        "organization_name": null,
+        "organization_display_name": null
     }]'::jsonb,
     'Repositories 1 and 2 are returned'
 );
@@ -57,7 +67,12 @@ select is(
         "url": "https://repo3.com",
         "kind": 1,
         "verified_publisher": false,
-        "official": false
+        "official": false,
+        "last_tracking_ts": null,
+        "last_tracking_errors": null,
+        "user_alias": "user1",
+        "organization_name": null,
+        "organization_display_name": null
     }]'::jsonb,
     'Repository 3 is returned'
 );
