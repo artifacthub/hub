@@ -1,30 +1,30 @@
 openapi: 3.0.3
 info:
   title: Artifact Hub
-  description: 'Find, install and publish Kubernetes packages'
-  version: 0.5.0
+  description: "Find, install and publish Kubernetes packages"
+  version: 0.6.0
 servers:
-  - url: 'https://artifacthub.io/api/v1'
+  - url: "https://artifacthub.io/api/v1"
     description: Main production server
-  - url: 'https://staging.artifacthub.io/api/v1'
+  - url: "https://staging.artifacthub.io/api/v1"
     description: Staging server for testing
-  - url: 'http://localhost:8000/api/v1'
+  - url: "http://localhost:8000/api/v1"
     description: Local server for development
 tags:
   - name: Users
-    description: ''
+    description: ""
   - name: Organizations
-    description: ''
+    description: ""
   - name: Repositories
-    description: ''
+    description: ""
   - name: Packages
-    description: ''
+    description: ""
   - name: Subscriptions
-    description: ''
+    description: ""
   - name: Webhooks
-    description: ''
+    description: ""
   - name: Availability checks
-    description: ''
+    description: ""
 paths:
   /users:
     post:
@@ -32,7 +32,7 @@ paths:
         - Users
       summary: Register a new user
       requestBody:
-        description: ''
+        description: ""
         required: true
         content:
           application/json:
@@ -61,14 +61,14 @@ paths:
                 - email
                 - password
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /users/verify-email:
     post:
       tags:
@@ -86,18 +86,18 @@ paths:
                   type: string
                   format: uuid
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '410':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "410":
           description: The code provided has expired
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /users/profile:
     get:
       tags:
@@ -107,18 +107,18 @@ paths:
         - CookieAuth: []
       summary: Get user's profile
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Users
@@ -126,22 +126,22 @@ paths:
         - ApiKeyAuth: []
       summary: Update user's profile
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /users/password:
     put:
       tags:
@@ -151,7 +151,7 @@ paths:
         - CookieAuth: []
       summary: Update user's password
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
@@ -170,16 +170,16 @@ paths:
                 old: oldPass
                 new: newPass
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /orgs:
     post:
       tags:
@@ -189,23 +189,23 @@ paths:
         - CookieAuth: []
       summary: Register new organization
       requestBody:
-        description: ''
+        description: ""
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationSummary'
+              $ref: "#/components/schemas/OrganizationSummary"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /orgs/user:
     get:
       tags:
@@ -215,38 +215,38 @@ paths:
         - CookieAuth: []
       summary: Get organizations the user belongs to
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Organization'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}':
+                  $ref: "#/components/schemas/Organization"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}":
     get:
       tags:
         - Organizations
       summary: Get organization profile
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganizationSummary'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/OrganizationSummary"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Organizations
@@ -255,28 +255,28 @@ paths:
         - CookieAuth: []
       summary: Updates organization profile
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       requestBody:
-        description: ''
+        description: ""
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrganizationSummary'
+              $ref: "#/components/schemas/OrganizationSummary"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}/authorizationPolicy':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/authorizationPolicy":
     get:
       tags:
         - Organizations
@@ -285,22 +285,22 @@ paths:
         - CookieAuth: []
       summary: Get organization's authorization policy
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthorizationPolicy'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/AuthorizationPolicy"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Organizations
@@ -309,28 +309,28 @@ paths:
         - CookieAuth: []
       summary: Update organization's authorization policy
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       requestBody:
-        description: ''
+        description: ""
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthorizationPolicy'
+              $ref: "#/components/schemas/AuthorizationPolicy"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}/members':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/members":
     get:
       tags:
         - Organizations
@@ -339,25 +339,25 @@ paths:
         - CookieAuth: []
       summary: Get organization members
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Member'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}/member/{userAlias}':
+                  $ref: "#/components/schemas/Member"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/member/{userAlias}":
     post:
       tags:
         - Organizations
@@ -366,19 +366,19 @@ paths:
         - CookieAuth: []
       summary: Add a new member to the organization
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/UserAliasParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/UserAliasParam"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "201":
+          $ref: "#/components/responses/Created"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Organizations
@@ -387,20 +387,20 @@ paths:
         - CookieAuth: []
       summary: Delete a member from the organization
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/UserAliasParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/UserAliasParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}/accept-invitation':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/accept-invitation":
     get:
       tags:
         - Organizations
@@ -409,17 +409,17 @@ paths:
         - CookieAuth: []
       summary: Confirm user's membership to an organization
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/orgs/{orgName}/userAllowedActions':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/orgs/{orgName}/userAllowedActions":
     get:
       tags:
         - Organizations
@@ -430,24 +430,24 @@ paths:
         Get actions which user is allowed to perform in the provided
         organization
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AuthorizerAction'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/AuthorizerAction"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /repositories:
     get:
       tags:
@@ -457,21 +457,21 @@ paths:
         - CookieAuth: []
       summary: Get all repositories
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryData'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/{^helm$|^falco$|^opa$|^olm$}':
+                  $ref: "#/components/schemas/RepositoryData"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/{^helm$|^falco$|^opa$|^olm$}":
     get:
       tags:
         - Repositories
@@ -480,22 +480,22 @@ paths:
         - CookieAuth: []
       summary: Get all available repositories of the provided kind
       parameters:
-        - $ref: '#/components/parameters/RepoKindParam'
+        - $ref: "#/components/parameters/RepoKindParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RepositoryData'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/RepositoryData"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /repositories/user:
     get:
       tags:
@@ -505,20 +505,20 @@ paths:
         - CookieAuth: []
       summary: Get user's repositories
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Repository'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/Repository"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Repositories
@@ -527,23 +527,23 @@ paths:
         - CookieAuth: []
       summary: Add user's repository
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RepositorySummary'
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/user/{repoName}':
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/user/{repoName}":
     put:
       tags:
         - Repositories
@@ -552,26 +552,26 @@ paths:
         - CookieAuth: []
       summary: Update user's repository
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RepositorySummary'
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Repositories
@@ -580,19 +580,19 @@ paths:
         - CookieAuth: []
       summary: Delete user's repository
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/user/{repoName}/transfer':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/user/{repoName}/transfer":
     put:
       tags:
         - Repositories
@@ -601,20 +601,20 @@ paths:
         - CookieAuth: []
       summary: Transfer user's repository ownership to an organization
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/OrgNameToTransferParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/user/{repoName}/claimOwnership':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/user/{repoName}/claimOwnership":
     put:
       tags:
         - Repositories
@@ -623,20 +623,20 @@ paths:
         - CookieAuth: []
       summary: Claim the ownership of a given repository
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/OrgNameToTransferParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/org/{orgName}':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/org/{orgName}":
     get:
       tags:
         - Repositories
@@ -645,22 +645,22 @@ paths:
         - CookieAuth: []
       summary: Get organization's repositories
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Repository'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/Repository"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Repositories
@@ -669,27 +669,27 @@ paths:
         - CookieAuth: []
       summary: Add organization's repository
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       requestBody:
-        description: ''
+        description: ""
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RepositorySummary'
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/org/{orgName}/{repoName}':
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/org/{orgName}/{repoName}":
     put:
       tags:
         - Repositories
@@ -698,27 +698,27 @@ paths:
         - CookieAuth: []
       summary: Update organization's repository
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/RepoNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
       requestBody:
         description: Repository
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RepositorySummary'
+              $ref: "#/components/schemas/RepositorySummary"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Repositories
@@ -727,20 +727,20 @@ paths:
         - CookieAuth: []
       summary: Delete organization's repository
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/RepoNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/org/{orgName}/{repoName}/transfer':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/org/{orgName}/{repoName}/transfer":
     put:
       tags:
         - Repositories
@@ -749,21 +749,21 @@ paths:
         - CookieAuth: []
       summary: Transfer organization's repository to a different owner
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/OrgNameToTransferParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/repositories/org/{orgName}/{repoName}/claimOwnership':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/repositories/org/{orgName}/{repoName}/claimOwnership":
     put:
       tags:
         - Repositories
@@ -772,28 +772,28 @@ paths:
         - CookieAuth: []
       summary: Claim the ownership of a given repository
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/OrgNameToTransferParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/OrgNameToTransferParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /packages/stats:
     get:
       tags:
         - Packages
       summary: Get the number of packages and releases registered
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -803,50 +803,50 @@ paths:
                     type: integer
                   releases:
                     type: integer
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /packages/random:
     get:
       tags:
         - Packages
       summary: Get some random packages
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PackageSummary'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/PackageSummary"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /packages/search:
     get:
       tags:
         - Packages
       summary: Search packages that meet the provided criteria
       parameters:
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
-        - $ref: '#/components/parameters/FacetsParam'
-        - $ref: '#/components/parameters/TsQueryWebParam'
-        - $ref: '#/components/parameters/TsQueryParam'
-        - $ref: '#/components/parameters/RepositoryKindsListParam'
-        - $ref: '#/components/parameters/UsersListParam'
-        - $ref: '#/components/parameters/OrgsListParam'
-        - $ref: '#/components/parameters/RepositoriesListParam'
-        - $ref: '#/components/parameters/DeprecatedParam'
-        - $ref: '#/components/parameters/OperatorsParam'
-        - $ref: '#/components/parameters/VerifiedPublisherParam'
-        - $ref: '#/components/parameters/OfficialParam'
+        - $ref: "#/components/parameters/OffsetParam"
+        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/FacetsParam"
+        - $ref: "#/components/parameters/TsQueryWebParam"
+        - $ref: "#/components/parameters/TsQueryParam"
+        - $ref: "#/components/parameters/RepositoryKindsListParam"
+        - $ref: "#/components/parameters/UsersListParam"
+        - $ref: "#/components/parameters/OrgsListParam"
+        - $ref: "#/components/parameters/RepositoriesListParam"
+        - $ref: "#/components/parameters/DeprecatedParam"
+        - $ref: "#/components/parameters/OperatorsParam"
+        - $ref: "#/components/parameters/VerifiedPublisherParam"
+        - $ref: "#/components/parameters/OfficialParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -858,12 +858,12 @@ paths:
                       packages:
                         type: array
                         items:
-                          $ref: '#/components/schemas/PackageSummary'
+                          $ref: "#/components/schemas/PackageSummary"
                       facets:
                         nullable: true
                         type: array
                         items:
-                          $ref: '#/components/schemas/Facets'
+                          $ref: "#/components/schemas/Facets"
                   metadata:
                     type: object
                     properties:
@@ -893,7 +893,7 @@ paths:
                           deprecated: false
                           signed: null
                           repository:
-                            url: 'http://url.com'
+                            url: "http://url.com"
                             kind: 0
                             name: artifact-hub
                             display_name: Artifact Hub
@@ -915,7 +915,7 @@ paths:
                           deprecated: false
                           signed: null
                           repository:
-                            url: 'http://url.com'
+                            url: "http://url.com"
                             kind: 0
                             name: incubator
                             display_name: Incubator
@@ -937,7 +937,7 @@ paths:
                           deprecated: false
                           signed: null
                           repository:
-                            url: 'http://url.com'
+                            url: "http://url.com"
                             kind: 0
                             name: stable
                             display_name: Stable
@@ -979,12 +979,12 @@ paths:
                       limit: 15
                       offset: 3
                       total: 54
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /packages/starred:
     get:
       tags:
@@ -994,202 +994,202 @@ paths:
         - CookieAuth: []
       summary: Get packages starred by user
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PackageSummary'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/helm/{repoName}/{packageName}':
+                  $ref: "#/components/schemas/PackageSummary"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/helm/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HelmPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/falco/{repoName}/{packageName}':
+                $ref: "#/components/schemas/HelmPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/falco/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FalcoPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/opa/{repoName}/{packageName}':
+                $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OPAPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/olm/{repoName}/{packageName}':
+                $ref: "#/components/schemas/OPAPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/olm/{repoName}/{packageName}":
     get:
       tags:
         - Packages
       summary: Get package details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OLMPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/helm/{repoName}/{packageName}/{version}':
+                $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/helm/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
-        - $ref: '#/components/parameters/VersionParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HelmPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/falco/{repoName}/{packageName}/{version}':
+                $ref: "#/components/schemas/HelmPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/falco/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
-        - $ref: '#/components/parameters/VersionParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FalcoPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/opa/{repoName}/{packageName}/{version}':
+                $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/opa/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
-        - $ref: '#/components/parameters/VersionParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OPAPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/olm/{repoName}/{packageName}/{version}':
+                $ref: "#/components/schemas/OPAPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/olm/{repoName}/{packageName}/{version}":
     get:
       tags:
         - Packages
       summary: Get package version details
       parameters:
-        - $ref: '#/components/parameters/RepoNameParam'
-        - $ref: '#/components/parameters/PackageNameParam'
-        - $ref: '#/components/parameters/VersionParam'
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OLMPackage'
-        '404':
-          $ref: '#/components/responses/NotFoundResponse'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/packages/{packageID}/stars':
+                $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/stars":
     get:
       tags:
         - Packages
       summary: Get package stars
       parameters:
-        - $ref: '#/components/parameters/PackageIDParam'
+        - $ref: "#/components/parameters/PackageIDParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1199,10 +1199,10 @@ paths:
                     type: integer
                   starred_by_user:
                     type: boolean
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Packages
@@ -1211,16 +1211,16 @@ paths:
         - CookieAuth: []
       summary: Toggle package's star
       parameters:
-        - $ref: '#/components/parameters/PackageIDParam'
+        - $ref: "#/components/parameters/PackageIDParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /subscriptions:
     get:
       tags:
@@ -1230,8 +1230,8 @@ paths:
         - CookieAuth: []
       summary: Get user's subscriptions
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1256,7 +1256,7 @@ paths:
                       type: object
                       properties:
                         kind:
-                          $ref: '#/components/schemas/RepositoryKind'
+                          $ref: "#/components/schemas/RepositoryKind"
                         name:
                           type: string
                           example: repo1
@@ -1275,13 +1275,13 @@ paths:
                     event_kinds:
                       type: array
                       items:
-                        $ref: '#/components/schemas/EventKindId'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                        $ref: "#/components/schemas/EventKindId"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Subscriptions
@@ -1290,16 +1290,16 @@ paths:
         - CookieAuth: []
       summary: Add subscription
       requestBody:
-        $ref: '#/components/requestBodies/SubscriptionBody'
+        $ref: "#/components/requestBodies/SubscriptionBody"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Subscriptions
@@ -1308,18 +1308,18 @@ paths:
         - CookieAuth: []
       summary: Delete subscription
       parameters:
-        - $ref: '#/components/parameters/PackageIDParam'
-        - $ref: '#/components/parameters/EventKindParam'
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/EventKindParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/subscriptions/{packageID}':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/subscriptions/{packageID}":
     get:
       tags:
         - Subscriptions
@@ -1328,10 +1328,10 @@ paths:
         - CookieAuth: []
       summary: Get user's subscriptions for the given package
       parameters:
-        - $ref: '#/components/parameters/PackageIDParam'
+        - $ref: "#/components/parameters/PackageIDParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1340,13 +1340,13 @@ paths:
                   type: object
                   properties:
                     event_kind:
-                      $ref: '#/components/schemas/EventKindId'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                      $ref: "#/components/schemas/EventKindId"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /subscriptions/opt-out:
     get:
       tags:
@@ -1356,8 +1356,8 @@ paths:
         - CookieAuth: []
       summary: Get user's opt-out entries
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -1375,7 +1375,7 @@ paths:
                           type: string
                           format: uuid
                         kind:
-                          $ref: '#/components/schemas/RepositoryKind'
+                          $ref: "#/components/schemas/RepositoryKind"
                         name:
                           type: string
                           example: repo1
@@ -1392,14 +1392,14 @@ paths:
                           type: string
                           example: Organization 1
                     event_kind:
-                      $ref: '#/components/schemas/EventKindId'
+                      $ref: "#/components/schemas/EventKindId"
                       example: 2
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Subscriptions
@@ -1408,17 +1408,17 @@ paths:
         - CookieAuth: []
       summary: Add opt-out entry
       requestBody:
-        $ref: '#/components/requestBodies/OptOutBody'
+        $ref: "#/components/requestBodies/OptOutBody"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/subscriptions/opt-out/{optOutID}':
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/subscriptions/opt-out/{optOutID}":
     delete:
       tags:
         - Subscriptions
@@ -1427,16 +1427,16 @@ paths:
         - CookieAuth: []
       summary: Delete opt-out entry
       parameters:
-        - $ref: '#/components/parameters/OptOutIDParam'
+        - $ref: "#/components/parameters/OptOutIDParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /webhooks/user:
     get:
       tags:
@@ -1446,20 +1446,20 @@ paths:
         - CookieAuth: []
       summary: Get user's webhooks
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Webhook'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Webhooks
@@ -1468,19 +1468,19 @@ paths:
         - CookieAuth: []
       summary: Add user's webhook
       requestBody:
-        $ref: '#/components/requestBodies/WebhookBody'
+        $ref: "#/components/requestBodies/WebhookBody"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/webhooks/user/{webhookID}':
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/user/{webhookID}":
     get:
       tags:
         - Webhooks
@@ -1489,20 +1489,20 @@ paths:
         - CookieAuth: []
       summary: Get user's webhook
       parameters:
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/WebhookIDParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Webhooks
@@ -1511,20 +1511,20 @@ paths:
         - CookieAuth: []
       summary: Update user's webhook
       parameters:
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/WebhookIDParam"
       requestBody:
-        $ref: '#/components/requestBodies/WebhookBody'
+        $ref: "#/components/requestBodies/WebhookBody"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Webhooks
@@ -1533,17 +1533,17 @@ paths:
         - CookieAuth: []
       summary: Delete user's webhook
       parameters:
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/WebhookIDParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/webhooks/org/{orgName}':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/org/{orgName}":
     get:
       tags:
         - Webhooks
@@ -1552,22 +1552,22 @@ paths:
         - CookieAuth: []
       summary: Get organization's webhooks
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Webhook'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                  $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     post:
       tags:
         - Webhooks
@@ -1576,23 +1576,23 @@ paths:
         - CookieAuth: []
       summary: Add organization's webhook
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
+        - $ref: "#/components/parameters/OrgNameParam"
       requestBody:
-        $ref: '#/components/requestBodies/WebhookBody'
+        $ref: "#/components/requestBodies/WebhookBody"
       responses:
-        '201':
-          $ref: '#/components/responses/Created'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/webhooks/org/{orgName}/{webhookID}':
+        "201":
+          $ref: "#/components/responses/Created"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/webhooks/org/{orgName}/{webhookID}":
     get:
       tags:
         - Webhooks
@@ -1601,23 +1601,23 @@ paths:
         - CookieAuth: []
       summary: Get organization's webhook
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/Webhook"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     put:
       tags:
         - Webhooks
@@ -1626,23 +1626,23 @@ paths:
         - CookieAuth: []
       summary: Update organization's webhook
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
       requestBody:
-        $ref: '#/components/requestBodies/WebhookBody'
+        $ref: "#/components/requestBodies/WebhookBody"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
     delete:
       tags:
         - Webhooks
@@ -1651,19 +1651,19 @@ paths:
         - CookieAuth: []
       summary: Delete organization's webhook
       parameters:
-        - $ref: '#/components/parameters/OrgNameParam'
-        - $ref: '#/components/parameters/WebhookIDParam'
+        - $ref: "#/components/parameters/OrgNameParam"
+        - $ref: "#/components/parameters/WebhookIDParam"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /webhooks/test:
     post:
       tags:
@@ -1676,25 +1676,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebhookTest'
+              $ref: "#/components/schemas/WebhookTest"
       responses:
-        '204':
-          $ref: '#/components/responses/NoContent'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/check-availability/{resourceKind}':
+        "204":
+          $ref: "#/components/responses/NoContent"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/check-availability/{resourceKind}":
     head:
       tags:
         - Availability checks
       summary: Check the availability of a given value for the provided resource kind
       parameters:
-        - $ref: '#/components/parameters/ResourceKindNameParam'
+        - $ref: "#/components/parameters/ResourceKindNameParam"
         - in: query
           name: v
           schema:
@@ -1702,14 +1702,14 @@ paths:
           required: true
           description: Value to check
       responses:
-        '204':
-          description: 'Found, the value is not available'
-        '404':
-          description: 'Not found, the value is available'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "204":
+          description: "Found, the value is not available"
+        "404":
+          description: "Not found, the value is available"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1861,7 +1861,7 @@ components:
             total: 1
     FalcoPackage:
       allOf:
-        - $ref: '#/components/schemas/Package'
+        - $ref: "#/components/schemas/Package"
         - type: object
           properties:
             data:
@@ -1877,7 +1877,7 @@ components:
                         condition: (evt.num < 0)
     HelmPackage:
       allOf:
-        - $ref: '#/components/schemas/Package'
+        - $ref: "#/components/schemas/Package"
         - type: object
           properties:
             data:
@@ -1894,14 +1894,14 @@ components:
                       example: 1.6.4
                     repository:
                       type: string
-                      example: 'http://repo.url'
+                      example: "http://repo.url"
     Link:
       type: object
       properties:
         url:
           type: string
           format: uri
-          example: 'http://url'
+          example: "http://url"
         name:
           type: string
           example: link
@@ -1936,7 +1936,7 @@ components:
           example: true
     OLMPackage:
       allOf:
-        - $ref: '#/components/schemas/Package'
+        - $ref: "#/components/schemas/Package"
         - type: object
           properties:
             data:
@@ -1983,7 +1983,7 @@ components:
                     }}]
     OPAPackage:
       allOf:
-        - $ref: '#/components/schemas/Package'
+        - $ref: "#/components/schemas/Package"
         - type: object
           properties:
             data:
@@ -1999,7 +1999,7 @@ components:
                           condition: (evt.num < 0)
     Package:
       allOf:
-        - $ref: '#/components/schemas/PackageSummary'
+        - $ref: "#/components/schemas/PackageSummary"
         - type: object
           properties:
             signed:
@@ -2012,7 +2012,7 @@ components:
                   type: string
                   format: uuid
                 kind:
-                  $ref: '#/components/schemas/RepositoryKind'
+                  $ref: "#/components/schemas/RepositoryKind"
                 name:
                   type: string
                   nullable: false
@@ -2024,7 +2024,7 @@ components:
                   type: string
                   nullable: false
                   format: uri
-                  example: 'http://repo-url'
+                  example: "http://repo-url"
                 user_alias:
                   type: string
                   example: jdoe
@@ -2046,7 +2046,7 @@ components:
             logo_url:
               type: string
               format: uri
-              example: 'http://logo'
+              example: "http://logo"
             keywords:
               type: array
               items:
@@ -2059,15 +2059,15 @@ components:
               type: string
               format: uri
               nullable: true
-              example: 'http://home'
+              example: "http://home"
             readme:
               type: string
               nullable: true
-              example: '###Readme'
+              example: "###Readme"
             links:
               type: array
               items:
-                $ref: '#/components/schemas/Link'
+                $ref: "#/components/schemas/Link"
               nullable: true
             available_versions:
               type: array
@@ -2088,7 +2088,7 @@ components:
             maintainers:
               type: array
               items:
-                $ref: '#/components/schemas/Maintainer'
+                $ref: "#/components/schemas/Maintainer"
               nullable: true
             defaultChannel:
               type: string
@@ -2113,7 +2113,7 @@ components:
             containerImage:
               type: string
               nullable: true
-              example: 'url.io/name/operator:v0.2.0'
+              example: "url.io/name/operator:v0.2.0"
             created_at:
               type: integer
               example: 1552082346
@@ -2158,11 +2158,11 @@ components:
         created_at:
           type: integer
         repository:
-          $ref: '#/components/schemas/RepositoryData'
+          $ref: "#/components/schemas/RepositoryData"
           nullable: false
     Repository:
       allOf:
-        - $ref: '#/components/schemas/RepositorySummary'
+        - $ref: "#/components/schemas/RepositorySummary"
         - type: object
           properties:
             repository_id:
@@ -2214,7 +2214,7 @@ components:
           type: string
           format: uri
           nullable: false
-          example: 'http://repourl'
+          example: "http://repourl"
         verified_publisher:
           type: boolean
         official:
@@ -2238,9 +2238,9 @@ components:
           type: string
           nullable: false
           format: uri
-          example: 'http://repo-url'
+          example: "http://repo-url"
         kind:
-          $ref: '#/components/schemas/RepositoryKind'
+          $ref: "#/components/schemas/RepositoryKind"
         name:
           type: string
           nullable: false
@@ -2263,7 +2263,7 @@ components:
           type: boolean
     Organization:
       allOf:
-        - $ref: '#/components/schemas/OrganizationSummary'
+        - $ref: "#/components/schemas/OrganizationSummary"
         - type: object
           properties:
             members_count:
@@ -2299,7 +2299,7 @@ components:
         home_url:
           type: string
           format: uri
-          example: 'http://url'
+          example: "http://url"
         logo_image_id:
           type: string
           example: 12345abcde
@@ -2331,20 +2331,20 @@ components:
         - email
     Webhook:
       allOf:
-        - $ref: '#/components/schemas/WebhookSummary'
+        - $ref: "#/components/schemas/WebhookSummary"
         - type: object
           properties:
             packages:
               type: array
               items:
-                $ref: '#/components/schemas/PackageSummary'
+                $ref: "#/components/schemas/PackageSummary"
             webhook_id:
               type: string
               format: uuid
             last_notifications:
               type: array
               items:
-                $ref: '#/components/schemas/WebhookNotification'
+                $ref: "#/components/schemas/WebhookNotification"
     WebhookNotification:
       type: object
       properties:
@@ -2375,7 +2375,7 @@ components:
           type: string
           format: uri
           nullable: false
-          example: 'http://url'
+          example: "http://url"
         secret:
           type: string
           example: 123abc
@@ -2393,10 +2393,10 @@ components:
         event_kinds:
           type: array
           items:
-            $ref: '#/components/schemas/EventKindId'
+            $ref: "#/components/schemas/EventKindId"
     WebhookSummaryWithPackages:
       allOf:
-        - $ref: '#/components/schemas/WebhookSummary'
+        - $ref: "#/components/schemas/WebhookSummary"
         - type: object
           properties:
             packages:
@@ -2420,7 +2420,7 @@ components:
           type: string
           format: uri
           nullable: false
-          example: 'http://url'
+          example: "http://url"
         content_type:
           type: string
           example: application/json
@@ -2432,7 +2432,7 @@ components:
         event_kinds:
           type: array
           items:
-            $ref: '#/components/schemas/EventKindId'
+            $ref: "#/components/schemas/EventKindId"
           example:
             - 0
       required:
@@ -2485,7 +2485,7 @@ components:
       name: event_kind
       required: true
       schema:
-        $ref: '#/components/schemas/EventKindId'
+        $ref: "#/components/schemas/EventKindId"
       description: Event kind
     FacetsParam:
       in: query
@@ -2563,7 +2563,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/RepositoryKind'
+          $ref: "#/components/schemas/RepositoryKind"
       required: false
       description: |
         Repository kind:
@@ -2583,7 +2583,7 @@ components:
       in: path
       name: ^helm$|^falco$|^opa$|^olm$
       schema:
-        $ref: '#/components/schemas/RepositoryKindParam'
+        $ref: "#/components/schemas/RepositoryKindParam"
       required: true
       description: Package kind name
     RepoNameParam:
@@ -2598,7 +2598,7 @@ components:
       in: path
       name: resourceKind
       schema:
-        $ref: '#/components/schemas/ResourceKindName'
+        $ref: "#/components/schemas/ResourceKindName"
       required: true
       description: Resource kind name
     TsQueryWebParam:
@@ -2663,7 +2663,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     Created:
       description: The request has succeeded and has led to the creation of a resource
     Forbidden:
@@ -2671,7 +2671,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     InternalServerError:
       description: >-
         The server encountered an unexpected condition that prevented it from
@@ -2679,15 +2679,15 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     NoContent:
-      description: 'The request has succeeded, no content returned'
+      description: "The request has succeeded, no content returned"
     NotFoundResponse:
       description: The requested resource was not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
     TooManyRequests:
       description: The user has sent too many requests in a given amount of time
     UnauthorizedError:
@@ -2695,7 +2695,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: "#/components/schemas/Error"
   requestBodies:
     SubscriptionBody:
       description: Subscription request body
@@ -2709,7 +2709,7 @@ components:
                 type: string
                 format: uuid
               event_kind:
-                $ref: '#/components/schemas/EventKindId'
+                $ref: "#/components/schemas/EventKindId"
             required:
               - package_id
               - event_kind
@@ -2725,7 +2725,7 @@ components:
                 type: string
                 format: uuid
               event_kind:
-                $ref: '#/components/schemas/EventKindId'
+                $ref: "#/components/schemas/EventKindId"
                 example: 2
             required:
               - repository_id
@@ -2736,4 +2736,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebhookSummaryWithPackages'
+            $ref: "#/components/schemas/WebhookSummaryWithPackages"
