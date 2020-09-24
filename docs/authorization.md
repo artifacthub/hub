@@ -94,7 +94,7 @@ Users are identified by their aliases. Organizations can get their members' alia
 
 Organizations can also define their own authorization policies. This will give them complete flexibility for their authorization setup, including the ability to define their own data file with a custom structure.
 
-Custom policies *must* be able to process the [queries](#queries) defined in the reference section. The input they will receive is also documented below.
+Custom policies *must* be able to process the [queries](#queries) defined in the reference section. The input they will receive is also documented below. Policy data file must be a valid json document and the top level value *must* be an object.
 
 ## Integration
 
