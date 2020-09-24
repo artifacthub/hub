@@ -1,11 +1,16 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(7);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set user2ID '00000000-0000-0000-0000-000000000002'
 \set org1ID '00000000-0000-0000-0000-000000000001'
+\set org2ID '00000000-0000-0000-0000-000000000002'
+\set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
+\set optOut1ID '00000000-0000-0000-0000-000000000001'
+\set optOut2ID '00000000-0000-0000-0000-000000000002'
 
 -- Seed some users and an organization
 insert into "user" (user_id, alias, first_name, last_name, email)
@@ -14,8 +19,19 @@ insert into "user" (user_id, alias, first_name, last_name, email)
 values (:'user2ID', 'user2', 'firstname2', 'lastname2', 'user2@email.com');
 insert into organization (organization_id, name, display_name, description, home_url)
 values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com');
+insert into organization (organization_id, name, display_name, description, home_url)
+values (:'org2ID', 'org2', 'Organization 2', 'Description 2', 'https://org2.com');
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
 insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org1ID', true);
+insert into user__organization (user_id, organization_id, confirmed) values(:'user2ID', :'org2ID', true);
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'org1ID');
+insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org2ID');
+insert into opt_out (opt_out_id, user_id, repository_id, event_kind_id)
+values (:'optOut1ID', :'user2ID', :'repo1ID', 1);
+insert into opt_out (opt_out_id, user_id, repository_id, event_kind_id)
+values (:'optOut2ID', :'user2ID', :'repo2ID', 1);
 
 -- Users and organization have been seeded
 select results_eq(
@@ -31,6 +47,15 @@ select results_eq(
     $$,
     'User1 and user2 should belong to organization1'
 );
+select isnt_empty(
+    $$
+        select *
+        from opt_out
+        where user_id = '00000000-0000-0000-0000-000000000002'
+        and repository_id = '00000000-0000-0000-0000-000000000001'
+    $$,
+    'User2 should have one opt-out entry for repo1'
+);
 
 -- Delete organization member and check it succeeded
 select delete_organization_member(:'user1ID', 'org1', 'user2');
@@ -44,6 +69,24 @@ select results_eq(
         values ('00000000-0000-0000-0000-000000000001'::uuid)
     $$,
     'User2 should not belong to organization1 anymore'
+);
+select is_empty(
+    $$
+        select *
+        from opt_out
+        where user_id = '00000000-0000-0000-0000-000000000002'
+        and repository_id = '00000000-0000-0000-0000-000000000001'
+    $$,
+    'User2 should not have any opt-out entries for repo1'
+);
+select isnt_empty(
+    $$
+        select *
+        from opt_out
+        where user_id = '00000000-0000-0000-0000-000000000002'
+        and repository_id = '00000000-0000-0000-0000-000000000002'
+    $$,
+    'User2 should have one opt-out entry for repo2'
 );
 
 -- Try again using a user not belonging to the organization
