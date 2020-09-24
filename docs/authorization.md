@@ -19,19 +19,6 @@ When an organization enables authorization using predefined policies, they'll be
 ```rego
 package artifacthub.authz
 
-# By default, deny requests
-default allow = false
-
-# Allow the action if the user is allowed to perform it
-allow {
-    # Allow if user's role is owner
-    data.roles.owner.users[_] == input.user
-}
-allow {
-    # Allow if user's role is allowed to perform this action
-    allowed_actions[_] == input.action
-}
-
 # Get user allowed actions
 allowed_actions[action] {
     # Owner can perform all actions
@@ -88,13 +75,11 @@ Organizations can define their own roles in this data file. They can define as m
 
 Users are identified by their aliases. Organizations can get their members' aliases from the members tab in the control panel. Actions available can be found below in the [reference section](#actions).
 
-**IMPORTANT NOTE**: *it's strongly advised to keep the `owners` role and assign it at least to a user. When defining a policy data file, it's possible to get locked out. Defining an owner will leave an open door that can be of help fixing any potential issue with your organization's authorization setup.*
-
 ## Using custom policies
 
 Organizations can also define their own authorization policies. This will give them complete flexibility for their authorization setup, including the ability to define their own data file with a custom structure.
 
-Custom policies *must* be able to process the [queries](#queries) defined in the reference section. The input they will receive is also documented below. Policy data file must be a valid json document and the top level value *must* be an object.
+Custom policies **must** be able to process the [queries](#queries) defined in the reference section. The input they will receive is also documented below. Policy data file must be a valid json document and the top level value **must** be an object.
 
 ## Integration
 
@@ -120,18 +105,7 @@ In addition to the actions just listed, there is a special one named `all` that 
 
 ### Queries
 
-Artifact Hub may perform two kinds of queries to the authorization policy: one to check if a user is allowed to perform a given action and another one to get all the actions a given user is allowed to perform. Predefined queries are already prepared to do this, but when using custom policies it's important that they are able to process these queries as well.
-
-- **data.artifacthub.authz.allow**
-
-This is the query used to check if a user can perform the provided actions. It's expected to return a *boolean*. The input used will be:
-
-```json
-{
-    "user": "userAlias",
-    "action": "addOrganizationMember"
-}
-```
+When users try to perform certain actions in the control panel, Artifact Hub will query the organizations authorization policy to check if they should be allowed or not. Predefined authorization policies are already prepared to process the required query, but when using custom policies it's important that they are able to handle it as well. At the moment, the only query your authorization policy will receive is `data.artifacthub.authz.allowed_actions`.
 
 - **data.artifacthub.authz.allowed_actions**
 

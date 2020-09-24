@@ -20,10 +20,6 @@ import (
 )
 
 const (
-	// AllowQuery represents the authorization's policy query used to check if
-	// a user is allowed to perform a given action.
-	AllowQuery = "data.artifacthub.authz.allow"
-
 	// AllowedActionsQuery represents the authorization's policy query used to
 	// get the actions a given user is allowed to perform.
 	AllowedActionsQuery = "data.artifacthub.authz.allowed_actions"
@@ -36,9 +32,6 @@ const (
 )
 
 var (
-	// AllowQueryRef represents a reference to AllowQuery.
-	AllowQueryRef = ast.MustParseRef(AllowQuery)
-
 	// AllowedActionsQueryRef represents a reference to AllowedActionsQuery.
 	AllowedActionsQueryRef = ast.MustParseRef(AllowedActionsQuery)
 
@@ -57,7 +50,6 @@ type Authorizer struct {
 	logger zerolog.Logger
 
 	mu                    sync.RWMutex
-	allowQueries          map[string]rego.PreparedEvalQuery
 	allowedActionsQueries map[string]rego.PreparedEvalQuery
 }
 
@@ -66,7 +58,6 @@ func NewAuthorizer(db hub.DB) (*Authorizer, error) {
 	a := &Authorizer{
 		db:                    db,
 		logger:                log.With().Str("svc", "authorizer").Logger(),
-		allowQueries:          make(map[string]rego.PreparedEvalQuery),
 		allowedActionsQueries: make(map[string]rego.PreparedEvalQuery),
 	}
 
@@ -98,7 +89,6 @@ func (a *Authorizer) preparePoliciesQueries() error {
 	}
 
 	// Prepare authorization policies queries
-	allowQueries := make(map[string]rego.PreparedEvalQuery)
 	allowedActionsQueries := make(map[string]rego.PreparedEvalQuery)
 	for organizationName, policy := range policies {
 		if !policy.AuthorizationEnabled {
@@ -109,14 +99,6 @@ func (a *Authorizer) preparePoliciesQueries() error {
 			rules = predefinedPolicies[policy.PredefinedPolicy]
 		} else {
 			rules = policy.CustomPolicy
-		}
-		allowPreparedEvalQuery, err := rego.New(
-			rego.Query(AllowQuery),
-			rego.Module(fmt.Sprintf("%s.rego", organizationName), rules),
-			rego.Store(inmem.NewFromReader(bytes.NewBuffer(policy.PolicyData))),
-		).PrepareForEval(context.Background())
-		if err == nil {
-			allowQueries[organizationName] = allowPreparedEvalQuery
 		}
 		allowedActionsPreparedEvalQuery, err := rego.New(
 			rego.Query(AllowedActionsQuery),
@@ -129,7 +111,6 @@ func (a *Authorizer) preparePoliciesQueries() error {
 	}
 
 	a.mu.Lock()
-	a.allowQueries = allowQueries
 	a.allowedActionsQueries = allowedActionsQueries
 	a.mu.Unlock()
 
@@ -166,41 +147,17 @@ func (a *Authorizer) listenForPoliciesUpdates() {
 }
 
 // Authorize allows or denies if an action can be performed based on the input
-// provided and the organization authorization policy.
+// provided and the organization authorization policy. It queries the policy
+// for all the actions the user is allowed to perform and checks if the action
+// provided in the input is in that list.
 func (a *Authorizer) Authorize(ctx context.Context, input *hub.AuthorizeInput) error {
-	// Get authorization policy allow query
-	a.mu.RLock()
-	query, ok := a.allowQueries[input.OrganizationName]
-	if !ok {
-		// If the organization hasn't defined an authorization policy yet, we
-		// fall back to only enforcing the basic organization permissions based
-		// on membership (all organization members can perform all operations)
-		a.mu.RUnlock()
-		return nil
-	}
-	a.mu.RUnlock()
-
-	// Get user alias to provide it to the query as input
-	userAlias, err := a.getUserAlias(ctx, input.UserID)
+	allowedActions, err := a.GetAllowedActions(ctx, input.UserID, input.OrganizationName)
 	if err != nil {
-		return fmt.Errorf("%w: error getting user alias: %s", hub.ErrInsufficientPrivilege, err.Error())
+		return fmt.Errorf("%w: error getting allowed actions: %s", hub.ErrInsufficientPrivilege, err.Error())
 	}
-
-	// Evaluate authorization policy allow query
-	queryInput := map[string]interface{}{
-		"user":   userAlias,
-		"action": input.Action,
-	}
-	results, err := query.Eval(ctx, rego.EvalInput(queryInput))
-	if err != nil {
-		return fmt.Errorf("%w: error evaluating query %s", hub.ErrInsufficientPrivilege, err.Error())
-	} else if len(results) != 1 || len(results[0].Expressions) != 1 {
+	if !IsActionAllowed(allowedActions, input.Action) {
 		return hub.ErrInsufficientPrivilege
 	}
-	if v, ok := results[0].Expressions[0].Value.(bool); !ok || !v {
-		return hub.ErrInsufficientPrivilege
-	}
-
 	return nil
 }
 
@@ -212,8 +169,9 @@ func (a *Authorizer) GetAllowedActions(ctx context.Context, userID, orgName stri
 	a.mu.RLock()
 	query, ok := a.allowedActionsQueries[orgName]
 	if !ok {
-		// If the organization hasn't defined an authorization policy yet, user
-		// is allowed to perform all actions available.
+		// If the organization hasn't defined an authorization policy yet, the
+		// user is allowed to perform all actions available in the organizations
+		// he belongs to.
 		a.mu.RUnlock()
 		return []hub.Action{"all"}, nil
 	}
@@ -252,16 +210,6 @@ func (a *Authorizer) GetAllowedActions(ctx context.Context, userID, orgName stri
 	return allowedActions, nil
 }
 
-// getUserAlias is a helper function that returns the alias of a user
-// identified by the ID provided.
-func (a *Authorizer) getUserAlias(ctx context.Context, userID string) (string, error) {
-	var userAlias string
-	if err := a.db.QueryRow(ctx, getUserAliasDBQ, userID).Scan(&userAlias); err != nil {
-		return "", err
-	}
-	return userAlias, nil
-}
-
 // WillUserBeLockedOut checks if the user will be locked out if the new policy
 // provided is applied to the organization.
 func (a *Authorizer) WillUserBeLockedOut(
@@ -284,33 +232,9 @@ func (a *Authorizer) WillUserBeLockedOut(
 	}
 	policyDataJSON, _ := strconv.Unquote(string(newPolicy.PolicyData))
 
-	// AllowQuery check
-	allowQuery, err := rego.New(
-		rego.Query(AllowQuery),
-		rego.Module("", rules),
-		rego.Store(inmem.NewFromReader(bytes.NewBufferString(policyDataJSON))),
-	).PrepareForEval(context.Background())
-	if err != nil {
-		return true, err
-	}
-	for _, action := range policyMgmtActions {
-		queryInput := map[string]interface{}{
-			"user":   userAlias,
-			"action": action,
-		}
-		results, err := allowQuery.Eval(ctx, rego.EvalInput(queryInput))
-		if err != nil {
-			return true, err
-		} else if len(results) != 1 || len(results[0].Expressions) != 1 {
-			return true, nil
-		}
-		if v, ok := results[0].Expressions[0].Value.(bool); !ok || !v {
-			return true, nil
-		}
-	}
-
-	// AllowedActions check
-	allowedActionsQuery, err := rego.New(
+	// Prepare policy query and evaluate it to get the actions the user will be
+	// allowed to perform with it
+	allowedActionsPreparedEvalQuery, err := rego.New(
 		rego.Query(AllowedActionsQuery),
 		rego.Module("", rules),
 		rego.Store(inmem.NewFromReader(bytes.NewBufferString(policyDataJSON))),
@@ -321,7 +245,7 @@ func (a *Authorizer) WillUserBeLockedOut(
 	queryInput := map[string]interface{}{
 		"user": userAlias,
 	}
-	results, err := allowedActionsQuery.Eval(ctx, rego.EvalInput(queryInput))
+	results, err := allowedActionsPreparedEvalQuery.Eval(ctx, rego.EvalInput(queryInput))
 	if err != nil {
 		return true, err
 	} else if len(results) != 1 || len(results[0].Expressions) != 1 {
@@ -339,11 +263,24 @@ func (a *Authorizer) WillUserBeLockedOut(
 		}
 		allowedActions = append(allowedActions, hub.Action(action))
 	}
+
+	// Check if the actions required to manage the policy will be allowed using
+	// the new policy provided
 	if !AreActionsAllowed(allowedActions, policyMgmtActions) {
 		return true, nil
 	}
 
 	return false, nil
+}
+
+// getUserAlias is a helper function that returns the alias of a user
+// identified by the ID provided.
+func (a *Authorizer) getUserAlias(ctx context.Context, userID string) (string, error) {
+	var userAlias string
+	if err := a.db.QueryRow(ctx, getUserAliasDBQ, userID).Scan(&userAlias); err != nil {
+		return "", err
+	}
+	return userAlias, nil
 }
 
 // IsPredefinedPolicyValid checks if the provided predefined policy is valid.
