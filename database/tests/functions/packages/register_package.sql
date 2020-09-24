@@ -290,7 +290,6 @@ select results_eq(
     $$ values ('name1 updated', 'email1') $$,
     'Package maintainers should have been updated'
 );
-select * from maintainer;
 select is_empty(
     $$
         select *

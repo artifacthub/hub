@@ -20,8 +20,19 @@ begin
         raise 'last member of an organization cannot leave it';
     end if;
 
+    -- Delete member from organization
     delete from user__organization
     where user_id = (select user_id from "user" where alias = p_user_alias)
     and organization_id = (select organization_id from organization where name = p_org_name);
+
+    -- Delete user opt-out entries for repositories belonging to the org
+    delete from opt_out
+    where user_id = (select user_id from "user" where alias = p_user_alias)
+    and repository_id in (
+        select repository_id
+        from repository r
+        join organization o using (organization_id)
+        where o.name = p_org_name
+    );
 end
 $$ language plpgsql;
