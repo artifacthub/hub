@@ -182,7 +182,7 @@ func (h *Handlers) RssFeed(w http.ResponseWriter, r *http.Request) {
 			Title:       s.Version,
 			Description: fmt.Sprintf("%s %s", p.NormalizedName, s.Version),
 			Created:     time.Unix(s.CreatedAt, 0),
-			Link:        &feeds.Link{Href: BuildPackageURL(baseURL, p, s.Version)},
+			Link:        &feeds.Link{Href: BuildURL(baseURL, p, s.Version)},
 		})
 	}
 	sort.Slice(feed.Items, func(i, j int) bool {
@@ -339,8 +339,8 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 	}, nil
 }
 
-// BuildPackageURL builds the url of a given package.
-func BuildPackageURL(baseURL string, p *hub.Package, version string) string {
+// BuildURL builds the url of a given package.
+func BuildURL(baseURL string, p *hub.Package, version string) string {
 	pkgPath := fmt.Sprintf("/packages/%s/%s/%s",
 		hub.GetKindName(p.Repository.Kind),
 		p.Repository.Name,

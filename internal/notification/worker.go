@@ -11,6 +11,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/internal/email"
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
@@ -266,12 +267,6 @@ func (w *Worker) preparePkgNotificationTemplateData(
 	if publisher == "" {
 		publisher = p.Repository.UserAlias
 	}
-	packagePath := fmt.Sprintf("/packages/%s/%s/%s/%s",
-		hub.GetKindName(p.Repository.Kind),
-		p.Repository.Name,
-		p.NormalizedName,
-		e.PackageVersion,
-	)
 
 	return &hub.PackageNotificationTemplateData{
 		BaseURL: w.baseURL,
@@ -283,7 +278,7 @@ func (w *Worker) preparePkgNotificationTemplateData(
 			"name":        p.Name,
 			"version":     p.Version,
 			"logoImageID": p.LogoImageID,
-			"url":         w.baseURL + packagePath,
+			"url":         pkg.BuildURL(w.baseURL, p, e.PackageVersion),
 			"repository": map[string]interface{}{
 				"kind":      hub.GetKindName(p.Repository.Kind),
 				"name":      p.Repository.Name,

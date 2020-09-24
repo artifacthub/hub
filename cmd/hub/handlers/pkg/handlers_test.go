@@ -736,7 +736,7 @@ func TestBuildPackageURL(t *testing.T) {
 	for _, tc := range testCases {
 		tc := tc
 		t.Run(tc.expectedPkgURL, func(t *testing.T) {
-			pkgURL := BuildPackageURL(baseURL, tc.p, tc.version)
+			pkgURL := BuildURL(baseURL, tc.p, tc.version)
 			assert.Equal(t, tc.expectedPkgURL, pkgURL)
 		})
 	}
