@@ -14,7 +14,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 3,
-    "iteration": 1587136821868,
+    "iteration": 1600927601121,
     "links": [],
     "panels": [{
             "collapsed": false,
@@ -33,6 +33,28 @@
         {
             "cacheTimeout": null,
             "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "mappings": [{
+                        "id": 0,
+                        "op": "=",
+                        "text": "N/A",
+                        "type": 1,
+                        "value": "null"
+                    }],
+                    "nullValueMode": "connected",
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "dark-green",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
             "gridPos": {
                 "h": 6,
                 "w": 8,
@@ -44,36 +66,19 @@
             "links": [],
             "options": {
                 "colorMode": "value",
-                "fieldOptions": {
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
                     "calcs": [
                         "sum"
                     ],
-                    "defaults": {
-                        "mappings": [{
-                            "id": 0,
-                            "op": "=",
-                            "text": "N/A",
-                            "type": 1,
-                            "value": "null"
-                        }],
-                        "nullValueMode": "connected",
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [{
-                                "color": "dark-green",
-                                "value": null
-                            }]
-                        },
-                        "unit": "none"
-                    },
-                    "overrides": [],
+                    "fields": "",
                     "values": false
                 },
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto"
+                "textMode": "auto"
             },
-            "pluginVersion": "6.7.1",
+            "pluginVersion": "7.1.1",
             "targets": [{
                 "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"OK\"}[$__interval]))",
                 "interval": "",
@@ -88,6 +93,32 @@
         },
         {
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "decimals": 0,
+                    "displayName": "",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                                "color": "dark-red",
+                                "value": null
+                            },
+                            {
+                                "color": "yellow",
+                                "value": 90
+                            },
+                            {
+                                "color": "dark-green",
+                                "value": 95
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": []
+            },
             "gridPos": {
                 "h": 6,
                 "w": 8,
@@ -98,40 +129,18 @@
             "interval": "30s",
             "links": [],
             "options": {
-                "fieldOptions": {
+                "orientation": "auto",
+                "reduceOptions": {
                     "calcs": [
                         "mean"
                     ],
-                    "defaults": {
-                        "decimals": 0,
-                        "mappings": [],
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [{
-                                    "color": "dark-red",
-                                    "value": null
-                                },
-                                {
-                                    "color": "yellow",
-                                    "value": 90
-                                },
-                                {
-                                    "color": "dark-green",
-                                    "value": 95
-                                }
-                            ]
-                        },
-                        "title": "",
-                        "unit": "percent"
-                    },
-                    "overrides": [],
+                    "fields": "",
                     "values": false
                 },
-                "orientation": "auto",
                 "showThresholdLabels": false,
                 "showThresholdMarkers": true
             },
-            "pluginVersion": "6.7.1",
+            "pluginVersion": "7.1.1",
             "targets": [{
                 "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status!=\"Internal Server Error\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval])) * 100",
                 "instant": false,
@@ -148,6 +157,28 @@
         {
             "cacheTimeout": null,
             "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "mappings": [{
+                        "id": 0,
+                        "op": "=",
+                        "text": "0",
+                        "type": 1,
+                        "value": "null"
+                    }],
+                    "nullValueMode": "connected",
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [{
+                            "color": "dark-red",
+                            "value": null
+                        }]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
             "gridPos": {
                 "h": 6,
                 "w": 8,
@@ -159,36 +190,19 @@
             "links": [],
             "options": {
                 "colorMode": "value",
-                "fieldOptions": {
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
                     "calcs": [
                         "sum"
                     ],
-                    "defaults": {
-                        "mappings": [{
-                            "id": 0,
-                            "op": "=",
-                            "text": "N/A",
-                            "type": 1,
-                            "value": "null"
-                        }],
-                        "nullValueMode": "connected",
-                        "thresholds": {
-                            "mode": "absolute",
-                            "steps": [{
-                                "color": "dark-red",
-                                "value": null
-                            }]
-                        },
-                        "unit": "none"
-                    },
-                    "overrides": [],
+                    "fields": "",
                     "values": false
                 },
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto"
+                "textMode": "auto"
             },
-            "pluginVersion": "6.7.1",
+            "pluginVersion": "7.1.1",
             "targets": [{
                 "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",status=\"Internal Server Error\"}[$__interval]))",
                 "interval": "",
@@ -202,13 +216,205 @@
             "type": "stat"
         },
         {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
+            "fill": 3,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 5,
+                "w": 12,
+                "x": 0,
+                "y": 7
+            },
+            "hiddenSeries": false,
+            "id": 26,
+            "interval": "1h",
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "null",
+            "percentage": false,
+            "pluginVersion": "7.1.1",
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [{
+                "alias": "Hour requests",
+                "color": "#F2CC0C"
+            }],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [{
+                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval]))",
+                "format": "time_series",
+                "instant": false,
+                "interval": "",
+                "legendFormat": "Hour requests",
+                "refId": "A"
+            }],
+            "thresholds": [],
+            "timeFrom": "1d",
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Last day requests",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [{
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
+            "fill": 3,
+            "fillGradient": 0,
+            "gridPos": {
+                "h": 5,
+                "w": 12,
+                "x": 12,
+                "y": 7
+            },
+            "hiddenSeries": false,
+            "id": 27,
+            "interval": "1d",
+            "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "null",
+            "percentage": false,
+            "pluginVersion": "7.1.1",
+            "pointradius": 2,
+            "points": true,
+            "renderer": "flot",
+            "seriesOverrides": [{
+                "alias": "Daily requests",
+                "color": "#FFF899"
+            }],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [{
+                "expr": "sum(increase(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\"}[$__interval]))",
+                "format": "time_series",
+                "instant": false,
+                "interval": "",
+                "legendFormat": "Daily requests",
+                "refId": "A"
+            }],
+            "thresholds": [],
+            "timeFrom": "7d",
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Last week requests",
+            "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+            },
+            "yaxes": [{
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                },
+                {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                }
+            ],
+            "yaxis": {
+                "align": false,
+                "alignLevel": null
+            }
+        },
+        {
             "collapsed": false,
             "datasource": null,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 7
+                "y": 12
             },
             "id": 22,
             "panels": [],
@@ -221,13 +427,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": null,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 1,
             "fillGradient": 0,
             "gridPos": {
                 "h": 5,
                 "w": 24,
                 "x": 0,
-                "y": 8
+                "y": 13
             },
             "hiddenSeries": false,
             "id": 24,
@@ -244,10 +457,8 @@
             "lines": false,
             "linewidth": 2,
             "nullPointMode": "connected",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -259,7 +470,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "sum(rate(http_request_duration_sum{kubernetes_namespace=\"$environment\",path=~\"/api/v1/.*\",status=\"OK\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/v1/.*\",status=\"OK\"}[$__interval]))",
+                "expr": "sum(rate(http_request_duration_sum{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) / sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval]))",
                 "interval": "",
                 "legendFormat": "API average latency",
                 "refId": "A"
@@ -312,7 +523,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 13
+                "y": 18
             },
             "id": 12,
             "panels": [],
@@ -321,53 +532,61 @@
         },
         {
             "aliasColors": {},
-            "bars": false,
+            "bars": true,
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "decimals": 2,
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
+                "w": 18,
                 "x": 0,
-                "y": 14
+                "y": 19
             },
             "hiddenSeries": false,
             "id": 2,
             "interval": "30s",
             "legend": {
-                "alignAsTable": false,
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
+                "hideEmpty": true,
+                "hideZero": true,
                 "max": false,
                 "min": false,
-                "rightSide": false,
-                "show": false,
+                "rightSide": true,
+                "show": true,
                 "sideWidth": 400,
                 "sort": "min",
                 "sortDesc": false,
                 "total": false,
                 "values": false
             },
-            "lines": true,
+            "lines": false,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
             "spaceLength": 10,
-            "stack": false,
+            "stack": true,
             "steppedLine": false,
             "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"OK\"}[$__interval])) by (path)",
+                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path)",
                 "instant": false,
-                "interval": "10s",
+                "interval": "30s",
                 "intervalFactor": 1,
                 "legendFormat": "{{ path }}",
                 "refId": "A"
@@ -415,17 +634,24 @@
         },
         {
             "aliasColors": {},
-            "bars": false,
+            "bars": true,
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
-                "x": 12,
-                "y": 14
+                "w": 6,
+                "x": 18,
+                "y": 19
             },
             "hiddenSeries": false,
             "id": 4,
@@ -444,22 +670,20 @@
                 "total": false,
                 "values": false
             },
-            "lines": true,
+            "lines": false,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
             "seriesOverrides": [],
             "spaceLength": 10,
-            "stack": false,
+            "stack": true,
             "steppedLine": false,
             "targets": [{
-                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"Internal Server Error\"}[$__interval])) by (path)",
+                "expr": "sum(rate(http_request_duration_count{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path)",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -514,7 +738,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 24
+                "y": 29
             },
             "id": 16,
             "panels": [],
@@ -527,13 +751,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
+                "w": 18,
                 "x": 0,
-                "y": 25
+                "y": 30
             },
             "hiddenSeries": false,
             "id": 3,
@@ -542,12 +773,12 @@
                 "alignAsTable": true,
                 "avg": false,
                 "current": false,
-                "hideEmpty": false,
-                "hideZero": false,
+                "hideEmpty": true,
+                "hideZero": true,
                 "max": false,
                 "min": false,
                 "rightSide": true,
-                "show": false,
+                "show": true,
                 "sideWidth": 400,
                 "total": false,
                 "values": false
@@ -555,10 +786,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -567,7 +796,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -621,13 +850,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
-                "x": 12,
-                "y": 25
+                "w": 6,
+                "x": 18,
+                "y": 30
             },
             "hiddenSeries": false,
             "id": 5,
@@ -647,10 +883,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -659,7 +893,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -713,13 +947,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
+                "w": 18,
                 "x": 0,
-                "y": 35
+                "y": 40
             },
             "hiddenSeries": false,
             "id": 17,
@@ -728,10 +969,12 @@
                 "alignAsTable": true,
                 "avg": false,
                 "current": false,
+                "hideEmpty": true,
+                "hideZero": true,
                 "max": false,
                 "min": false,
                 "rightSide": true,
-                "show": false,
+                "show": true,
                 "sideWidth": 400,
                 "total": false,
                 "values": false
@@ -739,10 +982,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -751,7 +992,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -805,13 +1046,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
-                "x": 12,
-                "y": 35
+                "w": 6,
+                "x": 18,
+                "y": 40
             },
             "hiddenSeries": false,
             "id": 18,
@@ -831,10 +1079,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -843,7 +1089,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.75, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -897,13 +1143,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
+                "w": 18,
                 "x": 0,
-                "y": 45
+                "y": 50
             },
             "hiddenSeries": false,
             "id": 19,
@@ -912,10 +1165,12 @@
                 "alignAsTable": true,
                 "avg": false,
                 "current": false,
+                "hideEmpty": true,
+                "hideZero": true,
                 "max": false,
                 "min": false,
                 "rightSide": true,
-                "show": false,
+                "show": true,
                 "sideWidth": 400,
                 "total": false,
                 "values": false
@@ -923,10 +1178,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -935,7 +1188,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"OK\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"OK\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -989,13 +1242,20 @@
             "dashLength": 10,
             "dashes": false,
             "datasource": "Prometheus",
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {},
+                    "links": []
+                },
+                "overrides": []
+            },
             "fill": 0,
             "fillGradient": 0,
             "gridPos": {
                 "h": 10,
-                "w": 12,
-                "x": 12,
-                "y": 45
+                "w": 6,
+                "x": 18,
+                "y": 50
             },
             "hiddenSeries": false,
             "id": 20,
@@ -1015,10 +1275,8 @@
             "lines": true,
             "linewidth": 1,
             "nullPointMode": "null as zero",
-            "options": {
-                "dataLinks": []
-            },
             "percentage": false,
+            "pluginVersion": "7.1.1",
             "pointradius": 2,
             "points": false,
             "renderer": "flot",
@@ -1027,7 +1285,7 @@
             "stack": false,
             "steppedLine": false,
             "targets": [{
-                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path!=\"/\",path!=\"\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
+                "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_bucket{kubernetes_namespace=\"$environment\",path=~\"/api/.*\",status=\"Internal Server Error\"}[$__interval])) by (path, le))",
                 "instant": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -1077,7 +1335,7 @@
         }
     ],
     "refresh": false,
-    "schemaVersion": 22,
+    "schemaVersion": 26,
     "style": "dark",
     "tags": [],
     "templating": {
@@ -1092,7 +1350,6 @@
             "definition": "label_values(kubernetes_namespace)",
             "hide": 0,
             "includeAll": false,
-            "index": -1,
             "label": "",
             "multi": false,
             "name": "environment",
@@ -1120,12 +1377,11 @@
         }]
     },
     "time": {
-        "from": "now-3h",
+        "from": "now-1h",
         "to": "now"
     },
     "timepicker": {
         "refresh_intervals": [
-            "5s",
             "10s",
             "30s",
             "1m",
@@ -1140,8 +1396,5 @@
     "timezone": "",
     "title": "ArtifactHub",
     "uid": "FBPhb4qWk",
-    "variables": {
-        "list": []
-    },
-    "version": 34
+    "version": 51
 }
