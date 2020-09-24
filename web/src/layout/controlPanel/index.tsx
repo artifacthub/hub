@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { AppCtx, signOut, unselectOrg, updateOrg } from '../../context/AppCtx';
 import { Section } from '../../types';
@@ -35,6 +35,7 @@ const ControlPanelView = (props: Props) => {
     isUndefined(ctx.user) || isNull(ctx.user) ? null : isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org'
   );
   const isLoggedIn = !isUndefined(ctx.user) && !isNull(ctx.user);
+  const [lastSelectedOrg, setLastSelectedOrg] = useState<string | undefined>(ctx.prefs.controlPanel.selectedOrg);
 
   const onAuthError = (): void => {
     dispatch(signOut());
@@ -47,15 +48,17 @@ const ControlPanelView = (props: Props) => {
     });
   };
 
-  const onMenuItemClick = (name: string) => {
-    history.replace(`/control-panel/${name}`);
-    setActiveSection(name);
-    setActiveSubsection(null);
-  };
+  const checkIfAuthorizationIsActive = (newCtx: string): boolean => {
+    if (
+      newCtx === 'user' &&
+      props.subsection === 'authorization' &&
+      !isControlPanelSectionAvailable(newCtx, props.section, props.subsection) &&
+      !isUndefined(lastSelectedOrg)
+    ) {
+      return true;
+    }
 
-  const onSubMenuItemClick = (name: string) => {
-    history.replace(`/control-panel/${activeSection}/${name}`);
-    setActiveSubsection(name);
+    return false;
   };
 
   useEffect(() => {
@@ -83,7 +86,17 @@ const ControlPanelView = (props: Props) => {
           search: '',
         });
       }
-      setContext(context);
+
+      if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+        setLastSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
+      }
+
+      // On /settings/authorization, if user doesn't want to lose unsaved changes
+      if (!isUndefined(lastSelectedOrg) && checkIfAuthorizationIsActive(context)) {
+        dispatch(updateOrg(lastSelectedOrg));
+      } else {
+        setContext(context);
+      }
     }
   }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
@@ -97,7 +110,13 @@ const ControlPanelView = (props: Props) => {
           setActiveSubsection(props.subsection);
         }
       } else {
-        history.replace(`/control-panel/${DEFAULT_SECTION}`);
+        if (props.subsection !== 'authorization') {
+          history.replace(`/control-panel/${DEFAULT_SECTION}`);
+        } else {
+          if (isUndefined(lastSelectedOrg)) {
+            history.replace(`/control-panel/${DEFAULT_SECTION}`);
+          }
+        }
       }
     }
   }, [props.section, props.subsection, context]); /* eslint-disable-line react-hooks/exhaustive-deps */
@@ -117,21 +136,22 @@ const ControlPanelView = (props: Props) => {
               {CONTROL_PANEL_SECTIONS[context].map((section: Section) => {
                 return (
                   <li key={`section_${section.name}`} className={`nav-item mx-1 ${styles.navItem}`} role="tab">
-                    <button
-                      type="button"
+                    <Link
+                      to={{
+                        pathname: `/control-panel/${section.name}`,
+                      }}
                       className={classnames(
                         'btn btn-link rounded-0 text-reset nav-link position-relative',
                         styles.section,
                         { [`active activeSection ${styles.activeSection}`]: activeSection === section.name },
                         { disabled: section.disabled }
                       )}
-                      onClick={() => onMenuItemClick(section.name)}
                     >
                       <div className="d-flex flex-row align-items-center">
                         <span className={styles.icon}>{section.icon}</span>
                         <span className={`d-none d-md-inline ml-2 ${styles.navTitle}`}>{section.displayName}</span>
                       </div>
-                    </button>
+                    </Link>
                   </li>
                 );
               })}
@@ -158,8 +178,8 @@ const ControlPanelView = (props: Props) => {
                     <SettingsSection
                       {...props}
                       context={context}
+                      activeSection={activeSection}
                       onAuthError={onAuthError}
-                      onSubMenuItemClick={onSubMenuItemClick}
                     />
                   );
                 default:

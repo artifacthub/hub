@@ -1,14 +1,16 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { AuthorizerAction, Section } from '../../types';
 import ActionBtn from '../controlPanel/ActionBtn';
 import styles from './SectionPanel.module.css';
 
 interface Props {
-  onSectionChange?: (section: string) => void;
   defaultSection: string;
+  activeSection?: string;
+  pathPrefix?: string;
   sections: Section[];
   content: {
     [key: string]: JSX.Element;
@@ -16,14 +18,14 @@ interface Props {
 }
 
 const SectionPanel = (props: Props) => {
-  const [activeSection, setActiveSection] = useState<string>(props.defaultSection);
+  const history = useHistory();
+  const [activeSection, setActiveSection] = useState<string>(props.activeSection || props.defaultSection);
 
-  const onMenuItemClick = (section: string) => {
-    setActiveSection(section);
-    if (!isUndefined(props.onSectionChange)) {
-      props.onSectionChange(section);
+  useEffect(() => {
+    if (!isUndefined(props.activeSection)) {
+      setActiveSection(props.activeSection);
     }
-  };
+  }, [props.activeSection]);
 
   const getBtnContent = (section: Section): JSX.Element => {
     return (
@@ -47,15 +49,18 @@ const SectionPanel = (props: Props) => {
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
           {props.sections.map((section: Section) => {
             const className = classnames(
-              'list-group-item list-group-item-action flex-row align-items-center sectionItem',
+              'd-flex list-group-item list-group-item-action flex-row align-items-center sectionItem',
               styles.listItem,
               { [`${styles.isActive} isActive`]: section.name === activeSection },
-              { disabled: section.disabled },
-              { 'd-flex': isUndefined(section.onlyDesktop) },
-              { 'd-none d-md-flex': !isUndefined(section.onlyDesktop) && section.onlyDesktop }
+              { disabled: section.disabled }
             );
             return (
-              <span key={`package_${section.name}`}>
+              <span
+                className={classnames('w-100', {
+                  'd-none d-md-block': !isUndefined(section.onlyDesktop) && section.onlyDesktop,
+                })}
+                key={`package_${section.name}`}
+              >
                 {(() => {
                   switch (section.name) {
                     case 'authorization':
@@ -66,7 +71,7 @@ const SectionPanel = (props: Props) => {
                           contentClassName="flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100"
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.preventDefault();
-                            onMenuItemClick(section.name);
+                            history.push(`${props.pathPrefix || ''}/${section.name}`);
                           }}
                           action={AuthorizerAction.GetAuthorizationPolicy}
                         >
@@ -78,9 +83,11 @@ const SectionPanel = (props: Props) => {
                         <button
                           type="button"
                           data-testid="sectionBtn"
-                          className={className}
+                          className={`btn btn-link text-reset ${className}`}
                           disabled={section.disabled}
-                          onClick={() => onMenuItemClick(section.name)}
+                          onClick={() => {
+                            history.push(`${props.pathPrefix || ''}/${section.name}`);
+                          }}
                         >
                           <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start w-100">
                             {getBtnContent(section)}

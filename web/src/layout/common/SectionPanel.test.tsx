@@ -3,6 +3,15 @@ import React from 'react';
 
 import SectionPanel from './SectionPanel';
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
 const defaultProps = {
   sections: [
     { name: 'opt0', displayName: 'Details 0', shortName: 'details_0', disabled: false },
@@ -42,17 +51,24 @@ describe('SectionPanel', () => {
   });
 
   it('changes active section', () => {
-    const { getAllByTestId, getByText } = render(<SectionPanel {...defaultProps} />);
+    const { getAllByTestId } = render(<SectionPanel {...defaultProps} />);
 
     const btns = getAllByTestId('sectionBtn');
     fireEvent.click(btns[1]);
 
-    expect(getByText('Content 1')).toBeInTheDocument();
+    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+    expect(mockHistoryPush).toHaveBeenCalledWith('/opt1');
   });
 
-  it('renders with active section', () => {
+  it('renders with a different default section', () => {
     const { getByText } = render(<SectionPanel {...defaultProps} defaultSection="opt2" />);
 
     expect(getByText('Content 2')).toBeInTheDocument();
+  });
+
+  it('renders with active section', () => {
+    const { getByText } = render(<SectionPanel {...defaultProps} defaultSection="opt0" activeSection="opt1" />);
+
+    expect(getByText('Content 1')).toBeInTheDocument();
   });
 });

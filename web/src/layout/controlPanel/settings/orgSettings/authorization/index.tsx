@@ -1,9 +1,10 @@
 import classnames from 'classnames';
 import { isNull, isUndefined, trim } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Prompt } from 'react-router-dom';
 
 import { API } from '../../../../../api';
-import { AppCtx } from '../../../../../context/AppCtx';
+import { AppCtx, updateOrg } from '../../../../../context/AppCtx';
 import {
   AuthorizationPolicy,
   AuthorizerAction,
@@ -15,19 +16,28 @@ import {
 } from '../../../../../types';
 import alertDispatcher from '../../../../../utils/alertDispatcher';
 import authorizer from '../../../../../utils/authorizer';
+import { checkUnsavedPolicyChanges, PolicyChangeAction } from '../../../../../utils/checkUnsavedPolicyChanges';
 import compoundErrorMessage from '../../../../../utils/compoundErrorMessage';
 import { PREDEFINED_POLICIES } from '../../../../../utils/data';
 import isValidJSON from '../../../../../utils/isValidJSON';
 import prepareRegoPolicyForPlayground from '../../../../../utils/prepareRegoPolicyForPlayground';
+import stringifyPolicyData from '../../../../../utils/stringifyPolicyData';
 import CodeEditor from '../../../../common/CodeEditor';
 import ExternalLink from '../../../../common/ExternalLink';
 import Loading from '../../../../common/Loading';
+import Modal from '../../../../common/Modal';
 import NoData from '../../../../common/NoData';
 import ActionBtn from '../../../ActionBtn';
 import styles from './AuthorizationSection.module.css';
 
 interface Props {
   onAuthError: () => void;
+}
+
+interface ConfirmationModal {
+  open: boolean;
+  message?: JSX.Element;
+  onConfirm?: () => void;
 }
 
 interface Option {
@@ -49,7 +59,7 @@ const PAYLOAD_OPTION: Option[] = [
 const DEFAULT_POLICY_NAME = 'rbac.v1';
 
 const AuthorizationSection = (props: Props) => {
-  const { ctx } = useContext(AppCtx);
+  const { ctx, dispatch } = useContext(AppCtx);
   const errorWrapper = useRef<HTMLDivElement>(null);
   const updateActionBtn = useRef<RefActionBtn>(null);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
@@ -60,10 +70,11 @@ const AuthorizationSection = (props: Props) => {
   const [orgPolicy, setOrgPolicy] = useState<OrganizationPolicy | undefined | null>(undefined);
   const [invalidPolicy, setInvalidPolicy] = useState<boolean>(false);
   const [invalidPolicyDataJSON, setInvalidPolicyDataJSON] = useState<boolean>(false);
-  const [selectedOrg, setSelectedOrg] = useState<string | undefined>(ctx.prefs.controlPanel.selectedOrg);
+  const [selectedOrg, setSelectedOrg] = useState<string | undefined>(undefined);
   const [members, setMembers] = useState<string[] | undefined>(undefined);
   const [notGetPolicyAllowed, setNotGetPolicyAllowed] = useState<boolean>(false);
   const [updatePolicyAllowed, setUpdatePolicyAllowed] = useState<boolean>(false);
+  const [confirmationModal, setConfirmationModal] = useState<ConfirmationModal>({ open: false });
 
   const getPredefinedPolicy = (name?: string): AuthorizationPolicy | undefined => {
     let policy = PREDEFINED_POLICIES.find((item: AuthorizationPolicy) => item.name === name);
@@ -83,44 +94,58 @@ const AuthorizationSection = (props: Props) => {
     return policy;
   };
 
-  const stringifyPolicyData = (data: { [key: string]: any } | string): string => {
-    return JSON.stringify(data, null, '  ');
-  };
-
   const onPayloadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    let updatedOrgPolicy: OrganizationPolicy | undefined = undefined;
     if (value === 'predefined') {
       if (!isUndefined(savedOrgPolicy) && !isNull(savedOrgPolicy.predefinedPolicy)) {
-        setOrgPolicy({
+        updatedOrgPolicy = {
           ...savedOrgPolicy,
           authorizationEnabled: true,
-        });
+        };
       } else {
         const defaultPolicy = getPredefinedPolicy(DEFAULT_POLICY_NAME);
         if (!isUndefined(defaultPolicy)) {
-          setOrgPolicy({
+          updatedOrgPolicy = {
             ...orgPolicy!,
             customPolicy: null,
             predefinedPolicy: defaultPolicy.name,
             policyData: stringifyPolicyData(defaultPolicy.data),
-          });
+          };
         }
       }
+
+      checkPolicyChanges(
+        () => setOrgPolicy(updatedOrgPolicy!),
+        PolicyChangeAction.OnSwitchFromCustomToPredefinedPolicy
+      );
     } else {
+      let updatedOrgPolicy: OrganizationPolicy | undefined = undefined;
+
       if (!isUndefined(savedOrgPolicy) && !isNull(savedOrgPolicy.customPolicy)) {
-        setOrgPolicy({
+        updatedOrgPolicy = {
           ...savedOrgPolicy,
           authorizationEnabled: true,
-        });
+        };
       } else {
-        setOrgPolicy({
+        updatedOrgPolicy = {
           ...orgPolicy!,
-          customPolicy: '',
+          customPolicy: null,
           predefinedPolicy: null,
           policyData: null,
-        });
+        };
       }
+
+      checkPolicyChanges(
+        () => setOrgPolicy(updatedOrgPolicy!),
+        PolicyChangeAction.OnSwitchFromPredefinedToCustomPolicy
+      );
     }
+  };
+
+  const checkIfUnsavedChanges = (): boolean => {
+    const lostData = checkUnsavedPolicyChanges(savedOrgPolicy!, orgPolicy!);
+    return lostData.lostData;
   };
 
   async function triggerTestInRegoPlayground() {
@@ -196,7 +221,7 @@ const AuthorizationSection = (props: Props) => {
   async function updateAuthorizationPolicy() {
     try {
       setIsSaving(true);
-      await API.updateAuthorizationPolicy(ctx.prefs.controlPanel.selectedOrg!, orgPolicy!);
+      await API.updateAuthorizationPolicy(selectedOrg!, orgPolicy!);
       getAuthorizationPolicy();
       // Update allowed actions and re-render button
       authorizer.getAllowedActionsList(() => updateActionBtn.current!.reRender());
@@ -244,7 +269,68 @@ const AuthorizationSection = (props: Props) => {
     } else if (!isValidJSON(orgPolicy!.policyData || '')) {
       setInvalidPolicyDataJSON(true);
     } else {
-      updateAuthorizationPolicy();
+      checkPolicyChanges(updateAuthorizationPolicy, PolicyChangeAction.OnSavePolicy);
+    }
+  };
+
+  const onAuthorizationEnabledChange = () => {
+    let extraData = {};
+    const authorized = !orgPolicy!.authorizationEnabled;
+    const defaultPolicy = getPredefinedPolicy(DEFAULT_POLICY_NAME);
+    if (
+      authorized &&
+      isNull(savedOrgPolicy!.customPolicy) &&
+      isNull(savedOrgPolicy!.predefinedPolicy) &&
+      !isUndefined(defaultPolicy)
+    ) {
+      extraData = {
+        predefinedPolicy: defaultPolicy.name,
+        policyData: stringifyPolicyData(defaultPolicy.data),
+      };
+    }
+
+    const updatedOrgPolicy = {
+      ...savedOrgPolicy!,
+      ...extraData,
+      authorizationEnabled: authorized,
+    };
+
+    if (!authorized) {
+      checkPolicyChanges(() => setOrgPolicy(updatedOrgPolicy), PolicyChangeAction.OnDisableAuthorization);
+    } else {
+      setOrgPolicy(updatedOrgPolicy);
+    }
+  };
+
+  const onPredefinedPolicyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    const activePredefinedPolicy = getPredefinedPolicy(e.target.value);
+    const updatedOrgPolicy = {
+      ...orgPolicy!,
+      predefinedPolicy: e.target.value,
+      policyData: !isUndefined(activePredefinedPolicy) ? stringifyPolicyData(activePredefinedPolicy.data) : '',
+    };
+
+    checkPolicyChanges(() => setOrgPolicy(updatedOrgPolicy!), PolicyChangeAction.OnChangePredefinedPolicy);
+  };
+
+  const checkPolicyChanges = (onConfirmAction: () => void, action?: PolicyChangeAction) => {
+    const currentPredefinedPolicy =
+      orgPolicy && orgPolicy.predefinedPolicy ? getPredefinedPolicy(orgPolicy.predefinedPolicy) : undefined;
+    const lostData = checkUnsavedPolicyChanges(
+      savedOrgPolicy!,
+      orgPolicy!,
+      action,
+      currentPredefinedPolicy ? currentPredefinedPolicy.data : undefined
+    );
+    if (lostData.lostData) {
+      setConfirmationModal({
+        open: true,
+        message: lostData.message,
+        onConfirm: onConfirmAction,
+      });
+    } else {
+      onConfirmAction();
     }
   };
 
@@ -256,12 +342,50 @@ const AuthorizationSection = (props: Props) => {
   }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    setSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
-  }, [ctx.prefs.controlPanel.selectedOrg]);
+    if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+      if (selectedOrg !== ctx.prefs.controlPanel.selectedOrg) {
+        if (!checkIfUnsavedChanges()) {
+          setSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
+        } else {
+          const warningPrompt = window.confirm(
+            'You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost.'
+          );
+          if (!warningPrompt) {
+            dispatch(updateOrg(selectedOrg!));
+          } else {
+            setSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
+          }
+        }
+      }
+    }
+  }, [ctx.prefs.controlPanel.selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  const onBeforeUnload = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+
+    e.returnValue =
+      'You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost.';
+  };
+
+  useEffect(() => {
+    if (checkIfUnsavedChanges()) {
+      window.addEventListener('beforeunload', onBeforeUnload);
+    } else {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, [orgPolicy]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <main role="main" className="container p-0">
       {(isUndefined(orgPolicy) || isLoading) && <Loading />}
+      <Prompt
+        when={!isNull(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
+        message="You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost."
+      />
 
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Authorization</div>
 
@@ -302,28 +426,7 @@ const AuthorizationSection = (props: Props) => {
                 type="checkbox"
                 className="custom-control-input"
                 value="true"
-                onChange={() => {
-                  let extraData = {};
-                  const authorized = !orgPolicy.authorizationEnabled;
-                  const defaultPolicy = getPredefinedPolicy(DEFAULT_POLICY_NAME);
-                  if (
-                    authorized &&
-                    isNull(savedOrgPolicy!.customPolicy) &&
-                    isNull(savedOrgPolicy!.predefinedPolicy) &&
-                    !isUndefined(defaultPolicy)
-                  ) {
-                    extraData = {
-                      predefinedPolicy: defaultPolicy.name,
-                      policyData: stringifyPolicyData(defaultPolicy.data),
-                    };
-                  }
-
-                  setOrgPolicy({
-                    ...savedOrgPolicy!,
-                    ...extraData,
-                    authorizationEnabled: authorized,
-                  });
-                }}
+                onChange={onAuthorizationEnabledChange}
                 checked={orgPolicy.authorizationEnabled}
                 disabled={!updatePolicyAllowed}
               />
@@ -366,17 +469,7 @@ const AuthorizationSection = (props: Props) => {
                       className="custom-select"
                       aria-label="org-select"
                       value={orgPolicy.predefinedPolicy || ''}
-                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        e.preventDefault();
-                        const activePredefinedPolicy = getPredefinedPolicy(e.target.value);
-                        setOrgPolicy({
-                          ...orgPolicy!,
-                          predefinedPolicy: e.target.value,
-                          policyData: !isUndefined(activePredefinedPolicy)
-                            ? stringifyPolicyData(activePredefinedPolicy.data)
-                            : '',
-                        });
-                      }}
+                      onChange={onPredefinedPolicyChange}
                       required={!isNull(orgPolicy.predefinedPolicy)}
                       disabled={!updatePolicyAllowed}
                     >
@@ -410,7 +503,7 @@ const AuthorizationSection = (props: Props) => {
                           }
                           setOrgPolicy({
                             ...orgPolicy!,
-                            customPolicy: value,
+                            customPolicy: value || null,
                           });
                         }}
                         disabled={!isNull(orgPolicy.predefinedPolicy) || !updatePolicyAllowed}
@@ -436,7 +529,7 @@ const AuthorizationSection = (props: Props) => {
                           }
                           setOrgPolicy({
                             ...orgPolicy!,
-                            policyData: value,
+                            policyData: value || null,
                           });
                         }}
                         disabled={!updatePolicyAllowed}
@@ -502,6 +595,41 @@ const AuthorizationSection = (props: Props) => {
           </div>
         </div>
       </div>
+
+      {confirmationModal.open && (
+        <Modal
+          className={`d-inline-block ${styles.modal}`}
+          closeButton={
+            <>
+              <button
+                className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                onClick={() => setConfirmationModal({ open: false })}
+              >
+                Cancel
+              </button>
+
+              <button
+                data-testid="leaveOrgBtn"
+                className="btn btn-sm btn-primary text-uppercase ml-3"
+                onClick={(e) => {
+                  e.preventDefault();
+                  confirmationModal.onConfirm!();
+                  setConfirmationModal({ open: false });
+                }}
+              >
+                Ok
+              </button>
+            </>
+          }
+          header={<div className={`h3 m-2 ${styles.title}`}>Confirm action</div>}
+          onClose={() => setConfirmationModal({ open: false })}
+          open
+        >
+          <div className="mt-3 mw-100 text-center">
+            <p>{confirmationModal.message!}</p>
+          </div>
+        </Modal>
+      )}
     </main>
   );
 };
