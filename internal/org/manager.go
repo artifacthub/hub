@@ -355,9 +355,6 @@ func (m *Manager) UpdateAuthorizationPolicy(
 		if err != nil {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid custom policy")
 		}
-		if compiler.GetRules(authz.AllowQueryRef) == nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "allow rule not found in custom policy")
-		}
 		if compiler.GetRules(authz.AllowedActionsQueryRef) == nil {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "allowed actions rule not found in custom policy")
 		}

@@ -63,12 +63,12 @@ var testsAuthorizationPoliciesJSON = []byte(`{
 	},
 	"org2": {
 		"authorization_enabled": true,
-		"custom_policy": "package artifacthub.authz\ndefault allow = false\n",
+		"custom_policy": "package artifacthub.authz\ndefault allowed_actions = []\n",
 		"policy_data": {}
 	},
 	"org3": {
 		"authorization_enabled": false,
-		"custom_policy": "package artifacthub.authz\ndefault allow = false\n",
+		"custom_policy": "package artifacthub.authz\ndefault allowed_actions = []\n",
 		"policy_data": {}
 	}
 }`)
@@ -104,7 +104,6 @@ func TestNewAuthorizer(t *testing.T) {
 			Return(testsAuthorizationPoliciesJSON, nil)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 		az, err := NewAuthorizer(db)
-		assert.Contains(t, az.allowQueries, "org1")
 		assert.Contains(t, az.allowedActionsQueries, "org1")
 		assert.Nil(t, err)
 		db.AssertExpectations(t)
@@ -299,12 +298,12 @@ func TestGetAllowedActions(t *testing.T) {
 		{
 			user1ID,
 			org2Name,
-			nil,
+			[]hub.Action{},
 		},
 		{
 			user2ID,
 			org2Name,
-			nil,
+			[]hub.Action{},
 		},
 		{
 			user1ID,
@@ -473,4 +472,118 @@ func TestWillUserBeLockedOut(t *testing.T) {
 	}
 
 	db.AssertExpectations(t)
+}
+
+func TestIsPredefinedPolicyValid(t *testing.T) {
+	testCases := []struct {
+		predefinedPolicy string
+		expectedValid    bool
+	}{
+		{
+			"rbac.v1",
+			true,
+		},
+		{
+			"rbac.v2",
+			false,
+		},
+		{
+			"something else",
+			false,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			valid := IsPredefinedPolicyValid(tc.predefinedPolicy)
+			assert.Equal(t, tc.expectedValid, valid)
+		})
+	}
+}
+
+func TestIsActionAllowed(t *testing.T) {
+	testCases := []struct {
+		allowedActions  []hub.Action
+		action          hub.Action
+		expectedAllowed bool
+	}{
+		{
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			hub.AddOrganizationMember,
+			true,
+		},
+		{
+			[]hub.Action{hub.Action("all")},
+			hub.AddOrganizationMember,
+			true,
+		},
+		{
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			hub.TransferOrganizationRepository,
+			false,
+		},
+		{
+			[]hub.Action{},
+			hub.TransferOrganizationRepository,
+			false,
+		},
+		{
+			nil,
+			hub.TransferOrganizationRepository,
+			false,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			allowed := IsActionAllowed(tc.allowedActions, tc.action)
+			assert.Equal(t, tc.expectedAllowed, allowed)
+		})
+	}
+}
+
+func TestAreActionsAllowed(t *testing.T) {
+	testCases := []struct {
+		allowedActions  []hub.Action
+		actions         []hub.Action
+		expectedAllowed bool
+	}{
+		{
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember, hub.GetAuthorizationPolicy},
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			true,
+		},
+		{
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember, hub.GetAuthorizationPolicy},
+			false,
+		},
+		{
+			[]hub.Action{hub.AddOrganizationMember},
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			false,
+		},
+		{
+			[]hub.Action{hub.Action("all")},
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			true,
+		},
+		{
+			[]hub.Action{},
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			false,
+		},
+		{
+			nil,
+			[]hub.Action{hub.AddOrganizationMember, hub.DeleteOrganizationMember},
+			false,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			allowed := AreActionsAllowed(tc.allowedActions, tc.actions)
+			assert.Equal(t, tc.expectedAllowed, allowed)
+		})
+	}
 }

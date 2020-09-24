@@ -4,19 +4,6 @@ var predefinedPolicies = map[string]string{
 	"rbac.v1": `
 		package artifacthub.authz
 
-		# By default, deny requests
-		default allow = false
-
-		# Allow the action if the user is allowed to perform it
-		allow {
-			# Allow if user's role is owner
-			data.roles.owner.users[_] == input.user
-		}
-		allow {
-			# Allow if user's role is allowed to perform this action
-			allowed_actions[_] == input.action
-		}
-
 		# Get user allowed actions
 		allowed_actions[action] {
 			# Owner can perform all actions

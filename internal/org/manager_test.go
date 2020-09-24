@@ -854,34 +854,10 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 				},
 			},
 			{
-				"allow rule not found in custom policy",
-				"org1",
-				&hub.AuthorizationPolicy{
-					CustomPolicy: "package artifacthub.authz",
-				},
-			},
-			{
-				"allow rule not found in custom policy",
-				"org1",
-				&hub.AuthorizationPolicy{
-					CustomPolicy: `
-					package artifacthub.invalid
-
-					default allow = false
-					allow { data.roles.owner.users[_] == input.user }
-					`,
-				},
-			},
-			{
 				"allowed actions rule not found in custom policy",
 				"org1",
 				&hub.AuthorizationPolicy{
-					CustomPolicy: `
-					package artifacthub.authz
-
-					default allow = false
-					allow { data.roles.owner.users[_] == input.user }
-					`,
+					CustomPolicy: `package artifacthub.authz`,
 				},
 			},
 			{
@@ -891,8 +867,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 					CustomPolicy: `
 					package artifacthub.authz
 
-					default allow = false
-					allow { data.roles.owner.users[_] == input.user }
 					allowed_actions[action] { action := "all" }
 					`,
 					PolicyData: []byte("{invalidJSON"),
@@ -905,8 +879,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 					CustomPolicy: `
 					package artifacthub.authz
 
-					default allow = false
-					allow { data.roles.owner.users[_] == input.user }
 					allowed_actions[action] { action := "all" }
 					`,
 					PolicyData: []byte(`"[]"`),
@@ -919,7 +891,6 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 					CustomPolicy: `
 					package artifacthub.authz
 
-					default allow = false
 					allowed_actions = ["all"]
 					`,
 					PolicyData: []byte(`"{}"`),
