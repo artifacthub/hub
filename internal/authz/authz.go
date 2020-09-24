@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 	"sync"
 	"time"
 
@@ -27,6 +28,10 @@ const (
 	// get the actions a given user is allowed to perform.
 	AllowedActionsQuery = "data.artifacthub.authz.allowed_actions"
 
+	// Database queries
+	getUserAliasDBQ             = `select alias from "user" where user_id = $1`
+	getAuthorizationPoliciesDBQ = `select get_authorization_policies()`
+
 	pauseOnError = 10 * time.Second
 )
 
@@ -39,6 +44,10 @@ var (
 
 	validPredefinedPolicies = []string{
 		"rbac.v1",
+	}
+	policyMgmtActions = []hub.Action{
+		hub.GetAuthorizationPolicy,
+		hub.UpdateAuthorizationPolicy,
 	}
 )
 
@@ -76,9 +85,8 @@ func (a *Authorizer) preparePoliciesQueries() error {
 	a.logger.Info().Msg("preparing policies queries")
 
 	// Get organizations authorization policies from database
-	dbQuery := "select get_authorization_policies()"
 	var policiesJSON []byte
-	err := a.db.QueryRow(context.Background(), dbQuery).Scan(&policiesJSON)
+	err := a.db.QueryRow(context.Background(), getAuthorizationPoliciesDBQ).Scan(&policiesJSON)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return fmt.Errorf("error getting authorization policies: %w", err)
 	}
@@ -207,7 +215,7 @@ func (a *Authorizer) GetAllowedActions(ctx context.Context, userID, orgName stri
 		// If the organization hasn't defined an authorization policy yet, user
 		// is allowed to perform all actions available.
 		a.mu.RUnlock()
-		return []hub.Action{hub.Action("all")}, nil
+		return []hub.Action{"all"}, nil
 	}
 	a.mu.RUnlock()
 
@@ -248,11 +256,94 @@ func (a *Authorizer) GetAllowedActions(ctx context.Context, userID, orgName stri
 // identified by the ID provided.
 func (a *Authorizer) getUserAlias(ctx context.Context, userID string) (string, error) {
 	var userAlias string
-	dbQuery := `select alias from "user" where user_id = $1`
-	if err := a.db.QueryRow(ctx, dbQuery, userID).Scan(&userAlias); err != nil {
+	if err := a.db.QueryRow(ctx, getUserAliasDBQ, userID).Scan(&userAlias); err != nil {
 		return "", err
 	}
 	return userAlias, nil
+}
+
+// WillUserBeLockedOut checks if the user will be locked out if the new policy
+// provided is applied to the organization.
+func (a *Authorizer) WillUserBeLockedOut(
+	ctx context.Context,
+	newPolicy *hub.AuthorizationPolicy,
+	userID string,
+) (bool, error) {
+	// Get user alias to provide it to the query as input
+	userAlias, err := a.getUserAlias(ctx, userID)
+	if err != nil {
+		return true, err
+	}
+
+	// Prepare policy rules and data
+	var rules string
+	if newPolicy.PredefinedPolicy != "" {
+		rules = predefinedPolicies[newPolicy.PredefinedPolicy]
+	} else {
+		rules = newPolicy.CustomPolicy
+	}
+	policyDataJSON, _ := strconv.Unquote(string(newPolicy.PolicyData))
+
+	// AllowQuery check
+	allowQuery, err := rego.New(
+		rego.Query(AllowQuery),
+		rego.Module("", rules),
+		rego.Store(inmem.NewFromReader(bytes.NewBufferString(policyDataJSON))),
+	).PrepareForEval(context.Background())
+	if err != nil {
+		return true, err
+	}
+	for _, action := range policyMgmtActions {
+		queryInput := map[string]interface{}{
+			"user":   userAlias,
+			"action": action,
+		}
+		results, err := allowQuery.Eval(ctx, rego.EvalInput(queryInput))
+		if err != nil {
+			return true, err
+		} else if len(results) != 1 || len(results[0].Expressions) != 1 {
+			return true, nil
+		}
+		if v, ok := results[0].Expressions[0].Value.(bool); !ok || !v {
+			return true, nil
+		}
+	}
+
+	// AllowedActions check
+	allowedActionsQuery, err := rego.New(
+		rego.Query(AllowedActionsQuery),
+		rego.Module("", rules),
+		rego.Store(inmem.NewFromReader(bytes.NewBufferString(policyDataJSON))),
+	).PrepareForEval(context.Background())
+	if err != nil {
+		return true, err
+	}
+	queryInput := map[string]interface{}{
+		"user": userAlias,
+	}
+	results, err := allowedActionsQuery.Eval(ctx, rego.EvalInput(queryInput))
+	if err != nil {
+		return true, err
+	} else if len(results) != 1 || len(results[0].Expressions) != 1 {
+		return true, err
+	}
+	values, ok := results[0].Expressions[0].Value.([]interface{})
+	if !ok {
+		return true, nil
+	}
+	allowedActions := make([]hub.Action, 0, len(values))
+	for _, v := range values {
+		action, ok := v.(string)
+		if !ok {
+			return true, nil
+		}
+		allowedActions = append(allowedActions, hub.Action(action))
+	}
+	if !AreActionsAllowed(allowedActions, policyMgmtActions) {
+		return true, nil
+	}
+
+	return false, nil
 }
 
 // IsPredefinedPolicyValid checks if the provided predefined policy is valid.
@@ -263,4 +354,26 @@ func IsPredefinedPolicyValid(predefinedPolicy string) bool {
 		}
 	}
 	return false
+}
+
+// IsActionAllowed checks if a given action is allowed checking against the
+// list of allowed actions provided.
+func IsActionAllowed(allowedActions []hub.Action, action hub.Action) bool {
+	for _, allowedAction := range allowedActions {
+		if allowedAction == hub.Action("all") || allowedAction == action {
+			return true
+		}
+	}
+	return false
+}
+
+// AreActionsAllowed checks if a given list of actions are allowed checking
+// against the list of allowed actions provided.
+func AreActionsAllowed(allowedActions, actions []hub.Action) bool {
+	for _, action := range actions {
+		if !IsActionAllowed(allowedActions, action) {
+			return false
+		}
+	}
+	return true
 }

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strconv"
 
 	"github.com/artifacthub/hub/internal/authz"
 	"github.com/artifacthub/hub/internal/email"
@@ -361,9 +362,17 @@ func (m *Manager) UpdateAuthorizationPolicy(
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "allowed actions rule not found in custom policy")
 		}
 	}
-	var tmp interface{}
-	if json.Unmarshal(p.PolicyData, &tmp) != nil {
+	policyDataJSON, _ := strconv.Unquote(string(p.PolicyData))
+	var tmp map[string]interface{}
+	if err := json.Unmarshal([]byte(policyDataJSON), &tmp); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid policy data")
+	}
+	lockedOut, err := m.az.WillUserBeLockedOut(ctx, p, userID)
+	if err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "error checking if editing user will be locked out")
+	}
+	if lockedOut {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "editing user will be locked out with this policy")
 	}
 
 	// Authorize action
@@ -378,7 +387,7 @@ func (m *Manager) UpdateAuthorizationPolicy(
 	// Update authorization policy in database
 	query := "select update_authorization_policy($1::uuid, $2::text, $3::jsonb)"
 	policyJSON, _ := json.Marshal(p)
-	_, err := m.db.Exec(ctx, query, userID, orgName, policyJSON)
+	_, err = m.db.Exec(ctx, query, userID, orgName, policyJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}

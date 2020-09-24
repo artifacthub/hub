@@ -59,6 +59,7 @@ type AuthorizationPolicy struct {
 type Authorizer interface {
 	Authorize(ctx context.Context, input *AuthorizeInput) error
 	GetAllowedActions(ctx context.Context, userID, orgName string) ([]Action, error)
+	WillUserBeLockedOut(ctx context.Context, newPolicy *AuthorizationPolicy, userID string) (bool, error)
 }
 
 // AuthorizeInput represents the input required to call Authorize.

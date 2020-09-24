@@ -795,7 +795,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 	validPolicy := &hub.AuthorizationPolicy{
 		AuthorizationEnabled: true,
 		PredefinedPolicy:     "rbac.v1",
-		PolicyData:           []byte("{}"),
+		PolicyData:           []byte(`"{\"k\": \"v\"}"`),
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -898,11 +898,40 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 					PolicyData: []byte("{invalidJSON"),
 				},
 			},
+			{
+				"invalid policy data",
+				"org1",
+				&hub.AuthorizationPolicy{
+					CustomPolicy: `
+					package artifacthub.authz
+
+					default allow = false
+					allow { data.roles.owner.users[_] == input.user }
+					allowed_actions[action] { action := "all" }
+					`,
+					PolicyData: []byte(`"[]"`),
+				},
+			},
+			{
+				"editing user will be locked out with this policy",
+				"org1",
+				&hub.AuthorizationPolicy{
+					CustomPolicy: `
+					package artifacthub.authz
+
+					default allow = false
+					allowed_actions = ["all"]
+					`,
+					PolicyData: []byte(`"{}"`),
+				},
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
-				m := NewManager(nil, nil, nil)
+				az := &authz.AuthorizerMock{}
+				az.On("WillUserBeLockedOut", ctx, tc.policy, "userID").Return(true, nil).Maybe()
+				m := NewManager(nil, nil, az)
 				err := m.UpdateAuthorizationPolicy(ctx, tc.orgName, tc.policy)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -912,6 +941,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		az := &authz.AuthorizerMock{}
+		az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "org1",
 			UserID:           "userID",
@@ -928,6 +958,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, dbQuery, "userID", "org1", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
+		az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "org1",
 			UserID:           "userID",
@@ -961,6 +992,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, dbQuery, "userID", "org1", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
+				az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "org1",
 					UserID:           "userID",

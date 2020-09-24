@@ -24,3 +24,14 @@ func (m *AuthorizerMock) GetAllowedActions(ctx context.Context, userID, orgName 
 	data, _ := args.Get(0).([]hub.Action)
 	return data, args.Error(1)
 }
+
+// WillUserBeLockedOut implements the Authorizer interface.
+func (m *AuthorizerMock) WillUserBeLockedOut(
+	ctx context.Context,
+	newPolicy *hub.AuthorizationPolicy,
+	userID string,
+) (bool, error) {
+	args := m.Called(ctx, newPolicy, userID)
+	data, _ := args.Get(0).(bool)
+	return data, args.Error(1)
+}

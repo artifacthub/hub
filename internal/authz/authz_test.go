@@ -2,6 +2,7 @@ package authz
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"os"
 	"strconv"
@@ -78,11 +79,10 @@ func TestMain(m *testing.M) {
 }
 
 func TestNewAuthorizer(t *testing.T) {
-	dbQuery := "select get_authorization_policies()"
-
 	t.Run("error getting authorization policies", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
+			Return(nil, tests.ErrFakeDatabaseFailure)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 		_, err := NewAuthorizer(db)
 		assert.True(t, errors.Is(err, tests.ErrFakeDatabaseFailure))
@@ -91,7 +91,7 @@ func TestNewAuthorizer(t *testing.T) {
 
 	t.Run("error unmarshalling authorization policies", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), dbQuery).Return([]byte(`{"invalid`), nil)
+		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return([]byte(`{"invalid`), nil)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 		_, err := NewAuthorizer(db)
 		assert.Error(t, err)
@@ -100,7 +100,8 @@ func TestNewAuthorizer(t *testing.T) {
 
 	t.Run("authorizer created successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), dbQuery).Return(testsAuthorizationPoliciesJSON, nil)
+		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
+			Return(testsAuthorizationPoliciesJSON, nil)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 		az, err := NewAuthorizer(db)
 		assert.Contains(t, az.allowQueries, "org1")
@@ -111,14 +112,13 @@ func TestNewAuthorizer(t *testing.T) {
 }
 
 func TestAuthorize(t *testing.T) {
-	policiesQuery := "select get_authorization_policies()"
-	userAliasQuery := `select alias from "user" where user_id = $1`
 	db := &tests.DBMock{}
-	db.On("QueryRow", context.Background(), policiesQuery).Return(testsAuthorizationPoliciesJSON, nil)
-	db.On("QueryRow", context.Background(), userAliasQuery, user1ID).Return(user1Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user2ID).Return(user2Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user3ID).Return(user3Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
+	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
+		Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user3ID).Return(user3Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
 	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 	az, err := NewAuthorizer(db)
 	require.NoError(t, err)
@@ -248,15 +248,13 @@ func TestAuthorize(t *testing.T) {
 }
 
 func TestGetAllowedActions(t *testing.T) {
-	policiesQuery := "select get_authorization_policies()"
-	userAliasQuery := `select alias from "user" where user_id = $1`
 	db := &tests.DBMock{}
-	db.On("QueryRow", context.Background(), policiesQuery).Return(testsAuthorizationPoliciesJSON, nil)
-	db.On("QueryRow", context.Background(), userAliasQuery, user1ID).Return(user1Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user2ID).Return(user2Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user3ID).Return(user3Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user4ID).Return(user4Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), userAliasQuery, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
+	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user3ID).Return(user3Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user4ID).Return(user4Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
 	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
 	az, err := NewAuthorizer(db)
 	require.NoError(t, err)
@@ -328,6 +326,149 @@ func TestGetAllowedActions(t *testing.T) {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			allowedActions, _ := az.GetAllowedActions(context.Background(), tc.userID, tc.orgName)
 			assert.Equal(t, tc.expectedAllowedActions, allowedActions)
+		})
+	}
+
+	db.AssertExpectations(t)
+}
+
+func TestWillUserBeLockedOut(t *testing.T) {
+	db := &tests.DBMock{}
+	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
+	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+	az, err := NewAuthorizer(db)
+	require.NoError(t, err)
+
+	testCases := []struct {
+		predefinedPolicy  string
+		customPolicy      string
+		policyData        string
+		userID            string
+		expectedLockedOut bool
+	}{
+		{
+			"rbac.v1",
+			``,
+			`{}`,
+			user1ID,
+			true,
+		},
+		{
+			"rbac.v1",
+			``,
+			`{"roles": {"owner": {"users": ["user1"]}}}`,
+			user1ID,
+			false,
+		},
+		{
+			"rbac.v1",
+			"",
+			`{"roles": {"owner": {"users": ["user1"]}}}`,
+			user2ID,
+			true,
+		},
+		{
+			"rbac.v1",
+			"",
+			`{"roles": {"role1": {"users": ["user1"], "allowed_actions": []}}}`,
+			user1ID,
+			true,
+		},
+		{
+			"rbac.v1",
+			"",
+			`{"roles": {"role1": {"users": ["user1"], "allowed_actions": ["updateAuthorizationPolicy"]}}}`,
+			user1ID,
+			true,
+		},
+		{
+			"rbac.v1",
+			"",
+			`{"roles": {"role1": {"users": ["user1"], "allowed_actions": ["getAuthorizationPolicy"]}}}`,
+			user1ID,
+			true,
+		},
+		{
+			"rbac.v1",
+			"",
+			`{"roles": {"role1": {"users": ["user1"], "allowed_actions": ["getAuthorizationPolicy", "updateAuthorizationPolicy"]}}}`,
+			user1ID,
+			false,
+		},
+		{
+			"",
+			`
+			package artifacthub.authz
+
+			allow = true
+			allowed_actions = ["all"]
+			`,
+			`{}`,
+			user1ID,
+			false,
+		},
+		{
+			"",
+			`
+			package artifacthub.authz
+
+			allow = false
+			allowed_actions = []
+			`,
+			`{}`,
+			user1ID,
+			true,
+		},
+		{
+			"",
+			`
+			package artifacthub.authz
+
+			allow = true
+			allowed_actions = ["getAuthorizationPolicy"]
+			`,
+			`{}`,
+			user1ID,
+			true,
+		},
+		{
+			"",
+			`
+			package artifacthub.authz
+
+			allow = true
+			allowed_actions = ["updateAuthorizationPolicy"]
+			`,
+			`{}`,
+			user1ID,
+			true,
+		},
+		{
+			"",
+			`
+			package artifacthub.authz
+
+			allow = true
+			allowed_actions = ["getAuthorizationPolicy", "updateAuthorizationPolicy"]
+			`,
+			`{}`,
+			user1ID,
+			false,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			policyDataJSON, _ := json.Marshal(tc.policyData)
+			p := &hub.AuthorizationPolicy{
+				PredefinedPolicy: tc.predefinedPolicy,
+				CustomPolicy:     tc.customPolicy,
+				PolicyData:       policyDataJSON,
+			}
+			lockedOut, _ := az.WillUserBeLockedOut(context.Background(), p, tc.userID)
+			assert.Equal(t, tc.expectedLockedOut, lockedOut)
 		})
 	}
 
