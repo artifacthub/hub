@@ -12,6 +12,17 @@ import (
 	"github.com/satori/uuid"
 )
 
+const (
+	// Database queries
+	addWebhookDBQ                 = `select add_webhook($1::uuid, $2::text, $3::jsonb)`
+	deleteWebhookDBQ              = `select delete_webhook($1::uuid, $2::uuid)`
+	getWebhooksSubscribedToPkgDBQ = `select get_webhooks_subscribed_to_package($1::int, $2::uuid)`
+	getOrgWebhooksDBQ             = `select get_org_webhooks($1::uuid, $2::text)`
+	getUserWebhooksDBQ            = `select get_user_webhooks($1::uuid)`
+	getWebhookDBQ                 = `select get_webhook($1::uuid, $2::uuid)`
+	updateWebhookDBQ              = `select update_webhook($1::uuid, $2::jsonb)`
+)
+
 // Manager provides an API to manage webhooks.
 type Manager struct {
 	db hub.DB
@@ -55,9 +66,8 @@ func (m *Manager) Add(ctx context.Context, orgName string, wh *hub.Webhook) erro
 	}
 
 	// Add webhook to the database
-	query := "select add_webhook($1::uuid, $2::text, $3::jsonb)"
 	whJSON, _ := json.Marshal(wh)
-	_, err = m.db.Exec(ctx, query, userID, orgName, whJSON)
+	_, err = m.db.Exec(ctx, addWebhookDBQ, userID, orgName, whJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -74,8 +84,7 @@ func (m *Manager) Delete(ctx context.Context, webhookID string) error {
 	}
 
 	// Delete webhook from database
-	query := "select delete_webhook($1::uuid, $2::uuid)"
-	_, err := m.db.Exec(ctx, query, userID, webhookID)
+	_, err := m.db.Exec(ctx, deleteWebhookDBQ, userID, webhookID)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -92,8 +101,7 @@ func (m *Manager) GetJSON(ctx context.Context, webhookID string) ([]byte, error)
 	}
 
 	// Get webhook from database
-	query := "select get_webhook($1::uuid, $2::uuid)"
-	dataJSON, err := m.dbQueryJSON(ctx, query, userID, webhookID)
+	dataJSON, err := util.DBQueryJSON(ctx, m.db, getWebhookDBQ, userID, webhookID)
 	if err != nil {
 		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 			return nil, hub.ErrInsufficientPrivilege
@@ -114,8 +122,7 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 	}
 
 	// Get webhooks from database
-	query := "select get_org_webhooks($1::uuid, $2::text)"
-	return m.dbQueryJSON(ctx, query, userID, orgName)
+	return util.DBQueryJSON(ctx, m.db, getOrgWebhooksDBQ, userID, orgName)
 }
 
 // GetOwnedByUserJSON returns the webhooks belonging to the requesting user as
@@ -124,8 +131,7 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Get webhooks from database
-	query := "select get_user_webhooks($1::uuid)"
-	return m.dbQueryJSON(ctx, query, userID)
+	return util.DBQueryJSON(ctx, m.db, getUserWebhooksDBQ, userID)
 }
 
 // GetSubscribedTo returns the webhooks subscribed to the event provided.
@@ -137,8 +143,7 @@ func (m *Manager) GetSubscribedTo(ctx context.Context, e *hub.Event) ([]*hub.Web
 		if _, err := uuid.FromString(e.PackageID); err != nil {
 			return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 		}
-		query := "select get_webhooks_subscribed_to_package($1::int, $2::uuid)"
-		dataJSON, err = m.dbQueryJSON(ctx, query, e.EventKind, e.PackageID)
+		dataJSON, err = util.DBQueryJSON(ctx, m.db, getWebhooksSubscribedToPkgDBQ, e.EventKind, e.PackageID)
 	default:
 		return nil, nil
 	}
@@ -186,21 +191,10 @@ func (m *Manager) Update(ctx context.Context, wh *hub.Webhook) error {
 	}
 
 	// Update webhook in database
-	query := "select update_webhook($1::uuid, $2::jsonb)"
 	whJSON, _ := json.Marshal(wh)
-	_, err = m.db.Exec(ctx, query, userID, whJSON)
+	_, err = m.db.Exec(ctx, updateWebhookDBQ, userID, whJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
-}
-
-// dbQueryJSON is a helper that executes the query provided and returns a bytes
-// slice containing the json data returned from the database.
-func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
 }

@@ -113,7 +113,7 @@ func TestRenderErrorJSON(t *testing.T) {
 			"",
 		},
 		{
-			tests.ErrFakeDatabaseFailure,
+			tests.ErrFakeDB,
 			http.StatusInternalServerError,
 			"",
 		},

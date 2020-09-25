@@ -2,6 +2,7 @@ package util
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -68,4 +69,33 @@ func DBTransact(ctx context.Context, db hub.DB, txFunc func(pgx.Tx) error) (err 
 	}()
 	err = txFunc(tx)
 	return err
+}
+
+// DBQueryJSON is a helper that executes the query provided and returns a bytes
+// slice containing the json data returned from the database.
+func DBQueryJSON(ctx context.Context, db hub.DB, query string, args ...interface{}) ([]byte, error) {
+	var dataJSON []byte
+	if err := db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
+		if err.Error() == ErrDBInsufficientPrivilege.Error() {
+			return nil, hub.ErrInsufficientPrivilege
+		}
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, hub.ErrNotFound
+		}
+		return nil, err
+	}
+	return dataJSON, nil
+}
+
+// DBQueryUnmarshal is a helper that executes the query provided and unmarshals
+// the json data returned from the database into the value (v) provided.
+func DBQueryUnmarshal(ctx context.Context, db hub.DB, v interface{}, query string, args ...interface{}) error {
+	dataJSON, err := DBQueryJSON(ctx, db, query, args...)
+	if err != nil {
+		return err
+	}
+	if err := json.Unmarshal(dataJSON, &v); err != nil {
+		return err
+	}
+	return nil
 }

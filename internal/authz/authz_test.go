@@ -81,18 +81,17 @@ func TestMain(m *testing.M) {
 func TestNewAuthorizer(t *testing.T) {
 	t.Run("error getting authorization policies", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
-			Return(nil, tests.ErrFakeDatabaseFailure)
-		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(nil, tests.ErrFakeDB)
+		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 		_, err := NewAuthorizer(db)
-		assert.True(t, errors.Is(err, tests.ErrFakeDatabaseFailure))
+		assert.True(t, errors.Is(err, tests.ErrFakeDB))
 		db.AssertExpectations(t)
 	})
 
 	t.Run("error unmarshalling authorization policies", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return([]byte(`{"invalid`), nil)
-		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return([]byte(`{"invalid`), nil)
+		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 		_, err := NewAuthorizer(db)
 		assert.Error(t, err)
 		db.AssertExpectations(t)
@@ -100,9 +99,8 @@ func TestNewAuthorizer(t *testing.T) {
 
 	t.Run("authorizer created successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
-			Return(testsAuthorizationPoliciesJSON, nil)
-		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
+		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 		az, err := NewAuthorizer(db)
 		assert.Contains(t, az.allowedActionsQueries, "org1")
 		assert.Nil(t, err)
@@ -112,13 +110,12 @@ func TestNewAuthorizer(t *testing.T) {
 
 func TestAuthorize(t *testing.T) {
 	db := &tests.DBMock{}
-	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).
-		Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user3ID).Return(user3Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
-	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDB).Maybe()
+	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 	az, err := NewAuthorizer(db)
 	require.NoError(t, err)
 
@@ -248,13 +245,13 @@ func TestAuthorize(t *testing.T) {
 
 func TestGetAllowedActions(t *testing.T) {
 	db := &tests.DBMock{}
-	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user3ID).Return(user3Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user4ID).Return(user4Alias, nil).Maybe()
-	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDatabaseFailure).Maybe()
-	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+	db.On("QueryRow", context.Background(), getUserAliasDBQ, user5ID).Return("", tests.ErrFakeDB).Maybe()
+	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 	az, err := NewAuthorizer(db)
 	require.NoError(t, err)
 
@@ -333,10 +330,10 @@ func TestGetAllowedActions(t *testing.T) {
 
 func TestWillUserBeLockedOut(t *testing.T) {
 	db := &tests.DBMock{}
-	db.On("QueryRow", context.Background(), getAuthorizationPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
+	db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user1ID).Return(user1Alias, nil).Maybe()
 	db.On("QueryRow", context.Background(), getUserAliasDBQ, user2ID).Return(user2Alias, nil).Maybe()
-	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDatabaseFailure).Maybe()
+	db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
 	az, err := NewAuthorizer(db)
 	require.NoError(t, err)
 

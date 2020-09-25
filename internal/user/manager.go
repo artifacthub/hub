@@ -16,6 +16,23 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+const (
+	// Database queries
+	checkUserAliasAvailDBQ = `select user_id from "user" where alias = $1`
+	checkUserCredsDBQ      = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
+	deleteSessionDBQ       = `delete from session where session_id = $1`
+	getAPIKeyUserIDDBQ     = `select user_id from api_key where key = $1`
+	getSessionDBQ          = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
+	getUserIDDBQ           = `select user_id from "user" where email = $1`
+	getUserPasswordDBQ     = `select password from "user" where user_id = $1 and password is not null`
+	getUserProfileDBQ      = `select get_user_profile($1::uuid)`
+	registerSessionDBQ     = `select register_session($1::jsonb)`
+	registerUserDBQ        = `select register_user($1::jsonb)`
+	updateUserPasswordDBQ  = `select update_user_password($1::uuid, $2::text, $3::text)`
+	updateUserProfileDBQ   = `select update_user_profile($1::uuid, $2::jsonb)`
+	verifyEmailDBQ         = `select verify_email($1::uuid)`
+)
+
 var (
 	// ErrInvalidPassword indicates that the password provided is not valid.
 	ErrInvalidPassword = errors.New("invalid password")
@@ -47,8 +64,7 @@ func (m *Manager) CheckAPIKey(ctx context.Context, key []byte) (*hub.CheckAPIKey
 
 	// Get key's user id from database
 	var userID string
-	query := `select user_id from api_key where key = $1`
-	err := m.db.QueryRow(ctx, query, key).Scan(&userID)
+	err := m.db.QueryRow(ctx, getAPIKeyUserIDDBQ, key).Scan(&userID)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckAPIKeyOutput{Valid: false}, nil
@@ -89,7 +105,7 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	// Check availability in database
 	switch resourceKind {
 	case "userAlias":
-		query = `select user_id from "user" where alias = $1`
+		query = checkUserAliasAvailDBQ
 	}
 	query = fmt.Sprintf("select not exists (%s)", query)
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
@@ -112,14 +128,7 @@ func (m *Manager) CheckCredentials(
 
 	// Get password for email provided from database
 	var userID, hashedPassword string
-	query := `
-	select user_id, password
-	from "user"
-	where email = $1
-	and password is not null
-	and email_verified = true
-	`
-	err := m.db.QueryRow(ctx, query, email).Scan(&userID, &hashedPassword)
+	err := m.db.QueryRow(ctx, checkUserCredsDBQ, email).Scan(&userID, &hashedPassword)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckCredentialsOutput{Valid: false}, nil
@@ -156,11 +165,7 @@ func (m *Manager) CheckSession(
 	// Get session details from database
 	var userID string
 	var createdAt int64
-	query := `
-	select user_id, floor(extract(epoch from created_at))
-	from session where session_id = $1
-	`
-	err := m.db.QueryRow(ctx, query, sessionID).Scan(&userID, &createdAt)
+	err := m.db.QueryRow(ctx, getSessionDBQ, sessionID).Scan(&userID, &createdAt)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return &hub.CheckSessionOutput{Valid: false}, nil
@@ -187,7 +192,7 @@ func (m *Manager) DeleteSession(ctx context.Context, sessionID []byte) error {
 	}
 
 	// Delete session from database
-	_, err := m.db.Exec(ctx, "delete from session where session_id = $1", sessionID)
+	_, err := m.db.Exec(ctx, deleteSessionDBQ, sessionID)
 	return err
 }
 
@@ -209,7 +214,7 @@ func (m *Manager) GetProfile(ctx context.Context) (*hub.User, error) {
 func (m *Manager) GetProfileJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 	var profile []byte
-	err := m.db.QueryRow(ctx, "select get_user_profile($1::uuid)", userID).Scan(&profile)
+	err := m.db.QueryRow(ctx, getUserProfileDBQ, userID).Scan(&profile)
 	return profile, err
 }
 
@@ -222,8 +227,7 @@ func (m *Manager) GetUserID(ctx context.Context, email string) (string, error) {
 
 	// Get user id from database
 	var userID string
-	query := `select user_id from "user" where email = $1`
-	err := m.db.QueryRow(ctx, query, email).Scan(&userID)
+	err := m.db.QueryRow(ctx, getUserIDDBQ, email).Scan(&userID)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return "", ErrNotFound
@@ -246,7 +250,7 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]
 	// Register session in database
 	sessionJSON, _ := json.Marshal(session)
 	var sessionID []byte
-	err := m.db.QueryRow(ctx, "select register_session($1::jsonb)", sessionJSON).Scan(&sessionID)
+	err := m.db.QueryRow(ctx, registerSessionDBQ, sessionJSON).Scan(&sessionID)
 	return sessionID, err
 }
 
@@ -286,7 +290,7 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 	// Register user in database
 	userJSON, _ := json.Marshal(user)
 	var code string
-	err := m.db.QueryRow(ctx, "select register_user($1::jsonb)", userJSON).Scan(&code)
+	err := m.db.QueryRow(ctx, registerUserDBQ, userJSON).Scan(&code)
 	if err != nil {
 		return err
 	}
@@ -327,8 +331,7 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 
 	// Validate old password
 	var oldHashed string
-	getPasswordQuery := `select password from "user" where user_id = $1 and password is not null`
-	err := m.db.QueryRow(ctx, getPasswordQuery, userID).Scan(&oldHashed)
+	err := m.db.QueryRow(ctx, getUserPasswordDBQ, userID).Scan(&oldHashed)
 	if err != nil {
 		return err
 	}
@@ -344,8 +347,7 @@ func (m *Manager) UpdatePassword(ctx context.Context, old, new string) error {
 	}
 
 	// Update user password in database
-	updatePasswordQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
-	_, err = m.db.Exec(ctx, updatePasswordQuery, userID, oldHashed, string(newHashed))
+	_, err = m.db.Exec(ctx, updateUserPasswordDBQ, userID, oldHashed, string(newHashed))
 	return err
 }
 
@@ -364,9 +366,8 @@ func (m *Manager) UpdateProfile(ctx context.Context, user *hub.User) error {
 	}
 
 	// Update user profile in database
-	query := "select update_user_profile($1::uuid, $2::jsonb)"
 	userJSON, _ := json.Marshal(user)
-	_, err := m.db.Exec(ctx, query, userID, userJSON)
+	_, err := m.db.Exec(ctx, updateUserProfileDBQ, userID, userJSON)
 	return err
 }
 
@@ -381,6 +382,6 @@ func (m *Manager) VerifyEmail(ctx context.Context, code string) (bool, error) {
 	}
 
 	// Verify email in database
-	err := m.db.QueryRow(ctx, "select verify_email($1::uuid)", code).Scan(&verified)
+	err := m.db.QueryRow(ctx, verifyEmailDBQ, code).Scan(&verified)
 	return verified, err
 }

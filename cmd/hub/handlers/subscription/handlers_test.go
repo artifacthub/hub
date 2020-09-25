@@ -91,7 +91,7 @@ func TestAdd(t *testing.T) {
 			},
 			{
 				"error adding subscription",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -181,7 +181,7 @@ func TestAddOptOut(t *testing.T) {
 			},
 			{
 				"error adding opt-out",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -278,7 +278,7 @@ func TestDelete(t *testing.T) {
 			},
 			{
 				"error deleting subscription",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -323,7 +323,7 @@ func TestDeleteOptOut(t *testing.T) {
 		},
 		{
 			"error deleting opt-out entry",
-			tests.ErrFakeDatabaseFailure,
+			tests.ErrFakeDB,
 			http.StatusInternalServerError,
 		},
 	}
@@ -365,7 +365,7 @@ func TestGetByPackage(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -418,7 +418,7 @@ func TestGetByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.sm.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -455,7 +455,7 @@ func TestGetOptOutList(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.sm.On("GetOptOutListJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.sm.On("GetOptOutListJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOptOutList(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

@@ -137,8 +137,7 @@ func TestCheckAvailability(t *testing.T) {
 			r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAvailability", r.Context(), "userAlias", "value").
-				Return(false, tests.ErrFakeDatabaseFailure)
+			hw.um.On("CheckAvailability", r.Context(), "userAlias", "value").Return(false, tests.ErrFakeDB)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -156,7 +155,7 @@ func TestGetProfile(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.um.On("GetProfileJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("GetProfileJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -236,7 +235,7 @@ func TestInjectUserID(t *testing.T) {
 			Value: encodedSessionID,
 		})
 		hw.um.On("CheckSession", r.Context(), mock.Anything, mock.Anything).
-			Return(nil, tests.ErrFakeDatabaseFailure)
+			Return(nil, tests.ErrFakeDB)
 		hw.h.InjectUserID(checkUserID(nil)).ServeHTTP(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -321,7 +320,7 @@ func TestLogin(t *testing.T) {
 		r, _ := http.NewRequest("POST", "/", body)
 
 		hw := newHandlersWrapper()
-		hw.um.On("CheckCredentials", r.Context(), "email", "pass").Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.um.On("CheckCredentials", r.Context(), "email", "pass").Return(nil, tests.ErrFakeDB)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -355,7 +354,7 @@ func TestLogin(t *testing.T) {
 		hw.um.On("CheckCredentials", r.Context(), "email", "pass").
 			Return(&hub.CheckCredentialsOutput{Valid: true, UserID: "userID"}, nil)
 		hw.um.On("RegisterSession", r.Context(), &hub.Session{UserID: "userID"}).
-			Return(nil, tests.ErrFakeDatabaseFailure)
+			Return(nil, tests.ErrFakeDB)
 		hw.h.Login(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -445,7 +444,7 @@ func TestLogout(t *testing.T) {
 			},
 			{
 				"error deleting session",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 			},
 		}
 		for _, tc := range testCases {
@@ -561,7 +560,7 @@ func TestRegisterUser(t *testing.T) {
 			},
 			{
 				"registration failed",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -610,7 +609,7 @@ func TestRequireLogin(t *testing.T) {
 
 			hw := newHandlersWrapper()
 			hw.um.On("CheckSession", r.Context(), sessionID, sessionDuration).
-				Return(nil, tests.ErrFakeDatabaseFailure)
+				Return(nil, tests.ErrFakeDB)
 			encodedSessionID, _ := hw.h.sc.Encode(sessionCookieName, sessionID)
 			r.AddCookie(&http.Cookie{
 				Name:  sessionCookieName,
@@ -688,7 +687,7 @@ func TestRequireLogin(t *testing.T) {
 			r.Header.Add(apiKeyHeader, keyB64)
 
 			hw := newHandlersWrapper()
-			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDatabaseFailure)
+			hw.um.On("CheckAPIKey", r.Context(), key).Return(nil, tests.ErrFakeDB)
 			hw.h.RequireLogin(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -799,7 +798,7 @@ func TestUpdatePassword(t *testing.T) {
 
 		hw := newHandlersWrapper()
 		hw.um.On("UpdatePassword", r.Context(), "old", "new").
-			Return(tests.ErrFakeDatabaseFailure)
+			Return(tests.ErrFakeDB)
 		hw.h.UpdatePassword(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -878,7 +877,7 @@ func TestUpdateProfile(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.um.On("UpdateProfile", r.Context(), u).Return(tests.ErrFakeDatabaseFailure)
+		hw.um.On("UpdateProfile", r.Context(), u).Return(tests.ErrFakeDB)
 		hw.h.UpdateProfile(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -926,7 +925,7 @@ func TestVerifyEmail(t *testing.T) {
 		},
 		{
 			"database error",
-			[]interface{}{false, tests.ErrFakeDatabaseFailure},
+			[]interface{}{false, tests.ErrFakeDB},
 			http.StatusInternalServerError,
 		},
 	}

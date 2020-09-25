@@ -14,7 +14,6 @@ import (
 const apiKeyID = "00000000-0000-0000-0000-000000000001"
 
 func TestAdd(t *testing.T) {
-	dbQuery := "select add_api_key($1::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	ak := &hub.APIKey{
 		Name:   "apikey1",
@@ -56,18 +55,18 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, akJSON).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.Add(ctx, ak)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("add api key succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, akJSON).Return([]byte("key"), nil)
+		db.On("QueryRow", ctx, addAPIKeyDBQ, akJSON).Return([]byte("key"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.Add(ctx, ak)
@@ -78,7 +77,6 @@ func TestAdd(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	dbQuery := "select delete_api_key($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -96,17 +94,17 @@ func TestDelete(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", apiKeyID).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, deleteAPIKeyDBQ, "userID", apiKeyID).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, apiKeyID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("delete api key succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", apiKeyID).Return(nil)
+		db.On("Exec", ctx, deleteAPIKeyDBQ, "userID", apiKeyID).Return(nil)
 		m := NewManager(db)
 
 		err := m.Delete(ctx, apiKeyID)
@@ -116,7 +114,6 @@ func TestDelete(t *testing.T) {
 }
 
 func TestGetJSON(t *testing.T) {
-	dbQuery := "select get_api_key($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -134,18 +131,18 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", apiKeyID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getAPIKeyDBQ, "userID", apiKeyID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, apiKeyID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("api key data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", apiKeyID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getAPIKeyDBQ, "userID", apiKeyID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, apiKeyID)
@@ -156,7 +153,6 @@ func TestGetJSON(t *testing.T) {
 }
 
 func TestGetOwnedByUserJSON(t *testing.T) {
-	dbQuery := "select get_user_api_keys($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -168,18 +164,18 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserAPIKeysDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("user api keys data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserAPIKeysDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -190,7 +186,6 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	dbQuery := "select update_api_key($1::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	ak := &hub.APIKey{
 		APIKeyID: apiKeyID,
@@ -239,17 +234,17 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, akJSON).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, updateAPIKeyDBQ, akJSON).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
 		err := m.Update(ctx, ak)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("update api key succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, akJSON).Return(nil)
+		db.On("Exec", ctx, updateAPIKeyDBQ, akJSON).Return(nil)
 		m := NewManager(db)
 
 		err := m.Update(ctx, ak)

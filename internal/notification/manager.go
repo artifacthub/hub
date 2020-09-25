@@ -10,6 +10,13 @@ import (
 	"github.com/satori/uuid"
 )
 
+const (
+	// Database queries
+	addNotificationDBQ          = `select add_notification($1::jsonb)`
+	getPendingNotificationDBQ   = `select get_pending_notification()`
+	updateNotificationStatusDBQ = `select update_notification_status($1::uuid, $2::boolean, $3::text)`
+)
+
 // Manager provides an API to manage notifications.
 type Manager struct{}
 
@@ -39,17 +46,15 @@ func (m *Manager) Add(ctx context.Context, tx pgx.Tx, n *hub.Notification) error
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid webhook id")
 		}
 	}
-	query := `select add_notification($1::jsonb)`
 	nJSON, _ := json.Marshal(n)
-	_, err := tx.Exec(ctx, query, nJSON)
+	_, err := tx.Exec(ctx, addNotificationDBQ, nJSON)
 	return err
 }
 
 // GetPending returns a pending notification to be delivered if available.
 func (m *Manager) GetPending(ctx context.Context, tx pgx.Tx) (*hub.Notification, error) {
-	query := "select get_pending_notification()"
 	var dataJSON []byte
-	if err := tx.QueryRow(ctx, query).Scan(&dataJSON); err != nil {
+	if err := tx.QueryRow(ctx, getPendingNotificationDBQ).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
 	var n *hub.Notification
@@ -70,11 +75,10 @@ func (m *Manager) UpdateStatus(
 	if _, err := uuid.FromString(notificationID); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid notification id")
 	}
-	query := "select update_notification_status($1::uuid, $2::boolean, $3::text)"
 	var processedErrStr string
 	if processedErr != nil {
 		processedErrStr = processedErr.Error()
 	}
-	_, err := tx.Exec(ctx, query, notificationID, processed, processedErrStr)
+	_, err := tx.Exec(ctx, updateNotificationStatusDBQ, notificationID, processed, processedErrStr)
 	return err
 }

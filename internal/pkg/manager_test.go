@@ -12,7 +12,6 @@ import (
 )
 
 func TestGet(t *testing.T) {
-	dbQuery := "select get_package($1::jsonb)"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -23,11 +22,11 @@ func TestGet(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		p, err := m.Get(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, p)
 		db.AssertExpectations(t)
 	})
@@ -110,7 +109,7 @@ func TestGet(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, mock.Anything).Return([]byte(`
+		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return([]byte(`
 		{
 			"package_id": "00000000-0000-0000-0000-000000000001",
 			"name": "Package 1",
@@ -197,7 +196,6 @@ func TestGet(t *testing.T) {
 }
 
 func TestGetJSON(t *testing.T) {
-	dbQuery := "select get_package($1::jsonb)"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -208,7 +206,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
@@ -219,23 +217,22 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetJSON(ctx, &hub.GetPackageInput{PackageName: "pkg1"})
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetRandomJSON(t *testing.T) {
-	dbQuery := "select get_random_packages()"
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getRandomPkgsDBQ).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetRandomJSON(ctx)
@@ -246,18 +243,17 @@ func TestGetRandomJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRandomPkgsDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetRandomJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetStarredByUserJSON(t *testing.T) {
-	dbQuery := "select get_packages_starred_by_user($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -269,7 +265,7 @@ func TestGetStarredByUserJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgsStarredByUserDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStarredByUserJSON(ctx)
@@ -280,18 +276,17 @@ func TestGetStarredByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getPkgsStarredByUserDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStarredByUserJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetStarsJSON(t *testing.T) {
-	dbQuery := "select get_package_stars($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	pkgID := "00000000-0000-0000-0000-000000000001"
 
@@ -316,17 +311,17 @@ func TestGetStarsJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, pkgID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getPkgStarsDBQ, mock.Anything, pkgID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		_, err := m.GetStarsJSON(ctx, pkgID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything, pkgID).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgStarsDBQ, mock.Anything, pkgID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStarsJSON(ctx, pkgID)
@@ -337,12 +332,11 @@ func TestGetStarsJSON(t *testing.T) {
 }
 
 func TestGetStatsJSON(t *testing.T) {
-	dbQuery := "select get_packages_stats()"
 	ctx := context.Background()
 
 	t.Run("packages stats data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getPkgsStatsDBQ).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStatsJSON(ctx)
@@ -353,18 +347,17 @@ func TestGetStatsJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getPkgsStatsDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.GetStatsJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestRegister(t *testing.T) {
-	dbQuery := "select register_package($1::jsonb)"
 	ctx := context.Background()
 
 	p := &hub.Package{
@@ -530,7 +523,7 @@ func TestRegister(t *testing.T) {
 
 	t.Run("successful package registration", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
+		db.On("Exec", ctx, registerPkgDBQ, mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Register(ctx, p)
@@ -540,17 +533,16 @@ func TestRegister(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, registerPkgDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
 		err := m.Register(ctx, p)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestSearchJSON(t *testing.T) {
-	dbQuery := "select search_packages($1::jsonb)"
 	ctx := context.Background()
 	input := &hub.SearchPackageInput{
 		Limit:      10,
@@ -623,7 +615,7 @@ func TestSearchJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.SearchJSON(ctx, input)
@@ -634,25 +626,24 @@ func TestSearchJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.SearchJSON(ctx, input)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestSearchMonocularJSON(t *testing.T) {
-	dbQuery := "select search_packages_monocular($1::text, $2::text)"
 	ctx := context.Background()
 	baseURL := "https://artifacthub.io"
 	searchTerm := "text"
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, baseURL, searchTerm).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, searchPkgsMonocularDBQ, baseURL, searchTerm).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
 
 		dataJSON, err := m.SearchMonocularJSON(ctx, baseURL, searchTerm)
@@ -663,18 +654,17 @@ func TestSearchMonocularJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, baseURL, searchTerm).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, searchPkgsMonocularDBQ, baseURL, searchTerm).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
 
 		dataJSON, err := m.SearchMonocularJSON(ctx, baseURL, searchTerm)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestToggleStar(t *testing.T) {
-	dbQuery := "select toggle_star($1::uuid, $2::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	pkgID := "00000000-0000-0000-0000-000000000001"
 
@@ -706,7 +696,7 @@ func TestToggleStar(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", pkgID).Return(nil)
+		db.On("Exec", ctx, togglePkgStarDBQ, "userID", pkgID).Return(nil)
 		m := NewManager(db)
 
 		err := m.ToggleStar(ctx, pkgID)
@@ -716,17 +706,16 @@ func TestToggleStar(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", pkgID).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, togglePkgStarDBQ, "userID", pkgID).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
 		err := m.ToggleStar(ctx, pkgID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestUnregister(t *testing.T) {
-	dbQuery := "select unregister_package($1::jsonb)"
 	ctx := context.Background()
 
 	p := &hub.Package{
@@ -773,7 +762,7 @@ func TestUnregister(t *testing.T) {
 
 	t.Run("successful package unregistration", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
+		db.On("Exec", ctx, unregisterPkgDBQ, mock.Anything).Return(nil)
 		m := NewManager(db)
 
 		err := m.Unregister(ctx, p)
@@ -783,11 +772,11 @@ func TestUnregister(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, unregisterPkgDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
 		err := m.Unregister(ctx, p)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }

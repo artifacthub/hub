@@ -6,7 +6,17 @@ import (
 	"fmt"
 
 	"github.com/artifacthub/hub/internal/hub"
+	"github.com/artifacthub/hub/internal/util"
 	"github.com/satori/uuid"
+)
+
+const (
+	// Database queries
+	addAPIKeyDBQ      = `select add_api_key($1::jsonb)`
+	deleteAPIKeyDBQ   = `select delete_api_key($1::uuid, $2::uuid)`
+	getAPIKeyDBQ      = `select get_api_key($1::uuid, $2::uuid)`
+	getUserAPIKeysDBQ = `select get_user_api_keys($1::uuid)`
+	updateAPIKeyDBQ   = `select update_api_key($1::jsonb)`
 )
 
 // Manager provides an API to manage api keys.
@@ -33,7 +43,7 @@ func (m *Manager) Add(ctx context.Context, ak *hub.APIKey) ([]byte, error) {
 	// Add api key to the database
 	akJSON, _ := json.Marshal(ak)
 	var key []byte
-	err := m.db.QueryRow(ctx, "select add_api_key($1::jsonb)", akJSON).Scan(&key)
+	err := m.db.QueryRow(ctx, addAPIKeyDBQ, akJSON).Scan(&key)
 	return key, err
 }
 
@@ -47,8 +57,7 @@ func (m *Manager) Delete(ctx context.Context, apiKeyID string) error {
 	}
 
 	// Delete api key from database
-	query := "select delete_api_key($1::uuid, $2::uuid)"
-	_, err := m.db.Exec(ctx, query, userID, apiKeyID)
+	_, err := m.db.Exec(ctx, deleteAPIKeyDBQ, userID, apiKeyID)
 	return err
 }
 
@@ -62,8 +71,7 @@ func (m *Manager) GetJSON(ctx context.Context, apiKeyID string) ([]byte, error) 
 	}
 
 	// Get api key from database
-	query := "select get_api_key($1::uuid, $2::uuid)"
-	return m.dbQueryJSON(ctx, query, userID, apiKeyID)
+	return util.DBQueryJSON(ctx, m.db, getAPIKeyDBQ, userID, apiKeyID)
 }
 
 // GetOwnedByUserJSON returns the api keys belonging to the requesting user as
@@ -72,8 +80,7 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Get api keys from database
-	query := "select get_user_api_keys($1::uuid)"
-	return m.dbQueryJSON(ctx, query, userID)
+	return util.DBQueryJSON(ctx, m.db, getUserAPIKeysDBQ, userID)
 }
 
 // Update updates the provided api key in the database.
@@ -89,18 +96,7 @@ func (m *Manager) Update(ctx context.Context, ak *hub.APIKey) error {
 	}
 
 	// Update api key in database
-	query := "select update_api_key($1::jsonb)"
 	akJSON, _ := json.Marshal(ak)
-	_, err := m.db.Exec(ctx, query, akJSON)
+	_, err := m.db.Exec(ctx, updateAPIKeyDBQ, akJSON)
 	return err
-}
-
-// dbQueryJSON is a helper that executes the query provided and returns a bytes
-// slice containing the json data returned from the database.
-func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
 }

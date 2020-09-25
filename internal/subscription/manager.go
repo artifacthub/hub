@@ -9,6 +9,19 @@ import (
 	"github.com/satori/uuid"
 )
 
+const (
+	// Database queries
+	addOptOutDBQ               = `select add_opt_out($1::jsonb)`
+	addSubscriptionDBQ         = `select add_subscription($1::jsonb)`
+	deleteOptOutDBQ            = `select delete_opt_out($1::uuid, $2::uuid)`
+	deleteSubscriptionDBQ      = `select delete_subscription($1::jsonb)`
+	getPkgSubscriptorsDBQ      = `select get_package_subscriptors($1::uuid, $2::integer)`
+	getRepoSubscriptorsDBQ     = `select get_repository_subscriptors($1::uuid, $2::integer)`
+	getUserOptOutEntriesDBQ    = `select get_user_opt_out_entries($1::uuid)`
+	getUserPkgSubscriptionsDBQ = `select get_user_package_subscriptions($1::uuid, $2::uuid)`
+	getUserSubscriptionsDBQ    = `select get_user_subscriptions($1::uuid)`
+)
+
 // Manager provides an API to manage subscriptions.
 type Manager struct {
 	db hub.DB
@@ -28,9 +41,8 @@ func (m *Manager) Add(ctx context.Context, s *hub.Subscription) error {
 	if err := validateSubscription(s); err != nil {
 		return err
 	}
-	query := "select add_subscription($1::jsonb)"
 	sJSON, _ := json.Marshal(s)
-	_, err := m.db.Exec(ctx, query, sJSON)
+	_, err := m.db.Exec(ctx, addSubscriptionDBQ, sJSON)
 	return err
 }
 
@@ -41,9 +53,8 @@ func (m *Manager) AddOptOut(ctx context.Context, o *hub.OptOut) error {
 	if err := validateOptOut(o); err != nil {
 		return err
 	}
-	query := "select add_opt_out($1::jsonb)"
 	oJSON, _ := json.Marshal(o)
-	_, err := m.db.Exec(ctx, query, oJSON)
+	_, err := m.db.Exec(ctx, addOptOutDBQ, oJSON)
 	return err
 }
 
@@ -54,9 +65,8 @@ func (m *Manager) Delete(ctx context.Context, s *hub.Subscription) error {
 	if err := validateSubscription(s); err != nil {
 		return err
 	}
-	query := "select delete_subscription($1::jsonb)"
 	sJSON, _ := json.Marshal(s)
-	_, err := m.db.Exec(ctx, query, sJSON)
+	_, err := m.db.Exec(ctx, deleteSubscriptionDBQ, sJSON)
 	return err
 }
 
@@ -66,8 +76,7 @@ func (m *Manager) DeleteOptOut(ctx context.Context, optOutID string) error {
 	if _, err := uuid.FromString(optOutID); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid opt out id")
 	}
-	query := "select delete_opt_out($1::uuid, $2::uuid)"
-	_, err := m.db.Exec(ctx, query, userID, optOutID)
+	_, err := m.db.Exec(ctx, deleteOptOutDBQ, userID, optOutID)
 	return err
 }
 
@@ -78,9 +87,9 @@ func (m *Manager) GetByPackageJSON(ctx context.Context, packageID string) ([]byt
 	if _, err := uuid.FromString(packageID); err != nil {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid package id")
 	}
-	query := "select get_user_package_subscriptions($1::uuid, $2::uuid)"
 	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, userID, packageID).Scan(&dataJSON); err != nil {
+	err := m.db.QueryRow(ctx, getUserPkgSubscriptionsDBQ, userID, packageID).Scan(&dataJSON)
+	if err != nil {
 		return nil, err
 	}
 	return dataJSON, nil
@@ -90,9 +99,8 @@ func (m *Manager) GetByPackageJSON(ctx context.Context, packageID string) ([]byt
 // as json array of objects.
 func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	query := "select get_user_subscriptions($1::uuid)"
 	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, userID).Scan(&dataJSON); err != nil {
+	if err := m.db.QueryRow(ctx, getUserSubscriptionsDBQ, userID).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
 	return dataJSON, nil
@@ -102,9 +110,8 @@ func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
 // request as as json array of objects.
 func (m *Manager) GetOptOutListJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	query := "select get_user_opt_out_entries($1::uuid)"
 	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, userID).Scan(&dataJSON); err != nil {
+	if err := m.db.QueryRow(ctx, getUserOptOutEntriesDBQ, userID).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
 	return dataJSON, nil
@@ -117,11 +124,9 @@ func (m *Manager) GetSubscriptors(ctx context.Context, e *hub.Event) ([]*hub.Use
 	var err error
 	switch e.EventKind {
 	case hub.NewRelease:
-		query := "select get_package_subscriptors($1::uuid, $2::integer)"
-		err = m.db.QueryRow(ctx, query, e.PackageID, e.EventKind).Scan(&dataJSON)
+		err = m.db.QueryRow(ctx, getPkgSubscriptorsDBQ, e.PackageID, e.EventKind).Scan(&dataJSON)
 	case hub.RepositoryTrackingErrors:
-		query := "select get_repository_subscriptors($1::uuid, $2::integer)"
-		err = m.db.QueryRow(ctx, query, e.RepositoryID, e.EventKind).Scan(&dataJSON)
+		err = m.db.QueryRow(ctx, getRepoSubscriptorsDBQ, e.RepositoryID, e.EventKind).Scan(&dataJSON)
 	case hub.RepositoryOwnershipClaim:
 		dataJSON, _ = json.Marshal(e.Data["subscriptors"])
 	default:

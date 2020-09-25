@@ -28,7 +28,6 @@ var (
 )
 
 func TestAdd(t *testing.T) {
-	dbQuery := "select add_repository($1::uuid, $2::text, $3::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -185,8 +184,8 @@ func TestAdd(t *testing.T) {
 					URL:         "https://repo1.com",
 					Kind:        hub.Helm,
 				},
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				&hub.Repository{
@@ -203,7 +202,7 @@ func TestAdd(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(tc.dbErr)
+				db.On("Exec", ctx, addRepoDBQ, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -248,7 +247,7 @@ func TestAdd(t *testing.T) {
 			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, "userID", "orgName", mock.Anything).Return(nil)
+				db.On("Exec", ctx, addRepoDBQ, "userID", "orgName", mock.Anything).Return(nil)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -310,12 +309,12 @@ func TestCheckAvailability(t *testing.T) {
 		}{
 			{
 				"repositoryName",
-				`select repository_id from repository where name = $1`,
+				checkRepoNameAvailDBQ,
 				true,
 			},
 			{
 				"repositoryURL",
-				`select repository_id from repository where url = $1`,
+				checkRepoURLAvailDBQ,
 				false,
 			},
 		}
@@ -337,21 +336,18 @@ func TestCheckAvailability(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		dbQuery := `select not exists (select repository_id from repository where name = $1)`
-		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkRepoNameAvailDBQ)
+		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		available, err := m.CheckAvailability(ctx, "repositoryName", "value")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestClaimOwnership(t *testing.T) {
-	getRepoQuery := `select get_repository_by_name($1::text)`
-	userEmailQuery := `select email from "user" where user_id = $1`
-	transferRepoQuery := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
 	userID := "userID"
 	userIDP := &userID
 	org := "org1"
@@ -390,17 +386,17 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: database error getting repository", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
@@ -415,8 +411,8 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
-		db.On("QueryRow", ctx, userEmailQuery, userID).Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("", tests.ErrFakeDB)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
@@ -426,14 +422,14 @@ func TestClaimOwnership(t *testing.T) {
 		m := NewManager(cfg, db, nil, withHTTPGetter(hg))
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
-		db.On("QueryRow", ctx, userEmailQuery, userID).Return("user1@email.com", nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("user1@email.com", nil)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
@@ -449,9 +445,9 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim succeeded (helm)", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(helmRepoJSON, nil)
-		db.On("QueryRow", ctx, userEmailQuery, userID).Return("owner1@email.com", nil)
-		db.On("Exec", ctx, transferRepoQuery, "repo1", userIDP, orgP, true).Return(nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
+		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
@@ -467,7 +463,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed (opa): error cloning repository", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(opaRepoJSON, nil)
 		rc := &ClonerMock{}
 		var r *hub.Repository
 		_ = json.Unmarshal(opaRepoJSON, &r)
@@ -481,9 +477,9 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim succeeded (opa)", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoQuery, "repo1").Return(opaRepoJSON, nil)
-		db.On("QueryRow", ctx, userEmailQuery, userID).Return("owner1@email.com", nil)
-		db.On("Exec", ctx, transferRepoQuery, "repo1", userIDP, orgP, true).Return(nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
+		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		rc := &ClonerMock{}
 		var r *hub.Repository
 		_ = json.Unmarshal(opaRepoJSON, &r)
@@ -497,8 +493,6 @@ func TestClaimOwnership(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	getByNameQuery := "select get_repository_by_name($1::text)"
-	deleteQuery := "select delete_repository($1::uuid, $2::text)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -516,7 +510,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -542,8 +536,8 @@ func TestDelete(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -554,14 +548,14 @@ func TestDelete(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
 					"organization_name": "orgName"
 				}
 				`), nil)
-				db.On("Exec", ctx, deleteQuery, "userID", "repo1").Return(tc.dbErr)
+				db.On("Exec", ctx, deleteRepoDBQ, "userID", "repo1").Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -580,14 +574,14 @@ func TestDelete(t *testing.T) {
 
 	t.Run("delete repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
 			"user_alias": "user1"
 		}
 		`), nil)
-		db.On("Exec", ctx, deleteQuery, "userID", "repo1").Return(nil)
+		db.On("Exec", ctx, deleteRepoDBQ, "userID", "repo1").Return(nil)
 		m := NewManager(cfg, db, nil)
 
 		err := m.Delete(ctx, "repo1")
@@ -597,11 +591,10 @@ func TestDelete(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-	dbQuery := "select get_all_repositories()"
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, dbQuery).Return([]byte(`
+	db.On("QueryRow", ctx, getAllReposDBQ).Return([]byte(`
 	[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -658,23 +651,22 @@ func TestGetAll(t *testing.T) {
 }
 
 func TestGetAllJSON(t *testing.T) {
-	dbQuery := "select get_all_repositories()"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getAllReposDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetAllJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getAllReposDBQ).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetAllJSON(ctx)
@@ -685,7 +677,6 @@ func TestGetAllJSON(t *testing.T) {
 }
 
 func TestGetByID(t *testing.T) {
-	dbQuery := "select get_repository_by_id($1::uuid)"
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
 
@@ -717,18 +708,18 @@ func TestGetByID(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, repoID).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		r, err := m.GetByID(context.Background(), repoID)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, repoID).Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -755,11 +746,10 @@ func TestGetByID(t *testing.T) {
 }
 
 func TestGetByKind(t *testing.T) {
-	dbQuery := "select get_repositories_by_kind($1::int)"
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, dbQuery, hub.Helm).Return([]byte(`
+	db.On("QueryRow", ctx, getReposByKindDBQ, hub.Helm).Return([]byte(`
 	[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -801,23 +791,22 @@ func TestGetByKind(t *testing.T) {
 }
 
 func TestGetByKindJSON(t *testing.T) {
-	dbQuery := "select get_repositories_by_kind($1::int)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, hub.OLM).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, hub.OLM).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
@@ -828,7 +817,6 @@ func TestGetByKindJSON(t *testing.T) {
 }
 
 func TestGetByName(t *testing.T) {
-	dbQuery := "select get_repository_by_name($1::text)"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -839,7 +827,7 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("get existing repository by name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -868,18 +856,18 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "repo1").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		r, err := m.GetByName(context.Background(), "repo1")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("invalid json data returned from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "repo1").Return([]byte("invalid json"), nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte("invalid json"), nil)
 		m := NewManager(cfg, db, nil)
 
 		r, err := m.GetByName(context.Background(), "repo1")
@@ -972,9 +960,8 @@ func TestGetPackagesDigest(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
-		dbQuery := "select get_repository_packages_digest($1::uuid)"
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "00000000-0000-0000-0000-000000000001").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoPkgsDigestDBQ, "00000000-0000-0000-0000-000000000001").Return([]byte(`
 		{
 			"package1@1.0.0": "digest-package1-1.0.0",
 			"package1@0.0.9": "digest-package1-0.0.9",
@@ -996,7 +983,6 @@ func TestGetPackagesDigest(t *testing.T) {
 }
 
 func TestGetOwnedByOrgJSON(t *testing.T) {
-	dbQuery := "select get_org_repositories($1::uuid, $2::text)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -1014,18 +1000,18 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName").Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("org repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
@@ -1036,7 +1022,6 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 }
 
 func TestGetOwnedByUserJSON(t *testing.T) {
-	dbQuery := "select get_user_repositories($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -1048,18 +1033,18 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserReposDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("user repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserReposDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
 		dataJSON, err := m.GetOwnedByUserJSON(ctx)
@@ -1072,7 +1057,6 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 func TestSetLastTrackingResults(t *testing.T) {
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
-	dbQuery := "select set_last_tracking_results($1::uuid, $2::text, $3::boolean)"
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
@@ -1082,7 +1066,7 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 	t.Run("database update succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, "errors", false).Return(nil)
+		db.On("Exec", ctx, setLastTrackingResultsDBQ, repoID, "errors", false).Return(nil)
 		m := NewManager(cfg, db, nil)
 
 		err := m.SetLastTrackingResults(ctx, repoID, "errors")
@@ -1092,11 +1076,11 @@ func TestSetLastTrackingResults(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, "errors", false).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, setLastTrackingResultsDBQ, repoID, "errors", false).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		err := m.SetLastTrackingResults(ctx, repoID, "errors")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
@@ -1104,7 +1088,6 @@ func TestSetLastTrackingResults(t *testing.T) {
 func TestSetVerifiedPublisher(t *testing.T) {
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
-	dbQuery := "select set_verified_publisher($1::uuid, $2::boolean)"
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
@@ -1114,7 +1097,7 @@ func TestSetVerifiedPublisher(t *testing.T) {
 
 	t.Run("database update succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, true).Return(nil)
+		db.On("Exec", ctx, setVerifiedPublisherDBQ, repoID, true).Return(nil)
 		m := NewManager(cfg, db, nil)
 
 		err := m.SetVerifiedPublisher(ctx, repoID, true)
@@ -1124,18 +1107,16 @@ func TestSetVerifiedPublisher(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, repoID, true).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, setVerifiedPublisherDBQ, repoID, true).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		err := m.SetVerifiedPublisher(ctx, repoID, true)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestTransfer(t *testing.T) {
-	getByNameQuery := "select get_repository_by_name($1::text)"
-	transferQuery := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	userID := "userID"
 	userIDP := &userID
@@ -1172,7 +1153,7 @@ func TestTransfer(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -1198,8 +1179,8 @@ func TestTransfer(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -1210,14 +1191,14 @@ func TestTransfer(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
 					"organization_name": "orgName"
 				}
 				`), nil)
-				db.On("Exec", ctx, transferQuery, "repo1", userIDP, orgP, false).Return(tc.dbErr)
+				db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, false).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -1236,14 +1217,14 @@ func TestTransfer(t *testing.T) {
 
 	t.Run("transfer repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
 			"user_alias": "user1"
 		}
 		`), nil)
-		db.On("Exec", ctx, transferQuery, "repo1", userIDP, orgP, false).Return(nil)
+		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, false).Return(nil)
 		m := NewManager(cfg, db, nil)
 
 		err := m.Transfer(ctx, "repo1", org, false)
@@ -1253,8 +1234,6 @@ func TestTransfer(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	getByNameQuery := "select get_repository_by_name($1::text)"
-	updateQuery := "select update_repository($1::uuid, $2::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -1328,7 +1307,7 @@ func TestUpdate(t *testing.T) {
 			Kind:        hub.Helm,
 		}
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -1364,8 +1343,8 @@ func TestUpdate(t *testing.T) {
 					URL:         "https://repo1.com",
 					Kind:        hub.Helm,
 				},
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				&hub.Repository{
@@ -1382,14 +1361,14 @@ func TestUpdate(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getByNameQuery, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
 					"organization_name": "orgName"
 				}
 				`), nil)
-				db.On("Exec", ctx, updateQuery, "userID", mock.Anything).Return(tc.dbErr)
+				db.On("Exec", ctx, updateRepoDBQ, "userID", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -1436,8 +1415,8 @@ func TestUpdate(t *testing.T) {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				repoJSON, _ := json.Marshal(tc.r)
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getByNameQuery, tc.r.Name).Return(repoJSON, nil)
-				db.On("Exec", ctx, updateQuery, "userID", mock.Anything).Return(nil)
+				db.On("QueryRow", ctx, getRepoByNameDBQ, tc.r.Name).Return(repoJSON, nil)
+				db.On("Exec", ctx, updateRepoDBQ, "userID", mock.Anything).Return(nil)
 				l := &HelmIndexLoaderMock{}
 				if tc.r.Kind == hub.Helm {
 					l.On("LoadIndex", tc.r).Return(nil, nil)
