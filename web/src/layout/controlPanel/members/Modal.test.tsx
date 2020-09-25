@@ -104,7 +104,6 @@ describe('Members Modal - members section', () => {
 
       rerender(component);
 
-      expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
       expect(getByText('An error occurred adding the new member, please try again later.')).toBeInTheDocument();
     });
 

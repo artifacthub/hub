@@ -150,6 +150,10 @@ exports[`SubscriptionModal renders correctly 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="alertWrapper"
+              data-testid="alertWrapper"
+            />
           </div>
           <div
             class="modal-footer p-3"

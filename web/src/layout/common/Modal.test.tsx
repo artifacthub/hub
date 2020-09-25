@@ -55,11 +55,11 @@ describe('Modal', () => {
     const { getByTestId, getByRole, getByText } = render(<Modal {...defaultProps} error="api error" />);
     expect(getByRole('alert')).toBeInTheDocument();
     expect(getByText('api error')).toBeInTheDocument();
-    expect(getByTestId('closeModalErrorBtn')).toBeInTheDocument();
+    expect(getByTestId('closeAlertBtn')).toBeInTheDocument();
 
     expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(getByTestId('closeModalErrorBtn'));
+    fireEvent.click(getByTestId('closeAlertBtn'));
     expect(cleanErrorMock).toHaveBeenCalledTimes(1);
   });
 

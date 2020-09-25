@@ -2,16 +2,6 @@
   font-size: 0.875rem;
 }
 
-.alertWrapper {
-  transition: max-height 1s;
-  overflow: hidden;
-  max-height: 0;
-}
-
-.isAlertActive {
-  max-height: 300px;
-}
-
 .link {
   text-decoration: underline;
 }

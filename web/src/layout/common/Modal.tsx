@@ -1,11 +1,11 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import Alert from './Alert';
 import styles from './Modal.module.css';
 
 interface Props {
@@ -32,7 +32,6 @@ interface Props {
 const Modal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState(props.open || false);
   const ref = useRef<HTMLDivElement>(null);
-  const errorWrapper = useRef<HTMLDivElement>(null);
   useOutsideClick([ref, ...(!isUndefined(props.excludedRefs) ? [...props.excludedRefs] : [])], openStatus, () => {
     closeModal();
   });
@@ -52,12 +51,6 @@ const Modal = (props: Props) => {
       setOpenStatus(props.open);
     }
   }, [props.open]);
-
-  useEffect(() => {
-    if (!isUndefined(props.error) && !isNull(props.error)) {
-      errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [props.error]);
 
   return (
     <div className={props.className}>
@@ -122,25 +115,7 @@ const Modal = (props: Props) => {
 
             <div className="modal-body p-4 h-100 d-flex flex-column">
               {openStatus && <>{props.children}</>}
-              {!isUndefined(props.error) && !isNull(props.error) && (
-                <div className={`alert alert-danger mt-3 ${styles.errorAlert}`} role="alert" ref={errorWrapper}>
-                  <div className="d-flex flex-row align-items-start justify-content-between">
-                    <div>{props.error}</div>
-                    <button
-                      data-testid="closeModalErrorBtn"
-                      type="button"
-                      className="close ml-3"
-                      onClick={() => {
-                        if (!isUndefined(props.cleanError)) {
-                          props.cleanError();
-                        }
-                      }}
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                </div>
-              )}
+              <Alert message={props.error || null} type="danger" onClose={props.cleanError} activeScroll />
             </div>
 
             <div className="modal-footer p-3">

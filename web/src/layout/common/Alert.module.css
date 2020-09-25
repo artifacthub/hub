@@ -1,0 +1,9 @@
+.alertWrapper {
+  transition: max-height 1s;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.isAlertActive {
+  max-height: 300px;
+}
