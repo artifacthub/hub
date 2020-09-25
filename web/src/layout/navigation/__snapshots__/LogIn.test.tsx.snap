@@ -172,6 +172,10 @@ exports[`LogIn creates snapshot 1`] = `
                 </button>
               </div>
             </div>
+            <div
+              class="alertWrapper"
+              data-testid="alertWrapper"
+            />
           </div>
           <div
             class="modal-footer p-3"

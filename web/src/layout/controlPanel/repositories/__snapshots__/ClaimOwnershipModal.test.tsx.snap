@@ -201,6 +201,10 @@ exports[`Claim Repository Modal - packages section creates snapshot 1`] = `
                 </small>
               </form>
             </div>
+            <div
+              class="alertWrapper"
+              data-testid="alertWrapper"
+            />
           </div>
           <div
             class="modal-footer p-3"

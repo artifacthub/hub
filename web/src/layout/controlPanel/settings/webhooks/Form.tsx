@@ -15,6 +15,7 @@ import {
   PayloadKindsItem,
   SubscriptionItem,
 } from '../../../../utils/data';
+import Alert from '../../../common/Alert';
 import AutoresizeTextarea from '../../../common/AutoresizeTextarea';
 import CheckBox from '../../../common/Checkbox';
 import ExternalLink from '../../../common/ExternalLink';
@@ -63,7 +64,6 @@ const WebhookForm = (props: Props) => {
   const form = useRef<HTMLFormElement>(null);
   const urlInput = useRef<RefInputField>(null);
   const contentTypeInput = useRef<RefInputField>(null);
-  const errorWrapper = useRef<HTMLDivElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -127,7 +127,6 @@ const WebhookForm = (props: Props) => {
           } the organization.`;
         }
         setApiError(error);
-        errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {
         props.onAuthError();
       }
@@ -146,7 +145,6 @@ const WebhookForm = (props: Props) => {
       if (err.kind !== ErrorKind.Unauthorized) {
         let error = compoundErrorMessage(err, `An error occurred testing the webhook`);
         setApiError(error);
-        errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {
         props.onAuthError();
       }
@@ -288,6 +286,7 @@ const WebhookForm = (props: Props) => {
           ref={form}
           data-testid="webhookForm"
           className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
+          onClick={() => setApiError(null)}
           autoComplete="off"
           noValidate
         >
@@ -733,14 +732,7 @@ const WebhookForm = (props: Props) => {
               </div>
             </div>
 
-            <div
-              className={classnames(styles.alertWrapper, { [styles.isAlertActive]: !isNull(apiError) })}
-              ref={errorWrapper}
-            >
-              <div className="alert alert-danger mt-3 mb-0" role="alert">
-                {!isNull(apiError) ? apiError : ''}
-              </div>
-            </div>
+            <Alert message={apiError} type="danger" onClose={() => setApiError(null)} activeScroll />
           </div>
         </form>
       </div>

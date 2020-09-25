@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { isNull, isUndefined, trim } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Prompt } from 'react-router-dom';
@@ -22,6 +21,7 @@ import { PREDEFINED_POLICIES } from '../../../../../utils/data';
 import isValidJSON from '../../../../../utils/isValidJSON';
 import prepareRegoPolicyForPlayground from '../../../../../utils/prepareRegoPolicyForPlayground';
 import stringifyPolicyData from '../../../../../utils/stringifyPolicyData';
+import Alert from '../../../../common/Alert';
 import CodeEditor from '../../../../common/CodeEditor';
 import ExternalLink from '../../../../common/ExternalLink';
 import Loading from '../../../../common/Loading';
@@ -60,7 +60,6 @@ const DEFAULT_POLICY_NAME = 'rbac.v1';
 
 const AuthorizationSection = (props: Props) => {
   const { ctx, dispatch } = useContext(AppCtx);
-  const errorWrapper = useRef<HTMLDivElement>(null);
   const updateActionBtn = useRef<RefActionBtn>(null);
   const [apiError, setApiError] = useState<string | JSX.Element | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -244,9 +243,9 @@ const AuthorizationSection = (props: Props) => {
         );
         if (err.kind === ErrorKind.Forbidden) {
           error = 'You do not have permissions to update the policy from the organization.';
+          setUpdatePolicyAllowed(false);
         }
         setApiError(error);
-        errorWrapper.current!.scrollIntoView({ behavior: 'smooth' });
       } else {
         props.onAuthError();
       }
@@ -586,14 +585,7 @@ const AuthorizationSection = (props: Props) => {
           </>
         )}
 
-        <div
-          className={classnames(styles.alertWrapper, { [styles.isAlertActive]: !isNull(apiError) })}
-          ref={errorWrapper}
-        >
-          <div className="alert alert-danger mt-3 mb-0" role="alert">
-            {!isNull(apiError) ? apiError : ''}
-          </div>
-        </div>
+        <Alert message={apiError} type="danger" onClose={() => setApiError(null)} activeScroll />
       </div>
 
       {confirmationModal.open && (

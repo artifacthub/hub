@@ -286,6 +286,10 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                 </div>
               </form>
             </div>
+            <div
+              class="alertWrapper"
+              data-testid="alertWrapper"
+            />
           </div>
           <div
             class="modal-footer p-3"

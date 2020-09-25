@@ -352,7 +352,12 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                       <div
                         class="modal-body p-4 h-100 d-flex flex-column"
-                      />
+                      >
+                        <div
+                          class="alertWrapper"
+                          data-testid="alertWrapper"
+                        />
+                      </div>
                       <div
                         class="modal-footer p-3"
                       >
@@ -467,7 +472,12 @@ exports[`Package index creates snapshot 2`] = `
                       </div>
                       <div
                         class="modal-body p-4 h-100 d-flex flex-column"
-                      />
+                      >
+                        <div
+                          class="alertWrapper"
+                          data-testid="alertWrapper"
+                        />
+                      </div>
                       <div
                         class="modal-footer p-3"
                       >
@@ -581,7 +591,12 @@ exports[`Package index creates snapshot 2`] = `
                   </div>
                   <div
                     class="modal-body p-4 h-100 d-flex flex-column"
-                  />
+                  >
+                    <div
+                      class="alertWrapper"
+                      data-testid="alertWrapper"
+                    />
+                  </div>
                   <div
                     class="modal-footer p-3"
                   >
