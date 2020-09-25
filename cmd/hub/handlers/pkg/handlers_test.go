@@ -41,7 +41,7 @@ func TestGet(t *testing.T) {
 				http.StatusNotFound,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -110,7 +110,7 @@ func TestGetRandom(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetRandomJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetRandomJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetRandom(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -147,7 +147,7 @@ func TestGetStarredByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetStarredByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetStarredByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetStarredByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -175,7 +175,7 @@ func TestGetStars(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -246,7 +246,7 @@ func TestGetStats(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("GetStatsJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("GetStatsJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetStats(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -271,7 +271,7 @@ func TestInjectIndexMeta(t *testing.T) {
 				http.StatusNotFound,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -370,7 +370,7 @@ func TestRssFeed(t *testing.T) {
 				http.StatusNotFound,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -548,7 +548,7 @@ func TestSearch(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("SearchJSON", r.Context(), mock.Anything).Return(nil, tests.ErrFakeDB)
 		hw.h.Search(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -583,7 +583,7 @@ func TestSearchMonocular(t *testing.T) {
 		r, _ := http.NewRequest("GET", "/?q=text", nil)
 
 		hw := newHandlersWrapper()
-		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.pm.On("SearchMonocularJSON", r.Context(), "baseURL", "text").Return(nil, tests.ErrFakeDB)
 		hw.h.SearchMonocular(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -611,7 +611,7 @@ func TestToggleStar(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}

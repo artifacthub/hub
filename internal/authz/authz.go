@@ -25,8 +25,8 @@ const (
 	AllowedActionsQuery = "data.artifacthub.authz.allowed_actions"
 
 	// Database queries
-	getUserAliasDBQ             = `select alias from "user" where user_id = $1`
-	getAuthorizationPoliciesDBQ = `select get_authorization_policies()`
+	getAuthzPoliciesDBQ = `select get_authorization_policies()`
+	getUserAliasDBQ     = `select alias from "user" where user_id = $1`
 
 	pauseOnError = 10 * time.Second
 )
@@ -77,7 +77,7 @@ func (a *Authorizer) preparePoliciesQueries() error {
 
 	// Get organizations authorization policies from database
 	var policiesJSON []byte
-	err := a.db.QueryRow(context.Background(), getAuthorizationPoliciesDBQ).Scan(&policiesJSON)
+	err := a.db.QueryRow(context.Background(), getAuthzPoliciesDBQ).Scan(&policiesJSON)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return fmt.Errorf("error getting authorization policies: %w", err)
 	}

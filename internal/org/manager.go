@@ -17,6 +17,23 @@ import (
 	"github.com/satori/uuid"
 )
 
+const (
+	// Database queries
+	addOrgDBQ            = `select add_organization($1::uuid, $2::jsonb)`
+	addOrgMemberDBQ      = `select add_organization_member($1::uuid, $2::text, $3::text)`
+	checkOrgNameAvailDBQ = `select organization_id from organization where name = $1`
+	confirmMembershipDBQ = `select confirm_organization_membership($1::uuid, $2::text)`
+	deleteOrgMemberDBQ   = `select delete_organization_member($1::uuid, $2::text, $3::text)`
+	getAuthzPolicyDBQ    = `select get_authorization_policy($1::uuid, $2::text)`
+	getOrgDBQ            = `select get_organization($1::text)`
+	getOrgMembersDBQ     = `select get_organization_members($1::uuid, $2::text)`
+	getUserAliasDBQ      = `select alias from "user" where user_id = $1`
+	getUserEmailDBQ      = `select email from "user" where alias = $1`
+	getUserOrgsDBQ       = `select get_user_organizations($1::uuid)`
+	updateAuthzPolicyDBQ = `select update_authorization_policy($1::uuid, $2::text, $3::jsonb)`
+	updateOrgDBQ         = `select update_organization($1::uuid, $2::jsonb)`
+)
+
 var (
 	// organizationNameRE is a regexp used to validate an organization name.
 	organizationNameRE = regexp.MustCompile(`^[a-z0-9-]+$`)
@@ -56,9 +73,8 @@ func (m *Manager) Add(ctx context.Context, org *hub.Organization) error {
 	}
 
 	// Add org to database
-	query := "select add_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
-	_, err := m.db.Exec(ctx, query, userID, orgJSON)
+	_, err := m.db.Exec(ctx, addOrgDBQ, userID, orgJSON)
 	return err
 }
 
@@ -94,8 +110,7 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	}
 
 	// Add organization member to database
-	query := "select add_organization_member($1::uuid, $2::text, $3::text)"
-	_, err = m.db.Exec(ctx, query, userID, orgName, userAlias)
+	_, err = m.db.Exec(ctx, addOrgMemberDBQ, userID, orgName, userAlias)
 	if err != nil {
 		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 			return hub.ErrInsufficientPrivilege
@@ -106,8 +121,7 @@ func (m *Manager) AddMember(ctx context.Context, orgName, userAlias, baseURL str
 	// Send organization invitation email
 	if m.es != nil {
 		var userEmail string
-		query := `select email from "user" where alias = $1`
-		if err := m.db.QueryRow(ctx, query, userAlias).Scan(&userEmail); err != nil {
+		if err := m.db.QueryRow(ctx, getUserEmailDBQ, userAlias).Scan(&userEmail); err != nil {
 			return err
 		}
 		templateData := map[string]string{
@@ -159,7 +173,7 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	// Check availability in database
 	switch resourceKind {
 	case "organizationName":
-		query = `select organization_id from organization where name = $1`
+		query = checkOrgNameAvailDBQ
 	}
 	query = fmt.Sprintf("select not exists (%s)", query)
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
@@ -177,8 +191,7 @@ func (m *Manager) ConfirmMembership(ctx context.Context, orgName string) error {
 	}
 
 	// Confirm organization membership in database
-	query := "select confirm_organization_membership($1::uuid, $2::text)"
-	_, err := m.db.Exec(ctx, query, userID, orgName)
+	_, err := m.db.Exec(ctx, confirmMembershipDBQ, userID, orgName)
 	return err
 }
 
@@ -197,8 +210,7 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 
 	// Authorize action
 	var requestingUserAlias string
-	aliasQuery := `select alias from "user" where user_id = $1`
-	if err := m.db.QueryRow(ctx, aliasQuery, userID).Scan(&requestingUserAlias); err != nil {
+	if err := m.db.QueryRow(ctx, getUserAliasDBQ, userID).Scan(&requestingUserAlias); err != nil {
 		return err
 	}
 	if requestingUserAlias != userAlias { // User is always allowed to leave
@@ -212,8 +224,7 @@ func (m *Manager) DeleteMember(ctx context.Context, orgName, userAlias string) e
 	}
 
 	// Delete organization member from database
-	deleteQuery := "select delete_organization_member($1::uuid, $2::text, $3::text)"
-	_, err := m.db.Exec(ctx, deleteQuery, userID, orgName, userAlias)
+	_, err := m.db.Exec(ctx, deleteOrgMemberDBQ, userID, orgName, userAlias)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -240,23 +251,14 @@ func (m *Manager) GetAuthorizationPolicyJSON(ctx context.Context, orgName string
 	}
 
 	// Get organization from database
-	query := "select get_authorization_policy($1::uuid, $2::text)"
-	dataJSON, err := m.dbQueryJSON(ctx, query, userID, orgName)
-	if err != nil {
-		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
-			return nil, hub.ErrInsufficientPrivilege
-		}
-		return nil, err
-	}
-	return dataJSON, nil
+	return util.DBQueryJSON(ctx, m.db, getAuthzPolicyDBQ, userID, orgName)
 }
 
 // GetByUserJSON returns the organizations the user doing the request belongs
 // to as a json object.
 func (m *Manager) GetByUserJSON(ctx context.Context) ([]byte, error) {
-	query := "select get_user_organizations($1::uuid)"
 	userID := ctx.Value(hub.UserIDKey).(string)
-	return m.dbQueryJSON(ctx, query, userID)
+	return util.DBQueryJSON(ctx, m.db, getUserOrgsDBQ, userID)
 }
 
 // GetJSON returns the organization requested as a json object.
@@ -267,8 +269,7 @@ func (m *Manager) GetJSON(ctx context.Context, orgName string) ([]byte, error) {
 	}
 
 	// Get organization from database
-	query := "select get_organization($1::text)"
-	return m.dbQueryJSON(ctx, query, orgName)
+	return util.DBQueryJSON(ctx, m.db, getOrgDBQ, orgName)
 }
 
 // GetMembersJSON returns the members of the provided organization as a json
@@ -282,15 +283,7 @@ func (m *Manager) GetMembersJSON(ctx context.Context, orgName string) ([]byte, e
 	}
 
 	// Get organization members from database
-	query := "select get_organization_members($1::uuid, $2::text)"
-	dataJSON, err := m.dbQueryJSON(ctx, query, userID, orgName)
-	if err != nil {
-		if err.Error() == util.ErrDBInsufficientPrivilege.Error() {
-			return nil, hub.ErrInsufficientPrivilege
-		}
-		return nil, err
-	}
-	return dataJSON, nil
+	return util.DBQueryJSON(ctx, m.db, getOrgMembersDBQ, userID, orgName)
 }
 
 // Update updates the provided organization in the database.
@@ -314,9 +307,8 @@ func (m *Manager) Update(ctx context.Context, org *hub.Organization) error {
 	}
 
 	// Update organization in database
-	query := "select update_organization($1::uuid, $2::jsonb)"
 	orgJSON, _ := json.Marshal(org)
-	_, err := m.db.Exec(ctx, query, userID, orgJSON)
+	_, err := m.db.Exec(ctx, updateOrgDBQ, userID, orgJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -382,21 +374,10 @@ func (m *Manager) UpdateAuthorizationPolicy(
 	}
 
 	// Update authorization policy in database
-	query := "select update_authorization_policy($1::uuid, $2::text, $3::jsonb)"
 	policyJSON, _ := json.Marshal(p)
-	_, err = m.db.Exec(ctx, query, userID, orgName, policyJSON)
+	_, err = m.db.Exec(ctx, updateAuthzPolicyDBQ, userID, orgName, policyJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
-}
-
-// dbQueryJSON is a helper that executes the query provided and returns a bytes
-// slice containing the json data returned from the database.
-func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
 }

@@ -8,6 +8,11 @@ import (
 	"github.com/jackc/pgx/v4"
 )
 
+const (
+	// Database queries
+	getPendingEventDBQ = `select get_pending_event()`
+)
+
 // Manager provides an API to manage events.
 type Manager struct{}
 
@@ -18,9 +23,8 @@ func NewManager() *Manager {
 
 // GetPending returns a pending event to be processed if available.
 func (m *Manager) GetPending(ctx context.Context, tx pgx.Tx) (*hub.Event, error) {
-	query := "select get_pending_event()"
 	var dataJSON []byte
-	if err := tx.QueryRow(ctx, query).Scan(&dataJSON); err != nil {
+	if err := tx.QueryRow(ctx, getPendingEventDBQ).Scan(&dataJSON); err != nil {
 		return nil, err
 	}
 	var e *hub.Event

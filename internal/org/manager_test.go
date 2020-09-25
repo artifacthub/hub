@@ -16,7 +16,6 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	dbQuery := `select add_organization($1::uuid, $2::jsonb)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -70,7 +69,7 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
@@ -80,18 +79,16 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		err := m.Add(ctx, &hub.Organization{Name: "org1"})
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestAddMember(t *testing.T) {
-	dbQueryAddMember := `select add_organization_member($1::uuid, $2::text, $3::text)`
-	dbQueryGetUserEmail := `select email from "user" where alias = $1`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -176,8 +173,8 @@ func TestAddMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").Return(nil)
-				db.On("QueryRow", ctx, dbQueryGetUserEmail, mock.Anything).Return("email", nil)
+				db.On("Exec", ctx, addOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
+				db.On("QueryRow", ctx, getUserEmailDBQ, mock.Anything).Return("email", nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				az := &authz.AuthorizerMock{}
@@ -203,8 +200,8 @@ func TestAddMember(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -215,7 +212,7 @@ func TestAddMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQueryAddMember, "userID", "orgName", "userAlias").Return(tc.dbErr)
+				db.On("Exec", ctx, addOrgMemberDBQ, "userID", "orgName", "userAlias").Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -272,7 +269,7 @@ func TestCheckAvailability(t *testing.T) {
 		}{
 			{
 				"organizationName",
-				`select organization_id from organization where name = $1`,
+				checkOrgNameAvailDBQ,
 				true,
 			},
 		}
@@ -294,19 +291,18 @@ func TestCheckAvailability(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		dbQuery := `select not exists (select organization_id from organization where name = $1)`
-		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkOrgNameAvailDBQ)
+		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		available, err := m.CheckAvailability(context.Background(), "organizationName", "value")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestConfirmMembership(t *testing.T) {
-	dbQuery := `select confirm_organization_membership($1::uuid, $2::text)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -324,7 +320,7 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName").Return(nil)
+		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(nil)
 		m := NewManager(db, nil, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
@@ -334,18 +330,16 @@ func TestConfirmMembership(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "orgName").Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		err := m.ConfirmMembership(ctx, "orgName")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestDeleteMember(t *testing.T) {
-	aliasQuery := `select alias from "user" where user_id = $1`
-	deleteQuery := `select delete_organization_member($1::uuid, $2::text, $3::text)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -385,7 +379,7 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("get requesting user alias failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, aliasQuery, "userID").Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
@@ -395,7 +389,7 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, aliasQuery, "userID").Return("requestingUserAlias", nil)
+		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "orgName",
@@ -411,8 +405,8 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("member deleted successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, aliasQuery, "userID").Return("requestingUserAlias", nil)
-		db.On("Exec", ctx, deleteQuery, "userID", "orgName", "userAlias").Return(nil)
+		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
+		db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "orgName",
@@ -429,8 +423,8 @@ func TestDeleteMember(t *testing.T) {
 
 	t.Run("user left organization successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, aliasQuery, "userID").Return("userAlias", nil)
-		db.On("Exec", ctx, deleteQuery, "userID", "orgName", "userAlias").Return(nil)
+		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("userAlias", nil)
+		db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
 		m := NewManager(db, nil, nil)
 
 		err := m.DeleteMember(ctx, "orgName", "userAlias")
@@ -444,8 +438,8 @@ func TestDeleteMember(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -456,8 +450,8 @@ func TestDeleteMember(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, aliasQuery, "userID").Return("requestingUserAlias", nil)
-				db.On("Exec", ctx, deleteQuery, "userID", "orgName", "userAlias").Return(tc.dbErr)
+				db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
+				db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -476,7 +470,6 @@ func TestDeleteMember(t *testing.T) {
 }
 
 func TestGetAuthorizationPolicyJSON(t *testing.T) {
-	dbQuery := `select get_authorization_policy($1::uuid, $2::text)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -509,7 +502,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", "org1").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getAuthzPolicyDBQ, "userID", "org1").Return([]byte("dataJSON"), nil)
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "org1",
@@ -531,8 +524,8 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -543,7 +536,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, dbQuery, "userID", "org1").Return(nil, tc.dbErr)
+				db.On("QueryRow", ctx, getAuthzPolicyDBQ, "userID", "org1").Return(nil, tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "org1",
@@ -563,7 +556,6 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 }
 
 func TestGetByUserJSON(t *testing.T) {
-	dbQuery := `select get_user_organizations($1::uuid)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -575,7 +567,7 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
@@ -586,18 +578,17 @@ func TestGetByUserJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		dataJSON, err := m.GetByUserJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetJSON(t *testing.T) {
-	dbQuery := `select get_organization($1::text)`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -608,7 +599,7 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
 
 		dataJSON, err := m.GetJSON(ctx, "orgName")
@@ -619,18 +610,17 @@ func TestGetJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "orgName").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
 
 		dataJSON, err := m.GetJSON(ctx, "orgName")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetMembersJSON(t *testing.T) {
-	dbQuery := `select get_organization_members($1::uuid, $2::text)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -648,7 +638,7 @@ func TestGetMembersJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
 
 		dataJSON, err := m.GetMembersJSON(ctx, "orgName")
@@ -663,8 +653,8 @@ func TestGetMembersJSON(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -675,7 +665,7 @@ func TestGetMembersJSON(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, dbQuery, "userID", "orgName").Return(nil, tc.dbErr)
+				db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return(nil, tc.dbErr)
 				m := NewManager(db, nil, nil)
 
 				dataJSON, err := m.GetMembersJSON(ctx, "orgName")
@@ -688,7 +678,6 @@ func TestGetMembersJSON(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	dbQuery := `select update_organization($1::uuid, $2::jsonb)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -738,7 +727,7 @@ func TestUpdate(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "orgName",
@@ -759,8 +748,8 @@ func TestUpdate(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -771,7 +760,7 @@ func TestUpdate(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tc.dbErr)
+				db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("Authorize", ctx, &hub.AuthorizeInput{
 					OrganizationName: "orgName",
@@ -790,7 +779,6 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestUpdateAuthorizationPolicy(t *testing.T) {
-	dbQuery := `select update_authorization_policy($1::uuid, $2::text, $3::jsonb)`
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	validPolicy := &hub.AuthorizationPolicy{
 		AuthorizationEnabled: true,
@@ -927,7 +915,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", "org1", mock.Anything).Return(nil)
+		db.On("Exec", ctx, updateAuthzPolicyDBQ, "userID", "org1", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
 		az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
@@ -949,8 +937,8 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			expectedError error
 		}{
 			{
-				tests.ErrFakeDatabaseFailure,
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
+				tests.ErrFakeDB,
 			},
 			{
 				util.ErrDBInsufficientPrivilege,
@@ -961,7 +949,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, "userID", "org1", mock.Anything).Return(tc.dbErr)
+				db.On("Exec", ctx, updateAuthzPolicyDBQ, "userID", "org1", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
 				az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 				az.On("Authorize", ctx, &hub.AuthorizeInput{

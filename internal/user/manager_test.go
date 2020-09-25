@@ -17,7 +17,6 @@ import (
 )
 
 func TestCheckAPIKey(t *testing.T) {
-	dbQuery := `select user_id from api_key where key = $1`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -47,7 +46,7 @@ func TestCheckAPIKey(t *testing.T) {
 
 	t.Run("key not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckAPIKey(ctx, []byte("key"))
@@ -59,18 +58,18 @@ func TestCheckAPIKey(t *testing.T) {
 
 	t.Run("error getting key from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckAPIKey(ctx, []byte("key"))
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("valid key", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("key")).Return("userID", nil)
+		db.On("QueryRow", ctx, getAPIKeyUserIDDBQ, []byte("key")).Return("userID", nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckAPIKey(ctx, []byte("key"))
@@ -120,7 +119,7 @@ func TestCheckAvailability(t *testing.T) {
 		}{
 			{
 				"userAlias",
-				`select user_id from "user" where alias = $1`,
+				checkUserAliasAvailDBQ,
 				true,
 			},
 		}
@@ -142,25 +141,18 @@ func TestCheckAvailability(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		dbQuery := `select not exists (select user_id from "user" where alias = $1)`
-		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDatabaseFailure)
+		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkUserAliasAvailDBQ)
+		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		available, err := m.CheckAvailability(ctx, "userAlias", "value")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.False(t, available)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestCheckCredentials(t *testing.T) {
-	dbQuery := `
-	select user_id, password
-	from "user"
-	where email = $1
-	and password is not null
-	and email_verified = true
-	`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -193,7 +185,7 @@ func TestCheckCredentials(t *testing.T) {
 
 	t.Run("credentials provided not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, checkUserCredsDBQ, "email").Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckCredentials(ctx, "email", "pass")
@@ -205,11 +197,11 @@ func TestCheckCredentials(t *testing.T) {
 
 	t.Run("error getting credentials from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, checkUserCredsDBQ, "email").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckCredentials(ctx, "email", "pass")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
@@ -217,7 +209,7 @@ func TestCheckCredentials(t *testing.T) {
 	t.Run("invalid credentials provided", func(t *testing.T) {
 		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return([]interface{}{"userID", string(pw)}, nil)
+		db.On("QueryRow", ctx, checkUserCredsDBQ, "email").Return([]interface{}{"userID", string(pw)}, nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckCredentials(ctx, "email", "pass2")
@@ -230,7 +222,7 @@ func TestCheckCredentials(t *testing.T) {
 	t.Run("valid credentials provided", func(t *testing.T) {
 		pw, _ := bcrypt.GenerateFromPassword([]byte("pass"), bcrypt.DefaultCost)
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return([]interface{}{"userID", string(pw)}, nil)
+		db.On("QueryRow", ctx, checkUserCredsDBQ, "email").Return([]interface{}{"userID", string(pw)}, nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckCredentials(ctx, "email", "pass")
@@ -242,10 +234,6 @@ func TestCheckCredentials(t *testing.T) {
 }
 
 func TestCheckSession(t *testing.T) {
-	dbQuery := `
-	select user_id, floor(extract(epoch from created_at))
-	from session where session_id = $1
-	`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -283,7 +271,7 @@ func TestCheckSession(t *testing.T) {
 
 	t.Run("session not found in database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("sessionID")).Return(nil, pgx.ErrNoRows)
+		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return(nil, pgx.ErrNoRows)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -295,18 +283,18 @@ func TestCheckSession(t *testing.T) {
 
 	t.Run("error getting session from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("sessionID")).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, output)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("session has expired", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("sessionID")).Return([]interface{}{"userID", int64(1)}, nil)
+		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return([]interface{}{"userID", int64(1)}, nil)
 		m := NewManager(db, nil)
 
 		output, err := m.CheckSession(ctx, []byte("sessionID"), 1*time.Hour)
@@ -318,7 +306,7 @@ func TestCheckSession(t *testing.T) {
 
 	t.Run("valid session", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, []byte("sessionID")).Return([]interface{}{
+		db.On("QueryRow", ctx, getSessionDBQ, []byte("sessionID")).Return([]interface{}{
 			"userID",
 			time.Now().Unix(),
 		}, nil)
@@ -333,7 +321,6 @@ func TestCheckSession(t *testing.T) {
 }
 
 func TestDeleteSession(t *testing.T) {
-	dbQuery := "delete from session where session_id = $1"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -375,14 +362,14 @@ func TestDeleteSession(t *testing.T) {
 			},
 			{
 				"error deleting session from database",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 			},
 		}
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("Exec", ctx, dbQuery, []byte("sessionID")).Return(tc.dbResponse)
+				db.On("Exec", ctx, deleteSessionDBQ, []byte("sessionID")).Return(tc.dbResponse)
 				m := NewManager(db, nil)
 
 				err := m.DeleteSession(ctx, []byte("sessionID"))
@@ -394,7 +381,6 @@ func TestDeleteSession(t *testing.T) {
 }
 
 func TestGetProfile(t *testing.T) {
-	dbQuery := "select get_user_profile($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -406,11 +392,11 @@ func TestGetProfile(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserProfileDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		profile, err := m.GetProfile(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, profile)
 		db.AssertExpectations(t)
 	})
@@ -425,7 +411,7 @@ func TestGetProfile(t *testing.T) {
 		}
 
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte(`
+		db.On("QueryRow", ctx, getUserProfileDBQ, "userID").Return([]byte(`
 		{
 			"alias": "alias",
 			"first_name": "first_name",
@@ -444,7 +430,6 @@ func TestGetProfile(t *testing.T) {
 }
 
 func TestGetProfileJSON(t *testing.T) {
-	dbQuery := "select get_user_profile($1::uuid)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -456,7 +441,7 @@ func TestGetProfileJSON(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserProfileDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil)
 
 		data, err := m.GetProfileJSON(ctx)
@@ -467,18 +452,17 @@ func TestGetProfileJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "userID").Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserProfileDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		data, err := m.GetProfileJSON(ctx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, data)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestGetUserID(t *testing.T) {
-	dbQuery := `select user_id from "user" where email = $1`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -489,7 +473,7 @@ func TestGetUserID(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return("userID", nil)
+		db.On("QueryRow", ctx, getUserIDDBQ, "email").Return("userID", nil)
 		m := NewManager(db, nil)
 
 		userID, err := m.GetUserID(ctx, "email")
@@ -500,18 +484,17 @@ func TestGetUserID(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "email").Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserIDDBQ, "email").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		userID, err := m.GetUserID(ctx, "email")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Empty(t, userID)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestRegisterSession(t *testing.T) {
-	dbQuery := "select register_session($1::jsonb)"
 	ctx := context.Background()
 
 	s := &hub.Session{
@@ -548,7 +531,7 @@ func TestRegisterSession(t *testing.T) {
 
 	t.Run("successful session registration", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything).Return([]byte("sessionID"), nil)
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return([]byte("sessionID"), nil)
 		m := NewManager(db, nil)
 
 		sessionID, err := m.RegisterSession(ctx, s)
@@ -559,18 +542,17 @@ func TestRegisterSession(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything).Return(nil, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, registerSessionDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		sessionID, err := m.RegisterSession(ctx, s)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, sessionID)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestRegisterUser(t *testing.T) {
-	dbQuery := "select register_user($1::jsonb)"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -632,7 +614,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, dbQuery, mock.Anything).Return("emailVerificationCode", nil)
+				db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return("emailVerificationCode", nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
@@ -656,7 +638,7 @@ func TestRegisterUser(t *testing.T) {
 
 	t.Run("database error registering user", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, mock.Anything).Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		u := &hub.User{
@@ -664,14 +646,12 @@ func TestRegisterUser(t *testing.T) {
 			Email: "email@email.com",
 		}
 		err := m.RegisterUser(ctx, u, "http://baseurl.com")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestUpdatePassword(t *testing.T) {
-	getPasswordDBQuery := `select password from "user" where user_id = $1 and password is not null`
-	updatePasswordDBQuery := "select update_user_password($1::uuid, $2::text, $3::text)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 	oldHashed, _ := bcrypt.GenerateFromPassword([]byte("old"), bcrypt.DefaultCost)
 
@@ -712,17 +692,17 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("database error getting user password", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPasswordDBQuery, "userID").Return("", tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		err := m.UpdatePassword(ctx, "old", "new")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("invalid user password provided", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
+		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return(string(oldHashed), nil)
 		m := NewManager(db, nil)
 
 		err := m.UpdatePassword(ctx, "old2", "new")
@@ -732,20 +712,20 @@ func TestUpdatePassword(t *testing.T) {
 
 	t.Run("database error updating password", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
-		db.On("Exec", ctx, updatePasswordDBQuery, "userID", mock.Anything, mock.Anything).
-			Return(tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return(string(oldHashed), nil)
+		db.On("Exec", ctx, updateUserPasswordDBQ, "userID", mock.Anything, mock.Anything).
+			Return(tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		err := m.UpdatePassword(ctx, "old", "new")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("successful password update", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getPasswordDBQuery, "userID").Return(string(oldHashed), nil)
-		db.On("Exec", ctx, updatePasswordDBQuery, "userID", mock.Anything, mock.Anything).Return(nil)
+		db.On("QueryRow", ctx, getUserPasswordDBQ, "userID").Return(string(oldHashed), nil)
+		db.On("Exec", ctx, updateUserPasswordDBQ, "userID", mock.Anything, mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.UpdatePassword(ctx, "old", "new")
@@ -755,7 +735,6 @@ func TestUpdatePassword(t *testing.T) {
 }
 
 func TestUpdateProfile(t *testing.T) {
-	dbQuery := "select update_user_profile($1::uuid, $2::jsonb)"
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
@@ -792,7 +771,7 @@ func TestUpdateProfile(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(nil)
+		db.On("Exec", ctx, updateUserProfileDBQ, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil)
 
 		err := m.UpdateProfile(ctx, &hub.User{Alias: "user1"})
@@ -802,17 +781,16 @@ func TestUpdateProfile(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("Exec", ctx, dbQuery, "userID", mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		db.On("Exec", ctx, updateUserProfileDBQ, "userID", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		err := m.UpdateProfile(ctx, &hub.User{Alias: "user1"})
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
 }
 
 func TestVerifyEmail(t *testing.T) {
-	dbQuery := "select verify_email($1::uuid)"
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -823,7 +801,7 @@ func TestVerifyEmail(t *testing.T) {
 
 	t.Run("successful email verification", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "emailVerificationCode").Return(true, nil)
+		db.On("QueryRow", ctx, verifyEmailDBQ, "emailVerificationCode").Return(true, nil)
 		m := NewManager(db, nil)
 
 		verified, err := m.VerifyEmail(ctx, "emailVerificationCode")
@@ -834,11 +812,11 @@ func TestVerifyEmail(t *testing.T) {
 
 	t.Run("database error verifying email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, dbQuery, "emailVerificationCode").Return(false, tests.ErrFakeDatabaseFailure)
+		db.On("QueryRow", ctx, verifyEmailDBQ, "emailVerificationCode").Return(false, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		verified, err := m.VerifyEmail(ctx, "emailVerificationCode")
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.False(t, verified)
 		db.AssertExpectations(t)
 	})

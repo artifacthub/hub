@@ -22,7 +22,6 @@ func TestMain(m *testing.M) {
 }
 
 func TestAdd(t *testing.T) {
-	dbQuery := `select add_notification($1::jsonb)`
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -83,17 +82,17 @@ func TestAdd(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", ctx, dbQuery, mock.Anything).Return(tests.ErrFakeDatabaseFailure)
+		tx.On("Exec", ctx, addNotificationDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager()
 
 		err := m.Add(ctx, tx, n)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		tx.AssertExpectations(t)
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", ctx, dbQuery, mock.Anything).Return(nil)
+		tx.On("Exec", ctx, addNotificationDBQ, mock.Anything).Return(nil)
 		m := NewManager()
 
 		err := m.Add(ctx, tx, n)
@@ -103,16 +102,15 @@ func TestAdd(t *testing.T) {
 }
 
 func TestGetPending(t *testing.T) {
-	dbQuery := "select get_pending_notification()"
 	ctx := context.Background()
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		tx.On("QueryRow", ctx, getPendingNotificationDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager()
 
 		dataJSON, err := m.GetPending(ctx, tx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		tx.AssertExpectations(t)
 	})
@@ -131,7 +129,7 @@ func TestGetPending(t *testing.T) {
 		}
 
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", ctx, dbQuery).Return([]byte(`
+		tx.On("QueryRow", ctx, getPendingNotificationDBQ).Return([]byte(`
 		{
 			"notification_id": "notificationID",
 			"event": {
@@ -154,7 +152,6 @@ func TestGetPending(t *testing.T) {
 }
 
 func TestUpdateStatus(t *testing.T) {
-	dbQuery := "select update_notification_status($1::uuid, $2::boolean, $3::text)"
 	ctx := context.Background()
 	notificationID := "00000000-0000-0000-0000-000000000001"
 
@@ -181,17 +178,17 @@ func TestUpdateStatus(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", ctx, dbQuery, notificationID, true, "").Return(tests.ErrFakeDatabaseFailure)
+		tx.On("Exec", ctx, updateNotificationStatusDBQ, notificationID, true, "").Return(tests.ErrFakeDB)
 		m := NewManager()
 
 		err := m.UpdateStatus(ctx, tx, notificationID, true, nil)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		tx.AssertExpectations(t)
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("Exec", ctx, dbQuery, notificationID, true, "").Return(nil)
+		tx.On("Exec", ctx, updateNotificationStatusDBQ, notificationID, true, "").Return(nil)
 		m := NewManager()
 
 		err := m.UpdateStatus(ctx, tx, notificationID, true, nil)

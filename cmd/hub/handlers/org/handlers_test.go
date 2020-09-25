@@ -100,7 +100,7 @@ func TestAdd(t *testing.T) {
 			},
 			{
 				"error adding organization",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -142,7 +142,7 @@ func TestAddMember(t *testing.T) {
 			http.StatusForbidden,
 		},
 		{
-			tests.ErrFakeDatabaseFailure,
+			tests.ErrFakeDB,
 			http.StatusInternalServerError,
 		},
 	}
@@ -256,7 +256,7 @@ func TestCheckAvailability(t *testing.T) {
 
 			hw := newHandlersWrapper()
 			hw.om.On("CheckAvailability", r.Context(), "organizationName", "value").
-				Return(false, tests.ErrFakeDatabaseFailure)
+				Return(false, tests.ErrFakeDB)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -281,7 +281,7 @@ func TestConfirmMembership(t *testing.T) {
 			http.StatusBadRequest,
 		},
 		{
-			tests.ErrFakeDatabaseFailure,
+			tests.ErrFakeDB,
 			http.StatusInternalServerError,
 		},
 	}
@@ -333,7 +333,7 @@ func TestDeleteMember(t *testing.T) {
 			http.StatusForbidden,
 		},
 		{
-			tests.ErrFakeDatabaseFailure,
+			tests.ErrFakeDB,
 			http.StatusInternalServerError,
 		},
 	}
@@ -385,7 +385,7 @@ func TestGet(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -449,7 +449,7 @@ func TestGetAuthorizationPolicy(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -522,7 +522,7 @@ func TestGetByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.om.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.om.On("GetByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -550,7 +550,7 @@ func TestGetMembers(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -668,7 +668,7 @@ func TestUpdate(t *testing.T) {
 			},
 			{
 				"error updating organization (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -780,7 +780,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 			},
 			{
 				"error updating organization policy (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}

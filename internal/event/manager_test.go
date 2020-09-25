@@ -18,16 +18,15 @@ func TestMain(m *testing.M) {
 }
 
 func TestGetPending(t *testing.T) {
-	dbQuery := "select get_pending_event()"
 	ctx := context.Background()
 
 	t.Run("database error", func(t *testing.T) {
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", ctx, dbQuery).Return(nil, tests.ErrFakeDatabaseFailure)
+		tx.On("QueryRow", ctx, getPendingEventDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager()
 
 		dataJSON, err := m.GetPending(ctx, tx)
-		assert.Equal(t, tests.ErrFakeDatabaseFailure, err)
+		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		tx.AssertExpectations(t)
 	})
@@ -41,7 +40,7 @@ func TestGetPending(t *testing.T) {
 		}
 
 		tx := &tests.TXMock{}
-		tx.On("QueryRow", ctx, dbQuery).Return([]byte(`
+		tx.On("QueryRow", ctx, getPendingEventDBQ).Return([]byte(`
 		{
 			"event_id": "00000000-0000-0000-0000-000000000001",
 			"package_version": "1.0.0",

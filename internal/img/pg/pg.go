@@ -11,6 +11,13 @@ import (
 	"github.com/jackc/pgx/v4"
 )
 
+const (
+	// Database queries
+	getImageDBQ      = `select get_image($1::uuid, $2::text)`
+	getImageIDDBQ    = `select image_id from image where original_hash = $1`
+	registerImageDBQ = `select register_image($1::bytea, $2::text, $3::bytea)`
+)
+
 // DB defines the methods the database handler must provide.
 type DB interface {
 	QueryRow(ctx context.Context, sql string, args ...interface{}) pgx.Row
@@ -32,8 +39,7 @@ func NewImageStore(db DB) *ImageStore {
 // GetImage returns an image stored in the database.
 func (s *ImageStore) GetImage(ctx context.Context, imageID, version string) ([]byte, error) {
 	var data []byte
-	query := "select get_image($1::uuid, $2::text)"
-	err := s.db.QueryRow(ctx, query, imageID, version).Scan(&data)
+	err := s.db.QueryRow(ctx, getImageDBQ, imageID, version).Scan(&data)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, hub.ErrNotFound
@@ -83,8 +89,7 @@ func (s *ImageStore) SaveImage(ctx context.Context, data []byte) (string, error)
 // returning its id when found.
 func (s *ImageStore) getImageID(ctx context.Context, hash []byte) (string, error) {
 	var imageID string
-	query := "select image_id from image where original_hash = $1"
-	err := s.db.QueryRow(ctx, query, hash).Scan(&imageID)
+	err := s.db.QueryRow(ctx, getImageIDDBQ, hash).Scan(&imageID)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return "", nil
@@ -97,8 +102,7 @@ func (s *ImageStore) getImageID(ctx context.Context, hash []byte) (string, error
 // registerImage stores the image provided in the database.
 func (s *ImageStore) registerImage(ctx context.Context, hash []byte, version string, data []byte) (string, error) {
 	var imageID string
-	query := "select register_image($1::bytea, $2::text, $3::bytea)"
-	err := s.db.QueryRow(ctx, query, hash, version, data).Scan(&imageID)
+	err := s.db.QueryRow(ctx, registerImageDBQ, hash, version, data).Scan(&imageID)
 	if err != nil {
 		return "", err
 	}

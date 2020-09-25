@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// ErrFakeDatabaseFailure represents a fake database error.
-var ErrFakeDatabaseFailure = errors.New("fake database failure")
+// ErrFakeDB represents a fake database error.
+var ErrFakeDB = errors.New("fake database failure")
 
 // DBMock is a mock implementation of the DB interface.
 type DBMock struct {

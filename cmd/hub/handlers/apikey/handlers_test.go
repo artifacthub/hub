@@ -84,7 +84,7 @@ func TestAdd(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.am.On("Add", r.Context(), ak).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.am.On("Add", r.Context(), ak).Return(nil, tests.ErrFakeDB)
 		hw.h.Add(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -134,7 +134,7 @@ func TestDelete(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -193,7 +193,7 @@ func TestGet(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -246,7 +246,7 @@ func TestGetOwnedByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.am.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.am.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -339,7 +339,7 @@ func TestUpdate(t *testing.T) {
 			},
 			{
 				"error updating api key (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}

@@ -21,6 +21,26 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const (
+	// Database queries
+	addRepoDBQ                = `select add_repository($1::uuid, $2::text, $3::jsonb)`
+	checkRepoNameAvailDBQ     = `select repository_id from repository where name = $1`
+	checkRepoURLAvailDBQ      = `select repository_id from repository where url = $1`
+	deleteRepoDBQ             = `select delete_repository($1::uuid, $2::text)`
+	getAllReposDBQ            = `select get_all_repositories()`
+	getOrgReposDBQ            = `select get_org_repositories($1::uuid, $2::text)`
+	getRepoByIDDBQ            = `select get_repository_by_id($1::uuid)`
+	getRepoByNameDBQ          = `select get_repository_by_name($1::text)`
+	getRepoPkgsDigestDBQ      = `select get_repository_packages_digest($1::uuid)`
+	getReposByKindDBQ         = `select get_repositories_by_kind($1::int)`
+	getUserReposDBQ           = `select get_user_repositories($1::uuid)`
+	getUserEmailDBQ           = `select email from "user" where user_id = $1`
+	setLastTrackingResultsDBQ = `select set_last_tracking_results($1::uuid, $2::text, $3::boolean)`
+	setVerifiedPublisherDBQ   = `select set_verified_publisher($1::uuid, $2::boolean)`
+	transferRepoDBQ           = `select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)`
+	updateRepoDBQ             = `select update_repository($1::uuid, $2::jsonb)`
+)
+
 var (
 	// repositoryNameRE is a regexp used to validate a repository name.
 	repositoryNameRE = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
@@ -116,9 +136,8 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	}
 
 	// Add repository to the database
-	query := "select add_repository($1::uuid, $2::text, $3::jsonb)"
 	rJSON, _ := json.Marshal(r)
-	_, err := m.db.Exec(ctx, query, userID, orgName, rJSON)
+	_, err := m.db.Exec(ctx, addRepoDBQ, userID, orgName, rJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -154,9 +173,9 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 	var query string
 	switch resourceKind {
 	case "repositoryName":
-		query = `select repository_id from repository where name = $1`
+		query = checkRepoNameAvailDBQ
 	case "repositoryURL":
-		query = `select repository_id from repository where url = $1`
+		query = checkRepoURLAvailDBQ
 	}
 	query = fmt.Sprintf("select not exists (%s)", query)
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
@@ -200,8 +219,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 
 	// Get requesting user email
 	var userEmail string
-	userEmailQuery := `select email from "user" where user_id = $1`
-	if err := m.db.QueryRow(ctx, userEmailQuery, userID).Scan(&userEmail); err != nil {
+	if err := m.db.QueryRow(ctx, getUserEmailDBQ, userID).Scan(&userEmail); err != nil {
 		return err
 	}
 
@@ -240,8 +258,7 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 	}
 
 	// Delete repository from database
-	query := "select delete_repository($1::uuid, $2::text)"
-	_, err = m.db.Exec(ctx, query, userID, name)
+	_, err = m.db.Exec(ctx, deleteRepoDBQ, userID, name)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -251,14 +268,14 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 // GetAll returns all available repositories.
 func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
 	var r []*hub.Repository
-	err := m.dbQueryUnmarshal(ctx, &r, "select get_all_repositories()")
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getAllReposDBQ)
 	return r, err
 }
 
 // GetAllJSON returns all available repositories as a json array, which is
 // built by the database.
 func (m *Manager) GetAllJSON(ctx context.Context) ([]byte, error) {
-	return m.dbQueryJSON(ctx, "select get_all_repositories()")
+	return util.DBQueryJSON(ctx, m.db, getAllReposDBQ)
 }
 
 // GetByID returns the repository identified by the id provided.
@@ -273,21 +290,21 @@ func (m *Manager) GetByID(ctx context.Context, repositoryID string) (*hub.Reposi
 
 	// Get repository from database
 	var r *hub.Repository
-	err := m.dbQueryUnmarshal(ctx, &r, "select get_repository_by_id($1::uuid)", repositoryID)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByIDDBQ, repositoryID)
 	return r, err
 }
 
 // GetByKind returns all available repositories of the provided kind.
 func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
 	var r []*hub.Repository
-	err := m.dbQueryUnmarshal(ctx, &r, "select get_repositories_by_kind($1::int)", kind)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getReposByKindDBQ, kind)
 	return r, err
 }
 
 // GetByKindJSON returns all available repositories of the provided kind as a
 // json array, which is built by the database.
 func (m *Manager) GetByKindJSON(ctx context.Context, kind hub.RepositoryKind) ([]byte, error) {
-	return m.dbQueryJSON(ctx, "select get_repositories_by_kind($1::int)", kind)
+	return util.DBQueryJSON(ctx, m.db, getReposByKindDBQ, kind)
 }
 
 // GetByName returns the repository identified by the name provided.
@@ -299,7 +316,7 @@ func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, 
 
 	// Get repository from database
 	var r *hub.Repository
-	err := m.dbQueryUnmarshal(ctx, &r, "select get_repository_by_name($1::text)", name)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByNameDBQ, name)
 	return r, err
 }
 
@@ -354,8 +371,7 @@ func (m *Manager) GetPackagesDigest(
 
 	// Get repository packages digest from database
 	pd := make(map[string]string)
-	query := "select get_repository_packages_digest($1::uuid)"
-	err := m.dbQueryUnmarshal(ctx, &pd, query, repositoryID)
+	err := util.DBQueryUnmarshal(ctx, m.db, &pd, getRepoPkgsDigestDBQ, repositoryID)
 	return pd, err
 }
 
@@ -369,17 +385,15 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "organization name not provided")
 	}
 
-	// Delete org repositories from database
-	query := "select get_org_repositories($1::uuid, $2::text)"
-	return m.dbQueryJSON(ctx, query, userID, orgName)
+	// Get org repositories from database
+	return util.DBQueryJSON(ctx, m.db, getOrgReposDBQ, userID, orgName)
 }
 
 // GetOwnedByUserJSON returns all repositories that belong to the user making
 // the request.
 func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	query := "select get_user_repositories($1::uuid)"
-	return m.dbQueryJSON(ctx, query, userID)
+	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID)
 }
 
 // SetLastTrackingResults updates the timestamp and errors of the last tracking
@@ -391,9 +405,8 @@ func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs
 	}
 
 	// Update last tracking results in database
-	query := "select set_last_tracking_results($1::uuid, $2::text, $3::boolean)"
 	trackingErrorsEventsEnabled := m.cfg.GetBool("tracker.events.trackingErrors")
-	_, err := m.db.Exec(ctx, query, repositoryID, errs, trackingErrorsEventsEnabled)
+	_, err := m.db.Exec(ctx, setLastTrackingResultsDBQ, repositoryID, errs, trackingErrorsEventsEnabled)
 	return err
 }
 
@@ -406,8 +419,7 @@ func (m *Manager) SetVerifiedPublisher(ctx context.Context, repositoryID string,
 	}
 
 	// Update verified publisher status in database
-	query := "select set_verified_publisher($1::uuid, $2::boolean)"
-	_, err := m.db.Exec(ctx, query, repositoryID, verified)
+	_, err := m.db.Exec(ctx, setVerifiedPublisherDBQ, repositoryID, verified)
 	return err
 }
 
@@ -451,8 +463,7 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string, owners
 	}
 
 	// Update repository owner in database
-	query := "select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)"
-	_, err := m.db.Exec(ctx, query, repoName, userIDP, orgNameP, ownershipClaim)
+	_, err := m.db.Exec(ctx, transferRepoDBQ, repoName, userIDP, orgNameP, ownershipClaim)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -497,36 +508,12 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	}
 
 	// Update repository in database
-	query := "select update_repository($1::uuid, $2::jsonb)"
 	rJSON, _ := json.Marshal(r)
-	_, err = m.db.Exec(ctx, query, userID, rJSON)
+	_, err = m.db.Exec(ctx, updateRepoDBQ, userID, rJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
-}
-
-// dbQueryJSON is a helper that executes the query provided and returns a bytes
-// slice containing the json data returned from the database.
-func (m *Manager) dbQueryJSON(ctx context.Context, query string, args ...interface{}) ([]byte, error) {
-	var dataJSON []byte
-	if err := m.db.QueryRow(ctx, query, args...).Scan(&dataJSON); err != nil {
-		return nil, err
-	}
-	return dataJSON, nil
-}
-
-// dbQueryUnmarshal is a helper that executes the query provided and unmarshals
-// the json data returned from the database into the value (v) provided.
-func (m *Manager) dbQueryUnmarshal(ctx context.Context, v interface{}, query string, args ...interface{}) error {
-	dataJSON, err := m.dbQueryJSON(ctx, query, args...)
-	if err != nil {
-		return err
-	}
-	if err := json.Unmarshal(dataJSON, &v); err != nil {
-		return err
-	}
-	return nil
 }
 
 // isValidKind checks if the provided repository kind is valid.

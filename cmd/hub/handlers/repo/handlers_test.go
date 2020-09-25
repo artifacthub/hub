@@ -106,7 +106,7 @@ func TestAdd(t *testing.T) {
 			},
 			{
 				"error adding repository (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -242,7 +242,7 @@ func TestCheckAvailability(t *testing.T) {
 
 			hw := newHandlersWrapper()
 			hw.rm.On("CheckAvailability", r.Context(), "repositoryName", "value").
-				Return(false, tests.ErrFakeDatabaseFailure)
+				Return(false, tests.ErrFakeDB)
 			hw.h.CheckAvailability(w, r)
 			resp := w.Result()
 			defer resp.Body.Close()
@@ -287,7 +287,7 @@ func TestClaimOwnership(t *testing.T) {
 			},
 			{
 				"error claiming repository ownership (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -356,7 +356,7 @@ func TestDelete(t *testing.T) {
 				http.StatusForbidden,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -408,7 +408,7 @@ func TestGetAll(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetAllJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.rm.On("GetAllJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetAll(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -468,7 +468,7 @@ func TestGetByKind(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByKind(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -517,7 +517,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -569,7 +569,7 @@ func TestGetOwnedByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.rm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -613,7 +613,7 @@ func TestTransfer(t *testing.T) {
 			},
 			{
 				"error transferring repository (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -715,7 +715,7 @@ func TestUpdate(t *testing.T) {
 			},
 			{
 				"error updating repository (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}

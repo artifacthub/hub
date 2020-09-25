@@ -111,7 +111,7 @@ func TestAdd(t *testing.T) {
 			},
 			{
 				"error adding webhook (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -158,7 +158,7 @@ func TestDelete(t *testing.T) {
 				http.StatusForbidden,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -221,7 +221,7 @@ func TestGet(t *testing.T) {
 				http.StatusForbidden,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -306,7 +306,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 				http.StatusBadRequest,
 			},
 			{
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
@@ -338,7 +338,7 @@ func TestGetOwnedByUser(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDatabaseFailure)
+		hw.wm.On("GetOwnedByUserJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetOwnedByUser(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -641,7 +641,7 @@ func TestUpdate(t *testing.T) {
 			},
 			{
 				"error updating webhook (db error)",
-				tests.ErrFakeDatabaseFailure,
+				tests.ErrFakeDB,
 				http.StatusInternalServerError,
 			},
 		}
