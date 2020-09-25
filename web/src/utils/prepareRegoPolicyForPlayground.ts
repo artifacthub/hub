@@ -13,7 +13,6 @@ export default (policy: string, data: RegoData, userAlias: string): RegoPlaygrou
     },
     input: {
       user: userAlias,
-      action: 'updateOrganization',
     },
     data: data,
   };
