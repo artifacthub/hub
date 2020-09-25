@@ -7,6 +7,12 @@ import { Member } from '../../../types';
 import Card from './Card';
 jest.mock('../../../api');
 
+jest.mock('../../../utils/authorizer', () => ({
+  check: () => {
+    return true;
+  },
+}));
+
 const memberMock: Member = {
   alias: 'test',
   firstName: 'first',

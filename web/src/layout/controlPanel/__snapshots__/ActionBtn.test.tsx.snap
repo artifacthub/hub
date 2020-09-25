@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActionBtn renders correctly 1`] = `
+<DocumentFragment>
+  <span
+    class="position-relative"
+  >
+    <button
+      class=""
+      data-testid="test"
+      type="button"
+    >
+      <div
+        class="d-flex flex-row align-items-center undefined"
+      >
+        <div>
+          button content
+        </div>
+      </div>
+    </button>
+  </span>
+</DocumentFragment>
+`;

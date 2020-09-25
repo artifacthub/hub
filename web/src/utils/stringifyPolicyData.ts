@@ -1,3 +1,7 @@
 export default (data: { [key: string]: any } | string): string => {
-  return JSON.stringify(data, null, '  ');
+  if (data) {
+    return JSON.stringify(data, null, '  ');
+  } else {
+    return '';
+  }
 };

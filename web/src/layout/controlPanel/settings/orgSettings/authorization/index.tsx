@@ -421,6 +421,7 @@ const AuthorizationSection = (props: Props) => {
           <>
             <div className="custom-control custom-switch mb-4">
               <input
+                data-testid="swicthAccessControl"
                 id="activeAuthorization"
                 type="checkbox"
                 className="custom-control-input"
@@ -445,6 +446,7 @@ const AuthorizationSection = (props: Props) => {
                     return (
                       <div className="custom-control custom-radio mr-4 mb-2" key={`payload_${item.name}`}>
                         <input
+                          data-testid={`radio-${item.name}`}
                           className="custom-control-input"
                           type="radio"
                           id={item.name}
@@ -464,7 +466,7 @@ const AuthorizationSection = (props: Props) => {
                 {!isNull(orgPolicy.predefinedPolicy) && (
                   <div className="form-group w-75 mb-4">
                     <select
-                      data-testid="select_claim_orgs"
+                      data-testid="selectPredefinedPolicies"
                       className="custom-select"
                       aria-label="org-select"
                       value={orgPolicy.predefinedPolicy || ''}
@@ -546,7 +548,12 @@ const AuthorizationSection = (props: Props) => {
 
             <div className="d-flex flex-row mt-4">
               {orgPolicy.authorizationEnabled && (
-                <button type="button" className="btn btn-success" onClick={triggerTestInRegoPlayground}>
+                <button
+                  data-testid="playgroundBtn"
+                  type="button"
+                  className="btn btn-success"
+                  onClick={triggerTestInRegoPlayground}
+                >
                   {isTesting ? (
                     <>
                       <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -568,6 +575,7 @@ const AuthorizationSection = (props: Props) => {
                     onSaveAuthorizationPolicy();
                   }}
                   action={AuthorizerAction.UpdateAuthorizationPolicy}
+                  disabled={isSaving}
                 >
                   <>
                     {isSaving ? (
@@ -594,6 +602,7 @@ const AuthorizationSection = (props: Props) => {
           closeButton={
             <>
               <button
+                data-testid="modalCancelBtn"
                 className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
                 onClick={() => setConfirmationModal({ open: false })}
               >
@@ -601,7 +610,7 @@ const AuthorizationSection = (props: Props) => {
               </button>
 
               <button
-                data-testid="leaveOrgBtn"
+                data-testid="modalOKBtn"
                 className="btn btn-sm btn-primary text-uppercase ml-3"
                 onClick={(e) => {
                   e.preventDefault();
