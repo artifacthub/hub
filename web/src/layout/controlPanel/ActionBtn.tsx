@@ -19,7 +19,7 @@ interface Props {
 
 const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
   const { ctx } = useContext(AppCtx);
-  const [isAuthorized, setIsAuthorized] = useState<boolean | undefined>(undefined);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
   const [onBtnHover, setOnBtnHover] = useState<boolean>(false);
   const [visibleTooltipStatus, setVisibleTooltipStatus] = useState<boolean>(false);
   const [activeOrg, setActiveOrg] = useState<undefined | string>(undefined);
@@ -51,14 +51,16 @@ const ActionBtn = forwardRef((props: Props, ref: React.Ref<RefActionBtn>) => {
   }, [onBtnHover, visibleTooltipStatus]);
 
   useEffect(() => {
-    setIsAuthorized(
-      authorizer.check({
-        action: props.action,
-        user: ctx.user!.alias!,
-        organizationName: activeOrg,
-        onCompletion: () => setUpdateView((updateView: number) => ++updateView),
-      })
-    );
+    if (activeOrg) {
+      setIsAuthorized(
+        authorizer.check({
+          action: props.action,
+          user: ctx.user!.alias!,
+          organizationName: activeOrg,
+          onCompletion: () => setUpdateView((updateView: number) => ++updateView),
+        })
+      );
+    }
   }, [activeOrg, updateView]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {

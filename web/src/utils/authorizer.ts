@@ -19,7 +19,7 @@ export class Authorizer {
   public updateCtx(selectedOrg?: string) {
     if (isUndefined(selectedOrg)) {
       this.selectedOrg = undefined;
-      this.allowedActions = [];
+      this.allowedActions = ['all'];
     } else if (this.selectedOrg !== selectedOrg) {
       this.selectedOrg = selectedOrg;
       this.getAllowedActionsList();
@@ -34,7 +34,7 @@ export class Authorizer {
     } else {
       if (this.gettingActions && !isUndefined(input.onCompletion) && input.organizationName) {
         this.pendingActions.push(input.onCompletion);
-        return false;
+        return true;
       } else {
         if (isUndefined(this.selectedOrg) || this.allowedActions.includes('all')) {
           return true;
