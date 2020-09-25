@@ -3,6 +3,7 @@ import fetchMock from 'jest-fetch-mock';
 
 import {
   APIKey,
+  AuthorizationPolicy,
   CheckAvailabilityProps,
   ErrorKind,
   OptOutItem,
@@ -10,6 +11,8 @@ import {
   Package,
   PackageStars,
   Profile,
+  RegoPlaygroundPolicy,
+  RegoPlaygroundResult,
   Repository,
   RepositoryKind,
   SearchResults,
@@ -1612,6 +1615,104 @@ describe('index API', () => {
         expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/repositories/user/repo1/claimOwnership');
         expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
         expect(response).toBe('');
+      });
+    });
+
+    describe('getAuthorizationPolicy', () => {
+      it('success', async () => {
+        const authz: AuthorizationPolicy = getData('33') as AuthorizationPolicy;
+        fetchMock.mockResponse(JSON.stringify(authz), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getAuthorizationPolicy('org1');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorizationPolicy');
+        expect(response).toEqual(methods.toCamelCase(authz));
+      });
+    });
+
+    describe('updateAuthorizationPolicy', () => {
+      it('success', async () => {
+        fetchMock.mockResponse('', {
+          headers: {
+            'content-type': 'text/plain; charset=utf-8',
+          },
+          status: 204,
+        });
+
+        const policy = {
+          authorizationEnabled: true,
+          predefinedPolicy: null,
+          customPolicy: 'custom',
+          policyData: '{}',
+        };
+
+        const response = await methods.API.updateAuthorizationPolicy('org1', policy);
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/authorizationPolicy');
+        expect(fetchMock.mock.calls[0][1]!.method).toBe('PUT');
+        expect(fetchMock.mock.calls[0][1]!.body).toBe(
+          JSON.stringify(
+            renameKeysInObject(
+              { ...policy },
+              {
+                authorizationEnabled: 'authorization_enabled',
+                predefinedPolicy: 'predefined_policy',
+                customPolicy: 'custom_policy',
+                policyData: 'policy_data',
+              }
+            )
+          )
+        );
+        expect(response).toBe('');
+      });
+    });
+
+    describe('getUserAllowedActions', () => {
+      it('success', async () => {
+        const actions: string[] = getData('34') as string[];
+        fetchMock.mockResponse(JSON.stringify(actions), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getUserAllowedActions('org1');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/orgs/org1/userAllowedActions');
+        expect(response).toEqual(methods.toCamelCase(actions));
+      });
+    });
+
+    describe('triggerTestInRegoPlayground', () => {
+      it('success', async () => {
+        const playgroundPolicy: RegoPlaygroundResult = getData('35') as RegoPlaygroundResult;
+        fetchMock.mockResponse(JSON.stringify(playgroundPolicy), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const data: RegoPlaygroundPolicy = {
+          rego_modules: { 'policy.rego': 'package artifacthub.authz\n\nallow = true\nallowed_actions = ["all"]' },
+          input: { user: 'cynthiasg', action: 'updateOrganization' },
+          data: {},
+        };
+
+        const response = await methods.API.triggerTestInRegoPlayground(data);
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('https://play.openpolicyagent.org/v1/share');
+        expect(response).toEqual(methods.toCamelCase(playgroundPolicy));
       });
     });
   });

@@ -9,6 +9,12 @@ import { ErrorKind, User } from '../../../types';
 import MembersSection from './index';
 jest.mock('../../../api');
 
+jest.mock('../../../utils/authorizer', () => ({
+  check: () => {
+    return true;
+  },
+}));
+
 const getMembers = (fixtureId: string): User[] => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as User[];
 };

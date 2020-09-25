@@ -1,0 +1,26 @@
+{
+  "authorizationEnabled": true,
+  "predefinedPolicy": "rbac.v1",
+  "customPolicy": null,
+  "policyData": {
+    "roles": {
+      "owner": {
+        "users": ["demo", "cintia"]
+      },
+      "customRole1": {
+        "users": [],
+        "allowed_actions": [
+          "addOrganizationMember",
+          "addOrganizationRepository",
+          "deleteOrganizationMember",
+          "deleteOrganizationRepository",
+          "getAuthorizationPolicy",
+          "transferOrganizationRepository",
+          "updateAuthorizationPolicy",
+          "updateOrganization",
+          "updateOrganizationRepository"
+        ]
+      }
+    }
+  }
+}

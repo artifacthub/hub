@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Authorization settings index creates snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="container p-0"
+    role="main"
+  >
+    <div
+      class="position-absolute p-5 wrapper undefined"
+    >
+      <div
+        class="d-flex flex-row align-items-center justify-content-center w-100 h-100"
+      >
+        <div
+          class="spinner-border text-primary spinner undefined"
+          role="status"
+        >
+          <span
+            class="sr-only"
+          >
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="h3 pb-2 border-bottom title"
+    >
+      Authorization
+    </div>
+    <div
+      class="mt-4 mt-md-5"
+    >
+      <p>
+        Artifact Hub allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
+        <a
+          class="link text-reset link"
+          href="https://www.openpolicyagent.org/docs/latest/#rego"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          rego
+        </a>
+         and they are evaluated using the 
+        <a
+          class="link text-reset link"
+          href="https://www.openpolicyagent.org"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          Open Policy Agent
+        </a>
+        . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
+        <a
+          class="link text-reset link"
+          href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          documentation
+        </a>
+        .
+      </p>
+      <div
+        class="alertWrapper"
+        data-testid="alertWrapper"
+      />
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Authorization settings index creates snapshot 2`] = `
+<DocumentFragment>
+  <main
+    class="container p-0"
+    role="main"
+  >
+    <div
+      class="h3 pb-2 border-bottom title"
+    >
+      Authorization
+    </div>
+    <div
+      class="mt-4 mt-md-5"
+    >
+      <p>
+        Artifact Hub allows you to setup fine-grained access control based on authorization policies. Authorization polices are written in 
+        <a
+          class="link text-reset link"
+          href="https://www.openpolicyagent.org/docs/latest/#rego"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          rego
+        </a>
+         and they are evaluated using the 
+        <a
+          class="link text-reset link"
+          href="https://www.openpolicyagent.org"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          Open Policy Agent
+        </a>
+        . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
+        <a
+          class="link text-reset link"
+          href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          documentation
+        </a>
+        .
+      </p>
+      <div
+        class="custom-control custom-switch mb-4"
+      >
+        <input
+          class="custom-control-input"
+          data-testid="swicthAccessControl"
+          id="activeAuthorization"
+          type="checkbox"
+          value="true"
+        />
+        <label
+          class="custom-control-label"
+          for="activeAuthorization"
+        >
+          Fine-grained access control
+        </label>
+      </div>
+      <div
+        class="d-flex flex-row mt-4"
+      >
+        <div
+          class="ml-auto"
+        >
+          <span
+            class="position-relative"
+          >
+            <button
+              class="btn btn-secondary"
+              data-testid="updateAuthorizationPolicyBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center undefined"
+              >
+                Save
+              </div>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div
+        class="alertWrapper"
+        data-testid="alertWrapper"
+      />
+    </div>
+  </main>
+</DocumentFragment>
+`;

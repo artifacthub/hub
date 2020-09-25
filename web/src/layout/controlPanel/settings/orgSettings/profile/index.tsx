@@ -103,6 +103,7 @@ const ProfileSection = (props: Props) => {
                       submitForm();
                     }}
                     action={AuthorizerAction.UpdateOrganization}
+                    disabled={isSending}
                   >
                     <>
                       {isSending ? (

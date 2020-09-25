@@ -19,6 +19,12 @@ const defaultProps = {
   onAuthError: onAuthErrorMock,
 };
 
+jest.mock('../../../../../utils/authorizer', () => ({
+  check: () => {
+    return true;
+  },
+}));
+
 const mockCtx = {
   user: { alias: 'test', email: 'test@test.com' },
   prefs: {
@@ -86,17 +92,17 @@ describe('Organization settings index', () => {
       );
 
       await waitFor(() => {
-        const form = getByTestId('organizationForm');
-
-        expect(form).toBeInTheDocument();
-        expect(getByAltText('Logo')).toBeInTheDocument();
-        expect(getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
-        expect(getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
-        expect(getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
-        expect(getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
+        expect(API.getOrganization).toHaveBeenCalledTimes(1);
       });
 
-      await waitFor(() => {});
+      const form = getByTestId('organizationForm');
+
+      expect(form).toBeInTheDocument();
+      expect(getByAltText('Logo')).toBeInTheDocument();
+      expect(getByDisplayValue(mockOrganization.name)).toBeInTheDocument();
+      expect(getByDisplayValue(mockOrganization.displayName!)).toBeInTheDocument();
+      expect(getByDisplayValue(mockOrganization.homeUrl!)).toBeInTheDocument();
+      expect(getByDisplayValue(mockOrganization.description!)).toBeInTheDocument();
     });
   });
 

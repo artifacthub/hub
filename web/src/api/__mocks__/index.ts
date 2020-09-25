@@ -48,4 +48,8 @@ export const API = {
   getOptOutList: jest.fn(),
   addOptOut: jest.fn(),
   deleteOptOut: jest.fn(),
+  getAuthorizationPolicy: jest.fn(),
+  updateAuthorizationPolicy: jest.fn(),
+  getUserAllowedActions: jest.fn(),
+  triggerTestInRegoPlayground: jest.fn(),
 };
