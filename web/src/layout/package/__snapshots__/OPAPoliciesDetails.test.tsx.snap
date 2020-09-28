@@ -207,7 +207,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       >
         MIT
         <span
-          class="smallIcon"
+          class="smallIcon alignedSmallIcon"
         >
           <svg
             class="ml-1"

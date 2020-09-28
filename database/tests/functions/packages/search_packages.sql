@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(25);
+select plan(26);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -340,6 +340,14 @@ select is(
                 }, {
                     "id": "repo3",
                     "name": "Repo3",
+                    "total": 1
+                }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
                     "total": 1
                 }]
             }]
@@ -745,6 +753,14 @@ select is(
                     "name": "Repo2",
                     "total": 1
                 }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -815,6 +831,14 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
+                    "total": 1
+                }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
                     "total": 1
                 }]
             }]
@@ -966,6 +990,14 @@ select is(
                     "name": "Repo1",
                     "total": 1
                 }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -1015,6 +1047,14 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
+                    "total": 1
+                }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
                     "total": 1
                 }]
             }]
@@ -1067,6 +1107,14 @@ select is(
                     "name": "Repo1",
                     "total": 1
                 }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -1114,6 +1162,14 @@ select is(
                 "options": [{
                     "id": "repo1",
                     "name": "Repo1",
+                    "total": 1
+                }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
                     "total": 1
                 }]
             }]
@@ -1310,6 +1366,53 @@ select is(
         }
     }'::jsonb,
     'TsQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
+);
+
+-- Tests with with license filter
+select is(
+    search_packages('{
+        "licenses": [
+            "Apache-2.0"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'TsQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
 );
 
 -- Tests with limit and offset
@@ -1562,6 +1665,14 @@ select is(
                 }, {
                     "id": "repo2",
                     "name": "Repo2",
+                    "total": 1
+                }]
+            }, {
+                "title": "License",
+                "filter_key": "license",
+                "options": [{
+                    "id": "Apache-2.0",
+                    "name": "Apache-2.0",
                     "total": 1
                 }]
             }]

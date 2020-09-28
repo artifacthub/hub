@@ -840,6 +840,7 @@ paths:
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
         - $ref: "#/components/parameters/RepositoriesListParam"
+        - $ref: "#/components/parameters/LicensesListParam"
         - $ref: "#/components/parameters/DeprecatedParam"
         - $ref: "#/components/parameters/OperatorsParam"
         - $ref: "#/components/parameters/VerifiedPublisherParam"
@@ -2356,6 +2357,19 @@ components:
           - repo2
       required: false
       description: List of repository names
+    LicensesListParam:
+      in: query
+      name: license
+      schema:
+        type: array
+        items:
+          type: string
+        # https://spdx.org/licenses/
+        example:
+          - MIT
+          - Apache-2.0
+      required: false
+      description: List of SPDX identifiers
     DeprecatedParam:
       in: query
       name: deprecated
@@ -2436,7 +2450,7 @@ components:
       description: The org to transfer the repoName
     OrgsListParam:
       in: query
-      name: orgs
+      name: org
       schema:
         type: array
         items:
@@ -2528,14 +2542,14 @@ components:
         (12.3.2. Parsing Queries) for more details.
     UsersListParam:
       in: query
-      name: users
+      name: user
       schema:
         type: array
         items:
           type: string
-          example:
-            - user1
-            - user2
+        example:
+          - user1
+          - user2
       required: false
       description: List of aliases
     UserAliasParam:
