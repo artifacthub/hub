@@ -5,11 +5,12 @@ import { FiExternalLink } from 'react-icons/fi';
 import { GoLaw } from 'react-icons/go';
 
 import ExternalLink from '../common/ExternalLink';
-import SmallTitle from '../common/SmallTitle';
 import styles from './License.module.css';
 
 interface Props {
   license?: null | string;
+  className?: string;
+  visibleIcon?: boolean;
 }
 
 const LICENSES_LIST: string[] = [
@@ -58,30 +59,27 @@ const License = (props: Props) => {
   if (isUndefined(props.license) || isNull(props.license)) return null;
 
   return (
-    <>
-      <SmallTitle text="License" />
-      <div className="mb-3">
-        {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
-          <ExternalLink
-            href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
-            className="text-primary py-1 py-sm-0"
-          >
-            <div className="d-flex align-items-center">
-              <GoLaw className="text-muted mr-2 h6 mb-0" />
-              <>{props.license}</>
-              <span className={styles.smallIcon}>
-                <FiExternalLink className="ml-1" />
-              </span>
-            </div>
-          </ExternalLink>
-        ) : (
+    <div className={props.className}>
+      {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
+        <ExternalLink
+          href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
+          className="text-primary py-1 py-sm-0"
+        >
           <div className="d-flex align-items-center">
-            <GoLaw className="text-muted mr-2 h6 mb-0" />
+            {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
             <>{props.license}</>
+            <span className={styles.smallIcon}>
+              <FiExternalLink className="ml-1" />
+            </span>
           </div>
-        )}
-      </div>
-    </>
+        </ExternalLink>
+      ) : (
+        <div className="d-flex align-items-center">
+          {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
+          <>{props.license}</>
+        </div>
+      )}
+    </div>
   );
 };
 

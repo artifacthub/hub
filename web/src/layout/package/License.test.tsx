@@ -21,7 +21,6 @@ describe('License', () => {
     it('renders component', () => {
       const { getByText, getByRole } = render(<License {...defaultProps} />);
 
-      expect(getByText('License')).toBeInTheDocument();
       expect(getByText(defaultProps.license)).toBeInTheDocument();
 
       const link = getByRole('button');
@@ -31,7 +30,6 @@ describe('License', () => {
     it('does not render external link when license is not on the available licenses links list', () => {
       const { getByText, queryByRole } = render(<License license="xxx" />);
 
-      expect(getByText('License')).toBeInTheDocument();
       expect(getByText('xxx')).toBeInTheDocument();
       expect(queryByRole('button')).toBeNull();
     });

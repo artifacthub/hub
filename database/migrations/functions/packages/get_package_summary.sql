@@ -12,6 +12,7 @@ returns setof json as $$
         'description', s.description,
         'version', s.version,
         'app_version', s.app_version,
+        'license', s.license,
         'deprecated', s.deprecated,
         'signed', s.signed,
         'created_at', floor(extract(epoch from s.created_at)),

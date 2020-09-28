@@ -34,6 +34,7 @@ insert into snapshot (
     app_version,
     display_name,
     description,
+    license,
     deprecated,
     signed,
     created_at
@@ -43,6 +44,7 @@ insert into snapshot (
     '12.0.0',
     'Package 1',
     'description',
+    'Apache-2.0',
     false,
     false,
     '2020-06-16 11:20:34+02'
@@ -61,6 +63,7 @@ select is(
         "description": "description",
         "version": "1.0.0",
         "app_version": "12.0.0",
+        "license": "Apache-2.0",
         "deprecated": false,
         "signed": false,
         "created_at": 1592299234,

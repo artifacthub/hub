@@ -85,6 +85,7 @@ select is(
                     "description": null,
                     "version": "1.0.0",
                     "app_version": null,
+                    "license": null,
                     "deprecated": null,
                     "signed": null,
                     "created_at": 1592299234,

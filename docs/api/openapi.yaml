@@ -892,6 +892,7 @@ paths:
                           app_version: 0.1.0
                           deprecated: false
                           signed: null
+                          license: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -914,6 +915,7 @@ paths:
                           app_version: latest
                           deprecated: false
                           signed: null
+                          license: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -936,6 +938,7 @@ paths:
                           app_version: 0.9.4
                           deprecated: false
                           signed: null
+                          license: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -2014,10 +2017,6 @@ components:
                     type: integer
                     example: 1552082346
               nullable: true
-            license:
-              type: string
-              nullable: true
-              example: MIT
             maintainers:
               type: array
               items:
@@ -2082,6 +2081,10 @@ components:
         app_version:
           type: string
           example: 0.1.0
+        license:
+          type: string
+          nullable: true
+          example: MIT
         deprecated:
           type: boolean
           example: false

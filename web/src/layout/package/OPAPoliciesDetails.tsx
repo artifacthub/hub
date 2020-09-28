@@ -43,7 +43,12 @@ const OPAPoliciesDetails = (props: Props) => (
 
     <Maintainers maintainers={props.package.maintainers} />
 
-    <License license={props.package.license} />
+    {props.package.license && (
+      <>
+        <SmallTitle text="License" />
+        <License license={props.package.license} className="mb-3" />
+      </>
+    )}
 
     {props.package.containerImage && (
       <>
