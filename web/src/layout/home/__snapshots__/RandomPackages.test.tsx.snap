@@ -376,7 +376,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                       >
                         <div
-                          class="text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -761,7 +761,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                       >
                         <div
-                          class="text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -1145,7 +1145,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                       >
                         <div
-                          class="text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -1530,7 +1530,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                       >
                         <div
-                          class="text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"
@@ -1915,7 +1915,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                       >
                         <div
-                          class="text-truncate"
+                          class="d-flex flex-row align-items-baseline text-truncate"
                         >
                           <span
                             class="text-muted text-uppercase mr-1"

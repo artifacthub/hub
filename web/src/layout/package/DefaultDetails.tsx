@@ -30,7 +30,12 @@ const DefaultDetails = (props: Props) => {
 
       <Links links={props.package.links} />
 
-      <License license={props.package.license} />
+      {props.package.license && (
+        <>
+          <SmallTitle text="License" />
+          <License license={props.package.license} className="mb-3" visibleIcon />
+        </>
+      )}
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

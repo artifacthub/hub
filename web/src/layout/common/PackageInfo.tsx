@@ -7,8 +7,10 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
 import buildPackageURL from '../../utils/buildPackageURL';
+import cutString from '../../utils/cutString';
 import prepareQueryString from '../../utils/prepareQueryString';
 import prettifyNumber from '../../utils/prettifyNumber';
+import License from '../package/License';
 import Image from './Image';
 import Label from './Label';
 import OfficialBadge from './OfficialBadge';
@@ -199,9 +201,9 @@ const PackageInfo = (props: Props) => {
             <div
               className={`d-none d-md-block card-subtitle text-truncate align-items-baseline ${styles.subtitle} ${styles.lastLine}`}
             >
-              <div className="text-truncate">
+              <div className="d-flex flex-row align-items-baseline text-truncate">
                 <span className="text-muted text-uppercase mr-1">Version: </span>
-                {props.package.version || '-'}
+                {cutString(props.package.version || '-')}
 
                 {(() => {
                   switch (props.package.repository.kind) {
@@ -209,7 +211,7 @@ const PackageInfo = (props: Props) => {
                       return (
                         <>
                           <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>
-                          {props.package.appVersion || '-'}
+                          {cutString(props.package.appVersion || '-')}
                         </>
                       );
 
@@ -217,6 +219,13 @@ const PackageInfo = (props: Props) => {
                       return null;
                   }
                 })()}
+
+                {props.package.license && (
+                  <div className={`d-none d-lg-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}>
+                    <span className="text-muted text-uppercase mr-1 ml-3">License:</span>
+                    <License license={props.package.license} className="text-truncate" visibleIcon={false} />
+                  </div>
+                )}
               </div>
             </div>
           </div>
