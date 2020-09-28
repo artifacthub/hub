@@ -1,3 +1,7 @@
 .smallIcon {
   font-size: 0.65rem;
 }
+
+.alignedSmallIcon {
+  margin-top: -2px;
+}

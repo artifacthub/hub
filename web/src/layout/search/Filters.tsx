@@ -5,7 +5,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { FaBuilding, FaUser } from 'react-icons/fa';
-import { GoPackage } from 'react-icons/go';
+import { GoLaw, GoPackage } from 'react-icons/go';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 import { FacetOption, Facets, Option } from '../../types';
@@ -148,6 +148,30 @@ const Filters = (props: Props) => {
     return crElement;
   };
 
+  const getLicenseFacets = (): JSX.Element | null => {
+    let crElement = null;
+    const repo = getFacetsByFilterKey('license');
+    if (!isUndefined(repo)) {
+      const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoLaw />, filterKey: 'license' }));
+
+      crElement = (
+        <div className="mt-3 mt-sm-4 pt-1">
+          <InputTypeahead
+            label="license"
+            options={options}
+            selected={{
+              license: props.activeFilters.license || [],
+            }}
+            onChange={props.onChange}
+            onResetSomeFilters={props.onResetSomeFilters}
+          />
+        </div>
+      );
+    }
+
+    return crElement;
+  };
+
   return (
     <div className={classnames(styles.filters, { 'pt-2 mt-3 mb-5': props.visibleTitle })}>
       {props.visibleTitle && (
@@ -177,6 +201,7 @@ const Filters = (props: Props) => {
       {getKindFacets()}
       {getPublishers()}
       {getRepositoryFacets()}
+      {getLicenseFacets()}
 
       <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />

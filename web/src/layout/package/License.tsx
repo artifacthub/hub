@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
@@ -68,7 +69,11 @@ const License = (props: Props) => {
           <div className="d-flex align-items-center">
             {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
             <>{props.license}</>
-            <span className={styles.smallIcon}>
+            <span
+              className={classnames(styles.smallIcon, {
+                [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,
+              })}
+            >
               <FiExternalLink className="ml-1" />
             </span>
           </div>

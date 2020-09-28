@@ -7,6 +7,7 @@ declare
     v_users text[];
     v_orgs text[];
     v_repositories text[];
+    v_licenses text[];
     v_facets boolean := (p_input->>'facets')::boolean;
     v_tsquery_web tsquery := websearch_to_tsquery(p_input->>'ts_query_web');
     v_tsquery tsquery := to_tsquery(p_input->>'ts_query');
@@ -20,6 +21,8 @@ begin
     from jsonb_array_elements_text(p_input->'orgs') e;
     select array_agg(e::text) into v_repositories
     from jsonb_array_elements_text(p_input->'repositories') e;
+    select array_agg(e::text) into v_licenses
+    from jsonb_array_elements_text(p_input->'licenses') e;
 
     return query
     with packages_applying_minimum_filters as (
@@ -101,6 +104,8 @@ begin
                     organization_name = any(v_orgs)
                 when cardinality(v_users) > 0 then
                     user_alias = any(v_users)
+                when cardinality(v_licenses) > 0 then
+                    license = any(v_licenses)
                 else true
             end
         and
@@ -265,6 +270,37 @@ begin
                                         ) as repos
                                         order by pri asc, total desc, repository_name asc
                                     ) as repos_filtered
+                                )
+                            )
+                        ),
+                        (
+                            select json_build_object(
+                                'title', 'License',
+                                'filter_key', 'license',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', license,
+                                        'name', license,
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select license, total
+                                        from (
+                                            select 1 as pri, license, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where license = any(v_licenses)
+                                            group by license
+                                            union
+                                            select 2 as pri, license, count(*) as total
+                                            from packages_applying_minimum_filters
+                                            where license is not null
+                                            and
+                                                case when cardinality(v_licenses) > 0
+                                                then license <> all(v_licenses) else true end
+                                            group by license
+                                        ) as orgs
+                                        order by pri asc, total desc, license asc
+                                    ) as licenses_filtered
                                 )
                             )
                         )
