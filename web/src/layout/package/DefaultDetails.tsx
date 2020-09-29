@@ -33,7 +33,12 @@ const DefaultDetails = (props: Props) => {
       {props.package.license && (
         <>
           <SmallTitle text="License" />
-          <License license={props.package.license} className="mb-3" visibleIcon />
+          <License
+            license={props.package.license}
+            className="mb-3"
+            linkClassName="text-primary py-1 py-sm-0"
+            visibleIcon
+          />
         </>
       )}
 

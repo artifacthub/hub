@@ -20,87 +20,82 @@ interface Props {
   onChannelChange: (channel: string) => void;
 }
 
-const OLMOperatorsDetails = (props: Props) => {
-  const getCapabilityLevel = (): string | undefined => {
-    let level: string | undefined;
-    if (props.package.capabilities) {
-      level = props.package.capabilities;
-    }
-    return level;
-  };
+const OLMOperatorsDetails = (props: Props) => (
+  <>
+    <div>
+      <SmallTitle text="Channel" />
+      <select
+        className={`custom-select custom-select-sm bg-light mb-3 ${styles.select}`}
+        aria-label="channel-select"
+        value={props.activeChannel!}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.onChannelChange(e.target.value)}
+      >
+        {props.package.channels!.map((channel: Channel) => (
+          <option key={`channel_${channel.name}`} value={channel.name}>
+            {channel.name}
+          </option>
+        ))}
+      </select>
+    </div>
 
-  return (
-    <>
-      <div>
-        <SmallTitle text="Channel" />
-        <select
-          className={`custom-select custom-select-sm bg-light mb-3 ${styles.select}`}
-          aria-label="channel-select"
-          value={props.activeChannel!}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => props.onChannelChange(e.target.value)}
-        >
-          {props.package.channels!.map((channel: Channel) => (
-            <option key={`channel_${channel.name}`} value={channel.name}>
-              {channel.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <RSSLinkTitle title="Versions" package={props.package} />
-        {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
-          <p data-testid="versions">-</p>
-        ) : (
-          <div className="mb-3" data-testid="versions">
-            <ExpandableList items={props.allVersions} visibleItems={3} />
-          </div>
-        )}
-      </div>
-
-      <CapabilityLevel capabilityLevel={getCapabilityLevel()} />
-
-      {props.package.provider && (
-        <>
-          <div>
-            <SmallTitle text="Provider" />
-            <p className="text-truncate">{props.package.provider}</p>
-          </div>
-        </>
+    <div>
+      <RSSLinkTitle title="Versions" package={props.package} />
+      {isUndefined(props.package.availableVersions) || props.package.availableVersions.length === 0 ? (
+        <p data-testid="versions">-</p>
+      ) : (
+        <div className="mb-3" data-testid="versions">
+          <ExpandableList items={props.allVersions} visibleItems={3} />
+        </div>
       )}
+    </div>
 
-      <Links links={props.package.links} />
+    <CapabilityLevel capabilityLevel={props.package.capabilities} />
 
-      <Maintainers maintainers={props.package.maintainers} />
+    {props.package.provider && (
+      <>
+        <div>
+          <SmallTitle text="Provider" />
+          <p className="text-truncate">{props.package.provider}</p>
+        </div>
+      </>
+    )}
 
-      {props.package.license && (
-        <>
-          <SmallTitle text="License" />
-          <License license={props.package.license} className="mb-3" visibleIcon />
-        </>
-      )}
+    <Links links={props.package.links} />
 
-      {props.package.containerImage && (
-        <>
-          <SmallTitle
-            text="Container Image"
-            icon={
-              <div className="d-inline-block">
-                <ButtonCopyToClipboard
-                  text={props.package.containerImage}
-                  className="btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
-                />
-              </div>
-            }
-          />
-          <p className={styles.containerImage}>{props.package.containerImage}</p>
-        </>
-      )}
+    <Maintainers maintainers={props.package.maintainers} />
 
-      <SmallTitle text="Keywords" />
-      <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
-    </>
-  );
-};
+    {props.package.license && (
+      <>
+        <SmallTitle text="License" />
+        <License
+          license={props.package.license}
+          className="mb-3"
+          linkClassName="text-primary py-1 py-sm-0"
+          visibleIcon
+        />
+      </>
+    )}
+
+    {props.package.containerImage && (
+      <>
+        <SmallTitle
+          text="Container Image"
+          icon={
+            <div className="d-inline-block">
+              <ButtonCopyToClipboard
+                text={props.package.containerImage}
+                className="btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
+              />
+            </div>
+          }
+        />
+        <p className={styles.containerImage}>{props.package.containerImage}</p>
+      </>
+    )}
+
+    <SmallTitle text="Keywords" />
+    <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />
+  </>
+);
 
 export default OLMOperatorsDetails;

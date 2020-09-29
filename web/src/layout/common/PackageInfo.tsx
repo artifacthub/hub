@@ -197,7 +197,13 @@ const PackageInfo = (props: Props) => {
                 {props.package.license && (
                   <div className={`d-none d-lg-flex flex-row aling-items-baseline text-truncate ${styles.mx50}`}>
                     <span className="text-muted text-uppercase mr-1 ml-3">License:</span>
-                    <License license={props.package.license} className="text-truncate" visibleIcon={false} />
+                    <License
+                      license={props.package.license}
+                      className="text-truncate"
+                      linkClassName={`${styles.link} ${styles.subtitle} ${styles.licenseBtn}`}
+                      visibleIcon={false}
+                      btnType
+                    />
                   </div>
                 )}
               </div>
@@ -214,7 +220,7 @@ const PackageInfo = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={`mt-3 overflow-hidden ${styles.description} ${styles.lineClamp}`}>
+      <div className={`mb-0 mb-md-1 mt-3 overflow-hidden ${styles.description} ${styles.lineClamp}`}>
         {props.package.description}
       </div>
 

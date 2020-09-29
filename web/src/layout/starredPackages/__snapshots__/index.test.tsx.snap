@@ -469,7 +469,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="mt-3 overflow-hidden description lineClamp"
+                    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                   >
                     Airflow is a platform to programmatically author, schedule and monitor workflows
                   </div>
@@ -916,7 +916,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="mt-3 overflow-hidden description lineClamp"
+                    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                   >
                     Apache Cassandra is a free and open-source distributed database management system designed to handle large amounts of data across many commodity servers, providing high availability with no single point of failure.
                   </div>
@@ -1363,7 +1363,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="mt-3 overflow-hidden description lineClamp"
+                    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                   >
                     Prometheus is a monitoring system and time series database.
                   </div>
@@ -1788,7 +1788,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="mt-3 overflow-hidden description lineClamp"
+                    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                   >
                     Falco rules for securing Traefik
                   </div>
@@ -2213,7 +2213,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                     </div>
                   </div>
                   <div
-                    class="mt-3 overflow-hidden description lineClamp"
+                    class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                   >
                     Open Policy Agent policy for running only images from a trusted repository
                   </div>

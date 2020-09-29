@@ -4,7 +4,7 @@ exports[`License creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <a
-      class="link text-primary py-1 py-sm-0"
+      class="link undefined"
       href="https://choosealicense.com/licenses/mit/"
       rel="noopener noreferrer"
       role="button"

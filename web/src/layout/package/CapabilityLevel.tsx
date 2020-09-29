@@ -8,15 +8,14 @@ import styles from './CapabilityLevel.module.css';
 import CapatabilityLevelInfoModal from './CapatabilityLevelInfoModal';
 
 interface Props {
-  capabilityLevel?: string;
+  capabilityLevel?: string | null;
 }
 
 const LEVELS = ['basic install', 'seamless upgrades', 'full lifecycle', 'deep insights', 'auto pilot'];
 
 const CapabilityLevel = (props: Props) => {
-  if (isUndefined(props.capabilityLevel) || isNull(props.capabilityLevel)) return null;
-
   const activeLevel = LEVELS.findIndex((level: string) => level === props.capabilityLevel);
+  if (isUndefined(props.capabilityLevel) || isNull(props.capabilityLevel) || activeLevel < 0) return null;
 
   return (
     <div>
