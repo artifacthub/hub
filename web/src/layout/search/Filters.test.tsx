@@ -150,6 +150,140 @@ const defaultProps = {
   official: false,
 };
 
+interface CapabilitiesTest {
+  input: Facets;
+  output: string[];
+}
+
+const capabitiesTests: CapabilitiesTest[] = [
+  {
+    input: {
+      title: 'Operator capabilities',
+      filterKey: 'capabilities',
+      options: [
+        {
+          id: 'basic install',
+          name: 'basic install',
+          total: 73,
+        },
+        {
+          id: 'seamless upgrades',
+          name: 'seamless upgrades',
+          total: 33,
+        },
+        {
+          id: 'full lifecycle',
+          name: 'full lifecycle',
+          total: 25,
+        },
+        {
+          id: 'deep insights',
+          name: 'deep insights',
+          total: 17,
+        },
+        {
+          id: 'auto pilot',
+          name: 'auto pilot',
+          total: 9,
+        },
+      ],
+    },
+    output: ['basic install(73)', 'seamless upgrades(33)', 'full lifecycle(25)', 'deep insights(17)', 'auto pilot(9)'],
+  },
+  {
+    input: {
+      title: 'Operator capabilities',
+      filterKey: 'capabilities',
+      options: [
+        {
+          id: 'seamless upgrades',
+          name: 'seamless upgrades',
+          total: 33,
+        },
+        {
+          id: 'full lifecycle',
+          name: 'full lifecycle',
+          total: 25,
+        },
+        {
+          id: 'deep insights',
+          name: 'deep insights',
+          total: 17,
+        },
+        {
+          id: 'basic install',
+          name: 'basic install',
+          total: 8,
+        },
+        {
+          id: 'auto pilot',
+          name: 'auto pilot',
+          total: 9,
+        },
+      ],
+    },
+    output: ['basic install(8)', 'seamless upgrades(33)', 'full lifecycle(25)', 'deep insights(17)', 'auto pilot(9)'],
+  },
+  {
+    input: {
+      title: 'Operator capabilities',
+      filterKey: 'capabilities',
+      options: [
+        {
+          id: 'auto pilot',
+          name: 'auto pilot',
+          total: 29,
+        },
+        {
+          id: 'seamless upgrades',
+          name: 'seamless upgrades',
+          total: 27,
+        },
+        {
+          id: 'deep insights',
+          name: 'deep insights',
+          total: 17,
+        },
+        {
+          id: 'basic install',
+          name: 'basic install',
+          total: 8,
+        },
+        {
+          id: 'full lifecycle',
+          name: 'full lifecycle',
+          total: 2,
+        },
+      ],
+    },
+    output: ['basic install(8)', 'seamless upgrades(27)', 'full lifecycle(2)', 'deep insights(17)', 'auto pilot(29)'],
+  },
+  {
+    input: {
+      title: 'Operator capabilities',
+      filterKey: 'capabilities',
+      options: [
+        {
+          id: 'auto pilot',
+          name: 'auto pilot',
+          total: 29,
+        },
+        {
+          id: 'basic install',
+          name: 'basic install',
+          total: 8,
+        },
+        {
+          id: 'full lifecycle',
+          name: 'full lifecycle',
+          total: 2,
+        },
+      ],
+    },
+    output: ['basic install(8)', 'full lifecycle(2)', 'auto pilot(29)'],
+  },
+];
+
 describe('Filters', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -283,11 +417,45 @@ describe('Filters', () => {
 
       expect(queryByText('License')).toBeNull();
     });
+
+    it('render Operator capatibilities', () => {
+      const { getByText } = render(<Filters {...defaultProps} />);
+
+      expect(getByText('Operator capabilities')).toBeInTheDocument();
+    });
+
+    it('does not render Operator capatibilities', () => {
+      const props = {
+        ...defaultProps,
+        facets: [
+          {
+            title: 'Operator capabilities',
+            filterKey: 'capabilities',
+            options: [],
+          },
+        ],
+      };
+
+      const { queryByText } = render(<Filters {...props} />);
+
+      expect(queryByText('Operator capabilities')).toBeNull();
+    });
   });
 
-  it('render Operator capatibilities', () => {
-    const { getByText } = render(<Filters {...defaultProps} />);
+  describe('Operator capabilities facets', () => {
+    for (let i = 0; i < capabitiesTests.length; i++) {
+      it('returns correct order', () => {
+        const props = {
+          ...defaultProps,
+          facets: [capabitiesTests[i].input],
+        };
+        const { getAllByTestId } = render(<Filters {...props} />);
+        const labels = getAllByTestId('checkboxLabel');
 
-    expect(getByText('Operator capabilities')).toBeInTheDocument();
+        for (let j = 0; j < capabitiesTests[i].output.length; j++) {
+          expect(labels[12 + j]).toHaveTextContent(capabitiesTests[i].output[j]);
+        }
+      });
+    }
   });
 });
