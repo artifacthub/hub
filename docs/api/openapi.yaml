@@ -894,6 +894,7 @@ paths:
                           deprecated: false
                           signed: null
                           license: null
+                          capabilities: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -917,6 +918,7 @@ paths:
                           deprecated: false
                           signed: null
                           license: null
+                          capabilities: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -940,6 +942,7 @@ paths:
                           deprecated: false
                           signed: null
                           license: null
+                          capabilities: null
                           repository:
                             url: "http://url.com"
                             kind: 0
@@ -1907,15 +1910,6 @@ components:
             data:
               type: object
               properties:
-                capabilities:
-                  type: string
-                  nullable: true
-                  example:
-                    - Basic Install
-                    - Seamless Upgrades
-                    - Full Lifecycle
-                    - Deep Insights
-                    - Auto Pilot
                 isGlobalOperator:
                   type: boolean
                   nullable: true
@@ -2050,6 +2044,15 @@ components:
             created_at:
               type: integer
               example: 1552082346
+            capabilities:
+              type: string
+              nullable: true
+              example:
+                - basic install
+                - seamless upgrades
+                - full lifecycle
+                - deep insights
+                - auto pilot
     PackageSummary:
       type: object
       properties:

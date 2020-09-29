@@ -45,6 +45,7 @@ type Package struct {
 	LogoURL           string                 `json:"logo_url"`
 	LogoImageID       string                 `json:"logo_image_id"`
 	IsOperator        bool                   `json:"is_operator"`
+	Capabilities      string                 `json:"capabilities"`
 	Channels          []*Channel             `json:"channels"`
 	DefaultChannel    string                 `json:"default_channel"`
 	DisplayName       string                 `json:"display_name"`

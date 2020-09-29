@@ -144,6 +144,7 @@ func TestTracker(t *testing.T) {
 			Readme:         "Test Operator README",
 			Version:        "0.1.0",
 			IsOperator:     true,
+			Capabilities:   "Basic Install",
 			ContainerImage: "repo.url:latest",
 			Provider:       "Test",
 			CreatedAt:      1561735380,
@@ -172,7 +173,6 @@ func TestTracker(t *testing.T) {
 				},
 			},
 			Data: map[string]interface{}{
-				"capabilities": "Basic Install",
 				"customResourcesDefinitions": []map[string]string{
 					{
 						"description": "Test CRD",

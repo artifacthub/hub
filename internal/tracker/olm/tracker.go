@@ -284,6 +284,7 @@ func (t *Tracker) registerPackage(
 		Readme:         csv.Spec.Description,
 		Version:        getPackageVersion(csv),
 		IsOperator:     true,
+		Capabilities:   csv.Annotations["capabilities"],
 		DefaultChannel: manifest.DefaultChannelName,
 		ContainerImage: csv.Annotations["containerImage"],
 		Provider:       csv.Spec.Provider.Name,
@@ -353,7 +354,6 @@ func (t *Tracker) registerPackage(
 		})
 	}
 	p.Data = map[string]interface{}{
-		"capabilities":                       csv.Annotations["capabilities"],
 		"isGlobalOperator":                   isGlobalOperator,
 		"customResourcesDefinitions":         crds,
 		"customResourcesDefinitionsExamples": csv.Annotations["alm-examples"],

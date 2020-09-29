@@ -129,6 +129,7 @@ create table if not exists snapshot (
     readme text check (readme <> ''),
     install text check (install <> ''),
     links jsonb,
+    capabilities text,
     data jsonb,
     deprecated boolean,
     license text check (license <> ''),

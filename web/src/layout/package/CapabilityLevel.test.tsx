@@ -5,21 +5,21 @@ import CapabilityLevel from './CapabilityLevel';
 
 describe('DefaultDetails', () => {
   it('creates snapshot', () => {
-    const result = render(<CapabilityLevel capabilityLevel="Deep Insights" />);
+    const result = render(<CapabilityLevel capabilityLevel="deep insights" />);
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByTestId } = render(<CapabilityLevel capabilityLevel="Deep Insights" />);
+      const { getByText, getAllByTestId } = render(<CapabilityLevel capabilityLevel="deep insights" />);
 
       expect(getByText('Capability Level')).toBeInTheDocument();
 
-      expect(getByText('Basic Install')).toBeInTheDocument();
-      expect(getByText('Seamless Upgrades')).toBeInTheDocument();
-      expect(getByText('Full Lifecycle')).toBeInTheDocument();
-      expect(getByText('Deep Insights')).toBeInTheDocument();
-      expect(getByText('Auto Pilot')).toBeInTheDocument();
+      expect(getByText('basic install')).toBeInTheDocument();
+      expect(getByText('seamless upgrades')).toBeInTheDocument();
+      expect(getByText('full lifecycle')).toBeInTheDocument();
+      expect(getByText('deep insights')).toBeInTheDocument();
+      expect(getByText('auto pilot')).toBeInTheDocument();
 
       const steps = getAllByTestId('capabilityLevelStep');
       expect(steps[0]).toHaveClass('activeStep');
@@ -30,7 +30,7 @@ describe('DefaultDetails', () => {
     });
 
     it('opens modal', () => {
-      const { getByTestId, getByRole, getByAltText } = render(<CapabilityLevel capabilityLevel="Deep Insights" />);
+      const { getByTestId, getByRole, getByAltText } = render(<CapabilityLevel capabilityLevel="deep insights" />);
 
       const modal = getByRole('dialog');
       expect(modal).not.toHaveClass('d-block');

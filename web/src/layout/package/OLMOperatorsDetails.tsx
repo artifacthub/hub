@@ -1,4 +1,3 @@
-import { isNull } from 'lodash';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
@@ -24,12 +23,8 @@ interface Props {
 const OLMOperatorsDetails = (props: Props) => {
   const getCapabilityLevel = (): string | undefined => {
     let level: string | undefined;
-    if (
-      !isNull(props.package.data) &&
-      !isUndefined(props.package.data) &&
-      !isUndefined(props.package.data.capabilities)
-    ) {
-      level = props.package.data.capabilities;
+    if (props.package.capabilities) {
+      level = props.package.capabilities;
     }
     return level;
   };

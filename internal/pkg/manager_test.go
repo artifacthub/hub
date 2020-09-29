@@ -509,6 +509,23 @@ func TestRegister(t *testing.T) {
 					},
 				},
 			},
+			{
+				"invalid capabilities",
+				&hub.Package{
+					Name:    "package1",
+					Version: "1.0.0",
+					Repository: &hub.Repository{
+						RepositoryID: "00000000-0000-0000-0000-000000000001",
+					},
+					Channels: []*hub.Channel{
+						{
+							Name:    "stable",
+							Version: "1.0.0",
+						},
+					},
+					Capabilities: "invalid",
+				},
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc

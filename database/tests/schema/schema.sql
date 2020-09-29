@@ -166,6 +166,7 @@ select columns_are('snapshot', array[
     'readme',
     'install',
     'links',
+    'capabilities',
     'data',
     'deprecated',
     'license',

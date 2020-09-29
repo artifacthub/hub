@@ -127,9 +127,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class=""
+          class="text-capitalize"
         >
-          Basic Install
+          basic install
         </small>
       </div>
       <div
@@ -154,9 +154,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class=""
+          class="text-capitalize"
         >
-          Seamless Upgrades
+          seamless upgrades
         </small>
       </div>
       <div
@@ -181,9 +181,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class=""
+          class="text-capitalize"
         >
-          Full Lifecycle
+          full lifecycle
         </small>
       </div>
       <div
@@ -208,9 +208,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
           </svg>
         </div>
         <small
-          class=""
+          class="text-capitalize"
         >
-          Deep Insights
+          deep insights
         </small>
       </div>
       <div
@@ -221,9 +221,9 @@ exports[`DefaultDetails creates snapshot 1`] = `
           data-testid="capabilityLevelStep"
         />
         <small
-          class="text-muted"
+          class="text-capitalize text-muted"
         >
-          Auto Pilot
+          auto pilot
         </small>
       </div>
     </div>

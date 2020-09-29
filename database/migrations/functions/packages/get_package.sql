@@ -33,6 +33,7 @@ begin
         'readme', s.readme,
         'install', s.install,
         'links', s.links,
+        'capabilities', s.capabilities,
         'data', s.data,
         'version', s.version,
         'available_versions', (
