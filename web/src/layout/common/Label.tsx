@@ -24,7 +24,9 @@ const Label = (props: Props) => (
         { [styles.default]: isUndefined(props.labelStyle) }
       )}
     >
-      {!isUndefined(props.icon) && <div className={`text-center ${styles.iconWrapper}`}>{props.icon}</div>}
+      {!isUndefined(props.icon) && (
+        <div className={`text-center labelIconWrapper ${styles.iconWrapper}`}>{props.icon}</div>
+      )}
       <div className={`text-nowrap ${styles.labelText}`}>{props.text}</div>
     </div>
   </div>

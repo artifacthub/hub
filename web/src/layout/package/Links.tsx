@@ -70,8 +70,8 @@ const Links = (props: Props) => {
           </div>
         )}
 
-        {formattedLinks.map((link: PackageLink) => (
-          <div className="py-1 py-sm-0" key={`link_${link.name}`}>
+        {formattedLinks.map((link: PackageLink, index: number) => (
+          <div className="py-1 py-sm-0" key={`link_${link.name}_${index}`}>
             <ExternalLink href={link.url} className="text-primary d-flex align-items-center mb-1 text-capitalize">
               <div className="d-flex flex-row align-items-start mw-100">
                 {getIconLink(link.name)}

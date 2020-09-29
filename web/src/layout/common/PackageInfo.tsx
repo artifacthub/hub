@@ -51,35 +51,6 @@ const PackageInfo = (props: Props) => {
     </div>
   );
 
-  const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
-    <>
-      {withRepoInfo && (
-        <>
-          <OfficialBadge official={props.package.repository.official} className={`mr-3 d-inline ${extraStyle}`} />
-          <VerifiedPublisherBadge
-            verifiedPublisher={props.package.repository.verifiedPublisher}
-            className={`mr-3 d-inline ${extraStyle}`}
-          />
-        </>
-      )}
-      {props.package.deprecated && (
-        <Label
-          text="Deprecated"
-          icon={<AiOutlineStop />}
-          labelStyle="danger"
-          className={`d-inline mr-3 ${extraStyle}`}
-        />
-      )}
-      {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
-        <SignedBadge
-          signed={props.package.signed}
-          repositoryKind={props.package.repository.kind}
-          className={`d-inline ${extraStyle}`}
-        />
-      )}
-    </>
-  );
-
   const packageImage = (
     <div
       className={`d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 ${styles.imageWrapper} imageWrapper`}
@@ -132,8 +103,6 @@ const PackageInfo = (props: Props) => {
                     {props.package.displayName || props.package.name}
                   </div>
                 )}
-
-                <div className="d-none d-lg-flex ml-3">{getBadges(false)}</div>
               </div>
             </div>
 
@@ -144,6 +113,7 @@ const PackageInfo = (props: Props) => {
                   deprecated={props.package.deprecated}
                   className="d-inline d-md-none text-truncate w-100"
                   repoLabelClassName="d-none"
+                  withLabels={false}
                 />
               </div>
             </div>
@@ -153,7 +123,7 @@ const PackageInfo = (props: Props) => {
                 {!isUndefined(props.package.repository.organizationName) &&
                   props.package.repository.organizationName && (
                     <OrganizationInfo
-                      className="mr-0 d-flex flex-row align-items-baseline mw-100"
+                      className={`mr-0 d-flex flex-row align-items-baseline ${styles.mx50} `}
                       btnClassName="text-truncate mw-100"
                       organizationName={props.package.repository.organizationName}
                       organizationDisplayName={props.package.repository.organizationDisplayName}
@@ -167,7 +137,7 @@ const PackageInfo = (props: Props) => {
                     <span className="text-muted text-uppercase mr-1">User: </span>
                     <button
                       data-testid="userLink"
-                      className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link}`}
+                      className={`p-0 border-0 text-truncate text-dark mw-100 ${styles.link} ${styles.mx50}`}
                       onClick={(e) => {
                         e.preventDefault();
                         history.push({
@@ -185,16 +155,16 @@ const PackageInfo = (props: Props) => {
                     </button>
                   </>
                 )}
-              </div>
-            </div>
-            <div className={`d-none d-md-block card-subtitle align-items-baseline ${styles.subtitle}`}>
-              <div className="d-flex flex-row align-items-baseline">
-                <RepositoryInfo
-                  repository={props.package.repository}
-                  deprecated={props.package.deprecated}
-                  className={`d-flex flex-row align-items-baseline ${styles.truncateWrapper}`}
-                  repoLabelClassName="d-none d-lg-inline"
-                />
+
+                <div className={styles.mx50}>
+                  <RepositoryInfo
+                    repository={props.package.repository}
+                    deprecated={props.package.deprecated}
+                    className={`d-flex flex-row align-items-baseline ml-3 ${styles.truncateWrapper}`}
+                    repoLabelClassName="d-none d-lg-inline"
+                    withLabels={false}
+                  />
+                </div>
               </div>
             </div>
 
@@ -210,8 +180,12 @@ const PackageInfo = (props: Props) => {
                     case RepositoryKind.Helm:
                       return (
                         <>
-                          <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>
-                          {cutString(props.package.appVersion || '-')}
+                          {props.package.appVersion && (
+                            <>
+                              <span className="text-muted text-uppercase mr-1 ml-3">App Version: </span>
+                              {cutString(props.package.appVersion)}
+                            </>
+                          )}
                         </>
                       );
 
@@ -253,7 +227,23 @@ const PackageInfo = (props: Props) => {
         {starsAndKindInfo}
       </div>
 
-      <div className="d-flex flex-wrap d-lg-none">{getBadges(true, 'mt-2 mt-lg-0')}</div>
+      <div className={`d-flex flex-wrap justify-content-md-end ${styles.labelsWrapper}`}>
+        <OfficialBadge official={props.package.repository.official} className="d-inline mt-3" />
+        <VerifiedPublisherBadge
+          verifiedPublisher={props.package.repository.verifiedPublisher}
+          className="d-inline mt-3"
+        />
+        {props.package.deprecated && (
+          <Label text="Deprecated" icon={<AiOutlineStop />} labelStyle="danger" className="d-inline mt-3" />
+        )}
+        {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
+          <SignedBadge
+            signed={props.package.signed}
+            repositoryKind={props.package.repository.kind}
+            className="d-inline mt-3"
+          />
+        )}
+      </div>
     </>
   );
 };

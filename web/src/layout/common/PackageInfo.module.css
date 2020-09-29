@@ -6,7 +6,6 @@
   background-color: var(--white);
   border: 2px solid var(--color-1-10);
   box-shadow: 0px 0px 5px 0px var(--color-1-20);
-  margin: 0.4rem 0;
 }
 
 .image {
@@ -86,6 +85,10 @@
   top: -1px;
 }
 
+.labelsWrapper > div:not(:last-child) {
+  margin-right: 1rem;
+}
+
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;
@@ -107,5 +110,14 @@
   .image {
     max-width: calc(100% - 4px);
     max-height: calc(100% - 4px);
+  }
+
+  .labelsWrapper > div:not(:first-child) {
+    margin-right: 0;
+    margin-left: 1rem;
+  }
+
+  .labelsWrapper > div:first-child {
+    margin-right: 0;
   }
 }

@@ -24,4 +24,5 @@
 
 .signedInText {
   padding: 0.25rem 1.5rem;
+  word-wrap: break-word;
 }
