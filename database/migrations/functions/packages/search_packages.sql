@@ -108,15 +108,17 @@ begin
                     organization_name = any(v_orgs)
                 when cardinality(v_users) > 0 then
                     user_alias = any(v_users)
-                when cardinality(v_licenses) > 0 then
-                    license = any(v_licenses)
-                when cardinality(v_capabilities) > 0 then
-                    capabilities = any(v_capabilities)
                 else true
             end
         and
             case when cardinality(v_repositories) > 0
             then repository_name = any(v_repositories) else true end
+        and
+            case when cardinality(v_licenses) > 0
+            then license = any(v_licenses) else true end
+        and
+            case when cardinality(v_capabilities) > 0
+            then capabilities = any(v_capabilities) else true end
     )
     select json_build_object(
         'data', (
