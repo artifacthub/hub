@@ -13,6 +13,7 @@ interface Props {
   label: string;
   options: Option[];
   selected: { [key: string]: string[] };
+  className?: string;
   onChange: (name: string, value: string, checked: boolean) => void;
   onResetSomeFilters: (filterKeys: string[]) => void;
 }
@@ -116,8 +117,10 @@ const InputTypeahead = (props: Props) => {
     setHightlightedText(e.target.value !== '' ? new RegExp(`(${e.target.value.toLowerCase()})`, 'gi') : null);
   };
 
+  if (props.options.length === 0) return null;
+
   return (
-    <div className="position-relative">
+    <div className={`position-relative ${props.className}`}>
       <button
         data-testid="typeaheadBtn"
         className="btn text-left p-0 btn-block"

@@ -3,6 +3,7 @@ import { isNull, isUndefined } from 'lodash';
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 
+import { OPERATOR_CAPABILITIES } from '../../utils/data';
 import SmallTitle from '../common/SmallTitle';
 import styles from './CapabilityLevel.module.css';
 import CapatabilityLevelInfoModal from './CapatabilityLevelInfoModal';
@@ -11,10 +12,8 @@ interface Props {
   capabilityLevel?: string | null;
 }
 
-const LEVELS = ['basic install', 'seamless upgrades', 'full lifecycle', 'deep insights', 'auto pilot'];
-
 const CapabilityLevel = (props: Props) => {
-  const activeLevel = LEVELS.findIndex((level: string) => level === props.capabilityLevel);
+  const activeLevel = OPERATOR_CAPABILITIES.findIndex((level: string) => level === props.capabilityLevel);
   if (isUndefined(props.capabilityLevel) || isNull(props.capabilityLevel) || activeLevel < 0) return null;
 
   return (
@@ -25,7 +24,7 @@ const CapabilityLevel = (props: Props) => {
       </div>
 
       <div className="mb-3 position-relative">
-        {LEVELS.map((level: string, index: number) => (
+        {OPERATOR_CAPABILITIES.map((level: string, index: number) => (
           <div
             key={`capabilityLevel-${index}`}
             className={`d-flex flex-row align-items-center my-2 position-relative stepWrapper ${styles.stepWrapper}`}

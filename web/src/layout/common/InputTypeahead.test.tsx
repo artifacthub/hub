@@ -195,4 +195,15 @@ describe('InputTypeahead', () => {
     expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
     expect(getByText('Sorry, no matches found')).toBeInTheDocument();
   });
+
+  it('does not render component when options list is empty', () => {
+    const props = {
+      ...defaultProps,
+      label: 'Empty list',
+      options: [],
+    };
+    const { container } = render(<InputTypeahead {...props} />);
+
+    expect(container).toBeEmptyDOMElement();
+  });
 });

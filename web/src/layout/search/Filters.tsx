@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
@@ -9,6 +10,7 @@ import { GoLaw, GoPackage } from 'react-icons/go';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 import { FacetOption, Facets, Option } from '../../types';
+import { OPERATOR_CAPABILITIES } from '../../utils/data';
 import CheckBox from '../common/Checkbox';
 import InputTypeahead from '../common/InputTypeahead';
 import SmallTitle from '../common/SmallTitle';
@@ -71,19 +73,16 @@ const Filters = (props: Props) => {
       }
 
       const options = [...usersList, ...orgsList];
-      if (options.length > 0) {
-        publishersList = (
-          <div className="mt-3 mt-sm-4 pt-1">
-            <InputTypeahead
-              label="publisher"
-              options={options}
-              selected={selectedPublishers}
-              onChange={props.onChange}
-              onResetSomeFilters={props.onResetSomeFilters}
-            />
-          </div>
-        );
-      }
+      publishersList = (
+        <InputTypeahead
+          label="publisher"
+          options={options}
+          selected={selectedPublishers}
+          className="mt-3 mt-sm-4 pt-1"
+          onChange={props.onChange}
+          onResetSomeFilters={props.onResetSomeFilters}
+        />
+      );
     }
 
     return publishersList;
@@ -92,7 +91,7 @@ const Filters = (props: Props) => {
   const getKindFacets = (): JSX.Element | null => {
     let kindElement = null;
     const kind = getFacetsByFilterKey('kind');
-    if (!isUndefined(kind)) {
+    if (!isUndefined(kind) && kind.options.length > 0) {
       const active = props.activeFilters.hasOwnProperty(kind.filterKey) ? props.activeFilters[kind.filterKey] : [];
       const isChecked = (facetOptionId: string) => {
         return active.includes(facetOptionId.toString());
@@ -124,6 +123,49 @@ const Filters = (props: Props) => {
     return kindElement;
   };
 
+  const getCapabilitiesFacets = (): JSX.Element | null => {
+    let element = null;
+    const capabilities = getFacetsByFilterKey('capabilities');
+    if (!isUndefined(capabilities) && capabilities.options.length > 0) {
+      const active = props.activeFilters.hasOwnProperty(capabilities.filterKey)
+        ? props.activeFilters[capabilities.filterKey]
+        : [];
+      const isChecked = (facetOptionId: string) => {
+        return active.includes(facetOptionId.toString());
+      };
+
+      const sortedCapabililties = sortBy(capabilities.options, [
+        (facet: FacetOption) => {
+          return OPERATOR_CAPABILITIES.findIndex((level: string) => level === facet.id);
+        },
+      ]);
+
+      element = (
+        <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+          <SmallTitle text={capabilities.title} className="text-secondary font-weight-bold" />
+          <div className="mt-3">
+            {sortedCapabililties.map((option: FacetOption) => (
+              <CheckBox
+                key={`capabilities_${option.id.toString()}`}
+                name={capabilities.filterKey}
+                value={option.id.toString()}
+                className={`text-capitalize ${styles.checkbox}`}
+                legend={option.total}
+                label={option.name}
+                checked={isChecked(option.id.toString())}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.onChange(e.target.name, e.target.value, e.target.checked)
+                }
+              />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return element;
+  };
+
   const getRepositoryFacets = (): JSX.Element | null => {
     let crElement = null;
     const repo = getFacetsByFilterKey('repo');
@@ -131,17 +173,16 @@ const Filters = (props: Props) => {
       const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoPackage />, filterKey: 'repo' }));
 
       crElement = (
-        <div className="mt-3 mt-sm-4 pt-1">
-          <InputTypeahead
-            label="repository"
-            options={options}
-            selected={{
-              repo: props.activeFilters.repo || [],
-            }}
-            onChange={props.onChange}
-            onResetSomeFilters={props.onResetSomeFilters}
-          />
-        </div>
+        <InputTypeahead
+          label="repository"
+          options={options}
+          selected={{
+            repo: props.activeFilters.repo || [],
+          }}
+          className="mt-3 mt-sm-4 pt-1"
+          onChange={props.onChange}
+          onResetSomeFilters={props.onResetSomeFilters}
+        />
       );
     }
 
@@ -155,17 +196,16 @@ const Filters = (props: Props) => {
       const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoLaw />, filterKey: 'license' }));
 
       crElement = (
-        <div className="mt-3 mt-sm-4 pt-1">
-          <InputTypeahead
-            label="license"
-            options={options}
-            selected={{
-              license: props.activeFilters.license || [],
-            }}
-            onChange={props.onChange}
-            onResetSomeFilters={props.onResetSomeFilters}
-          />
-        </div>
+        <InputTypeahead
+          label="license"
+          options={options}
+          selected={{
+            license: props.activeFilters.license || [],
+          }}
+          className="mt-3 mt-sm-4 pt-1"
+          onChange={props.onChange}
+          onResetSomeFilters={props.onResetSomeFilters}
+        />
       );
     }
 
@@ -197,36 +237,35 @@ const Filters = (props: Props) => {
         </div>
       )}
 
+      <CheckBox
+        name="official"
+        value="official"
+        className={styles.checkbox}
+        label="Official repositories"
+        checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
+        onChange={props.onOfficialChange}
+      />
+
+      <CheckBox
+        name="verifiedPublisher"
+        value="verifiedPublisher"
+        className={styles.checkbox}
+        label="Verified publishers"
+        checked={!isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher}
+        onChange={props.onVerifiedPublisherChange}
+      />
+
       <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getKindFacets()}
       {getPublishers()}
       {getRepositoryFacets()}
       {getLicenseFacets()}
+      {getCapabilitiesFacets()}
 
       <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">
-          <CheckBox
-            name="official"
-            value="official"
-            className={styles.checkbox}
-            label="Official repositories"
-            checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
-            onChange={props.onOfficialChange}
-          />
-
-          <CheckBox
-            name="verifiedPublisher"
-            value="verifiedPublisher"
-            className={styles.checkbox}
-            label="Verified publishers"
-            checked={
-              !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher
-            }
-            onChange={props.onVerifiedPublisherChange}
-          />
-
           <CheckBox
             name="operators"
             value="operators"

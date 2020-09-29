@@ -6,6 +6,60 @@ exports[`Filters creates snapshot 1`] = `
     class="filters"
   >
     <div
+      class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+    >
+      <input
+        class="custom-control-input input"
+        data-testid="checkbox"
+        id="official-official"
+        name="official"
+        type="checkbox"
+        value="official"
+      />
+      <label
+        class="custom-control-label w-100 label"
+        data-testid="checkboxLabel"
+        for="official-official"
+      >
+        <div
+          class="d-flex align-items-baseline mw-100"
+        >
+          <span
+            class="d-inline-block text-truncate"
+          >
+            Official repositories
+          </span>
+        </div>
+      </label>
+    </div>
+    <div
+      class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+    >
+      <input
+        class="custom-control-input input"
+        data-testid="checkbox"
+        id="verifiedPublisher-verifiedPublisher"
+        name="verifiedPublisher"
+        type="checkbox"
+        value="verifiedPublisher"
+      />
+      <label
+        class="custom-control-label w-100 label"
+        data-testid="checkboxLabel"
+        for="verifiedPublisher-verifiedPublisher"
+      >
+        <div
+          class="d-flex align-items-baseline mw-100"
+        >
+          <span
+            class="d-inline-block text-truncate"
+          >
+            Verified publishers
+          </span>
+        </div>
+      </label>
+    </div>
+    <div
       class="mt-3 mt-sm-4 pt-1"
       role="menuitem"
     >
@@ -450,111 +504,336 @@ exports[`Filters creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="mt-3 mt-sm-4 pt-1"
+      class="position-relative mt-3 mt-sm-4 pt-1"
     >
-      <div
-        class="position-relative"
+      <button
+        class="btn text-left p-0 btn-block"
+        data-testid="typeaheadBtn"
       >
-        <button
-          class="btn text-left p-0 btn-block"
-          data-testid="typeaheadBtn"
+        <div
+          class="d-flex flex-row align-items-center justify-content-between"
         >
           <div
-            class="d-flex flex-row align-items-center justify-content-between"
+            class="mt-2 mb-1"
+            data-testid="smallTitle"
           >
-            <div
-              class="mt-2 mb-1"
-              data-testid="smallTitle"
+            <small
+              class="card-title text-muted text-uppercase"
             >
-              <small
-                class="card-title text-muted text-uppercase"
+              <span
+                class="text-secondary font-weight-bold pt-2"
               >
-                <span
-                  class="text-secondary font-weight-bold pt-2"
-                >
-                  publisher
-                </span>
-              </small>
-            </div>
-            <svg
-              class="mt-2 mb-1 text-secondary"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
-              />
-            </svg>
+                publisher
+              </span>
+            </small>
           </div>
-          <div>
-            <div
-              class="text-muted option"
-            >
-              <i>
-                No publisher selected
-              </i>
-            </div>
+          <svg
+            class="mt-2 mb-1 text-secondary"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+            />
+          </svg>
+        </div>
+        <div>
+          <div
+            class="text-muted option"
+          >
+            <i>
+              No publisher selected
+            </i>
           </div>
-        </button>
-      </div>
+        </div>
+      </button>
     </div>
     <div
-      class="mt-3 mt-sm-4 pt-1"
+      class="position-relative mt-3 mt-sm-4 pt-1"
     >
-      <div
-        class="position-relative"
+      <button
+        class="btn text-left p-0 btn-block"
+        data-testid="typeaheadBtn"
       >
-        <button
-          class="btn text-left p-0 btn-block"
-          data-testid="typeaheadBtn"
+        <div
+          class="d-flex flex-row align-items-center justify-content-between"
         >
           <div
-            class="d-flex flex-row align-items-center justify-content-between"
+            class="mt-2 mb-1"
+            data-testid="smallTitle"
+          >
+            <small
+              class="card-title text-muted text-uppercase"
+            >
+              <span
+                class="text-secondary font-weight-bold pt-2"
+              >
+                repository
+              </span>
+            </small>
+          </div>
+          <svg
+            class="mt-2 mb-1 text-secondary"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+            />
+          </svg>
+        </div>
+        <div>
+          <div
+            class="text-muted option"
+          >
+            <i>
+              No repository selected
+            </i>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="position-relative mt-3 mt-sm-4 pt-1"
+    >
+      <button
+        class="btn text-left p-0 btn-block"
+        data-testid="typeaheadBtn"
+      >
+        <div
+          class="d-flex flex-row align-items-center justify-content-between"
+        >
+          <div
+            class="mt-2 mb-1"
+            data-testid="smallTitle"
+          >
+            <small
+              class="card-title text-muted text-uppercase"
+            >
+              <span
+                class="text-secondary font-weight-bold pt-2"
+              >
+                license
+              </span>
+            </small>
+          </div>
+          <svg
+            class="mt-2 mb-1 text-secondary"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+            />
+          </svg>
+        </div>
+        <div>
+          <div
+            class="text-muted option"
+          >
+            <i>
+              No license selected
+            </i>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div
+      class="mt-3 mt-sm-4 pt-1 facet"
+      role="menuitem"
+    >
+      <div
+        class="mt-2 mb-1"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span
+            class="text-secondary font-weight-bold"
+          >
+            Operator capabilities
+          </span>
+        </small>
+      </div>
+      <div
+        class="mt-3"
+      >
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="capabilities-basic install"
+            name="capabilities"
+            type="checkbox"
+            value="basic install"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="capabilities-basic install"
           >
             <div
-              class="mt-2 mb-1"
-              data-testid="smallTitle"
+              class="d-flex align-items-baseline mw-100"
             >
-              <small
-                class="card-title text-muted text-uppercase"
+              <span
+                class="d-inline-block text-truncate"
               >
-                <span
-                  class="text-secondary font-weight-bold pt-2"
-                >
-                  repository
-                </span>
+                basic install
+              </span>
+              <small
+                class="pl-1"
+              >
+                (73)
               </small>
             </div>
-            <svg
-              class="mt-2 mb-1 text-secondary"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
-              />
-            </svg>
-          </div>
-          <div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="capabilities-seamless upgrades"
+            name="capabilities"
+            type="checkbox"
+            value="seamless upgrades"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="capabilities-seamless upgrades"
+          >
             <div
-              class="text-muted option"
+              class="d-flex align-items-baseline mw-100"
             >
-              <i>
-                No repository selected
-              </i>
+              <span
+                class="d-inline-block text-truncate"
+              >
+                seamless upgrades
+              </span>
+              <small
+                class="pl-1"
+              >
+                (33)
+              </small>
             </div>
-          </div>
-        </button>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="capabilities-full lifecycle"
+            name="capabilities"
+            type="checkbox"
+            value="full lifecycle"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="capabilities-full lifecycle"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                full lifecycle
+              </span>
+              <small
+                class="pl-1"
+              >
+                (25)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="capabilities-deep insights"
+            name="capabilities"
+            type="checkbox"
+            value="deep insights"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="capabilities-deep insights"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                deep insights
+              </span>
+              <small
+                class="pl-1"
+              >
+                (17)
+              </small>
+            </div>
+          </label>
+        </div>
+        <div
+          class="custom-control custom-checkbox mr-sm-2 mb-2 text-capitalize checkbox"
+        >
+          <input
+            class="custom-control-input input"
+            data-testid="checkbox"
+            id="capabilities-auto pilot"
+            name="capabilities"
+            type="checkbox"
+            value="auto pilot"
+          />
+          <label
+            class="custom-control-label w-100 label"
+            data-testid="checkboxLabel"
+            for="capabilities-auto pilot"
+          >
+            <div
+              class="d-flex align-items-baseline mw-100"
+            >
+              <span
+                class="d-inline-block text-truncate"
+              >
+                auto pilot
+              </span>
+              <small
+                class="pl-1"
+              >
+                (9)
+              </small>
+            </div>
+          </label>
+        </div>
       </div>
     </div>
     <div
@@ -578,60 +857,6 @@ exports[`Filters creates snapshot 1`] = `
       <div
         class="mt-3"
       >
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="official-official"
-            name="official"
-            type="checkbox"
-            value="official"
-          />
-          <label
-            class="custom-control-label w-100 label"
-            data-testid="checkboxLabel"
-            for="official-official"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Official repositories
-              </span>
-            </div>
-          </label>
-        </div>
-        <div
-          class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
-        >
-          <input
-            class="custom-control-input input"
-            data-testid="checkbox"
-            id="verifiedPublisher-verifiedPublisher"
-            name="verifiedPublisher"
-            type="checkbox"
-            value="verifiedPublisher"
-          />
-          <label
-            class="custom-control-label w-100 label"
-            data-testid="checkboxLabel"
-            for="verifiedPublisher-verifiedPublisher"
-          >
-            <div
-              class="d-flex align-items-baseline mw-100"
-            >
-              <span
-                class="d-inline-block text-truncate"
-              >
-                Verified publishers
-              </span>
-            </div>
-          </label>
-        </div>
         <div
           class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
         >

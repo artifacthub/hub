@@ -74,6 +74,53 @@ const FacetsMock: Facets[] = [
       },
     ],
   },
+  {
+    title: 'License',
+    filterKey: 'license',
+    options: [
+      {
+        id: 'Apache-2.0',
+        name: 'Apache-2.0',
+        total: 3,
+      },
+      {
+        id: 'MIT',
+        name: 'MIT',
+        total: 1,
+      },
+    ],
+  },
+  {
+    title: 'Operator capabilities',
+    filterKey: 'capabilities',
+    options: [
+      {
+        id: 'basic install',
+        name: 'basic install',
+        total: 73,
+      },
+      {
+        id: 'seamless upgrades',
+        name: 'seamless upgrades',
+        total: 33,
+      },
+      {
+        id: 'full lifecycle',
+        name: 'full lifecycle',
+        total: 25,
+      },
+      {
+        id: 'deep insights',
+        name: 'deep insights',
+        total: 17,
+      },
+      {
+        id: 'auto pilot',
+        name: 'auto pilot',
+        total: 9,
+      },
+    ],
+  },
 ];
 
 const onDeprecatedChangeMock = jest.fn();
@@ -118,7 +165,9 @@ describe('Filters', () => {
     it('renders component', () => {
       const { getByLabelText, getAllByTestId } = render(<Filters {...defaultProps} />);
 
-      expect(getAllByTestId('checkbox')).toHaveLength(18);
+      expect(getAllByTestId('checkbox')).toHaveLength(23);
+      expect(getByLabelText('Official repositories')).toBeInTheDocument();
+      expect(getByLabelText('Verified publishers')).toBeInTheDocument();
       expect(getByLabelText('Include deprecated')).toBeInTheDocument();
     });
 
@@ -186,13 +235,15 @@ describe('Filters', () => {
       const { getAllByTestId } = render(<Filters {...defaultProps} />);
 
       const titles = getAllByTestId('smallTitle');
-      expect(titles).toHaveLength(5);
+      expect(titles).toHaveLength(7);
 
       expect(titles[0]).toHaveTextContent('Category');
       expect(titles[1]).toHaveTextContent('Kind');
       expect(titles[2]).toHaveTextContent('publisher');
       expect(titles[3]).toHaveTextContent('repository');
-      expect(titles[4]).toHaveTextContent('Others');
+      expect(titles[4]).toHaveTextContent('license');
+      expect(titles[5]).toHaveTextContent('Operator capabilities');
+      expect(titles[6]).toHaveTextContent('Others');
     });
 
     it('renders all kind options', () => {
@@ -210,5 +261,33 @@ describe('Filters', () => {
       expect(getByText('Only operators')).toBeInTheDocument();
       expect(getByText('Include deprecated')).toBeInTheDocument();
     });
+
+    it('renders license', () => {
+      const { getByText } = render(<Filters {...defaultProps} />);
+
+      expect(getByText('license')).toBeInTheDocument();
+    });
+
+    it('does not render license when no options', () => {
+      const props = {
+        ...defaultProps,
+        facets: [
+          {
+            title: 'License',
+            filterKey: 'license',
+            options: [],
+          },
+        ],
+      };
+      const { queryByText } = render(<Filters {...props} />);
+
+      expect(queryByText('License')).toBeNull();
+    });
+  });
+
+  it('render Operator capatibilities', () => {
+    const { getByText } = render(<Filters {...defaultProps} />);
+
+    expect(getByText('Operator capabilities')).toBeInTheDocument();
   });
 });
