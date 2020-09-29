@@ -243,9 +243,10 @@ func TestWorker(t *testing.T) {
 						URL:  "https://link2.url",
 					},
 				},
-				Version:    "1.0.0",
-				AppVersion: "1.0.0",
-				ContentURL: "http://tests/pkg1-1.0.0.tgz",
+				Capabilities: "Basic Install",
+				Version:      "1.0.0",
+				AppVersion:   "1.0.0",
+				ContentURL:   "http://tests/pkg1-1.0.0.tgz",
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "me-updated",
@@ -336,12 +337,13 @@ func TestWorker(t *testing.T) {
 
 func TestEnrichPackageFromAnnotations(t *testing.T) {
 	testCases := []struct {
-		p                   *hub.Package
-		annotations         map[string]string
-		expectedOperator    bool
-		expectedLinks       []*hub.Link
-		expectedMaintainers []*hub.Maintainer
-		expectedErrMsg      string
+		p                            *hub.Package
+		annotations                  map[string]string
+		expectedOperator             bool
+		expectedOperatorCapabilities string
+		expectedLinks                []*hub.Link
+		expectedMaintainers          []*hub.Maintainer
+		expectedErrMsg               string
 	}{
 		// Operator flag
 		{
@@ -350,6 +352,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				operatorAnnotation: "invalid",
 			},
 			false,
+			"",
 			nil,
 			nil,
 			"invalid operator value",
@@ -360,6 +363,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				operatorAnnotation: "true",
 			},
 			true,
+			"",
 			nil,
 			nil,
 			"",
@@ -372,6 +376,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				operatorAnnotation: "false",
 			},
 			false,
+			"",
 			nil,
 			nil,
 			"",
@@ -382,6 +387,19 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			map[string]string{},
 			true,
+			"",
+			nil,
+			nil,
+			"",
+		},
+		// Operator capabilities
+		{
+			&hub.Package{},
+			map[string]string{
+				operatorCapabilitiesAnnotation: "Basic Install",
+			},
+			false,
+			"Basic Install",
 			nil,
 			nil,
 			"",
@@ -393,6 +411,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				linksAnnotation: `"{\"`,
 			},
 			false,
+			"",
 			nil,
 			nil,
 			"invalid links value",
@@ -410,6 +429,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				linksAnnotation: `"{\"`,
 			},
 			false,
+			"",
 			[]*hub.Link{
 				{
 					Name: "",
@@ -428,6 +448,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			false,
+			"",
 			[]*hub.Link{
 				{
 					Name: "link1",
@@ -455,6 +476,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			false,
+			"",
 			[]*hub.Link{
 				{
 					Name: "link1",
@@ -475,6 +497,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				maintainersAnnotation: `"{\"`,
 			},
 			false,
+			"",
 			nil,
 			nil,
 			"invalid maintainers value",
@@ -492,6 +515,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				maintainersAnnotation: `"{\"`,
 			},
 			false,
+			"",
 			nil,
 			[]*hub.Maintainer{
 				{
@@ -510,6 +534,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			false,
+			"",
 			nil,
 			[]*hub.Maintainer{
 				{
@@ -537,6 +562,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 `,
 			},
 			false,
+			"",
 			nil,
 			[]*hub.Maintainer{
 				{
@@ -562,6 +588,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 				assert.Nil(t, err)
 			}
 			assert.Equal(t, tc.expectedOperator, tc.p.IsOperator)
+			assert.Equal(t, tc.expectedOperatorCapabilities, tc.p.Capabilities)
 			assert.Equal(t, tc.expectedLinks, tc.p.Links)
 		})
 	}

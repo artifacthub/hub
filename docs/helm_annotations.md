@@ -10,6 +10,10 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 Use this annotation to indicate that your chart represents an operator. Artifact Hub at the moment also considers your chart to represent an operator if the word *operator* appears in the chart name.
 
+- **artifacthub.io/operatorCapabilities** *(string)*
+
+Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights or Auto Pilot. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
+
 - **artifacthub.io/links** *(yaml string, see example below)*
 
 This annotation allows including named links, which will be rendered nicely in Artifact Hub. You can use this annotation to include links not included previously in the Chart.yaml file, or you can use it to name links already present (in the sources section, for example).
@@ -24,13 +28,14 @@ Artifact Hub annotations in `Chart.yaml`:
 
 ```yaml
 annotations:
-  "artifacthub.io/operator": "true"
-  "artifacthub.io/links": |
+  artifacthub.io/operator: "true"
+  artifacthub.io/operatorCapabilities: Basic Install
+  artifacthub.io/links: |
     - name: link1
       url: https://link1.url
     - name: link2
       url: https://link2.url
-  "artifacthub.io/maintainers": |
+  artifacthub.io/maintainers: |
     - name: user1
       email: user1@email.com
     - name: user2
