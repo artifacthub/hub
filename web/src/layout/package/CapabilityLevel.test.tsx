@@ -42,4 +42,24 @@ describe('DefaultDetails', () => {
       expect(getByAltText('Capability Level Diagram')).toBeInTheDocument();
     });
   });
+
+  describe('does not render', () => {
+    it('when capability level is null', () => {
+      const { container } = render(<CapabilityLevel capabilityLevel={null} />);
+
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('when capability level is undefined', () => {
+      const { container } = render(<CapabilityLevel />);
+
+      expect(container).toBeEmptyDOMElement();
+    });
+
+    it('when capability level is different to described levels', () => {
+      const { container } = render(<CapabilityLevel capabilityLevel="a not valid one" />);
+
+      expect(container).toBeEmptyDOMElement();
+    });
+  });
 });

@@ -85,6 +85,11 @@
   top: -1px;
 }
 
+.licenseBtn {
+  position: relative;
+  top: -2px;
+}
+
 .labelsWrapper > div:not(:last-child) {
   margin-right: 1rem;
 }

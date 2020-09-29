@@ -74,6 +74,190 @@ exports[`ChartDetails creates snapshot 1`] = `
       -
     </p>
   </div>
+  <div>
+    <div
+      class="d-flex flex-row align-items-center"
+    >
+      <div
+        class="mt-2 mb-1"
+        data-testid="smallTitle"
+      >
+        <small
+          class="card-title text-muted text-uppercase"
+        >
+          <span>
+            Capability Level
+          </span>
+        </small>
+      </div>
+      <div
+        class="d-none d-lg-inline-block mt-1 ml-2"
+      >
+        <div
+          class="position-relative buttonWrapper"
+        >
+          <button
+            class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary"
+            data-testid="openModalBtn"
+            type="button"
+          >
+            <div
+              class="d-flex align-items-center justify-content-center"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div
+          class="modal modal"
+          role="dialog"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+          >
+            <div
+              class="modal-content content undefined"
+            >
+              <div
+                class="modal-header d-flex flex-row align-items-center header"
+              >
+                <div
+                  class="h5 m-0"
+                >
+                  Capability level
+                </div>
+                <button
+                  class="close"
+                  data-testid="closeModalBtn"
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                class="modal-body p-4 h-100 d-flex flex-column"
+              >
+                <div
+                  class="alertWrapper"
+                  data-testid="alertWrapper"
+                />
+              </div>
+              <div
+                class="modal-footer p-3"
+              >
+                <button
+                  class="btn btn-secondary"
+                  data-testid="closeModalFooterBtn"
+                  type="button"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mb-3 position-relative"
+    >
+      <div
+        class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
+      >
+        <div
+          class="rounded-circle text-center mr-2 textLight step step activeStep activeStep"
+          data-testid="capabilityLevelStep"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+            />
+          </svg>
+        </div>
+        <small
+          class="text-capitalize"
+        >
+          basic install
+        </small>
+      </div>
+      <div
+        class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
+      >
+        <div
+          class="rounded-circle text-center mr-2 textLight step step"
+          data-testid="capabilityLevelStep"
+        />
+        <small
+          class="text-capitalize text-muted"
+        >
+          seamless upgrades
+        </small>
+      </div>
+      <div
+        class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
+      >
+        <div
+          class="rounded-circle text-center mr-2 textLight step step"
+          data-testid="capabilityLevelStep"
+        />
+        <small
+          class="text-capitalize text-muted"
+        >
+          full lifecycle
+        </small>
+      </div>
+      <div
+        class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
+      >
+        <div
+          class="rounded-circle text-center mr-2 textLight step step"
+          data-testid="capabilityLevelStep"
+        />
+        <small
+          class="text-capitalize text-muted"
+        >
+          deep insights
+        </small>
+      </div>
+      <div
+        class="d-flex flex-row align-items-center my-2 position-relative stepWrapper stepWrapper"
+      >
+        <div
+          class="rounded-circle text-center mr-2 textLight step step"
+          data-testid="capabilityLevelStep"
+        />
+        <small
+          class="text-capitalize text-muted"
+        >
+          auto pilot
+        </small>
+      </div>
+    </div>
+  </div>
   <div
     class="mt-2 mb-1"
     data-testid="smallTitle"

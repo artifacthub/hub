@@ -25,6 +25,7 @@ const packageItem: Package = {
   license: 'MIT',
   createdAt: 1,
   signed: false,
+  capabilities: 'basic install',
 };
 const defaultProps = {
   package: packageItem,

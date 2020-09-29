@@ -6,6 +6,7 @@ import { Package } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
+import CapabilityLevel from './CapabilityLevel';
 import Dependencies from './Dependencies';
 import Keywords from './Keywords';
 import License from './License';
@@ -40,6 +41,8 @@ const HelmChartDetails = (props: Props) => {
         )}
       </div>
 
+      <CapabilityLevel capabilityLevel={props.package.capabilities} />
+
       <Links links={props.package.links} homeUrl={props.package.homeUrl} />
 
       <Maintainers maintainers={props.package.maintainers} />
@@ -47,7 +50,12 @@ const HelmChartDetails = (props: Props) => {
       {props.package.license && (
         <>
           <SmallTitle text="License" />
-          <License license={props.package.license} className="mb-3" visibleIcon />
+          <License
+            license={props.package.license}
+            className="mb-3"
+            linkClassName="text-primary py-1 py-sm-0"
+            visibleIcon
+          />
         </>
       )}
 

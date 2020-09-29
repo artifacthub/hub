@@ -11,7 +11,9 @@ import styles from './License.module.css';
 interface Props {
   license?: null | string;
   className?: string;
+  linkClassName?: string;
   visibleIcon?: boolean;
+  btnType?: boolean;
 }
 
 const LICENSES_LIST: string[] = [
@@ -64,7 +66,8 @@ const License = (props: Props) => {
       {LICENSES_LIST.includes(props.license.toLowerCase()) ? (
         <ExternalLink
           href={`https://choosealicense.com/licenses/${props.license.toLowerCase()}/`}
-          className="text-primary py-1 py-sm-0"
+          className={props.linkClassName}
+          btnType={props.btnType}
         >
           <div className="d-flex align-items-center">
             {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
