@@ -167,7 +167,7 @@ describe('PackageInfo', () => {
         </Router>
       );
 
-      expect(getAllByText('Verified Publisher')).toHaveLength(3);
+      expect(getAllByText('Verified Publisher')).toHaveLength(1);
     });
   });
 });

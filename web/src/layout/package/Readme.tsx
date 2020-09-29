@@ -38,7 +38,7 @@ const Readme = (props: Props) => {
   const Code: React.ElementType = (props: CodeProps) => {
     if (props.value) {
       return (
-        <SyntaxHighlighter language={props.language || 'bash'} style={docco}>
+        <SyntaxHighlighter language="bash" style={docco}>
           {props.value}
         </SyntaxHighlighter>
       );

@@ -336,7 +336,7 @@ const PackageView = (props: Props) => {
             }}
           >
             <IoIosArrowBack className="mr-2" />
-            {!isUndefined(tsQueryWeb) ? (
+            {tsQueryWeb ? (
               <>
                 Back to "<span className="font-weight-bold">{tsQueryWeb}</span>" results
               </>
@@ -449,6 +449,7 @@ const PackageView = (props: Props) => {
                             repoLabelClassName={styles.repoLabel}
                             visibleInfoIcon
                             visibleIcon
+                            withLabels
                           />
                         </div>
                       </div>

@@ -27,6 +27,7 @@ const repo = {
 const defaultProps = {
   repository: repo,
   deprecated: false,
+  withLabels: true,
 };
 
 describe('RepositoryInfo', () => {

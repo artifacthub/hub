@@ -453,6 +453,15 @@
     border-bottom: 1px solid var(--border-md);
   }
 
+  .labelIconWrapper {
+    background-color: var(--body-bg) !important;
+    color: var(--color-font) !important;
+
+    &::before {
+      background-color: var(--body-bg) !important;
+    }
+  }
+
   // Modal
   .modal-backdrop {
     opacity: 0.75;

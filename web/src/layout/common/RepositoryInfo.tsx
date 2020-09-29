@@ -20,6 +20,7 @@ interface Props {
   repoLabelClassName?: string;
   visibleInfoIcon?: boolean;
   visibleIcon?: boolean;
+  withLabels: boolean;
 }
 
 const RepositoryInfo = (props: Props) => {
@@ -133,14 +134,18 @@ const RepositoryInfo = (props: Props) => {
           </button>
         </div>
       </div>
-      <OfficialBadge
-        official={props.repository.official}
-        className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
-      />
-      <VerifiedPublisherBadge
-        verifiedPublisher={props.repository.verifiedPublisher}
-        className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
-      />
+      {props.withLabels && (
+        <>
+          <OfficialBadge
+            official={props.repository.official}
+            className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+          />
+          <VerifiedPublisherBadge
+            verifiedPublisher={props.repository.verifiedPublisher}
+            className={`ml-3 ${styles.repoLabel} ${props.repoLabelClassName}`}
+          />
+        </>
+      )}
     </>
   );
 };
