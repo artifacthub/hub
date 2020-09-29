@@ -81,6 +81,7 @@ insert into snapshot (
     readme,
     install,
     links,
+    capabilities,
     data,
     deprecated,
     license,
@@ -100,6 +101,7 @@ insert into snapshot (
     'readme-version-1.0.0',
     'install-version-1.0.0',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
+    'seamless upgrades',
     '{"key": "value"}',
     true,
     'Apache-2.0',
@@ -120,6 +122,7 @@ insert into snapshot (
     readme,
     install,
     links,
+    capabilities,
     data,
     created_at
 ) values (
@@ -134,6 +137,7 @@ insert into snapshot (
     'readme-version-0.0.9',
     'install-version-0.0.9',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
+    'basic install',
     '{"key": "value"}',
     '2020-06-16 11:20:33+02'
 );
@@ -210,6 +214,7 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "capabilities": "seamless upgrades",
         "data": {
             "key": "value"
         },
@@ -295,6 +300,7 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "capabilities": "seamless upgrades",
         "data": {
             "key": "value"
         },
@@ -381,6 +387,7 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "capabilities": "basic install",
         "data": {
             "key": "value"
         },
@@ -449,6 +456,7 @@ select is(
         "install": "install-version-1.0.0",
         "links": null,
         "digest": null,
+        "capabilities": null,
         "data": {
             "key": "value"
         },

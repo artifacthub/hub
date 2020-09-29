@@ -64,6 +64,7 @@ export interface Package {
   channels?: Channel[] | null;
   provider?: string | null;
   containerImage?: string | null;
+  capabilities?: string | null;
 }
 
 export interface Version {
@@ -72,7 +73,6 @@ export interface Version {
 }
 
 export interface OLMExtraData {
-  capabilities?: string;
   customResourcesExamples?: string;
 }
 
@@ -100,7 +100,6 @@ export interface PackageData {
   policies?: OPAPolicies;
   rules?: { raw: string }[];
   dependencies?: Dependency[];
-  capabilities?: string;
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
   isGlobalOperator?: boolean;

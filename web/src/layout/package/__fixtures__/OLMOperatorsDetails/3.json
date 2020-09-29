@@ -31,8 +31,8 @@
       "name": "Deploying a Lagom application to OpenShift"
     }
   ],
+  "capabilities": "seamless upgrades",
   "data": {
-    "capabilities": "Seamless Upgrades",
     "isGlobalOperator": true,
     "customResourcesDefinitions": [
       {

@@ -11,7 +11,7 @@ interface Props {
   capabilityLevel?: string;
 }
 
-const LEVELS = ['Basic Install', 'Seamless Upgrades', 'Full Lifecycle', 'Deep Insights', 'Auto Pilot'];
+const LEVELS = ['basic install', 'seamless upgrades', 'full lifecycle', 'deep insights', 'auto pilot'];
 
 const CapabilityLevel = (props: Props) => {
   if (isUndefined(props.capabilityLevel) || isNull(props.capabilityLevel)) return null;
@@ -40,7 +40,7 @@ const CapabilityLevel = (props: Props) => {
               {activeLevel >= index && <FaCheck />}
             </div>
             <small
-              className={classnames({
+              className={classnames('text-capitalize', {
                 'text-muted': activeLevel < index,
               })}
             >

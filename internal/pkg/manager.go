@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
@@ -24,6 +25,16 @@ const (
 	searchPkgsMonocularDBQ  = `select search_packages_monocular($1::text, $2::text)`
 	togglePkgStarDBQ        = `select toggle_star($1::uuid, $2::uuid)`
 	unregisterPkgDBQ        = `select unregister_package($1::jsonb)`
+)
+
+var (
+	validCapabilities = []string{
+		"basic install",
+		"seamless upgrades",
+		"full lifecycle",
+		"deep insights",
+		"auto pilot",
+	}
 )
 
 // Manager provides an API to manage packages.
@@ -147,6 +158,12 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid channel version (semver expected)")
 		}
 	}
+	if pkg.Capabilities != "" {
+		pkg.Capabilities = strings.ToLower(pkg.Capabilities)
+		if !areValidCapabilities(pkg.Capabilities) {
+			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid capabilities")
+		}
+	}
 
 	// Register package in database
 	pkgJSON, _ := json.Marshal(pkg)
@@ -236,4 +253,14 @@ func getUserID(ctx context.Context) *string {
 		userID = &v
 	}
 	return userID
+}
+
+// areValidCapabilities checks if the provided capabilities are valid.
+func areValidCapabilities(capabilities string) bool {
+	for _, validOption := range validCapabilities {
+		if capabilities == validOption {
+			return true
+		}
+	}
+	return false
 }
