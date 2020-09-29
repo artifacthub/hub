@@ -337,6 +337,7 @@ func buildSearchInput(qs url.Values) (*hub.SearchPackageInput, error) {
 		Operators:         operators,
 		Deprecated:        deprecated,
 		Licenses:          qs["license"],
+		Capabilities:      qs["capabilities"],
 	}, nil
 }
 

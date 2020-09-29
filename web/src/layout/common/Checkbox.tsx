@@ -6,7 +6,7 @@ import styles from './Checkbox.module.css';
 interface Props {
   name: string;
   value: string;
-  label: string;
+  label: string | JSX.Element;
   legend?: string | number;
   checked: boolean;
   disabled?: boolean;

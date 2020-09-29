@@ -841,6 +841,7 @@ paths:
         - $ref: "#/components/parameters/OrgsListParam"
         - $ref: "#/components/parameters/RepositoriesListParam"
         - $ref: "#/components/parameters/LicensesListParam"
+        - $ref: "#/components/parameters/CapabilitiesListParam"
         - $ref: "#/components/parameters/DeprecatedParam"
         - $ref: "#/components/parameters/OperatorsParam"
         - $ref: "#/components/parameters/VerifiedPublisherParam"
@@ -2373,6 +2374,21 @@ components:
           - Apache-2.0
       required: false
       description: List of SPDX identifiers
+    CapabilitiesListParam:
+      in: query
+      name: capabilities
+      schema:
+        type: array
+        items:
+          type: string
+        example:
+          - basic install
+          - seamless upgrades
+          - full lifecycle
+          - deep insights
+          - auto pilot
+      required: false
+      description: List of operator capability levels
     DeprecatedParam:
       in: query
       name: deprecated

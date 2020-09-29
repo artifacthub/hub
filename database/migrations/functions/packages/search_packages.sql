@@ -8,6 +8,7 @@ declare
     v_orgs text[];
     v_repositories text[];
     v_licenses text[];
+    v_capabilities text[];
     v_facets boolean := (p_input->>'facets')::boolean;
     v_tsquery_web tsquery := websearch_to_tsquery(p_input->>'ts_query_web');
     v_tsquery tsquery := to_tsquery(p_input->>'ts_query');
@@ -23,6 +24,8 @@ begin
     from jsonb_array_elements_text(p_input->'repositories') e;
     select array_agg(e::text) into v_licenses
     from jsonb_array_elements_text(p_input->'licenses') e;
+    select array_agg(e::text) into v_capabilities
+    from jsonb_array_elements_text(p_input->'capabilities') e;
 
     return query
     with packages_applying_minimum_filters as (
@@ -38,6 +41,7 @@ begin
             s.version,
             s.app_version,
             s.license,
+            s.capabilities,
             s.deprecated,
             s.signed,
             s.created_at,
@@ -106,6 +110,8 @@ begin
                     user_alias = any(v_users)
                 when cardinality(v_licenses) > 0 then
                     license = any(v_licenses)
+                when cardinality(v_capabilities) > 0 then
+                    capabilities = any(v_capabilities)
                 else true
             end
         and
@@ -185,7 +191,7 @@ begin
                                             group by organization_name, organization_display_name
                                         ) as orgs
                                         order by pri asc, total desc, organization_name asc
-                                    ) as orgs_filtered
+                                    ) as orgs_breakdown
                                 )
                             )
                         ),
@@ -216,7 +222,7 @@ begin
                                             group by user_alias
                                         ) as users
                                         order by pri asc, total desc, user_alias asc
-                                    ) as users_filtered
+                                    ) as users_breakdown
                                 )
                             )
                         ),
@@ -238,7 +244,7 @@ begin
                                         from packages_applying_minimum_filters
                                         group by repository_kind_id, repository_kind_name
                                         order by total desc, repository_kind_name asc
-                                    ) as breakdown
+                                    ) as kinds_breakdown
                                 )
                             )
                         ),
@@ -269,7 +275,7 @@ begin
                                             group by repository_name
                                         ) as repos
                                         order by pri asc, total desc, repository_name asc
-                                    ) as repos_filtered
+                                    ) as repositories_breakdown
                                 )
                             )
                         ),
@@ -300,7 +306,27 @@ begin
                                             group by license
                                         ) as orgs
                                         order by pri asc, total desc, license asc
-                                    ) as licenses_filtered
+                                    ) as licenses_breakdown
+                                )
+                            )
+                        ),
+                        (
+                            select json_build_object(
+                                'title', 'Operator capabilities',
+                                'filter_key', 'capabilities',
+                                'options', (
+                                    select coalesce(json_agg(json_build_object(
+                                        'id', capabilities,
+                                        'name', capabilities,
+                                        'total', total
+                                    )), '[]')
+                                    from (
+                                        select capabilities, count(*) as total
+                                        from packages_applying_minimum_filters
+                                        where capabilities is not null
+                                        group by capabilities
+                                        order by total desc, capabilities asc
+                                    ) as capabilities_breakdown
                                 )
                             )
                         )

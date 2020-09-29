@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(26);
+select plan(27);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -74,6 +74,7 @@ insert into snapshot (
     license,
     digest,
     readme,
+    capabilities,
     created_at
 ) values (
     :'package1ID',
@@ -86,6 +87,7 @@ insert into snapshot (
     'Apache-2.0',
     'digest-package1-1.0.0',
     'readme',
+    'basic install',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -348,6 +350,14 @@ select is(
                 "options": [{
                     "id": "Apache-2.0",
                     "name": "Apache-2.0",
+                    "total": 1
+                }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
                     "total": 1
                 }]
             }]
@@ -761,6 +771,14 @@ select is(
                     "name": "Apache-2.0",
                     "total": 1
                 }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -839,6 +857,14 @@ select is(
                 "options": [{
                     "id": "Apache-2.0",
                     "name": "Apache-2.0",
+                    "total": 1
+                }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
                     "total": 1
                 }]
             }]
@@ -998,6 +1024,14 @@ select is(
                     "name": "Apache-2.0",
                     "total": 1
                 }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -1055,6 +1089,14 @@ select is(
                 "options": [{
                     "id": "Apache-2.0",
                     "name": "Apache-2.0",
+                    "total": 1
+                }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
                     "total": 1
                 }]
             }]
@@ -1115,6 +1157,14 @@ select is(
                     "name": "Apache-2.0",
                     "total": 1
                 }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
+                    "total": 1
+                }]
             }]
         },
         "metadata": {
@@ -1170,6 +1220,14 @@ select is(
                 "options": [{
                     "id": "Apache-2.0",
                     "name": "Apache-2.0",
+                    "total": 1
+                }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
                     "total": 1
                 }]
             }]
@@ -1413,6 +1471,53 @@ select is(
         }
     }'::jsonb,
     'TsQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
+);
+
+-- Tests with with capabilities filter
+select is(
+    search_packages('{
+        "capabilities": [
+            "basic install"
+        ]
+    }')::jsonb,
+    '{
+        "data": {
+            "packages": [{
+                "package_id": "00000000-0000-0000-0000-000000000001",
+                "name": "package1",
+                "normalized_name": "package1",
+                "logo_image_id": "00000000-0000-0000-0000-000000000001",
+                "stars": 10,
+                "display_name": "Package 1",
+                "description": "description",
+                "version": "1.0.0",
+                "app_version": "12.1.0",
+                "license": "Apache-2.0",
+                "deprecated": null,
+                "signed": null,
+                "created_at": 1592299234,
+                "repository": {
+                    "repository_id": "00000000-0000-0000-0000-000000000001",
+                    "kind": 0,
+                    "name": "repo1",
+                    "display_name": "Repo 1",
+                    "url": "https://repo1.com",
+                    "verified_publisher": true,
+                    "official": true,
+                    "user_alias": "user1",
+                    "organization_name": null,
+                    "organization_display_name": null
+                }
+            }],
+            "facets": null
+        },
+        "metadata": {
+            "limit": null,
+            "offset": null,
+            "total": 1
+        }
+    }'::jsonb,
+    'TsQueryWeb: - Capabilities: basic install | Package 1 expected - Facets not expected'
 );
 
 -- Tests with limit and offset
@@ -1673,6 +1778,14 @@ select is(
                 "options": [{
                     "id": "Apache-2.0",
                     "name": "Apache-2.0",
+                    "total": 1
+                }]
+            }, {
+                "title": "Operator capabilities",
+                "filter_key": "capabilities",
+                "options": [{
+                    "id": "basic install",
+                    "name": "basic install",
                     "total": 1
                 }]
             }]

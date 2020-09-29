@@ -263,3 +263,11 @@ user_roles[role] {
     },
   },
 ];
+
+export const OPERATOR_CAPABILITIES = [
+  'basic install',
+  'seamless upgrades',
+  'full lifecycle',
+  'deep insights',
+  'auto pilot',
+];
