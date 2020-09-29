@@ -26,9 +26,10 @@ import (
 )
 
 const (
-	operatorAnnotation    = "artifacthub.io/operator"
-	linksAnnotation       = "artifacthub.io/links"
-	maintainersAnnotation = "artifacthub.io/maintainers"
+	operatorAnnotation             = "artifacthub.io/operator"
+	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
+	linksAnnotation                = "artifacthub.io/links"
+	maintainersAnnotation          = "artifacthub.io/maintainers"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -324,13 +325,14 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 // Example:
 //
 // annotations:
-//   "artifacthub.io/operator": "true"
-//   "artifacthub.io/links": |
+//   artifacthub.io/operator: "true"
+//   artifacthub.io/operatorCapabilities: Basic Install
+//   artifacthub.io/links: |
 //     - name: link1
 //       url: https://link1.url
 //     - name: link2
 //       url: https://link2.url
-//   "artifacthub.io/maintainers": |
+//   artifacthub.io/maintainers: |
 //     - name: user1
 //       email: user1@email.com
 //     - name: user2
@@ -345,6 +347,9 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		}
 		p.IsOperator = isOperator
 	}
+
+	// Operator capabilities
+	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
 
 	// Links
 	if v, ok := annotations[linksAnnotation]; ok {
