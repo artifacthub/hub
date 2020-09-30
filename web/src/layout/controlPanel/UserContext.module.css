@@ -17,6 +17,11 @@
 
 .dropdown {
   top: 80%;
+  max-width: 350px;
+}
+
+.icon {
+  min-width: 16px;
 }
 
 .ctxWrapper {

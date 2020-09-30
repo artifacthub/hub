@@ -78,26 +78,26 @@ const MemberCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="memberCard">
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
-        <div className="d-flex flex-row align-items-center">
-          <div
-            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
-          >
-            <FaUser className={styles.image} />
-          </div>
+        <div
+          className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
+        >
+          <FaUser className={styles.image} />
+        </div>
 
-          <div>
+        <div className="flex-grow-1">
+          <div className="d-flex flex-row align-items-start">
             <div className="h5 mb-1">
-              <div className="d-flex flex-row align-items-start">
-                {!isNull(props.member.firstName) || !isNull(props.member.lastName) ? getFullName() : props.member.alias}
-                {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
-                  <small className="ml-4">
-                    <span className="badge badge-warning">Invitation not accepted yet</span>
-                  </small>
-                )}
-              </div>
+              {!isNull(props.member.firstName) || !isNull(props.member.lastName) ? getFullName() : props.member.alias}
             </div>
-            <div className="h6 text-muted mr-1 font-italic">{props.member.alias}</div>
+            {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
+              <div className={classnames('ml-3', { 'mr-3': props.membersNumber > 1 })}>
+                <small>
+                  <span className="badge badge-warning">Invitation not accepted yet</span>
+                </small>
+              </div>
+            )}
           </div>
+          <div className="h6 text-muted mr-1 font-italic">{props.member.alias}</div>
         </div>
 
         {props.membersNumber > 1 && (

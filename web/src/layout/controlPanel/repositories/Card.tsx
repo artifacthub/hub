@@ -94,7 +94,11 @@ const RepositoryCard = (props: Props) => {
                 <span className="d-inline d-sm-none">Logs</span>
               </>
             }
-            header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
+            header={
+              <div className={`h3 m-2 text-truncate ${styles.title}`}>
+                Errors log - {props.repository.displayName || props.repository.name}
+              </div>
+            }
             open={openErrorsModal}
             onClose={() => setOpenErrorsModal(false)}
           >
@@ -156,8 +160,10 @@ const RepositoryCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="repoCard">
       <div className="d-flex flex-row w-100 justify-content-between">
-        <div className="d-flex flex-row align-items-center mb-1">
-          <div className={`h5 mb-0 ${styles.titleCard}`}>{props.repository.displayName || props.repository.name}</div>
+        <div className="d-flex flex-row align-items-center mb-1 text-truncate">
+          <div className={`h5 mb-0 mr-3 text-truncate ${styles.titleCard}`}>
+            {props.repository.displayName || props.repository.name}
+          </div>
 
           <OfficialBadge
             official={props.repository.official}

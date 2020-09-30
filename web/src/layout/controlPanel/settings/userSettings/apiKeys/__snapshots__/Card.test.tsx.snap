@@ -10,7 +10,7 @@ exports[`API key Card - API keys section creates snapshot 1`] = `
       class="d-flex flex-row w-100 justify-content-between"
     >
       <div
-        class="h5 mb-1 titleCard"
+        class="h5 mb-1 mr-2 titleCard"
       >
         key1
       </div>

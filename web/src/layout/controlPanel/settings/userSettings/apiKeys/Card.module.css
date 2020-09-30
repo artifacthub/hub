@@ -3,6 +3,10 @@
   padding: 1.25rem;
 }
 
+.titleCard {
+  word-break: break-word;
+}
+
 .btnDropdown {
   height: 1.75rem;
   width: 1.75rem;

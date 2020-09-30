@@ -83,14 +83,14 @@ exports[`UserContext creates snapshot 1`] = `
         class="arrow arrow"
       />
       <button
-        class="dropdown-item"
+        class="dropdown-item mw-100"
         data-testid="userCtxBtn"
       >
         <div
-          class="d-flex flex-row align-items-center"
+          class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="mr-2"
+            class="mr-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -103,11 +103,13 @@ exports[`UserContext creates snapshot 1`] = `
               d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
             />
           </svg>
-          <span>
+          <div
+            class="flex-grow-1 text-truncate"
+          >
             userAlias
-          </span>
+          </div>
           <svg
-            class="ml-2 text-success"
+            class="ml-2 text-success icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -203,14 +205,14 @@ exports[`UserContext creates snapshot 2`] = `
         class="arrow arrow"
       />
       <button
-        class="dropdown-item"
+        class="dropdown-item mw-100"
         data-testid="userCtxBtn"
       >
         <div
-          class="d-flex flex-row align-items-center"
+          class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="mr-2"
+            class="mr-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -223,11 +225,13 @@ exports[`UserContext creates snapshot 2`] = `
               d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
             />
           </svg>
-          <span>
+          <div
+            class="flex-grow-1 text-truncate"
+          >
             userAlias
-          </span>
+          </div>
           <svg
-            class="ml-2 text-success"
+            class="ml-2 text-success icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -248,10 +252,10 @@ exports[`UserContext creates snapshot 2`] = `
         data-testid="orgCtxBtn"
       >
         <div
-          class="d-flex flex-row align-items-center"
+          class="d-flex flex-row align-items-center text-truncate"
         >
           <svg
-            class="mr-2"
+            class="mr-2 icon"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -264,9 +268,11 @@ exports[`UserContext creates snapshot 2`] = `
               d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
             />
           </svg>
-          <span>
+          <div
+            class="flex-grow-1 text-truncate"
+          >
             test
-          </span>
+          </div>
         </div>
       </button>
     </div>

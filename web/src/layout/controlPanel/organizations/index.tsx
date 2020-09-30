@@ -51,7 +51,7 @@ const OrganizationsSection = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 w-100">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
             <div className={`h3 pb-0 ${styles.title}`}>Organizations</div>

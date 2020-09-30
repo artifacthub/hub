@@ -5,9 +5,11 @@
 .table {
   background-color: var(--white);
   border: 1px solid var(--color-1-300);
+  word-break: break-word;
 }
 
 .tableTitle th {
+  border-top: 2px solid var(--color-1-300) !important;
   border-bottom-color: var(--color-1-300) !important;
 }
 

@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { AppCtx, updateLimit } from '../../context/AppCtx';
 import useScrollRestorationFix from '../../hooks/useScrollRestorationFix';
-import { Facets, Package, RepositoryKind, SearchResults } from '../../types';
+import { Facets, Package, RepositoryKind, SearchFiltersURL, SearchResults } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
@@ -98,6 +98,19 @@ const SearchView = (props: Props) => {
     };
   };
 
+  const getCurrentFilters = (): SearchFiltersURL => {
+    return {
+      pageNumber: props.pageNumber,
+      tsQueryWeb: props.tsQueryWeb,
+      tsQuery: props.tsQuery,
+      filters: props.filters,
+      deprecated: props.deprecated,
+      operators: props.operators,
+      verifiedPublisher: props.verifiedPublisher,
+      official: props.official,
+    };
+  };
+
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
     let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
     if (checked) {
@@ -109,14 +122,9 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
         filters: prepareSelectedFilters(name, newFilters, props.filters),
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -130,14 +138,9 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
         filters: { ...props.filters, ...newFilters },
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -154,14 +157,9 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
         tsQuery: query,
-        filters: props.filters,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -170,14 +168,9 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
         deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -186,14 +179,9 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        deprecated: props.deprecated,
         operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -202,15 +190,10 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        deprecated: props.deprecated,
-        operators: props.operators,
         verifiedPublisher:
           !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
-        official: props.official,
       }),
     });
   };
@@ -219,13 +202,8 @@ const SearchView = (props: Props) => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
         official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
       }),
     });
@@ -243,18 +221,12 @@ const SearchView = (props: Props) => {
     });
   };
 
-  const onPageChange = (pageNumber: number): void => {
+  const onPageNumberChange = (pageNumber: number): void => {
     history.push({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: pageNumber,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
   };
@@ -263,14 +235,8 @@ const SearchView = (props: Props) => {
     history.replace({
       pathname: '/packages/search',
       search: prepareQueryString({
+        ...getCurrentFilters(),
         pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: props.tsQuery,
-        filters: props.filters,
-        deprecated: props.deprecated,
-        operators: props.operators,
-        verifiedPublisher: props.verifiedPublisher,
-        official: props.official,
       }),
     });
     setScrollPosition(0);
@@ -657,7 +623,7 @@ const SearchView = (props: Props) => {
                       offset={searchResults.metadata.offset}
                       total={searchResults.metadata.total}
                       active={props.pageNumber}
-                      onChange={onPageChange}
+                      onChange={onPageNumberChange}
                     />
                   </>
                 )}

@@ -58,7 +58,7 @@ const APIKeyCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="APIKeyCard">
       <div className="d-flex flex-row w-100 justify-content-between">
-        <div className={`h5 mb-1 ${styles.titleCard}`}>{props.apiKey.name}</div>
+        <div className={`h5 mb-1 mr-2 ${styles.titleCard}`}>{props.apiKey.name}</div>
         {deletionModalStatus && (
           <Modal
             className={`d-inline-block ${styles.modal}`}
