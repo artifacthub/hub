@@ -41,7 +41,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
             class="modal-body p-4 h-100 d-flex flex-column"
           >
             <div
-              class="w-100 body"
+              class="w-100"
             >
               <form
                 autocomplete="on"
@@ -241,42 +241,31 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     <small
                       class="text-muted text-break mt-1"
                     >
-                      <p>
-                        Base URL of the repository where the index.yaml and optionally some package charts are hosted.
-                      </p>
-                      <p>
-                        If you host your charts in Github, you can use 
-                        <a
-                          class="link text-reset"
-                          href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
-                          rel="noopener noreferrer"
-                          role="button"
-                          target="_blank"
-                        >
-                          <u>
-                            GitHub Pages
-                          </u>
-                        </a>
-                         to serve them or you can use a URL like the one below:
-                      </p>
-                      <p
-                        class="font-italic ml-1 ml-md-3 inputAdditionalInfoURL"
-                      >
-                        https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
-                      </p>
                       <p
                         class="mb-0"
                       >
-                        For more information about how to create and host your own chart repository please visit the 
+                        For more information about the url format and the repository structure, please see the 
                         <a
                           class="link text-reset"
-                          href="https://helm.sh/docs/topics/chart_repository/"
+                          href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#helm-charts-repositories"
                           rel="noopener noreferrer"
                           role="button"
                           target="_blank"
                         >
                           <u>
-                            Helm chart repository guide
+                            Helm charts repositories
+                          </u>
+                        </a>
+                         section in the 
+                        <a
+                          class="link text-reset"
+                          href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md"
+                          rel="noopener noreferrer"
+                          role="button"
+                          target="_blank"
+                        >
+                          <u>
+                            repositories guide
                           </u>
                         </a>
                         .

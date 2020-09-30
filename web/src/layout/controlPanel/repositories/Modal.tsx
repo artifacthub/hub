@@ -151,124 +151,65 @@ const RepositoryModal = (props: Props) => {
   };
 
   const getAdditionalInfo = (): JSX.Element | undefined => {
+    let link: JSX.Element;
+
     switch (selectedKind) {
       case RepositoryKind.Helm:
-        return (
-          <small className="text-muted text-break mt-1">
-            <p>Base URL of the repository where the index.yaml and optionally some package charts are hosted.</p>
-            <p>
-              If you host your charts in Github, you can use{' '}
-              <ExternalLink
-                href="https://helm.sh/docs/topics/chart_repository/#github-pages-example"
-                className="text-reset"
-              >
-                <u>GitHub Pages</u>
-              </ExternalLink>{' '}
-              to serve them or you can use a URL like the one below:
-            </p>
-            <p className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-              https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/PATH/TO/CHARTS
-            </p>
-            <p className="mb-0">
-              For more information about how to create and host your own chart repository please visit the{' '}
-              <ExternalLink href="https://helm.sh/docs/topics/chart_repository/" className="text-reset">
-                <u>Helm chart repository guide</u>
-              </ExternalLink>
-              .
-            </p>
-          </small>
+        link = (
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#helm-charts-repositories"
+            className="text-reset"
+          >
+            <u>Helm charts repositories</u>
+          </ExternalLink>
         );
+        break;
       case RepositoryKind.OLM:
-        return (
-          <small className="text-muted text-break mt-1">
-            <p>
-              URL where the OLM operators are located. At the moment only Github and Gitlab URLs are supported, and they
-              must follow the following format:
-            </p>
-            <ul className="mt-3">
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://github.com/user/repo[/path/to/operators]
-              </li>
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://gitlab.com/user/repo[/path/to/operators]
-              </li>
-            </ul>
-            <p className="mb-0">
-              Operators inside the repo must be structured the same way as the{' '}
-              <ExternalLink
-                href="https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators"
-                className="text-reset"
-              >
-                <u>Community Operators</u>
-              </ExternalLink>{' '}
-              repository. There are some{' '}
-              <ExternalLink
-                href="https://github.com/operator-framework/community-operators/blob/master/docs/required-fields.md"
-                className="text-reset"
-              >
-                <u>required fields</u>
-              </ExternalLink>{' '}
-              within your CSV for your packages to be displayed properly in Artifact Hub.
-            </p>
-          </small>
+        link = (
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#olm-operators-repositories"
+            className="text-reset"
+          >
+            <u>OLM operators repositories</u>
+          </ExternalLink>
         );
+        break;
       case RepositoryKind.Falco:
-        return (
-          <small className="text-muted text-break mt-1">
-            <p>
-              URL where the Falco rules definitions are located. At the moment only Github and Gitlab URLs are
-              supported, and they must follow the following format:
-            </p>
-            <ul className="mt-3">
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://github.com/user/repo[/path/to/rules]
-              </li>
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://gitlab.com/user/repo[/path/to/rules]
-              </li>
-            </ul>
-            <p className="mb-0">
-              Falco rules packages are defined using YAML files, following{' '}
-              <ExternalLink
-                href="https://github.com/falcosecurity/cloud-native-security-hub#adding-a-new-falco-rule"
-                className="text-reset"
-              >
-                <u>the same spec</u>
-              </ExternalLink>{' '}
-              the Cloud Native Security Hub uses.
-            </p>
-          </small>
+        link = (
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#falco-rules-repositories"
+            className="text-reset"
+          >
+            <u>Falco rules repositories</u>
+          </ExternalLink>
         );
+        break;
       case RepositoryKind.OPA:
-        return (
-          <small className="text-muted text-break mt-1">
-            <p>
-              URL where the OPA policies packages are located. At the moment only Github and Gitlab URLs are supported,
-              and they must follow the following format:
-            </p>
-            <ul className="mt-3">
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://github.com/user/repo[/path/to/packages]
-              </li>
-              <li className={`font-italic ml-1 ml-md-3 ${styles.inputAdditionalInfoURL}`}>
-                https://gitlab.com/user/repo[/path/to/packages]
-              </li>
-            </ul>
-            <p className="mb-0">
-              You can have multiple packages with one or multiple versions on each repository. Each package version
-              needs a metadata file. A package version starts at the point where a metadata file is located and all
-              policies files inside that directory will belong to that package version. Please see{' '}
-              <ExternalLink
-                href="https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml"
-                className="text-reset"
-              >
-                <u>the spec</u>
-              </ExternalLink>{' '}
-              for more details.
-            </p>
-          </small>
+        link = (
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#opa-policies-repositories"
+            className="text-reset"
+          >
+            <u>OPA policies repositories</u>
+          </ExternalLink>
         );
+        break;
     }
+
+    return (
+      <small className="text-muted text-break mt-1">
+        <p className="mb-0">
+          For more information about the url format and the repository structure, please see the {link} section in the{' '}
+          <ExternalLink
+            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md"
+            className="text-reset"
+          >
+            <u>repositories guide</u>
+          </ExternalLink>
+          .
+        </p>
+      </small>
+    );
   };
 
   const getURLPattern = (): string | undefined => {
@@ -311,7 +252,7 @@ const RepositoryModal = (props: Props) => {
       error={apiError}
       cleanError={cleanApiError}
     >
-      <div className={`w-100 ${styles.body}`}>
+      <div className="w-100">
         <form
           data-testid="repoForm"
           ref={form}
