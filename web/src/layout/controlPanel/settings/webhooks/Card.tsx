@@ -59,24 +59,22 @@ const WebhookCard = (props: Props) => {
       <div className={`card cardWithHover w-100 ${styles.card}`}>
         <div className={`card-body p-0 position-relative ${styles.body}`}>
           <div className="d-flex flex-row">
-            <div className="flex-grow-1">
-              <div className={`card-title mb-3 ${styles.title}`}>
-                <div className="h5 d-flex flex-row align-items-center">
-                  {props.webhook.name}
-                  {props.webhook.active ? (
-                    <span
-                      className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase ${styles.badge}`}
-                    >
-                      Active
-                    </span>
-                  ) : (
-                    <span
-                      className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
-                    >
-                      Inactive
-                    </span>
-                  )}
-                </div>
+            <div className={`h5 card-title mb-3 mr-3 ${styles.title}`}>
+              <div className="d-flex flex-row align-items-start">
+                <div>{props.webhook.name}</div>
+                {props.webhook.active ? (
+                  <span
+                    className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase ${styles.badge}`}
+                  >
+                    Active
+                  </span>
+                ) : (
+                  <span
+                    className={`ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase ${styles.badge} ${styles.inactiveBadge}`}
+                  >
+                    Inactive
+                  </span>
+                )}
               </div>
             </div>
 

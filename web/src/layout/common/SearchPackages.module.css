@@ -35,6 +35,10 @@
   top: 2.65rem;
 }
 
+.table {
+  word-break: break-word;
+}
+
 .table th {
   font-size: 0.875rem;
 }

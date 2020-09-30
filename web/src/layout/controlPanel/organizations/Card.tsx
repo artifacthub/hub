@@ -94,7 +94,7 @@ const OrganizationCard = (props: Props) => {
   return (
     <li className={`list-group-item ${styles.listItem}`} data-testid="organizationCard">
       <div className="d-flex flex-row w-100 justify-content-between align-items-start">
-        <div className="d-flex flex-row align-items-center">
+        <div className="d-flex flex-row align-items-center w-100">
           <div
             className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
           >
@@ -110,15 +110,87 @@ const OrganizationCard = (props: Props) => {
             )}
           </div>
 
-          <div>
-            <div className={`h5 mb-0 ${styles.title}`}>{props.organization.displayName || props.organization.name}</div>
+          <div className="flex-grow-1 text-truncate">
+            <div className={`h5 mb-0 text-truncate ${styles.title}`}>
+              {props.organization.displayName || props.organization.name}
+            </div>
           </div>
 
           {!isMember && (
-            <div className="ml-4">
+            <div className="ml-3">
               <span className="badge badge-warning">Invitation not accepted yet</span>
             </div>
           )}
+
+          <div className="ml-auto">
+            <div
+              ref={dropdownMenu}
+              className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                show: dropdownMenuStatus,
+              })}
+            >
+              <div className={`arrow ${styles.arrow}`} />
+
+              {!isUndefined(props.organization.confirmed) &&
+              !isNull(props.organization.confirmed) &&
+              props.organization.confirmed ? (
+                <>
+                  {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
+                    <button
+                      data-testid="leaveOrgModalBtn"
+                      className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.preventDefault();
+                        closeDropdown();
+                        setLeaveModalStatus(true);
+                      }}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                        <span>Leave</span>
+                      </div>
+                    </button>
+                  )}
+                </>
+              ) : (
+                <div>
+                  <button
+                    data-testid="acceptInvitationBtn"
+                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      confirmOrganizationMembership();
+                      closeDropdown();
+                    }}
+                    disabled={isAccepting}
+                  >
+                    <div className="d-flex flex-row align-items-center">
+                      {isAccepting ? (
+                        <>
+                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                          <span className="ml-2">Accepting invitation...</span>
+                        </>
+                      ) : (
+                        <>
+                          <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
+                          <span>Accept invitation</span>
+                        </>
+                      )}
+                    </div>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {hasDropdownContent && (
+              <button
+                className={`ml-3 btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                onClick={() => setDropdownMenuStatus(true)}
+              >
+                <BsThreeDotsVertical />
+              </button>
+            )}
+          </div>
         </div>
 
         {leaveModalStatus && (
@@ -170,76 +242,6 @@ const OrganizationCard = (props: Props) => {
             </div>
           </Modal>
         )}
-
-        <div className="ml-auto">
-          <div
-            ref={dropdownMenu}
-            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
-              show: dropdownMenuStatus,
-            })}
-          >
-            <div className={`arrow ${styles.arrow}`} />
-
-            {!isUndefined(props.organization.confirmed) &&
-            !isNull(props.organization.confirmed) &&
-            props.organization.confirmed ? (
-              <>
-                {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
-                  <button
-                    data-testid="leaveOrgModalBtn"
-                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      e.preventDefault();
-                      closeDropdown();
-                      setLeaveModalStatus(true);
-                    }}
-                  >
-                    <div className="d-flex flex-row align-items-center">
-                      <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
-                      <span>Leave</span>
-                    </div>
-                  </button>
-                )}
-              </>
-            ) : (
-              <div>
-                <button
-                  data-testid="acceptInvitationBtn"
-                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    e.preventDefault();
-                    confirmOrganizationMembership();
-                    closeDropdown();
-                  }}
-                  disabled={isAccepting}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    {isAccepting ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Accepting invitation...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
-                        <span>Accept invitation</span>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
-
-          {hasDropdownContent && (
-            <button
-              className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
-              onClick={() => setDropdownMenuStatus(true)}
-            >
-              <BsThreeDotsVertical />
-            </button>
-          )}
-        </div>
       </div>
 
       {!isUndefined(props.organization.homeUrl) && !isNull(props.organization.homeUrl) && (

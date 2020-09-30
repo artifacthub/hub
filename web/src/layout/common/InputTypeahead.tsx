@@ -21,8 +21,9 @@ interface Props {
 const OptionItem = (opt: Option, name: string | JSX.Element) => (
   <>
     {!isUndefined(opt.icon) && <div className={styles.icon}>{opt.icon}</div>}
-    <div className="ml-2 flex-grow-1 text-truncate">
-      {name}
+    <div className="ml-2 text-truncate">{name}</div>
+    <div>
+      {' '}
       <small className="ml-1">({opt.total})</small>
     </div>
   </>

@@ -115,11 +115,13 @@ const UserContext = () => {
       >
         <div className={`arrow ${styles.arrow}`} />
 
-        <button data-testid="userCtxBtn" className="dropdown-item" onClick={() => handleChange(alias)}>
-          <div className="d-flex flex-row align-items-center">
-            <FaUser className="mr-2" />
-            <span>{alias}</span>
-            {isUndefined(ctx.prefs.controlPanel.selectedOrg) && <GoCheck className="ml-2 text-success" />}
+        <button data-testid="userCtxBtn" className="dropdown-item mw-100" onClick={() => handleChange(alias)}>
+          <div className="d-flex flex-row align-items-center text-truncate">
+            <FaUser className={`mr-2 ${styles.icon}`} />
+            <div className="flex-grow-1 text-truncate">{alias}</div>
+            {isUndefined(ctx.prefs.controlPanel.selectedOrg) && (
+              <GoCheck className={`ml-2 text-success ${styles.icon}`} />
+            )}
           </div>
         </button>
         {!isNull(organizations) && (
@@ -131,11 +133,13 @@ const UserContext = () => {
                 className="dropdown-item"
                 onClick={() => handleChange(org)}
               >
-                <div className="d-flex flex-row align-items-center">
-                  <MdBusiness className="mr-2" />
-                  <span>{org.name}</span>
+                <div className="d-flex flex-row align-items-center text-truncate">
+                  <MdBusiness className={`mr-2 ${styles.icon}`} />
+                  <div className="flex-grow-1 text-truncate">{org.name}</div>
                   {!isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
-                    org.name === ctx.prefs.controlPanel.selectedOrg && <GoCheck className="ml-2 text-success" />}
+                    org.name === ctx.prefs.controlPanel.selectedOrg && (
+                      <GoCheck className={`ml-2 text-success ${styles.icon}`} />
+                    )}
                 </div>
               </button>
             ))}

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { isUndefined } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
 
 import styles from './ButtonCopyToClipboard.module.css';
@@ -31,10 +31,19 @@ const copyToClipboard = (text: string): boolean => {
 const ButtonCopyToClipboard = (props: Props) => {
   const [copyStatus, setCopyStatus] = useState(false);
 
-  // Hide tooltip after 2s
-  if (copyStatus) {
-    setTimeout(() => setCopyStatus(false), 2 * 1000);
-  }
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (copyStatus) {
+      // Hide tooltip after 2s
+      timeout = setTimeout(() => setCopyStatus(false), 2 * 1000);
+    }
+
+    return () => {
+      if (!isUndefined(timeout)) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [copyStatus]);
 
   return (
     <div className={`position-relative ${props.wrapperClassName}`}>

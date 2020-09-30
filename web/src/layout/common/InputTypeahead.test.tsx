@@ -102,18 +102,18 @@ describe('InputTypeahead', () => {
     fireEvent.click(btn);
 
     const opts = getAllByTestId('typeaheadDropdownBtn');
-    expect(opts[0]).toHaveTextContent('Option key 2(12)');
-    expect(opts[1]).toHaveTextContent('Option key 1(7)');
-    expect(opts[2]).toHaveTextContent('Option 1(19)');
-    expect(opts[3]).toHaveTextContent('Option 2(17)');
+    expect(opts[0]).toHaveTextContent('Option key 2 (12)');
+    expect(opts[1]).toHaveTextContent('Option key 1 (7)');
+    expect(opts[2]).toHaveTextContent('Option 1 (19)');
+    expect(opts[3]).toHaveTextContent('Option 2 (17)');
   });
 
   it('renders selected options in correct order', () => {
     const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 
     const opts = getAllByTestId('typeaheadSelectedItem');
-    expect(opts[0]).toHaveTextContent('Option key 2(12)');
-    expect(opts[1]).toHaveTextContent('Option key 1(7)');
+    expect(opts[0]).toHaveTextContent('Option key 2 (12)');
+    expect(opts[1]).toHaveTextContent('Option key 1 (7)');
   });
 
   it('unselects option', () => {

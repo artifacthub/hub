@@ -192,21 +192,19 @@ exports[`WebhooksSection renders correctly 2`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="flex-grow-1"
+                      class="h5 card-title mb-3 mr-3 title"
                     >
                       <div
-                        class="card-title mb-3 title"
+                        class="d-flex flex-row align-items-start"
                       >
-                        <div
-                          class="h5 d-flex flex-row align-items-center"
-                        >
+                        <div>
                           test
-                          <span
-                            class="ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase badge inactiveBadge"
-                          >
-                            Inactive
-                          </span>
                         </div>
+                        <span
+                          class="ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                        >
+                          Inactive
+                        </span>
                       </div>
                     </div>
                     <div
@@ -334,21 +332,19 @@ exports[`WebhooksSection renders correctly 2`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="flex-grow-1"
+                      class="h5 card-title mb-3 mr-3 title"
                     >
                       <div
-                        class="card-title mb-3 title"
+                        class="d-flex flex-row align-items-start"
                       >
-                        <div
-                          class="h5 d-flex flex-row align-items-center"
-                        >
+                        <div>
                           test1
-                          <span
-                            class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
-                          >
-                            Active
-                          </span>
                         </div>
+                        <span
+                          class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
                       </div>
                     </div>
                     <div
@@ -476,21 +472,19 @@ exports[`WebhooksSection renders correctly 2`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="flex-grow-1"
+                      class="h5 card-title mb-3 mr-3 title"
                     >
                       <div
-                        class="card-title mb-3 title"
+                        class="d-flex flex-row align-items-start"
                       >
-                        <div
-                          class="h5 d-flex flex-row align-items-center"
-                        >
+                        <div>
                           dfgfgdhg
-                          <span
-                            class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
-                          >
-                            Active
-                          </span>
                         </div>
+                        <span
+                          class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
                       </div>
                     </div>
                     <div
@@ -616,21 +610,19 @@ exports[`WebhooksSection renders correctly 2`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="flex-grow-1"
+                      class="h5 card-title mb-3 mr-3 title"
                     >
                       <div
-                        class="card-title mb-3 title"
+                        class="d-flex flex-row align-items-start"
                       >
-                        <div
-                          class="h5 d-flex flex-row align-items-center"
-                        >
+                        <div>
                           testdefault
-                          <span
-                            class="ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase badge inactiveBadge"
-                          >
-                            Inactive
-                          </span>
                         </div>
+                        <span
+                          class="ml-3 mt-1 font-weight-bold badge badge-pill border border-dark text-dark text-uppercase badge inactiveBadge"
+                        >
+                          Inactive
+                        </span>
                       </div>
                     </div>
                     <div
@@ -758,21 +750,19 @@ exports[`WebhooksSection renders correctly 2`] = `
                     class="d-flex flex-row"
                   >
                     <div
-                      class="flex-grow-1"
+                      class="h5 card-title mb-3 mr-3 title"
                     >
                       <div
-                        class="card-title mb-3 title"
+                        class="d-flex flex-row align-items-start"
                       >
-                        <div
-                          class="h5 d-flex flex-row align-items-center"
-                        >
+                        <div>
                           ffdsffdfgdsd
-                          <span
-                            class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
-                          >
-                            Active
-                          </span>
                         </div>
+                        <span
+                          class="ml-3 mt-1 font-weight-bold badge badge-pill border border-success text-success text-uppercase badge"
+                        >
+                          Active
+                        </span>
                       </div>
                     </div>
                     <div

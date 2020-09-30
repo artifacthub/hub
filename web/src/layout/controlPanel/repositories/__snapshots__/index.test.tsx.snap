@@ -7,7 +7,7 @@ exports[`Repository index creates snapshot 1`] = `
     role="main"
   >
     <div
-      class="flex-grow-1"
+      class="flex-grow-1 w-100"
     >
       <div>
         <div
@@ -198,7 +198,7 @@ exports[`Repository index creates snapshot 2`] = `
     role="main"
   >
     <div
-      class="flex-grow-1"
+      class="flex-grow-1 w-100"
     >
       <div>
         <div
@@ -371,10 +371,10 @@ exports[`Repository index creates snapshot 2`] = `
             class="d-flex flex-row w-100 justify-content-between"
           >
             <div
-              class="d-flex flex-row align-items-center mb-1"
+              class="d-flex flex-row align-items-center mb-1 text-truncate"
             >
               <div
-                class="h5 mb-0 titleCard"
+                class="h5 mb-0 mr-3 text-truncate titleCard"
               >
                 test
               </div>
