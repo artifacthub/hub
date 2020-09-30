@@ -9,7 +9,7 @@ Artifact Hub is a web-based application that enables finding, installing, and pu
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
-The project, accessible at [https://artifacthub.io](https://artifacthub.io), is currently in development in a beta state. Support for Helm charts, Falco configurations, OPA policies, and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [DEV.md](./DEV.md) for more details.
+The project, accessible at [https://artifacthub.io](https://artifacthub.io), is currently in development in a beta state. Support for Helm charts, Falco configurations, OPA policies, and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [dev.md](./docs/dev.md) for more details.
 
 Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit [http://slack.cncf.io/](http://slack.cncf.io/).
 
@@ -29,7 +29,9 @@ Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. T
 
 ## Getting started
 
-The easiest way to try Artifact Hub in your Kubernetes cluster is by deploying the Helm chart provided. For more details, please see the [Helm chart README file](charts/artifact-hub/README.md).
+Artifact Hub allows publishers to list their content in an automated way. Please check out the [repositories guide](./docs/repositories.md) for more details about how to add your repositories.
+
+If you want to run your own Artifact Hub instance in your Kubernetes cluster, the easiest way is by deploying the Helm chart provided. For more details, please see the [Helm chart README file](charts/artifact-hub/README.md).
 
 ## Community
 
