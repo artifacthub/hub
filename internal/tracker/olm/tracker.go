@@ -24,6 +24,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const (
+	licenseAnnotation = "artifacthub.io/license"
+)
+
 var (
 	// channelVersionRE is a regexp used to extract the version from the
 	// channel CurrentCSVName.
@@ -286,6 +290,7 @@ func (t *Tracker) registerPackage(
 		IsOperator:     true,
 		Capabilities:   csv.Annotations["capabilities"],
 		DefaultChannel: manifest.DefaultChannelName,
+		License:        csv.Annotations[licenseAnnotation],
 		ContainerImage: csv.Annotations["containerImage"],
 		Provider:       csv.Spec.Provider.Name,
 		Repository:     t.r,
