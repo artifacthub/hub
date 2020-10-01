@@ -18,7 +18,7 @@ Falco rules repositories are expected to be hosted in Github or Gitlab repos. Wh
 
 *Please NOTE that the repository URL used when adding the repository to Artifact Hub **must NOT** contain the git hosting platform specific parts, like **tree/branch**, just the path to your packages like it would show in the filesystem.*
 
-Falco rules packages are defined using YAML files, following the [same spec the Cloud Native Security Hub](https://github.com/falcosecurity/cloud-native-security-hub#adding-a-new-falco-rule) uses. Each package version must be defined in a file with `.yaml` extension. The `/path/to/packages` provided will be processed recursively to find all packages versions available.
+Falco rules packages are defined using YAML files, following the [same spec the Cloud Native Security Hub](https://github.com/falcosecurity/cloud-native-security-hub#adding-a-new-falco-rule) uses. Each package version must be defined in a file with `.yaml` extension. The `/path/to/packages` provided will be processed recursively to find all packages' versions available.
 
 There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/packages`.
 
@@ -37,7 +37,7 @@ Artifact Hub is able to process chart repositories as defined by the Helm projec
 
 Most of the metadata Artifact Hub needs is extracted from the `Chart.yaml` file and other files in the chart package, like the `README` or `LICENSE` files. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `Chart.yaml` file. For more information, please see the [Artifact Hub Helm annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/helm_annotations.md).
 
-There is an extra metadata file that you can add at the root your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim).
+There is an extra metadata file that you can add at the root of your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim).
 
 Once you have added your repository, you are all set up. As you add new versions of your charts or even new charts to your repository, they'll be automatically indexed and listed in Artifact Hub.
 
@@ -51,6 +51,8 @@ OLM operators repositories are expected to be hosted in Github or Gitlab repos. 
 *Please NOTE that the repository URL used when adding the repository to Artifact Hub **must NOT** contain the git hosting platform specific parts, like **tree/branch**, just the path to your operators like it would show in the filesystem.*
 
 The *path to operators* provided can contain one or more operators, that **must** be packaged using the [format defined in the Operator Framework documentation](https://github.com/operator-framework/community-operators/blob/master/docs/contributing.md#packaging-format). This is exactly the same format required to publish operators in [operatorhub.io](https://operatorhub.io). We've adopted this format for this repository kind because of its well thought structure and to make it easier for publishers to start listing their content in Artifact Hub.
+
+Most of the metadata Artifact Hub needs is extracted from the `CSV` file and other files in the operator package. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `CSV` file. For more information, please see the [Artifact Hub OLM annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/olm_annotations.md).
 
 There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at `/path/to/operators`.
 

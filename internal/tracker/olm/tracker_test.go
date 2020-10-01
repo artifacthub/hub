@@ -156,6 +156,7 @@ func TestTracker(t *testing.T) {
 				},
 			},
 			DefaultChannel: "alpha",
+			License:        "Apache-2.0",
 			Links: []*hub.Link{
 				{
 					Name: "Sample link",
