@@ -330,34 +330,54 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       data-testid="keywords"
     >
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        monitoring
+        <div
+          class="text-truncate"
+        >
+          monitoring
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        kubernetes
+        <div
+          class="text-truncate"
+        >
+          kubernetes
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        deprecations
+        <div
+          class="text-truncate"
+        >
+          deprecations
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        policies
+        <div
+          class="text-truncate"
+        >
+          policies
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        opa
+        <div
+          class="text-truncate"
+        >
+          opa
+        </div>
       </button>
     </span>
   </div>

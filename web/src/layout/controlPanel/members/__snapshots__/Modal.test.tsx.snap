@@ -18,7 +18,7 @@ exports[`Members Modal - members section creates snapshot 1`] = `
           class="modal-content content modal"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header"
+            class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
               class="h3 m-2 title"

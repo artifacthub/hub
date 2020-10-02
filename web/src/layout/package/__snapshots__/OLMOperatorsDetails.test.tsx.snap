@@ -144,7 +144,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
               class="modal-content content undefined"
             >
               <div
-                class="modal-header d-flex flex-row align-items-center header"
+                class="modal-header d-flex flex-row align-items-center header undefined"
               >
                 <div
                   class="h5 m-0"
@@ -698,28 +698,44 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
       data-testid="keywords"
     >
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        Akka
+        <div
+          class="text-truncate"
+        >
+          Akka
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        Akka Cluster
+        <div
+          class="text-truncate"
+        >
+          Akka Cluster
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        Lightbend
+        <div
+          class="text-truncate"
+        >
+          Lightbend
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        Application Runtime
+        <div
+          class="text-truncate"
+        >
+          Application Runtime
+        </div>
       </button>
     </span>
   </div>

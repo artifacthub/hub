@@ -13,6 +13,7 @@ import {
   NavSection,
   PayloadKind,
   RepositoryKind,
+  SearchTipItem,
   TsQuery,
 } from '../types';
 
@@ -270,4 +271,39 @@ export const OPERATOR_CAPABILITIES = [
   'full lifecycle',
   'deep insights',
   'auto pilot',
+];
+
+export const SEARH_TIPS: SearchTipItem[] = [
+  {
+    content: (
+      <>
+        Use <span className="font-weight-bold">multiple words</span> to refine your search.
+      </>
+    ),
+    example: 'kafka operator',
+  },
+  {
+    content: (
+      <>
+        Use <span className="font-weight-bold">-</span> to exclude words from your search.
+      </>
+    ),
+    example: 'apache -solr -hadoop',
+  },
+  {
+    content: (
+      <>
+        Put a phrase inside <span className="font-weight-bold">double quotes</span> for an exact match.
+      </>
+    ),
+    example: `"monitoring system"`,
+  },
+  {
+    content: (
+      <>
+        Use <span className="font-weight-bold">or</span> to combine multiple searches.
+      </>
+    ),
+    example: 'postgresql or mysql',
+  },
 ];

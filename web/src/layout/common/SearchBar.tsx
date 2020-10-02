@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchBar.module.css';
+import SearchTipsModal from './SearchTipsModal';
 
 interface Props {
   formClassName?: string;
@@ -99,6 +100,8 @@ const SearchBar = (props: Props) => {
           >
             <span aria-hidden="true">&times;</span>
           </button>
+
+          <SearchTipsModal size={props.size} />
         </div>
 
         {props.isSearching && (

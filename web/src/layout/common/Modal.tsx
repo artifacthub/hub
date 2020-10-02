@@ -12,7 +12,8 @@ interface Props {
   children: JSX.Element | JSX.Element[];
   buttonType?: string;
   buttonContent?: string | JSX.Element;
-  header: JSX.Element | string;
+  header?: JSX.Element | string;
+  headerClassName?: string;
   closeButton?: JSX.Element;
   className?: string;
   modalClassName?: string;
@@ -96,46 +97,52 @@ const Modal = (props: Props) => {
           ref={ref}
         >
           <div className={`modal-content ${styles.content} ${props.modalClassName}`}>
-            <div className={`modal-header d-flex flex-row align-items-center ${styles.header}`}>
-              {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
-
-              <button
-                data-testid="closeModalBtn"
-                type="button"
-                className="close"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  e.preventDefault();
-                  closeModal();
-                }}
-                disabled={props.disabledClose}
+            {!isUndefined(props.header) && (
+              <div
+                className={`modal-header d-flex flex-row align-items-center ${styles.header} ${props.headerClassName}`}
               >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+                {isString(props.header) ? <div className="modal-title h5">{props.header}</div> : <>{props.header}</>}
 
-            <div className="modal-body p-4 h-100 d-flex flex-column">
-              {openStatus && <>{props.children}</>}
-              <Alert message={props.error || null} type="danger" onClose={props.cleanError} activeScroll />
-            </div>
-
-            <div className="modal-footer p-3">
-              {isUndefined(props.closeButton) ? (
                 <button
-                  data-testid="closeModalFooterBtn"
+                  data-testid="closeModalBtn"
                   type="button"
-                  className="btn btn-secondary"
+                  className="close"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeModal();
                   }}
                   disabled={props.disabledClose}
                 >
-                  Close
+                  <span aria-hidden="true">&times;</span>
                 </button>
-              ) : (
-                <>{props.closeButton}</>
-              )}
+              </div>
+            )}
+
+            <div className="modal-body p-4 h-100 d-flex flex-column">
+              {openStatus && <>{props.children}</>}
+              <Alert message={props.error || null} type="danger" onClose={props.cleanError} activeScroll />
             </div>
+
+            {(isUndefined(props.noFooter) || !props.noFooter) && (
+              <div className="modal-footer p-3">
+                {isUndefined(props.closeButton) ? (
+                  <button
+                    data-testid="closeModalFooterBtn"
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
+                      closeModal();
+                    }}
+                    disabled={props.disabledClose}
+                  >
+                    Close
+                  </button>
+                ) : (
+                  <>{props.closeButton}</>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

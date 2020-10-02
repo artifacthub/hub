@@ -1,3 +1,4 @@
+import { compact } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import uniq from 'lodash/uniq';
@@ -19,7 +20,7 @@ const Keywords = (props: Props) => {
     let keywords: string[] = [];
 
     if (!isUndefined(props.keywords) && !isNull(props.keywords)) {
-      keywords = uniq(props.keywords);
+      keywords = uniq(compact(props.keywords));
     }
 
     return keywords;
@@ -34,7 +35,7 @@ const Keywords = (props: Props) => {
           {cleanKeywords().map((keyword: string) => (
             <button
               data-testid="keywordBtn"
-              className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 ${styles.badge}`}
+              className={`btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 ${styles.badge}`}
               key={keyword}
               onClick={() => {
                 history.push({
@@ -48,7 +49,7 @@ const Keywords = (props: Props) => {
                 });
               }}
             >
-              {keyword}
+              <div className="text-truncate">{keyword}</div>
             </button>
           ))}
         </span>
