@@ -17,6 +17,7 @@ import Loading from '../common/Loading';
 import NoData from '../common/NoData';
 import PackageCard from '../common/PackageCard';
 import Pagination from '../common/Pagination';
+import SampleQueries from '../common/SampleQueries';
 import Sidebar from '../common/Sidebar';
 import SubNavbar from '../navigation/SubNavbar';
 import Filters from './Filters';
@@ -403,7 +404,7 @@ const SearchView = (props: Props) => {
                       {searchResults.metadata.total < ctx.prefs.search.limit * props.pageNumber
                         ? searchResults.metadata.total
                         : ctx.prefs.search.limit * props.pageNumber}{' '}
-                      of{' '}
+                      <span className="ml-1">of</span>{' '}
                     </span>
                   )}
                   {searchResults.metadata.total}
@@ -413,6 +414,7 @@ const SearchView = (props: Props) => {
                       for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                     </span>
                   )}
+                  {activeFilters && <small className="font-italic ml-1"> (some filters applied)</small>}
                 </div>
               )}
             </>
@@ -510,85 +512,7 @@ const SearchView = (props: Props) => {
                           , try a new search or start with one of the sample queries:
                         </p>
                         <div className="h5 d-flex flex-row align-items-end justify-content-center flex-wrap">
-                          <button
-                            data-testid="sampleFilterLink"
-                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  tsQueryWeb: 'database',
-                                  filters: { kind: ['3'] },
-                                }),
-                              });
-                            }}
-                          >
-                            OLM operators for databases
-                          </button>
-                          <button
-                            data-testid="sampleFilterLink"
-                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: { kind: ['0'], org: ['bitnami'] },
-                                }),
-                              });
-                            }}
-                          >
-                            Helm Charts provided by Bitnami
-                          </button>
-                          <button
-                            data-testid="sampleFilterLink"
-                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  tsQueryWeb: 'etcd',
-                                  filters: {},
-                                }),
-                              });
-                            }}
-                          >
-                            Packages of any kind related to etcd
-                          </button>
-                          <button
-                            data-testid="sampleFilterLink"
-                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  tsQueryWeb: 'CVE',
-                                  filters: { kind: ['1'] },
-                                }),
-                              });
-                            }}
-                          >
-                            Falco rules for CVE
-                          </button>
-                          <button
-                            data-testid="sampleFilterLink"
-                            className="badge badge-pill badge-light border border-secondary text-secondary font-weight-normal mx-2 mt-3"
-                            onClick={() => {
-                              history.push({
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  tsQuery: ['monitoring'],
-                                  filters: { kind: ['3'] },
-                                }),
-                              });
-                            }}
-                          >
-                            OLM operators in the monitoring category
-                          </button>
+                          <SampleQueries className="badge-light border-secondary text-secondary" />
                         </div>
                       </>
                     ) : (

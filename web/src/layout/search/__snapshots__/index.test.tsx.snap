@@ -748,7 +748,13 @@ exports[`Search index creates snapshot 2`] = `
           <span
             class="pr-1"
           >
-            1 - 7 of 
+            1 - 7 
+            <span
+              class="ml-1"
+            >
+              of
+            </span>
+             
           </span>
           7
           <span

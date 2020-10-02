@@ -25,11 +25,11 @@ const UserContext = () => {
 
   const handleChange = (value: string | Organization): void => {
     if (isString(value)) {
-      dispatch(unselectOrg());
       authorizer.updateCtx();
+      dispatch(unselectOrg());
     } else {
-      dispatch(updateOrg(value.name));
       authorizer.updateCtx(value.name);
+      dispatch(updateOrg(value.name));
     }
     setOpenStatus(false);
   };

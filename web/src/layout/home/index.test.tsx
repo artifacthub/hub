@@ -8,6 +8,7 @@ import { ErrorKind, Stats } from '../../types';
 import HomeView from './index';
 jest.mock('../../api');
 jest.mock('./SearchTip', () => () => <div />);
+jest.mock('../common/SampleQueries', () => () => <div />);
 jest.mock('./RandomPackages', () => () => <div />);
 
 const getMockStats = (fixtureId: string): Stats => {

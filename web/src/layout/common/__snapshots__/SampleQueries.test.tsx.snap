@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SampleQueries creates snapshot 1`] = `
+<DocumentFragment>
+  <a
+    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    data-testid="sampleQuery"
+    href="/packages/search?page=1&ts_query_web=database&kind=3"
+  >
+    OLM operators for databases
+  </a>
+  <a
+    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    data-testid="sampleQuery"
+    href="/packages/search?page=1&kind=0&org=bitnami"
+  >
+    Helm Charts provided by Bitnami
+  </a>
+  <a
+    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    data-testid="sampleQuery"
+    href="/packages/search?page=1&ts_query_web=etcd"
+  >
+    Packages of any kind related to etcd
+  </a>
+  <a
+    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    data-testid="sampleQuery"
+    href="/packages/search?page=1&ts_query=monitoring&kind=3"
+  >
+    Falco rules for CVE
+  </a>
+  <a
+    class="badge badge-pill border font-weight-normal mx-2 mt-3 undefined"
+    data-testid="sampleQuery"
+    href="/packages/search?page=1&ts_query=monitoring&kind=3"
+  >
+    OLM operators in the monitoring category
+  </a>
+</DocumentFragment>
+`;

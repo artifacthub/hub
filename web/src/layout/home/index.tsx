@@ -6,9 +6,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { API } from '../../api';
 import { RepositoryKind, Stats } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
-import prepareQueryString from '../../utils/prepareQueryString';
 import ExternalLink from '../common/ExternalLink';
 import RepositoryIcon from '../common/RepositoryIcon';
+import SampleQueries from '../common/SampleQueries';
 import SearchBar from '../common/SearchBar';
 import UserInvitation from '../controlPanel/members/UserInvitation';
 import Counter from './Counter';
@@ -96,86 +96,7 @@ const HomeView = (props: Props) => {
           </div>
 
           <div className="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap">
-            <Link
-              data-testid="sampleFilter"
-              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-              to={{
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  tsQueryWeb: 'database',
-                  filters: {
-                    kind: ['3'],
-                  },
-                }),
-              }}
-            >
-              OLM operators for databases
-            </Link>
-            <Link
-              data-testid="sampleFilter"
-              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-              to={{
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  filters: {
-                    kind: ['0'],
-                    org: ['bitnami'],
-                  },
-                }),
-              }}
-            >
-              Helm Charts provided by Bitnami
-            </Link>
-            <Link
-              data-testid="sampleFilter"
-              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-              to={{
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  tsQueryWeb: 'etcd',
-                  filters: {},
-                }),
-              }}
-            >
-              Packages of any kind related to etcd
-            </Link>
-          </div>
-          <div className="d-none d-md-flex flex-row align-items-start justify-content-center flex-wrap">
-            <Link
-              data-testid="sampleFilter"
-              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-              to={{
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  tsQueryWeb: 'CVE',
-                  filters: {
-                    kind: ['1'],
-                  },
-                }),
-              }}
-            >
-              Falco rules for CVE
-            </Link>
-            <Link
-              data-testid="sampleFilter"
-              className="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-              to={{
-                pathname: '/packages/search',
-                search: prepareQueryString({
-                  pageNumber: 1,
-                  tsQuery: ['monitoring'],
-                  filters: {
-                    kind: ['3'],
-                  },
-                }),
-              }}
-            >
-              OLM operators in the monitoring category
-            </Link>
+            <SampleQueries lineBreakIn={3} className="badge-secondary border-light" />
           </div>
         </div>
 
