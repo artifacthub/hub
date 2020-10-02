@@ -131,7 +131,7 @@ exports[`ChartDetails creates snapshot 1`] = `
               class="modal-content content undefined"
             >
               <div
-                class="modal-header d-flex flex-row align-items-center header"
+                class="modal-header d-flex flex-row align-items-center header undefined"
               >
                 <div
                   class="h5 m-0"

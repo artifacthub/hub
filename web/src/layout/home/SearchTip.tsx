@@ -1,86 +1,17 @@
+import { isUndefined, sample } from 'lodash';
 import React, { useState } from 'react';
 import { FaRegLightbulb } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import { SearchTipItem } from '../../types';
+import { SEARH_TIPS } from '../../utils/data';
 import prepareQueryString from '../../utils/prepareQueryString';
 import styles from './SearchTip.module.css';
 
-const TIPS: JSX.Element[] = [
-  <>
-    Use <span className="font-weight-bold">multiple words</span> to refine your search. Example:{' '}
-    <Link
-      data-testid="sampleFilter"
-      className="font-weight-bold textLight p-0"
-      to={{
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: 'kafka operator',
-          filters: {},
-        }),
-      }}
-    >
-      <u>kafka operator</u>
-    </Link>
-  </>,
-  <>
-    Use <span className="font-weight-bold">-</span> to exclude words from your search. Example:{' '}
-    <Link
-      data-testid="sampleFilter"
-      className="font-weight-bold textLight p-0"
-      to={{
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: 'apache -solr -hadoop',
-          filters: {},
-        }),
-      }}
-    >
-      <u>apache -solr -hadoop</u>
-    </Link>
-  </>,
-  <>
-    Put a phrase inside <span className="font-weight-bold">double quotes</span> for an exact match. Example:{' '}
-    <Link
-      data-testid="sampleFilter"
-      className="font-weight-bold textLight p-0"
-      to={{
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: `"monitoring system"`,
-          filters: {},
-        }),
-      }}
-    >
-      <u>"monitoring system"</u>
-    </Link>
-  </>,
-  <>
-    Use <span className="font-weight-bold">or</span> to combine multiple searches. Example:{' '}
-    <Link
-      data-testid="sampleFilter"
-      className="font-weight-bold textLight p-0"
-      to={{
-        pathname: '/packages/search',
-        search: prepareQueryString({
-          pageNumber: 1,
-          tsQueryWeb: 'postgresql or mysql',
-          filters: {},
-        }),
-      }}
-    >
-      <u>postgresql or mysql</u>
-    </Link>
-  </>,
-];
-
 const SearchTip = () => {
-  const getTip = () => {
-    return TIPS[Math.floor(Math.random() * TIPS.length)];
-  };
-  const [activeTip] = useState(getTip());
+  const [activeTip] = useState<SearchTipItem | undefined>(sample(SEARH_TIPS));
+
+  if (isUndefined(activeTip)) return null;
 
   return (
     <div className="d-none d-md-inline w-50 mx-auto text-center position-relative">
@@ -90,7 +21,21 @@ const SearchTip = () => {
         <FaRegLightbulb className="mr-1" />
         <div>
           <span className="font-weight-bold mr-1">Tip:</span>
-          {activeTip}
+          {activeTip.content} Example:{' '}
+          <Link
+            data-testid="sampleFilter"
+            className="font-weight-bold textLight p-0"
+            to={{
+              pathname: '/packages/search',
+              search: prepareQueryString({
+                pageNumber: 1,
+                tsQueryWeb: activeTip.example,
+                filters: {},
+              }),
+            }}
+          >
+            <u>{activeTip.example}</u>
+          </Link>
         </div>
       </div>
     </div>

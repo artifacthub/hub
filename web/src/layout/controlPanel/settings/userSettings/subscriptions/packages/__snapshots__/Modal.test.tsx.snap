@@ -18,7 +18,7 @@ exports[`SubscriptionModal renders correctly 1`] = `
           class="modal-content content undefined"
         >
           <div
-            class="modal-header d-flex flex-row align-items-center header"
+            class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
               class="h3 m-2 title"

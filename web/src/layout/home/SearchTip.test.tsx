@@ -2,13 +2,19 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { SEARH_TIPS } from '../../utils/data';
 import SearchTip from './SearchTip';
 
-describe('SearchTip', () => {
-  beforeEach(() => {
-    jest.spyOn(global.Math, 'random').mockReturnValue(0);
-  });
+const mockTip = SEARH_TIPS[0];
 
+jest.mock('lodash', () => ({
+  ...(jest.requireActual('lodash') as {}),
+  sample: () => {
+    return mockTip;
+  },
+}));
+
+describe('SearchTip', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });

@@ -146,16 +146,24 @@ exports[`DefaultDetails creates snapshot 1`] = `
       data-testid="keywords"
     >
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        key1
+        <div
+          class="text-truncate"
+        >
+          key1
+        </div>
       </button>
       <button
-        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 badge"
+        class="btn btn-sm d-inline badge font-weight-normal mr-2 mb-2 mb-sm-0 mw-100 badge"
         data-testid="keywordBtn"
       >
-        key2
+        <div
+          class="text-truncate"
+        >
+          key2
+        </div>
       </button>
     </span>
   </div>

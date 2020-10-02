@@ -28,6 +28,10 @@
   cursor: auto;
 }
 
+.closeBtn {
+  padding: 1rem !important;
+}
+
 .tooltip {
   top: 40px;
   right: 0;

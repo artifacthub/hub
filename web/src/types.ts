@@ -421,3 +421,8 @@ export interface AuthorizationPolicy {
     [key: string]: any;
   };
 }
+
+export interface SearchTipItem {
+  content: JSX.Element | string;
+  example: string;
+}
