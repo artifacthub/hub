@@ -1,8 +1,8 @@
 import React from 'react';
 import { MdVerifiedUser } from 'react-icons/md';
 
+import ElementWithTooltip from './ElementWithTooltip';
 import Label from './Label';
-import LabelWithTooltip from './LabelWithTooltip';
 
 interface Props {
   verifiedPublisher?: null | boolean;
@@ -10,11 +10,11 @@ interface Props {
 }
 
 const VerifiedPublisherBadge = (props: Props) => (
-  <LabelWithTooltip
+  <ElementWithTooltip
     active={props.verifiedPublisher}
     className={props.className}
-    label={<Label text="Verified Publisher" icon={<MdVerifiedUser />} />}
-    tooltipMessage="The publisher owns this repository"
+    element={<Label text="Verified Publisher" icon={<MdVerifiedUser />} />}
+    tooltipMessage="The publisher owns the repository"
     visibleTooltip
   />
 );

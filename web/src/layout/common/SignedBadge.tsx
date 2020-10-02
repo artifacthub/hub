@@ -3,8 +3,8 @@ import React from 'react';
 import { FaAward } from 'react-icons/fa';
 
 import { RepositoryKind } from '../../types';
+import ElementWithTooltip from './ElementWithTooltip';
 import Label from './Label';
-import LabelWithTooltip from './LabelWithTooltip';
 
 interface Props {
   signed: null | boolean;
@@ -13,10 +13,10 @@ interface Props {
 }
 
 const SignedBadge = (props: Props) => (
-  <LabelWithTooltip
+  <ElementWithTooltip
     active={props.signed}
     className={props.className}
-    label={<Label text="Signed" icon={<FaAward />} labelStyle="success" />}
+    element={<Label text="Signed" icon={<FaAward />} labelStyle="success" />}
     tooltipMessage="This chart has a provenance file"
     visibleTooltip={!isUndefined(props.repositoryKind) && props.repositoryKind === RepositoryKind.Helm}
   />

@@ -13,7 +13,7 @@ describe('OfficialBadge', () => {
     const { getByTestId, getByText, getByRole } = render(<OfficialBadge official />);
     expect(getByText('Official')).toBeInTheDocument();
 
-    const badge = getByTestId('labelWithTooltip');
+    const badge = getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 

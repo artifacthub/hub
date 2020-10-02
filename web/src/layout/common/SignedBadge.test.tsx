@@ -13,7 +13,7 @@ describe('SignedBadge', () => {
     const { getByTestId, getByText, getByRole } = render(<SignedBadge repositoryKind={0} signed />);
     expect(getByText('Signed')).toBeInTheDocument();
 
-    const badge = getByTestId('labelWithTooltip');
+    const badge = getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 
@@ -27,7 +27,7 @@ describe('SignedBadge', () => {
     const { getByTestId, getByText, queryByText, queryByRole } = render(<SignedBadge repositoryKind={1} signed />);
     expect(getByText('Signed')).toBeInTheDocument();
 
-    const badge = getByTestId('labelWithTooltip');
+    const badge = getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 
