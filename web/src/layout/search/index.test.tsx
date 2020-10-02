@@ -7,6 +7,7 @@ import { API } from '../../api';
 import { ErrorKind, SearchResults } from '../../types';
 import prepareQuerystring from '../../utils/prepareQueryString';
 import SearchView from './index';
+jest.mock('../common/SampleQueries', () => () => <div />);
 jest.mock('../../api');
 
 const getMockSearchResults = (fixtureId: string): SearchResults => {
@@ -92,6 +93,23 @@ describe('Search index', () => {
       await waitFor(() => {});
     });
 
+    it('renders correct legend with some filters applied', async () => {
+      const mockSearchResults = getMockSearchResults('4');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByTestId, getByText } = render(
+        <Router>
+          <SearchView {...defaultProps} filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      const results = await waitFor(() => getByTestId('resultsText'));
+
+      expect(results).toBeInTheDocument();
+      expect(getByText(/(some filters applied)/i)).toBeInTheDocument();
+      await waitFor(() => {});
+    });
+
     it('renders error message when searchPackages call fails', async () => {
       mocked(API).searchPackages.mockRejectedValue({ kind: ErrorKind.Other });
 
@@ -132,7 +150,7 @@ describe('Search index', () => {
       const mockSearchResults = getMockSearchResults('6');
       mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
 
-      const { getByTestId, getAllByTestId } = render(
+      const { getByTestId } = render(
         <Router>
           <SearchView {...defaultProps} />
         </Router>
@@ -145,7 +163,6 @@ describe('Search index', () => {
         `We're sorry! We can't seem to find any packages that match your search for "test"`
       );
       expect(getByTestId('resetLink')).toBeInTheDocument();
-      expect(getAllByTestId('sampleFilterLink')).toHaveLength(5);
 
       await waitFor(() => {});
     });

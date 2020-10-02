@@ -123,45 +123,7 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="d-none d-md-flex flex-row align-items-end justify-content-center flex-wrap"
         >
-          <a
-            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-            data-testid="sampleFilter"
-            href="/packages/search?page=1&ts_query_web=database&kind=3"
-          >
-            OLM operators for databases
-          </a>
-          <a
-            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-            data-testid="sampleFilter"
-            href="/packages/search?page=1&kind=0&org=bitnami"
-          >
-            Helm Charts provided by Bitnami
-          </a>
-          <a
-            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-            data-testid="sampleFilter"
-            href="/packages/search?page=1&ts_query_web=etcd"
-          >
-            Packages of any kind related to etcd
-          </a>
-        </div>
-        <div
-          class="d-none d-md-flex flex-row align-items-start justify-content-center flex-wrap"
-        >
-          <a
-            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-            data-testid="sampleFilter"
-            href="/packages/search?page=1&ts_query_web=CVE&kind=1"
-          >
-            Falco rules for CVE
-          </a>
-          <a
-            class="badge badge-pill badge-secondary border border-light font-weight-normal mx-2 mt-3"
-            data-testid="sampleFilter"
-            href="/packages/search?page=1&ts_query=monitoring&kind=3"
-          >
-            OLM operators in the monitoring category
-          </a>
+          <div />
         </div>
       </div>
       <div

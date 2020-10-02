@@ -97,4 +97,4 @@ const SearchTip = () => {
   );
 };
 
-export default SearchTip;
+export default React.memo(SearchTip);
