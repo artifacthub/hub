@@ -24,7 +24,7 @@ spec:
               {{- toYaml .Values.tracker.cronjob.resources | nindent 14 }}
             env:
               - name: PGHOST
-                value: {{ default (printf "%s-postgresql.%s" $fullName .Release.Namespace) .Values.db.host }}
+                value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
               - name: PGPORT
                 value: "{{ .Values.db.port }}"
             command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
