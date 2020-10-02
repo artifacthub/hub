@@ -2,17 +2,18 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 
-import styles from './LabelWithTooltip.module.css';
+import styles from './ElementWithTooltip.module.css';
 
 interface Props {
   active?: boolean | null;
-  label: JSX.Element;
+  element: JSX.Element;
   visibleTooltip: boolean;
   tooltipMessage: string;
   className?: string;
+  tooltipClassName?: string;
 }
 
-const LabelWithTooltip = (props: Props) => {
+const ElementWithTooltip = (props: Props) => {
   const [visibleTooltipStatus, setVisibleTooltipStatus] = useState<boolean>(false);
   const [onLabelHover, setOnLabelHover] = useState<boolean>(false);
 
@@ -21,7 +22,7 @@ const LabelWithTooltip = (props: Props) => {
     if (!visibleTooltipStatus && onLabelHover) {
       timeout = setTimeout(() => {
         setVisibleTooltipStatus(true);
-      }, 200);
+      }, 500);
     }
     if (visibleTooltipStatus && !onLabelHover) {
       timeout = setTimeout(() => {
@@ -40,7 +41,7 @@ const LabelWithTooltip = (props: Props) => {
   return (
     <div className={props.className}>
       <div
-        data-testid="labelWithTooltip"
+        data-testid="elementWithTooltip"
         onMouseEnter={(e) => {
           e.preventDefault();
           setOnLabelHover(true);
@@ -49,12 +50,12 @@ const LabelWithTooltip = (props: Props) => {
           setOnLabelHover(false);
         }}
       >
-        {props.label}
+        {props.element}
       </div>
 
       {props.visibleTooltip && visibleTooltipStatus && (
         <div className="position-absolute">
-          <div className={`tooltip bs-tooltip-bottom ${styles.tooltip}`} role="tooltip">
+          <div className={`tooltip bs-tooltip-bottom ${styles.tooltip} ${props.tooltipClassName}`} role="tooltip">
             <div className={`arrow ${styles.tooltipArrow}`} />
             <div className={`tooltip-inner ${styles.tooltipContent}`}>{props.tooltipMessage}</div>
           </div>
@@ -64,4 +65,4 @@ const LabelWithTooltip = (props: Props) => {
   );
 };
 
-export default LabelWithTooltip;
+export default ElementWithTooltip;

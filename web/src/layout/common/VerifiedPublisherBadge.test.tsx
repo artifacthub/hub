@@ -13,7 +13,7 @@ describe('VerifiedPublisherBadge', () => {
     const { getByTestId, getByText, getByRole } = render(<VerifiedPublisherBadge verifiedPublisher />);
     expect(getByText('Verified Publisher')).toBeInTheDocument();
 
-    const badge = getByTestId('labelWithTooltip');
+    const badge = getByTestId('elementWithTooltip');
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 

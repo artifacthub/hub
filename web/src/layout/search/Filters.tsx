@@ -8,10 +8,12 @@ import React from 'react';
 import { FaBuilding, FaUser } from 'react-icons/fa';
 import { GoLaw, GoPackage } from 'react-icons/go';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { MdInfoOutline } from 'react-icons/md';
 
 import { FacetOption, Facets, Option } from '../../types';
 import { OPERATOR_CAPABILITIES } from '../../utils/data';
 import CheckBox from '../common/Checkbox';
+import ElementWithTooltip from '../common/ElementWithTooltip';
 import InputTypeahead from '../common/InputTypeahead';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Filters.module.css';
@@ -237,23 +239,45 @@ const Filters = (props: Props) => {
         </div>
       )}
 
-      <CheckBox
-        name="official"
-        value="official"
-        className={styles.checkbox}
-        label="Official repositories"
-        checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
-        onChange={props.onOfficialChange}
-      />
+      <div className="d-flex flex-row align-items-baseline">
+        <CheckBox
+          name="official"
+          value="official"
+          className={styles.checkbox}
+          label="Official repositories"
+          checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
+          onChange={props.onOfficialChange}
+        />
 
-      <CheckBox
-        name="verifiedPublisher"
-        value="verifiedPublisher"
-        className={styles.checkbox}
-        label="Verified publishers"
-        checked={!isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher}
-        onChange={props.onVerifiedPublisherChange}
-      />
+        <ElementWithTooltip
+          className={styles.tooltipIcon}
+          tooltipClassName={styles.tooltipMessage}
+          element={<MdInfoOutline />}
+          tooltipMessage="The publisher owns the software deployed by the packages in this repository"
+          visibleTooltip
+          active
+        />
+      </div>
+
+      <div className="d-flex flex-row align-items-baseline">
+        <CheckBox
+          name="verifiedPublisher"
+          value="verifiedPublisher"
+          className={styles.checkbox}
+          label="Verified publishers"
+          checked={!isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher}
+          onChange={props.onVerifiedPublisherChange}
+        />
+
+        <ElementWithTooltip
+          className={styles.tooltipIcon}
+          tooltipClassName={styles.tooltipMessage}
+          element={<MdInfoOutline />}
+          tooltipMessage="The publisher owns the repository"
+          visibleTooltip
+          active
+        />
+      </div>
 
       <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />
       {getKindFacets()}

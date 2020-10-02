@@ -166,58 +166,108 @@ exports[`Search index creates snapshot 2`] = `
                     class="filters"
                   >
                     <div
-                      class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                      class="d-flex flex-row align-items-baseline"
                     >
-                      <input
-                        class="custom-control-input input"
-                        data-testid="checkbox"
-                        id="official-official"
-                        name="official"
-                        type="checkbox"
-                        value="official"
-                      />
-                      <label
-                        class="custom-control-label w-100 label"
-                        data-testid="checkboxLabel"
-                        for="official-official"
+                      <div
+                        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                      >
+                        <input
+                          class="custom-control-input input"
+                          data-testid="checkbox"
+                          id="official-official"
+                          name="official"
+                          type="checkbox"
+                          value="official"
+                        />
+                        <label
+                          class="custom-control-label w-100 label"
+                          data-testid="checkboxLabel"
+                          for="official-official"
+                        >
+                          <div
+                            class="d-flex align-items-baseline mw-100"
+                          >
+                            <span
+                              class="d-inline-block text-truncate"
+                            >
+                              Official repositories
+                            </span>
+                          </div>
+                        </label>
+                      </div>
+                      <div
+                        class="tooltipIcon"
                       >
                         <div
-                          class="d-flex align-items-baseline mw-100"
+                          data-testid="elementWithTooltip"
                         >
-                          <span
-                            class="d-inline-block text-truncate"
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Official repositories
-                          </span>
+                            <path
+                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                            />
+                          </svg>
                         </div>
-                      </label>
+                      </div>
                     </div>
                     <div
-                      class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                      class="d-flex flex-row align-items-baseline"
                     >
-                      <input
-                        class="custom-control-input input"
-                        data-testid="checkbox"
-                        id="verifiedPublisher-verifiedPublisher"
-                        name="verifiedPublisher"
-                        type="checkbox"
-                        value="verifiedPublisher"
-                      />
-                      <label
-                        class="custom-control-label w-100 label"
-                        data-testid="checkboxLabel"
-                        for="verifiedPublisher-verifiedPublisher"
+                      <div
+                        class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+                      >
+                        <input
+                          class="custom-control-input input"
+                          data-testid="checkbox"
+                          id="verifiedPublisher-verifiedPublisher"
+                          name="verifiedPublisher"
+                          type="checkbox"
+                          value="verifiedPublisher"
+                        />
+                        <label
+                          class="custom-control-label w-100 label"
+                          data-testid="checkboxLabel"
+                          for="verifiedPublisher-verifiedPublisher"
+                        >
+                          <div
+                            class="d-flex align-items-baseline mw-100"
+                          >
+                            <span
+                              class="d-inline-block text-truncate"
+                            >
+                              Verified publishers
+                            </span>
+                          </div>
+                        </label>
+                      </div>
+                      <div
+                        class="tooltipIcon"
                       >
                         <div
-                          class="d-flex align-items-baseline mw-100"
+                          data-testid="elementWithTooltip"
                         >
-                          <span
-                            class="d-inline-block text-truncate"
+                          <svg
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            Verified publishers
-                          </span>
+                            <path
+                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                            />
+                          </svg>
                         </div>
-                      </label>
+                      </div>
                     </div>
                     <div
                       class="mt-3 mt-sm-4 pt-1"
@@ -837,58 +887,108 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+              class="d-flex flex-row align-items-baseline"
             >
-              <input
-                class="custom-control-input input"
-                data-testid="checkbox"
-                id="official-official"
-                name="official"
-                type="checkbox"
-                value="official"
-              />
-              <label
-                class="custom-control-label w-100 label"
-                data-testid="checkboxLabel"
-                for="official-official"
+              <div
+                class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+              >
+                <input
+                  class="custom-control-input input"
+                  data-testid="checkbox"
+                  id="official-official"
+                  name="official"
+                  type="checkbox"
+                  value="official"
+                />
+                <label
+                  class="custom-control-label w-100 label"
+                  data-testid="checkboxLabel"
+                  for="official-official"
+                >
+                  <div
+                    class="d-flex align-items-baseline mw-100"
+                  >
+                    <span
+                      class="d-inline-block text-truncate"
+                    >
+                      Official repositories
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="tooltipIcon"
               >
                 <div
-                  class="d-flex align-items-baseline mw-100"
+                  data-testid="elementWithTooltip"
                 >
-                  <span
-                    class="d-inline-block text-truncate"
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Official repositories
-                  </span>
+                    <path
+                      d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                    />
+                  </svg>
                 </div>
-              </label>
+              </div>
             </div>
             <div
-              class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+              class="d-flex flex-row align-items-baseline"
             >
-              <input
-                class="custom-control-input input"
-                data-testid="checkbox"
-                id="verifiedPublisher-verifiedPublisher"
-                name="verifiedPublisher"
-                type="checkbox"
-                value="verifiedPublisher"
-              />
-              <label
-                class="custom-control-label w-100 label"
-                data-testid="checkboxLabel"
-                for="verifiedPublisher-verifiedPublisher"
+              <div
+                class="custom-control custom-checkbox mr-sm-2 mb-2 checkbox"
+              >
+                <input
+                  class="custom-control-input input"
+                  data-testid="checkbox"
+                  id="verifiedPublisher-verifiedPublisher"
+                  name="verifiedPublisher"
+                  type="checkbox"
+                  value="verifiedPublisher"
+                />
+                <label
+                  class="custom-control-label w-100 label"
+                  data-testid="checkboxLabel"
+                  for="verifiedPublisher-verifiedPublisher"
+                >
+                  <div
+                    class="d-flex align-items-baseline mw-100"
+                  >
+                    <span
+                      class="d-inline-block text-truncate"
+                    >
+                      Verified publishers
+                    </span>
+                  </div>
+                </label>
+              </div>
+              <div
+                class="tooltipIcon"
               >
                 <div
-                  class="d-flex align-items-baseline mw-100"
+                  data-testid="elementWithTooltip"
                 >
-                  <span
-                    class="d-inline-block text-truncate"
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Verified publishers
-                  </span>
+                    <path
+                      d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                    />
+                  </svg>
                 </div>
-              </label>
+              </div>
             </div>
             <div
               class="mt-3 mt-sm-4 pt-1"
