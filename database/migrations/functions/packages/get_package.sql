@@ -33,6 +33,8 @@ begin
         'readme', s.readme,
         'install', s.install,
         'links', s.links,
+        'crds', s.crds,
+        'crds_examples', s.crds_examples,
         'capabilities', s.capabilities,
         'data', s.data,
         'version', s.version,

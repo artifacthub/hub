@@ -6,13 +6,13 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
-- **artifacthub.io/operator** *(boolean string, see example below)*
+- **artifacthub.io/crds** *(yaml string, see example below)*
 
-Use this annotation to indicate that your chart represents an operator. Artifact Hub at the moment also considers your chart to represent an operator if the word *operator* appears in the chart name.
+This annotation can be used to list the operator's CRDs. They will be visible in the package's detail view as cards.
 
-- **artifacthub.io/operatorCapabilities** *(string)*
+- **artifacthub.io/crdsExamples** *(yaml string, see example below)*
 
-Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights or Auto Pilot. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
+Use this annotation to provide a list of example CRs for the operator's CRDs. Each of the examples can be opened from the corresponding CRD card in the package's detail view.
 
 - **artifacthub.io/links** *(yaml string, see example below)*
 
@@ -22,14 +22,33 @@ This annotation allows including named links, which will be rendered nicely in A
 
 This annotation can be used if you want to display a different name for a given user in Artifact Hub than the one used in the Chart.yaml file. If the email used matches, the name used in the annotations entry will be displayed in Artifact Hub. It's also possible to include maintainers that should only be listed in Artifact Hub by adding additional entries.
 
+- **artifacthub.io/operator** *(boolean string, see example below)*
+
+Use this annotation to indicate that your chart represents an operator. Artifact Hub at the moment also considers your chart to represent an operator if the word *operator* appears in the chart name.
+
+- **artifacthub.io/operatorCapabilities** *(string)*
+
+Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights or Auto Pilot. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
+
 ## Example
 
 Artifact Hub annotations in `Chart.yaml`:
 
 ```yaml
 annotations:
-  artifacthub.io/operator: "true"
-  artifacthub.io/operatorCapabilities: Basic Install
+  artifacthub.io/crds: |
+    - kind: MyKind
+      version: v1
+      name: mykind
+      displayName: My Kind
+      description: Some nice description
+  artifacthub.io/crdsExamples: |
+    - apiVersion: v1
+      kind: MyKind
+      metadata:
+        name: mykind
+      spec:
+        replicas: 1
   artifacthub.io/links: |
     - name: link1
       url: https://link1.url
@@ -40,4 +59,6 @@ annotations:
       email: user1@email.com
     - name: user2
       email: user2@email.com
+  artifacthub.io/operator: "true"
+  artifacthub.io/operatorCapabilities: Basic Install
 ```

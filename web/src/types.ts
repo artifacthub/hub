@@ -65,6 +65,8 @@ export interface Package {
   provider?: string | null;
   containerImage?: string | null;
   capabilities?: string | null;
+  crds?: { [key: string]: any } | null;
+  crdsExamples?: CustomResourcesDefinitionExample[] | null;
 }
 
 export interface Version {

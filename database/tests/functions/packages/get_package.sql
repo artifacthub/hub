@@ -81,6 +81,8 @@ insert into snapshot (
     readme,
     install,
     links,
+    crds,
+    crds_examples,
     capabilities,
     data,
     deprecated,
@@ -101,6 +103,8 @@ insert into snapshot (
     'readme-version-1.0.0',
     'install-version-1.0.0',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
+    '[{"key": "value"}]',
+    '[{"key": "value"}]',
     'seamless upgrades',
     '{"key": "value"}',
     true,
@@ -214,6 +218,12 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "crds": [{
+            "key": "value"
+        }],
+        "crds_examples": [{
+            "key": "value"
+        }],
         "capabilities": "seamless upgrades",
         "data": {
             "key": "value"
@@ -300,6 +310,12 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "crds": [{
+            "key": "value"
+        }],
+        "crds_examples": [{
+            "key": "value"
+        }],
         "capabilities": "seamless upgrades",
         "data": {
             "key": "value"
@@ -387,6 +403,8 @@ select is(
                 "url": "https://link2"
             }
         ],
+        "crds": null,
+        "crds_examples": null,
         "capabilities": "basic install",
         "data": {
             "key": "value"
@@ -456,6 +474,8 @@ select is(
         "install": "install-version-1.0.0",
         "links": null,
         "digest": null,
+        "crds": null,
+        "crds_examples": null,
         "capabilities": null,
         "data": {
             "key": "value"

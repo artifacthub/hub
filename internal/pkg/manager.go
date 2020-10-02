@@ -166,7 +166,10 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	}
 
 	// Register package in database
-	pkgJSON, _ := json.Marshal(pkg)
+	pkgJSON, err := json.Marshal(pkg)
+	if err != nil {
+		return err
+	}
 	_, err = m.db.Exec(ctx, registerPkgDBQ, pkgJSON)
 	return err
 }

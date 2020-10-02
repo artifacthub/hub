@@ -47,6 +47,12 @@ select register_package('
             "url": "https://link2"
         }
     ],
+    "crds": [{
+        "key": "value"
+    }],
+    "crds_examples": [{
+        "key": "value"
+    }],
     "data": {
         "key": "value"
     },
@@ -127,6 +133,8 @@ select results_eq(
             s.readme,
             s.install,
             s.links,
+            s.crds,
+            s.crds_examples,
             s.capabilities,
             s.data,
             s.deprecated,
@@ -153,6 +161,8 @@ select results_eq(
             'readme-version-1.0.0',
             'install-version-1.0.0',
             '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]'::jsonb,
+            '[{"key": "value"}]'::jsonb,
+            '[{"key": "value"}]'::jsonb,
             'basic install',
             '{"key": "value"}'::jsonb,
             false,

@@ -45,7 +45,6 @@ type Package struct {
 	LogoURL           string                 `json:"logo_url"`
 	LogoImageID       string                 `json:"logo_image_id"`
 	IsOperator        bool                   `json:"is_operator"`
-	Capabilities      string                 `json:"capabilities"`
 	Channels          []*Channel             `json:"channels"`
 	DefaultChannel    string                 `json:"default_channel"`
 	DisplayName       string                 `json:"display_name"`
@@ -55,6 +54,9 @@ type Package struct {
 	Readme            string                 `json:"readme"`
 	Install           string                 `json:"install"`
 	Links             []*Link                `json:"links"`
+	Capabilities      string                 `json:"capabilities"`
+	CRDs              []interface{}          `json:"crds"`
+	CRDsExamples      []interface{}          `json:"crds_examples"`
 	Data              map[string]interface{} `json:"data"`
 	Version           string                 `json:"version"`
 	AvailableVersions []*Version             `json:"available_versions"`

@@ -48,6 +48,7 @@ require (
 	gopkg.in/ini.v1 v1.57.0 // indirect
 	gopkg.in/src-d/go-license-detector.v3 v3.1.0
 	gopkg.in/yaml.v2 v2.3.0
+	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 	helm.sh/helm/v3 v3.2.4
 )
 
