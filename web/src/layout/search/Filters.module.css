@@ -44,4 +44,16 @@
   .facet:first-child {
     margin-top: 0 !important;
   }
+
+  .tooltipIcon {
+    left: 5px;
+  }
+
+  .tooltipMessage {
+    left: -50px;
+  }
+
+  .arrowTooltipMessage {
+    left: 50px;
+  }
 }

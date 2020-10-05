@@ -6,12 +6,12 @@
 }
 
 .tipIcon {
-  right: -5px;
+  right: -12px;
   top: -18px;
 }
 
 .bigTipIcon {
-  right: -32px;
+  right: -40px;
 }
 
 .closeModalBtn {
@@ -22,5 +22,9 @@
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;
+  }
+
+  .list {
+    padding-inline-start: 20px;
   }
 }
