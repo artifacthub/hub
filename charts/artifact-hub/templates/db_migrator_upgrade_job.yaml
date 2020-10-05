@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrator-upgrade
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      restartPolicy: Never
+      initContainers:
+      - name: check-db-ready
+        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        env:
+          - name: PGHOST
+            value: {{ default (printf "%s-postgresql.%s" .Release.Name .Release.Namespace) .Values.db.host }}
+          - name: PGPORT
+            value: "{{ .Values.db.port }}"
+        command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+      containers:
+      - name: db-migrator
+        image: {{ .Values.dbMigrator.job.image.repository }}:{{ .Values.imageTag }}
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        env:
+          - name: TERN_CONF
+            value: /home/db-migrator/.cfg/tern.conf
+        volumeMounts:
+          - name: db-migrator-config
+            mountPath: "/home/db-migrator/.cfg"
+            readOnly: true
+        command: ["./migrate.sh"]
+      volumes:
+      - name: db-migrator-config
+        secret:
+          secretName: db-migrator-config

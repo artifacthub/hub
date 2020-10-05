@@ -1,4 +1,3 @@
-{{- $fullName := include "chart.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,6 +25,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      {{- if .Release.IsInstall }}
+      serviceAccountName: hub
+      {{- end }}
       initContainers:
       - name: check-db-ready
         image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
@@ -36,6 +38,12 @@ spec:
           - name: PGPORT
             value: "{{ .Values.db.port }}"
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
+      {{- if .Release.IsInstall }}
+      - name: check-db-migrator-run
+        image: {{ printf "bitnami/kubectl:%s.%s" .Capabilities.KubeVersion.Major .Capabilities.KubeVersion.Minor }}
+        imagePullPolicy: IfNotPresent
+        command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/db-migrator-install', '--timeout=60s']
+      {{- end }}
       containers:
         - name: hub
           image: {{ .Values.hub.deploy.image.repository }}:{{ .Values.imageTag }}
