@@ -86,7 +86,7 @@ const QUERIES: SampleQuery[] = [
     filters: {
       pageNumber: 1,
       filters: {
-        capacilities: ['auto pilot'],
+        capabilities: ['auto pilot'],
       },
     },
   },
