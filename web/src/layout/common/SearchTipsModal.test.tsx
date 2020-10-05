@@ -30,7 +30,7 @@ describe('SearchTipsModal', () => {
       const modal = getByRole('dialog');
       expect(modal).not.toHaveClass('d-block');
 
-      const btn = getByTestId('openModalBtn');
+      const btn = getByTestId('openSearchTipsBtn');
       fireEvent.click(btn);
 
       expect(modal).toHaveClass('d-block');
@@ -46,7 +46,7 @@ describe('SearchTipsModal', () => {
           </Router>
         );
 
-        const btn = getByTestId('openModalBtn');
+        const btn = getByTestId('openSearchTipsBtn');
         fireEvent.click(btn);
 
         expect(getByRole('dialog')).toHaveClass('d-block');
@@ -65,7 +65,7 @@ describe('SearchTipsModal', () => {
       const modal = getByRole('dialog');
       expect(modal).not.toHaveClass('d-block');
 
-      const btn = getByTestId('openModalBtn');
+      const btn = getByTestId('openSearchTipsBtn');
       fireEvent.click(btn);
 
       expect(modal).toHaveClass('d-block');
