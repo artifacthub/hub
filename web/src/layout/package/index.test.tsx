@@ -284,4 +284,23 @@ describe('Package index', () => {
       await waitFor(() => {});
     });
   });
+
+  describe('Helm package', () => {
+    it('renders CRDs when are defined', async () => {
+      const mockPackage = getMockPackage('10');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      const { getByText, getByTestId } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => getByTestId('mainPackage'));
+
+      expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
+      expect(getByTestId('resourceDefinition')).toBeInTheDocument();
+      await waitFor(() => {});
+    });
+  });
 });

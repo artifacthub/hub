@@ -244,9 +244,30 @@ func TestWorker(t *testing.T) {
 					},
 				},
 				Capabilities: "Basic Install",
-				Version:      "1.0.0",
-				AppVersion:   "1.0.0",
-				ContentURL:   "http://tests/pkg1-1.0.0.tgz",
+				CRDs: []interface{}{
+					map[string]interface{}{
+						"kind":        "MyKind",
+						"version":     "v1",
+						"name":        "mykind",
+						"displayName": "My Kind",
+						"description": "Some nice description",
+					},
+				},
+				CRDsExamples: []interface{}{
+					map[string]interface{}{
+						"apiVersion": "v1",
+						"kind":       "MyKind",
+						"metadata": map[string]interface{}{
+							"name": "mykind",
+						},
+						"spec": map[string]interface{}{
+							"replicas": 1,
+						},
+					},
+				},
+				Version:    "1.0.0",
+				AppVersion: "1.0.0",
+				ContentURL: "http://tests/pkg1-1.0.0.tgz",
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "me-updated",

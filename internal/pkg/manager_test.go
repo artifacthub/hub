@@ -65,6 +65,16 @@ func TestGet(t *testing.T) {
 					URL:  "https://link2",
 				},
 			},
+			CRDs: []interface{}{
+				map[string]interface{}{
+					"key": "value",
+				},
+			},
+			CRDsExamples: []interface{}{
+				map[string]interface{}{
+					"key": "value",
+				},
+			},
 			Data: map[string]interface{}{
 				"key": "value",
 			},
@@ -143,6 +153,12 @@ func TestGet(t *testing.T) {
 					"url": "https://link2"
 				}
 			],
+			"crds": [{
+				"key": "value"
+			}],
+			"crds_examples": [{
+				"key": "value"
+			}],
 			"data": {
 				"key": "value"
 			},

@@ -257,6 +257,34 @@ const PackageView = (props: Props) => {
     return resources;
   };
 
+  const getHelmCRDs = (): CustomResourcesDefinition[] | undefined => {
+    let resources: CustomResourcesDefinition[] | undefined;
+    if (detail && detail.crds) {
+      let examples: CustomResourcesDefinitionExample[] = detail?.crdsExamples || [];
+      resources = detail.crds.map((resourceDefinition: CustomResourcesDefinition) => {
+        return {
+          ...resourceDefinition,
+          example: examples.find((info: any) => info.kind === resourceDefinition.kind),
+        };
+      });
+    }
+    return resources;
+  };
+
+  const getCRDsCards = (resources: CustomResourcesDefinition[] | undefined): JSX.Element | null => {
+    if (!isUndefined(resources) && resources.length > 0) {
+      return (
+        <div className={`mb-5 ${styles.codeWrapper}`}>
+          <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Custom Resource Definitions" />
+
+          <CustomResourceDefinition resources={resources} />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
+
   const getBadges = (withRepoInfo: boolean, extraStyle?: string): JSX.Element => (
     <>
       {withRepoInfo && (
@@ -556,23 +584,11 @@ const PackageView = (props: Props) => {
                                 </>
                               );
 
-                            case RepositoryKind.OLM:
-                              const resources = getOLMResources();
-                              if (!isUndefined(resources) && resources.length > 0) {
-                                return (
-                                  <div className={`mb-5 ${styles.codeWrapper}`}>
-                                    <AnchorHeader
-                                      level={2}
-                                      scrollIntoView={scrollIntoView}
-                                      title="Custom Resource Definitions"
-                                    />
+                            case RepositoryKind.Helm:
+                              return getCRDsCards(getHelmCRDs());
 
-                                    <CustomResourceDefinition resources={resources} />
-                                  </div>
-                                );
-                              } else {
-                                return null;
-                              }
+                            case RepositoryKind.OLM:
+                              return getCRDsCards(getOLMResources());
 
                             default:
                               return null;

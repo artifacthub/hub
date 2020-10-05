@@ -21,7 +21,7 @@ const CustomResourceDefinition = (props: Props) => {
     const getYAMLExample = (): string | undefined => {
       let yamlExample: string | undefined;
       if (!isNull(selectedCustomResourceDef) && !isUndefined(selectedCustomResourceDef.example)) {
-        yamlExample = YAML.stringify(selectedCustomResourceDef.example);
+        yamlExample = YAML.stringify(selectedCustomResourceDef.example, { sortMapEntries: true });
       }
       return yamlExample;
     };

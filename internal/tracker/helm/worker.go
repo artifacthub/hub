@@ -20,16 +20,18 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
 	"golang.org/x/time/rate"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 )
 
 const (
+	crdsAnnotation                 = "artifacthub.io/crds"
+	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
+	maintainersAnnotation          = "artifacthub.io/maintainers"
+	linksAnnotation                = "artifacthub.io/links"
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
-	linksAnnotation                = "artifacthub.io/links"
-	maintainersAnnotation          = "artifacthub.io/maintainers"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -315,41 +317,22 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 
 // enrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
-//
-// The annotations supported at the moment are:
-//
-// - artifacthub.io/operator
-// - artifacthub.io/links
-// - artifacthub.io/maintainers
-//
-// Example:
-//
-// annotations:
-//   artifacthub.io/operator: "true"
-//   artifacthub.io/operatorCapabilities: Basic Install
-//   artifacthub.io/links: |
-//     - name: link1
-//       url: https://link1.url
-//     - name: link2
-//       url: https://link2.url
-//   artifacthub.io/maintainers: |
-//     - name: user1
-//       email: user1@email.com
-//     - name: user2
-//       email: user2@email.com
-//
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
-	// Operator flag
-	if v, ok := annotations[operatorAnnotation]; ok {
-		isOperator, err := strconv.ParseBool(v)
-		if err != nil {
-			return errors.New("invalid operator value")
+	// CRDs
+	if v, ok := annotations[crdsAnnotation]; ok {
+		var crds []interface{}
+		if err := yaml.Unmarshal([]byte(v), &crds); err == nil {
+			p.CRDs = crds
 		}
-		p.IsOperator = isOperator
 	}
 
-	// Operator capabilities
-	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
+	// CRDs examples
+	if v, ok := annotations[crdsExamplesAnnotation]; ok {
+		var crdsExamples []interface{}
+		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err == nil {
+			p.CRDsExamples = crdsExamples
+		}
+	}
 
 	// Links
 	if v, ok := annotations[linksAnnotation]; ok {
@@ -386,6 +369,18 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 			p.Maintainers = append(p.Maintainers, maintainer)
 		}
 	}
+
+	// Operator flag
+	if v, ok := annotations[operatorAnnotation]; ok {
+		isOperator, err := strconv.ParseBool(v)
+		if err != nil {
+			return errors.New("invalid operator value")
+		}
+		p.IsOperator = isOperator
+	}
+
+	// Operator capabilities
+	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
 
 	return nil
 }
