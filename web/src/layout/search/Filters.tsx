@@ -252,6 +252,7 @@ const Filters = (props: Props) => {
         <ElementWithTooltip
           className={styles.tooltipIcon}
           tooltipClassName={styles.tooltipMessage}
+          tooltipArrowClassName={styles.arrowTooltipMessage}
           element={<MdInfoOutline />}
           tooltipMessage="The publisher owns the software deployed by the packages in this repository"
           visibleTooltip
@@ -272,6 +273,7 @@ const Filters = (props: Props) => {
         <ElementWithTooltip
           className={styles.tooltipIcon}
           tooltipClassName={styles.tooltipMessage}
+          tooltipArrowClassName={styles.arrowTooltipMessage}
           element={<MdInfoOutline />}
           tooltipMessage="The publisher owns the repository"
           visibleTooltip

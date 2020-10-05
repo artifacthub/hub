@@ -91,10 +91,20 @@ const SearchBar = (props: Props) => {
             disabled={props.isSearching}
           />
 
+          {props.isSearching && (
+            <div
+              className={classnames('position-absolute text-secondary', styles.loading, {
+                [styles.bigLoading]: props.size === 'big',
+              })}
+            >
+              <span data-testid="searchBarSpinning" className="spinner-border spinner-border-sm" />
+            </div>
+          )}
+
           <button
             data-testid="cleanBtn"
             type="button"
-            className={classnames('close', styles.inputClean, { invisible: value === '' })}
+            className={classnames('close', styles.inputClean, { invisible: value === '' || props.isSearching })}
             aria-label="Close"
             onClick={cleanSearch}
           >
@@ -103,15 +113,6 @@ const SearchBar = (props: Props) => {
 
           <SearchTipsModal size={props.size} />
         </div>
-
-        {props.isSearching && (
-          <div className={`position-absolute textLight ${styles.loading}`}>
-            <span
-              data-testid="searchBarSpinning"
-              className={`spinner-border spinner-border-${props.size === 'big' ? 'lg' : 'sm'}`}
-            />
-          </div>
-        )}
       </div>
     </>
   );

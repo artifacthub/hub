@@ -34,13 +34,13 @@
 }
 
 .loading {
-  right: -5px;
+  right: 35px;
   top: 5px;
 }
 
-.big + .loading {
-  right: -50px;
-  top: 10px;
+.bigLoading {
+  right: 20px;
+  top: 12px;
 }
 
 @media only screen and (max-width: 767.98px) {

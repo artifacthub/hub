@@ -25,7 +25,7 @@ const SearchTipsModal = (props: Props) => {
       <button
         data-testid="openSearchTipsBtn"
         onClick={() => setOpenStatus(true)}
-        className={classnames('btn btn-link px-0 pb-0 text-light', {
+        className={classnames('btn btn-link p-2 text-light', {
           'btn-lg': props.size === 'big',
         })}
       >
@@ -46,7 +46,6 @@ const SearchTipsModal = (props: Props) => {
                 type="button"
                 className={`close ${styles.closeModalBtn}`}
                 onClick={() => {
-                  console.log('click');
                   setOpenStatus(false);
                 }}
               >
@@ -55,7 +54,7 @@ const SearchTipsModal = (props: Props) => {
             </div>
           </div>
 
-          <ul className="mb-0">
+          <ul className={`mb-0 ${styles.list}`}>
             {SEARH_TIPS.map((tip: SearchTipItem, index: number) => (
               <li data-testid="searchTip" className="my-1" key={`searchBarTip_${index}`}>
                 {tip.content} <small className="text-muted">Example:</small>{' '}

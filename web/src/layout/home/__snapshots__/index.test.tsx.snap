@@ -65,6 +65,14 @@ exports[`Home index creates snapshot 1`] = `
               type="text"
               value=""
             />
+            <div
+              class="position-absolute text-secondary loading bigLoading"
+            >
+              <span
+                class="spinner-border spinner-border-sm"
+                data-testid="searchBarSpinning"
+              />
+            </div>
             <button
               aria-label="Close"
               class="close inputClean invisible"
@@ -81,7 +89,7 @@ exports[`Home index creates snapshot 1`] = `
               class="position-absolute text-dark tipIcon bigTipIcon"
             >
               <button
-                class="btn btn-link px-0 pb-0 text-light btn-lg"
+                class="btn btn-link p-2 text-light btn-lg"
                 data-testid="openSearchTipsBtn"
               >
                 <svg
@@ -122,14 +130,6 @@ exports[`Home index creates snapshot 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="position-absolute textLight loading"
-          >
-            <span
-              class="spinner-border spinner-border-lg"
-              data-testid="searchBarSpinning"
-            />
           </div>
         </div>
         <div />
