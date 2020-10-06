@@ -3,6 +3,8 @@ import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
+import { MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -233,7 +235,7 @@ const RepositoryModal = (props: Props) => {
       closeButton={
         <button
           data-testid="repoBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -244,7 +246,19 @@ const RepositoryModal = (props: Props) => {
               <span className="ml-2">Validating repository...</span>
             </>
           ) : (
-            <>{isUndefined(props.repository) ? <>Add</> : <>Update</>}</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              {isUndefined(props.repository) ? (
+                <>
+                  <MdAddCircle className="mr-2" />
+                  <div>Add</div>
+                </>
+              ) : (
+                <>
+                  <FaPencilAlt className="mr-2" />
+                  <div>Update</div>
+                </>
+              )}
+            </div>
           )}
         </button>
       }

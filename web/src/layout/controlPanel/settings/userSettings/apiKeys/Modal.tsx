@@ -2,6 +2,8 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
+import { MdAddCircle } from 'react-icons/md';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
@@ -135,7 +137,7 @@ const APIKeyModal = (props: Props) => {
   const sendBtn = (
     <button
       data-testid="apiKeyFormBtn"
-      className="btn btn-secondary"
+      className="btn btn-sm btn-secondary"
       type="button"
       disabled={isSending}
       onClick={submitForm}
@@ -146,7 +148,19 @@ const APIKeyModal = (props: Props) => {
           <span className="ml-2">{`${isUndefined(props.apiKey) ? 'Adding' : 'Updating'} API key`}</span>
         </>
       ) : (
-        <>{`${isUndefined(props.apiKey) ? 'Add' : 'Update'}`}</>
+        <div className="d-flex flex-row align-items-center text-uppercase">
+          {isUndefined(props.apiKey) ? (
+            <>
+              <MdAddCircle className="mr-2" />
+              <div>Add</div>
+            </>
+          ) : (
+            <>
+              <FaPencilAlt className="mr-2" />
+              <div>Update</div>
+            </>
+          )}
+        </div>
       )}
     </button>
   );

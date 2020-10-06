@@ -4,6 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { MdBusiness, MdClose } from 'react-icons/md';
+import { RiArrowLeftRightLine } from 'react-icons/ri';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -177,7 +178,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       closeButton={
         <button
           data-testid="claimRepoBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending || isNull(repoItem)}
           onClick={submitForm}
@@ -188,7 +189,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
               <span className="ml-2">Claiming ownership...</span>
             </>
           ) : (
-            <>Claim ownership</>
+            <div className="text-uppercase d-flex flex-row align-items-center">
+              <RiArrowLeftRightLine className="mr-2" />
+              <div>Claim ownership</div>
+            </div>
           )}
         </button>
       }

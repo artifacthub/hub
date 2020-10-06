@@ -270,7 +270,7 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                     <div
-                      class="mt-3 mt-sm-4 pt-1"
+                      class="mt-1 mt-sm-2 pt-1"
                       role="menuitem"
                     >
                       <div
@@ -563,7 +563,7 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                     <div
-                      class="mt-3 mt-sm-4 pt-1 facet"
+                      class="mt-2 mt-sm-3 pt-1 facet"
                       role="menuitem"
                     >
                       <div
@@ -618,7 +618,7 @@ exports[`Search index creates snapshot 2`] = `
                       </div>
                     </div>
                     <div
-                      class="position-relative mt-3 mt-sm-4 pt-1"
+                      class="position-relative mt-2 mt-sm-3 pt-1"
                     >
                       <button
                         class="btn text-left p-0 btn-block"
@@ -668,7 +668,7 @@ exports[`Search index creates snapshot 2`] = `
                       </button>
                     </div>
                     <div
-                      class="mt-3 mt-sm-4 pt-1 facet"
+                      class="mt-2 mt-sm-3 pt-1 facet"
                       role="menuitem"
                     >
                       <div
@@ -991,7 +991,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="mt-3 mt-sm-4 pt-1"
+              class="mt-1 mt-sm-2 pt-1"
               role="menuitem"
             >
               <div
@@ -1284,7 +1284,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="mt-3 mt-sm-4 pt-1 facet"
+              class="mt-2 mt-sm-3 pt-1 facet"
               role="menuitem"
             >
               <div
@@ -1339,7 +1339,7 @@ exports[`Search index creates snapshot 2`] = `
               </div>
             </div>
             <div
-              class="position-relative mt-3 mt-sm-4 pt-1"
+              class="position-relative mt-2 mt-sm-3 pt-1"
             >
               <button
                 class="btn text-left p-0 btn-block"
@@ -1389,7 +1389,7 @@ exports[`Search index creates snapshot 2`] = `
               </button>
             </div>
             <div
-              class="mt-3 mt-sm-4 pt-1 facet"
+              class="mt-2 mt-sm-3 pt-1 facet"
               role="menuitem"
             >
               <div

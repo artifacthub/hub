@@ -20,7 +20,7 @@ const TsQuery = (props: Props) => {
   );
 
   return (
-    <div role="menuitem" className="mt-3 mt-sm-4 pt-1">
+    <div role="menuitem" className="mt-1 mt-sm-2 pt-1">
       <SmallTitle text="Category" className="text-secondary font-weight-bold" />
       <div className="mt-3">
         {TS_QUERY.map((option: TsQueryType) => (

@@ -94,11 +94,31 @@ exports[`APIKeyModal - API keys section creates snapshot 1`] = `
             class="modal-footer p-3"
           >
             <button
-              class="btn btn-secondary"
+              class="btn btn-sm btn-secondary"
               data-testid="apiKeyFormBtn"
               type="button"
             >
-              Add
+              <div
+                class="d-flex flex-row align-items-center text-uppercase"
+              >
+                <svg
+                  class="mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                  />
+                </svg>
+                <div>
+                  Add
+                </div>
+              </div>
             </button>
           </div>
         </div>

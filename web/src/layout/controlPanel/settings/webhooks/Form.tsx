@@ -2,8 +2,10 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
+import { MdAddCircle, MdClose } from 'react-icons/md';
+import { RiTestTubeFill } from 'react-icons/ri';
 
 import { API } from '../../../../api';
 import { AppCtx } from '../../../../context/AppCtx';
@@ -685,7 +687,7 @@ const WebhookForm = (props: Props) => {
                 <button
                   data-testid="testWebhookBtn"
                   type="button"
-                  className="btn btn-success"
+                  className="btn btn-sm btn-success"
                   onClick={triggerTest}
                   disabled={!isAvailableTest || isSendingTest}
                 >
@@ -697,7 +699,9 @@ const WebhookForm = (props: Props) => {
                       </span>
                     </>
                   ) : (
-                    <>Test webhook</>
+                    <div className="d-flex flex-row align-items-center text-uppercase">
+                      <RiTestTubeFill className="mr-2" /> <div>Test webhook</div>
+                    </div>
                   )}
                 </button>
 
@@ -709,12 +713,15 @@ const WebhookForm = (props: Props) => {
               </div>
 
               <div className="ml-auto">
-                <button type="button" className={`btn btn-light mr-3 ${styles.btnLight}`} onClick={onCloseForm}>
-                  Cancel
+                <button type="button" className={`btn btn-sm btn-light mr-3 ${styles.btnLight}`} onClick={onCloseForm}>
+                  <div className="d-flex flex-row align-items-center text-uppercase">
+                    <MdClose className="mr-2" />
+                    <div>Cancel</div>
+                  </div>
                 </button>
 
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-sm btn-secondary"
                   type="button"
                   disabled={isSending}
                   onClick={submitForm}
@@ -726,7 +733,19 @@ const WebhookForm = (props: Props) => {
                       <span className="ml-2">{isUndefined(props.webhook) ? 'Adding' : 'Updating'} webhook</span>
                     </>
                   ) : (
-                    <>{isUndefined(props.webhook) ? 'Add' : 'Save'}</>
+                    <div className="d-flex flex-row align-items-center text-uppercase">
+                      {isUndefined(props.webhook) ? (
+                        <>
+                          <MdAddCircle className="mr-2" />
+                          <span>Add</span>
+                        </>
+                      ) : (
+                        <>
+                          <FaPencilAlt className="mr-2" />
+                          <div>Save</div>
+                        </>
+                      )}
+                    </div>
                   )}
                 </button>
               </div>

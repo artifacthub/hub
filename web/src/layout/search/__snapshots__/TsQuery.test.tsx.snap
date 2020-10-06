@@ -3,7 +3,7 @@
 exports[`TsQuery creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="mt-3 mt-sm-4 pt-1"
+    class="mt-1 mt-sm-2 pt-1"
     role="menuitem"
   >
     <div

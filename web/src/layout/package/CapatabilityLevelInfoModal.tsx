@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MdInfo } from 'react-icons/md';
+import { MdInfoOutline } from 'react-icons/md';
 
 import Loading from '../common/Loading';
 import Modal from '../common/Modal';
@@ -11,7 +11,7 @@ const CapatabilityLevelInfoModal = () => {
   return (
     <Modal
       className="d-none d-lg-inline-block mt-1 ml-2"
-      buttonContent={<MdInfo />}
+      buttonContent={<MdInfoOutline />}
       buttonType="btn-link btn-sm px-0 pb-0 text-secondary"
       header={<div className="h5 m-0">Capability level</div>}
     >

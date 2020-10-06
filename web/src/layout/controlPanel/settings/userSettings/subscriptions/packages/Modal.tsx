@@ -1,7 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
-import { MdClose } from 'react-icons/md';
+import { MdAddCircle, MdClose } from 'react-icons/md';
 
 import { API } from '../../../../../../api';
 import { ErrorKind, EventKind, Package } from '../../../../../../types';
@@ -82,7 +82,7 @@ const SubscriptionModal = (props: Props) => {
       closeButton={
         <button
           data-testid="addSubsModalBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isNull(packageItem) || isSending}
           onClick={submitForm}
@@ -93,7 +93,10 @@ const SubscriptionModal = (props: Props) => {
               <span className="ml-2">Adding subscription</span>
             </>
           ) : (
-            <>Add</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <MdAddCircle className="mr-2" />
+              <div>Add</div>
+            </div>
           )}
         </button>
       }
