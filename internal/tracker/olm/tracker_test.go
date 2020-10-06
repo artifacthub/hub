@@ -173,18 +173,23 @@ func TestTracker(t *testing.T) {
 					Email: "test@email.com",
 				},
 			},
-			Data: map[string]interface{}{
-				"customResourcesDefinitions": []map[string]string{
-					{
-						"description": "Test CRD",
-						"displayName": "Test",
-						"kind":        "Test",
-						"name":        "crd.test.com",
-						"version":     "v1alpha1",
-					},
+			CRDs: []interface{}{
+				map[string]interface{}{
+					"description": "Test CRD",
+					"displayName": "Test",
+					"kind":        "Test",
+					"name":        "test.crds.com",
+					"version":     "v1",
 				},
-				"customResourcesDefinitionsExamples": "",
-				"isGlobalOperator":                   true,
+			},
+			CRDsExamples: []interface{}{
+				map[string]interface{}{
+					"apiVersion": "crds.com/v1",
+					"kind":       "Test",
+				},
+			},
+			Data: map[string]interface{}{
+				"isGlobalOperator": true,
 			},
 		}).Return(nil)
 
