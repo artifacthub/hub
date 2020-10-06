@@ -9,9 +9,11 @@ select plan(2);
 \set package1ID '00000000-0000-0000-0000-000000000001'
 \set package2ID '00000000-0000-0000-0000-000000000002'
 \set package3ID '00000000-0000-0000-0000-000000000003'
+\set package4ID '00000000-0000-0000-0000-000000000004'
 \set image1ID '00000000-0000-0000-0000-000000000001'
 \set image2ID '00000000-0000-0000-0000-000000000002'
 \set image3ID '00000000-0000-0000-0000-000000000003'
+\set image4ID '00000000-0000-0000-0000-000000000004'
 
 -- No packages at this point
 select is(
@@ -140,6 +142,40 @@ insert into snapshot (
     true,
     true,
     '2020-06-16 11:20:34+02'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    logo_image_id,
+    repository_id
+) values (
+    :'package4ID',
+    'package4',
+    '1.0.0',
+    :'image4ID',
+    :'repo2ID'
+);
+insert into snapshot (
+    package_id,
+    version,
+    display_name,
+    description,
+    keywords,
+    home_url,
+    readme,
+    deprecated,
+    created_at
+) values (
+    :'package4ID',
+    '1.0.0',
+    'Package 4',
+    'description',
+    '{"kw1", "kw2"}',
+    'home_url',
+    'readme',
+    false,
+    '2019-06-16 11:20:34+02'
 );
 
 -- Some packages have just been seeded
