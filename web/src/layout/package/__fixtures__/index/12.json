@@ -1,0 +1,87 @@
+{
+  "packageId": "21390c0c-6e75-410e-8ac0-e392d5d157c4",
+  "name": "akka-cluster-operator",
+  "normalizedName": "akka-cluster-operator",
+  "logoImageId": "1ffb1d0a-451b-4b58-b45c-f1678820b6fe",
+  "isOperator": true,
+  "channels": [{ "name": "alpha", "version": "1.0.0" }],
+  "defaultChannel": "alpha",
+  "displayName": "Akka Cluster Operator",
+  "description": "Run Akka Cluster applications on Kubernetes.",
+  "keywords": ["Akka", "Akka Cluster", "Lightbend", "Application Runtime"],
+  "homeUrl": null,
+  "readme": "The Akka Cluster Operator allows you to manage applications designed for\n[Akka Cluster](https://doc.akka.io/docs/akka/current/common/cluster.html).\nClustering with [Akka](https://doc.akka.io/docs/akka/current/guide/introduction.html) provides a\nfault-tolerant, decentralized, peer-to-peer based cluster\nfor building stateful, distributed applications with no single point of failure.\nDevelopers should use Akka Management v1.x or newer, with both Bootstrap and HTTP modules enabled.\nWhen deploying using the Akka Cluster Operator, only the `management port` needs to be defined.\nDefaults are provided by the Operator for all other required configuration.\nThe Akka Cluster Operator provides scalability control and membership status information\nfor deployed applications using Akka Cluster. As part of supervising membership of running clusters,\nthis Operator creates a pod-listing ServiceAccount, Role, and RoleBinding suitable for\neach application. See the project [Readme](https://github.com/lightbend/akka-cluster-operator/blob/master/README.md)\nfor more information and details.\n",
+  "install": null,
+  "links": [
+    { "url": "https://github.com/lightbend/akka-cluster-operator", "name": "source" },
+    { "url": "https://doc.akka.io/docs/akka/current/guide/introduction.html", "name": "Intro to Akka" },
+    { "url": "https://doc.akka.io/docs/akka/current/common/cluster.html", "name": "Intro to Akka Cluster" },
+    { "url": "https://github.com/lightbend/akka-java-cluster-openshift", "name": "Akka Cluster demo application" },
+    {
+      "url": "https://developer.lightbend.com/guides/openshift-deployment/lagom/index.html",
+      "name": "Deploying a Lagom application to OpenShift"
+    }
+  ],
+  "capabilities": "seamless upgrades",
+  "crds": null,
+  "crdsExamples": null,
+  "data": {
+    "isGlobalOperator": true,
+    "customResourcesDefinitions": [
+      {
+        "kind": "ServiceDiscovery",
+        "name": "servicediscoveries.submariner.io",
+        "version": "v1alpha1",
+        "description": "ServiceDiscovery is the Schema for the servicediscoveries API",
+        "displayName": "Lighthouse"
+      },
+      {
+        "kind": "ServiceExport",
+        "name": "serviceexports.lighthouse.submariner.io",
+        "version": "v2alpha1",
+        "description": "ServiceExport declares that the associated service should be exported to other clusters",
+        "displayName": "ServiceExport"
+      },
+      {
+        "kind": "ServiceImport",
+        "name": "serviceimports.lighthouse.submariner.io",
+        "version": "v2alpha1",
+        "description": "ServiceImport describes a service imported from clusters in a supercluster",
+        "displayName": "ServiceImport"
+      },
+      {
+        "kind": "Submariner",
+        "name": "submariners.submariner.io",
+        "version": "v1alpha1",
+        "description": "Submariner is the Schema for the submariners API",
+        "displayName": "Submariner"
+      }
+    ],
+    "customResourcesDefinitionsExamples": "[\n  {\n    \"apiVersion\": \"submariner.io/v1alpha1\",\n    \"kind\": \"ServiceDiscovery\",\n    \"metadata\": {\n      \"name\": \"example-servicediscovery\"\n    },\n    \"spec\": {\n      \"namespace\": \"submariner_ns\",\n      \"clusterID\": \"east\",\n      \"debug\": false,\n      \"globalnetEnabled\": true,\n      \"brokerK8sApiServer\": \"192.168.67.110:8443\",\n      \"brokerK8sApiServerToken\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IkoxUDZXZUZrZmcyWTlyUHlTdnRmbHhMalE0NXhEYlZPbU5NLS1taE9wcmcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRlZmF1bHQtdG9rZW4taHJxNjQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjU2YTE2ODNjLTMxNzktNDBhZi1hYTg1LTQ1ZDczMGY5OGM5YyIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.Nu59vXNLcvDtWmYza1cg68YHs6XxnS5P8UQASK25VOsdo38WOAQUFc0M9CZyXcuG9hFe2GqZol3vj2NOhFev2PC02ljhhuDW-uJvSL53W9kM7Pv-YVbjxM0_PIZIU_biEvy4oIdNX11YO7hG1iOnTIXfZ3BN3hXGAVfQT-IuDC24MIJshEASEa3VsAQcd1BQGweG95EDn54v7qLQSAGdN2V7kJr6n9fDZuduk36gLFRzR9SGCZ9W2bDY_U4vrStqi1zB6WrA0auANP6MogZJDvRnMKL6XCS4BD29S8k2V9AYu0OoYChfitl0JijKyng4YhRblvToOQVsdn2lWfA1Sg\",\n      \"brokerK8sRemoteNamespace\": \"submariner-broker\",\n      \"brokerK8sCA\": \"ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklrb3hVRFpYWlVaclptY3lXVGx5VUhsVGRuUm1iSGhNYWxFME5YaEVZbFpQYlU1TkxTMXRhRTl3Y21jaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUprWldaaGRXeDBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpXTnlaWFF1Ym1GdFpTSTZJbVJsWm1GMWJIUXRkRzlyWlc0dGFISnhOalFpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pWkdWbVlYVnNkQ0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVnlkbWxqWlMxaFkyTnZkVzUwTG5WcFpDSTZJalUyWVRFMk9ETmpMVE14TnprdE5EQmhaaTFoWVRnMUxUUTFaRGN6TUdZNU9HTTVZeUlzSW5OMVlpSTZJbk41YzNSbGJUcHpaWEoyYVdObFlXTmpiM1Z1ZERwa1pXWmhkV3gwT21SbFptRjFiSFFpZlEuTnU1OXZYTkxjdkR0V21ZemExY2c2OFlIczZYeG5TNVA4VVFBU0syNVZPc2RvMzhXT0FRVUZjME05Q1p5WGN1RzloRmUyR3Fab2wzdmoyTk9oRmV2MlBDMDJsamhodURXLXVKdlNMNTNXOWtNN1B2LVlWYmp4TTBfUElaSVVfYmlFdnk0b0lkTlgxMVlPN2hHMWlPblRJWGZaM0JOM2hYR0FWZlFULUl1REMyNE1JSnNoRUFTRWEzVnNBUWNkMUJRR3dlRzk1RURuNTR2N3FMUVNBR2ROMlY3a0pyNm45ZkRadWR1azM2Z0xGUnpSOVNHQ1o5VzJiRFlfVTR2clN0cWkxekI2V3JBMGF1QU5QNk1vZ1pKRHZSbk1LTDZYQ1M0QkQyOVM4azJWOUFZdTBPb1lDaGZpdGwwSmlqS3luZzRZaFJibHZUb09RVnNkbjJsV2ZBMVNn\",\n      \"repository\": \"quay.io/submariner\",\n      \"version\": \"0.6.1\"\n    }\n  },\n  {\n    \"apiVersion\": \"submariner.io/v1alpha1\",\n    \"kind\": \"Submariner\",\n    \"metadata\": {\n      \"name\": \"example-submariner\"\n    },\n    \"spec\": {\n      \"namespace\": \"submariner_ns\",\n      \"serviceCIDR\": \"192.168.66.0/24\",\n      \"clusterCIDR\": \"192.168.67.0/24\",\n      \"globalCIDR\": \"169.254.0.0/16\",\n      \"clusterID\": \"east\",\n      \"colorCodes\": \"blue\",\n      \"debug\": false,\n      \"natEnabled\": true,\n      \"serviceDiscoveryEnabled\": true,\n      \"broker\": \"k8s\",\n      \"brokerK8sApiServer\": \"192.168.67.110:8443\",\n      \"brokerK8sApiServerToken\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IkoxUDZXZUZrZmcyWTlyUHlTdnRmbHhMalE0NXhEYlZPbU5NLS1taE9wcmcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRlZmF1bHQtdG9rZW4taHJxNjQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjU2YTE2ODNjLTMxNzktNDBhZi1hYTg1LTQ1ZDczMGY5OGM5YyIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmRlZmF1bHQifQ.Nu59vXNLcvDtWmYza1cg68YHs6XxnS5P8UQASK25VOsdo38WOAQUFc0M9CZyXcuG9hFe2GqZol3vj2NOhFev2PC02ljhhuDW-uJvSL53W9kM7Pv-YVbjxM0_PIZIU_biEvy4oIdNX11YO7hG1iOnTIXfZ3BN3hXGAVfQT-IuDC24MIJshEASEa3VsAQcd1BQGweG95EDn54v7qLQSAGdN2V7kJr6n9fDZuduk36gLFRzR9SGCZ9W2bDY_U4vrStqi1zB6WrA0auANP6MogZJDvRnMKL6XCS4BD29S8k2V9AYu0OoYChfitl0JijKyng4YhRblvToOQVsdn2lWfA1Sg\",\n      \"brokerK8sRemoteNamespace\": \"submariner-broker\",\n      \"brokerK8sCA\": \"ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklrb3hVRFpYWlVaclptY3lXVGx5VUhsVGRuUm1iSGhNYWxFME5YaEVZbFpQYlU1TkxTMXRhRTl3Y21jaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUprWldaaGRXeDBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpXTnlaWFF1Ym1GdFpTSTZJbVJsWm1GMWJIUXRkRzlyWlc0dGFISnhOalFpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pWkdWbVlYVnNkQ0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVnlkbWxqWlMxaFkyTnZkVzUwTG5WcFpDSTZJalUyWVRFMk9ETmpMVE14TnprdE5EQmhaaTFoWVRnMUxUUTFaRGN6TUdZNU9HTTVZeUlzSW5OMVlpSTZJbk41YzNSbGJUcHpaWEoyYVdObFlXTmpiM1Z1ZERwa1pXWmhkV3gwT21SbFptRjFiSFFpZlEuTnU1OXZYTkxjdkR0V21ZemExY2c2OFlIczZYeG5TNVA4VVFBU0syNVZPc2RvMzhXT0FRVUZjME05Q1p5WGN1RzloRmUyR3Fab2wzdmoyTk9oRmV2MlBDMDJsamhodURXLXVKdlNMNTNXOWtNN1B2LVlWYmp4TTBfUElaSVVfYmlFdnk0b0lkTlgxMVlPN2hHMWlPblRJWGZaM0JOM2hYR0FWZlFULUl1REMyNE1JSnNoRUFTRWEzVnNBUWNkMUJRR3dlRzk1RURuNTR2N3FMUVNBR2ROMlY3a0pyNm45ZkRadWR1azM2Z0xGUnpSOVNHQ1o5VzJiRFlfVTR2clN0cWkxekI2V3JBMGF1QU5QNk1vZ1pKRHZSbk1LTDZYQ1M0QkQyOVM4azJWOUFZdTBPb1lDaGZpdGwwSmlqS3luZzRZaFJibHZUb09RVnNkbjJsV2ZBMVNn\",\n      \"cableDriver\": \"libreswan\",\n      \"ceIPSecPSK\": \"DJaA2kVW72w8kjQCEpzkDhwZuniDwgePKFE7FaxVNMWqbpmT2qvp68XW52MO70ho\",\n      \"ceIPSecDebug\": false,\n      \"ceIPSecIKEPort\": 500,\n      \"ceIPSecNATTPort\": 4500,\n      \"repository\": \"quay.io/submariner\",\n      \"version\": \"0.6.1\"\n    }\n  },\n  {\n    \"apiVersion\": \"lighthouse.submariner.io/v2alpha1\",\n    \"kind\": \"ServiceImport\",\n    \"metadata\": {\n      \"name\": \"example-serviceimport\"\n    },\n    \"spec\": {\n      \"size\": 3\n    }\n  },\n  {\n    \"apiVersion\": \"lighthouse.submariner.io/v2alpha1\",\n    \"kind\": \"ServiceExport\",\n    \"metadata\": {\n      \"name\": \"example-serviceexport\"\n    },\n    \"spec\": {\n      \"size\": 3\n    }\n  }\n]"
+  },
+  "version": "1.0.0",
+  "availableVersions": [
+    { "version": "1.0.0", "createdAt": 1561735380 },
+    { "version": "0.2.0", "createdAt": 1561735380 },
+    { "version": "0.2.3", "createdAt": 1561735380 }
+  ],
+  "appVersion": null,
+  "digest": null,
+  "deprecated": false,
+  "license": "MIT",
+  "signed": false,
+  "containerImage": "lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0",
+  "provider": "Lightbend, Inc.",
+  "createdAt": 1561735380,
+  "maintainers": [{ "name": "Maintainer1", "email": "maintainer@email.com" }],
+  "repository": {
+    "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
+    "kind": 3,
+    "name": "community-operators",
+    "userAlias": null,
+    "displayName": "Community Operators",
+    "repositoryId": "0f467c6e-3eb4-4b6c-8140-410c084de5b8",
+    "organizationName": "operator-framework",
+    "organizationDisplayName": "Operator Framework"
+  }
+}

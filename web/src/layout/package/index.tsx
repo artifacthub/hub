@@ -233,14 +233,19 @@ const PackageView = (props: Props) => {
 
   const getOLMResources = (): CustomResourcesDefinition[] | undefined => {
     let resources: CustomResourcesDefinition[] | undefined;
-    if (
-      !isUndefined(detail) &&
-      !isNull(detail) &&
-      !isNull(detail.data) &&
-      !isUndefined(detail.data) &&
-      !isUndefined(detail.data.customResourcesDefinitions)
-    ) {
-      let examples: CustomResourcesDefinitionExample[] = [];
+    let examples: CustomResourcesDefinitionExample[] = [];
+
+    if (detail && detail.crds) {
+      if (detail.crdsExamples) {
+        examples = detail.crdsExamples;
+      }
+      resources = detail.crds.map((resourceDefinition: CustomResourcesDefinition) => {
+        return {
+          ...resourceDefinition,
+          example: examples.find((info: any) => info.kind === resourceDefinition.kind),
+        };
+      });
+    } else if (detail && detail.data && detail.data.customResourcesDefinitions) {
       if (
         !isUndefined(detail.data.customResourcesDefinitionsExamples) &&
         detail.data.customResourcesDefinitionsExamples !== ''
@@ -260,7 +265,7 @@ const PackageView = (props: Props) => {
   const getHelmCRDs = (): CustomResourcesDefinition[] | undefined => {
     let resources: CustomResourcesDefinition[] | undefined;
     if (detail && detail.crds) {
-      let examples: CustomResourcesDefinitionExample[] = detail?.crdsExamples || [];
+      let examples: CustomResourcesDefinitionExample[] = detail.crdsExamples || [];
       resources = detail.crds.map((resourceDefinition: CustomResourcesDefinition) => {
         return {
           ...resourceDefinition,

@@ -2,6 +2,7 @@ package olm
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -348,9 +349,9 @@ func (t *Tracker) registerPackage(
 			isGlobalOperator = true
 		}
 	}
-	crds := make([]map[string]string, 0, len(csv.Spec.CustomResourceDefinitions.Owned))
+	crds := make([]interface{}, 0, len(csv.Spec.CustomResourceDefinitions.Owned))
 	for _, crd := range csv.Spec.CustomResourceDefinitions.Owned {
-		crds = append(crds, map[string]string{
+		crds = append(crds, map[string]interface{}{
 			"name":        crd.Name,
 			"version":     crd.Version,
 			"kind":        crd.Kind,
@@ -358,10 +359,15 @@ func (t *Tracker) registerPackage(
 			"description": crd.Description,
 		})
 	}
+	if len(crds) > 0 {
+		p.CRDs = crds
+	}
+	var crdsExamples []interface{}
+	if err := json.Unmarshal([]byte(csv.Annotations["alm-examples"]), &crdsExamples); err == nil {
+		p.CRDsExamples = crdsExamples
+	}
 	p.Data = map[string]interface{}{
-		"isGlobalOperator":                   isGlobalOperator,
-		"customResourcesDefinitions":         crds,
-		"customResourcesDefinitionsExamples": csv.Annotations["alm-examples"],
+		"isGlobalOperator": isGlobalOperator,
 	}
 
 	// Register package

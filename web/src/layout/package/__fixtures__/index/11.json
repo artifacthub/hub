@@ -1,0 +1,85 @@
+{
+  "packageId": "21390c0c-6e75-410e-8ac0-e392d5d157c4",
+  "name": "akka-cluster-operator",
+  "normalizedName": "akka-cluster-operator",
+  "logoImageId": "1ffb1d0a-451b-4b58-b45c-f1678820b6fe",
+  "isOperator": true,
+  "channels": [{ "name": "alpha", "version": "1.0.0" }],
+  "defaultChannel": "alpha",
+  "displayName": "Akka Cluster Operator",
+  "description": "Run Akka Cluster applications on Kubernetes.",
+  "keywords": ["Akka", "Akka Cluster", "Lightbend", "Application Runtime"],
+  "homeUrl": null,
+  "readme": "The Akka Cluster Operator allows you to manage applications designed for\n[Akka Cluster](https://doc.akka.io/docs/akka/current/common/cluster.html).\nClustering with [Akka](https://doc.akka.io/docs/akka/current/guide/introduction.html) provides a\nfault-tolerant, decentralized, peer-to-peer based cluster\nfor building stateful, distributed applications with no single point of failure.\nDevelopers should use Akka Management v1.x or newer, with both Bootstrap and HTTP modules enabled.\nWhen deploying using the Akka Cluster Operator, only the `management port` needs to be defined.\nDefaults are provided by the Operator for all other required configuration.\nThe Akka Cluster Operator provides scalability control and membership status information\nfor deployed applications using Akka Cluster. As part of supervising membership of running clusters,\nthis Operator creates a pod-listing ServiceAccount, Role, and RoleBinding suitable for\neach application. See the project [Readme](https://github.com/lightbend/akka-cluster-operator/blob/master/README.md)\nfor more information and details.\n",
+  "install": null,
+  "links": [
+    { "url": "https://github.com/lightbend/akka-cluster-operator", "name": "source" },
+    { "url": "https://doc.akka.io/docs/akka/current/guide/introduction.html", "name": "Intro to Akka" },
+    { "url": "https://doc.akka.io/docs/akka/current/common/cluster.html", "name": "Intro to Akka Cluster" },
+    { "url": "https://github.com/lightbend/akka-java-cluster-openshift", "name": "Akka Cluster demo application" },
+    {
+      "url": "https://developer.lightbend.com/guides/openshift-deployment/lagom/index.html",
+      "name": "Deploying a Lagom application to OpenShift"
+    }
+  ],
+  "capabilities": "seamless upgrades",
+  "crds": [
+    {
+      "kind": "MyKind",
+      "name": "mykind",
+      "version": "v1",
+      "description": "Some nice description",
+      "displayName": "My Kind"
+    }
+  ],
+  "crdsExamples": [
+    {
+      "kind": "MyKind",
+      "spec": {
+        "replicas": 1
+      },
+      "metadata": {
+        "name": "mykind"
+      },
+      "apiVersion": "v1"
+    }
+  ],
+  "data": {
+    "isGlobalOperator": true,
+    "customResourcesDefinitions": [
+      {
+        "kind": "AkkaCluster",
+        "name": "akkaclusters.app.lightbend.com",
+        "version": "v1alpha1",
+        "description": "An example Akka Cluster app that provides cluster visualization.",
+        "displayName": "Akka Cluster"
+      }
+    ],
+    "customResourcesDefinitionsExamples": "[\n  {\n    \"apiVersion\": \"app.lightbend.com/v1alpha1\",\n    \"kind\": \"AkkaCluster\",\n    \"metadata\": {\n      \"name\": \"akka-cluster-demo\"\n    },\n    \"spec\": {\n      \"replicas\": 3,\n      \"template\": {\n        \"spec\": {\n          \"containers\": [\n            {\n              \"name\": \"main\",\n              \"image\": \"lightbend-docker-registry.bintray.io/lightbend/akka-cluster-demo:1.1.0\",\n              \"readinessProbe\": {\n                \"httpGet\": {\n                  \"path\": \"/ready\",\n                  \"port\": \"management\"\n                },\n                \"periodSeconds\": 10,\n                \"failureThreshold\": 10,\n                \"initialDelaySeconds\": 20\n              },\n              \"livenessProbe\": {\n                \"httpGet\": {\n                  \"path\": \"/alive\",\n                  \"port\": \"management\"\n                },\n                \"periodSeconds\": 10,\n                \"failureThreshold\": 10,\n                \"initialDelaySeconds\": 20\n              },\n              \"ports\": [\n                {\n                  \"name\": \"http\",\n                  \"containerPort\": 8080\n                },\n                {\n                  \"name\": \"remoting\",\n                  \"containerPort\": 2552\n                },\n                {\n                  \"name\": \"management\",\n                  \"containerPort\": 8558\n                }\n              ]\n            }\n          ]\n        }\n      }\n    }\n  }\n]"
+  },
+  "version": "1.0.0",
+  "availableVersions": [
+    { "version": "1.0.0", "createdAt": 1561735380 },
+    { "version": "0.2.0", "createdAt": 1561735380 },
+    { "version": "0.2.3", "createdAt": 1561735380 }
+  ],
+  "appVersion": null,
+  "digest": null,
+  "deprecated": false,
+  "license": "MIT",
+  "signed": false,
+  "containerImage": "lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0",
+  "provider": "Lightbend, Inc.",
+  "createdAt": 1561735380,
+  "maintainers": [{ "name": "Maintainer1", "email": "maintainer@email.com" }],
+  "repository": {
+    "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
+    "kind": 3,
+    "name": "community-operators",
+    "userAlias": null,
+    "displayName": "Community Operators",
+    "repositoryId": "0f467c6e-3eb4-4b6c-8140-410c084de5b8",
+    "organizationName": "operator-framework",
+    "organizationDisplayName": "Operator Framework"
+  }
+}

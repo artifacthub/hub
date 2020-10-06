@@ -1930,6 +1930,28 @@ components:
         - $ref: "#/components/schemas/Package"
         - type: object
           properties:
+            crds:
+              type: array
+              items:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                  name:
+                    type: string
+                  version:
+                    type: string
+                  description:
+                    type: string
+                  displayName:
+                    type: string
+              nullable: true
+            crds_examples:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+              nullable: true
             data:
               type: object
               properties:

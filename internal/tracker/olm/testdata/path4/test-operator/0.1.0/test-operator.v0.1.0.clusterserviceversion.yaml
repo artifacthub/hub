@@ -9,6 +9,7 @@ metadata:
     createdAt: "2019-06-28T15:23:00Z"
     description: This is just a test
     repository: https://github.com/test/test-operator
+    alm-examples: '[{"apiVersion": "crds.com/v1", "kind": "Test"}]'
   name: test-operator.v0.1.0
   namespace: placeholder
 spec:
@@ -16,8 +17,8 @@ spec:
     owned:
       - description: Test CRD
         kind: Test
-        name: crd.test.com
-        version: v1alpha1
+        name: test.crds.com
+        version: v1
         displayName: Test
   description: Test Operator README
   displayName: Test Operator
