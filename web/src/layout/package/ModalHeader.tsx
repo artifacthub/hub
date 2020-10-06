@@ -17,6 +17,7 @@ const ModalHeader = (props: Props) => (
         className={styles.image}
         alt={props.package.displayName || props.package.name}
         imageId={props.package.logoImageId}
+        kind={props.package.repository.kind}
       />
     </div>
 

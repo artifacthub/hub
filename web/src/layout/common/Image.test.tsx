@@ -30,7 +30,7 @@ describe('Image', () => {
     const { getByAltText } = render(<Image alt={defaultProps.alt} imageId={null} />);
     const image = getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
+    expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_helm.png');
   });
 
   it('renders placeholder on error', () => {
@@ -41,7 +41,7 @@ describe('Image', () => {
     fireEvent.error(image);
 
     waitFor(() => {
-      expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
+      expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_helm.png');
     });
   });
 });

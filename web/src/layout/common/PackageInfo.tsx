@@ -59,6 +59,7 @@ const PackageInfo = (props: Props) => {
         imageId={props.package.logoImageId}
         alt={`Logo ${props.package.displayName || props.package.name}`}
         className={styles.image}
+        kind={props.package.repository.kind}
       />
     </div>
   );

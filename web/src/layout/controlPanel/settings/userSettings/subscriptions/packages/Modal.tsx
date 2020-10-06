@@ -161,6 +161,7 @@ const SubscriptionModal = (props: Props) => {
                         alt={packageItem.displayName || packageItem.name}
                         imageId={packageItem.logoImageId}
                         className={styles.image}
+                        kind={packageItem.repository.kind}
                       />
                     </div>
 

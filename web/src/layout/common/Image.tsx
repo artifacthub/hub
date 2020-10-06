@@ -2,6 +2,7 @@ import { isUndefined } from 'lodash';
 import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 
+import { RepositoryKind } from '../../types';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
   alt: string;
   className?: string;
   placeholderIcon?: JSX.Element;
+  kind?: RepositoryKind;
 }
 
-const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
+const PLACEHOLDER_SRC = '/static/media/placeholder_helm.png';
 
 const Image = (props: Props) => {
   const [error, setError] = useState(false);
@@ -20,12 +22,29 @@ const Image = (props: Props) => {
     return `${getHubBaseURL()}/image/${props.imageId}`;
   };
 
+  const getPlaceholder = (): string => {
+    if (isUndefined(props.kind)) {
+      return PLACEHOLDER_SRC;
+    } else {
+      switch (props.kind) {
+        case RepositoryKind.Helm:
+          return '/static/media/placeholder_helm.png';
+        case RepositoryKind.OLM:
+          return '/static/media/placeholder_olm.png';
+        case RepositoryKind.OPA:
+          return '/static/media/placeholder_opa.png';
+        case RepositoryKind.Falco:
+          return '/static/media/placeholder_falco.png';
+      }
+    }
+  };
+
   return (
     <>
       {error || isNull(props.imageId) ? (
         <>
           {isUndefined(props.placeholderIcon) ? (
-            <img alt={props.alt} src={PLACEHOLDER_SRC} className={props.className} />
+            <img alt={props.alt} src={getPlaceholder()} className={props.className} />
           ) : (
             <>{props.placeholderIcon}</>
           )}
