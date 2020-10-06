@@ -5,6 +5,7 @@ import moment from 'moment';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
+import { HiExclamation } from 'react-icons/hi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { MdLabel } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
@@ -89,10 +90,11 @@ const RepositoryCard = (props: Props) => {
             className={`d-inline-block ${styles.modal}`}
             buttonType={`ml-1 btn badge btn-secondary ${styles.btn}`}
             buttonContent={
-              <>
+              <div className="d-flex flex-row align-items-center">
+                <HiExclamation className="mr-2" />
                 <span className="d-none d-sm-inline">Show errors log</span>
                 <span className="d-inline d-sm-none">Logs</span>
-              </>
+              </div>
             }
             header={
               <div className={`h3 m-2 text-truncate ${styles.title}`}>

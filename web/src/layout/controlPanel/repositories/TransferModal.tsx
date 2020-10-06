@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { RiArrowLeftRightLine } from 'react-icons/ri';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -121,7 +122,7 @@ const TransferRepositoryModal = (props: Props) => {
       closeButton={
         <button
           data-testid="transferRepoBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -132,7 +133,10 @@ const TransferRepositoryModal = (props: Props) => {
               <span className="ml-2">Transfering repository...</span>
             </>
           ) : (
-            <>Transfer</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <RiArrowLeftRightLine className="mr-2" />
+              <span>Transfer</span>
+            </div>
           )}
         </button>
       }

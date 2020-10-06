@@ -80,7 +80,7 @@ const Filters = (props: Props) => {
           label="publisher"
           options={options}
           selected={selectedPublishers}
-          className="mt-3 mt-sm-4 pt-1"
+          className="mt-2 mt-sm-3 pt-1"
           onChange={props.onChange}
           onResetSomeFilters={props.onResetSomeFilters}
         />
@@ -100,7 +100,7 @@ const Filters = (props: Props) => {
       };
 
       kindElement = (
-        <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+        <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
           <SmallTitle text={kind.title} className="text-secondary font-weight-bold" />
           <div className="mt-3">
             {kind.options.map((option: FacetOption) => (
@@ -143,7 +143,7 @@ const Filters = (props: Props) => {
       ]);
 
       element = (
-        <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+        <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
           <SmallTitle text={capabilities.title} className="text-secondary font-weight-bold" />
           <div className="mt-3">
             {sortedCapabililties.map((option: FacetOption) => (
@@ -181,7 +181,7 @@ const Filters = (props: Props) => {
           selected={{
             repo: props.activeFilters.repo || [],
           }}
-          className="mt-3 mt-sm-4 pt-1"
+          className="mt-2 mt-sm-3 pt-1"
           onChange={props.onChange}
           onResetSomeFilters={props.onResetSomeFilters}
         />
@@ -204,7 +204,7 @@ const Filters = (props: Props) => {
           selected={{
             license: props.activeFilters.license || [],
           }}
-          className="mt-3 mt-sm-4 pt-1"
+          className="mt-2 mt-sm-3 pt-1"
           onChange={props.onChange}
           onResetSomeFilters={props.onResetSomeFilters}
         />
@@ -288,7 +288,7 @@ const Filters = (props: Props) => {
       {getLicenseFacets()}
       {getCapabilitiesFacets()}
 
-      <div role="menuitem" className={`mt-3 mt-sm-4 pt-1 ${styles.facet}`}>
+      <div role="menuitem" className={`mt-2 mt-sm-3 pt-1 ${styles.facet}`}>
         <SmallTitle text="Others" className="text-secondary font-weight-bold" />
 
         <div className="mt-3">

@@ -148,7 +148,7 @@ const PackageView = (props: Props) => {
     setActiveChannel(channel);
   };
 
-  const InstallationModal = (buttonIcon: boolean, buttonType?: string): JSX.Element | null => {
+  const InstallationModal = (buttonType?: string): JSX.Element | null => {
     if (
       isNull(detail) ||
       isUndefined(detail) ||
@@ -168,7 +168,7 @@ const PackageView = (props: Props) => {
         buttonType={buttonType}
         buttonContent={
           <>
-            {buttonIcon ? <FiDownload className="mr-2" /> : undefined}
+            <FiDownload className="mr-2" />
             <span>Install</span>
           </>
         }
@@ -519,7 +519,7 @@ const PackageView = (props: Props) => {
                         </Modal>
                       </div>
 
-                      <div className="pl-1 w-50">{InstallationModal(true, 'btn-outline-secondary btn-sm')}</div>
+                      <div className="pl-1 w-50">{InstallationModal('btn-outline-secondary btn-sm')}</div>
                     </div>
                   </div>
                 </div>
@@ -601,7 +601,7 @@ const PackageView = (props: Props) => {
                   <div className="col col-auto pl-5 pb-4 d-none d-md-block">
                     {!isNull(detail) && (
                       <>
-                        {InstallationModal(false)}
+                        {InstallationModal()}
 
                         <div className={`card shadow-sm position-relative info ${styles.info}`}>
                           <div className="card-body">

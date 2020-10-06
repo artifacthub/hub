@@ -2,6 +2,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
+import { IoMdLogOut } from 'react-icons/io';
 import { MdBusiness, MdClose } from 'react-icons/md';
 
 import { API } from '../../../../../../api';
@@ -130,7 +131,7 @@ const OptOutModal = (props: Props) => {
       closeButton={
         <button
           data-testid="addOptOutModalBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isNull(repoItem) || isSending}
           onClick={submitForm}
@@ -141,7 +142,10 @@ const OptOutModal = (props: Props) => {
               <span className="ml-2">Opting out</span>
             </>
           ) : (
-            <>Opt-out</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <IoMdLogOut className="mr-2" />
+              <div>Opt-out</div>
+            </div>
           )}
         </button>
       }

@@ -1,5 +1,7 @@
 import { isNull, isUndefined, trim } from 'lodash';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
+import { RiTestTubeFill } from 'react-icons/ri';
 import { Prompt } from 'react-router-dom';
 
 import { API } from '../../../../../api';
@@ -551,7 +553,7 @@ const AuthorizationSection = (props: Props) => {
                 <button
                   data-testid="playgroundBtn"
                   type="button"
-                  className="btn btn-success"
+                  className="btn btn-sm btn-success"
                   onClick={triggerTestInRegoPlayground}
                 >
                   {isTesting ? (
@@ -560,7 +562,9 @@ const AuthorizationSection = (props: Props) => {
                       <span className="ml-2">Preparing Playground...</span>
                     </>
                   ) : (
-                    <>Test in Playground</>
+                    <div className="d-flex flex-row align-items-center text-uppercase">
+                      <RiTestTubeFill className="mr-2" /> <div>Test in Playground</div>
+                    </div>
                   )}
                 </button>
               )}
@@ -569,7 +573,7 @@ const AuthorizationSection = (props: Props) => {
                 <ActionBtn
                   ref={updateActionBtn}
                   testId="updateAuthorizationPolicyBtn"
-                  className="btn btn-secondary"
+                  className="btn btn-sm btn-secondary"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     onSaveAuthorizationPolicy();
@@ -584,7 +588,10 @@ const AuthorizationSection = (props: Props) => {
                         <span className="ml-2">Saving</span>
                       </>
                     ) : (
-                      <>Save</>
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        <FaPencilAlt className="mr-2" />
+                        <div>Save</div>
+                      </div>
                     )}
                   </>
                 </ActionBtn>

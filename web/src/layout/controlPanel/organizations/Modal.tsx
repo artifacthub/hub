@@ -1,5 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import React, { useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
+import { MdAddCircle } from 'react-icons/md';
 
 import { Organization } from '../../../types';
 import Modal from '../../common/Modal';
@@ -39,7 +41,7 @@ const OrganizationModal = (props: Props) => {
       open={props.open}
       modalClassName={styles.modal}
       closeButton={
-        <button className="btn btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
+        <button className="btn btn-sm btn-secondary" type="button" disabled={isSending} onClick={submitForm}>
           {isSending ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
@@ -48,7 +50,19 @@ const OrganizationModal = (props: Props) => {
               </span>
             </>
           ) : (
-            <>{isUndefined(props.organization) ? <>Add</> : <>Update</>}</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              {isUndefined(props.organization) ? (
+                <>
+                  <MdAddCircle className="mr-2" />
+                  <div>Add</div>
+                </>
+              ) : (
+                <>
+                  <FaPencilAlt className="mr-2" />
+                  <div>Update</div>
+                </>
+              )}
+            </div>
           )}
         </button>
       }

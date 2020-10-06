@@ -1,6 +1,7 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
 
 import { API } from '../../../../../api';
 import { AppCtx } from '../../../../../context/AppCtx';
@@ -97,7 +98,7 @@ const ProfileSection = (props: Props) => {
                 <div className="mt-4">
                   <ActionBtn
                     testId="updateOrgBtn"
-                    className="btn btn-secondary"
+                    className="btn btn-sm btn-secondary"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       submitForm();
@@ -112,7 +113,10 @@ const ProfileSection = (props: Props) => {
                           <span className="ml-2">Updating organization</span>
                         </>
                       ) : (
-                        <>Update</>
+                        <div className="d-flex flex-row align-items-center text-uppercase">
+                          <FaPencilAlt className="mr-2" />
+                          <div>Update</div>
+                        </div>
                       )}
                     </>
                   </ActionBtn>

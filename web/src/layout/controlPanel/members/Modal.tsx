@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
+import { MdAddCircle } from 'react-icons/md';
 
 import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
@@ -115,7 +116,7 @@ const MemberModal = (props: Props) => {
       closeButton={
         <button
           data-testid="membersFormBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -126,7 +127,10 @@ const MemberModal = (props: Props) => {
               <span className="ml-2">Inviting member</span>
             </>
           ) : (
-            <>Invite</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <MdAddCircle className="mr-2" />
+              <div>Invite</div>
+            </div>
           )}
         </button>
       }

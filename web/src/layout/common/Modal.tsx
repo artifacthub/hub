@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
+import { MdClose } from 'react-icons/md';
 
 import useBodyScroll from '../../hooks/useBodyScroll';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -129,14 +130,17 @@ const Modal = (props: Props) => {
                   <button
                     data-testid="closeModalFooterBtn"
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-sm btn-secondary text-uppercase"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
                       closeModal();
                     }}
                     disabled={props.disabledClose}
                   >
-                    Close
+                    <div className="d-flex flex-row align-items-center">
+                      <MdClose className="mr-2" />
+                      <div>Close</div>
+                    </div>
                   </button>
                 ) : (
                   <>{props.closeButton}</>

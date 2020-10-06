@@ -3,6 +3,7 @@ import every from 'lodash/every';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
 
 import { API } from '../../../../../api';
 import { AppCtx, updateUser } from '../../../../../context/AppCtx';
@@ -174,7 +175,7 @@ const UpdateProfile = (props: Props) => {
 
       <div className="mt-4">
         <button
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -186,7 +187,10 @@ const UpdateProfile = (props: Props) => {
               <span className="ml-2">Updating profile</span>
             </>
           ) : (
-            <>Update</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <FaPencilAlt className="mr-2" />
+              <div>Update</div>
+            </div>
           )}
         </button>
       </div>

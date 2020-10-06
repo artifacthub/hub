@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
-import { MdInfo } from 'react-icons/md';
+import { MdInfoOutline } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -128,7 +128,7 @@ const RepositoryInfo = (props: Props) => {
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
 
               {!isUndefined(props.repository.url) && !isUndefined(props.visibleInfoIcon) && props.visibleInfoIcon && (
-                <MdInfo className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
+                <MdInfoOutline className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
               )}
             </>
           </button>

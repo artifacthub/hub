@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import every from 'lodash/every';
 import React, { useRef, useState } from 'react';
+import { FaPencilAlt } from 'react-icons/fa';
 
 import { API } from '../../../../../api';
 import { ErrorKind, RefInputField } from '../../../../../types';
@@ -159,7 +160,7 @@ const UpdatePassword = () => {
       <div className="mt-4 mb-2">
         <button
           data-testid="updatePasswordBtn"
-          className="btn btn-secondary"
+          className="btn btn-sm btn-secondary"
           type="button"
           disabled={isSending}
           onClick={submitForm}
@@ -170,7 +171,10 @@ const UpdatePassword = () => {
               <span className="ml-2">Changing password</span>
             </>
           ) : (
-            <>Change</>
+            <div className="d-flex flex-row align-items-center text-uppercase">
+              <FaPencilAlt className="mr-2" />
+              <div>Change</div>
+            </div>
           )}
         </button>
       </div>
