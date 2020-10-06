@@ -420,6 +420,7 @@ const PackageView = (props: Props) => {
                           className={styles.image}
                           alt={detail.displayName || detail.name}
                           imageId={detail.logoImageId}
+                          kind={detail.repository.kind}
                         />
                       </div>
 

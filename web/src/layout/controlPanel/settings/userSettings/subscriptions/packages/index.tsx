@@ -175,6 +175,7 @@ const PackagesSection = (props: Props) => {
                                 alt={item.displayName || item.name}
                                 imageId={item.logoImageId}
                                 className={styles.image}
+                                kind={item.repository.kind}
                               />
                             </div>
 

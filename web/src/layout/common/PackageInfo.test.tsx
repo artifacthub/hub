@@ -60,7 +60,7 @@ describe('PackageInfo', () => {
       );
       const image = queryByAltText(`Logo ${mockPackage.displayName}`);
       expect(image).toBeInTheDocument();
-      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/package_placeholder.svg');
+      expect((image as HTMLImageElement).src).toBe('http://localhost/static/media/placeholder_helm.png');
     });
   });
 

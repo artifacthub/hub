@@ -165,6 +165,7 @@ const SearchPackages = (props: Props) => {
                                 imageId={item.logoImageId}
                                 alt={`Logo ${item.displayName || item.name}`}
                                 className={styles.image}
+                                kind={item.repository.kind}
                               />
                             </div>
 
