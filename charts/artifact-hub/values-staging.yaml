@@ -57,5 +57,6 @@ tracker:
   repositoriesNames: []
   repositoriesKinds: []
   imageStore: pg
+  bypassDigestCheck: false
   events:
     trackingErrors: false
