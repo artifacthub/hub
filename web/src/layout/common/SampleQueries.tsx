@@ -2,7 +2,7 @@ import { isUndefined, sampleSize } from 'lodash';
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { SearchFiltersURL } from '../../types';
+import { RepositoryKind, SearchFiltersURL } from '../../types';
 import prepareQueryString from '../../utils/prepareQueryString';
 
 interface Props {
@@ -22,7 +22,7 @@ const QUERIES: SampleQuery[] = [
       pageNumber: 1,
       tsQueryWeb: 'database',
       filters: {
-        kind: ['3'],
+        kind: [RepositoryKind.OLM.toString()],
       },
     },
   },
@@ -31,7 +31,7 @@ const QUERIES: SampleQuery[] = [
     filters: {
       pageNumber: 1,
       filters: {
-        kind: ['0'],
+        kind: [RepositoryKind.Helm.toString()],
         org: ['bitnami'],
       },
     },
@@ -48,9 +48,9 @@ const QUERIES: SampleQuery[] = [
     label: 'Falco rules for CVE',
     filters: {
       pageNumber: 1,
-      tsQuery: ['monitoring'],
+      tsQueryWeb: 'cve',
       filters: {
-        kind: ['3'],
+        kind: [RepositoryKind.Falco.toString()],
       },
     },
   },
@@ -60,7 +60,7 @@ const QUERIES: SampleQuery[] = [
       pageNumber: 1,
       tsQuery: ['monitoring'],
       filters: {
-        kind: ['3'],
+        kind: [RepositoryKind.OLM.toString()],
       },
     },
   },
@@ -96,7 +96,7 @@ const QUERIES: SampleQuery[] = [
       pageNumber: 1,
       tsQuery: ['storage'],
       filters: {
-        kind: ['0'],
+        kind: [RepositoryKind.Helm.toString()],
       },
     },
   },
@@ -116,7 +116,7 @@ const QUERIES: SampleQuery[] = [
       pageNumber: 1,
       tsQuery: [],
       filters: {
-        kind: ['2'],
+        kind: [RepositoryKind.OPA.toString()],
         license: ['MIT'],
       },
     },
