@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/apikey"
+	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/cmd/hub/handlers/org"
 	"github.com/artifacthub/hub/cmd/hub/handlers/pkg"
 	"github.com/artifacthub/hub/cmd/hub/handlers/repo"
@@ -328,9 +329,14 @@ func (h *Handlers) setupRouter() {
 	r.Get("/badge/repository/{repoName}", h.Repositories.Badge)
 
 	// Static files and index
-	staticFilesPath := path.Join(h.cfg.GetString("server.webBuildPath"), "static")
+	webBuildPath := h.cfg.GetString("server.webBuildPath")
+	staticFilesPath := path.Join(webBuildPath, "static")
 	static.FileServer(r, "/static", http.Dir(staticFilesPath))
 	r.Get("/image/{image}", h.Static.Image)
+	r.Get("/manifest.json", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(5*time.Minute))
+		http.ServeFile(w, r, path.Join(webBuildPath, "manifest.json"))
+	})
 	r.Get("/", h.Static.ServeIndex)
 
 	h.Router = r
