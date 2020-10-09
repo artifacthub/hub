@@ -76,6 +76,17 @@ dbMigrator:
       repository: artifacthub/db-migrator
   loadSampleData: true
 
+scanner:
+  cronjob:
+    image:
+      repository: artifacthub/scanner
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  concurrency: 10
+  trivyURL: http://trivy:8081
+
 tracker:
   cronjob:
     image:
@@ -91,6 +102,17 @@ tracker:
   bypassDigestCheck: false
   events:
     trackingErrors: false
+
+trivy:
+  deploy:
+    image: aquasec/trivy:0.11.0
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  persistence:
+    enabled: false
+    size: 10Gi
 
 # Values for postgresql chart dependency
 postgresql:

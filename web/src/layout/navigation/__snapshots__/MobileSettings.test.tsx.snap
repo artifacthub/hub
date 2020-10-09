@@ -83,7 +83,7 @@ exports[`MobileSettings creates snapshot 1`] = `
               class="overflow-auto mh-100 w-100 py-3"
             >
               <div
-                class="mt-2 mb-1"
+                class="mt-2 mb-1 undefined"
                 data-testid="smallTitle"
               >
                 <small

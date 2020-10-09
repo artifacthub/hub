@@ -59,7 +59,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="mt-2 mb-1"
+      class="mt-2 mb-1 undefined"
       data-testid="smallTitle"
     >
       <small
@@ -77,7 +77,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     </p>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -128,7 +128,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -181,7 +181,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -254,7 +254,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     </a>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -263,6 +263,15 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       <span>
         Container Image
       </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+  >
+    <div
+      class="containerImage"
+    >
+      lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0
       <div
         class="d-inline-block"
       >
@@ -270,7 +279,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
           class="position-relative undefined"
         >
           <button
-            class="btn btn-sm btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
+            class="btn btn-sm btn-link pl-2 text-secondary border-0 d-inline"
             data-testid="ctcBtn"
             type="button"
           >
@@ -304,15 +313,10 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
           </button>
         </div>
       </div>
-    </small>
+    </div>
   </div>
-  <p
-    class="containerImage"
-  >
-    eu.gcr.io/swade1987/deprek8ion:1.1.17
-  </p>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small

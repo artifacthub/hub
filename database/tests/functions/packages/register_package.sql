@@ -65,7 +65,11 @@ select register_package('
     "content_url": "https://package.content.url",
     "is_operator": true,
     "capabilities": "basic install",
-    "container_image": "quay.io/org/img:1.0.0",
+    "containers_images": [
+        {
+            "image": "quay.io/org/img:1.0.0"
+        }
+    ],
     "provider": "Org Inc",
     "created_at": 1592299234,
     "maintainers": [
@@ -141,7 +145,7 @@ select results_eq(
             s.license,
             s.signed,
             s.content_url,
-            s.container_image,
+            s.containers_images,
             s.provider,
             s.created_at
         from snapshot s
@@ -169,7 +173,7 @@ select results_eq(
             'Apache-2.0',
             false,
             'https://package.content.url',
-            'quay.io/org/img:1.0.0',
+            '[{"image": "quay.io/org/img:1.0.0"}]'::jsonb,
             'Org Inc',
             '2020-06-16 11:20:34+02'::timestamptz
         )
@@ -223,7 +227,11 @@ select register_package('
     "signed": true,
     "is_operator": false,
     "capabilities": "seamless upgrades",
-    "container_image": "quay.io/org/img:2.0.0",
+    "containers_images": [
+        {
+            "image": "quay.io/org/img:2.0.0"
+        }
+    ],
     "provider": "Org Inc 2",
     "created_at": 1592299235,
     "maintainers": [
@@ -262,7 +270,7 @@ select results_eq(
             s.capabilities,
             s.deprecated,
             s.signed,
-            s.container_image,
+            s.containers_images,
             s.provider,
             s.created_at
         from snapshot s
@@ -285,7 +293,7 @@ select results_eq(
             'seamless upgrades',
             true,
             true,
-            'quay.io/org/img:2.0.0',
+            '[{"image": "quay.io/org/img:2.0.0"}]'::jsonb,
             'Org Inc 2',
             '2020-06-16 11:20:35+02'::timestamptz
         )
@@ -346,7 +354,11 @@ select register_package('
     "signed": true,
     "is_operator": true,
     "capabilities": "basic install",
-    "container_image": "quay.io/org/img:0.0.9",
+    "containers_images": [
+        {
+            "image": "quay.io/org/img:0.0.9"
+        }
+    ],
     "provider": "Org Inc",
     "created_at": 1592299233,
     "maintainers": [
@@ -389,7 +401,7 @@ select results_eq(
             s.capabilities,
             s.deprecated,
             s.signed,
-            s.container_image,
+            s.containers_images,
             s.provider,
             s.created_at
         from snapshot s
@@ -412,7 +424,7 @@ select results_eq(
             'basic install',
             true,
             true,
-            'quay.io/org/img:0.0.9',
+            '[{"image": "quay.io/org/img:0.0.9"}]'::jsonb,
             'Org Inc',
             '2020-06-16 11:20:33+02'::timestamptz
         )

@@ -274,7 +274,7 @@ exports[`Search index creates snapshot 2`] = `
                       role="menuitem"
                     >
                       <div
-                        class="mt-2 mb-1"
+                        class="mt-2 mb-1 undefined"
                         data-testid="smallTitle"
                       >
                         <small
@@ -567,7 +567,7 @@ exports[`Search index creates snapshot 2`] = `
                       role="menuitem"
                     >
                       <div
-                        class="mt-2 mb-1"
+                        class="mt-2 mb-1 undefined"
                         data-testid="smallTitle"
                       >
                         <small
@@ -628,7 +628,7 @@ exports[`Search index creates snapshot 2`] = `
                           class="d-flex flex-row align-items-center justify-content-between"
                         >
                           <div
-                            class="mt-2 mb-1"
+                            class="mt-2 mb-1 undefined"
                             data-testid="smallTitle"
                           >
                             <small
@@ -672,7 +672,7 @@ exports[`Search index creates snapshot 2`] = `
                       role="menuitem"
                     >
                       <div
-                        class="mt-2 mb-1"
+                        class="mt-2 mb-1 undefined"
                         data-testid="smallTitle"
                       >
                         <small
@@ -995,7 +995,7 @@ exports[`Search index creates snapshot 2`] = `
               role="menuitem"
             >
               <div
-                class="mt-2 mb-1"
+                class="mt-2 mb-1 undefined"
                 data-testid="smallTitle"
               >
                 <small
@@ -1288,7 +1288,7 @@ exports[`Search index creates snapshot 2`] = `
               role="menuitem"
             >
               <div
-                class="mt-2 mb-1"
+                class="mt-2 mb-1 undefined"
                 data-testid="smallTitle"
               >
                 <small
@@ -1349,7 +1349,7 @@ exports[`Search index creates snapshot 2`] = `
                   class="d-flex flex-row align-items-center justify-content-between"
                 >
                   <div
-                    class="mt-2 mb-1"
+                    class="mt-2 mb-1 undefined"
                     data-testid="smallTitle"
                   >
                     <small
@@ -1393,7 +1393,7 @@ exports[`Search index creates snapshot 2`] = `
               role="menuitem"
             >
               <div
-                class="mt-2 mb-1"
+                class="mt-2 mb-1 undefined"
                 data-testid="smallTitle"
               >
                 <small

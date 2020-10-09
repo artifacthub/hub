@@ -18,8 +18,8 @@ const CapabilityLevel = (props: Props) => {
 
   return (
     <div>
-      <div className="d-flex flex-row align-items-center">
-        <SmallTitle text="Capability Level" />
+      <div className="d-inline">
+        <SmallTitle text="Capability Level" wrapperClassName="d-inline" />
         <CapatabilityLevelInfoModal />
       </div>
 

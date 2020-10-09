@@ -84,11 +84,12 @@ insert into snapshot (
     crds,
     crds_examples,
     capabilities,
+    security_report_summary,
     data,
     deprecated,
     license,
     signed,
-    container_image,
+    containers_images,
     provider,
     created_at
 ) values (
@@ -106,11 +107,12 @@ insert into snapshot (
     '[{"key": "value"}]',
     '[{"key": "value"}]',
     'seamless upgrades',
+    '{"high": 2, "medium": 1}',
     '{"key": "value"}',
     true,
     'Apache-2.0',
     true,
-    'quay.io/org/img:1.0.0',
+    '[{"image": "quay.io/org/img:1.0.0"}]',
     'Org Inc',
     '2020-06-16 11:20:34+02'
 );
@@ -225,6 +227,10 @@ select is(
             "key": "value"
         }],
         "capabilities": "seamless upgrades",
+        "security_report_summary": {
+            "high": 2,
+            "medium": 1
+        },
         "data": {
             "key": "value"
         },
@@ -244,7 +250,11 @@ select is(
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
-        "container_image": "quay.io/org/img:1.0.0",
+        "containers_images": [
+            {
+                "image": "quay.io/org/img:1.0.0"
+            }
+        ],
         "provider": "Org Inc",
         "created_at": 1592299234,
         "maintainers": [
@@ -317,6 +327,10 @@ select is(
             "key": "value"
         }],
         "capabilities": "seamless upgrades",
+        "security_report_summary": {
+            "high": 2,
+            "medium": 1
+        },
         "data": {
             "key": "value"
         },
@@ -336,7 +350,11 @@ select is(
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
-        "container_image": "quay.io/org/img:1.0.0",
+        "containers_images": [
+            {
+                "image": "quay.io/org/img:1.0.0"
+            }
+        ],
         "provider": "Org Inc",
         "created_at": 1592299234,
         "maintainers": [
@@ -406,6 +424,7 @@ select is(
         "crds": null,
         "crds_examples": null,
         "capabilities": "basic install",
+        "security_report_summary": null,
         "data": {
             "key": "value"
         },
@@ -425,7 +444,7 @@ select is(
         "deprecated": null,
         "license": null,
         "signed": null,
-        "container_image": null,
+        "containers_images": null,
         "provider": null,
         "created_at": 1592299233,
         "maintainers": [
@@ -477,13 +496,14 @@ select is(
         "crds": null,
         "crds_examples": null,
         "capabilities": null,
+        "security_report_summary": null,
         "data": {
             "key": "value"
         },
         "deprecated": null,
         "license": null,
         "signed": null,
-        "container_image": null,
+        "containers_images": null,
         "provider": null,
         "created_at": 1592299234,
         "version": "1.0.0",

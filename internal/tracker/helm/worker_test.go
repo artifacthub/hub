@@ -278,6 +278,16 @@ func TestWorker(t *testing.T) {
 						Email: "me2@me.com",
 					},
 				},
+				ContainersImages: []*hub.ContainerImage{
+					{
+						Name:  "img1",
+						Image: "repo/img1:1.0.0",
+					},
+					{
+						Name:  "img2",
+						Image: "repo/img2:2.0.0",
+					},
+				},
 				Repository: &hub.Repository{
 					RepositoryID: "repo1",
 				},

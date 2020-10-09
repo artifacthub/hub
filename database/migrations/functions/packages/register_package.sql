@@ -143,7 +143,7 @@ begin
         license,
         signed,
         content_url,
-        container_image,
+        containers_images,
         provider,
         created_at
     ) values (
@@ -166,7 +166,7 @@ begin
         nullif(p_pkg->>'license', ''),
         (p_pkg->>'signed')::boolean,
         nullif(p_pkg->>'content_url', ''),
-        nullif(p_pkg->>'container_image', ''),
+        nullif(p_pkg->'containers_images', 'null'),
         v_provider,
         v_created_at
     )
@@ -189,7 +189,7 @@ begin
         license = excluded.license,
         signed = excluded.signed,
         content_url = excluded.content_url,
-        container_image = excluded.container_image,
+        containers_images = excluded.containers_images,
         provider = excluded.provider,
         created_at = v_created_at;
 

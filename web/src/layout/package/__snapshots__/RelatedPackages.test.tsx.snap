@@ -8,7 +8,7 @@ exports[`RelatedPackages renders correctly 2`] = `
     class="my-4 w-100"
   >
     <div
-      class="mt-2 mb-1"
+      class="mt-2 mb-1 undefined"
       data-testid="smallTitle"
     >
       <small

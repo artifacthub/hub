@@ -22,22 +22,22 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		return nil, err
 	}
 	p := &hub.Package{
-		Name:           md.Name,
-		IsOperator:     md.Operator,
-		DisplayName:    md.DisplayName,
-		Description:    md.Description,
-		Keywords:       md.Keywords,
-		HomeURL:        md.HomeURL,
-		Readme:         md.Readme,
-		Install:        md.Install,
-		Links:          md.Links,
-		Version:        md.Version,
-		AppVersion:     md.AppVersion,
-		Digest:         md.Digest,
-		Deprecated:     md.Deprecated,
-		License:        md.License,
-		ContainerImage: md.ContainerImage,
-		Maintainers:    md.Maintainers,
+		Name:             md.Name,
+		IsOperator:       md.Operator,
+		DisplayName:      md.DisplayName,
+		Description:      md.Description,
+		Keywords:         md.Keywords,
+		HomeURL:          md.HomeURL,
+		Readme:           md.Readme,
+		Install:          md.Install,
+		Links:            md.Links,
+		Version:          md.Version,
+		AppVersion:       md.AppVersion,
+		Digest:           md.Digest,
+		Deprecated:       md.Deprecated,
+		License:          md.License,
+		ContainersImages: md.ContainersImages,
+		Maintainers:      md.Maintainers,
 	}
 	if md.Provider != nil {
 		p.Provider = md.Provider.Name

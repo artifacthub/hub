@@ -2,16 +2,17 @@ import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
 import { Channel, Package } from '../../types';
-import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
 import CapabilityLevel from './CapabilityLevel';
+import ContainersImages from './ContainersImages';
 import Keywords from './Keywords';
 import License from './License';
 import Links from './Links';
 import Maintainers from './Maintainers';
 import styles from './OLMOperatorsDetails.module.css';
+import SecurityReport from './securityReport';
 
 interface Props {
   package: Package;
@@ -49,6 +50,12 @@ const OLMOperatorsDetails = (props: Props) => (
       )}
     </div>
 
+    <SecurityReport
+      summary={props.package.securityReportSummary}
+      packageId={props.package.packageId}
+      version={props.package.version!}
+    />
+
     <CapabilityLevel capabilityLevel={props.package.capabilities} />
 
     {props.package.provider && (
@@ -76,22 +83,7 @@ const OLMOperatorsDetails = (props: Props) => (
       </>
     )}
 
-    {props.package.containerImage && (
-      <>
-        <SmallTitle
-          text="Container Image"
-          icon={
-            <div className="d-inline-block">
-              <ButtonCopyToClipboard
-                text={props.package.containerImage}
-                className="btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
-              />
-            </div>
-          }
-        />
-        <p className={styles.containerImage}>{props.package.containerImage}</p>
-      </>
-    )}
+    <ContainersImages containers={props.package.containersImages} />
 
     <SmallTitle text="Keywords" />
     <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

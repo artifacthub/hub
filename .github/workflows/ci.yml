@@ -86,6 +86,9 @@ jobs:
       - name: Build hub
         working-directory: ./cmd/hub
         run: go build -v
+      - name: Build scanner
+        working-directory: ./cmd/scanner
+        run: go build -v
       - name: Build tracker
         working-directory: ./cmd/tracker
         run: go build -v
@@ -137,6 +140,13 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA .
       - name: Push db-migrator image
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA
+      - name: Build scanner image
+        run: |
+          docker build \
+            -f cmd/scanner/Dockerfile \
+            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/scanner:$GITHUB_SHA .
+      - name: Push scanner image
+        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/scanner:$GITHUB_SHA
       - name: Build tracker image
         run: |
           docker build \

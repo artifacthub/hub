@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SecuritySummary creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-4"
+  >
+    <div
+      class="h5 my-3"
+    >
+      <span
+        class="font-weight-bold"
+      >
+        170
+      </span>
+       vulnerabilities have been detected in the 
+      <span
+        class="font-weight-bold"
+      >
+        default images
+      </span>
+       used by this package.
+    </div>
+    <div
+      class="progress mb-4"
+      style="height: 25px;"
+    >
+      <div
+        class="progress-bar text-dark px-1 font-weight-bold progressBar"
+        role="progressbar"
+        style="width: 1.1764705882352942%; background-color: rgb(178, 3, 3);"
+      >
+        <span
+          class="badge badge-pill badge-light text-center badgeSummary"
+        >
+          2
+        </span>
+      </div>
+      <div
+        class="progress-bar text-dark px-1 font-weight-bold progressBar"
+        role="progressbar"
+        style="width: 5.882352941176471%; background-color: rgb(255, 81, 82);"
+      >
+        <span
+          class="badge badge-pill badge-light text-center badgeSummary"
+        >
+          10
+        </span>
+      </div>
+      <div
+        class="progress-bar text-dark px-1 font-weight-bold progressBar"
+        role="progressbar"
+        style="width: 61.76470588235294%; background-color: rgb(255, 183, 96);"
+      >
+        <span
+          class="badge badge-pill badge-light text-center badgeSummary"
+        >
+          105
+        </span>
+      </div>
+      <div
+        class="progress-bar text-dark px-1 font-weight-bold progressBar"
+        role="progressbar"
+        style="width: 31.176470588235293%; background-color: rgb(255, 226, 88);"
+      >
+        <span
+          class="badge badge-pill badge-light text-center badgeSummary"
+        >
+          53
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

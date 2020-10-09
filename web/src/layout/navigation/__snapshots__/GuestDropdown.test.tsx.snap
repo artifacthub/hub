@@ -62,7 +62,7 @@ exports[`GuestDropdown creates snapshot 1`] = `
         class="my-3"
       >
         <div
-          class="mt-2 mb-1"
+          class="mt-2 mb-1 undefined"
           data-testid="smallTitle"
         >
           <small

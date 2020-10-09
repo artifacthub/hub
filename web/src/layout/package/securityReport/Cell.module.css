@@ -1,0 +1,19 @@
+.btnExpand {
+  line-height: 1rem;
+}
+
+.badge {
+  box-shadow: inset 0 0 2px var(--color-black-15);
+}
+
+.link {
+  top: -2px;
+}
+
+.clickableCell:hover {
+  cursor: pointer;
+}
+
+.noClickableCell:hover {
+  background-color: var(--white) !important;
+}

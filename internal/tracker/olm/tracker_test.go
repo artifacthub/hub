@@ -136,19 +136,23 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
-			Name:           "test-operator",
-			DisplayName:    "Test Operator",
-			LogoImageID:    "logoImageID",
-			Description:    "This is just a test",
-			Keywords:       []string{"Test", "Application Runtime"},
-			Readme:         "Test Operator README",
-			Version:        "0.1.0",
-			IsOperator:     true,
-			Capabilities:   "Basic Install",
-			ContainerImage: "repo.url:latest",
-			Provider:       "Test",
-			CreatedAt:      1561735380,
-			Repository:     r,
+			Name:         "test-operator",
+			DisplayName:  "Test Operator",
+			LogoImageID:  "logoImageID",
+			Description:  "This is just a test",
+			Keywords:     []string{"Test", "Application Runtime"},
+			Readme:       "Test Operator README",
+			Version:      "0.1.0",
+			IsOperator:   true,
+			Capabilities: "Basic Install",
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "repo.url:latest",
+				},
+			},
+			Provider:   "Test",
+			CreatedAt:  1561735380,
+			Repository: r,
 			Channels: []*hub.Channel{
 				{
 					Name:    "alpha",

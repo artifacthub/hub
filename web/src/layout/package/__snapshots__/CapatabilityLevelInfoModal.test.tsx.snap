@@ -9,7 +9,7 @@ exports[`CapatabilityLevelInfoModal creates snapshot 1`] = `
       class="position-relative buttonWrapper"
     >
       <button
-        class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary"
+        class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary btn"
         data-testid="openModalBtn"
         type="button"
       >

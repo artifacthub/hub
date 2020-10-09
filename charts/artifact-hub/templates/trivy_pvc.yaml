@@ -1,0 +1,15 @@
+{{- if .Values.trivy.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: trivy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.trivy.persistence.size | quote }}
+  {{- if .Values.trivy.persistence.storageClassName }}
+  storageClassName: {{ .Values.trivy.persistence.storageClassName }}
+  {{- end -}}
+{{- end -}}

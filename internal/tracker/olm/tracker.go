@@ -292,9 +292,15 @@ func (t *Tracker) registerPackage(
 		Capabilities:   csv.Annotations["capabilities"],
 		DefaultChannel: manifest.DefaultChannelName,
 		License:        csv.Annotations[licenseAnnotation],
-		ContainerImage: csv.Annotations["containerImage"],
 		Provider:       csv.Spec.Provider.Name,
 		Repository:     t.r,
+	}
+	if containerImage, ok := csv.Annotations["containerImage"]; ok && containerImage != "" {
+		p.ContainersImages = []*hub.ContainerImage{
+			{
+				Image: containerImage,
+			},
+		}
 	}
 	createdAt, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
 	if err == nil {

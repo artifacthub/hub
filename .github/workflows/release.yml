@@ -30,6 +30,14 @@ jobs:
             -t artifacthub/db-migrator:latest .
       - name: Push db-migrator image
         run: docker push artifacthub/db-migrator
+      - name: Build scanner image
+        run: |
+          docker build \
+            -f cmd/scanner/Dockerfile \
+            -t artifacthub/scanner:${{steps.extract_tag_name.outputs.tag}} \
+            -t artifacthub/scanner:latest .
+      - name: Push scanner image
+        run: docker push artifacthub/scanner
       - name: Build tracker image
         run: |
           docker build \

@@ -1,0 +1,12 @@
+log:
+  level: debug
+  pretty: true
+db:
+  db:
+  host: localhost
+  port: "5432"
+  database: hub
+  user: postgres
+scanner:
+  concurrency: 10
+  trivyURL: http://trivy:8081

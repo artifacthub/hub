@@ -71,7 +71,7 @@ exports[`UserAuthDropdown creates snapshot 1`] = `
         class="dropdown-divider my-3"
       />
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 undefined"
         data-testid="smallTitle"
       >
         <small

@@ -701,11 +701,11 @@ exports[`Package index creates snapshot 2`] = `
             class="card shadow-sm position-relative info info"
           >
             <div
-              class="card-body"
+              class="card-body detailsBody"
             >
               <div>
                 <div
-                  class="mt-2 mb-1"
+                  class="mt-2 mb-1 undefined"
                   data-testid="smallTitle"
                 >
                   <small
@@ -776,7 +776,7 @@ exports[`Package index creates snapshot 2`] = `
                 </p>
               </div>
               <div
-                class="mt-2 mb-1"
+                class="mt-2 mb-1 undefined"
                 data-testid="smallTitle"
               >
                 <small

@@ -114,7 +114,7 @@ exports[`Filters creates snapshot 1`] = `
       role="menuitem"
     >
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 undefined"
         data-testid="smallTitle"
       >
         <small
@@ -407,7 +407,7 @@ exports[`Filters creates snapshot 1`] = `
       role="menuitem"
     >
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 undefined"
         data-testid="smallTitle"
       >
         <small
@@ -564,7 +564,7 @@ exports[`Filters creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between"
         >
           <div
-            class="mt-2 mb-1"
+            class="mt-2 mb-1 undefined"
             data-testid="smallTitle"
           >
             <small
@@ -614,7 +614,7 @@ exports[`Filters creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between"
         >
           <div
-            class="mt-2 mb-1"
+            class="mt-2 mb-1 undefined"
             data-testid="smallTitle"
           >
             <small
@@ -664,7 +664,7 @@ exports[`Filters creates snapshot 1`] = `
           class="d-flex flex-row align-items-center justify-content-between"
         >
           <div
-            class="mt-2 mb-1"
+            class="mt-2 mb-1 undefined"
             data-testid="smallTitle"
           >
             <small
@@ -708,7 +708,7 @@ exports[`Filters creates snapshot 1`] = `
       role="menuitem"
     >
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 undefined"
         data-testid="smallTitle"
       >
         <small
@@ -891,7 +891,7 @@ exports[`Filters creates snapshot 1`] = `
       role="menuitem"
     >
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 undefined"
         data-testid="smallTitle"
       >
         <small
