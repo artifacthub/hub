@@ -321,8 +321,38 @@ func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, 
 }
 
 // GetMetadata reads and parses the repository metadata file provided, which
-// can be a remote URL or a local file path.
+// can be a remote URL or a local file path. The .yml and .yaml extensions will
+// be implicitly appended to the given path.
 func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
+	var data []byte
+	var err error
+
+	for _, extension := range []string{".yml", ".yaml"} {
+		data, err = m.readMetadataFile(mdFile + extension)
+		if err == nil {
+			break
+		}
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	var md *hub.RepositoryMetadata
+	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
+		return nil, fmt.Errorf("error unmarshaling repository metadata file: %w", err)
+	}
+	// repo IDs must be valid UUIDs
+	if md.RepositoryID != "" {
+		if _, err := uuid.FromString(md.RepositoryID); err != nil {
+			return nil, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid repository id")
+		}
+	}
+
+	return md, nil
+}
+
+func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 	var data []byte
 	u, err := url.Parse(mdFile)
 	if err != nil || u.Scheme == "" || u.Host == "" {
@@ -344,18 +374,7 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 			return nil, fmt.Errorf("error reading repository metadata file: %w", err)
 		}
 	}
-
-	var md *hub.RepositoryMetadata
-	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-		return nil, fmt.Errorf("error unmarshaling repository metadata file: %w", err)
-	}
-	if md.RepositoryID != "" {
-		if _, err := uuid.FromString(md.RepositoryID); err != nil {
-			return nil, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid repository id")
-		}
-	}
-
-	return md, nil
+	return data, nil
 }
 
 // GetPackagesDigest returns the digests for all packages in the repository

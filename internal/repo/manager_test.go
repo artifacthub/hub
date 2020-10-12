@@ -402,6 +402,10 @@ func TestClaimOwnership(t *testing.T) {
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
+		hg.On("Get", "http://repo.url/artifacthub-repo.yaml").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
+		}, nil)
 		m := NewManager(cfg, db, nil, withHTTPGetter(hg))
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
@@ -887,7 +891,8 @@ func TestGetMetadata(t *testing.T) {
 
 	t.Run("remote file: error downloading repository metadata file", func(t *testing.T) {
 		hg := &tests.HTTPGetterMock{}
-		hg.On("Get", "http://url.test/not-found").Return(nil, tests.ErrFake)
+		hg.On("Get", "http://url.test/not-found.yml").Return(nil, tests.ErrFake)
+		hg.On("Get", "http://url.test/not-found.yaml").Return(nil, tests.ErrFake)
 		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/not-found")
 		assert.Error(t, err)
@@ -896,7 +901,11 @@ func TestGetMetadata(t *testing.T) {
 
 	t.Run("remote file: unexpected status code received", func(t *testing.T) {
 		hg := &tests.HTTPGetterMock{}
-		hg.On("Get", "http://url.test/not-found").Return(&http.Response{
+		hg.On("Get", "http://url.test/not-found.yml").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
+		}, nil)
+		hg.On("Get", "http://url.test/not-found.yaml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
@@ -908,7 +917,11 @@ func TestGetMetadata(t *testing.T) {
 
 	t.Run("remote file: error reading repository metadata file", func(t *testing.T) {
 		hg := &tests.HTTPGetterMock{}
-		hg.On("Get", "http://url.test/not-found").Return(&http.Response{
+		hg.On("Get", "http://url.test/not-found.yml").Return(&http.Response{
+			Body:       ioutil.NopCloser(tests.ErrReader(0)),
+			StatusCode: http.StatusOK,
+		}, nil)
+		hg.On("Get", "http://url.test/not-found.yaml").Return(&http.Response{
 			Body:       ioutil.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
@@ -920,29 +933,50 @@ func TestGetMetadata(t *testing.T) {
 
 	t.Run("error unmarshaling repository metadata file", func(t *testing.T) {
 		m := NewManager(nil, nil, nil)
-		_, err := m.GetMetadata("testdata/invalid.yml")
+		_, err := m.GetMetadata("testdata/invalid")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error unmarshaling repository metadata file")
 	})
 
 	t.Run("invalid repository id", func(t *testing.T) {
 		m := NewManager(nil, nil, nil)
-		_, err := m.GetMetadata("testdata/invalid-repo-id.yml")
+		_, err := m.GetMetadata("testdata/invalid-repo-id")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid repository id")
 	})
 
-	t.Run("local file: success", func(t *testing.T) {
+	t.Run("local file: success fetching .yml", func(t *testing.T) {
 		m := NewManager(nil, nil, nil)
-		_, err := m.GetMetadata("testdata/artifacthub-repo.yml")
+		_, err := m.GetMetadata("testdata/artifacthub-repo")
+		assert.NoError(t, err)
+	})
+
+	t.Run("local file: success .yaml", func(t *testing.T) {
+		m := NewManager(nil, nil, nil)
+		_, err := m.GetMetadata("testdata/test-yaml-repo")
 		assert.NoError(t, err)
 	})
 
 	t.Run("remote file: success", func(t *testing.T) {
 		hg := &tests.HTTPGetterMock{}
-		hg.On("Get", "http://url.test/ok").Return(&http.Response{
+		hg.On("Get", "http://url.test/ok.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
 			StatusCode: http.StatusOK,
+		}, nil)
+		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		_, err := m.GetMetadata("http://url.test/ok")
+		assert.NoError(t, err)
+	})
+
+	t.Run("remote file: success on yaml", func(t *testing.T) {
+		hg := &tests.HTTPGetterMock{}
+		hg.On("Get", "http://url.test/ok.yaml").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
+			StatusCode: http.StatusOK,
+		}, nil)
+		hg.On("Get", "http://url.test/ok.yml").Return(&http.Response{
+			Body:       ioutil.NopCloser(strings.NewReader("")),
+			StatusCode: http.StatusNotFound,
 		}, nil)
 		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/ok")

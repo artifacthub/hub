@@ -10,7 +10,7 @@ import (
 const (
 	// RepositoryMetadataFile represents the name of the file where the
 	// Artifact Hub metadata for a given repository is stored.
-	RepositoryMetadataFile = "artifacthub-repo.yml"
+	RepositoryMetadataFile = "artifacthub-repo"
 )
 
 // RepositoryKind represents the kind of a given repository.
