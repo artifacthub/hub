@@ -23,11 +23,15 @@ interface Tab {
 
 const TABS: Tab[] = [
   {
-    name: 'cli',
-    title: 'Helm CLI',
+    name: 'v3',
+    title: 'Helm v3',
+  },
+  {
+    name: 'v2',
+    title: 'Helm v2',
   },
 ];
-const ACTIVE_TAB: string = 'cli';
+const ACTIVE_TAB: string = 'v3';
 
 const HelmInstall = (props: Props) => {
   const [activeTab, setActiveTab] = useState(ACTIVE_TAB);
@@ -53,10 +57,11 @@ const HelmInstall = (props: Props) => {
 
       <div className="tab-content mt-3">
         {(() => {
+          const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
+
           switch (activeTab) {
-            case 'cli':
-              const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
-              const block2 = `helm install ${props.repository.name}/${props.name} --version ${props.version}`;
+            case 'v3':
+              const block2 = `helm install my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`;
 
               return (
                 <div className="tab-pane fade show active">
@@ -89,10 +94,71 @@ const HelmInstall = (props: Props) => {
                     style={docco}
                     customStyle={{
                       backgroundColor: 'var(--color-1-10)',
+                      marginBottom: '10px',
                     }}
                   >
                     {block2}
                   </SyntaxHighlighter>
+
+                  <div className={`font-italic text-muted ${styles.legend}`}>
+                    <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free
+                    to change it to suit your needs. You can also add additional flags to the{' '}
+                    <span className="font-weight-bold">helm install</span> command if you need to.
+                  </div>
+
+                  <div className="mt-2">
+                    <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
+                      Need Helm?
+                    </ExternalLink>
+                  </div>
+                </div>
+              );
+
+            case 'v2':
+              const block2V2 = `helm install --name my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`;
+
+              return (
+                <div className="tab-pane fade show active">
+                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                    <small className="text-muted mt-2 mb-1">Add repository</small>
+                    <div>
+                      <ButtonCopyToClipboard text={block1} />
+                    </div>
+                  </div>
+
+                  <SyntaxHighlighter
+                    language="bash"
+                    style={docco}
+                    customStyle={{
+                      backgroundColor: 'var(--color-1-10)',
+                    }}
+                  >
+                    {block1}
+                  </SyntaxHighlighter>
+
+                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                    <small className="text-muted mt-2 mb-1">Install chart</small>
+                    <div>
+                      <ButtonCopyToClipboard text={block2V2} />
+                    </div>
+                  </div>
+
+                  <SyntaxHighlighter
+                    language="bash"
+                    style={docco}
+                    customStyle={{
+                      backgroundColor: 'var(--color-1-10)',
+                      marginBottom: '10px',
+                    }}
+                  >
+                    {block2V2}
+                  </SyntaxHighlighter>
+
+                  <div className={`font-italic text-muted ${styles.legend}`}>
+                    <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free
+                    to change it to suit your needs. You can also add additional flags to the{' '}
+                    <span className="font-weight-bold">helm install</span> command if you need to.
+                  </div>
 
                   <div className="mt-2">
                     <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
