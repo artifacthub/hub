@@ -8,7 +8,8 @@ digest: 0123456789
 license: Apache-2.0
 homeURL: https://home.url
 appVersion: 10.0.0
-containerImage: registry/test/test:latest
+containersImages:
+  - image: registry/test/test:latest
 operator: false
 deprecated: false
 keywords:

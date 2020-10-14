@@ -67,6 +67,20 @@ func (h *Handlers) GetRandom(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
+// GetSnapshotSecurityReport is an http handler used to get the security report
+// of a package's snapshot.
+func (h *Handlers) GetSnapshotSecurityReport(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	version := chi.URLParam(r, "version")
+	dataJSON, err := h.pkgManager.GetSnapshotSecurityReportJSON(r.Context(), packageID, version)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetSnapshotSecurityReportJSON").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, 30*time.Minute, http.StatusOK)
+}
+
 // GetStarredByUser is an http handler used to get the packages starred by the
 // user doing the request.
 func (h *Handlers) GetStarredByUser(w http.ResponseWriter, r *http.Request) {

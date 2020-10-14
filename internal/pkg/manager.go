@@ -15,16 +15,19 @@ import (
 
 const (
 	// Database queries
-	getPkgDBQ               = `select get_package($1::jsonb)`
-	getPkgStarsDBQ          = `select get_package_stars($1::uuid, $2::uuid)`
-	getPkgsStarredByUserDBQ = `select get_packages_starred_by_user($1::uuid)`
-	getPkgsStatsDBQ         = `select get_packages_stats()`
-	getRandomPkgsDBQ        = `select get_random_packages()`
-	registerPkgDBQ          = `select register_package($1::jsonb)`
-	searchPkgsDBQ           = `select search_packages($1::jsonb)`
-	searchPkgsMonocularDBQ  = `select search_packages_monocular($1::text, $2::text)`
-	togglePkgStarDBQ        = `select toggle_star($1::uuid, $2::uuid)`
-	unregisterPkgDBQ        = `select unregister_package($1::jsonb)`
+	getPkgDBQ                       = `select get_package($1::jsonb)`
+	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
+	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
+	getPkgsStatsDBQ                 = `select get_packages_stats()`
+	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
+	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
+	getRandomPkgsDBQ                = `select get_random_packages()`
+	registerPkgDBQ                  = `select register_package($1::jsonb)`
+	searchPkgsDBQ                   = `select search_packages($1::jsonb)`
+	searchPkgsMonocularDBQ          = `select search_packages_monocular($1::text, $2::text)`
+	togglePkgStarDBQ                = `select toggle_star($1::uuid, $2::uuid)`
+	updateSnapshotSecurityReportDBQ = `select update_snapshot_security_report($1::jsonb)`
+	unregisterPkgDBQ                = `select unregister_package($1::jsonb)`
 )
 
 var (
@@ -73,6 +76,20 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	// Get package from database
 	inputJSON, _ := json.Marshal(input)
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
+}
+
+// GetSnapshotSecurityReportJSON returns the security report of the package's
+// snapshot identified by the package id and version provided.
+func (m *Manager) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getSnapshotSecurityReportDBQ, pkgID, version)
+}
+
+// GetSnapshotsToScan returns the packages' snapshots that need to be scanned
+// for security vulnerabilities.
+func (m *Manager) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotToScan, error) {
+	var s []*hub.SnapshotToScan
+	err := util.DBQueryUnmarshal(ctx, m.db, &s, getSnapshotsToScanDBQ)
+	return s, err
 }
 
 // GetRandomJSON returns a json object with some random packages. The json
@@ -226,6 +243,14 @@ func (m *Manager) ToggleStar(ctx context.Context, packageID string) error {
 
 	// Toggle star in database
 	_, err := m.db.Exec(ctx, togglePkgStarDBQ, userID, packageID)
+	return err
+}
+
+// UpdateSnapshotSecurityReport updates the security report for the snapshot
+// provided.
+func (m *Manager) UpdateSnapshotSecurityReport(ctx context.Context, r *hub.SnapshotSecurityReport) error {
+	rJSON, _ := json.Marshal(r)
+	_, err := m.db.Exec(ctx, updateSnapshotSecurityReportDBQ, rJSON)
 	return err
 }
 

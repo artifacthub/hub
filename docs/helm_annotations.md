@@ -6,6 +6,12 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 ## Supported annotations
 
+- **artifacthub.io/images** *(yaml string, see example below)*
+
+Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view.
+
+Please note that images using the *latest* tag won't be scanned.
+
 - **artifacthub.io/crds** *(yaml string, see example below)*
 
 This annotation can be used to list the operator's CRDs. They will be visible in the package's detail view as cards.
@@ -36,6 +42,11 @@ Artifact Hub annotations in `Chart.yaml`:
 
 ```yaml
 annotations:
+  artifacthub.io/images: |
+    - name: img1
+      image: repo/img1:1.0.0
+    - name: img2
+      image: repo/img2:2.0.0
   artifacthub.io/crds: |
     - kind: MyKind
       version: v1

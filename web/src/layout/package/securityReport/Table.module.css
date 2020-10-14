@@ -1,0 +1,15 @@
+.tableTitle {
+  font-size: 0.875rem;
+}
+
+.table {
+  font-size: 0.875rem;
+}
+
+.table tbody {
+  background-color: var(--white);
+}
+
+.fitCell {
+  width: 30px;
+}

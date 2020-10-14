@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/artifacthub/hub/cmd/hub/handlers/helpers"
 	"github.com/artifacthub/hub/internal/hub"
@@ -112,6 +113,50 @@ func TestGetRandom(t *testing.T) {
 		hw := newHandlersWrapper()
 		hw.pm.On("GetRandomJSON", r.Context()).Return(nil, tests.ErrFakeDB)
 		hw.h.GetRandom(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
+func TestGetSnapshotSecurityReport(t *testing.T) {
+	rctx := &chi.Context{
+		URLParams: chi.RouteParams{
+			Keys:   []string{"packageID", "version"},
+			Values: []string{"pkg1", "1.0.0"},
+		},
+	}
+
+	t.Run("get snapshot security report succeeded", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetSnapshotSecurityReportJSON", r.Context(), "pkg1", "1.0.0").Return([]byte("dataJSON"), nil)
+		hw.h.GetSnapshotSecurityReport(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(30*time.Minute), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.pm.AssertExpectations(t)
+	})
+
+	t.Run("error getting snapshot security report", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetSnapshotSecurityReportJSON", r.Context(), "pkg1", "1.0.0").Return(nil, tests.ErrFakeDB)
+		hw.h.GetSnapshotSecurityReport(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
 

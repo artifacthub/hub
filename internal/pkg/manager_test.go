@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"testing"
 
@@ -9,6 +10,7 @@ import (
 	"github.com/artifacthub/hub/internal/tests"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGet(t *testing.T) {
@@ -89,11 +91,15 @@ func TestGet(t *testing.T) {
 					CreatedAt: 1592299234,
 				},
 			},
-			AppVersion:     "12.1.0",
-			Digest:         "digest-package1-1.0.0",
-			Deprecated:     true,
-			ContainerImage: "quay.io/org/img:1.0.0",
-			Provider:       "Org Inc",
+			AppVersion: "12.1.0",
+			Digest:     "digest-package1-1.0.0",
+			Deprecated: true,
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "quay.io/org/img:1.0.0",
+				},
+			},
+			Provider: "Org Inc",
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "name1",
@@ -176,7 +182,11 @@ func TestGet(t *testing.T) {
 			"app_version": "12.1.0",
 			"digest": "digest-package1-1.0.0",
 			"deprecated": true,
-			"container_image": "quay.io/org/img:1.0.0",
+			"containers_images": [
+				{
+					"image": "quay.io/org/img:1.0.0"
+				}
+			],
     		"provider": "Org Inc",
 			"maintainers": [
 				{
@@ -265,6 +275,76 @@ func TestGetRandomJSON(t *testing.T) {
 		dataJSON, err := m.GetRandomJSON(ctx)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetSnapshotSecurityReportJSON(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getSnapshotSecurityReportDBQ, "pkg1", "1.0.0").Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetSnapshotSecurityReportJSON(ctx, "pkg1", "1.0.0")
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getSnapshotSecurityReportDBQ, "pkg1", "1.0.0").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetSnapshotSecurityReportJSON(ctx, "pkg1", "1.0.0")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestGetSnapshotsToScan(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getSnapshotsToScanDBQ).Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		s, err := m.GetSnapshotsToScan(ctx)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, s)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getSnapshotsToScanDBQ).Return([]byte(`
+		[
+			{
+				"package_id": "00000000-0000-0000-0000-000000000001",
+				"version": "1.0.0",
+				"containers_images": [
+					{
+						"name": "image1",
+						"image": "organization/image:tag"
+					}
+				]
+			}
+		]
+		`), nil)
+		m := NewManager(db)
+
+		s, err := m.GetSnapshotsToScan(ctx)
+		assert.NoError(t, err)
+		require.Len(t, s, 1)
+		assert.Equal(t, "00000000-0000-0000-0000-000000000001", s[0].PackageID)
+		assert.Equal(t, "1.0.0", s[0].Version)
+		require.Len(t, s[0].ContainersImages, 1)
+		assert.Equal(t, "image1", s[0].ContainersImages[0].Name)
+		assert.Equal(t, "organization/image:tag", s[0].ContainersImages[0].Image)
 		db.AssertExpectations(t)
 	})
 }
@@ -744,6 +824,47 @@ func TestToggleStar(t *testing.T) {
 
 		err := m.ToggleStar(ctx, pkgID)
 		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
+func TestUpdateSnapshotSecurityReport(t *testing.T) {
+	ctx := context.Background()
+
+	s := &hub.SnapshotSecurityReport{
+		PackageID: "",
+		Version:   "",
+		Summary: &hub.SecurityReportSummary{
+			High:   2,
+			Medium: 1,
+		},
+		Full: map[string][]interface{}{
+			"organization/image:tag": {
+				map[string]interface{}{
+					"k": "v",
+				},
+			},
+		},
+	}
+	sJSON, _ := json.Marshal(s)
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(tests.ErrFakeDB)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, s)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database update succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(nil)
+		m := NewManager(db)
+
+		err := m.UpdateSnapshotSecurityReport(ctx, s)
+		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
 }

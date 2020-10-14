@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Artifact Hub
   description: "Find, install and publish Kubernetes packages"
-  version: 0.6.0
+  version: 0.7.0
 servers:
   - url: "https://artifacthub.io/api/v1"
     description: Main production server
@@ -1229,6 +1229,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/{version}/securityReport":
+    get:
+      tags:
+        - Packages
+      summary: Get package stars
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                nullable: true
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /subscriptions:
     get:
       tags:
@@ -2060,7 +2081,7 @@ components:
               items:
                 $ref: "#/components/schemas/Maintainer"
               nullable: true
-            defaultChannel:
+            default_channel:
               type: string
               nullable: true
               example: stable
@@ -2080,10 +2101,17 @@ components:
               type: string
               nullable: true
               example: Provider 1
-            containerImage:
-              type: string
+            containers_images:
+              type: object
+              properties:
+                image:
+                  type: string
+                  nullable: false
+                  example: "url.io/name/operator:v0.2.0"
+                name:
+                  type: string
+                  nullable: true
               nullable: true
-              example: "url.io/name/operator:v0.2.0"
             created_at:
               type: integer
               example: 1552082346
@@ -2096,6 +2124,20 @@ components:
                 - full lifecycle
                 - deep insights
                 - auto pilot
+            security_report_summary:
+              type: object
+              properties:
+                critical:
+                  type: number
+                high:
+                  type: number
+                medium:
+                  type: number
+                low:
+                  type: number
+                unkown:
+                  type: number
+              nullable: true
     PackageSummary:
       type: object
       properties:

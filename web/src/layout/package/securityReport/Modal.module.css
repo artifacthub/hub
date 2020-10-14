@@ -1,0 +1,14 @@
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    max-width: 80% !important;
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}

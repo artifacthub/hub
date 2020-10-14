@@ -51,5 +51,6 @@ export const API = {
   getAuthorizationPolicy: jest.fn(),
   updateAuthorizationPolicy: jest.fn(),
   getUserAllowedActions: jest.fn(),
+  getSnapshotSecurityReport: jest.fn(),
   triggerTestInRegoPlayground: jest.fn(),
 };

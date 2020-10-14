@@ -28,6 +28,7 @@ import (
 const (
 	crdsAnnotation                 = "artifacthub.io/crds"
 	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
+	imagesAnnotation               = "artifacthub.io/images"
 	maintainersAnnotation          = "artifacthub.io/maintainers"
 	linksAnnotation                = "artifacthub.io/links"
 	operatorAnnotation             = "artifacthub.io/operator"
@@ -331,6 +332,14 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		var crdsExamples []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err == nil {
 			p.CRDsExamples = crdsExamples
+		}
+	}
+
+	// Images
+	if v, ok := annotations[imagesAnnotation]; ok {
+		var images []*hub.ContainerImage
+		if err := yaml.Unmarshal([]byte(v), &images); err == nil {
+			p.ContainersImages = images
 		}
 	}
 

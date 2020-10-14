@@ -155,7 +155,7 @@ const PackageView = (props: Props) => {
       (detail!.repository.kind === RepositoryKind.OPA && (isUndefined(detail.install) || isNull(detail.install))) ||
       (detail.repository.kind === RepositoryKind.OLM && detail.repository.name !== 'community-operators')
     ) {
-      return null;
+      return <div className="pt-2" />;
     }
 
     const isDisabled =
@@ -610,7 +610,7 @@ const PackageView = (props: Props) => {
                         {InstallationModal()}
 
                         <div className={`card shadow-sm position-relative info ${styles.info}`}>
-                          <div className="card-body">
+                          <div className={`card-body ${styles.detailsBody}`}>
                             <Details
                               package={detail}
                               activeChannel={activeChannel}

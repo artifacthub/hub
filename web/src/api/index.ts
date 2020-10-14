@@ -23,6 +23,7 @@ import {
   Repository,
   SearchQuery,
   SearchResults,
+  SecurityReport,
   Stats,
   Subscription,
   TestWebhook,
@@ -115,24 +116,24 @@ const handleErrors = async (res: any) => {
   return res;
 };
 
-const handleContent = async (res: any) => {
+const handleContent = async (res: any, skipCamelConversion?: boolean) => {
   switch (res.headers.get('Content-Type')) {
     case 'text/plain; charset=utf-8':
       const text = await res.text();
       return text;
     case 'application/json':
       const json = await res.json();
-      return toCamelCase(json);
+      return skipCamelConversion ? json : toCamelCase(json);
     default:
       return res;
   }
 };
 
-export const apiFetch = (url: string, opts?: FetchOptions): any => {
+export const apiFetch = (url: string, opts?: FetchOptions, skipCamelConversion?: boolean): any => {
   const options = opts || {};
   return fetch(url, options)
     .then(handleErrors)
-    .then(handleContent)
+    .then((res) => handleContent(res, skipCamelConversion))
     .catch((error) => Promise.reject(error));
 };
 
@@ -602,6 +603,10 @@ export const API = {
 
   getUserAllowedActions: (orgName: string): Promise<AuthorizerAction[]> => {
     return apiFetch(`${API_BASE_URL}/orgs/${orgName}/userAllowedActions`);
+  },
+
+  getSnapshotSecurityReport: (packageId: string, version: string): Promise<SecurityReport> => {
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/securityReport`, undefined, true);
   },
 
   // External API call

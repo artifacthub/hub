@@ -30,6 +30,12 @@ type Link struct {
 	URL  string `json:"url" yaml:"url"`
 }
 
+// ContainerImage represents a container image associated with a package.
+type ContainerImage struct {
+	Name  string `json:"name" yaml:"name"`
+	Image string `json:"image" yaml:"image"`
+}
+
 // Maintainer represents a package's maintainer.
 type Maintainer struct {
 	MaintainerID string `json:"maintainer_id"`
@@ -39,38 +45,39 @@ type Maintainer struct {
 
 // Package represents a Kubernetes package.
 type Package struct {
-	PackageID         string                 `json:"package_id"`
-	Name              string                 `json:"name"`
-	NormalizedName    string                 `json:"normalized_name"`
-	LogoURL           string                 `json:"logo_url"`
-	LogoImageID       string                 `json:"logo_image_id"`
-	IsOperator        bool                   `json:"is_operator"`
-	Channels          []*Channel             `json:"channels"`
-	DefaultChannel    string                 `json:"default_channel"`
-	DisplayName       string                 `json:"display_name"`
-	Description       string                 `json:"description"`
-	Keywords          []string               `json:"keywords"`
-	HomeURL           string                 `json:"home_url"`
-	Readme            string                 `json:"readme"`
-	Install           string                 `json:"install"`
-	Links             []*Link                `json:"links"`
-	Capabilities      string                 `json:"capabilities"`
-	CRDs              []interface{}          `json:"crds"`
-	CRDsExamples      []interface{}          `json:"crds_examples"`
-	Data              map[string]interface{} `json:"data"`
-	Version           string                 `json:"version"`
-	AvailableVersions []*Version             `json:"available_versions"`
-	AppVersion        string                 `json:"app_version"`
-	Digest            string                 `json:"digest"`
-	Deprecated        bool                   `json:"deprecated"`
-	License           string                 `json:"license"`
-	Signed            bool                   `json:"signed"`
-	ContentURL        string                 `json:"content_url"`
-	ContainerImage    string                 `json:"container_image"`
-	Provider          string                 `json:"provider"`
-	Maintainers       []*Maintainer          `json:"maintainers"`
-	Repository        *Repository            `json:"repository"`
-	CreatedAt         int64                  `json:"created_at,omitempty"`
+	PackageID             string                 `json:"package_id"`
+	Name                  string                 `json:"name"`
+	NormalizedName        string                 `json:"normalized_name"`
+	LogoURL               string                 `json:"logo_url"`
+	LogoImageID           string                 `json:"logo_image_id"`
+	IsOperator            bool                   `json:"is_operator"`
+	Channels              []*Channel             `json:"channels"`
+	DefaultChannel        string                 `json:"default_channel"`
+	DisplayName           string                 `json:"display_name"`
+	Description           string                 `json:"description"`
+	Keywords              []string               `json:"keywords"`
+	HomeURL               string                 `json:"home_url"`
+	Readme                string                 `json:"readme"`
+	Install               string                 `json:"install"`
+	Links                 []*Link                `json:"links"`
+	Capabilities          string                 `json:"capabilities"`
+	CRDs                  []interface{}          `json:"crds"`
+	CRDsExamples          []interface{}          `json:"crds_examples"`
+	SecurityReportSummary *SecurityReportSummary `json:"security_report_summary"`
+	Data                  map[string]interface{} `json:"data"`
+	Version               string                 `json:"version"`
+	AvailableVersions     []*Version             `json:"available_versions"`
+	AppVersion            string                 `json:"app_version"`
+	Digest                string                 `json:"digest"`
+	Deprecated            bool                   `json:"deprecated"`
+	License               string                 `json:"license"`
+	Signed                bool                   `json:"signed"`
+	ContentURL            string                 `json:"content_url"`
+	ContainersImages      []*ContainerImage      `json:"containers_images"`
+	Provider              string                 `json:"provider"`
+	Maintainers           []*Maintainer          `json:"maintainers"`
+	Repository            *Repository            `json:"repository"`
+	CreatedAt             int64                  `json:"created_at,omitempty"`
 }
 
 // PackageManager describes the methods a PackageManager implementation must
@@ -79,6 +86,8 @@ type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
+	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
+	GetSnapshotsToScan(ctx context.Context) ([]*SnapshotToScan, error)
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
 	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
@@ -86,6 +95,7 @@ type PackageManager interface {
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
 	SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error)
 	ToggleStar(ctx context.Context, packageID string) error
+	UpdateSnapshotSecurityReport(ctx context.Context, r *SnapshotSecurityReport) error
 	Unregister(ctx context.Context, pkg *Package) error
 }
 
@@ -93,27 +103,53 @@ type PackageManager interface {
 // provided by repositories publishers, to provide the required information
 // about the content they'd like to be indexed.
 type PackageMetadata struct {
-	Version        string        `yaml:"version"`
-	Name           string        `yaml:"name"`
-	DisplayName    string        `yaml:"displayName"`
-	CreatedAt      string        `yaml:"createdAt"`
-	Description    string        `yaml:"description"`
-	LogoPath       string        `yaml:"logoPath"`
-	Digest         string        `yaml:"digest"`
-	License        string        `yaml:"license"`
-	HomeURL        string        `yaml:"homeURL"`
-	AppVersion     string        `yaml:"appVersion"`
-	PublisherID    string        `yaml:"publisherID"`
-	ContainerImage string        `yaml:"containerImage"`
-	Operator       bool          `yaml:"operator"`
-	Deprecated     bool          `yaml:"deprecated"`
-	Keywords       []string      `yaml:"keywords"`
-	Links          []*Link       `yaml:"links"`
-	Readme         string        `yaml:"readme"`
-	Install        string        `yaml:"install"`
-	Maintainers    []*Maintainer `yaml:"maintainers"`
-	Provider       *Provider     `yaml:"provider"`
-	Ignore         []string      `yaml:"ignore"`
+	Version          string            `yaml:"version"`
+	Name             string            `yaml:"name"`
+	DisplayName      string            `yaml:"displayName"`
+	CreatedAt        string            `yaml:"createdAt"`
+	Description      string            `yaml:"description"`
+	LogoPath         string            `yaml:"logoPath"`
+	Digest           string            `yaml:"digest"`
+	License          string            `yaml:"license"`
+	HomeURL          string            `yaml:"homeURL"`
+	AppVersion       string            `yaml:"appVersion"`
+	PublisherID      string            `yaml:"publisherID"`
+	ContainersImages []*ContainerImage `yaml:"containersImages"`
+	Operator         bool              `yaml:"operator"`
+	Deprecated       bool              `yaml:"deprecated"`
+	Keywords         []string          `yaml:"keywords"`
+	Links            []*Link           `yaml:"links"`
+	Readme           string            `yaml:"readme"`
+	Install          string            `yaml:"install"`
+	Maintainers      []*Maintainer     `yaml:"maintainers"`
+	Provider         *Provider         `yaml:"provider"`
+	Ignore           []string          `yaml:"ignore"`
+}
+
+// SnapshotSecurityReport represents some information about the security
+// vulnerabilities the images used by a given package's snapshot may have.
+type SnapshotSecurityReport struct {
+	PackageID string                   `json:"package_id"`
+	Version   string                   `json:"version"`
+	Summary   *SecurityReportSummary   `json:"summary"`
+	Full      map[string][]interface{} `json:"full"`
+}
+
+// SecurityReportSummary represents a summary of the security report.
+type SecurityReportSummary struct {
+	Critical int `json:"critical"`
+	High     int `json:"high"`
+	Medium   int `json:"medium"`
+	Low      int `json:"low"`
+	Unknown  int `json:"unknown"`
+}
+
+// SnapshotToScan represents some information about a package's snapshot that
+// needs to be scanned for security vulnerabilities.
+type SnapshotToScan struct {
+	PackageID        string            `json:"package_id"`
+	Version          string            `json:"version"`
+	ContainersImages []*ContainerImage `json:"containers_images"`
 }
 
 // Provider represents a package's provider.

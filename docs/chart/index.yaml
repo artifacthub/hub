@@ -1,6 +1,46 @@
 apiVersion: v1
 entries:
   artifact-hub:
+    - annotations:
+        artifacthub.io/images: |
+          - name: db-migrator
+            image: artifacthub/db-migrator:v0.7.0
+          - name: hub
+            image: artifacthub/hub:v0.7.0
+          - name: tracker
+            image: artifacthub/tracker:v0.7.0
+          - name: scanner
+            image: artifacthub/scanner:v0.7.0
+      apiVersion: v2
+      appVersion: 0.7.0
+      created: "2020-10-14T14:03:47.425375+02:00"
+      dependencies:
+        - condition: postgresql.enabled
+          name: postgresql
+          repository: https://kubernetes-charts.storage.googleapis.com/
+          version: 8.2.1
+      description:
+        Artifact Hub is a web-based application that enables finding, installing,
+        and publishing Kubernetes packages.
+      digest: 5f2fdf831fa5d75428180b54fb7978256ea6eda49bedc1113d2f83a8556c877c
+      home: https://artifacthub.io
+      icon: https://artifacthub.github.io/hub/chart/logo.png
+      keywords:
+        - kubernetes
+        - helm
+        - falco
+        - opa
+        - olm
+      maintainers:
+        - email: tegioz@icloud.com
+          name: Sergio
+        - email: cynthiasg@icloud.com
+          name: Cintia
+      name: artifact-hub
+      type: application
+      urls:
+        - https://artifacthub.github.io/hub/chart/artifact-hub-0.7.0.tgz
+      version: 0.7.0
     - apiVersion: v2
       appVersion: 0.6.0
       created: "2020-09-23T08:07:09.875145+02:00"
@@ -150,4 +190,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2020-09-23T08:07:09.857895+02:00"
+generated: "2020-10-14T14:03:47.409648+02:00"

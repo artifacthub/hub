@@ -8,6 +8,7 @@ import SmallTitle from '../common/SmallTitle';
 import Keywords from './Keywords';
 import License from './License';
 import Links from './Links';
+import SecurityReport from './securityReport';
 
 interface Props {
   package: Package;
@@ -27,6 +28,12 @@ const DefaultDetails = (props: Props) => {
           </div>
         )}
       </div>
+
+      <SecurityReport
+        summary={props.package.securityReportSummary}
+        packageId={props.package.packageId}
+        version={props.package.version!}
+      />
 
       <Links links={props.package.links} />
 

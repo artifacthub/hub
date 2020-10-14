@@ -77,6 +77,7 @@ func main() {
 	}
 
 	// Track registered repositories
+	cfg.SetDefault("tracker.concurrency", 1)
 	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
 	for _, r := range repos {

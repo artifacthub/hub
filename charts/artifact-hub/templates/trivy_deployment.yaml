@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trivy
+  labels:
+    app.kubernetes.io/component: trivy
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: trivy
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: trivy
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: trivy
+          image: {{ .Values.trivy.deploy.image }}
+          command: ['trivy', 'server', '--debug', '--cache-dir', '/trivy', '--listen', '0.0.0.0:8081']
+          volumeMounts:
+          - name: trivy
+            mountPath: "/trivy"
+          ports:
+          - name: http
+            containerPort: 8081
+            protocol: TCP
+          resources:
+            {{- toYaml .Values.trivy.deploy.resources | nindent 12 }}
+      volumes:
+      - name: trivy
+      {{- if .Values.trivy.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: trivy
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

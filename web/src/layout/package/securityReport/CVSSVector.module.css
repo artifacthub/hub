@@ -1,0 +1,35 @@
+.table {
+  border-color: var(--color-black-15);
+}
+
+.table tr:hover {
+  background-color: transparent !important;
+}
+
+.tableLegend {
+  background-color: var(--color-black-5);
+}
+
+.active {
+  font-weight: bold;
+}
+
+.active0 {
+  color: #4f8500;
+  border-bottom: 3px solid #4f8500;
+}
+
+.active1 {
+  color: #f1a201;
+  border-bottom: 3px solid #f1a201;
+}
+
+.active2 {
+  color: #ef6100;
+  border-bottom: 3px solid #ef6100;
+}
+
+.active3 {
+  color: #d50014;
+  border-bottom: 3px solid #d50014;
+}

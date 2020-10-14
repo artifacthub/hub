@@ -4,7 +4,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="mt-2 mb-1"
+      class="mt-2 mb-1 undefined"
       data-testid="smallTitle"
     >
       <small
@@ -89,10 +89,10 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="d-flex flex-row align-items-center"
+      class="d-inline"
     >
       <div
-        class="mt-2 mb-1"
+        class="mt-2 mb-1 d-inline"
         data-testid="smallTitle"
       >
         <small
@@ -110,7 +110,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
           class="position-relative buttonWrapper"
         >
           <button
-            class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary"
+            class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-link btn-sm px-0 pb-0 text-secondary btn"
             data-testid="openModalBtn"
             type="button"
           >
@@ -307,7 +307,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
   </div>
   <div>
     <div
-      class="mt-2 mb-1"
+      class="mt-2 mb-1 undefined"
       data-testid="smallTitle"
     >
       <small
@@ -325,7 +325,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
     </p>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -516,7 +516,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -569,7 +569,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
     </div>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -642,7 +642,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
     </a>
   </div>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small
@@ -651,6 +651,15 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
       <span>
         Container Image
       </span>
+    </small>
+  </div>
+  <div
+    class="mb-3"
+  >
+    <div
+      class="containerImage"
+    >
+      lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0
       <div
         class="d-inline-block"
       >
@@ -658,7 +667,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
           class="position-relative undefined"
         >
           <button
-            class="btn btn-sm btn-link px-2 pt-0 pb-1 text-secondary border-0 d-inline"
+            class="btn btn-sm btn-link pl-2 text-secondary border-0 d-inline"
             data-testid="ctcBtn"
             type="button"
           >
@@ -692,15 +701,10 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
           </button>
         </div>
       </div>
-    </small>
+    </div>
   </div>
-  <p
-    class="containerImage"
-  >
-    lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0
-  </p>
   <div
-    class="mt-2 mb-1"
+    class="mt-2 mb-1 undefined"
     data-testid="smallTitle"
   >
     <small

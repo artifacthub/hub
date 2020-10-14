@@ -20,5 +20,6 @@ USER hub
 WORKDIR /home/hub
 COPY --from=backend-builder /hub ./
 COPY --from=frontend-builder /web/build ./web
+COPY --from=frontend-builder /web/yarn.lock ./web
 CMD ["./hub"]
 EXPOSE 8000

@@ -16,6 +16,7 @@ import {
   Repository,
   RepositoryKind,
   SearchResults,
+  SecurityReport,
   Stats,
   Subscription,
   TestWebhook,
@@ -1713,6 +1714,24 @@ describe('index API', () => {
         expect(fetchMock.mock.calls.length).toEqual(1);
         expect(fetchMock.mock.calls[0][0]).toEqual('https://play.openpolicyagent.org/v1/share');
         expect(response).toEqual(methods.toCamelCase(playgroundPolicy));
+      });
+    });
+
+    describe('getSnapshotSecurityReport', () => {
+      it('success', async () => {
+        const report: SecurityReport = getData('36') as SecurityReport;
+        fetchMock.mockResponse(JSON.stringify(report), {
+          headers: {
+            'content-type': 'application/json',
+          },
+          status: 200,
+        });
+
+        const response = await methods.API.getSnapshotSecurityReport('pkgID', '1.1.1');
+
+        expect(fetchMock.mock.calls.length).toEqual(1);
+        expect(fetchMock.mock.calls[0][0]).toEqual('/api/v1/packages/pkgID/1.1.1/securityReport');
+        expect(response).toEqual(report);
       });
     });
   });

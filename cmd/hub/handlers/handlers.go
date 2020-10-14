@@ -217,6 +217,7 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.InjectUserID).Get("/", h.Packages.GetStars)
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
+			r.Get("/{packageID}/{version}/securityReport", h.Packages.GetSnapshotSecurityReport)
 		})
 
 		// Subscriptions

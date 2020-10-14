@@ -76,7 +76,7 @@ describe('OLMOperatorsDetails', () => {
       expect(getByText(mockPackage.license!)).toBeInTheDocument();
 
       expect(getByText(/Container Image/g)).toBeInTheDocument();
-      expect(getByText(mockPackage.containerImage!)).toBeInTheDocument();
+      expect(getByText(mockPackage.containersImages![0].image)).toBeInTheDocument();
 
       expect(getByText('Keywords')).toBeInTheDocument();
       expect(getAllByTestId('keywordBtn')).toHaveLength(mockPackage.keywords!.length);

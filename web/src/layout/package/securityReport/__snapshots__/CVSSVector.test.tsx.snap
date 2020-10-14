@@ -1,0 +1,361 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CVSSVector creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="h6 mb-3 mt-1"
+  >
+    CVSS v2 Vector
+  </div>
+  <div
+    class="d-flex flex-row"
+  >
+    <div
+      class="w-50 pr-4"
+    >
+      <table
+        class="table table-bordered table"
+      >
+        <thead>
+          <tr>
+            <th
+              class=" text-center text-muted text-uppercase"
+              colspan="4"
+            >
+              Exploitability Metrics
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Access Vector
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_AV_L"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Local
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_AV_A"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Adjacent Network
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active3"
+                data-testid="metric_AV_N"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Network
+                </small>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Access Complexity
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_AC_H"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  High
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_AC_M"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Medium
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active3"
+                data-testid="metric_AC_L"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Low
+                </small>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Authentication
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_Au_M"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Multiple
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_Au_S"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Single
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active3"
+                data-testid="metric_Au_N"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  None
+                </small>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="w-50 pl-4"
+    >
+      <table
+        class="table table-bordered table"
+      >
+        <thead>
+          <tr>
+            <th
+              class=" text-center text-muted text-uppercase"
+              colspan="4"
+            >
+              Impact Metrics
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Confidentiality
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_C_N"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  None
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active2"
+                data-testid="metric_C_P"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Partial
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_C_C"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Complete
+                </small>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Integrity
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_I_N"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  None
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active2"
+                data-testid="metric_I_P"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Partial
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_I_C"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Complete
+                </small>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="text-nowrap align-middle text-uppercase w-25 tableLegend"
+            >
+              <small>
+                Availability
+              </small>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_A_N"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  None
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class="active active2"
+                data-testid="metric_A_P"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Partial
+                </small>
+              </div>
+            </td>
+            <td
+              class="text-muted w-25 text-center"
+            >
+              <div
+                class=""
+                data-testid="metric_A_C"
+              >
+                <small
+                  class="text-truncate"
+                >
+                  Complete
+                </small>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;

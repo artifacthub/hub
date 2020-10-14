@@ -139,19 +139,23 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
-			Version:        "1.0.0",
-			Name:           "package-name",
-			DisplayName:    "Package name",
-			CreatedAt:      1561735380,
-			Description:    "Description",
-			Digest:         "0123456789",
-			License:        "Apache-2.0",
-			HomeURL:        "https://home.url",
-			AppVersion:     "10.0.0",
-			ContainerImage: "registry/test/test:latest",
-			IsOperator:     false,
-			Deprecated:     false,
-			Keywords:       []string{"kw1", "kw2"},
+			Version:     "1.0.0",
+			Name:        "package-name",
+			DisplayName: "Package name",
+			CreatedAt:   1561735380,
+			Description: "Description",
+			Digest:      "0123456789",
+			License:     "Apache-2.0",
+			HomeURL:     "https://home.url",
+			AppVersion:  "10.0.0",
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "registry/test/test:latest",
+				},
+			},
+			IsOperator: false,
+			Deprecated: false,
+			Keywords:   []string{"kw1", "kw2"},
 			Links: []*hub.Link{
 				{
 					Name: "Link1",

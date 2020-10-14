@@ -9,12 +9,14 @@ import RepositoryIcon from '../layout/common/RepositoryIcon';
 import {
   AuthorizationPolicy,
   AuthorizerAction,
+  CVSSVectorMetric,
   EventKind,
   NavSection,
   PayloadKind,
   RepositoryKind,
   SearchTipItem,
   TsQuery,
+  VulnerabilitySeverity,
 } from '../types';
 
 export interface SubscriptionItem {
@@ -307,3 +309,152 @@ export const SEARH_TIPS: SearchTipItem[] = [
     example: 'postgresql or mysql',
   },
 ];
+
+export const SEVERITY_ORDER = [
+  VulnerabilitySeverity.Critical,
+  VulnerabilitySeverity.High,
+  VulnerabilitySeverity.Medium,
+  VulnerabilitySeverity.Low,
+  VulnerabilitySeverity.UnKnown,
+];
+
+export const SEVERITY_COLORS = {
+  [VulnerabilitySeverity.Critical]: '#B20303',
+  [VulnerabilitySeverity.High]: '#ff5152',
+  [VulnerabilitySeverity.Medium]: '#ffb760',
+  [VulnerabilitySeverity.Low]: '#ffe258',
+  [VulnerabilitySeverity.UnKnown]: '#b2b2b2',
+};
+
+export const CVSS_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
+  'Exploitability Metrics': [
+    {
+      value: 'AV',
+      label: 'Access Vector',
+      options: [
+        {
+          value: 'L',
+          label: 'Local',
+          level: 1,
+        },
+        {
+          value: 'A',
+          label: 'Adjacent Network',
+          level: 2,
+        },
+        {
+          value: 'N',
+          label: 'Network',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'AC',
+      label: 'Access Complexity',
+      options: [
+        {
+          value: 'H',
+          label: 'High',
+          level: 1,
+        },
+        {
+          value: 'M',
+          label: 'Medium',
+          level: 2,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'Au',
+      label: 'Authentication',
+      options: [
+        {
+          value: 'M',
+          label: 'Multiple',
+          level: 1,
+        },
+        {
+          value: 'S',
+          label: 'Single',
+          level: 2,
+        },
+        {
+          value: 'N',
+          label: 'None',
+          level: 3,
+        },
+      ],
+    },
+  ],
+  'Impact Metrics': [
+    {
+      value: 'C',
+      label: 'Confidentiality',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'P',
+          label: 'Partial',
+          level: 2,
+        },
+        {
+          value: 'C',
+          label: 'Complete',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'I',
+      label: 'Integrity',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'P',
+          label: 'Partial',
+          level: 2,
+        },
+        {
+          value: 'C',
+          label: 'Complete',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'A',
+      label: 'Availability',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'P',
+          label: 'Partial',
+          level: 2,
+        },
+        {
+          value: 'C',
+          label: 'Complete',
+          level: 3,
+        },
+      ],
+    },
+  ],
+};

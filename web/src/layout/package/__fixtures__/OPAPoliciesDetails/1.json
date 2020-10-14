@@ -42,7 +42,11 @@
   "deprecated": false,
   "license": "MIT",
   "signed": false,
-  "containerImage": "eu.gcr.io/swade1987/deprek8ion:1.1.17",
+  "containersImages": [
+    {
+      "image": "lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator:v1.0.0"
+    }
+  ],
   "provider": "Provider name",
   "createdAt": 1595872800,
   "maintainers": [
