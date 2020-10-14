@@ -149,10 +149,18 @@ const HomeView = (props: Props) => {
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open
             Policy Agent (OPA) policies, and OLM operators.
             <div className="mx-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around">
-              <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
-              <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
-              <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
-              <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+              <ExternalLink href="https://helm.sh">
+                <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+              </ExternalLink>
+              <ExternalLink href="https://falco.org">
+                <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+              </ExternalLink>
+              <ExternalLink href="https://www.openpolicyagent.org">
+                <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+              </ExternalLink>
+              <ExternalLink href="https://github.com/operator-framework">
+                <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+              </ExternalLink>
             </div>
             Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share
             artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured
