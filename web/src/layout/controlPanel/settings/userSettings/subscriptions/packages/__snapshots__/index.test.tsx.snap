@@ -520,7 +520,7 @@ exports[`PackagesSection renders correctly 2`] = `
                           <img
                             alt="cerebro"
                             class="image"
-                            src="/static/media/placeholder_helm.png"
+                            src="/static/media/placeholder_pkg_helm.png"
                           />
                         </div>
                         <a
@@ -606,7 +606,7 @@ exports[`PackagesSection renders correctly 2`] = `
                           <img
                             alt="elastic-stack"
                             class="image"
-                            src="/static/media/placeholder_helm.png"
+                            src="/static/media/placeholder_pkg_helm.png"
                           />
                         </div>
                         <a
@@ -1274,7 +1274,7 @@ exports[`PackagesSection renders correctly 2`] = `
                               <img
                                 alt="Logo cerebro"
                                 class="image"
-                                src="/static/media/placeholder_helm.png"
+                                src="/static/media/placeholder_pkg_helm.png"
                               />
                             </div>
                             <div
@@ -1410,7 +1410,7 @@ exports[`PackagesSection renders correctly 2`] = `
                               <img
                                 alt="Logo elastic-stack"
                                 class="image"
-                                src="/static/media/placeholder_helm.png"
+                                src="/static/media/placeholder_pkg_helm.png"
                               />
                             </div>
                             <div

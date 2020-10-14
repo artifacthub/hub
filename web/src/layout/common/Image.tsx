@@ -13,7 +13,7 @@ interface Props {
   kind?: RepositoryKind;
 }
 
-const PLACEHOLDER_SRC = '/static/media/placeholder_helm.png';
+const PLACEHOLDER_SRC = '/static/media/package_placeholder.svg';
 
 const Image = (props: Props) => {
   const [error, setError] = useState(false);
@@ -28,13 +28,15 @@ const Image = (props: Props) => {
     } else {
       switch (props.kind) {
         case RepositoryKind.Helm:
-          return '/static/media/placeholder_helm.png';
+          return '/static/media/placeholder_pkg_helm.png';
         case RepositoryKind.OLM:
-          return '/static/media/placeholder_olm.png';
+          return '/static/media/placeholder_pkg_olm.png';
         case RepositoryKind.OPA:
-          return '/static/media/placeholder_opa.png';
+          return '/static/media/placeholder_pkg_opa.png';
         case RepositoryKind.Falco:
-          return '/static/media/placeholder_falco.png';
+          return '/static/media/placeholder_pkg_falco.png';
+        default:
+          return PLACEHOLDER_SRC;
       }
     }
   };
