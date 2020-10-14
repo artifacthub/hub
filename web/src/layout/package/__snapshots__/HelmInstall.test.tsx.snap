@@ -11,7 +11,16 @@ exports[`HelmInstall creates snapshot 1`] = `
       <button
         class="btn btn-link nav-item btn active btn-primary active"
       >
-        Helm CLI
+        Helm v3
+      </button>
+    </li>
+    <li
+      class="nav-item"
+    >
+      <button
+        class="btn btn-link nav-item btn"
+      >
+        Helm v2
       </button>
     </li>
   </ul>
@@ -129,16 +138,32 @@ exports[`HelmInstall creates snapshot 1`] = `
         </div>
       </div>
       <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255); margin-bottom: 10px;"
       >
         <code
           class="language-bash"
         >
           <span>
-            helm install repo/packageName --version 1.0.0
+            helm install my-packageName repo/packageName --version 1.0.0
           </span>
         </code>
       </pre>
+      <div
+        class="font-italic text-muted legend"
+      >
+        <span
+          class="font-weight-bold"
+        >
+          my-packageName
+        </span>
+         corresponds to the release name, feel free to change it to suit your needs. You can also add additional flags to the 
+        <span
+          class="font-weight-bold"
+        >
+          helm install
+        </span>
+         command if you need to.
+      </div>
       <div
         class="mt-2"
       >
