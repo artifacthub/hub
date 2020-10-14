@@ -837,7 +837,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                         <img
                           alt="Logo fcgi-nginx-frontend"
                           class="image"
-                          src="/static/media/placeholder_helm.png"
+                          src="/static/media/placeholder_pkg_helm.png"
                         />
                       </div>
                     </a>

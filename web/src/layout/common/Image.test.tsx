@@ -1,12 +1,14 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
+import { RepositoryKind } from '../../types';
 import Image from './Image';
 
 const defaultProps = {
   imageId: '123',
   alt: 'image',
   placeholderIcon: undefined,
+  kind: RepositoryKind.Helm,
 };
 
 describe('Image', () => {
@@ -27,10 +29,14 @@ describe('Image', () => {
   });
 
   it('renders placeholder image when imageId is null', () => {
-    const { getByAltText } = render(<Image alt={defaultProps.alt} imageId={null} />);
+    const props = {
+      ...defaultProps,
+      imageId: null,
+    };
+    const { getByAltText } = render(<Image {...props} />);
     const image = getByAltText(defaultProps.alt);
     expect(image).toBeInTheDocument();
-    expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_helm.png');
+    expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
   });
 
   it('renders placeholder on error', () => {
@@ -41,7 +47,19 @@ describe('Image', () => {
     fireEvent.error(image);
 
     waitFor(() => {
-      expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_helm.png');
+      expect(image).toHaveProperty('src', 'http://localhost/static/media/placeholder_pkg_helm.png');
     });
+  });
+
+  it('renders default placeholder when kind is undefined', () => {
+    const props = {
+      ...defaultProps,
+      imageId: null,
+      kind: undefined,
+    };
+    const { getByAltText } = render(<Image {...props} />);
+    const image = getByAltText(defaultProps.alt);
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveProperty('src', 'http://localhost/static/media/package_placeholder.svg');
   });
 });

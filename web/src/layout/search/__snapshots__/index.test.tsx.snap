@@ -1882,7 +1882,7 @@ exports[`Search index creates snapshot 2`] = `
                         <img
                           alt="Logo kafka"
                           class="image"
-                          src="/static/media/placeholder_helm.png"
+                          src="/static/media/placeholder_pkg_helm.png"
                         />
                       </div>
                       <div
