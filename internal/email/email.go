@@ -1,12 +1,18 @@
 package email
 
 import (
+	"errors"
 	"fmt"
 	"net/smtp"
 
 	"github.com/domodwyer/mailyak"
 	"github.com/spf13/viper"
 )
+
+// ErrSenderNotAvailable error indicates that there is not a mail sender
+// available. This usually happens when the email configuration hasn't been
+// set up.
+var ErrSenderNotAvailable = errors.New("email sender not available")
 
 // Data describes the different pieces of data used to compose an email.
 type Data struct {
