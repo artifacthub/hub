@@ -3,11 +3,10 @@ kind: CronJob
 metadata:
   name: scanner
 spec:
-  schedule: "15 * * * *"
+  schedule: "15,45 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
-  suspend: false
   jobTemplate:
     spec:
       template:

@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: tracker
 spec:
-  schedule: "*/30 * * * *"
+  schedule: "0,30 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
