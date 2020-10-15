@@ -109,7 +109,11 @@ func (w *Worker) processNotification(ctx context.Context) error {
 		// Process notification
 		switch {
 		case n.User != nil:
-			err = w.deliverEmailNotification(ctx, n)
+			if w.svc.ES != nil {
+				err = w.deliverEmailNotification(ctx, n)
+			} else {
+				err = email.ErrSenderNotAvailable
+			}
 		case n.Webhook != nil:
 			err = w.deliverWebhookNotification(ctx, n)
 		}
