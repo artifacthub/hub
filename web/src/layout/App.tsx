@@ -82,7 +82,7 @@ export default function App() {
             <Route
               path="/packages/search"
               exact
-              render={({ location }) => {
+              render={({ location }: any) => {
                 const searchParams = buildSearchParams(location.search);
                 return (
                   <>
