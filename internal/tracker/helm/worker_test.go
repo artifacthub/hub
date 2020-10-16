@@ -368,71 +368,88 @@ func TestWorker(t *testing.T) {
 
 func TestEnrichPackageFromAnnotations(t *testing.T) {
 	testCases := []struct {
-		p                            *hub.Package
-		annotations                  map[string]string
-		expectedOperator             bool
-		expectedOperatorCapabilities string
-		expectedLinks                []*hub.Link
-		expectedMaintainers          []*hub.Maintainer
-		expectedErrMsg               string
+		pkg            *hub.Package
+		annotations    map[string]string
+		expectedPkg    *hub.Package
+		expectedErrMsg string
 	}{
-		// Operator flag
+		// CRDs
 		{
 			&hub.Package{},
 			map[string]string{
-				operatorAnnotation: "invalid",
+				crdsAnnotation: `
+- kind: MyKind
+  version: v1
+  name: mykind
+  displayName: My Kind
+  description: Some nice description
+`,
 			},
-			false,
-			"",
-			nil,
-			nil,
-			"invalid operator value",
-		},
-		{
-			&hub.Package{},
-			map[string]string{
-				operatorAnnotation: "true",
-			},
-			true,
-			"",
-			nil,
-			nil,
-			"",
-		},
-		{
 			&hub.Package{
-				IsOperator: true,
+				CRDs: []interface{}{
+					map[string]interface{}{
+						"description": "Some nice description",
+						"displayName": "My Kind",
+						"kind":        "MyKind",
+						"name":        "mykind",
+						"version":     "v1",
+					},
+				},
 			},
-			map[string]string{
-				operatorAnnotation: "false",
-			},
-			false,
-			"",
-			nil,
-			nil,
 			"",
 		},
-		{
-			&hub.Package{
-				IsOperator: true,
-			},
-			map[string]string{},
-			true,
-			"",
-			nil,
-			nil,
-			"",
-		},
-		// Operator capabilities
+		// CRDs examples
 		{
 			&hub.Package{},
 			map[string]string{
-				operatorCapabilitiesAnnotation: "Basic Install",
+				crdsExamplesAnnotation: `
+- apiVersion: v1
+  kind: MyKind
+  metadata:
+    name: mykind
+  spec:
+    replicas: 1
+`,
 			},
-			false,
-			"Basic Install",
-			nil,
-			nil,
+			&hub.Package{
+				CRDsExamples: []interface{}{
+					map[string]interface{}{
+						"apiVersion": "v1",
+						"kind":       "MyKind",
+						"metadata": map[string]interface{}{
+							"name": "mykind",
+						},
+						"spec": map[string]interface{}{
+							"replicas": 1,
+						},
+					},
+				},
+			},
+			"",
+		},
+		// Images
+		{
+			&hub.Package{},
+			map[string]string{
+				imagesAnnotation: `
+- name: img1
+  image: repo/img1:1.0.0
+- name: img2
+  image: repo/img2:2.0.0
+`,
+			},
+			&hub.Package{
+				ContainersImages: []*hub.ContainerImage{
+					{
+						Name:  "img1",
+						Image: "repo/img1:1.0.0",
+					},
+					{
+						Name:  "img2",
+						Image: "repo/img2:2.0.0",
+					},
+				},
+			},
 			"",
 		},
 		// Links
@@ -441,10 +458,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			map[string]string{
 				linksAnnotation: `"{\"`,
 			},
-			false,
-			"",
-			nil,
-			nil,
+			&hub.Package{},
 			"invalid links value",
 		},
 		{
@@ -459,15 +473,14 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			map[string]string{
 				linksAnnotation: `"{\"`,
 			},
-			false,
-			"",
-			[]*hub.Link{
-				{
-					Name: "",
-					URL:  "https://link1.url",
+			&hub.Package{
+				Links: []*hub.Link{
+					{
+						Name: "",
+						URL:  "https://link1.url",
+					},
 				},
 			},
-			nil,
 			"invalid links value",
 		},
 		{
@@ -478,15 +491,14 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
   url: https://link1.url
 `,
 			},
-			false,
-			"",
-			[]*hub.Link{
-				{
-					Name: "link1",
-					URL:  "https://link1.url",
+			&hub.Package{
+				Links: []*hub.Link{
+					{
+						Name: "link1",
+						URL:  "https://link1.url",
+					},
 				},
 			},
-			nil,
 			"",
 		},
 		{
@@ -506,19 +518,18 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
   url: https://link2.url
 `,
 			},
-			false,
-			"",
-			[]*hub.Link{
-				{
-					Name: "link1",
-					URL:  "https://link1.url",
-				},
-				{
-					Name: "link2",
-					URL:  "https://link2.url",
+			&hub.Package{
+				Links: []*hub.Link{
+					{
+						Name: "link1",
+						URL:  "https://link1.url",
+					},
+					{
+						Name: "link2",
+						URL:  "https://link2.url",
+					},
 				},
 			},
-			nil,
 			"",
 		},
 		// Maintainers
@@ -527,10 +538,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			map[string]string{
 				maintainersAnnotation: `"{\"`,
 			},
-			false,
-			"",
-			nil,
-			nil,
+			&hub.Package{},
 			"invalid maintainers value",
 		},
 		{
@@ -545,13 +553,12 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			map[string]string{
 				maintainersAnnotation: `"{\"`,
 			},
-			false,
-			"",
-			nil,
-			[]*hub.Maintainer{
-				{
-					Name:  "user1",
-					Email: "user1@email.com",
+			&hub.Package{
+				Maintainers: []*hub.Maintainer{
+					{
+						Name:  "user1",
+						Email: "user1@email.com",
+					},
 				},
 			},
 			"invalid maintainers value",
@@ -564,13 +571,12 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
   email: user1@email.com
 `,
 			},
-			false,
-			"",
-			nil,
-			[]*hub.Maintainer{
-				{
-					Name:  "user1",
-					Email: "user1@email.com",
+			&hub.Package{
+				Maintainers: []*hub.Maintainer{
+					{
+						Name:  "user1",
+						Email: "user1@email.com",
+					},
 				},
 			},
 			"",
@@ -592,18 +598,69 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
   email: user2@email.com
 `,
 			},
-			false,
+			&hub.Package{
+				Maintainers: []*hub.Maintainer{
+					{
+						Name:  "user1-updated",
+						Email: "user1@email.com",
+					},
+					{
+						Name:  "user2",
+						Email: "user2@email.com",
+					},
+				},
+			},
 			"",
-			nil,
-			[]*hub.Maintainer{
-				{
-					Name:  "user1-updated",
-					Email: "user1@email.com",
-				},
-				{
-					Name:  "user2",
-					Email: "user2@email.com",
-				},
+		},
+		// Operator flag
+		{
+			&hub.Package{},
+			map[string]string{
+				operatorAnnotation: "invalid",
+			},
+			&hub.Package{},
+			"invalid operator value",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				operatorAnnotation: "true",
+			},
+			&hub.Package{
+				IsOperator: true,
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				IsOperator: true,
+			},
+			map[string]string{
+				operatorAnnotation: "false",
+			},
+			&hub.Package{
+				IsOperator: false,
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				IsOperator: true,
+			},
+			map[string]string{},
+			&hub.Package{
+				IsOperator: true,
+			},
+			"",
+		},
+		// Operator capabilities
+		{
+			&hub.Package{},
+			map[string]string{
+				operatorCapabilitiesAnnotation: "Basic Install",
+			},
+			&hub.Package{
+				Capabilities: "Basic Install",
 			},
 			"",
 		},
@@ -611,16 +668,14 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			err := enrichPackageFromAnnotations(tc.p, tc.annotations)
+			err := enrichPackageFromAnnotations(tc.pkg, tc.annotations)
 			if tc.expectedErrMsg != "" {
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), tc.expectedErrMsg)
 			} else {
 				assert.Nil(t, err)
 			}
-			assert.Equal(t, tc.expectedOperator, tc.p.IsOperator)
-			assert.Equal(t, tc.expectedOperatorCapabilities, tc.p.Capabilities)
-			assert.Equal(t, tc.expectedLinks, tc.p.Links)
+			assert.Equal(t, tc.expectedPkg, tc.pkg)
 		})
 	}
 }

@@ -332,6 +332,8 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 		var crdsExamples []interface{}
 		if err := yaml.Unmarshal([]byte(v), &crdsExamples); err == nil {
 			p.CRDsExamples = crdsExamples
+		} else {
+			fmt.Println(err)
 		}
 	}
 
