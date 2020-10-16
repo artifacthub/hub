@@ -177,6 +177,7 @@ jobs:
         run: |
           mkdir $HOME/.kube
           echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
       - name: Upgrade deployment
         working-directory: ./charts/artifact-hub
         run: |
@@ -205,6 +206,7 @@ jobs:
         run: |
           mkdir $HOME/.kube
           echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
       - name: Upgrade deployment
         working-directory: ./charts/artifact-hub
         run: |
