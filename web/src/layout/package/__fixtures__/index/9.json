@@ -20,6 +20,7 @@
     "organizationDisplayName": "Helm",
     "userAlias": null,
     "verifiedPublisher": true,
-    "official": false
+    "official": false,
+    "url": "https://repo.url"
   }
 }

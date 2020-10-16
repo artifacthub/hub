@@ -69,9 +69,10 @@ describe('RepositoryInfo', () => {
   });
 
   it('displays repo info to enter on link and hides on leave', async () => {
-    const { getByTestId, getAllByText, getByText } = render(<RepositoryInfo {...defaultProps} />);
+    const { getByTestId, getAllByText } = render(<RepositoryInfo {...defaultProps} />);
     expect(getAllByText(defaultProps.repository.displayName!)).toHaveLength(2);
-    expect(getByText(defaultProps.repository.url)).toBeInTheDocument();
+    expect(getByTestId('repoUrl')).toBeInTheDocument();
+    expect(getByTestId('repoUrl')).toHaveTextContent(defaultProps.repository.url);
 
     fireEvent.mouseEnter(getByTestId('repoLink'));
 

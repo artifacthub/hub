@@ -156,43 +156,132 @@ exports[`Package index creates snapshot 2`] = `
                             </small>
                             <div
                               class="text-reset urlContent labelContent"
+                              data-testid="repoUrl"
                             >
                               <div
-                                class="position-relative d-inline"
+                                style="line-height: 21px;"
                               >
-                                <button
-                                  class="btn btn-sm miniBtn"
-                                  data-testid="ctcBtn"
-                                  type="button"
+                                <div
+                                  class="d-inline"
+                                >
+                                  h
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  t
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  t
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  p
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  s
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  :
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  /
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  /
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  r
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  e
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  p
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  o
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  .
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  u
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  r
+                                </div>
+                                <div
+                                  class="d-inline"
+                                >
+                                  l
+                                </div>
+                                <div
+                                  class="d-inline-block"
                                 >
                                   <div
-                                    class="d-flex flex-row align-items-center"
+                                    class="position-relative d-inline"
                                   >
-                                    <svg
-                                      fill="none"
-                                      height="1em"
-                                      stroke="currentColor"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      viewBox="0 0 24 24"
-                                      width="1em"
-                                      xmlns="http://www.w3.org/2000/svg"
+                                    <button
+                                      class="btn btn-sm miniBtn"
+                                      data-testid="ctcBtn"
+                                      type="button"
                                     >
-                                      <rect
-                                        height="13"
-                                        rx="2"
-                                        ry="2"
-                                        width="13"
-                                        x="9"
-                                        y="9"
-                                      />
-                                      <path
-                                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                      />
-                                    </svg>
+                                      <div
+                                        class="d-flex flex-row align-items-center"
+                                      >
+                                        <svg
+                                          fill="none"
+                                          height="1em"
+                                          stroke="currentColor"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          viewBox="0 0 24 24"
+                                          width="1em"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <rect
+                                            height="13"
+                                            rx="2"
+                                            ry="2"
+                                            width="13"
+                                            x="9"
+                                            y="9"
+                                          />
+                                          <path
+                                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                          />
+                                        </svg>
+                                      </div>
+                                    </button>
                                   </div>
-                                </button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -224,6 +313,20 @@ exports[`Package index creates snapshot 2`] = `
                       >
                         incubator
                       </div>
+                      <svg
+                        class="d-none d-sm-inline-block ml-1 infoIcon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>

@@ -18,6 +18,7 @@
     "displayName": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
-    "userAlias": null
+    "userAlias": null,
+    "url": "https://repo.url"
   }
 }
