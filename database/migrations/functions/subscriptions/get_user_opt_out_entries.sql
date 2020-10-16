@@ -23,6 +23,6 @@ returns setof json as $$
         left join "user" u on u.user_id = r.user_id
         left join organization o using (organization_id)
         where oo.user_id = p_user_id
-        order by r.name asc
+        order by oo.opt_out_id asc
     ) ooe;
 $$ language sql;
