@@ -1572,44 +1572,67 @@ exports[`Search index creates snapshot 2`] = `
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
+                                          data-testid="repoUrl"
                                         >
-                                          url
                                           <div
-                                            class="position-relative d-inline"
+                                            style="line-height: 21px;"
                                           >
-                                            <button
-                                              class="btn btn-sm miniBtn"
-                                              data-testid="ctcBtn"
-                                              type="button"
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              u
+                                            </div>
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              r
+                                            </div>
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              l
+                                            </div>
+                                            <div
+                                              class="d-inline-block"
                                             >
                                               <div
-                                                class="d-flex flex-row align-items-center"
+                                                class="position-relative d-inline"
                                               >
-                                                <svg
-                                                  fill="none"
-                                                  height="1em"
-                                                  stroke="currentColor"
-                                                  stroke-linecap="round"
-                                                  stroke-linejoin="round"
-                                                  stroke-width="2"
-                                                  viewBox="0 0 24 24"
-                                                  width="1em"
-                                                  xmlns="http://www.w3.org/2000/svg"
+                                                <button
+                                                  class="btn btn-sm miniBtn"
+                                                  data-testid="ctcBtn"
+                                                  type="button"
                                                 >
-                                                  <rect
-                                                    height="13"
-                                                    rx="2"
-                                                    ry="2"
-                                                    width="13"
-                                                    x="9"
-                                                    y="9"
-                                                  />
-                                                  <path
-                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                  />
-                                                </svg>
+                                                  <div
+                                                    class="d-flex flex-row align-items-center"
+                                                  >
+                                                    <svg
+                                                      fill="none"
+                                                      height="1em"
+                                                      stroke="currentColor"
+                                                      stroke-linecap="round"
+                                                      stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      viewBox="0 0 24 24"
+                                                      width="1em"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <rect
+                                                        height="13"
+                                                        rx="2"
+                                                        ry="2"
+                                                        width="13"
+                                                        x="9"
+                                                        y="9"
+                                                      />
+                                                      <path
+                                                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                      />
+                                                    </svg>
+                                                  </div>
+                                                </button>
                                               </div>
-                                            </button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -1710,44 +1733,67 @@ exports[`Search index creates snapshot 2`] = `
                                           </small>
                                           <div
                                             class="text-reset urlContent labelContent"
+                                            data-testid="repoUrl"
                                           >
-                                            url
                                             <div
-                                              class="position-relative d-inline"
+                                              style="line-height: 21px;"
                                             >
-                                              <button
-                                                class="btn btn-sm miniBtn"
-                                                data-testid="ctcBtn"
-                                                type="button"
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                u
+                                              </div>
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                r
+                                              </div>
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                l
+                                              </div>
+                                              <div
+                                                class="d-inline-block"
                                               >
                                                 <div
-                                                  class="d-flex flex-row align-items-center"
+                                                  class="position-relative d-inline"
                                                 >
-                                                  <svg
-                                                    fill="none"
-                                                    height="1em"
-                                                    stroke="currentColor"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    viewBox="0 0 24 24"
-                                                    width="1em"
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  <button
+                                                    class="btn btn-sm miniBtn"
+                                                    data-testid="ctcBtn"
+                                                    type="button"
                                                   >
-                                                    <rect
-                                                      height="13"
-                                                      rx="2"
-                                                      ry="2"
-                                                      width="13"
-                                                      x="9"
-                                                      y="9"
-                                                    />
-                                                    <path
-                                                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                    />
-                                                  </svg>
+                                                    <div
+                                                      class="d-flex flex-row align-items-center"
+                                                    >
+                                                      <svg
+                                                        fill="none"
+                                                        height="1em"
+                                                        stroke="currentColor"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        viewBox="0 0 24 24"
+                                                        width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <rect
+                                                          height="13"
+                                                          rx="2"
+                                                          ry="2"
+                                                          width="13"
+                                                          x="9"
+                                                          y="9"
+                                                        />
+                                                        <path
+                                                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                        />
+                                                      </svg>
+                                                    </div>
+                                                  </button>
                                                 </div>
-                                              </button>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -1952,44 +1998,67 @@ exports[`Search index creates snapshot 2`] = `
                                         </small>
                                         <div
                                           class="text-reset urlContent labelContent"
+                                          data-testid="repoUrl"
                                         >
-                                          url
                                           <div
-                                            class="position-relative d-inline"
+                                            style="line-height: 21px;"
                                           >
-                                            <button
-                                              class="btn btn-sm miniBtn"
-                                              data-testid="ctcBtn"
-                                              type="button"
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              u
+                                            </div>
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              r
+                                            </div>
+                                            <div
+                                              class="d-inline"
+                                            >
+                                              l
+                                            </div>
+                                            <div
+                                              class="d-inline-block"
                                             >
                                               <div
-                                                class="d-flex flex-row align-items-center"
+                                                class="position-relative d-inline"
                                               >
-                                                <svg
-                                                  fill="none"
-                                                  height="1em"
-                                                  stroke="currentColor"
-                                                  stroke-linecap="round"
-                                                  stroke-linejoin="round"
-                                                  stroke-width="2"
-                                                  viewBox="0 0 24 24"
-                                                  width="1em"
-                                                  xmlns="http://www.w3.org/2000/svg"
+                                                <button
+                                                  class="btn btn-sm miniBtn"
+                                                  data-testid="ctcBtn"
+                                                  type="button"
                                                 >
-                                                  <rect
-                                                    height="13"
-                                                    rx="2"
-                                                    ry="2"
-                                                    width="13"
-                                                    x="9"
-                                                    y="9"
-                                                  />
-                                                  <path
-                                                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                  />
-                                                </svg>
+                                                  <div
+                                                    class="d-flex flex-row align-items-center"
+                                                  >
+                                                    <svg
+                                                      fill="none"
+                                                      height="1em"
+                                                      stroke="currentColor"
+                                                      stroke-linecap="round"
+                                                      stroke-linejoin="round"
+                                                      stroke-width="2"
+                                                      viewBox="0 0 24 24"
+                                                      width="1em"
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                      <rect
+                                                        height="13"
+                                                        rx="2"
+                                                        ry="2"
+                                                        width="13"
+                                                        x="9"
+                                                        y="9"
+                                                      />
+                                                      <path
+                                                        d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                      />
+                                                    </svg>
+                                                  </div>
+                                                </button>
                                               </div>
-                                            </button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
@@ -2090,44 +2159,67 @@ exports[`Search index creates snapshot 2`] = `
                                           </small>
                                           <div
                                             class="text-reset urlContent labelContent"
+                                            data-testid="repoUrl"
                                           >
-                                            url
                                             <div
-                                              class="position-relative d-inline"
+                                              style="line-height: 21px;"
                                             >
-                                              <button
-                                                class="btn btn-sm miniBtn"
-                                                data-testid="ctcBtn"
-                                                type="button"
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                u
+                                              </div>
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                r
+                                              </div>
+                                              <div
+                                                class="d-inline"
+                                              >
+                                                l
+                                              </div>
+                                              <div
+                                                class="d-inline-block"
                                               >
                                                 <div
-                                                  class="d-flex flex-row align-items-center"
+                                                  class="position-relative d-inline"
                                                 >
-                                                  <svg
-                                                    fill="none"
-                                                    height="1em"
-                                                    stroke="currentColor"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    viewBox="0 0 24 24"
-                                                    width="1em"
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                                  <button
+                                                    class="btn btn-sm miniBtn"
+                                                    data-testid="ctcBtn"
+                                                    type="button"
                                                   >
-                                                    <rect
-                                                      height="13"
-                                                      rx="2"
-                                                      ry="2"
-                                                      width="13"
-                                                      x="9"
-                                                      y="9"
-                                                    />
-                                                    <path
-                                                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                                                    />
-                                                  </svg>
+                                                    <div
+                                                      class="d-flex flex-row align-items-center"
+                                                    >
+                                                      <svg
+                                                        fill="none"
+                                                        height="1em"
+                                                        stroke="currentColor"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        viewBox="0 0 24 24"
+                                                        width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                      >
+                                                        <rect
+                                                          height="13"
+                                                          rx="2"
+                                                          ry="2"
+                                                          width="13"
+                                                          x="9"
+                                                          y="9"
+                                                        />
+                                                        <path
+                                                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                                                        />
+                                                      </svg>
+                                                    </div>
+                                                  </button>
                                                 </div>
-                                              </button>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>

@@ -2,3 +2,9 @@
   word-break: break-all;
   font-size: 0.9rem;
 }
+
+.icon {
+  font-size: 0.7rem;
+  min-width: 12px;
+  margin-top: 6px;
+}
