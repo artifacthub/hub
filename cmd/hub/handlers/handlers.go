@@ -25,9 +25,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"github.com/ulule/limiter/v3"
-	"github.com/ulule/limiter/v3/drivers/middleware/stdlib"
-	"github.com/ulule/limiter/v3/drivers/store/memory"
 )
 
 var xForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
@@ -123,17 +120,6 @@ func (h *Handlers) setupRouter() {
 
 	// API
 	r.Route("/api/v1", func(r chi.Router) {
-		// Setup rate limiter middleware
-		if h.cfg.GetBool("server.limiter.enabled") {
-			limiterRate := limiter.Rate{
-				Period: h.cfg.GetDuration("server.limiter.period"),
-				Limit:  h.cfg.GetInt64("server.limiter.limit"),
-			}
-			limiterStore := memory.NewStore()
-			rateLimiter := limiter.New(limiterStore, limiterRate)
-			r.Use(stdlib.NewMiddleware(rateLimiter).Handler)
-		}
-
 		// Users
 		r.Route("/users", func(r chi.Router) {
 			r.Post("/", h.Users.RegisterUser)
