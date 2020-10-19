@@ -7,11 +7,11 @@ import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
 import CapabilityLevel from './CapabilityLevel';
 import ContainersImages from './ContainersImages';
+import styles from './Details.module.css';
 import Keywords from './Keywords';
 import License from './License';
 import Links from './Links';
 import Maintainers from './Maintainers';
-import styles from './OLMOperatorsDetails.module.css';
 import SecurityReport from './securityReport';
 
 interface Props {
@@ -78,6 +78,7 @@ const OLMOperatorsDetails = (props: Props) => (
           license={props.package.license}
           className="mb-3"
           linkClassName="text-primary py-1 py-sm-0"
+          linkContentClassName={styles.text}
           visibleIcon
         />
       </>

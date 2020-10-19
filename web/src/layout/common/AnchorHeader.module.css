@@ -37,7 +37,6 @@
   margin-left: -35px;
   width: 35px;
   opacity: 0;
-  transition: opacity 0.15s ease-in-out;
   line-height: 1;
   padding-top: 4px;
 }

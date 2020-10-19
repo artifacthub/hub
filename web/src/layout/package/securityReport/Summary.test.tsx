@@ -30,5 +30,18 @@ describe('SecuritySummary', () => {
       expect(getByText('105')).toBeInTheDocument();
       expect(queryByText('0')).toBeNull();
     });
+
+    it('renders component with 0 vulnerabilities', () => {
+      const { getByText } = render(
+        <SecuritySummary
+          summary={{
+            critical: 0,
+            high: 0,
+            low: 0,
+          }}
+        />
+      );
+      expect(getByText(/No vulnerabilities have been detected in the/g)).toBeInTheDocument();
+    });
   });
 });

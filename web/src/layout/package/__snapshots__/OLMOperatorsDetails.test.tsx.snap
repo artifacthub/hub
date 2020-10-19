@@ -608,7 +608,11 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
             fill-rule="evenodd"
           />
         </svg>
-        MIT
+        <div
+          class="text"
+        >
+          MIT
+        </div>
         <span
           class="smallIcon"
         >

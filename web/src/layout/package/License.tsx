@@ -12,6 +12,7 @@ interface Props {
   license?: null | string;
   className?: string;
   linkClassName?: string;
+  linkContentClassName?: string;
   visibleIcon?: boolean;
   btnType?: boolean;
 }
@@ -71,7 +72,7 @@ const License = (props: Props) => {
         >
           <div className="d-flex align-items-center">
             {props.visibleIcon && <GoLaw className="text-muted mr-2 h6 mb-0" />}
-            <>{props.license}</>
+            <div className={props.linkContentClassName}>{props.license}</div>
             <span
               className={classnames(styles.smallIcon, {
                 [styles.alignedSmallIcon]: isUndefined(props.visibleIcon) || !props.visibleIcon,

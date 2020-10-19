@@ -57,11 +57,11 @@ describe('SecurityReport', () => {
           unknown: 0,
         },
       };
-      const { getByText, queryByText } = render(<SecurityReport {...props} />);
+      const { getByText } = render(<SecurityReport {...props} />);
 
       expect(getByText('Security Report')).toBeInTheDocument();
       expect(getByText('No vulnerabilities found')).toBeInTheDocument();
-      expect(queryByText('Open full report')).toBeNull();
+      expect(getByText('Open full report')).toBeInTheDocument();
     });
   });
 

@@ -285,24 +285,24 @@ describe('Package index', () => {
     });
   });
 
-  // describe('Helm package', () => {
-  //   it('renders CRDs when are defined', async () => {
-  //     const mockPackage = getMockPackage('10');
-  //     mocked(API).getPackage.mockResolvedValue(mockPackage);
+  describe('Helm package', () => {
+    it('renders CRDs when are defined', async () => {
+      const mockPackage = getMockPackage('10');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-  //     const { getByText, getByTestId } = render(
-  //       <Router>
-  //         <PackageView {...defaultProps} />
-  //       </Router>
-  //     );
+      const { getByText, getByTestId } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
 
-  //     await waitFor(() => getByTestId('mainPackage'));
+      await waitFor(() => getByTestId('mainPackage'));
 
-  //     expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
-  //     expect(getByTestId('resourceDefinition')).toBeInTheDocument();
-  //     await waitFor(() => {});
-  //   });
-  // });
+      expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
+      expect(getByTestId('resourceDefinition')).toBeInTheDocument();
+      await waitFor(() => {});
+    });
+  });
 
   describe('OLM package', () => {
     it('renders CRDs from crds prop when is defined', async () => {
@@ -319,23 +319,6 @@ describe('Package index', () => {
 
       expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
       expect(getAllByTestId('resourceDefinition')).toHaveLength(1);
-      await waitFor(() => {});
-    });
-
-    it('renders CRDs from data prop when crds props is null', async () => {
-      const mockPackage = getMockPackage('12');
-      mocked(API).getPackage.mockResolvedValue(mockPackage);
-
-      const { getByText, getAllByTestId, getByTestId } = render(
-        <Router>
-          <PackageView {...defaultProps} />
-        </Router>
-      );
-
-      await waitFor(() => getByTestId('mainPackage'));
-
-      expect(getByText('Custom Resource Definitions')).toBeInTheDocument();
-      expect(getAllByTestId('resourceDefinition')).toHaveLength(4);
       await waitFor(() => {});
     });
   });
