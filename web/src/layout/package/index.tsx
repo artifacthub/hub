@@ -231,38 +231,7 @@ const PackageView = (props: Props) => {
     return policies;
   };
 
-  const getOLMResources = (): CustomResourcesDefinition[] | undefined => {
-    let resources: CustomResourcesDefinition[] | undefined;
-    let examples: CustomResourcesDefinitionExample[] = [];
-
-    if (detail && detail.crds) {
-      if (detail.crdsExamples) {
-        examples = detail.crdsExamples;
-      }
-      resources = detail.crds.map((resourceDefinition: CustomResourcesDefinition) => {
-        return {
-          ...resourceDefinition,
-          example: examples.find((info: any) => info.kind === resourceDefinition.kind),
-        };
-      });
-    } else if (detail && detail.data && detail.data.customResourcesDefinitions) {
-      if (
-        !isUndefined(detail.data.customResourcesDefinitionsExamples) &&
-        detail.data.customResourcesDefinitionsExamples !== ''
-      ) {
-        examples = JSON.parse(detail.data.customResourcesDefinitionsExamples!) as CustomResourcesDefinitionExample[];
-      }
-      resources = detail.data.customResourcesDefinitions.map((resourceDefinition: CustomResourcesDefinition) => {
-        return {
-          ...resourceDefinition,
-          example: examples.find((info: any) => info.kind === resourceDefinition.kind),
-        };
-      });
-    }
-    return resources;
-  };
-
-  const getHelmCRDs = (): CustomResourcesDefinition[] | undefined => {
+  const getCRDs = (): CustomResourcesDefinition[] | undefined => {
     let resources: CustomResourcesDefinition[] | undefined;
     if (detail && detail.crds) {
       let examples: CustomResourcesDefinitionExample[] = detail.crdsExamples || [];
@@ -276,7 +245,8 @@ const PackageView = (props: Props) => {
     return resources;
   };
 
-  const getCRDsCards = (resources: CustomResourcesDefinition[] | undefined): JSX.Element | null => {
+  const getCRDsCards = (): JSX.Element | null => {
+    const resources = getCRDs();
     if (!isUndefined(resources) && resources.length > 0) {
       return (
         <div className={`mb-5 ${styles.codeWrapper}`}>
@@ -591,10 +561,8 @@ const PackageView = (props: Props) => {
                               );
 
                             case RepositoryKind.Helm:
-                              return getCRDsCards(getHelmCRDs());
-
                             case RepositoryKind.OLM:
-                              return getCRDsCards(getOLMResources());
+                              return getCRDsCards();
 
                             default:
                               return null;

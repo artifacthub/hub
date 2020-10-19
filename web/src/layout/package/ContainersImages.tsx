@@ -26,7 +26,7 @@ const ContainersImages = (props: Props) => {
               <div data-testid="containerImage" className={`flex-grow-1 ${styles.containerImage}`}>
                 {attachIconToText({
                   isVisible: true,
-                  text: containerImage.image,
+                  text: containerImage.name || containerImage.image,
                   icon: (
                     <ButtonCopyToClipboard
                       text={containerImage.image}

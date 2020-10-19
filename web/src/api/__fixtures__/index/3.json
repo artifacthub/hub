@@ -28,7 +28,7 @@
   "deprecated": false,
   "license": null,
   "signed": false,
-  "container_image": null,
+  "containers_images": null,
   "provider": null,
   "created_at": 1592382697,
   "maintainers": [],

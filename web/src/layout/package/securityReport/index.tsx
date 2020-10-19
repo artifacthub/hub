@@ -68,12 +68,12 @@ const SecurityReport = (props: Props) => {
                 </div>
               );
             })}
-
-            <div className="d-none d-md-block mt-md-3">
-              <SecurityModal summary={props.summary!} packageId={props.packageId} version={props.version} />
-            </div>
           </>
         )}
+
+        <div className="d-none d-md-block mt-md-3">
+          <SecurityModal summary={props.summary!} packageId={props.packageId} version={props.version} />
+        </div>
       </div>
     </div>
   );
