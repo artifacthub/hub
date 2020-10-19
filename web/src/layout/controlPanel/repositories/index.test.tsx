@@ -8,6 +8,7 @@ import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Repository as Repo } from '../../../types';
 import Repository from './index';
 jest.mock('../../../api');
+jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 
 const getMockRepository = (fixtureId: string): Repo[] => {
   return require(`./__fixtures__/index/${fixtureId}.json`) as Repo[];
