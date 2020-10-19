@@ -18,6 +18,7 @@ import { AppCtx } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, ErrorKind, Repository } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
@@ -70,8 +71,17 @@ const RepositoryCard = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   const getLastTracking = (): JSX.Element => {
+    const nextProcessedTime: number = minutesToNearestInterval(30);
+
     if (isUndefined(props.repository.lastTrackingTs) || isNull(props.repository.lastTrackingTs)) {
-      return <>Not processed yet, it will be processed automatically in less than 30m</>;
+      return (
+        <>
+          Not processed yet,{' '}
+          {nextProcessedTime > 0
+            ? `it will be processed automatically in ~ ${nextProcessedTime} minutes`
+            : 'it will be processed automatically in less than 30 minutes'}
+        </>
+      );
     }
 
     const content = (
@@ -80,6 +90,11 @@ const RepositoryCard = (props: Props) => {
         {hasErrors ? <FaExclamation className="mx-2 text-warning" /> : <FaCheck className="mx-2 text-success" />}
       </>
     );
+
+    let messageAboutNextProcessedTime: string = '';
+    if (nextProcessedTime > 0) {
+      messageAboutNextProcessedTime = `(it will be processed again in ~ ${nextProcessedTime} minutes)`;
+    }
 
     if (hasErrors) {
       return (
@@ -110,6 +125,7 @@ const RepositoryCard = (props: Props) => {
               </SyntaxHighlighter>
             </div>
           </Modal>
+          <span className="ml-3 font-italic text-muted">{messageAboutNextProcessedTime}</span>
         </>
       );
     } else {
@@ -131,6 +147,7 @@ const RepositoryCard = (props: Props) => {
               </div>
             </Modal>
           )}
+          <span className="ml-1 font-italic text-muted">{messageAboutNextProcessedTime}</span>
         </>
       );
     }

@@ -10,6 +10,7 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import Card from './Card';
 jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
+jest.mock('../../../utils/minutesToNearestInterval', () => () => 3);
 jest.mock('./TransferModal', () => () => <div>Transfer repository</div>);
 
 const mockHistoryReplace = jest.fn();
@@ -90,7 +91,7 @@ describe('Repository Card - packages section', () => {
       expect(getByTestId('transferRepoBtn')).toBeInTheDocument();
       expect(getByTestId('deleteRepoDropdownBtn')).toBeInTheDocument();
       expect(getByText(repoMock.url!)).toBeInTheDocument();
-      expect(getByText('Not processed yet, it will be processed automatically in less than 30m')).toBeInTheDocument();
+      expect(getByText('Not processed yet, it will be processed automatically in ~ 3 minutes')).toBeInTheDocument();
     });
 
     it('renders component with last tracking info', () => {

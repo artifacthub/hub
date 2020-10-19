@@ -202,7 +202,7 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
         Last processed: 
       </small>
       <small>
-        Not processed yet, it will be processed automatically in less than 30m
+        Not processed yet, it will be processed automatically in ~ 3 minutes
       </small>
     </div>
     <div

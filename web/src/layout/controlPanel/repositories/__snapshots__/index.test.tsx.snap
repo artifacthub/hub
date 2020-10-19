@@ -624,7 +624,7 @@ exports[`Repository index creates snapshot 2`] = `
               Last processed: 
             </small>
             <small>
-              Not processed yet, it will be processed automatically in less than 30m
+              Not processed yet, it will be processed automatically in ~ 3 minutes
             </small>
           </div>
           <div
