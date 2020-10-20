@@ -3,7 +3,6 @@ on: [push, pull_request]
 
 jobs:
   linter-backend:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,7 +14,6 @@ jobs:
           args: --timeout 5m
 
   tests-database:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     container:
       image: tegioz/db-tests
@@ -42,7 +40,6 @@ jobs:
         run: pg_prove --host postgres --dbname tests --username tests --verbose **/*.sql
 
   tests-backend:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -55,7 +52,6 @@ jobs:
         run: go test -cover -race -v -mod=readonly ./...
 
   tests-frontend:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -74,7 +70,6 @@ jobs:
         run: yarn test --watchAll=false --passWithNoTests --verbose
 
   build-backend:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -94,7 +89,6 @@ jobs:
         run: go build -v
 
   build-frontend:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -154,61 +148,3 @@ jobs:
             -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/tracker:$GITHUB_SHA .
       - name: Push tracker image
         run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/tracker:$GITHUB_SHA
-
-  deploy-staging:
-    if: github.ref == 'refs/heads/staging'
-    runs-on: ubuntu-latest
-    env:
-      AWS_DEFAULT_REGION: us-east-2
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      KUBECONFIG_DATA: ${{secrets.KUBECONFIG_DATA}}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Check commit exists in master branch
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/master
-          git branch -a --contains $GITHUB_SHA | grep -w master
-      - name: Install Helm 3
-        run: |
-          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      - name: Setup Kubernetes config
-        run: |
-          mkdir $HOME/.kube
-          echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
-      - name: Upgrade deployment
-        working-directory: ./charts/artifact-hub
-        run: |
-          helm dep update
-          helm upgrade --namespace staging --reuse-values --values values-staging.yaml --set imageTag=$GITHUB_SHA artifact-hub .
-
-  deploy-production:
-    if: github.ref == 'refs/heads/production'
-    runs-on: ubuntu-latest
-    env:
-      AWS_DEFAULT_REGION: us-east-2
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      KUBECONFIG_DATA: ${{secrets.KUBECONFIG_DATA}}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Check commit exists in staging branch
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/staging
-          git branch -a --contains $GITHUB_SHA | grep -w staging
-      - name: Install Helm 3
-        run: |
-          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-      - name: Setup Kubernetes config
-        run: |
-          mkdir $HOME/.kube
-          echo "$KUBECONFIG_DATA" | base64 --decode > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
-      - name: Upgrade deployment
-        working-directory: ./charts/artifact-hub
-        run: |
-          helm dep update
-          helm upgrade --namespace production --reuse-values --values values-production.yaml --set imageTag=$GITHUB_SHA artifact-hub .
