@@ -14,6 +14,12 @@ db:
   user: postgres
   password: postgres
 
+dbMigrator:
+  job:
+    image:
+      repository: artifacthub/db-migrator
+  loadSampleData: true
+
 hub:
   ingress:
     enabled: true
@@ -67,12 +73,6 @@ hub:
       password: ""
   analytics:
     gaTrackingID: ""
-
-dbMigrator:
-  job:
-    image:
-      repository: artifacthub/db-migrator
-  loadSampleData: true
 
 scanner:
   cronjob:
