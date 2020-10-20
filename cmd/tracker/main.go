@@ -65,7 +65,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting repositories")
 	}
-	ec := tracker.NewDBErrorsCollector(ctx, rm, repos)
+	ec := tracker.NewDBErrorsCollector(rm, repos)
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Cfg: cfg,
@@ -80,7 +80,14 @@ func main() {
 	cfg.SetDefault("tracker.concurrency", 1)
 	limiter := make(chan struct{}, cfg.GetInt("tracker.concurrency"))
 	var wg sync.WaitGroup
+L:
 	for _, r := range repos {
+		select {
+		case <-ctx.Done():
+			break L
+		default:
+		}
+
 		limiter <- struct{}{}
 		wg.Add(1)
 		var t tracker.Tracker
@@ -94,6 +101,7 @@ func main() {
 		case hub.OPA:
 			t = opa.NewTracker(svc, r)
 		}
+
 		go func(r *hub.Repository) {
 			log.Info().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Msg("tracking repository")
 			if err := t.Track(&wg); err != nil {
