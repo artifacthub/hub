@@ -72,8 +72,10 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `dbMigrator.loadSampleData`            | Load demo user and sample repos     | `true`                                     |
 | `hub.ingress.enabled`                  | Enable Hub ingress                  | `true`                                     |
 | `hub.ingress.annotations`              | Hub ingress annotations             | `{kubernetes.io/ingress.class: nginx}`     |
+| `hub.ingress.rules`                    | Hub ingress rules                   |                                            |
 | `hub.service.type`                     | Hub service type                    | `NodePort`                                 |
 | `hub.service.port`                     | Hub service port                    | 80                                         |
+| `hub.deploy.readinessGates`            | Hub readiness gates                 |                                            |
 | `hub.deploy.replicaCount`              | Hub replicas                        | 1                                          |
 | `hub.deploy.image.repository`          | Hub image repository                | `artifacthub/hub`                          |
 | `hub.deploy.resources`                 | Hub requested resources             | Memory: `500Mi`, CPU: `100m`               |
