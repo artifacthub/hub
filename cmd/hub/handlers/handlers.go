@@ -393,7 +393,7 @@ func Logger(next http.Handler) http.Handler {
 					"bytes_out": ww.BytesWritten(),
 				}).
 				Timestamp().
-				Msg(r.URL.Path)
+				Msg(fmt.Sprintf("%s?%s", r.URL.Path, r.URL.RawQuery))
 		}()
 		next.ServeHTTP(ww, r)
 	})
