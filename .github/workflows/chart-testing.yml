@@ -2,10 +2,9 @@ name: Helm CI
 on:
   pull_request:
     paths:
-      - 'charts/**'
+      - "charts/**"
 jobs:
   lint-and-test:
-    if: github.ref != 'refs/heads/staging' && github.ref != 'refs/heads/production'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
