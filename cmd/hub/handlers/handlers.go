@@ -375,6 +375,10 @@ func Logger(next http.Handler) http.Handler {
 		start := time.Now()
 		ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 		host, port, _ := net.SplitHostPort(r.RemoteAddr)
+		msg := r.URL.Path
+		if r.URL.RawQuery != "" && r.URL.Path == "/api/v1/packages/search" {
+			msg += "?" + r.URL.RawQuery
+		}
 		defer func() {
 			var event *zerolog.Event
 			if ww.Status() < 500 {
@@ -393,7 +397,7 @@ func Logger(next http.Handler) http.Handler {
 					"bytes_out": ww.BytesWritten(),
 				}).
 				Timestamp().
-				Msg(fmt.Sprintf("%s?%s", r.URL.Path, r.URL.RawQuery))
+				Msg(msg)
 		}()
 		next.ServeHTTP(ww, r)
 	})
