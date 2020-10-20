@@ -22,6 +22,8 @@ hub:
                 serviceName: hub
                 servicePort: 80
   deploy:
+    readinessGates:
+      - conditionType: target-health.alb.ingress.k8s.aws/hub_hub_80
     replicaCount: 2
     resources:
       requests:
