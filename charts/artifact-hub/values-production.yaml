@@ -1,17 +1,9 @@
-postgresql:
-  enabled: false
-
 log:
   level: debug
   pretty: true
 
-db:
-  port: "5432"
-  database: hub
-
 hub:
   ingress:
-    enabled: true
     annotations:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -29,9 +21,6 @@ hub:
               backend:
                 serviceName: hub
                 servicePort: 80
-  service:
-    type: NodePort
-    port: 80
   deploy:
     replicaCount: 3
     resources:
@@ -53,8 +42,6 @@ scanner:
       requests:
         cpu: 2
         memory: 4000Mi
-  concurrency: 10
-  trivyURL: http://trivy:8081
 
 tracker:
   cronjob:
@@ -62,17 +49,11 @@ tracker:
       requests:
         cpu: 2
         memory: 4000Mi
-  concurrency: 10
-  repositoriesNames: []
-  repositoriesKinds: []
-  imageStore: pg
-  bypassDigestCheck: false
   events:
     trackingErrors: true
 
 trivy:
   deploy:
-    image: aquasec/trivy:0.11.0
     resources:
       requests:
         cpu: 2
@@ -81,3 +62,6 @@ trivy:
     enabled: true
     size: 100Gi
     storageClassName: gp2
+
+postgresql:
+  enabled: false
