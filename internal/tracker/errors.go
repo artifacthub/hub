@@ -27,8 +27,7 @@ const (
 // repositories are being processed. Once all the processing is done, the
 // collected errors can be flushed, which will store them in the database.
 type DBErrorsCollector struct {
-	ctx context.Context
-	rm  hub.RepositoryManager
+	rm hub.RepositoryManager
 
 	mu     sync.Mutex
 	errors map[string][]error // K: repository id
@@ -36,12 +35,10 @@ type DBErrorsCollector struct {
 
 // NewDBErrorsCollector creates a new DBErrorsCollector instance.
 func NewDBErrorsCollector(
-	ctx context.Context,
 	repoManager hub.RepositoryManager,
 	repos []*hub.Repository,
 ) *DBErrorsCollector {
 	ec := &DBErrorsCollector{
-		ctx:    ctx,
 		rm:     repoManager,
 		errors: make(map[string][]error),
 	}
@@ -85,7 +82,7 @@ func (c *DBErrorsCollector) Flush() {
 				errStr.WriteString("\n")
 			}
 		}
-		err := c.rm.SetLastTrackingResults(c.ctx, repositoryID, errStr.String())
+		err := c.rm.SetLastTrackingResults(context.Background(), repositoryID, errStr.String())
 		if err != nil {
 			log.Error().Err(err).Str("repoID", repositoryID).Send()
 		}

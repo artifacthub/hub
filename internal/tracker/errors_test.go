@@ -11,7 +11,6 @@ import (
 
 func TestDBErrorsCollector(t *testing.T) {
 	// Setup errors collector
-	ctx := context.Background()
 	rm := &repo.ManagerMock{}
 	repos := []*hub.Repository{
 		{
@@ -21,7 +20,7 @@ func TestDBErrorsCollector(t *testing.T) {
 			RepositoryID: "repo2",
 		},
 	}
-	ec := NewDBErrorsCollector(ctx, rm, repos)
+	ec := NewDBErrorsCollector(rm, repos)
 
 	// Append some errors for both repositories
 	ec.Append("repo1", errors.New("error1"))
@@ -30,8 +29,8 @@ func TestDBErrorsCollector(t *testing.T) {
 	ec.Append("repo2", errors.New("error1"))
 
 	// Flush errors and check the results were set as expected
-	rm.On("SetLastTrackingResults", ctx, "repo1", "error1\nerror2").Return(nil)
-	rm.On("SetLastTrackingResults", ctx, "repo2", "error1\nerror2").Return(nil)
+	rm.On("SetLastTrackingResults", context.Background(), "repo1", "error1\nerror2").Return(nil)
+	rm.On("SetLastTrackingResults", context.Background(), "repo2", "error1\nerror2").Return(nil)
 	ec.Flush()
 	rm.AssertExpectations(t)
 }
