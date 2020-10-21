@@ -120,6 +120,9 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `trivy.persistence.storageClassName`   | Type of persistent volume claim     |                                            |
 | `trivy.deploy.image`                   | Trivy image                         | `aquasec/trivy:0.11.0`                     |
 | `trivy.deploy.resources`               | Trivy requested resources           | Memory: `500Mi`, CPU: `100m`               |
+| `trivy.authURL`                        | Trivy authentication URL            |                                            |
+| `trivy.username`                       | Trivy authentication username       |                                            |
+| `trivy.password`                       | Trivy authentication password       |                                            |
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
