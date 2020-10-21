@@ -58,12 +58,13 @@ trivy:
   deploy:
     resources:
       requests:
-        cpu: 2
+        cpu: 1
         memory: 4000Mi
   persistence:
     enabled: true
     size: 100Gi
     storageClassName: gp2
+  authURL: https://registry.hub.docker.com
 
 postgresql:
   enabled: false

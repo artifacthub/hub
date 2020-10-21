@@ -42,26 +42,27 @@ scanner:
   cronjob:
     resources:
       requests:
-        cpu: 2
-        memory: 4000Mi
+        cpu: 1
+        memory: 2000Mi
 
 tracker:
   cronjob:
     resources:
       requests:
-        cpu: 2
-        memory: 4000Mi
+        cpu: 1
+        memory: 2000Mi
 
 trivy:
   deploy:
     resources:
       requests:
-        cpu: 2
-        memory: 4000Mi
+        cpu: 1
+        memory: 2000Mi
   persistence:
     enabled: true
     size: 100Gi
     storageClassName: gp2
+  authURL: https://registry.hub.docker.com
 
 postgresql:
   enabled: false

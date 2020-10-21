@@ -21,6 +21,21 @@ spec:
         - name: trivy
           image: {{ .Values.trivy.deploy.image }}
           command: ['trivy', 'server', '--debug', '--cache-dir', '/trivy', '--listen', '0.0.0.0:8081']
+          {{- if and .Values.trivy.authURL .Values.trivy.username .Values.trivy.password }}
+          env:
+            - name: TRIVY_AUTH_URL
+              value: {{ .Values.trivy.authURL }}
+            - name: TRIVY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: trivy
+                  key: username
+            - name: TRIVY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: trivy
+                  key: password
+          {{- end }}
           volumeMounts:
           - name: trivy
             mountPath: "/trivy"

@@ -111,6 +111,9 @@ trivy:
   persistence:
     enabled: false
     size: 10Gi
+  authURL: ""
+  username: ""
+  password: ""
 
 # Values for postgresql chart dependency
 postgresql:
