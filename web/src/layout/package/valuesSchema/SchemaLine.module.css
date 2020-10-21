@@ -1,0 +1,82 @@
+.content {
+  font-size: 80%;
+  cursor: pointer;
+}
+
+.description {
+  font-size: 80%;
+}
+
+.description::before,
+.description::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  top: -1px;
+  right: 0;
+  left: 0;
+  border-top: 1px dashed var(--border-md);
+}
+
+.description::after {
+  bottom: 0px;
+}
+
+.lineNumber {
+  width: 25px;
+  font-size: 75%;
+}
+
+.level0 {
+  margin-left: 0;
+}
+
+.level1 {
+  margin-left: 20px;
+}
+
+.level2 {
+  margin-left: 40px;
+}
+
+.level3 {
+  margin-left: 60px;
+}
+
+.level4 {
+  margin-left: 80px;
+}
+
+.level5 {
+  margin-left: 100px;
+}
+
+.level6 {
+  margin-left: 120px;
+}
+
+.line {
+  word-break: break-word;
+}
+
+@media (hover: hover) {
+  .wrapper:hover .content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-black-15);
+  }
+
+  .wrapper:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-black-5);
+  }
+}

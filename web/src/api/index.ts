@@ -1,3 +1,4 @@
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import camelCase from 'lodash/camelCase';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
@@ -607,6 +608,10 @@ export const API = {
 
   getSnapshotSecurityReport: (packageId: string, version: string): Promise<SecurityReport> => {
     return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/securityReport`, undefined, true);
+  },
+
+  getValuesSchema: (packageId: string, version: string): Promise<JSONSchema> => {
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/valuesSchema`, undefined, true);
   },
 
   // External API call

@@ -51,6 +51,7 @@ import Readme from './Readme';
 import RelatedPackages from './RelatedPackages';
 import StarButton from './StarButton';
 import SubscriptionsButton from './SubscriptionsButton';
+import ValuesSchema from './valuesSchema';
 
 interface Props {
   isLoadingPackage: boolean;
@@ -576,6 +577,10 @@ const PackageView = (props: Props) => {
                     {!isNull(detail) && (
                       <>
                         {InstallationModal()}
+
+                        {detail.hasValuesSchema && detail.repository.kind === RepositoryKind.Helm && (
+                          <ValuesSchema packageId={detail.packageId} version={detail.version!} />
+                        )}
 
                         <div className={`card shadow-sm position-relative info ${styles.info}`}>
                           <div className={`card-body ${styles.detailsBody}`}>

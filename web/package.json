@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@analytics/google-analytics": "^0.3.1",
+    "@apidevtools/json-schema-ref-parser": "^9.0.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.2",
     "@testing-library/react-hooks": "^3.4.1",
@@ -11,6 +12,7 @@
     "@types/bootstrap": "^4.5.0",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^26.0.13",
+    "@types/json-schema": "^7.0.6",
     "@types/lodash": "^4.14.161",
     "@types/node": "^14.6.4",
     "@types/node-sass": "^4.11.1",
