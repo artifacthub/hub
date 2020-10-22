@@ -76,6 +76,7 @@ type Package struct {
 	ContentURL            string                 `json:"content_url"`
 	ContainersImages      []*ContainerImage      `json:"containers_images"`
 	Provider              string                 `json:"provider"`
+	HasReferenceDoc       bool                   `json:"has_reference_doc"`
 	Values                map[string]interface{} `json:"values"`
 	Schema                json.RawMessage        `json:"schema"`
 	Maintainers           []*Maintainer          `json:"maintainers"`
@@ -89,6 +90,7 @@ type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
+	GetReferenceDocJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotsToScan(ctx context.Context) ([]*SnapshotToScan, error)
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)

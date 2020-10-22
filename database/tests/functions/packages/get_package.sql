@@ -91,6 +91,8 @@ insert into snapshot (
     signed,
     containers_images,
     provider,
+    "values",
+    "schema",
     created_at
 ) values (
     :'package1ID',
@@ -114,6 +116,8 @@ insert into snapshot (
     true,
     '[{"image": "quay.io/org/img:1.0.0"}]',
     'Org Inc',
+    '{"key": "value"}',
+    '{"key": "value"}',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -130,6 +134,7 @@ insert into snapshot (
     links,
     capabilities,
     data,
+    "values",
     created_at
 ) values (
     :'package1ID',
@@ -144,6 +149,7 @@ insert into snapshot (
     'install-version-0.0.9',
     '[{"name": "link1", "url": "https://link1"}, {"name": "link2", "url": "https://link2"}]',
     'basic install',
+    '{"key": "value"}',
     '{"key": "value"}',
     '2020-06-16 11:20:33+02'
 );
@@ -256,6 +262,7 @@ select is(
             }
         ],
         "provider": "Org Inc",
+        "has_reference_doc": true,
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -356,6 +363,7 @@ select is(
             }
         ],
         "provider": "Org Inc",
+        "has_reference_doc": true,
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -446,6 +454,7 @@ select is(
         "signed": null,
         "containers_images": null,
         "provider": null,
+        "has_reference_doc": false,
         "created_at": 1592299233,
         "maintainers": [
             {
@@ -505,6 +514,7 @@ select is(
         "signed": null,
         "containers_images": null,
         "provider": null,
+        "has_reference_doc": false,
         "created_at": 1592299234,
         "version": "1.0.0",
         "app_version": null,

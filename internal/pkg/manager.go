@@ -19,6 +19,7 @@ const (
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
+	getReferenceDocDBQ              = `select get_reference_doc($1::uuid, $2::text)`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
 	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
 	getRandomPkgsDBQ                = `select get_random_packages()`
@@ -76,6 +77,12 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	// Get package from database
 	inputJSON, _ := json.Marshal(input)
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
+}
+
+// GetReferenceDocJSON returns the reference documentation of the package's
+// snapshot identified by the package id and version provided.
+func (m *Manager) GetReferenceDocJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getReferenceDocDBQ, pkgID, version)
 }
 
 // GetSnapshotSecurityReportJSON returns the security report of the package's
