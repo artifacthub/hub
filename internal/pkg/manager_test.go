@@ -279,6 +279,32 @@ func TestGetRandomJSON(t *testing.T) {
 	})
 }
 
+func TestGetReferenceDocJSON(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getReferenceDocDBQ, "pkg1", "1.0.0").Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetReferenceDocJSON(ctx, "pkg1", "1.0.0")
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getReferenceDocDBQ, "pkg1", "1.0.0").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetReferenceDocJSON(ctx, "pkg1", "1.0.0")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetSnapshotSecurityReportJSON(t *testing.T) {
 	ctx := context.Background()
 

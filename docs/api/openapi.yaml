@@ -1229,11 +1229,38 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/{version}/referenceDoc":
+    get:
+      tags:
+        - Packages
+      summary: Get package reference documentation
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  values:
+                    type: object
+                    additionalProperties: true
+                  schema:
+                    type: object
+                    additionalProperties: true
+                nullable: true
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/{packageID}/{version}/securityReport":
     get:
       tags:
         - Packages
-      summary: Get package stars
+      summary: Get package security report
       parameters:
         - $ref: "#/components/parameters/PackageIDParam"
         - $ref: "#/components/parameters/VersionParam"
@@ -2138,6 +2165,8 @@ components:
                 unkown:
                   type: number
               nullable: true
+            has_reference_doc:
+              type: boolean
     PackageSummary:
       type: object
       properties:
