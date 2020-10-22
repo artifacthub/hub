@@ -9,6 +9,7 @@ log:
   pretty: false
 
 db:
+  host: ""
   port: "5432"
   database: hub
   user: postgres
@@ -25,17 +26,16 @@ hub:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
+    rules: []
   service:
     type: NodePort
     port: 80
   deploy:
+    readinessGates: []
     replicaCount: 1
     image:
       repository: artifacthub/hub
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
+    resources: {}
   server:
     baseURL: ""
     shutdownTimeout: 10s
@@ -78,10 +78,7 @@ scanner:
   cronjob:
     image:
       repository: artifacthub/scanner
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
+    resources: {}
   concurrency: 10
   trivyURL: http://trivy:8081
 
@@ -89,10 +86,7 @@ tracker:
   cronjob:
     image:
       repository: artifacthub/tracker
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
+    resources: {}
   concurrency: 10
   repositoriesNames: []
   repositoriesKinds: []
@@ -104,10 +98,7 @@ tracker:
 trivy:
   deploy:
     image: aquasec/trivy:0.12.0
-    resources:
-      requests:
-        cpu: 100m
-        memory: 500Mi
+    resources: {}
   persistence:
     enabled: false
     size: 10Gi

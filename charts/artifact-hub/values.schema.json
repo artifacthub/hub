@@ -1,0 +1,557 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "Artifact Hub Chart JSON Schema",
+    "type": "object",
+    "properties": {
+        "db": {
+            "title": "Database configuration",
+            "type": "object",
+            "properties": {
+                "database": {
+                    "title": "Database name",
+                    "default": "hub",
+                    "type": "string"
+                },
+                "host": {
+                    "title": "Database host",
+                    "default": "",
+                    "type": "string"
+                },
+                "password": {
+                    "title": "Database password",
+                    "default": "postgres",
+                    "type": "string"
+                },
+                "port": {
+                    "title": "Database port",
+                    "default": "5432",
+                    "type": "string"
+                },
+                "user": {
+                    "title": "Database user",
+                    "default": "postgres",
+                    "type": "string"
+                }
+            },
+            "required": ["database", "host", "password", "port", "user"]
+        },
+        "dbMigrator": {
+            "title": "Database migrator configuration",
+            "type": "object",
+            "properties": {
+                "job": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "title": "Database migrator image repository (without the tag)",
+                                    "type": "string",
+                                    "default": "artifacthub/db-migrator"
+                                }
+                            },
+                            "required": ["repository"]
+                        }
+                    },
+                    "required": ["image"]
+                },
+                "loadSampleData": {
+                    "title": "Load demo user and sample repositories",
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "required": ["job", "loadSampleData"]
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "default": ""
+        },
+        "hub": {
+            "title": "Hub configuration",
+            "type": "object",
+            "properties": {
+                "analytics": {
+                    "type": "object",
+                    "properties": {
+                        "gaTrackingID": {
+                            "title": "Google Analytics tracking id",
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                },
+                "deploy": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "title": "Hub image repository (without the tag)",
+                                    "type": "string",
+                                    "default": "artifacthub/hub"
+                                }
+                            },
+                            "required": ["repository"]
+                        },
+                        "readinessGates": {
+                            "title": "Hub pod readiness gates",
+                            "type": "array",
+                            "items": {
+                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#podreadinessgate-v1-core",
+                                "type": "object"
+                            },
+                            "default": []
+                        },
+                        "replicaCount": {
+                            "title": "Number of Hub replicas",
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "resources": {
+                            "title": "Hub pod resource requirements",
+                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
+                            "type": "object",
+                            "default": {}
+                        }
+                    },
+                    "required": ["image", "replicaCount", "resources"]
+                },
+                "email": {
+                    "type": "object",
+                    "properties": {
+                        "from": {
+                            "title": "From address used in emails",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "fromName": {
+                            "title": "From name used in emails",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "replyTo": {
+                            "title": "Reply-to address used in emails",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "smtp": {
+                            "type": "object",
+                            "properties": {
+                                "host": {
+                                    "title": "SMTP host",
+                                    "type": "string",
+                                    "default": ""
+                                },
+                                "password": {
+                                    "title": "SMTP password",
+                                    "type": "string",
+                                    "default": ""
+                                },
+                                "port": {
+                                    "title": "SMTP port",
+                                    "type": "integer",
+                                    "default": 587
+                                },
+                                "username": {
+                                    "title": "SMTP username",
+                                    "type": "string",
+                                    "default": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "title": "Hub ingress annotations",
+                            "type": "object",
+                            "properties": {
+                                "kubernetes.io/ingress.class": {
+                                    "title": "Hub ingress class",
+                                    "type": "string",
+                                    "default": "nginx"
+                                }
+                            },
+                            "required": ["kubernetes.io/ingress.class"]
+                        },
+                        "enabled": {
+                            "title": "Enable Hub ingress",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "rules": {
+                            "title": "Hub ingress rules",
+                            "type": "array",
+                            "items": {
+                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#ingressrule-v1-networking-k8s-io",
+                                "type": "object"
+                            },
+                            "default": []
+                        }
+                    },
+                    "required": ["annotations", "enabled"]
+                },
+                "server": {
+                    "type": "object",
+                    "properties": {
+                        "baseURL": {
+                            "title": "Hub server base url",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "basicAuth": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "title": "Enable Hub basic auth",
+                                    "type": "boolean",
+                                    "default": false
+                                },
+                                "password": {
+                                    "title": "Hub basic auth password",
+                                    "type": "string",
+                                    "default": "hub"
+                                },
+                                "username": {
+                                    "title": "Hub basic auth username",
+                                    "type": "string",
+                                    "default": "changeme"
+                                }
+                            },
+                            "required": ["enabled"]
+                        },
+                        "cookie": {
+                            "type": "object",
+                            "properties": {
+                                "hashKey": {
+                                    "title": "Hub cookie hash key",
+                                    "type": "string",
+                                    "default": "default-unsafe-key"
+                                },
+                                "secure": {
+                                    "title": "Enable Hub secure cookies",
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            },
+                            "required": ["secure"]
+                        },
+                        "oauth": {
+                            "type": "object",
+                            "properties": {
+                                "github": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientID": {
+                                            "title": "Github oauth client id",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "clientSecret": {
+                                            "title": "Github oauth client secret",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "redirectURL": {
+                                            "title": "Github oauth redirect url",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "scopes": {
+                                            "title": "Github oauth scopes",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "default": [
+                                                "read:user",
+                                                "user:email"
+                                            ],
+                                            "uniqueItems": true
+                                        }
+                                    }
+                                },
+                                "google": {
+                                    "type": "object",
+                                    "properties": {
+                                        "clientID": {
+                                            "title": "Google oauth client id",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "clientSecret": {
+                                            "title": "Google oauth client secret",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "redirectURL": {
+                                            "title": "Google oauth redirect url",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "scopes": {
+                                            "title": "Google oauth scopes",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "default": [
+                                                "https://www.googleapis.com/auth/userinfo.email",
+                                                "https://www.googleapis.com/auth/userinfo.profile"
+                                            ],
+                                            "uniqueItems": true
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "shutdownTimeout": {
+                            "title": "Hub server shutdown timeout",
+                            "type": "string",
+                            "default": "10s"
+                        },
+                        "xffIndex": {
+                            "title": "X-Forwarded-For IP index",
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    "required": ["baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "port": {
+                            "title": "Hub service port",
+                            "type": "integer",
+                            "default": 80
+                        },
+                        "type": {
+                            "title": "Hub service type",
+                            "type": "string",
+                            "default": "NodePort"
+                        }
+                    },
+                    "required": ["port", "type"]
+                }
+            },
+            "required": ["ingress", "service", "deploy", "server"]
+        },
+        "imagePullSecrets": {
+            "type": "array",
+            "default": []
+        },
+        "imageTag": {
+            "title": "Tag used when pulling images",
+            "type": "string",
+            "default": "latest"
+        },
+        "log": {
+            "type": "object",
+            "properties": {
+                "level": {
+                    "title": "Log level",
+                    "type": "string",
+                    "default": "info",
+                    "enum": ["trace", "debug", "info", "warn", "error", "fatal", "panic"]
+                },
+                "pretty": {
+                    "title": "Enable pretty logging",
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "required": ["level", "pretty"]
+        },
+        "nameOverride": {
+            "type": "string",
+            "default": ""
+        },
+        "pullPolicy": {
+            "type": "string",
+            "default": "IfNotPresent"
+        },
+        "scanner": {
+            "title": "Scanner configuration",
+            "type": "object",
+            "properties": {
+                "concurrency": {
+                    "title": "Snapshots to process concurrently",
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1
+                },
+                "cronjob": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "title": "Scanner image repository (without the tag)",
+                                    "type": "string",
+                                    "default": "artifacthub/scanner"
+                                }
+                            },
+                            "required": ["repository"]
+                        },
+                        "resources": {
+                            "title": "Scanner pod resource requirements",
+                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
+                            "type": "object",
+                            "default": {}
+                        }
+                    },
+                    "required": ["image", "resources"]
+                },
+                "trivyURL": {
+                    "title": "Trivy server url",
+                    "type": "string",
+                    "default": "http://trivy:8081"
+                }
+            },
+            "required": ["concurrency", "cronjob", "trivyURL"]
+        },
+        "tracker": {
+            "title": "Tracker configuration",
+            "type": "object",
+            "properties": {
+                "bypassDigestCheck": {
+                    "title": "Bypass digest check",
+                    "type": "boolean",
+                    "default": false
+                },
+                "concurrency": {
+                    "title": "Repositories to process concurrently",
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 1
+                },
+                "cronjob": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "title": "Tracker image repository (without the tag)",
+                                    "type": "string",
+                                    "default": "artifacthub/tracker"
+                                }
+                            },
+                            "required": ["repository"]
+                        },
+                        "resources": {
+                            "title": "Tracker pod resource requirements",
+                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
+                            "type": "object",
+                            "default": {}
+                        }
+                    },
+                    "required": ["image", "resources"]
+                },
+                "events": {
+                    "type": "object",
+                    "properties": {
+                        "trackingErrors": {
+                            "title": "Enable repository tracking errors events",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                },
+                "imageStore": {
+                    "title": "Store for images",
+                    "type": "string",
+                    "default": "pg",
+                    "enum": ["pg"]
+                },
+                "repositoriesKinds": {
+                    "title": "Repositories kinds to process ([] = all)",
+                    "description": "The following kinds are supported at the moment: falco, helm, olm, opa",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "uniqueItems": true
+                },
+                "repositoriesNames": {
+                    "title": "Repositories names to process ([] = all)",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "uniqueItems": true
+                }
+            },
+            "required": ["bypassDigestCheck", "concurrency", "cronjob", "events", "imageStore", "repositoriesKinds", "repositoriesNames"]
+        },
+        "trivy": {
+            "title": "Trivy configuration",
+            "type": "object",
+            "properties": {
+                "authURL": {
+                    "title": "Trivy authentication URL",
+                    "type": "string",
+                    "default": ""
+                },
+                "deploy": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                            "type": "string",
+                            "default": "aquasec/trivy:0.12.0"
+                        },
+                        "resources": {
+                            "title": "Trivy pod resource requirements",
+                            "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#resourcerequirements-v1-core",
+                            "type": "object",
+                            "default": {}
+                        }
+                    },
+                    "required": ["image", "resources"]
+                },
+                "password": {
+                    "title": "Trivy authentication password",
+                    "type": "string",
+                    "default": ""
+                },
+                "persistence": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "title": "Use persistent volume to store data",
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "size": {
+                            "title": "Size of persistent volume claim",
+                            "type": "string",
+                            "default": "10Gi"
+                        },
+                        "storageClassName": {
+                            "title": "Type of persistent volume claim",
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    "required": ["enabled"]
+                },
+                "username": {
+                    "title": "Trivy authentication username",
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": ["deploy", "persistence"]
+        }
+    },
+    "required": ["imageTag", "pullPolicy", "log", "db", "dbMigrator", "hub", "scanner", "tracker", "trivy", "postgresql"]
+}

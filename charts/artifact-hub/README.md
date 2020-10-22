@@ -63,7 +63,7 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `pullPolicy`                           | Image pull policy                   | `IfNotPresent`                             |
 | `log.level`                            | Log level                           | `info`                                     |
 | `log.pretty`                           | Enable pretty logging               | `false`                                    |
-| `db.host`                              | Database host                       | `hub-postgresql.default.svc.cluster.local` |
+| `db.host`                              | Database host                       |                                            |
 | `db.port`                              | Database port                       | `5432`                                     |
 | `db.database`                          | Database name                       | `hub`                                      |
 | `db.user`                              | Database user                       | `postgres`                                 |
@@ -71,16 +71,16 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `dbMigrator.job.image.repository`      | DB migrator image repository        | `artifacthub/db-migrator`                  |
 | `dbMigrator.loadSampleData`            | Load demo user and sample repos     | `true`                                     |
 | `hub.ingress.enabled`                  | Enable Hub ingress                  | `true`                                     |
-| `hub.ingress.annotations`              | Hub ingress annotations             | `{kubernetes.io/ingress.class: nginx}`     |
-| `hub.ingress.rules`                    | Hub ingress rules                   |                                            |
+| `hub.ingress.annotations`              | Hub ingress annotations             | `{"kubernetes.io/ingress.class": "nginx"}` |
+| `hub.ingress.rules`                    | Hub ingress rules                   | `[]`                                       |
 | `hub.service.type`                     | Hub service type                    | `NodePort`                                 |
 | `hub.service.port`                     | Hub service port                    | 80                                         |
-| `hub.deploy.readinessGates`            | Hub readiness gates                 |                                            |
+| `hub.deploy.readinessGates`            | Hub readiness gates                 | `[]`                                       |
 | `hub.deploy.replicaCount`              | Hub replicas                        | 1                                          |
 | `hub.deploy.image.repository`          | Hub image repository                | `artifacthub/hub`                          |
-| `hub.deploy.resources`                 | Hub requested resources             | Memory: `500Mi`, CPU: `100m`               |
+| `hub.deploy.resources`                 | Hub requested resources             | `{}`                                       |
 | `hub.server.baseURL`                   | Hub server base url                 |                                            |
-| `hub.server.shutdownTimeout`           | Hub server shutdown timeout         | 10s                                        |
+| `hub.server.shutdownTimeout`           | Hub server shutdown timeout         | `10s`                                      |
 | `hub.server.basicAuth.enabled`         | Enable basic auth                   | `false`                                    |
 | `hub.server.basicAuth.username`        | Hub basic auth username             | `hub`                                      |
 | `hub.server.basicAuth.password`        | Hub basic auth password             | `changeme`                                 |
@@ -89,11 +89,11 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `hub.server.oauth.github.clientID`     | Github oauth client id              |                                            |
 | `hub.server.oauth.github.clientSecret` | Github oauth client secret          |                                            |
 | `hub.server.oauth.github.redirectURL`  | Github oauth redirect url           |                                            |
-| `hub.server.oauth.github.scopes`       | Github oauth scopes                 | `[read:user, user:email]`                  |
+| `hub.server.oauth.github.scopes`       | Github oauth scopes                 | `["read:user", "user:email"]`              |
 | `hub.server.oauth.google.clientID`     | Google oauth client id              |                                            |
 | `hub.server.oauth.google.clientSecret` | Google oauth client secret          |                                            |
 | `hub.server.oauth.google.redirectURL`  | Google oauth redirect url           |                                            |
-| `hub.server.oauth.google.scopes`       | Google oauth scopes                 | `[userinfo.email, userinfo.profile]`       |
+| `hub.server.oauth.google.scopes`       | Google oauth scopes                 | `["userinfo.email", "userinfo.profile"]`   |
 | `hub.server.xffIndex`                  | X-Forwarded-For IP index            | 0                                          |
 | `hub.email.fromName`                   | From name used in emails            |                                            |
 | `hub.email.from`                       | From address used in emails         |                                            |
@@ -104,22 +104,22 @@ The following table lists the configurable parameters of the Artifact Hub chart 
 | `hub.email.smtp.password`              | SMTP password                       |                                            |
 | `hub.analytics.gaTrackingID`           | Google Analytics tracking id        |                                            |
 | `scanner.cronjob.image.repository`     | Scanner image repository            | `artifacthub/scanner`                      |
-| `scanner.cronjob.resources`            | Scanner requested resources         | Memory: `500Mi`, CPU: `100m`               |
+| `scanner.cronjob.resources`            | Scanner requested resources         | `{}`                                       |
 | `scanner.concurrency`                  | Snapshots to process concurrently   | 10                                         |
 | `scanner.trivyURL`                     | Trivy server url                    | `http://trivy:8081`                        |
 | `tracker.cronjob.image.repository`     | Tracker image repository            | `artifacthub/tracker`                      |
-| `tracker.cronjob.resources`            | Tracker requested resources         | Memory: `500Mi`, CPU: `100m`               |
+| `tracker.cronjob.resources`            | Tracker requested resources         | `{}`                                       |
 | `tracker.concurrency`                  | Repos to process concurrently       | 10                                         |
-| `tracker.repositoriesNames`            | Repos names to process ([] = all)   | []                                         |
-| `tracker.repositoriesKinds`            | Repos kinds to process ([] = all)   | []                                         |
+| `tracker.repositoriesNames`            | Repos names to process ([] = all)   | `[]`                                       |
+| `tracker.repositoriesKinds`            | Repos kinds to process ([] = all)   | `[]`                                       |
 | `tracker.imageStore`                   | Image store                         | `pg`                                       |
 | `tracker.bypassDigestCheck`            | Bypass digest check                 | `false`                                    |
 | `tracker.events.trackingErrors`        | Enable repo tracking errors events  | `false`                                    |
 | `trivy.persistence.enabled`            | Use persistent volume to store data | false                                      |
-| `trivy.persistence.size`               | Size of persistent volume claim     | 10Gi                                       |
+| `trivy.persistence.size`               | Size of persistent volume claim     | `10Gi`                                     |
 | `trivy.persistence.storageClassName`   | Type of persistent volume claim     |                                            |
 | `trivy.deploy.image`                   | Trivy image                         | `aquasec/trivy:0.12.0`                     |
-| `trivy.deploy.resources`               | Trivy requested resources           | Memory: `500Mi`, CPU: `100m`               |
+| `trivy.deploy.resources`               | Trivy requested resources           | `{}`                                       |
 | `trivy.authURL`                        | Trivy authentication URL            |                                            |
 | `trivy.username`                       | Trivy authentication username       |                                            |
 | `trivy.password`                       | Trivy authentication password       |                                            |
