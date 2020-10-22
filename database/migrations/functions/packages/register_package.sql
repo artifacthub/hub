@@ -145,6 +145,8 @@ begin
         content_url,
         containers_images,
         provider,
+        "values",
+        "schema",
         created_at
     ) values (
         v_package_id,
@@ -168,6 +170,8 @@ begin
         nullif(p_pkg->>'content_url', ''),
         nullif(p_pkg->'containers_images', 'null'),
         v_provider,
+        nullif(p_pkg->'values', 'null'),
+        nullif(p_pkg->'schema', 'null'),
         v_created_at
     )
     on conflict (package_id, version) do update
@@ -191,6 +195,8 @@ begin
         content_url = excluded.content_url,
         containers_images = excluded.containers_images,
         provider = excluded.provider,
+        "values" = excluded.values,
+        "schema" = excluded.schema,
         created_at = v_created_at;
 
     -- Register new release event if package's latest version has been updated

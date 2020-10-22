@@ -2,6 +2,7 @@ package hub
 
 import (
 	"context"
+	"encoding/json"
 )
 
 const (
@@ -75,6 +76,8 @@ type Package struct {
 	ContentURL            string                 `json:"content_url"`
 	ContainersImages      []*ContainerImage      `json:"containers_images"`
 	Provider              string                 `json:"provider"`
+	Values                map[string]interface{} `json:"values"`
+	Schema                json.RawMessage        `json:"schema"`
 	Maintainers           []*Maintainer          `json:"maintainers"`
 	Repository            *Repository            `json:"repository"`
 	CreatedAt             int64                  `json:"created_at,omitempty"`
