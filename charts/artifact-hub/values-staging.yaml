@@ -2,6 +2,9 @@ log:
   level: debug
   pretty: true
 
+dbMigrator:
+  loadSampleData: false
+
 hub:
   ingress:
     annotations:
