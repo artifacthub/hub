@@ -179,6 +179,8 @@ select columns_are('snapshot', array[
     'content_url',
     'containers_images',
     'provider',
+    'values',
+    'schema',
     'created_at'
 ]);
 select columns_are('subscription', array[

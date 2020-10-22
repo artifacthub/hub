@@ -150,6 +150,8 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		Digest:      j.ChartVersion.Digest,
 		Deprecated:  md.Deprecated,
 		ContentURL:  chartURL,
+		Values:      chart.Values,
+		Schema:      chart.Schema,
 		CreatedAt:   j.ChartVersion.Created.Unix(),
 		Repository:  w.r,
 	}
