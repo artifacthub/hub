@@ -116,6 +116,7 @@ create table if not exists package (
 
 create index package_tsdoc_idx on package using gin (tsdoc);
 create index package_repository_id_idx on package (repository_id);
+create index package_has_logo_image_id_idx on package (package_id, latest_version) where logo_image_id is not null;
 
 create table if not exists snapshot (
     package_id uuid not null references package on delete cascade,
@@ -147,6 +148,9 @@ create table if not exists snapshot (
     primary key (package_id, version),
     unique (package_id, digest)
 );
+
+create index snapshot_not_deprecated_with_readme_idx on snapshot (package_id, version) include (created_at)
+where (deprecated is null or deprecated = false) and readme is not null;
 
 create table if not exists maintainer (
     maintainer_id uuid primary key default gen_random_uuid(),

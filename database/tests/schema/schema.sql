@@ -279,7 +279,8 @@ select indexes_are('package', array[
     'package_pkey',
     'package_tsdoc_idx',
     'package_repository_id_idx',
-    'package_repository_id_name_key'
+    'package_repository_id_name_key',
+    'package_has_logo_image_id_idx'
 ]);
 select indexes_are('package__maintainer', array[
     'package__maintainer_pkey'
@@ -300,7 +301,8 @@ select indexes_are('session', array[
 ]);
 select indexes_are('snapshot', array[
     'snapshot_pkey',
-    'snapshot_package_id_digest_key'
+    'snapshot_package_id_digest_key',
+    'snapshot_not_deprecated_with_readme_idx'
 ]);
 select indexes_are('subscription', array[
     'subscription_pkey'
