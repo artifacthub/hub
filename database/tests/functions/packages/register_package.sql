@@ -71,10 +71,7 @@ select register_package('
         }
     ],
     "provider": "Org Inc",
-    "values": {
-        "key": "value"
-    },
-    "schema": {
+    "values_schema": {
         "key": "value"
     },
     "created_at": 1592299234,
@@ -153,8 +150,7 @@ select results_eq(
             s.content_url,
             s.containers_images,
             s.provider,
-            s.values,
-            s.schema,
+            s.values_schema,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -183,7 +179,6 @@ select results_eq(
             'https://package.content.url',
             '[{"image": "quay.io/org/img:1.0.0"}]'::jsonb,
             'Org Inc',
-            '{"key": "value"}'::jsonb,
             '{"key": "value"}'::jsonb,
             '2020-06-16 11:20:34+02'::timestamptz
         )
@@ -243,8 +238,7 @@ select register_package('
         }
     ],
     "provider": "Org Inc 2",
-    "values": null,
-    "schema": null,
+    "values_schema": null,
     "created_at": 1592299235,
     "maintainers": [
         {
@@ -284,8 +278,7 @@ select results_eq(
             s.signed,
             s.containers_images,
             s.provider,
-            s.values,
-            s.schema,
+            s.values_schema,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -309,7 +302,6 @@ select results_eq(
             true,
             '[{"image": "quay.io/org/img:2.0.0"}]'::jsonb,
             'Org Inc 2',
-            null::jsonb,
             null::jsonb,
             '2020-06-16 11:20:35+02'::timestamptz
         )

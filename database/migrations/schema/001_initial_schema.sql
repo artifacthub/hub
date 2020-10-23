@@ -142,8 +142,7 @@ create table if not exists snapshot (
     content_url text check (content_url <> ''),
     containers_images jsonb,
     provider text check (provider <> ''),
-    "values" jsonb,
-    "schema" jsonb,
+    values_schema jsonb,
     created_at timestamptz default current_timestamp not null,
     primary key (package_id, version),
     unique (package_id, digest)

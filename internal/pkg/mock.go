@@ -33,13 +33,6 @@ func (m *ManagerMock) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, 
 	return data, args.Error(1)
 }
 
-// GetReferenceDocJSON implements the PackageManager interface.
-func (m *ManagerMock) GetReferenceDocJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
-	args := m.Called(ctx, pkgID, version)
-	data, _ := args.Get(0).([]byte)
-	return data, args.Error(1)
-}
-
 // GetSnapshotsToScan implements the PackageManager interface.
 func (m *ManagerMock) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotToScan, error) {
 	args := m.Called(ctx)
@@ -71,6 +64,13 @@ func (m *ManagerMock) GetStarsJSON(ctx context.Context, packageID string) ([]byt
 // GetStatsJSON implements the PackageManager interface.
 func (m *ManagerMock) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
+// GetValuesSchemaJSON implements the PackageManager interface.
+func (m *ManagerMock) GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
+	args := m.Called(ctx, pkgID, version)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }

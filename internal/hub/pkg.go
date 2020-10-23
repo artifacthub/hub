@@ -76,9 +76,8 @@ type Package struct {
 	ContentURL            string                 `json:"content_url"`
 	ContainersImages      []*ContainerImage      `json:"containers_images"`
 	Provider              string                 `json:"provider"`
-	HasReferenceDoc       bool                   `json:"has_reference_doc"`
-	Values                map[string]interface{} `json:"values"`
-	Schema                json.RawMessage        `json:"schema"`
+	HasValuesSchema       bool                   `json:"has_values_schema"`
+	ValuesSchema          json.RawMessage        `json:"values_schema"`
 	Maintainers           []*Maintainer          `json:"maintainers"`
 	Repository            *Repository            `json:"repository"`
 	CreatedAt             int64                  `json:"created_at,omitempty"`
@@ -90,12 +89,12 @@ type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
-	GetReferenceDocJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	GetSnapshotsToScan(ctx context.Context) ([]*SnapshotToScan, error)
 	GetStarredByUserJSON(ctx context.Context) ([]byte, error)
 	GetStarsJSON(ctx context.Context, packageID string) ([]byte, error)
 	GetStatsJSON(ctx context.Context) ([]byte, error)
+	GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error)
 	Register(ctx context.Context, pkg *Package) error
 	SearchJSON(ctx context.Context, input *SearchPackageInput) ([]byte, error)
 	SearchMonocularJSON(ctx context.Context, baseURL, tsQueryWeb string) ([]byte, error)

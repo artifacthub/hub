@@ -1229,33 +1229,6 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/packages/{packageID}/{version}/referenceDoc":
-    get:
-      tags:
-        - Packages
-      summary: Get package reference documentation
-      parameters:
-        - $ref: "#/components/parameters/PackageIDParam"
-        - $ref: "#/components/parameters/VersionParam"
-      responses:
-        "200":
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  values:
-                    type: object
-                    additionalProperties: true
-                  schema:
-                    type: object
-                    additionalProperties: true
-                nullable: true
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
   "/packages/{packageID}/{version}/securityReport":
     get:
       tags:
@@ -1273,8 +1246,33 @@ paths:
                 type: object
                 additionalProperties: true
                 nullable: true
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/{version}/valuesSchema":
+    get:
+      tags:
+        - Packages
+      summary: Get package values schema
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                nullable: true
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
   /subscriptions:
@@ -2165,7 +2163,7 @@ components:
                 unkown:
                   type: number
               nullable: true
-            has_reference_doc:
+            has_values_schema:
               type: boolean
     PackageSummary:
       type: object

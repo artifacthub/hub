@@ -203,8 +203,8 @@ func (h *Handlers) setupRouter() {
 				r.With(h.Users.InjectUserID).Get("/", h.Packages.GetStars)
 				r.With(h.Users.RequireLogin).Put("/", h.Packages.ToggleStar)
 			})
-			r.Get("/{packageID}/{version}/referenceDoc", h.Packages.GetReferenceDoc)
 			r.Get("/{packageID}/{version}/securityReport", h.Packages.GetSnapshotSecurityReport)
+			r.Get("/{packageID}/{version}/valuesSchema", h.Packages.GetValuesSchema)
 		})
 
 		// Subscriptions

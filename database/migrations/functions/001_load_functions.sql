@@ -36,7 +36,6 @@
 {{ template "packages/get_package_stars.sql" }}
 {{ template "packages/get_packages_stats.sql" }}
 {{ template "packages/get_random_packages.sql" }}
-{{ template "packages/get_reference_doc.sql" }}
 {{ template "packages/get_snapshots_to_scan.sql" }}
 {{ template "packages/register_package.sql" }}
 {{ template "packages/search_packages.sql" }}

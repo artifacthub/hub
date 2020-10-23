@@ -54,7 +54,7 @@ begin
         'signed', s.signed,
         'containers_images', s.containers_images,
         'provider', s.provider,
-        'has_reference_doc', (s.values is not null and s.schema is not null),
+        'has_values_schema', (s.values_schema is not null and s.values_schema <> '{}'),
         'created_at', floor(extract(epoch from s.created_at)),
         'maintainers', (
             select json_agg(json_build_object(
