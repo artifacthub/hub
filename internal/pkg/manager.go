@@ -19,10 +19,10 @@ const (
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
-	getReferenceDocDBQ              = `select get_reference_doc($1::uuid, $2::text)`
 	getSnapshotSecurityReportDBQ    = `select security_report from snapshot where package_id = $1 and version = $2`
 	getSnapshotsToScanDBQ           = `select get_snapshots_to_scan()`
 	getRandomPkgsDBQ                = `select get_random_packages()`
+	getValuesSchemaDBQ              = `select values_schema from snapshot where package_id = $1 and version = $2`
 	registerPkgDBQ                  = `select register_package($1::jsonb)`
 	searchPkgsDBQ                   = `select search_packages($1::jsonb)`
 	searchPkgsMonocularDBQ          = `select search_packages_monocular($1::text, $2::text)`
@@ -79,12 +79,6 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
 }
 
-// GetReferenceDocJSON returns the reference documentation of the package's
-// snapshot identified by the package id and version provided.
-func (m *Manager) GetReferenceDocJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getReferenceDocDBQ, pkgID, version)
-}
-
 // GetSnapshotSecurityReportJSON returns the security report of the package's
 // snapshot identified by the package id and version provided.
 func (m *Manager) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
@@ -132,6 +126,12 @@ func (m *Manager) GetStarsJSON(ctx context.Context, packageID string) ([]byte, e
 // releases available in the database. The json object is built by the database.
 func (m *Manager) GetStatsJSON(ctx context.Context) ([]byte, error) {
 	return util.DBQueryJSON(ctx, m.db, getPkgsStatsDBQ)
+}
+
+// GetValuesSchemaJSON returns the values schema of the package's snapshot
+// identified by the package id and version provided.
+func (m *Manager) GetValuesSchemaJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getValuesSchemaDBQ, pkgID, version)
 }
 
 // Register registers the package provided in the database.

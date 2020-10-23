@@ -139,21 +139,20 @@ func (w *Worker) handleRegisterJob(j *Job) {
 
 	// Prepare package to be registered
 	p := &hub.Package{
-		Name:        md.Name,
-		LogoURL:     logoURL,
-		LogoImageID: logoImageID,
-		Description: md.Description,
-		Keywords:    md.Keywords,
-		HomeURL:     md.Home,
-		Version:     md.Version,
-		AppVersion:  md.AppVersion,
-		Digest:      j.ChartVersion.Digest,
-		Deprecated:  md.Deprecated,
-		ContentURL:  chartURL,
-		Values:      chart.Values,
-		Schema:      chart.Schema,
-		CreatedAt:   j.ChartVersion.Created.Unix(),
-		Repository:  w.r,
+		Name:         md.Name,
+		LogoURL:      logoURL,
+		LogoImageID:  logoImageID,
+		Description:  md.Description,
+		Keywords:     md.Keywords,
+		HomeURL:      md.Home,
+		Version:      md.Version,
+		AppVersion:   md.AppVersion,
+		Digest:       j.ChartVersion.Digest,
+		Deprecated:   md.Deprecated,
+		ContentURL:   chartURL,
+		ValuesSchema: chart.Schema,
+		CreatedAt:    j.ChartVersion.Created.Unix(),
+		Repository:   w.r,
 	}
 	readme := getFile(chart, "README.md")
 	if readme != nil {

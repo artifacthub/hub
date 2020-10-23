@@ -67,20 +67,6 @@ func (h *Handlers) GetRandom(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
-// GetReferenceDoc is an http handler used to get the reference documentation
-// of a package's snapshot.
-func (h *Handlers) GetReferenceDoc(w http.ResponseWriter, r *http.Request) {
-	packageID := chi.URLParam(r, "packageID")
-	version := chi.URLParam(r, "version")
-	dataJSON, err := h.pkgManager.GetReferenceDocJSON(r.Context(), packageID, version)
-	if err != nil {
-		h.logger.Error().Err(err).Str("method", "GetReferenceDocJSON").Send()
-		helpers.RenderErrorJSON(w, err)
-		return
-	}
-	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
-}
-
 // GetSnapshotSecurityReport is an http handler used to get the security report
 // of a package's snapshot.
 func (h *Handlers) GetSnapshotSecurityReport(w http.ResponseWriter, r *http.Request) {
@@ -126,6 +112,20 @@ func (h *Handlers) GetStats(w http.ResponseWriter, r *http.Request) {
 	dataJSON, err := h.pkgManager.GetStatsJSON(r.Context())
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetStats").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
+// GetValuesSchema is an http handler used to get the values schema of a
+// package's snapshot.
+func (h *Handlers) GetValuesSchema(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	version := chi.URLParam(r, "version")
+	dataJSON, err := h.pkgManager.GetValuesSchemaJSON(r.Context(), packageID, version)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetValuesSchemaJSON").Send()
 		helpers.RenderErrorJSON(w, err)
 		return
 	}
