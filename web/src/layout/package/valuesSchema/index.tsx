@@ -50,7 +50,7 @@ const ValuesSchema = (props: Props) => {
           {isLoading ? (
             <>
               <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Getting values schema...</span>
+              <span className="ml-2 font-weight-bold">Getting schema...</span>
             </>
           ) : (
             <>
