@@ -45,8 +45,11 @@ const SchemaLine = (props: Prop) => {
                   ) : (
                     <>
                       {(props.value.default as string[]).map((listItem: string) => (
-                        <div className={`${styles.level1} ${styles.line}`} key={listItem}>
-                          - {listItem}
+                        <div
+                          className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}
+                          key={listItem}
+                        >
+                          {listItem}
                         </div>
                       ))}
                     </>
@@ -91,7 +94,7 @@ const SchemaLine = (props: Prop) => {
   };
 
   const compoundCurrentPath = (): string => {
-    let name = props.name.includes('.') ? `"${props.name}"` : props.name;
+    let name = props.name.includes('.') ? `"${props.name.replace(/\./gi, '\\.')}"` : props.name;
     return isUndefined(props.path) ? name : `${props.path}.${name}`;
   };
 

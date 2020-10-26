@@ -2,6 +2,10 @@
   font-size: inherit;
 }
 
+.btnClip {
+  font-size: 80%;
+}
+
 .dropdownMenu {
   top: 25px;
   left: -10px;
@@ -21,7 +25,7 @@
   top: -2px;
 }
 
-.desc {
+.wordBreak {
   word-break: break-word;
 }
 
@@ -31,4 +35,14 @@
 
 .moreInfo {
   margin-left: 20px;
+}
+
+.listItem {
+  padding-left: 15px;
+}
+
+.listItem::before {
+  content: '- ';
+  position: absolute;
+  left: 0px;
 }
