@@ -2163,6 +2163,8 @@ components:
                 unkown:
                   type: number
               nullable: true
+            security_report_created_at:
+              type: integer
             has_values_schema:
               type: boolean
     PackageSummary:
