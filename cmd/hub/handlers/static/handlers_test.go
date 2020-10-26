@@ -158,7 +158,7 @@ func TestServeStaticFile(t *testing.T) {
 	hw := newHandlersWrapper()
 	r := chi.NewRouter()
 	staticFilesPath := path.Join(hw.h.cfg.GetString("server.webBuildPath"), "static")
-	FileServer(r, "/static", http.Dir(staticFilesPath))
+	FileServer(r, "/static", staticFilesPath)
 	s := httptest.NewServer(r)
 	defer s.Close()
 
@@ -166,7 +166,9 @@ func TestServeStaticFile(t *testing.T) {
 		resp, err := http.Get(s.URL + "/static/test.js")
 		require.NoError(t, err)
 		defer resp.Body.Close()
+		h := resp.Header
 
+		assert.Empty(t, h.Get("Cache-Control"))
 		assert.Equal(t, http.StatusNotFound, resp.StatusCode)
 	})
 
