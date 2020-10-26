@@ -103,7 +103,7 @@ const SchemaLine = (props: Prop) => {
     <React.Fragment>
       <div className={`row position-relative ${styles.wrapper}`}>
         <div
-          className={`col-7 bg-dark text-light position-relative py-1 ${styles.content} ${props.className}`}
+          className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
           onClick={() => props.setActivePath(!isExpanded ? currentPath : undefined)}
         >
           <div className={`${styles[`level${props.level}`]} text-monospace`}>
