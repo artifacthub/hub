@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path"
 	"strings"
 	"sync"
@@ -149,18 +150,25 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// FileServer sets up a http.FileServer handler to serve static files from a
-// a http.FileSystem.
-func FileServer(r chi.Router, path string, fs http.FileSystem) {
-	fsHandler := http.StripPrefix(path, http.FileServer(fs))
-
-	if path != "/" && path[len(path)-1] != '/' {
-		r.Get(path, http.RedirectHandler(path+"/", 301).ServeHTTP)
-		path += "/"
+// FileServer sets up a http.FileServer handler to serve static files.
+func FileServer(r chi.Router, public, static string) {
+	if strings.ContainsAny(public, "{}*") {
+		panic("FileServer does not permit URL parameters")
 	}
-	path += "*"
 
-	r.Get(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	if public != "/" && public[len(public)-1] != '/' {
+		r.Get(public, http.RedirectHandler(public+"/", 301).ServeHTTP)
+		public += "/"
+	}
+
+	fsHandler := http.StripPrefix(public, http.FileServer(http.Dir(static)))
+
+	r.Get(public+"*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		file := strings.Replace(r.RequestURI, public, "/", 1)
+		if _, err := os.Stat(static + file); os.IsNotExist(err) {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
 		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(staticCacheMaxAge))
 		fsHandler.ServeHTTP(w, r)
 	}))
