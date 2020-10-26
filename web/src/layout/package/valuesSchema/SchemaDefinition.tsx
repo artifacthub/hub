@@ -6,6 +6,7 @@ import { BsFillCaretDownFill, BsFillCaretRightFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
 import { FiExternalLink } from 'react-icons/fi';
 
+import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import ExternalLink from '../../common/ExternalLink';
 import styles from './SchemaDefinition.module.css';
 
@@ -137,8 +138,8 @@ const SchemaDefinition = (props: Prop) => {
           return (
             <div className="d-flex flex-column ml-3">
               {value.map((el: string) => (
-                <div key={`it_${el}`}>
-                  <span className="mr-2">-</span> {el}
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`}>
+                  {el}
                 </div>
               ))}
             </div>
@@ -147,8 +148,8 @@ const SchemaDefinition = (props: Prop) => {
           return (
             <div className="ml-3">
               {Object.keys(value).map((el: string) => (
-                <div key={`it_${el}`}>
-                  <span className="mr-2">-</span> {el}: <span className="text-muted">{value[el].type || '-'}</span>
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`}>
+                  {el}: <span className="text-muted">{value[el].type || '-'}</span>
                 </div>
               ))}
             </div>
@@ -275,12 +276,22 @@ const SchemaDefinition = (props: Prop) => {
       {props.isExpanded && (
         <div className={`${styles.moreInfo} border-top my-2 pt-2`}>
           <div className="d-flex flex-column">
-            <div className="font-weight-bold mb-1">Annotations</div>
+            <div className="d-flex flex-row align-items-between">
+              <div className="font-weight-bold mb-1">Annotations</div>
+              <div className="ml-auto">
+                <ButtonCopyToClipboard
+                  text={props.path}
+                  contentBtn="Copy path to clipboard"
+                  className={`btn-link text-muted p-0 ${styles.btnClip}`}
+                  visibleBtnText
+                />
+              </div>
+            </div>
             <div>
               <small className="text-muted text-uppercase">Description</small>:{' '}
               <span className="ml-1">
                 {props.def.description ? (
-                  <span className={styles.desc}>{props.def.description}</span>
+                  <span className={styles.wordBreak}>{props.def.description}</span>
                 ) : (
                   <>
                     {props.def.type === 'array' && props.def.items ? (

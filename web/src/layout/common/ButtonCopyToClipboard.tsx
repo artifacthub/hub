@@ -12,6 +12,7 @@ interface Props {
   className?: string;
   tooltipClassName?: string;
   visibleBtnText?: boolean;
+  contentBtn?: string;
 }
 
 const copyToClipboard = (text: string): boolean => {
@@ -68,8 +69,13 @@ const ButtonCopyToClipboard = (props: Props) => {
         }}
       >
         <div className="d-flex flex-row align-items-center">
+          {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (
+            <div className="mr-2">{props.contentBtn}</div>
+          )}
           <FiCopy />
-          {!isUndefined(props.visibleBtnText) && props.visibleBtnText && <div className="ml-2">Copy to clipboard</div>}
+          {!isUndefined(props.visibleBtnText) && props.visibleBtnText && isUndefined(props.contentBtn) && (
+            <div className="ml-2">Copy to clipboard</div>
+          )}
         </div>
       </button>
     </div>

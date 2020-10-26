@@ -59,6 +59,16 @@
   word-break: break-word;
 }
 
+.listItem {
+  padding-left: 15px;
+}
+
+.listItem::before {
+  content: '- ';
+  position: absolute;
+  left: 0px;
+}
+
 @media (hover: hover) {
   .wrapper:hover .content::after {
     content: '';
