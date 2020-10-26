@@ -36,6 +36,10 @@ Use this annotation to indicate that your chart represents an operator. Artifact
 
 Use this annotation to indicate the capabilities of the operator your chart provides. It must be one of the following options: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights or Auto Pilot. For more information please see the [capability level diagram](https://artifacthub.io/static/media/capability-level-diagram.svg).
 
+- **artifacthub.io/whatsnew** *(yaml string, see example below)*
+
+This annotation is used to provide some details about the changes introduced by a given chart version. Artifact Hub can generate a display a **ChangeLog** based on the entries in the `whatsnew` field in all your chart versions.
+
 ## Example
 
 Artifact Hub annotations in `Chart.yaml`:
@@ -72,4 +76,7 @@ annotations:
       email: user2@email.com
   artifacthub.io/operator: "true"
   artifacthub.io/operatorCapabilities: Basic Install
+  artifacthub.io/whatsnew: |
+    - Added cool feature
+    - Fixed minor bug
 ```

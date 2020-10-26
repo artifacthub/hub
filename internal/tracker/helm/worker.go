@@ -33,6 +33,7 @@ const (
 	linksAnnotation                = "artifacthub.io/links"
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
+	whatsnewAnnotation             = "artifacthub.io/whatsnew"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -393,6 +394,14 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 
 	// Operator capabilities
 	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
+
+	// What's new
+	if v, ok := annotations[whatsnewAnnotation]; ok {
+		var whatsnew []string
+		if err := yaml.Unmarshal([]byte(v), &whatsnew); err == nil {
+			p.WhatsNew = whatsnew
+		}
+	}
 
 	return nil
 }
