@@ -14,6 +14,7 @@ interface Props {
   summary: SecurityReportSummary | null;
   packageId: string;
   version: string;
+  visibleSecurityReport: boolean;
 }
 
 const SecurityReport = (props: Props) => {
@@ -72,7 +73,12 @@ const SecurityReport = (props: Props) => {
         )}
 
         <div className="d-none d-md-block mt-md-3">
-          <SecurityModal summary={props.summary!} packageId={props.packageId} version={props.version} />
+          <SecurityModal
+            summary={props.summary!}
+            packageId={props.packageId}
+            version={props.version}
+            visibleSecurityReport={props.visibleSecurityReport}
+          />
         </div>
       </div>
     </div>

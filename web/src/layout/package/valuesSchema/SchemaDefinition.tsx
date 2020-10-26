@@ -275,7 +275,7 @@ const SchemaDefinition = (props: Prop) => {
       {props.isExpanded && (
         <div className={`${styles.moreInfo} border-top my-2 pt-2`}>
           <div className="d-flex flex-column">
-            <div className="font-weight-bold">Annotations</div>
+            <div className="font-weight-bold mb-1">Annotations</div>
             <div>
               <small className="text-muted text-uppercase">Description</small>:{' '}
               <span className="ml-1">
@@ -299,10 +299,9 @@ const SchemaDefinition = (props: Prop) => {
               </div>
             )}
 
-            <div className="font-weight-bold mt-2">Constraints</div>
-
             {!isUndefined(typeDef) && (
               <>
+                <div className="font-weight-bold mt-2 mb-1">Constraints</div>
                 {typeDef.map((keyword: KeywordProp) => (
                   <React.Fragment key={keyword.label}>
                     {isArray(keyword.value) ? (
@@ -321,12 +320,11 @@ const SchemaDefinition = (props: Prop) => {
                     )}
                   </React.Fragment>
                 ))}
+                <div>
+                  <small className="text-muted text-uppercase">Enum</small>: {formatPropValue(props.def.enum)}
+                </div>
               </>
             )}
-
-            <div>
-              <small className="text-muted text-uppercase">Enum</small>: {formatPropValue(props.def.enum)}
-            </div>
           </div>
         </div>
       )}

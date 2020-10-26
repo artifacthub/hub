@@ -17,6 +17,7 @@ import SecurityReport from './securityReport';
 interface Props {
   package: Package;
   allVersions: JSX.Element[];
+  visibleSecurityReport: boolean;
   activeChannel?: string | null;
   onChannelChange: (channel: string) => void;
 }
@@ -54,6 +55,7 @@ const OLMOperatorsDetails = (props: Props) => (
       summary={props.package.securityReportSummary}
       packageId={props.package.packageId}
       version={props.package.version!}
+      visibleSecurityReport={props.visibleSecurityReport}
     />
 
     <CapabilityLevel capabilityLevel={props.package.capabilities} />

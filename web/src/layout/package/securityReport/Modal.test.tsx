@@ -11,6 +11,15 @@ const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as SecurityReport;
 };
 
+const mockHistoryReplace = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as {}),
+  useHistory: () => ({
+    replace: mockHistoryReplace,
+  }),
+}));
+
 const defaultProps = {
   summary: {
     [VulnerabilitySeverity.Critical]: 4,

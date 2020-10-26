@@ -112,6 +112,7 @@ export default function App() {
                     <PackageView
                       hash={location.hash}
                       channel={getQueryParam(location.search, 'channel')}
+                      visibleModal={getQueryParam(location.search, 'modal') || undefined}
                       isLoadingPackage={isLoadingPackage}
                       setIsLoadingPackage={setIsLoadingPackage}
                       {...location.state}
