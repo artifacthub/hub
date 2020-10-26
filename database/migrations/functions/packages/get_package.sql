@@ -37,6 +37,7 @@ begin
         'crds_examples', s.crds_examples,
         'capabilities', s.capabilities,
         'security_report_summary', s.security_report_summary,
+        'security_report_created_at', floor(extract(epoch from s.security_report_created_at)),
         'data', s.data,
         'version', s.version,
         'available_versions', (
