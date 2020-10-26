@@ -4,7 +4,7 @@ import map from 'lodash/map';
 import moment from 'moment';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
-import { FiDownload, FiPlus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Link, useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -40,11 +40,8 @@ import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import SubNavbar from '../navigation/SubNavbar';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
-import FalcoInstall from './FalcoInstall';
-import HelmInstall from './HelmInstall';
+import InstallationModal from './InstallationModal';
 import ModalHeader from './ModalHeader';
-import OLMInstall from './OLMInstall';
-import OPAInstall from './OPAInstall';
 import OPAPoliciesList from './OPAPoliciesList';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
@@ -64,6 +61,7 @@ interface Props {
   repositoryName: string;
   hash?: string;
   channel?: string;
+  visibleModal?: string;
 }
 
 const PackageView = (props: Props) => {
@@ -149,7 +147,7 @@ const PackageView = (props: Props) => {
     setActiveChannel(channel);
   };
 
-  const InstallationModal = (buttonType?: string): JSX.Element | null => {
+  const getInstallationModal = (buttonType?: string): JSX.Element | null => {
     if (
       isNull(detail) ||
       isUndefined(detail) ||
@@ -165,42 +163,15 @@ const PackageView = (props: Props) => {
       detail!.version !== sortedVersions[0].version;
 
     return (
-      <Modal
-        buttonType={buttonType}
-        buttonContent={
-          <>
-            <FiDownload className="mr-2" />
-            <span>Install</span>
-          </>
-        }
-        header={<ModalHeader package={detail!} />}
-        className={styles.modalInstallationWrapper}
-        disabledOpenBtn={isDisabled}
-        tooltipMessage={isDisabled ? 'Only the current version can be installed' : undefined}
-      >
-        <>
-          {(() => {
-            switch (detail!.repository.kind) {
-              case RepositoryKind.Helm:
-                return <HelmInstall name={detail.name} version={detail.version} repository={detail.repository} />;
-              case RepositoryKind.Falco:
-                return <FalcoInstall normalizedName={detail.normalizedName!} />;
-              case RepositoryKind.OPA:
-                return <OPAInstall install={detail.install} />;
-              case RepositoryKind.OLM:
-                return (
-                  <OLMInstall
-                    name={detail.name}
-                    activeChannel={activeChannel!}
-                    isGlobalOperator={detail.data!.isGlobalOperator}
-                  />
-                );
-              default:
-                return null;
-            }
-          })()}
-        </>
-      </Modal>
+      <div className={styles.modalInstallationWrapper}>
+        <InstallationModal
+          isDisabled={isDisabled}
+          package={detail!}
+          btnClassName={buttonType}
+          activeChannel={activeChannel}
+          visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
+        />
+      </div>
     );
   };
 
@@ -492,11 +463,12 @@ const PackageView = (props: Props) => {
                             sortedVersions={sortedVersions}
                             searchUrlReferer={props.searchUrlReferer}
                             fromStarredPage={props.fromStarredPage}
+                            visibleSecurityReport={false}
                           />
                         </Modal>
                       </div>
 
-                      <div className="pl-1 w-50">{InstallationModal('btn-outline-secondary btn-sm')}</div>
+                      <div className="pl-1 w-50">{getInstallationModal('btn-outline-secondary btn-sm')}</div>
                     </div>
                   </div>
                 </div>
@@ -576,10 +548,16 @@ const PackageView = (props: Props) => {
                   <div className="col col-auto pl-5 pb-4 d-none d-md-block">
                     {!isNull(detail) && (
                       <>
-                        {InstallationModal()}
+                        {getInstallationModal('btn-primary')}
 
                         {detail.hasValuesSchema && detail.repository.kind === RepositoryKind.Helm && (
-                          <ValuesSchema packageId={detail.packageId} version={detail.version!} />
+                          <ValuesSchema
+                            packageId={detail.packageId}
+                            version={detail.version!}
+                            visibleValuesSchema={
+                              !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                            }
+                          />
                         )}
 
                         <div className={`card shadow-sm position-relative info ${styles.info}`}>
@@ -591,6 +569,9 @@ const PackageView = (props: Props) => {
                               sortedVersions={sortedVersions}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
+                              visibleSecurityReport={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
+                              }
                             />
                           </div>
                         </div>

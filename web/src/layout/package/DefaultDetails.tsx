@@ -14,6 +14,7 @@ import SecurityReport from './securityReport';
 interface Props {
   package: Package;
   allVersions: JSX.Element[];
+  visibleSecurityReport: boolean;
 }
 
 const DefaultDetails = (props: Props) => {
@@ -34,6 +35,7 @@ const DefaultDetails = (props: Props) => {
         summary={props.package.securityReportSummary}
         packageId={props.package.packageId}
         version={props.package.version!}
+        visibleSecurityReport={props.visibleSecurityReport}
       />
 
       <Links links={props.package.links} />

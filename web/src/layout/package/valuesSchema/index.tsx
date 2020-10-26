@@ -1,6 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
+import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
 import alertDispatcher from '../../../utils/alertDispatcher';
@@ -11,9 +12,11 @@ import styles from './ValuesSchema.module.css';
 interface Props {
   packageId: string;
   version: string;
+  visibleValuesSchema: boolean;
 }
 
 const ValuesSchema = (props: Props) => {
+  const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [valuesSchema, setValuesSchema] = useState<JSONSchema | undefined | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,7 +44,23 @@ const ValuesSchema = (props: Props) => {
     } else {
       getValuesSchema();
     }
+    history.replace({
+      search: '?modal=values-schema',
+    });
   };
+
+  const onCloseModal = () => {
+    setOpenStatus(false);
+    history.replace({
+      search: '',
+    });
+  };
+
+  useEffect(() => {
+    if (props.visibleValuesSchema && !openStatus) {
+      onOpenModal();
+    }
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>
@@ -66,7 +85,7 @@ const ValuesSchema = (props: Props) => {
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
           header={<div className={`h3 m-2 ${styles.title}`}>Values schema reference</div>}
-          onClose={() => setOpenStatus(false)}
+          onClose={onCloseModal}
           open={openStatus}
         >
           <div className="m-3 mw-100">

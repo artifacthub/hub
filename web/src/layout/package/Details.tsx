@@ -14,6 +14,7 @@ interface Props {
   sortedVersions: VersionData[];
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
+  visibleSecurityReport: boolean;
 }
 
 const Details = (props: Props) => {
@@ -36,19 +37,38 @@ const Details = (props: Props) => {
       {(() => {
         switch (props.package.repository.kind) {
           case RepositoryKind.Helm:
-            return <HelmChartDetails package={props.package} allVersions={allVersions} />;
+            return (
+              <HelmChartDetails
+                package={props.package}
+                allVersions={allVersions}
+                visibleSecurityReport={props.visibleSecurityReport}
+              />
+            );
 
           case RepositoryKind.Falco:
-            return <DefaultDetails package={props.package} allVersions={allVersions} />;
+            return (
+              <DefaultDetails
+                package={props.package}
+                allVersions={allVersions}
+                visibleSecurityReport={props.visibleSecurityReport}
+              />
+            );
 
           case RepositoryKind.OPA:
-            return <OPAPoliciesDetails package={props.package} allVersions={allVersions} />;
+            return (
+              <OPAPoliciesDetails
+                package={props.package}
+                allVersions={allVersions}
+                visibleSecurityReport={props.visibleSecurityReport}
+              />
+            );
 
           case RepositoryKind.OLM:
             return (
               <OLMOperatorsDetails
                 package={props.package}
                 allVersions={allVersions}
+                visibleSecurityReport={props.visibleSecurityReport}
                 activeChannel={props.activeChannel}
                 onChannelChange={props.onChannelChange}
               />

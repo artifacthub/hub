@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
+import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
 import { SecurityReport, SecurityReportSummary } from '../../../types';
@@ -14,9 +15,11 @@ interface Props {
   summary: SecurityReportSummary;
   packageId: string;
   version: string;
+  visibleSecurityReport: boolean;
 }
 
 const SecurityModal = (props: Props) => {
+  const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
@@ -43,7 +46,23 @@ const SecurityModal = (props: Props) => {
     } else {
       getSecurityReports();
     }
+    history.replace({
+      search: '?modal=security-report',
+    });
   };
+
+  const onCloseModal = () => {
+    setOpenStatus(false);
+    history.replace({
+      search: '',
+    });
+  };
+
+  useEffect(() => {
+    if (props.visibleSecurityReport && !openStatus) {
+      onOpenModal();
+    }
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>
@@ -70,7 +89,7 @@ const SecurityModal = (props: Props) => {
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
           header={<div className={`h3 m-2 ${styles.title}`}>Security report</div>}
-          onClose={() => setOpenStatus(false)}
+          onClose={onCloseModal}
           open={openStatus}
         >
           <div className="m-3">

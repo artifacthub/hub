@@ -16,6 +16,7 @@ import SecurityReport from './securityReport';
 interface Props {
   package: Package;
   allVersions: JSX.Element[];
+  visibleSecurityReport: boolean;
 }
 
 const OPAPoliciesDetails = (props: Props) => (
@@ -35,6 +36,7 @@ const OPAPoliciesDetails = (props: Props) => (
       summary={props.package.securityReportSummary}
       packageId={props.package.packageId}
       version={props.package.version!}
+      visibleSecurityReport={props.visibleSecurityReport}
     />
 
     {props.package.provider && (

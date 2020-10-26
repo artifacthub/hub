@@ -19,6 +19,7 @@ import SecurityReport from './securityReport';
 interface Props {
   package: Package;
   allVersions: JSX.Element[];
+  visibleSecurityReport: boolean;
 }
 
 const HelmChartDetails = (props: Props) => {
@@ -48,6 +49,7 @@ const HelmChartDetails = (props: Props) => {
         summary={props.package.securityReportSummary}
         packageId={props.package.packageId}
         version={props.package.version!}
+        visibleSecurityReport={props.visibleSecurityReport}
       />
 
       <CapabilityLevel capabilityLevel={props.package.capabilities} />

@@ -13,6 +13,7 @@ const defaultProps = {
   },
   packageId: 'pkgID',
   version: '1.1.1',
+  visibleSecurityReport: false,
 };
 
 describe('SecurityReport', () => {
