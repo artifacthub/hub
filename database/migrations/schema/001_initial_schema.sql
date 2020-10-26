@@ -144,6 +144,7 @@ create table if not exists snapshot (
     containers_images jsonb,
     provider text check (provider <> ''),
     values_schema jsonb,
+    whatsnew text[],
     created_at timestamptz default current_timestamp not null,
     primary key (package_id, version),
     unique (package_id, digest)

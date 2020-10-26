@@ -11,7 +11,8 @@ declare
     v_name text := p_pkg->>'name';
     v_display_name text := nullif(p_pkg->>'display_name', '');
     v_description text := nullif(p_pkg->>'description', '');
-    v_keywords text[] := (select (array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))))::text[]);
+    v_keywords text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'keywords', 'null'::jsonb))), '{}'));
+    v_whatsnew text[] := (select nullif(array(select jsonb_array_elements_text(nullif(p_pkg->'whatsnew', 'null'::jsonb))), '{}'));
     v_version text := p_pkg->>'version';
     v_repository_id uuid := ((p_pkg->'repository')->>'repository_id')::uuid;
     v_maintainer jsonb;
@@ -146,6 +147,7 @@ begin
         containers_images,
         provider,
         values_schema,
+        whatsnew,
         created_at
     ) values (
         v_package_id,
@@ -170,6 +172,7 @@ begin
         nullif(p_pkg->'containers_images', 'null'),
         v_provider,
         nullif(p_pkg->'values_schema', 'null'),
+        v_whatsnew,
         v_created_at
     )
     on conflict (package_id, version) do update
@@ -194,6 +197,7 @@ begin
         containers_images = excluded.containers_images,
         provider = excluded.provider,
         values_schema = excluded.values_schema,
+        whatsnew = excluded.whatsnew,
         created_at = v_created_at;
 
     -- Register new release event if package's latest version has been updated

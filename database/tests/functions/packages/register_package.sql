@@ -74,6 +74,10 @@ select register_package('
     "values_schema": {
         "key": "value"
     },
+    "whatsnew": [
+        "Added cool feature",
+        "Fixed minor bug"
+    ],
     "created_at": 1592299234,
     "maintainers": [
         {
@@ -151,6 +155,7 @@ select results_eq(
             s.containers_images,
             s.provider,
             s.values_schema,
+            s.whatsnew,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -180,6 +185,10 @@ select results_eq(
             '[{"image": "quay.io/org/img:1.0.0"}]'::jsonb,
             'Org Inc',
             '{"key": "value"}'::jsonb,
+            '{
+                "Added cool feature",
+                "Fixed minor bug"
+            }'::text[],
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,
@@ -279,6 +288,7 @@ select results_eq(
             s.containers_images,
             s.provider,
             s.values_schema,
+            s.whatsnew,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -303,6 +313,7 @@ select results_eq(
             '[{"image": "quay.io/org/img:2.0.0"}]'::jsonb,
             'Org Inc 2',
             null::jsonb,
+            null::text[],
             '2020-06-16 11:20:35+02'::timestamptz
         )
     $$,
@@ -352,7 +363,6 @@ select register_package('
     "logo_url": "logo_url",
     "home_url": "home_url",
     "logo_image_id": "00000000-0000-0000-0000-000000000001",
-    "keywords": ["kw1", "kw2"],
     "readme": "readme-version-0.0.9",
     "install": "install-version-0.0.9",
     "version": "0.0.9",
@@ -422,7 +432,7 @@ select results_eq(
             '0.0.9',
             'Package 1',
             'description',
-            '{kw1,kw2}'::text[],
+            null::text[],
             'home_url',
             '11.0.0',
             'digest-package1-0.0.9',

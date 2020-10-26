@@ -180,6 +180,7 @@ select columns_are('snapshot', array[
     'containers_images',
     'provider',
     'values_schema',
+    'whatsnew',
     'created_at'
 ]);
 select columns_are('subscription', array[
