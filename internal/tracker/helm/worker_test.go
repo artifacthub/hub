@@ -288,6 +288,10 @@ func TestWorker(t *testing.T) {
 						Image: "repo/img2:2.0.0",
 					},
 				},
+				WhatsNew: []string{
+					"Added cool feature",
+					"Fixed minor bug",
+				},
 				Repository: &hub.Repository{
 					RepositoryID: "repo1",
 				},
@@ -661,6 +665,23 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			&hub.Package{
 				Capabilities: "Basic Install",
+			},
+			"",
+		},
+		// What's new
+		{
+			&hub.Package{},
+			map[string]string{
+				whatsnewAnnotation: `
+- Added cool feature
+- Fixed minor bug
+`,
+			},
+			&hub.Package{
+				WhatsNew: []string{
+					"Added cool feature",
+					"Fixed minor bug",
+				},
 			},
 			"",
 		},

@@ -79,6 +79,7 @@ type Package struct {
 	Provider                string                 `json:"provider"`
 	HasValuesSchema         bool                   `json:"has_values_schema"`
 	ValuesSchema            json.RawMessage        `json:"values_schema"`
+	WhatsNew                []string               `json:"whatsnew"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	Repository              *Repository            `json:"repository"`
 	CreatedAt               int64                  `json:"created_at,omitempty"`
