@@ -29,7 +29,7 @@ export default (props: Props): JSX.Element => {
       }
     };
 
-    if (!isNull(ref.current) && props.isVisible) {
+    if (!isNull(ref.current) && !isNull(lastCharacter.current) && !isNull(icon.current) && props.isVisible) {
       calculateFontSize();
     }
   }, [props.isVisible, lineHeight]);
