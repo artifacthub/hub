@@ -79,6 +79,7 @@ type Package struct {
 	Provider                string                 `json:"provider"`
 	HasValuesSchema         bool                   `json:"has_values_schema"`
 	ValuesSchema            json.RawMessage        `json:"values_schema"`
+	HasChangeLog            bool                   `json:"has_changelog"`
 	Changes                 []string               `json:"changes"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	Repository              *Repository            `json:"repository"`
@@ -89,6 +90,7 @@ type Package struct {
 // provide.
 type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
+	GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)

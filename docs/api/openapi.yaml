@@ -1275,6 +1275,37 @@ paths:
           $ref: "#/components/responses/NotFoundResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/{packageID}/changelog":
+    get:
+      tags:
+        - Packages
+      summary: Get package changelogs
+      parameters:
+        - $ref: "#/components/parameters/PackageIDParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    version:
+                      type: string
+                    created_at:
+                      type: integer
+                    changes:
+                      type: array
+                      items:
+                        type: string
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   /subscriptions:
     get:
       tags:
@@ -2166,6 +2197,8 @@ components:
             security_report_created_at:
               type: integer
             has_values_schema:
+              type: boolean
+            has_changelog:
               type: boolean
     PackageSummary:
       type: object

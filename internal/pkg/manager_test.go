@@ -221,6 +221,32 @@ func TestGet(t *testing.T) {
 	})
 }
 
+func TestGetChangeLogJSON(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("database query succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return([]byte("dataJSON"), nil)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetChangeLogJSON(ctx, "pkg1")
+		assert.NoError(t, err)
+		assert.Equal(t, []byte("dataJSON"), dataJSON)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
+		m := NewManager(db)
+
+		dataJSON, err := m.GetChangeLogJSON(ctx, "pkg1")
+		assert.Equal(t, tests.ErrFakeDB, err)
+		assert.Nil(t, dataJSON)
+		db.AssertExpectations(t)
+	})
+}
+
 func TestGetJSON(t *testing.T) {
 	ctx := context.Background()
 

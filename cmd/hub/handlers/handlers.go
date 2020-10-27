@@ -205,6 +205,7 @@ func (h *Handlers) setupRouter() {
 			})
 			r.Get("/{packageID}/{version}/securityReport", h.Packages.GetSnapshotSecurityReport)
 			r.Get("/{packageID}/{version}/valuesSchema", h.Packages.GetValuesSchema)
+			r.Get("/{packageID}/changelog", h.Packages.GetChangeLog)
 		})
 
 		// Subscriptions
