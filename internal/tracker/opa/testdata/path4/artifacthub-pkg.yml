@@ -20,6 +20,9 @@ links:
     url: https://link1.url
 readme: Package documentation in markdown format
 install: Brief install instructions in markdown format
+changes:
+  - feature 1
+  - fix 1
 maintainers:
   - name: Maintainer
     email: test@email.com

@@ -26,6 +26,7 @@ import (
 )
 
 const (
+	changesAnnotation = "artifacthub.io/changes"
 	licenseAnnotation = "artifacthub.io/license"
 )
 
@@ -371,6 +372,10 @@ func (t *Tracker) registerPackage(
 	var crdsExamples []interface{}
 	if err := json.Unmarshal([]byte(csv.Annotations["alm-examples"]), &crdsExamples); err == nil {
 		p.CRDsExamples = crdsExamples
+	}
+	var changes []string
+	if err := yaml.Unmarshal([]byte(csv.Annotations[changesAnnotation]), &changes); err == nil {
+		p.Changes = changes
 	}
 	p.Data = map[string]interface{}{
 		"isGlobalOperator": isGlobalOperator,

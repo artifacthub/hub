@@ -28,6 +28,9 @@ install: | # (optional)
   Brief install instructions in markdown format
 
   Content added here will be displayed when the INSTALL button on the package details page is clicked.
+changes: # (optional)
+  - A list of changes introduced in this package version
+  - Use one entry for each of them
 maintainers: # (optional)
   - name: The maintainer name (required for each maintainer)
     email: The maintainer email (required for each maintainer)
