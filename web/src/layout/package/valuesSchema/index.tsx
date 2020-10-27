@@ -87,6 +87,7 @@ const ValuesSchema = (props: Props) => {
           header={<div className={`h3 m-2 ${styles.title}`}>Values schema reference</div>}
           onClose={onCloseModal}
           open={openStatus}
+          breakPoint="md"
         >
           <div className="m-3 mw-100">
             <Schema schema={valuesSchema} />

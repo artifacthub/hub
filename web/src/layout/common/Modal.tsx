@@ -29,6 +29,7 @@ interface Props {
   disabledOpenBtn?: boolean;
   tooltipMessage?: string;
   excludedRefs?: React.MutableRefObject<HTMLDivElement | null>[];
+  breakPoint?: string;
 }
 
 const Modal = (props: Props) => {
@@ -37,7 +38,7 @@ const Modal = (props: Props) => {
   useOutsideClick([ref, ...(!isUndefined(props.excludedRefs) ? [...props.excludedRefs] : [])], openStatus, () => {
     closeModal();
   });
-  useBodyScroll(openStatus, 'modal');
+  useBodyScroll(openStatus, 'modal', props.breakPoint);
 
   const closeModal = () => {
     if (isUndefined(props.disabledClose) || !props.disabledClose) {
