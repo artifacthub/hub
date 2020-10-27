@@ -68,6 +68,7 @@ export interface Package {
   crds?: { [key: string]: any } | null;
   crdsExamples?: CustomResourcesDefinitionExample[] | null;
   securityReportSummary: SecurityReportSummary | null;
+  securityReportCreatedAt?: number;
   hasValuesSchema?: boolean;
 }
 

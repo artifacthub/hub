@@ -177,7 +177,7 @@ exports[`SecurityReport creates snapshot 1`] = `
         </span>
       </div>
       <div
-        class="d-none d-md-block mt-md-3"
+        class="d-none d-md-block"
       >
         <div
           class="text-center"

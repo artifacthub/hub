@@ -55,6 +55,7 @@ const OLMOperatorsDetails = (props: Props) => (
       summary={props.package.securityReportSummary}
       packageId={props.package.packageId}
       version={props.package.version!}
+      createdAt={props.package.securityReportCreatedAt}
       visibleSecurityReport={props.visibleSecurityReport}
     />
 
