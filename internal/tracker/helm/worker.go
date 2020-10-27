@@ -26,14 +26,14 @@ import (
 )
 
 const (
+	changesAnnotation              = "artifacthub.io/changes"
 	crdsAnnotation                 = "artifacthub.io/crds"
 	crdsExamplesAnnotation         = "artifacthub.io/crdsExamples"
 	imagesAnnotation               = "artifacthub.io/images"
-	maintainersAnnotation          = "artifacthub.io/maintainers"
 	linksAnnotation                = "artifacthub.io/links"
+	maintainersAnnotation          = "artifacthub.io/maintainers"
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
-	whatsnewAnnotation             = "artifacthub.io/whatsnew"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -321,6 +321,14 @@ func getFile(chart *chart.Chart, name string) *chart.File {
 // enrichPackageFromAnnotations adds some extra information to the package from
 // the provided annotations.
 func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string) error {
+	// Changes
+	if v, ok := annotations[changesAnnotation]; ok {
+		var changes []string
+		if err := yaml.Unmarshal([]byte(v), &changes); err == nil {
+			p.Changes = changes
+		}
+	}
+
 	// CRDs
 	if v, ok := annotations[crdsAnnotation]; ok {
 		var crds []interface{}
@@ -394,14 +402,6 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 
 	// Operator capabilities
 	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
-
-	// What's new
-	if v, ok := annotations[whatsnewAnnotation]; ok {
-		var whatsnew []string
-		if err := yaml.Unmarshal([]byte(v), &whatsnew); err == nil {
-			p.WhatsNew = whatsnew
-		}
-	}
 
 	return nil
 }
