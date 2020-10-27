@@ -100,6 +100,10 @@ func TestGet(t *testing.T) {
 				},
 			},
 			Provider: "Org Inc",
+			Changes: []string{
+				"feature 1",
+				"fix 1",
+			},
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "name1",
@@ -187,7 +191,11 @@ func TestGet(t *testing.T) {
 					"image": "quay.io/org/img:1.0.0"
 				}
 			],
-    		"provider": "Org Inc",
+			"provider": "Org Inc",
+			"changes": [
+				"feature 1",
+				"fix 1"
+			],
 			"maintainers": [
 				{
 					"name": "name1",

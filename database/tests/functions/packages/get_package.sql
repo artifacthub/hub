@@ -267,6 +267,10 @@ select is(
         "provider": "Org Inc",
         "has_values_schema": true,
         "has_changelog": true,
+        "changes": [
+            "feature 1",
+            "fix 1"
+        ],
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -370,6 +374,10 @@ select is(
         "provider": "Org Inc",
         "has_values_schema": true,
         "has_changelog": true,
+        "changes": [
+            "feature 1",
+            "fix 1"
+        ],
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -463,6 +471,7 @@ select is(
         "provider": null,
         "has_values_schema": false,
         "has_changelog": true,
+        "changes": null,
         "created_at": 1592299233,
         "maintainers": [
             {
@@ -525,6 +534,7 @@ select is(
         "provider": null,
         "has_values_schema": false,
         "has_changelog": false,
+        "changes": null,
         "created_at": 1592299234,
         "version": "1.0.0",
         "app_version": null,

@@ -283,6 +283,7 @@ func (w *Worker) preparePkgNotificationTemplateData(
 			"version":     p.Version,
 			"logoImageID": p.LogoImageID,
 			"url":         pkg.BuildURL(w.baseURL, p, e.PackageVersion),
+			"changes":     p.Changes,
 			"repository": map[string]interface{}{
 				"kind":      hub.GetKindName(p.Repository.Kind),
 				"name":      p.Repository.Name,
