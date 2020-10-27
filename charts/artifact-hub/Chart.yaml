@@ -2,7 +2,7 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.8.0
+version: 0.8.1
 appVersion: 0.8.0
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
@@ -23,6 +23,17 @@ dependencies:
     repository: https://kubernetes-charts.storage.googleapis.com/
     condition: postgresql.enabled
 annotations:
+  artifacthub.io/changes: |
+    - Add JSON schema for Artifact Hub Helm chart
+    - Some improvements in Artifact Hub Helm chart
+    - Track Helm charts values schema
+    - Add endpoint to get Helm charts values schema
+    - Bump Trivy to 0.12.0
+    - Display containers images in Helm packages
+    - Remove internal requests limiter
+    - Upgrade frontend dependencies to fix some security vulnerabilities
+    - Add packages security report documentation
+    - Some bugs fixes and improvements
   artifacthub.io/images: |
     - name: db-migrator
       image: artifacthub/db-migrator:v0.8.0
