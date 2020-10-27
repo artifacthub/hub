@@ -59,6 +59,7 @@ begin
         'has_changelog', (select exists (
             select 1 from snapshot where package_id = v_package_id and changes is not null
         )),
+        'changes', s.changes,
         'created_at', floor(extract(epoch from s.created_at)),
         'maintainers', (
             select json_agg(json_build_object(
