@@ -288,7 +288,7 @@ func TestWorker(t *testing.T) {
 						Image: "repo/img2:2.0.0",
 					},
 				},
-				WhatsNew: []string{
+				Changes: []string{
 					"Added cool feature",
 					"Fixed minor bug",
 				},
@@ -672,13 +672,13 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 		{
 			&hub.Package{},
 			map[string]string{
-				whatsnewAnnotation: `
+				changesAnnotation: `
 - Added cool feature
 - Fixed minor bug
 `,
 			},
 			&hub.Package{
-				WhatsNew: []string{
+				Changes: []string{
 					"Added cool feature",
 					"Fixed minor bug",
 				},

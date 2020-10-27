@@ -74,7 +74,7 @@ select register_package('
     "values_schema": {
         "key": "value"
     },
-    "whatsnew": [
+    "changes": [
         "Added cool feature",
         "Fixed minor bug"
     ],
@@ -155,7 +155,7 @@ select results_eq(
             s.containers_images,
             s.provider,
             s.values_schema,
-            s.whatsnew,
+            s.changes,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -288,7 +288,7 @@ select results_eq(
             s.containers_images,
             s.provider,
             s.values_schema,
-            s.whatsnew,
+            s.changes,
             s.created_at
         from snapshot s
         join package p using (package_id)
