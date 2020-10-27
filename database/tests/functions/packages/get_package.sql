@@ -93,6 +93,7 @@ insert into snapshot (
     containers_images,
     provider,
     values_schema,
+    changes,
     created_at
 ) values (
     :'package1ID',
@@ -118,6 +119,7 @@ insert into snapshot (
     '[{"image": "quay.io/org/img:1.0.0"}]',
     'Org Inc',
     '{"key": "value"}',
+    '{"feature 1", "fix 1"}',
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -264,6 +266,7 @@ select is(
         ],
         "provider": "Org Inc",
         "has_values_schema": true,
+        "has_changelog": true,
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -366,6 +369,7 @@ select is(
         ],
         "provider": "Org Inc",
         "has_values_schema": true,
+        "has_changelog": true,
         "created_at": 1592299234,
         "maintainers": [
             {
@@ -458,6 +462,7 @@ select is(
         "containers_images": null,
         "provider": null,
         "has_values_schema": false,
+        "has_changelog": true,
         "created_at": 1592299233,
         "maintainers": [
             {
@@ -519,6 +524,7 @@ select is(
         "containers_images": null,
         "provider": null,
         "has_values_schema": false,
+        "has_changelog": false,
         "created_at": 1592299234,
         "version": "1.0.0",
         "app_version": null,

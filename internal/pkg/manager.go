@@ -16,6 +16,7 @@ import (
 const (
 	// Database queries
 	getPkgDBQ                       = `select get_package($1::jsonb)`
+	getPkgChangeLogDBQ              = `select get_package_changelog($1::uuid)`
 	getPkgStarsDBQ                  = `select get_package_stars($1::uuid, $2::uuid)`
 	getPkgsStarredByUserDBQ         = `select get_packages_starred_by_user($1::uuid)`
 	getPkgsStatsDBQ                 = `select get_packages_stats()`
@@ -64,6 +65,12 @@ func (m *Manager) Get(ctx context.Context, input *hub.GetPackageInput) (*hub.Pac
 		return nil, err
 	}
 	return p, nil
+}
+
+// GetChangeLogJSON returns the changelog for the package identified by the id
+// provided.
+func (m *Manager) GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getPkgChangeLogDBQ, pkgID)
 }
 
 // GetJSON returns the package identified by the input provided as a json

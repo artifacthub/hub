@@ -55,6 +55,18 @@ func (h *Handlers) Get(w http.ResponseWriter, r *http.Request) {
 	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
 }
 
+// GetChangeLog is an http handler used to get a package's changelog.
+func (h *Handlers) GetChangeLog(w http.ResponseWriter, r *http.Request) {
+	packageID := chi.URLParam(r, "packageID")
+	dataJSON, err := h.pkgManager.GetChangeLogJSON(r.Context(), packageID)
+	if err != nil {
+		h.logger.Error().Err(err).Str("method", "GetChangeLogJSON").Send()
+		helpers.RenderErrorJSON(w, err)
+		return
+	}
+	helpers.RenderJSON(w, dataJSON, helpers.DefaultAPICacheMaxAge, http.StatusOK)
+}
+
 // GetRandom is an http handler used to get some random packages from the hub
 // database.
 func (h *Handlers) GetRandom(w http.ResponseWriter, r *http.Request) {
