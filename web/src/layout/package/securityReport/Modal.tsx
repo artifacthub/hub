@@ -91,6 +91,7 @@ const SecurityModal = (props: Props) => {
           header={<div className={`h3 m-2 ${styles.title}`}>Security report</div>}
           onClose={onCloseModal}
           open={openStatus}
+          breakPoint="md"
         >
           <div className="m-3">
             <div className="h5 mt-0 text-secondary text-uppercase font-weight-bold mb-2">Summary</div>
