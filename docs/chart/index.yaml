@@ -2,6 +2,17 @@ apiVersion: v1
 entries:
   artifact-hub:
     - annotations:
+        artifacthub.io/changes: |
+          - Add JSON schema for Artifact Hub Helm chart
+          - Some improvements in Artifact Hub Helm chart
+          - Track Helm charts values schema
+          - Add endpoint to get Helm charts values schema
+          - Bump Trivy to 0.12.0
+          - Display containers images in Helm packages
+          - Remove internal requests limiter
+          - Upgrade frontend dependencies to fix some security vulnerabilities
+          - Add packages security report documentation
+          - Some bugs fixes and improvements
         artifacthub.io/images: |
           - name: db-migrator
             image: artifacthub/db-migrator:v0.8.0
@@ -24,7 +35,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: 0a4ca745a250b9132ef09ba91360af70e44d91416f8142a31e46e087f873dab8
+      digest: 5b64baccdc1299e9a58567c6fb6f946e54d8563239aa84072a26f363b5a0d62e
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -44,6 +55,16 @@ entries:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.8.0.tgz
       version: 0.8.0
     - annotations:
+        artifacthub.io/changes: |
+          - Introduce packages security report
+          - Display packages' license in cards
+          - Allow filtering packages by license and operator capabilities
+          - Add support for some extra Helm and OLM annotations
+          - Add repositories guide
+          - Allow adding CRDs for operators in Helm packages
+          - Display search tips and add some extra sample searches
+          - Improve user experience in authorization configuration view
+          - Some bugs fixes and improvements
         artifacthub.io/images: |
           - name: db-migrator
             image: artifacthub/db-migrator:v0.7.0
@@ -64,7 +85,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: 5f2fdf831fa5d75428180b54fb7978256ea6eda49bedc1113d2f83a8556c877c
+      digest: c00c5eb6a938a5da4ed8703958d96bc959cff0e9d864a4298ab65c17fce9a7f4
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -83,7 +104,19 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.7.0.tgz
       version: 0.7.0
-    - apiVersion: v2
+    - annotations:
+        artifacthub.io/changes: |
+          - Introduce fine grained authorization mechanism based on OPA policies
+          - Allow enriching package information using Helm annotations
+          - Allow entities to claim repositories ownership
+          - Introduce official repository concept
+          - Add verified publisher and official repository search filters
+          - Artifact Hub repositories badges
+          - Test Artifact Hub Helm chart
+          - Improve package view on mobile devices
+          - Add API endpoint to get repositories by kind
+          - Some bugs fixes and improvements
+      apiVersion: v2
       appVersion: 0.6.0
       created: "2020-09-23T08:07:09.875145+02:00"
       dependencies:
@@ -94,7 +127,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: 3748ee32e964cb978e70a54e000331418f92c324841369d901c0c4d46afae212
+      digest: 682cda1fcd3901266ad5ab6d2c490598ab317eda9a3515707a413a9ebccfb330
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -113,7 +146,18 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.6.0.tgz
       version: 0.6.0
-    - apiVersion: v2
+    - annotations:
+        artifacthub.io/changes: |
+          - Introduce verified publisher concept
+          - Add dark mode support
+          - Improve search facets filtering
+          - Notify repository owners of tracking errors
+          - Track and list Helm charts dependencies
+          - Display links to source in Helm packages
+          - Add repositories kind filter to tracker
+          - Add Monocular compatible search API
+          - Some bugs fixes and improvements
+      apiVersion: v2
       appVersion: 0.5.0
       created: "2020-09-03T11:27:53.611583+02:00"
       dependencies:
@@ -124,7 +168,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: 87e0f3ed5fdcdbde2a38ed85cf87cad5b23b596b91c65a0a0ed384047cefcda9
+      digest: 5af1c721359b8d2bbee7640d99853740201c7fd071e9f52dfd2c1a0c5099348c
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -143,7 +187,17 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.5.0.tgz
       version: 0.5.0
-    - apiVersion: v2
+    - annotations:
+        artifacthub.io/changes: |
+          - Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)
+          - Trackers have been improved and consolidated into one
+          - Search filtering experience in UI has been improved
+          - Now it's possible to search by the name of the repository and the name of the owning organization or user
+          - Added support to allow filtering packages by category
+          - An operator flag has been added to the package entity, and it's possible to filter by it
+          - Repositories URL is now exposed to users in several places in the UI
+          - Some bugs fixes
+      apiVersion: v2
       appVersion: 0.4.0
       created: "2020-08-06T16:42:47.340102+02:00"
       dependencies:
@@ -154,7 +208,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: cc7fd833e7adf669e3eeb8f5acbe18c5929d28cccf0fdea0536529e787c1947a
+      digest: 87ce974eb3a6c0e891a6c4609b0d51d1b6d6c5dce58beef9df2e64a9a5b65b34
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -173,7 +227,19 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.4.0.tgz
       version: 0.4.0
-    - apiVersion: v2
+    - annotations:
+        artifacthub.io/changes: |
+          - Added support for OLM operators repositories
+          - Added support for Falco rules repositories
+          - Added RSS feed for packages' new version releases
+          - Packages now always belong to a repository
+          - Reorganized some API routes (breaking changes)
+          - Added a link to browse all packages and some sample searches to home page
+          - Added CNCF Sandbox logo to home page
+          - Some minor improvements in search page filters
+          - Package creation time is now tracked and displayed
+          - Some bugs fixes
+      apiVersion: v2
       appVersion: 0.3.0
       created: "2020-07-04T02:05:00.111694+02:00"
       dependencies:
@@ -184,7 +250,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: adcaeada41bc6d26b1567ae007dc1ee86314bb1d6a3e68ae87b29fc03a6ab63b
+      digest: 66fbcb93a54465728ceaeff8a5669e5bf92aeecdf986171f281d55b0cbf13661
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -203,7 +269,17 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.3.0.tgz
       version: 0.3.0
-    - apiVersion: v2
+    - annotations:
+        artifacthub.io/changes: |
+          - API docs
+          - Reorganize API routes
+          - Some HTTP handlers improvements
+          - Support for API keys
+          - API rate limiting
+          - Signed packages label (Helm provenance file)
+          - Home page updated
+          - Bug fixes
+      apiVersion: v2
       appVersion: 0.2.0
       created: "2020-07-04T02:05:00.109185+02:00"
       dependencies:
@@ -214,7 +290,7 @@ entries:
       description:
         Artifact Hub is a web-based application that enables finding, installing,
         and publishing Kubernetes packages.
-      digest: d5177bf053b58a0b59bfb40b498910b9c7201583df351b4b05ab94c100caa2f2
+      digest: ff04187d9857649814767fc830d3aade1345b1f134b67f80bcb6354fe737d9be
       home: https://artifacthub.io
       icon: https://artifacthub.github.io/hub/chart/logo.png
       keywords:
@@ -232,4 +308,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2020-10-22T15:14:46.284112+02:00"
+generated: "2020-10-27T08:46:16.954971+01:00"
