@@ -12,6 +12,10 @@ exports[`SecurityModal Render renders component 2`] = `<DocumentFragment />`;
 
 exports[`SecurityModal Render renders component 3`] = `<DocumentFragment />`;
 
+exports[`SecurityModal Render renders last scan time 1`] = `<DocumentFragment />`;
+
+exports[`SecurityModal Render renders last scan time 2`] = `<DocumentFragment />`;
+
 exports[`SecurityModal creates snapshot 1`] = `
 <DocumentFragment>
   <div

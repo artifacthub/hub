@@ -7,6 +7,8 @@ import { SecurityReport, VulnerabilitySeverity } from '../../../types';
 import SecurityModal from './Modal';
 jest.mock('../../../api');
 
+jest.mock('moment', () => () => ({ fromNow: () => '3 hours ago' }));
+
 const getMockSecurityReport = (fixtureId: string): SecurityReport => {
   return require(`./__fixtures__/Modal/${fixtureId}.json`) as SecurityReport;
 };
@@ -30,6 +32,7 @@ const defaultProps = {
   },
   packageId: 'pkgID',
   version: '1.1.1',
+  visibleSecurityReport: false,
 };
 
 describe('SecurityModal', () => {
@@ -84,6 +87,16 @@ describe('SecurityModal', () => {
       expect(getByText('Security report')).toBeInTheDocument();
       expect(getByText('Summary')).toBeInTheDocument();
       expect(getByText('Vulnerabilities')).toBeInTheDocument();
+    });
+
+    it('renders last scan time', async () => {
+      const mockReport = getMockSecurityReport('4');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { getByText } = render(<SecurityModal {...defaultProps} createdAt={1603804873} />);
+
+      expect(getByText('Last scan:')).toBeInTheDocument();
+      expect(getByText('3 hours ago')).toBeInTheDocument();
     });
   });
 });

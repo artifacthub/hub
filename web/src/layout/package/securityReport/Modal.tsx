@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +16,7 @@ interface Props {
   summary: SecurityReportSummary;
   packageId: string;
   version: string;
+  createdAt?: number;
   visibleSecurityReport: boolean;
 }
 
@@ -67,6 +69,12 @@ const SecurityModal = (props: Props) => {
   return (
     <>
       <div className="text-center">
+        {props.createdAt && (
+          <div className={`text-left my-2 ${styles.created}`}>
+            <small className="text-uppercase text-muted">Last scan: </small> {moment(props.createdAt * 1000).fromNow()}
+          </div>
+        )}
+
         <button className="btn btn-secondary btn-sm" onClick={onOpenModal}>
           <small className="d-flex flex-row align-items-center text-uppercase">
             {isLoading ? (
