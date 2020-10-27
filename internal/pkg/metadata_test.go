@@ -51,6 +51,10 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 				},
 				Readme:  "Package readme",
 				Install: "Package install",
+				Changes: []string{
+					"feature 1",
+					"fix 1",
+				},
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "maintainer1",
@@ -90,6 +94,10 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					},
 				},
 				Provider: "Package provider",
+				Changes: []string{
+					"feature 1",
+					"fix 1",
+				},
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "maintainer1",

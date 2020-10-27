@@ -171,6 +171,10 @@ func TestTracker(t *testing.T) {
 					URL:  "https://github.com/test/test-operator",
 				},
 			},
+			Changes: []string{
+				"feature 1",
+				"fix 1",
+			},
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "Test",

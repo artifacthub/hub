@@ -3,6 +3,9 @@ kind: ClusterServiceVersion
 metadata:
   annotations:
     artifacthub.io/license: Apache-2.0
+    artifacthub.io/changes: |
+      - feature 1
+      - fix 1
     capabilities: Basic Install
     categories: Application Runtime
     containerImage: repo.url:latest

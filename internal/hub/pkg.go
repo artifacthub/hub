@@ -129,6 +129,7 @@ type PackageMetadata struct {
 	Links            []*Link           `yaml:"links"`
 	Readme           string            `yaml:"readme"`
 	Install          string            `yaml:"install"`
+	Changes          []string          `yaml:"changes"`
 	Maintainers      []*Maintainer     `yaml:"maintainers"`
 	Provider         *Provider         `yaml:"provider"`
 	Ignore           []string          `yaml:"ignore"`

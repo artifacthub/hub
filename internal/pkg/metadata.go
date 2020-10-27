@@ -30,6 +30,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		HomeURL:          md.HomeURL,
 		Readme:           md.Readme,
 		Install:          md.Install,
+		Changes:          md.Changes,
 		Links:            md.Links,
 		Version:          md.Version,
 		AppVersion:       md.AppVersion,

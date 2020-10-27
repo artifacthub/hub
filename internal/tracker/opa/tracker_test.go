@@ -164,6 +164,10 @@ func TestTracker(t *testing.T) {
 			},
 			Readme:  "Package documentation in markdown format",
 			Install: "Brief install instructions in markdown format",
+			Changes: []string{
+				"feature 1",
+				"fix 1",
+			},
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "Maintainer",
