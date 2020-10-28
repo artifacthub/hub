@@ -6,6 +6,7 @@ import (
 	"net/smtp"
 
 	"github.com/domodwyer/mailyak"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 )
 
@@ -33,21 +34,18 @@ type Sender struct {
 // NewSender creates a new Sender instance and returns it.
 func NewSender(cfg *viper.Viper) *Sender {
 	requiredConfigFields := []string{
-		"fromName",
 		"from",
-		"replyTo",
 		"smtp.host",
 		"smtp.port",
-		"smtp.username",
-		"smtp.password",
 	}
 	for _, f := range requiredConfigFields {
 		if !cfg.IsSet("email." + f) {
+			log.Warn().Msg("email not setup properly, some required configuration fields are missing")
 			return nil
 		}
 	}
 
-	return &Sender{
+	s := &Sender{
 		fromName: cfg.GetString("email.fromName"),
 		from:     cfg.GetString("email.from"),
 		replyTo:  cfg.GetString("email.replyTo"),
@@ -56,13 +54,13 @@ func NewSender(cfg *viper.Viper) *Sender {
 			cfg.GetString("email.smtp.host"),
 			cfg.GetInt("email.smtp.port"),
 		),
-		smtpAuth: smtp.PlainAuth(
-			"",
-			cfg.GetString("email.smtp.username"),
-			cfg.GetString("email.smtp.password"),
-			cfg.GetString("email.smtp.host"),
-		),
 	}
+	username := cfg.GetString("email.smtp.username")
+	password := cfg.GetString("email.smtp.password")
+	if username != "" && password != "" {
+		s.smtpAuth = smtp.PlainAuth("", username, password, cfg.GetString("email.smtp.host"))
+	}
+	return s
 }
 
 // SendEmail creates an email using the data provided and sends it.
