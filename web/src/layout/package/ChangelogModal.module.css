@@ -1,0 +1,26 @@
+.list {
+  padding-inline-start: 20px;
+  font-size: 90%;
+}
+
+.versionWrapper {
+  min-width: 0px;
+}
+
+.btnLink {
+  top: -3px;
+}
+
+.tooltip {
+  width: 230px;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .list {
+    font-size: 80%;
+  }
+}

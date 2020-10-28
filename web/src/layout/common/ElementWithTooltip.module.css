@@ -14,6 +14,7 @@
 
 .tooltipContent {
   background-color: var(--color-1-900) !important;
+  max-width: 100%;
 }
 
 @media (hover: hover) {

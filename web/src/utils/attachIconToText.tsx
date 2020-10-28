@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -17,19 +16,21 @@ export default (props: Props): JSX.Element => {
   const ref = useRef<HTMLDivElement | null>(null);
   const icon = useRef<HTMLDivElement | null>(null);
   const lastCharacter = useRef<HTMLDivElement | null>(null);
-  const [reducedFontSize, setreducedFontSize] = useState<boolean>(false);
+  const [reducedFontSize, setReducedFontSize] = useState<boolean>(false);
 
   useEffect(() => {
     const calculateFontSize = () => {
-      const { offsetTop } = ref.current!;
-      const lineOfLastCharacter = Math.floor((lastCharacter.current!.offsetTop - offsetTop) / lineHeight);
-      const lineOfIcon = Math.floor((icon.current!.offsetTop - offsetTop) / lineHeight);
+      const offsetTop = ref.current ? ref.current.offsetTop : 0;
+      const lineOfLastCharacter = lastCharacter.current
+        ? Math.floor((lastCharacter.current.offsetTop - offsetTop) / lineHeight)
+        : 0;
+      const lineOfIcon = icon.current ? Math.floor((icon.current.offsetTop - offsetTop) / lineHeight) : 0;
       if (lineOfIcon !== lineOfLastCharacter) {
-        setreducedFontSize(true);
+        setReducedFontSize(true);
       }
     };
 
-    if (!isNull(ref.current) && !isNull(lastCharacter.current) && !isNull(icon.current) && props.isVisible) {
+    if (props.isVisible) {
       calculateFontSize();
     }
   }, [props.isVisible, lineHeight]);

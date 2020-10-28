@@ -4,7 +4,6 @@ import React from 'react';
 import { GoPackage } from 'react-icons/go';
 
 import { ContainerImage } from '../../types';
-import attachIconToText from '../../utils/attachIconToText';
 import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
 import SmallTitle from '../common/SmallTitle';
 import styles from './ContainersImages.module.css';
@@ -24,16 +23,12 @@ const ContainersImages = (props: Props) => {
             <div className="d-flex flex-row align-items-start mw-100">
               <GoPackage className={`text-muted mr-2 ${styles.icon}`} />
               <div data-testid="containerImage" className={`flex-grow-1 ${styles.containerImage}`}>
-                {attachIconToText({
-                  isVisible: true,
-                  text: containerImage.name || containerImage.image,
-                  icon: (
-                    <ButtonCopyToClipboard
-                      text={containerImage.image}
-                      className="btn-link text-secondary border-0 d-inline"
-                    />
-                  ),
-                })}
+                <span>{containerImage.name || containerImage.image}</span>
+                <ButtonCopyToClipboard
+                  text={containerImage.image}
+                  className="btn-link text-secondary border-0"
+                  wrapperClassName="d-inline-block"
+                />
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import {
   APIKey,
   APIKeyCode,
   AuthorizerAction,
+  ChangeLog,
   CheckAvailabilityProps,
   Error,
   ErrorKind,
@@ -612,6 +613,10 @@ export const API = {
 
   getValuesSchema: (packageId: string, version: string): Promise<JSONSchema> => {
     return apiFetch(`${API_BASE_URL}/packages/${packageId}/${version}/valuesSchema`, undefined, true);
+  },
+
+  getChangelog: (packageId: string): Promise<ChangeLog[]> => {
+    return apiFetch(`${API_BASE_URL}/packages/${packageId}/changelog`);
   },
 
   // External API call

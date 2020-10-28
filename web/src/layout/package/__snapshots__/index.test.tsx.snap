@@ -352,22 +352,156 @@ exports[`Package index creates snapshot 2`] = `
           </span>
         </div>
         <div
-          class="d-flex align-items-center justify-content-between flex-wrap d-md-none"
+          class="row align-items-baseline d-md-none"
         >
           <div
-            class="d-flex w-100 mt-3"
+            class="col mt-3 btnMobileWrapper"
           >
             <div
-              class="pr-1 w-50"
+              class="position-relative buttonWrapper"
             >
-              <div
-                class="wrapper"
+              <button
+                class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-secondary btn-sm text-nowrap"
+                data-testid="openModalBtn"
+                type="button"
               >
                 <div
-                  class="position-relative buttonWrapper"
+                  class="d-flex align-items-center justify-content-center"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="none"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <line
+                      x1="12"
+                      x2="12"
+                      y1="5"
+                      y2="19"
+                    />
+                    <line
+                      x1="5"
+                      x2="19"
+                      y1="12"
+                      y2="12"
+                    />
+                  </svg>
+                  <span>
+                    Info
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="modal modal"
+              role="dialog"
+            >
+              <div
+                class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+              >
+                <div
+                  class="modal-content content undefined"
+                >
+                  <div
+                    class="modal-header d-flex flex-row align-items-center header undefined"
+                  >
+                    <div
+                      class="d-flex align-items-center"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper imageWrapper"
+                      >
+                        <img
+                          alt="Pretty name"
+                          class="image"
+                          src="/image/imageId"
+                          srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
+                        />
+                      </div>
+                      <div
+                        class="ml-3"
+                      >
+                        <div
+                          class="h5 mb-0"
+                        >
+                          Pretty name
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      class="close"
+                      data-testid="closeModalBtn"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body p-4 h-100 d-flex flex-column"
+                  >
+                    <div
+                      class="alertWrapper"
+                      data-testid="alertWrapper"
+                    />
+                  </div>
+                  <div
+                    class="modal-footer p-3"
+                  >
+                    <button
+                      class="btn btn-sm btn-secondary text-uppercase"
+                      data-testid="closeModalFooterBtn"
+                      type="button"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="mr-2"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                        <div>
+                          Close
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col mt-3 btnMobileWrapper"
+          >
+            <div
+              class="modalInstallationWrapper"
+            >
+              <div>
+                <div
+                  data-testid="elementWithTooltip"
                 >
                   <button
-                    class="font-weight-bold text-uppercase position-relative btn btn-block btn btn-outline-secondary btn-sm"
+                    class="btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap"
                     data-testid="openModalBtn"
                     type="button"
                   >
@@ -386,25 +520,27 @@ exports[`Package index creates snapshot 2`] = `
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <path
+                          d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                        />
+                        <polyline
+                          points="7 10 12 15 17 10"
+                        />
                         <line
                           x1="12"
                           x2="12"
-                          y1="5"
-                          y2="19"
-                        />
-                        <line
-                          x1="5"
-                          x2="19"
-                          y1="12"
-                          y2="12"
+                          y1="15"
+                          y2="3"
                         />
                       </svg>
                       <span>
-                        Info
+                        Install
                       </span>
                     </div>
                   </button>
                 </div>
+              </div>
+              <div>
                 <div
                   class="modal modal"
                   role="dialog"
@@ -497,14 +633,93 @@ exports[`Package index creates snapshot 2`] = `
                 </div>
               </div>
             </div>
-            <div
-              class="pl-1 w-50"
-            >
+          </div>
+          <div
+            class="col mt-3 btnMobileWrapper"
+          >
+            <div>
               <div
-                class="modalInstallationWrapper"
+                data-testid="elementWithTooltip"
               >
                 <button
-                  class="btn font-weight-bold text-uppercase position-relative btn btn-block btn-outline-secondary btn-sm"
+                  class="btn btn-secondary btn-block btn-sm text-nowrap disabled"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+                  >
+                    <svg
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7 18H17V16H7V18Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M17 14H7V12H17V14Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M7 10H11V8H7V10Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        clip-rule="evenodd"
+                        d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM6 4H13V9H19V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5C5 4.44772 5.44772 4 6 4ZM15 4.10002C16.6113 4.4271 17.9413 5.52906 18.584 7H15V4.10002Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                    <span
+                      class="ml-2 font-weight-bold"
+                    >
+                      Changelog
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="container"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="mainContent"
+        >
+          <div
+            class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper"
+            data-testid="noData"
+          >
+            <div
+              class="h4"
+            >
+              No README file available for this package
+            </div>
+          </div>
+        </div>
+        <div
+          class="col col-auto pl-5 pb-4 d-none d-md-block"
+        >
+          <div
+            class="modalInstallationWrapper"
+          >
+            <div>
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <button
+                  class="btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap"
                   data-testid="openModalBtn"
                   type="button"
                 >
@@ -541,168 +756,8 @@ exports[`Package index creates snapshot 2`] = `
                     </span>
                   </div>
                 </button>
-                <div>
-                  <div
-                    class="modal modal"
-                    role="dialog"
-                  >
-                    <div
-                      class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-                    >
-                      <div
-                        class="modal-content content undefined"
-                      >
-                        <div
-                          class="modal-header d-flex flex-row align-items-center header undefined"
-                        >
-                          <div
-                            class="d-flex align-items-center"
-                          >
-                            <div
-                              class="d-flex align-items-center justify-content-center p-1 overflow-hidden imageWrapper imageWrapper"
-                            >
-                              <img
-                                alt="Pretty name"
-                                class="image"
-                                src="/image/imageId"
-                                srcset="/image/imageId@1x 1x, /image/imageId@2x 2x, /image/imageId@3x 3x, /image/imageId@4x 4x"
-                              />
-                            </div>
-                            <div
-                              class="ml-3"
-                            >
-                              <div
-                                class="h5 mb-0"
-                              >
-                                Pretty name
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            class="close"
-                            data-testid="closeModalBtn"
-                            type="button"
-                          >
-                            <span
-                              aria-hidden="true"
-                            >
-                              ×
-                            </span>
-                          </button>
-                        </div>
-                        <div
-                          class="modal-body p-4 h-100 d-flex flex-column"
-                        >
-                          <div
-                            class="alertWrapper"
-                            data-testid="alertWrapper"
-                          />
-                        </div>
-                        <div
-                          class="modal-footer p-3"
-                        >
-                          <button
-                            class="btn btn-sm btn-secondary text-uppercase"
-                            data-testid="closeModalFooterBtn"
-                            type="button"
-                          >
-                            <div
-                              class="d-flex flex-row align-items-center"
-                            >
-                              <svg
-                                class="mr-2"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                              <div>
-                                Close
-                              </div>
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="container"
-    >
-      <div
-        class="row"
-      >
-        <div
-          class="mainContent"
-        >
-          <div
-            class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper"
-            data-testid="noData"
-          >
-            <div
-              class="h4"
-            >
-              No README file available for this package
-            </div>
-          </div>
-        </div>
-        <div
-          class="col col-auto pl-5 pb-4 d-none d-md-block"
-        >
-          <div
-            class="modalInstallationWrapper"
-          >
-            <button
-              class="btn font-weight-bold text-uppercase position-relative btn btn-block btn-primary"
-              data-testid="openModalBtn"
-              type="button"
-            >
-              <div
-                class="d-flex align-items-center justify-content-center"
-              >
-                <svg
-                  class="mr-2"
-                  fill="none"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                  />
-                  <polyline
-                    points="7 10 12 15 17 10"
-                  />
-                  <line
-                    x1="12"
-                    x2="12"
-                    y1="15"
-                    y2="3"
-                  />
-                </svg>
-                <span>
-                  Install
-                </span>
-              </div>
-            </button>
             <div>
               <div
                 class="modal modal"
@@ -793,6 +848,97 @@ exports[`Package index creates snapshot 2`] = `
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="my-2"
+          >
+            <div>
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <button
+                  class="btn btn-secondary btn-block btn-sm disabled"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+                  >
+                    <svg
+                      class="mr-2"
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M9 1H1V9H9V6H11V20H15V23H23V15H15V18H13V6H15V9H23V1H15V4H9V1ZM21 3H17V7H21V3ZM17 17H21V21H17V17Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                    <span
+                      class="font-weight-bold"
+                    >
+                      Values Schema
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="my-2 "
+          >
+            <div>
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <button
+                  class="btn btn-secondary btn-block btn-sm text-nowrap disabled"
+                >
+                  <div
+                    class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+                  >
+                    <svg
+                      fill="none"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M7 18H17V16H7V18Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M17 14H7V12H17V14Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M7 10H11V8H7V10Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        clip-rule="evenodd"
+                        d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM6 4H13V9H19V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5C5 4.44772 5.44772 4 6 4ZM15 4.10002C16.6113 4.4271 17.9413 5.52906 18.584 7H15V4.10002Z"
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                      />
+                    </svg>
+                    <span
+                      class="ml-2 font-weight-bold"
+                    >
+                      Changelog
+                    </span>
+                  </div>
+                </button>
               </div>
             </div>
           </div>
