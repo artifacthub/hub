@@ -24,3 +24,11 @@
     font-size: 80%;
   }
 }
+
+@media only screen and (min-width: 576px) {
+  .modalDialog {
+    min-height: calc(100% - 10rem) !important;
+    max-height: calc(100% - 10rem) !important;
+    margin: 5rem auto !important;
+  }
+}
