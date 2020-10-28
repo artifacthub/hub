@@ -130,6 +130,8 @@ const ChangelogModal = (props: Props) => {
 
       {openStatus && changelog && (
         <Modal
+          modalDialogClassName={styles.modalDialog}
+          modalClassName="h-100"
           header={<div className={`h3 m-2 ${styles.title}`}>Changelog</div>}
           onClose={onCloseModal}
           open={openStatus}
@@ -137,7 +139,7 @@ const ChangelogModal = (props: Props) => {
           <div className="mx-0 mx-md-3 my-1 mw-100">
             {changelog.map((item: ChangeLog) => {
               return (
-                <div className={`item${item.version}`} key={`v_${item.version}`}>
+                <div key={`v_${item.version}`}>
                   <div className="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2">
                     <div className={`flex-grow-1 d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
                       <div className="h5 text-secondary text-truncate mb-0">{item.version}</div>
