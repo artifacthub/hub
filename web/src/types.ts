@@ -70,6 +70,7 @@ export interface Package {
   securityReportSummary: SecurityReportSummary | null;
   securityReportCreatedAt?: number;
   hasValuesSchema?: boolean;
+  hasChangelog?: boolean;
 }
 
 export interface ContainerImage {
@@ -474,4 +475,10 @@ export interface CVSSVectorOpt {
   value: string;
   label: string;
   level: number;
+}
+
+export interface ChangeLog {
+  version: string;
+  createdAt: number;
+  changes: string[];
 }

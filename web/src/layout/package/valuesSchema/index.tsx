@@ -1,10 +1,12 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
 import alertDispatcher from '../../../utils/alertDispatcher';
+import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import Schema from './Schema';
 import styles from './ValuesSchema.module.css';
@@ -13,6 +15,7 @@ interface Props {
   packageId: string;
   version: string;
   visibleValuesSchema: boolean;
+  hasValuesSchema?: boolean;
 }
 
 const ValuesSchema = (props: Props) => {
@@ -39,14 +42,16 @@ const ValuesSchema = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (valuesSchema) {
-      setOpenStatus(true);
-    } else {
-      getValuesSchema();
+    if (props.hasValuesSchema) {
+      if (valuesSchema) {
+        setOpenStatus(true);
+      } else {
+        getValuesSchema();
+      }
+      history.replace({
+        search: '?modal=values-schema',
+      });
     }
-    history.replace({
-      search: '?modal=values-schema',
-    });
   };
 
   const onCloseModal = () => {
@@ -58,27 +63,46 @@ const ValuesSchema = (props: Props) => {
 
   useEffect(() => {
     if (props.visibleValuesSchema && !openStatus) {
-      onOpenModal();
+      if (props.hasValuesSchema) {
+        onOpenModal();
+      } else {
+        history.replace({
+          search: '',
+        });
+      }
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <>
-      <button className="btn btn-primary btn-block my-3" onClick={onOpenModal}>
-        <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
-          {isLoading ? (
-            <>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2 font-weight-bold">Getting schema...</span>
-            </>
-          ) : (
-            <>
-              <CgListTree className="mr-2" />
-              <span className="font-weight-bold">Values Schema</span>
-            </>
-          )}
-        </div>
-      </button>
+    <div className="my-2">
+      <ElementWithTooltip
+        element={
+          <button
+            className={classnames('btn btn-secondary btn-block btn-sm', {
+              disabled: !props.hasValuesSchema,
+            })}
+            onClick={onOpenModal}
+          >
+            <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
+              {isLoading ? (
+                <>
+                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                  <span className="ml-2 font-weight-bold">Getting schema...</span>
+                </>
+              ) : (
+                <>
+                  <CgListTree className="mr-2" />
+                  <span className="font-weight-bold">Values Schema</span>
+                </>
+              )}
+            </div>
+          </button>
+        }
+        visibleTooltip={!props.hasValuesSchema}
+        tooltipClassName={styles.tooltip}
+        tooltipMessage="This package version does not include a values.schema.json file."
+        active
+      />
 
       {openStatus && valuesSchema && (
         <Modal
@@ -97,7 +121,7 @@ const ValuesSchema = (props: Props) => {
           </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 

@@ -38,6 +38,7 @@ import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import SubNavbar from '../navigation/SubNavbar';
+import ChangelogModal from './Changelog';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import InstallationModal from './InstallationModal';
@@ -147,7 +148,7 @@ const PackageView = (props: Props) => {
     setActiveChannel(channel);
   };
 
-  const getInstallationModal = (buttonType?: string): JSX.Element | null => {
+  const getInstallationModal = (): JSX.Element | null => {
     if (
       isNull(detail) ||
       isUndefined(detail) ||
@@ -167,7 +168,6 @@ const PackageView = (props: Props) => {
         <InstallationModal
           isDisabled={isDisabled}
           package={detail!}
-          btnClassName={buttonType}
           activeChannel={activeChannel}
           visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
         />
@@ -442,33 +442,38 @@ const PackageView = (props: Props) => {
                     <SubscriptionsButton packageId={detail.packageId} />
                   </div>
 
-                  <div className="d-flex align-items-center justify-content-between flex-wrap d-md-none">
-                    <div className="d-flex w-100 mt-3">
-                      <div className="pr-1 w-50">
-                        <Modal
-                          buttonType="btn-outline-secondary btn-sm"
-                          buttonContent={
-                            <>
-                              <FiPlus className="mr-2" />
-                              <span>Info</span>
-                            </>
-                          }
-                          header={<ModalHeader package={detail} />}
-                          className={styles.wrapper}
-                        >
-                          <Details
-                            package={detail}
-                            activeChannel={activeChannel}
-                            onChannelChange={onChannelChange}
-                            sortedVersions={sortedVersions}
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
-                            visibleSecurityReport={false}
-                          />
-                        </Modal>
-                      </div>
+                  <div className="row align-items-baseline d-md-none">
+                    <Modal
+                      buttonType="btn-secondary btn-sm text-nowrap"
+                      buttonContent={
+                        <>
+                          <FiPlus className="mr-2" />
+                          <span>Info</span>
+                        </>
+                      }
+                      header={<ModalHeader package={detail} />}
+                      className={`col mt-3 ${styles.btnMobileWrapper}`}
+                    >
+                      <Details
+                        package={detail}
+                        activeChannel={activeChannel}
+                        onChannelChange={onChannelChange}
+                        sortedVersions={sortedVersions}
+                        searchUrlReferer={props.searchUrlReferer}
+                        fromStarredPage={props.fromStarredPage}
+                        visibleSecurityReport={false}
+                      />
+                    </Modal>
 
-                      <div className="pl-1 w-50">{getInstallationModal('btn-outline-secondary btn-sm')}</div>
+                    <div className={`col mt-3 ${styles.btnMobileWrapper}`}>{getInstallationModal()}</div>
+
+                    <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
+                      <ChangelogModal
+                        packageItem={detail}
+                        visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                        searchUrlReferer={props.searchUrlReferer}
+                        fromStarredPage={props.fromStarredPage}
+                      />
                     </div>
                   </div>
                 </div>
@@ -548,10 +553,11 @@ const PackageView = (props: Props) => {
                   <div className="col col-auto pl-5 pb-4 d-none d-md-block">
                     {!isNull(detail) && (
                       <>
-                        {getInstallationModal('btn-primary')}
+                        {getInstallationModal()}
 
-                        {detail.hasValuesSchema && detail.repository.kind === RepositoryKind.Helm && (
+                        {detail.repository.kind === RepositoryKind.Helm && (
                           <ValuesSchema
+                            hasValuesSchema={detail.hasValuesSchema}
                             packageId={detail.packageId}
                             version={detail.version!}
                             visibleValuesSchema={
@@ -559,6 +565,15 @@ const PackageView = (props: Props) => {
                             }
                           />
                         )}
+
+                        <div className="my-2 ">
+                          <ChangelogModal
+                            packageItem={detail}
+                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </div>
 
                         <div className={`card shadow-sm position-relative info ${styles.info}`}>
                           <div className={`card-body ${styles.detailsBody}`}>

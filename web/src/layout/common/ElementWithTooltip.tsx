@@ -8,7 +8,7 @@ interface Props {
   active?: boolean | null;
   element: JSX.Element;
   visibleTooltip: boolean;
-  tooltipMessage: string;
+  tooltipMessage: string | JSX.Element;
   className?: string;
   tooltipClassName?: string;
   tooltipArrowClassName?: string;

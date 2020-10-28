@@ -1,8 +1,10 @@
+import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind } from '../../types';
+import ElementWithTooltip from '../common/ElementWithTooltip';
 import Modal from '../common/Modal';
 import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
@@ -12,7 +14,6 @@ import OPAInstall from './OPAInstall';
 
 interface Props {
   package: Package;
-  btnClassName?: string;
   isDisabled: boolean;
   activeChannel?: string;
   visibleInstallationModal: boolean;
@@ -23,10 +24,12 @@ const InstallationModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
 
   const onOpenModal = () => {
-    setOpenStatus(true);
-    history.replace({
-      search: '?modal=install',
-    });
+    if (!props.isDisabled) {
+      setOpenStatus(true);
+      history.replace({
+        search: '?modal=install',
+      });
+    }
   };
 
   const onCloseModal = () => {
@@ -44,25 +47,30 @@ const InstallationModal = (props: Props) => {
 
   return (
     <>
-      <button
-        data-testid="openModalBtn"
-        type="button"
-        className={`btn font-weight-bold text-uppercase position-relative btn btn-block ${props.btnClassName}`}
-        onClick={onOpenModal}
-      >
-        <div className="d-flex align-items-center justify-content-center">
-          <FiDownload className="mr-2" />
-          <span>Install</span>
-        </div>
-      </button>
+      <ElementWithTooltip
+        element={
+          <button
+            data-testid="openModalBtn"
+            type="button"
+            className={classnames(
+              'btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap',
+              { disabled: props.isDisabled }
+            )}
+            onClick={onOpenModal}
+            disabled={props.isDisabled}
+          >
+            <div className="d-flex align-items-center justify-content-center">
+              <FiDownload className="mr-2" />
+              <span>Install</span>
+            </div>
+          </button>
+        }
+        visibleTooltip={props.isDisabled}
+        tooltipMessage="Only the current version can be installed"
+        active
+      />
 
-      <Modal
-        header={<ModalHeader package={props.package!} />}
-        disabledOpenBtn={props.isDisabled}
-        tooltipMessage={props.isDisabled ? 'Only the current version can be installed' : undefined}
-        onClose={onCloseModal}
-        open={openStatus}
-      >
+      <Modal header={<ModalHeader package={props.package!} />} onClose={onCloseModal} open={openStatus}>
         <>
           {(() => {
             switch (props.package!.repository.kind) {
