@@ -13,7 +13,7 @@ const OfficialBadge = (props: Props) => (
   <ElementWithTooltip
     active={props.official}
     className={props.className}
-    element={<Label text="Official" icon={<HiBadgeCheck />} />}
+    element={<Label text="Official" icon={<HiBadgeCheck />} labelStyle="success" />}
     tooltipMessage="The publisher owns the software deployed by the packages in this repository"
     visibleTooltip
   />

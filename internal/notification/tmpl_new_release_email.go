@@ -114,7 +114,27 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
 												<h4 style="color: #1c2c35; font-family: sans-serif; margin: 0; Margin-bottom: 15px;">{{ .Package.repository.publisher }} </h4>
 
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Version <b>{{ .Package.version }}</b> has been released</p>
+                      </td>
+                    </tr>
 
+                    <tr>
+                      <td style="font-family: sans-serif; font-size: 14px;">
+                        {{ if .Package.changes }}
+                          <hr style="border-top: 1px solid #659DBD; border-bottom: none;" />
+                          <h4 style="color: #39596c; font-family: sans-serif; font-size: 12px; Margin-top: 20px;">CHANGES:</h4>
+                          <ul style="Margin-bottom: 20px;">
+                            {{range $change := .Package.changes}}
+                              <li>{{$change}}</li>
+                            {{end}}
+                          </ul>
+                          <hr style="border-top: 1px solid #659DBD; border-bottom: none;" />
+                          <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 45px;"></p>
+                        {{ end }}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td style="font-family: sans-serif; font-size: 14px; text-align: center;">
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>
                             <tr>
