@@ -1,7 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
-import { Package } from '../../types';
+import { Package, SearchFiltersURL } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
@@ -15,6 +15,8 @@ interface Props {
   package: Package;
   allVersions: JSX.Element[];
   visibleSecurityReport: boolean;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const DefaultDetails = (props: Props) => {
@@ -37,6 +39,8 @@ const DefaultDetails = (props: Props) => {
         version={props.package.version!}
         createdAt={props.package.securityReportCreatedAt}
         visibleSecurityReport={props.visibleSecurityReport}
+        searchUrlReferer={props.searchUrlReferer}
+        fromStarredPage={props.fromStarredPage}
       />
 
       <Links links={props.package.links} />

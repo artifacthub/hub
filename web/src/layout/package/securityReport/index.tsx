@@ -2,7 +2,7 @@ import { isEmpty, isNull } from 'lodash';
 import React from 'react';
 import { FaCheck, FaExclamationTriangle } from 'react-icons/fa';
 
-import { SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
+import { SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_COLORS, SEVERITY_ORDER } from '../../../utils/data';
 import sumObjectValues from '../../../utils/sumObjectValues';
 import SmallTitle from '../../common/SmallTitle';
@@ -16,6 +16,8 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const SecurityReport = (props: Props) => {
@@ -80,6 +82,8 @@ const SecurityReport = (props: Props) => {
             version={props.version}
             createdAt={props.createdAt}
             visibleSecurityReport={props.visibleSecurityReport}
+            searchUrlReferer={props.searchUrlReferer}
+            fromStarredPage={props.fromStarredPage}
           />
         </div>
       </div>

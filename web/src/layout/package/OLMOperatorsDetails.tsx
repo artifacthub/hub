@@ -1,7 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 
-import { Channel, Package } from '../../types';
+import { Channel, Package, SearchFiltersURL } from '../../types';
 import ExpandableList from '../common/ExpandableList';
 import RSSLinkTitle from '../common/RSSLinkTitle';
 import SmallTitle from '../common/SmallTitle';
@@ -20,6 +20,8 @@ interface Props {
   visibleSecurityReport: boolean;
   activeChannel?: string | null;
   onChannelChange: (channel: string) => void;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const OLMOperatorsDetails = (props: Props) => (
@@ -57,6 +59,8 @@ const OLMOperatorsDetails = (props: Props) => (
       version={props.package.version!}
       createdAt={props.package.securityReportCreatedAt}
       visibleSecurityReport={props.visibleSecurityReport}
+      searchUrlReferer={props.searchUrlReferer}
+      fromStarredPage={props.fromStarredPage}
     />
 
     <CapabilityLevel capabilityLevel={props.package.capabilities} />

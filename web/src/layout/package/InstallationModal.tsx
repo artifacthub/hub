@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
-import { Package, RepositoryKind } from '../../types';
+import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
 import ElementWithTooltip from '../common/ElementWithTooltip';
 import Modal from '../common/Modal';
 import FalcoInstall from './FalcoInstall';
@@ -17,6 +17,8 @@ interface Props {
   isDisabled: boolean;
   activeChannel?: string;
   visibleInstallationModal: boolean;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const InstallationModal = (props: Props) => {
@@ -28,6 +30,7 @@ const InstallationModal = (props: Props) => {
       setOpenStatus(true);
       history.replace({
         search: '?modal=install',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
   };
@@ -36,6 +39,7 @@ const InstallationModal = (props: Props) => {
     setOpenStatus(false);
     history.replace({
       search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 

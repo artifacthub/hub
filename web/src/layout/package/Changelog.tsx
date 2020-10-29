@@ -78,6 +78,7 @@ const ChangelogModal = (props: Props) => {
       }
       history.replace({
         search: '?modal=changelog',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
   };
@@ -86,6 +87,7 @@ const ChangelogModal = (props: Props) => {
     setOpenStatus(false);
     history.replace({
       search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 
