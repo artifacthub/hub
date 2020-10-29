@@ -54,7 +54,7 @@
   overflow-wrap: break-word;
 }
 
-.modalInstallationWrapper code,
+.rightColumnWrapper code,
 .codeWrapper code {
   word-wrap: normal !important;
   white-space: pre !important;
@@ -169,7 +169,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .modalInstallationWrapper {
+  .rightColumnWrapper {
     margin-top: 35px;
   }
 }
