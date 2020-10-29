@@ -5,7 +5,7 @@ import { HiClipboardList } from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
-import { SecurityReport, SecurityReportSummary } from '../../../types';
+import { SearchFiltersURL, SecurityReport, SecurityReportSummary } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
@@ -18,6 +18,8 @@ interface Props {
   version: string;
   createdAt?: number;
   visibleSecurityReport: boolean;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const SecurityModal = (props: Props) => {
@@ -50,6 +52,7 @@ const SecurityModal = (props: Props) => {
     }
     history.replace({
       search: '?modal=security-report',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 
@@ -57,6 +60,7 @@ const SecurityModal = (props: Props) => {
     setOpenStatus(false);
     history.replace({
       search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 

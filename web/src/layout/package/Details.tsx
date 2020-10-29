@@ -42,6 +42,8 @@ const Details = (props: Props) => {
                 package={props.package}
                 allVersions={allVersions}
                 visibleSecurityReport={props.visibleSecurityReport}
+                searchUrlReferer={props.searchUrlReferer}
+                fromStarredPage={props.fromStarredPage}
               />
             );
 
@@ -51,6 +53,8 @@ const Details = (props: Props) => {
                 package={props.package}
                 allVersions={allVersions}
                 visibleSecurityReport={props.visibleSecurityReport}
+                searchUrlReferer={props.searchUrlReferer}
+                fromStarredPage={props.fromStarredPage}
               />
             );
 
@@ -60,6 +64,8 @@ const Details = (props: Props) => {
                 package={props.package}
                 allVersions={allVersions}
                 visibleSecurityReport={props.visibleSecurityReport}
+                searchUrlReferer={props.searchUrlReferer}
+                fromStarredPage={props.fromStarredPage}
               />
             );
 
@@ -71,6 +77,8 @@ const Details = (props: Props) => {
                 visibleSecurityReport={props.visibleSecurityReport}
                 activeChannel={props.activeChannel}
                 onChannelChange={props.onChannelChange}
+                searchUrlReferer={props.searchUrlReferer}
+                fromStarredPage={props.fromStarredPage}
               />
             );
 

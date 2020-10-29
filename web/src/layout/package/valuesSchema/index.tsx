@@ -5,6 +5,7 @@ import { CgListTree } from 'react-icons/cg';
 import { useHistory } from 'react-router-dom';
 
 import { API } from '../../../api';
+import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
@@ -16,6 +17,8 @@ interface Props {
   version: string;
   visibleValuesSchema: boolean;
   hasValuesSchema?: boolean;
+  searchUrlReferer?: SearchFiltersURL;
+  fromStarredPage?: boolean;
 }
 
 const ValuesSchema = (props: Props) => {
@@ -50,6 +53,7 @@ const ValuesSchema = (props: Props) => {
       }
       history.replace({
         search: '?modal=values-schema',
+        state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
   };
@@ -58,6 +62,7 @@ const ValuesSchema = (props: Props) => {
     setOpenStatus(false);
     history.replace({
       search: '',
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
     });
   };
 
@@ -68,6 +73,7 @@ const ValuesSchema = (props: Props) => {
       } else {
         history.replace({
           search: '',
+          state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
         });
       }
     }

@@ -170,6 +170,8 @@ const PackageView = (props: Props) => {
           package={detail!}
           activeChannel={activeChannel}
           visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
+          searchUrlReferer={props.searchUrlReferer}
+          fromStarredPage={props.fromStarredPage}
         />
       </div>
     );
@@ -560,6 +562,8 @@ const PackageView = (props: Props) => {
                             hasValuesSchema={detail.hasValuesSchema}
                             packageId={detail.packageId}
                             version={detail.version!}
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
                             visibleValuesSchema={
                               !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
                             }
