@@ -148,14 +148,14 @@ const PackageView = (props: Props) => {
     setActiveChannel(channel);
   };
 
-  const getInstallationModal = (): JSX.Element | null => {
+  const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => {
     if (
       isNull(detail) ||
       isUndefined(detail) ||
       (detail!.repository.kind === RepositoryKind.OPA && (isUndefined(detail.install) || isNull(detail.install))) ||
       (detail.repository.kind === RepositoryKind.OLM && detail.repository.name !== 'community-operators')
     ) {
-      return <div className="pt-2" />;
+      return <div />;
     }
 
     const isDisabled =
@@ -164,7 +164,7 @@ const PackageView = (props: Props) => {
       detail!.version !== sortedVersions[0].version;
 
     return (
-      <div className={styles.modalInstallationWrapper}>
+      <div className={wrapperClassName}>
         <InstallationModal
           isDisabled={isDisabled}
           package={detail!}
@@ -467,7 +467,7 @@ const PackageView = (props: Props) => {
                       />
                     </Modal>
 
-                    <div className={`col mt-3 ${styles.btnMobileWrapper}`}>{getInstallationModal()}</div>
+                    {getInstallationModal(`col mt-3 ${styles.btnMobileWrapper}`)}
 
                     <div className={`col mt-3 ${styles.btnMobileWrapper}`}>
                       <ChangelogModal
@@ -554,23 +554,25 @@ const PackageView = (props: Props) => {
 
                   <div className="col col-auto pl-5 pb-4 d-none d-md-block">
                     {!isNull(detail) && (
-                      <>
-                        {getInstallationModal()}
+                      <div className={styles.rightColumnWrapper}>
+                        {getInstallationModal('mb-2')}
 
                         {detail.repository.kind === RepositoryKind.Helm && (
-                          <ValuesSchema
-                            hasValuesSchema={detail.hasValuesSchema}
-                            packageId={detail.packageId}
-                            version={detail.version!}
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
-                            visibleValuesSchema={
-                              !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                            }
-                          />
+                          <div className="mb-2">
+                            <ValuesSchema
+                              hasValuesSchema={detail.hasValuesSchema}
+                              packageId={detail.packageId}
+                              version={detail.version!}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                              visibleValuesSchema={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                              }
+                            />
+                          </div>
                         )}
 
-                        <div className="my-2 ">
+                        <div className="mb-2">
                           <ChangelogModal
                             packageItem={detail}
                             visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
@@ -598,7 +600,7 @@ const PackageView = (props: Props) => {
                         <div className={styles.relatedPackagesWrapper}>
                           <RelatedPackages packageId={detail.packageId} name={detail.name} keywords={detail.keywords} />
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>

@@ -80,7 +80,7 @@ const ValuesSchema = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <div className="my-2">
+    <>
       <ElementWithTooltip
         element={
           <button
@@ -127,7 +127,7 @@ const ValuesSchema = (props: Props) => {
           </div>
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 
