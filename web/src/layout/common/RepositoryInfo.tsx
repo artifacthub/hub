@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 
 import useOutsideClick from '../../hooks/useOutsideClick';
 import { Repository } from '../../types';
-import attachIconToText from '../../utils/attachIconToText';
 import prepareQueryString from '../../utils/prepareQueryString';
+import AttachedIconToText from './AttachedIconToText';
 import ButtonCopyToClipboard from './ButtonCopyToClipboard';
 import OfficialBadge from './OfficialBadge';
 import RepositoryIcon from './RepositoryIcon';
@@ -79,9 +79,10 @@ const RepositoryInfo = (props: Props) => {
                   <div className="mt-2 d-flex flex-row align-items-baseline">
                     <small className="text-muted text-uppercase mr-1">Url: </small>
                     <div data-testid="repoUrl" className={`text-reset ${styles.urlContent} ${styles.labelContent}`}>
-                      {attachIconToText({
-                        text: props.repository.url,
-                        icon: (
+                      <AttachedIconToText
+                        text={props.repository.url}
+                        isVisible={openStatus}
+                        icon={
                           <ButtonCopyToClipboard
                             text={props.repository.url}
                             className={styles.miniBtn}
@@ -89,9 +90,8 @@ const RepositoryInfo = (props: Props) => {
                             arrowClassName={styles.arrow}
                             tooltipClassName="p-0"
                           />
-                        ),
-                        isVisible: openStatus,
-                      })}
+                        }
+                      />
                     </div>
                   </div>
                 )}
