@@ -87,19 +87,6 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
       label: 'Properties',
       value: 'properties',
     },
-    {
-      label: 'Size',
-      value: [
-        {
-          label: 'Min props',
-          value: 'minProperties',
-        },
-        {
-          label: 'Max props',
-          value: 'maxProperties',
-        },
-      ],
-    },
   ],
   array: [
     {
