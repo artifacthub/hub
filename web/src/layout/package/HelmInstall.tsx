@@ -40,20 +40,22 @@ const HelmInstall = (props: Props) => {
 
   return (
     <>
-      <ul className={`nav nav-tabs ${styles.tabs}`}>
-        {TABS.map((tab: Tab) => (
-          <li className="nav-item" key={tab.name}>
-            <button
-              className={classnames('btn btn-link nav-item', styles.btn, {
-                [`active btn-primary ${styles.active}`]: tab.name === activeTab,
-              })}
-              onClick={() => setActiveTab(tab.name)}
-            >
-              {tab.title}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <ul className={`nav nav-tabs ${styles.tabs}`}>
+          {TABS.map((tab: Tab) => (
+            <li className="nav-item" key={tab.name}>
+              <button
+                className={classnames('btn btn-link nav-item', styles.btn, {
+                  [`active btn-primary ${styles.active}`]: tab.name === activeTab,
+                })}
+                onClick={() => setActiveTab(tab.name)}
+              >
+                {tab.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="tab-content mt-3">
         {(() => {

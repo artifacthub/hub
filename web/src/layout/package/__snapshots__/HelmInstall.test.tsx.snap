@@ -2,28 +2,30 @@
 
 exports[`HelmInstall creates snapshot 1`] = `
 <DocumentFragment>
-  <ul
-    class="nav nav-tabs tabs"
-  >
-    <li
-      class="nav-item"
+  <div>
+    <ul
+      class="nav nav-tabs tabs"
     >
-      <button
-        class="btn btn-link nav-item btn active btn-primary active"
+      <li
+        class="nav-item"
       >
-        Helm v3
-      </button>
-    </li>
-    <li
-      class="nav-item"
-    >
-      <button
-        class="btn btn-link nav-item btn"
+        <button
+          class="btn btn-link nav-item btn active btn-primary active"
+        >
+          Helm v3
+        </button>
+      </li>
+      <li
+        class="nav-item"
       >
-        Helm v2
-      </button>
-    </li>
-  </ul>
+        <button
+          class="btn btn-link nav-item btn"
+        >
+          Helm v2
+        </button>
+      </li>
+    </ul>
+  </div>
   <div
     class="tab-content mt-3"
   >
