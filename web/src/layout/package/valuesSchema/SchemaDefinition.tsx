@@ -50,7 +50,7 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
         },
         {
           label: 'Max length',
-          value: 'minLength',
+          value: 'maxLength',
         },
       ],
     },
@@ -75,7 +75,7 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
           value: 'maximum',
         },
         {
-          label: 'Exclusive Max',
+          label: 'Exclusive max',
           legend: 'x <',
           value: 'exclusiveMaximum',
         },
@@ -125,7 +125,7 @@ const SchemaDefinition = (props: Prop) => {
           return (
             <div className="d-flex flex-column ml-3">
               {value.map((el: string) => (
-                <div key={`it_${el}`} className={`${styles.listItem} position-relative`}>
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
                   {el}
                 </div>
               ))}
@@ -135,7 +135,7 @@ const SchemaDefinition = (props: Prop) => {
           return (
             <div className="ml-3">
               {Object.keys(value).map((el: string) => (
-                <div key={`it_${el}`} className={`${styles.listItem} position-relative`}>
+                <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
                   {el}: <span className="text-muted">{value[el].type || '-'}</span>
                 </div>
               ))}
@@ -220,6 +220,7 @@ const SchemaDefinition = (props: Prop) => {
   return (
     <div className="position-relative w-100">
       <button
+        data-testid="expandBtn"
         className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
         onClick={() => props.setActivePath(!props.isExpanded ? props.path : undefined)}
       >
@@ -304,7 +305,6 @@ const SchemaDefinition = (props: Prop) => {
                   <React.Fragment key={keyword.label}>
                     {isArray(keyword.value) ? (
                       <>
-                        {/* <div>{keyword.label}: </div> */}
                         <div className="d-flex flex-row">
                           {keyword.value.map((subKeyword: KeywordProp) => (
                             <React.Fragment key={subKeyword.label}>

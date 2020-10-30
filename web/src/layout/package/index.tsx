@@ -38,7 +38,7 @@ import RepositoryInfo from '../common/RepositoryInfo';
 import SignedBadge from '../common/SignedBadge';
 import VerifiedPublisherBadge from '../common/VerifiedPublisherBadge';
 import SubNavbar from '../navigation/SubNavbar';
-import ChangelogModal from './Changelog';
+import ChangelogModal from './ChangelogModal';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import InstallationModal from './InstallationModal';

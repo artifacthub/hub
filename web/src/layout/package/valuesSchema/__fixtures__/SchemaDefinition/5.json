@@ -1,0 +1,15 @@
+{
+  "def": {
+    "type": "array",
+    "title": "title",
+    "description": "this is a description",
+    "items": {
+      "type": "string"
+    },
+    "default": ["read:user", "user:email"],
+    "uniqueItems": true,
+    "minItems": 2,
+    "maxItems": 6
+  },
+  "defaultValue": "[]"
+}

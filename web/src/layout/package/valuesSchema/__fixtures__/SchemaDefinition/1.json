@@ -1,0 +1,4 @@
+{
+  "def": { "type": "string", "title": "Database host", "default": "" },
+  "defaultValue": "value"
+}

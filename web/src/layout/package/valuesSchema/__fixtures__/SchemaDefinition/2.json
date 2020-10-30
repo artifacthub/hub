@@ -1,0 +1,12 @@
+{
+  "def": {
+    "type": "string",
+    "title": "Phone",
+    "description": "this is a description",
+    "default": "",
+    "pattern": "^(\\([0-9]{3}\\))?[0-9]{3}-[0-9]{4}$",
+    "minLength": 7,
+    "maxLength": 12
+  },
+  "defaultValue": "value"
+}

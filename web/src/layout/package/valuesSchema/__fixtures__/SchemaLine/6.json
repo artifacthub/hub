@@ -1,0 +1,13 @@
+{
+  "value": {
+    "type": "array",
+    "items": { "type": "string" },
+    "title": "Github oauth scopes",
+    "default": ["read:user", "user:email"],
+    "uniqueItems": true
+  },
+  "name": "scopes",
+  "level": 4,
+  "isRequired": false,
+  "path": "hub.server.oauth.github"
+}

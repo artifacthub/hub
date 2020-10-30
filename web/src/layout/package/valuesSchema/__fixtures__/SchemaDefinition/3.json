@@ -1,0 +1,12 @@
+{
+  "def": {
+    "type": "integer",
+    "title": "Sample",
+    "description": "this is a description",
+    "default": 2,
+    "minimum": 0,
+    "maximum": 100,
+    "exclusiveMaximum": true
+  },
+  "defaultValue": "2"
+}

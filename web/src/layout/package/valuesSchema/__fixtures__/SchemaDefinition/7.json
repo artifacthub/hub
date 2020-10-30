@@ -1,0 +1,9 @@
+{
+  "def": {
+    "enum": ["trace", "debug", "info", "warn", "error", "fatal", "panic"],
+    "type": "string",
+    "title": "Log level",
+    "default": "info"
+  },
+  "defaultValue": "value"
+}

@@ -2,6 +2,7 @@ import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isUndefined } from 'lodash';
 import React from 'react';
 
+import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
 import SchemaDefinition from './SchemaDefinition';
 import styles from './SchemaLine.module.css';
 
@@ -93,25 +94,23 @@ const SchemaLine = (props: Prop) => {
     }
   };
 
-  const compoundCurrentPath = (): string => {
-    let name = props.name.includes('.') ? `"${props.name.replace(/\./gi, '\\.')}"` : props.name;
-    return isUndefined(props.path) ? name : `${props.path}.${name}`;
-  };
-
   const { className, content } = getValue();
-  const currentPath = compoundCurrentPath();
+  const currentPath = getJMESPathForValuesSchema(props.name, props.path);
   const isExpanded = !isUndefined(props.activePath) && props.activePath === currentPath;
 
   return (
     <React.Fragment>
-      <div className={`row position-relative ${styles.wrapper}`}>
+      <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
         <div
           className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
           onClick={() => props.setActivePath(!isExpanded ? currentPath : undefined)}
         >
           <div className={`${styles[`level${props.level}`]} text-monospace`}>
             {props.value.title && <div className="text-muted text-truncate"># {props.value.title}</div>}
-            {props.name}: <span className={`${className} ${styles.line}`}>{content}</span>
+            {props.name}:{' '}
+            <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
+              {content}
+            </span>
           </div>
         </div>
 
@@ -129,7 +128,7 @@ const SchemaLine = (props: Prop) => {
 
       {props.value.properties && (
         <>
-          {Object.keys(props.value.properties).map((propName: string, index: number) => {
+          {Object.keys(props.value.properties).map((propName: string) => {
             const value = props.value.properties![propName] as JSONSchema;
             if (isUndefined(value)) return null;
             const isRequired = props.value.required ? props.value.required.includes(propName) : false;
