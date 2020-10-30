@@ -1,10 +1,11 @@
 -- Start transaction and plan tests
 begin;
-select plan(2);
+select plan(3);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
+\set repo2ID '00000000-0000-0000-0000-000000000002'
 
 -- Non existing repository
 select is_empty(
@@ -31,6 +32,26 @@ values (
     0,
     :'user1ID'
 );
+insert into repository (
+    repository_id,
+    name,
+    display_name,
+    url,
+    auth_user,
+    auth_pass,
+    repository_kind_id,
+    user_id
+)
+values (
+    :'repo2ID',
+    'repo2',
+    'Repo 2',
+    'https://repo2.com',
+    'user',
+    'pass',
+    0,
+    :'user1ID'
+);
 
 -- One repository has just been seeded
 select is(
@@ -40,6 +61,7 @@ select is(
         "name": "repo1",
         "display_name": "Repo 1",
         "url": "https://repo1.com",
+        "private": false,
         "kind": 0,
         "verified_publisher": false,
         "official": false,
@@ -47,7 +69,24 @@ select is(
         "organization_name": null,
         "organization_display_name": null
     }'::jsonb,
-    'Repository just seeded is returned as a json object'
+    'Repository 1 is returned as a json object'
+);
+select is(
+    get_repository_summary('00000000-0000-0000-0000-000000000002')::jsonb,
+    '{
+        "repository_id": "00000000-0000-0000-0000-000000000002",
+        "name": "repo2",
+        "display_name": "Repo 2",
+        "url": "https://repo2.com",
+        "private": true,
+        "kind": 0,
+        "verified_publisher": false,
+        "official": false,
+        "user_alias": "user1",
+        "organization_name": null,
+        "organization_display_name": null
+    }'::jsonb,
+    'Repository 2 is returned as a json object'
 );
 
 -- Finish tests and rollback transaction

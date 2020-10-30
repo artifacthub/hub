@@ -73,7 +73,7 @@ func main() {
 		Pm:  pm,
 		Is:  is,
 		Ec:  ec,
-		Hg:  &http.Client{Timeout: 10 * time.Second},
+		Hc:  &http.Client{Timeout: 10 * time.Second},
 	}
 
 	// Track registered repositories
@@ -135,7 +135,7 @@ func getRepositories(
 	var repos []*hub.Repository
 	if len(reposNames) > 0 {
 		for _, name := range reposNames {
-			repo, err := rm.GetByName(context.Background(), name)
+			repo, err := rm.GetByName(context.Background(), name, true)
 			if err != nil {
 				return nil, fmt.Errorf("error getting repository %s: %w", name, err)
 			}
@@ -147,7 +147,7 @@ func getRepositories(
 			if err != nil {
 				return nil, fmt.Errorf("invalid repository kind found in config: %s", kindName)
 			}
-			kindRepos, err := rm.GetByKind(context.Background(), kind)
+			kindRepos, err := rm.GetByKind(context.Background(), kind, true)
 			if err != nil {
 				return nil, fmt.Errorf("error getting repositories by kind (%s): %w", kindName, err)
 			}
@@ -155,7 +155,7 @@ func getRepositories(
 		}
 	} else {
 		var err error
-		repos, err = rm.GetAll(context.Background())
+		repos, err = rm.GetAll(context.Background(), true)
 		if err != nil {
 			return nil, fmt.Errorf("error getting all repositories: %w", err)
 		}

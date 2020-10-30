@@ -202,6 +202,11 @@
                 "server": {
                     "type": "object",
                     "properties": {
+                        "allowPrivateRepositories": {
+                            "title": "Allow adding private repositories to the Hub",
+                            "type": "boolean",
+                            "default": false
+                        },
                         "baseURL": {
                             "title": "Hub server base url",
                             "type": "string",
@@ -324,7 +329,7 @@
                             "default": 0
                         }
                     },
-                    "required": ["baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
+                    "required": ["allowPrivateRepositories", "baseURL", "shutdownTimeout", "basicAuth", "cookie", "xffIndex"]
                 },
                 "service": {
                     "type": "object",

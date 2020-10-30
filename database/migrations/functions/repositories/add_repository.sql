@@ -21,6 +21,8 @@ begin
         name,
         display_name,
         url,
+        auth_user,
+        auth_pass,
         repository_kind_id,
         user_id,
         organization_id
@@ -28,6 +30,8 @@ begin
         p_repository->>'name',
         nullif(p_repository->>'display_name', ''),
         p_repository->>'url',
+        nullif(p_repository->>'auth_user', ''),
+        nullif(p_repository->>'auth_pass', ''),
         (p_repository->>'kind')::int,
         v_owner_user_id,
         v_owner_organization_id

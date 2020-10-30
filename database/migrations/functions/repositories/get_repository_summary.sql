@@ -7,6 +7,10 @@ returns setof json as $$
         'name', r.name,
         'display_name', r.display_name,
         'url', r.url,
+        'private', (
+            case when r.auth_user is not null or r.auth_pass is not null then true
+            else false end
+        ),
         'kind', r.repository_kind_id,
         'verified_publisher', verified_publisher,
         'official', r.official,

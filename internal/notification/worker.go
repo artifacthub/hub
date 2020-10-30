@@ -307,7 +307,7 @@ func (w *Worker) prepareRepoNotificationTemplateData(
 		r = cValue.(*hub.Repository)
 	} else {
 		var err error
-		r, err = w.svc.RepositoryManager.GetByID(ctx, e.RepositoryID)
+		r, err = w.svc.RepositoryManager.GetByID(ctx, e.RepositoryID, false)
 		if err != nil {
 			return nil, err
 		}

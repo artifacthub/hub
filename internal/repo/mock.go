@@ -38,42 +38,58 @@ func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 }
 
 // GetAll implements the RepositoryManager interface.
-func (m *ManagerMock) GetAll(ctx context.Context) ([]*hub.Repository, error) {
+func (m *ManagerMock) GetAll(ctx context.Context, includeCredentials bool) ([]*hub.Repository, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]*hub.Repository)
 	return data, args.Error(1)
 }
 
 // GetAllJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetAllJSON(ctx context.Context) ([]byte, error) {
+func (m *ManagerMock) GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 
 // GetByID implements the RepositoryManager interface.
-func (m *ManagerMock) GetByID(ctx context.Context, repositoryID string) (*hub.Repository, error) {
+func (m *ManagerMock) GetByID(
+	ctx context.Context,
+	repositoryID string,
+	includeCredentials bool,
+) (*hub.Repository, error) {
 	args := m.Called(ctx, repositoryID)
 	data, _ := args.Get(0).(*hub.Repository)
 	return data, args.Error(1)
 }
 
 // GetByKind implements the RepositoryManager interface.
-func (m *ManagerMock) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
+func (m *ManagerMock) GetByKind(
+	ctx context.Context,
+	kind hub.RepositoryKind,
+	includeCredentials bool,
+) ([]*hub.Repository, error) {
 	args := m.Called(ctx, kind)
 	data, _ := args.Get(0).([]*hub.Repository)
 	return data, args.Error(1)
 }
 
 // GetByKindJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetByKindJSON(ctx context.Context, kind hub.RepositoryKind) ([]byte, error) {
+func (m *ManagerMock) GetByKindJSON(
+	ctx context.Context,
+	kind hub.RepositoryKind,
+	includeCredentials bool,
+) ([]byte, error) {
 	args := m.Called(ctx, kind)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 
 // GetByName implements the RepositoryManager interface.
-func (m *ManagerMock) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
+func (m *ManagerMock) GetByName(
+	ctx context.Context,
+	name string,
+	includeCredentials bool,
+) (*hub.Repository, error) {
 	args := m.Called(ctx, name)
 	data, _ := args.Get(0).(*hub.Repository)
 	return data, args.Error(1)
@@ -97,14 +113,18 @@ func (m *ManagerMock) GetPackagesDigest(
 }
 
 // GetOwnedByOrgJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error) {
+func (m *ManagerMock) GetOwnedByOrgJSON(
+	ctx context.Context,
+	orgName string,
+	includeCredentials bool,
+) ([]byte, error) {
 	args := m.Called(ctx, orgName)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 
 // GetOwnedByUserJSON implements the RepositoryManager interface.
-func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)

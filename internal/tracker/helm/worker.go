@@ -100,25 +100,24 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	}()
 
 	// Prepare chart archive url
-	u, err := url.Parse(j.ChartVersion.URLs[0])
+	chartURL, err := url.Parse(j.ChartVersion.URLs[0])
 	if err != nil {
-		w.warn(md, fmt.Errorf("invalid chart url %s: %w", w.r.URL, err))
+		w.warn(md, fmt.Errorf("invalid chart url %s: %w", j.ChartVersion.URLs[0], err))
 		return
 	}
-	if !u.IsAbs() {
+	if !chartURL.IsAbs() {
 		repoURL, _ := url.Parse(w.r.URL)
-		u.Scheme = repoURL.Scheme
-		u.Host = repoURL.Host
-		if !strings.HasPrefix(u.Path, "/") {
-			u.Path = path.Join(repoURL.Path, u.Path)
+		chartURL.Scheme = repoURL.Scheme
+		chartURL.Host = repoURL.Host
+		if !strings.HasPrefix(chartURL.Path, "/") {
+			chartURL.Path = path.Join(repoURL.Path, chartURL.Path)
 		}
 	}
-	chartURL := u.String()
 
 	// Load chart from remote archive
-	chart, err := w.loadChart(chartURL)
+	chart, err := w.loadChart(chartURL.String())
 	if err != nil {
-		w.warn(md, fmt.Errorf("error loading chart (%s): %w", chartURL, err))
+		w.warn(md, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err))
 		return
 	}
 	md = chart.Metadata
@@ -150,7 +149,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		AppVersion:   md.AppVersion,
 		Digest:       j.ChartVersion.Digest,
 		Deprecated:   md.Deprecated,
-		ContentURL:   chartURL,
+		ContentURL:   chartURL.String(),
 		ValuesSchema: chart.Schema,
 		CreatedAt:    j.ChartVersion.Created.Unix(),
 		Repository:   w.r,
@@ -163,7 +162,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if licenseFile != nil {
 		p.License = license.Detect(licenseFile.Data)
 	}
-	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(chartURL)
+	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(chartURL.String())
 	if err == nil {
 		p.Signed = hasProvenanceFile
 	} else {
@@ -245,7 +244,11 @@ func (w *Worker) loadChart(u string) (*chart.Chart, error) {
 		_ = githubRL.Wait(w.svc.Ctx)
 	}
 
-	resp, err := w.svc.Hg.Get(u)
+	req, _ := http.NewRequest("GET", u, nil)
+	if w.r.AuthUser != "" || w.r.AuthPass != "" {
+		req.SetBasicAuth(w.r.AuthUser, w.r.AuthPass)
+	}
+	resp, err := w.svc.Hc.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +266,11 @@ func (w *Worker) loadChart(u string) (*chart.Chart, error) {
 // chartVersionHasProvenanceFile checks if a chart version has a provenance
 // file checking if a .prov file exists for the chart version url provided.
 func (w *Worker) chartVersionHasProvenanceFile(u string) (bool, error) {
-	resp, err := w.svc.Hg.Get(u + ".prov")
+	req, _ := http.NewRequest("GET", u+".prov", nil)
+	if w.r.AuthUser != "" || w.r.AuthPass != "" {
+		req.SetBasicAuth(w.r.AuthUser, w.r.AuthPass)
+	}
+	resp, err := w.svc.Hc.Do(req)
 	if err != nil {
 		return false, err
 	}
@@ -287,7 +294,8 @@ func (w *Worker) getImage(u string) ([]byte, error) {
 	}
 
 	// Download image using url provided
-	resp, err := w.svc.Hg.Get(u)
+	req, _ := http.NewRequest("GET", u, nil)
+	resp, err := w.svc.Hc.Do(req)
 	if err != nil {
 		return nil, err
 	}

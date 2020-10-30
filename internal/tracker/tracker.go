@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-// HTTPGetter defines the methods an HTTPGetter implementation must provide.
-type HTTPGetter interface {
-	Get(url string) (*http.Response, error)
+// HTTPClient defines the methods an HTTPClient implementation must provide.
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
 }
 
 // Tracker is the interface that wraps the Track method, used to ask a tracker
@@ -39,7 +39,7 @@ type Services struct {
 	Il  hub.HelmIndexLoader
 	Is  img.Store
 	Ec  ErrorsCollector
-	Hg  HTTPGetter
+	Hc  HTTPClient
 }
 
 // SetVerifiedPublisherFlag sets the repository verified publisher flag for the

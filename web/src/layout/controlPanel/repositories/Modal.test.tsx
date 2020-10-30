@@ -26,6 +26,8 @@ const repoMock: Repository = {
   name: 'repoTest',
   displayName: 'Repo test',
   url: 'http://test.repo',
+  authUser: null,
+  authPass: null,
 };
 
 const mockCtx = {
@@ -96,6 +98,8 @@ describe('Repository Modal - repositories section', () => {
               url: 'http://test.com',
               displayName: 'Pretty name',
               kind: 0,
+              authUser: null,
+              authPass: null,
             },
             undefined
           );
@@ -127,6 +131,8 @@ describe('Repository Modal - repositories section', () => {
               url: 'http://test.com',
               displayName: 'Pretty name',
               kind: 0,
+              authUser: null,
+              authPass: null,
             },
             'orgTest'
           );

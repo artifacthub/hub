@@ -19,6 +19,8 @@ select add_repository(:'user1ID', null, '
     "name": "repo1",
     "display_name": "Repository 1",
     "url": "repo1_url",
+    "auth_user": "user1",
+    "auth_pass": "pass1",
     "kind": 0
 }
 '::jsonb);
@@ -28,6 +30,8 @@ select results_eq(
             name,
             display_name,
             url,
+            auth_user,
+            auth_pass,
             repository_kind_id,
             user_id,
             organization_id
@@ -39,6 +43,8 @@ select results_eq(
             'repo1',
             'Repository 1',
             'repo1_url',
+            'user1',
+            'pass1',
             0,
             '00000000-0000-0000-0000-000000000001'::uuid,
             null::uuid
@@ -53,6 +59,8 @@ select add_repository(:'user1ID', 'org1', '
     "name": "repo2",
     "display_name": "Repository 2",
     "url": "repo2_url",
+    "auth_user": "user1",
+    "auth_pass": "pass1",
     "kind": 0
 }
 '::jsonb);
@@ -62,6 +70,8 @@ select results_eq(
             name,
             display_name,
             url,
+            auth_user,
+            auth_pass,
             repository_kind_id,
             user_id,
             organization_id
@@ -73,6 +83,8 @@ select results_eq(
             'repo2',
             'Repository 2',
             'repo2_url',
+            'user1',
+            'pass1',
             0,
             null::uuid,
             '00000000-0000-0000-0000-000000000001'::uuid

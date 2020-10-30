@@ -97,28 +97,23 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 type servicesWrapper struct {
 	ctx context.Context
 	rm  *repo.ManagerMock
-	hg  *tests.HTTPGetterMock
 	svc *Services
 }
 
 func newServicesWrapper() *servicesWrapper {
 	ctx := context.Background()
 	rm := &repo.ManagerMock{}
-	hg := &tests.HTTPGetterMock{}
 	svc := &Services{
 		Ctx: ctx,
 		Rm:  rm,
-		Hg:  hg,
 	}
 	return &servicesWrapper{
 		ctx: ctx,
 		rm:  rm,
-		hg:  hg,
 		svc: svc,
 	}
 }
 
 func (sw *servicesWrapper) assertExpectations(t *testing.T) {
 	sw.rm.AssertExpectations(t)
-	sw.hg.AssertExpectations(t)
 }

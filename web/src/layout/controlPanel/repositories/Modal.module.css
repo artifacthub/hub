@@ -3,6 +3,10 @@
   width: 620px !important;
 }
 
+.allowPrivateModal {
+  min-height: 715px;
+}
+
 .inputAdditionalInfoURL {
   font-size: 90%;
 }

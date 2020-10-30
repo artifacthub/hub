@@ -14,8 +14,10 @@ type HelmIndexLoader struct{}
 // LoadIndex downloads and parses the index file of the provided repository.
 func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, error) {
 	repoConfig := &helmrepo.Entry{
-		Name: r.Name,
-		URL:  r.URL,
+		Name:     r.Name,
+		URL:      r.URL,
+		Username: r.AuthUser,
+		Password: r.AuthPass,
 	}
 	getters := getter.All(&cli.EnvSettings{})
 	chartRepository, err := helmrepo.NewChartRepository(repoConfig, getters)

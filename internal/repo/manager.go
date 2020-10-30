@@ -27,13 +27,13 @@ const (
 	checkRepoNameAvailDBQ     = `select repository_id from repository where name = $1`
 	checkRepoURLAvailDBQ      = `select repository_id from repository where url = $1`
 	deleteRepoDBQ             = `select delete_repository($1::uuid, $2::text)`
-	getAllReposDBQ            = `select get_all_repositories()`
-	getOrgReposDBQ            = `select get_org_repositories($1::uuid, $2::text)`
-	getRepoByIDDBQ            = `select get_repository_by_id($1::uuid)`
-	getRepoByNameDBQ          = `select get_repository_by_name($1::text)`
+	getAllReposDBQ            = `select get_all_repositories($1::boolean)`
+	getOrgReposDBQ            = `select get_org_repositories($1::uuid, $2::text, $3::boolean)`
+	getRepoByIDDBQ            = `select get_repository_by_id($1::uuid, $2::boolean)`
+	getRepoByNameDBQ          = `select get_repository_by_name($1::text, $2::boolean)`
 	getRepoPkgsDigestDBQ      = `select get_repository_packages_digest($1::uuid)`
-	getReposByKindDBQ         = `select get_repositories_by_kind($1::int)`
-	getUserReposDBQ           = `select get_user_repositories($1::uuid)`
+	getReposByKindDBQ         = `select get_repositories_by_kind($1::int, $2::boolean)`
+	getUserReposDBQ           = `select get_user_repositories($1::uuid, $2::boolean)`
 	getUserEmailDBQ           = `select email from "user" where user_id = $1`
 	setLastTrackingResultsDBQ = `select set_last_tracking_results($1::uuid, $2::text, $3::boolean)`
 	setVerifiedPublisherDBQ   = `select set_verified_publisher($1::uuid, $2::boolean)`
@@ -113,6 +113,20 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if r.URL == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
+	u, err := url.Parse(r.URL)
+	if err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+	}
+	if u.User != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
+	}
+	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
+	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "private repositories not allowed")
+	}
+	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
+	}
 	if r.Kind == hub.Falco || r.Kind == hub.OLM {
 		if !GitRepoURLRE.MatchString(r.URL) {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
@@ -120,7 +134,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	}
 	if r.Kind == hub.Helm {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
 	}
 
@@ -137,7 +151,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 
 	// Add repository to the database
 	rJSON, _ := json.Marshal(r)
-	_, err := m.db.Exec(ctx, addRepoDBQ, userID, orgName, rJSON)
+	_, err = m.db.Exec(ctx, addRepoDBQ, userID, orgName, rJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -194,7 +208,7 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	}
 
 	// Get repository metadata
-	r, err := m.GetByName(ctx, repoName)
+	r, err := m.GetByName(ctx, repoName, false)
 	if err != nil {
 		return err
 	}
@@ -243,7 +257,7 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 	}
 
 	// Authorize action if the repository is owned by an organization
-	r, err := m.GetByName(ctx, name)
+	r, err := m.GetByName(ctx, name, false)
 	if err != nil {
 		return err
 	}
@@ -266,20 +280,24 @@ func (m *Manager) Delete(ctx context.Context, name string) error {
 }
 
 // GetAll returns all available repositories.
-func (m *Manager) GetAll(ctx context.Context) ([]*hub.Repository, error) {
+func (m *Manager) GetAll(ctx context.Context, includeCredentials bool) ([]*hub.Repository, error) {
 	var r []*hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getAllReposDBQ)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getAllReposDBQ, includeCredentials)
 	return r, err
 }
 
 // GetAllJSON returns all available repositories as a json array, which is
 // built by the database.
-func (m *Manager) GetAllJSON(ctx context.Context) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getAllReposDBQ)
+func (m *Manager) GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getAllReposDBQ, includeCredentials)
 }
 
 // GetByID returns the repository identified by the id provided.
-func (m *Manager) GetByID(ctx context.Context, repositoryID string) (*hub.Repository, error) {
+func (m *Manager) GetByID(
+	ctx context.Context,
+	repositoryID string,
+	includeCredentials bool,
+) (*hub.Repository, error) {
 	// Validate input
 	if repositoryID == "" {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "repository id not provided")
@@ -290,25 +308,37 @@ func (m *Manager) GetByID(ctx context.Context, repositoryID string) (*hub.Reposi
 
 	// Get repository from database
 	var r *hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByIDDBQ, repositoryID)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByIDDBQ, repositoryID, includeCredentials)
 	return r, err
 }
 
 // GetByKind returns all available repositories of the provided kind.
-func (m *Manager) GetByKind(ctx context.Context, kind hub.RepositoryKind) ([]*hub.Repository, error) {
+func (m *Manager) GetByKind(
+	ctx context.Context,
+	kind hub.RepositoryKind,
+	includeCredentials bool,
+) ([]*hub.Repository, error) {
 	var r []*hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getReposByKindDBQ, kind)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getReposByKindDBQ, kind, includeCredentials)
 	return r, err
 }
 
 // GetByKindJSON returns all available repositories of the provided kind as a
 // json array, which is built by the database.
-func (m *Manager) GetByKindJSON(ctx context.Context, kind hub.RepositoryKind) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getReposByKindDBQ, kind)
+func (m *Manager) GetByKindJSON(
+	ctx context.Context,
+	kind hub.RepositoryKind,
+	includeCredentials bool,
+) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getReposByKindDBQ, kind, includeCredentials)
 }
 
 // GetByName returns the repository identified by the name provided.
-func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, error) {
+func (m *Manager) GetByName(
+	ctx context.Context,
+	name string,
+	includeCredentials bool,
+) (*hub.Repository, error) {
 	// Validate input
 	if name == "" {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
@@ -316,7 +346,7 @@ func (m *Manager) GetByName(ctx context.Context, name string) (*hub.Repository, 
 
 	// Get repository from database
 	var r *hub.Repository
-	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByNameDBQ, name)
+	err := util.DBQueryUnmarshal(ctx, m.db, &r, getRepoByNameDBQ, name, includeCredentials)
 	return r, err
 }
 
@@ -333,7 +363,6 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 			break
 		}
 	}
-
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +371,6 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
 		return nil, fmt.Errorf("error unmarshaling repository metadata file: %w", err)
 	}
-	// repo IDs must be valid UUIDs
 	if md.RepositoryID != "" {
 		if _, err := uuid.FromString(md.RepositoryID); err != nil {
 			return nil, fmt.Errorf("%w: %s", ErrInvalidMetadata, "invalid repository id")
@@ -396,7 +424,11 @@ func (m *Manager) GetPackagesDigest(
 
 // GetOwnedByOrgJSON returns all repositories that belong to the organization
 // provided.
-func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error) {
+func (m *Manager) GetOwnedByOrgJSON(
+	ctx context.Context,
+	orgName string,
+	includeCredentials bool,
+) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
 
 	// Validate input
@@ -405,14 +437,14 @@ func (m *Manager) GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte
 	}
 
 	// Get org repositories from database
-	return util.DBQueryJSON(ctx, m.db, getOrgReposDBQ, userID, orgName)
+	return util.DBQueryJSON(ctx, m.db, getOrgReposDBQ, userID, orgName, includeCredentials)
 }
 
 // GetOwnedByUserJSON returns all repositories that belong to the user making
 // the request.
-func (m *Manager) GetOwnedByUserJSON(ctx context.Context) ([]byte, error) {
+func (m *Manager) GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
 	userID := ctx.Value(hub.UserIDKey).(string)
-	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID)
+	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID, includeCredentials)
 }
 
 // SetLastTrackingResults updates the timestamp and errors of the last tracking
@@ -466,7 +498,7 @@ func (m *Manager) Transfer(ctx context.Context, repoName, orgName string, owners
 	// Authorize action if this is not an ownership claim operation and the
 	// repository is owned by an organization
 	if !ownershipClaim {
-		r, err := m.GetByName(ctx, repoName)
+		r, err := m.GetByName(ctx, repoName, false)
 		if err != nil {
 			return err
 		}
@@ -500,6 +532,20 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if r.URL == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
 	}
+	u, err := url.Parse(r.URL)
+	if err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+	}
+	if u.User != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
+	}
+	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
+	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "private repositories not allowed")
+	}
+	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
+	}
 	if r.Kind == hub.Falco || r.Kind == hub.OLM {
 		if !GitRepoURLRE.MatchString(r.URL) {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
@@ -507,12 +553,12 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	}
 	if r.Kind == hub.Helm {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
+			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
 	}
 
 	// Authorize action if the repository is owned by an organization
-	rBefore, err := m.GetByName(ctx, r.Name)
+	rBefore, err := m.GetByName(ctx, r.Name, false)
 	if err != nil {
 		return err
 	}

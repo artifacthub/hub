@@ -144,3 +144,9 @@ First, an [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/
 Once the repository metadata file has been set up, you can proceed from the Artifact Hub control panel. In the repositories tab, click on `Claim Ownership`. You'll need to enter the repository you'd like to claim the ownership for, as well as the destination entity, which can be the user performing the request or an organization. If the metadata file was set up correctly, the process should complete successfully.
 
 *Please note that the **artifacthub-repo.yml** metadata file must be located at the same level of the chart repository **index.yaml**, and it must be served from the chart repository HTTP server as well. This means that depending on how your chart repository is set up, adding it to the source git repository may not be enough.*
+
+## Private repositories
+
+Artifact Hub supports adding private Helm repositories. By default this feature is disabled, but you can enable it in your own Artifact Hub deployment setting the `hub.server.allowPrivateRepositories` configuration setting to `true`. When enabled, you'll be allowed to add the basic auth credentials for the repository in the add/update repository modal in the control panel. Credentials are not exposed in the Artifact Hub UI, so users will need to get them separately. The installation instructions modal will display a warning to users when the package displayed belongs to a private repository.
+
+*Please note that this feature is not enabled in `artifacthub.io`.*

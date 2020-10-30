@@ -8,7 +8,7 @@ select plan(2);
 
 -- Non existing repository
 select is_empty(
-    $$ select get_repository_by_name('repo1') $$,
+    $$ select get_repository_by_name('repo1', false) $$,
     'If repository requested does not exist no rows are returned'
 );
 
@@ -20,7 +20,7 @@ values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 
 -- One repository has just been seeded
 select is(
-    get_repository_by_name('repo1')::jsonb,
+    get_repository_by_name('repo1', false)::jsonb,
     '{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",

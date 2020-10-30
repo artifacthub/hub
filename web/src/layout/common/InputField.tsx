@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import { API } from '../../api';
 import { AvailabilityInfo, RefInputField } from '../../types';
@@ -34,6 +35,7 @@ export interface Props {
   setValidationStatus?: (status: boolean) => void;
   autoFocus?: boolean;
   disabled?: boolean;
+  visiblePassword?: boolean;
   excludedValues?: string[];
 }
 
@@ -43,6 +45,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
   const [inputValue, setInputValue] = useState(props.value || '');
   const [invalidText, setInvalidText] = useState(!isUndefined(props.invalidText) ? props.invalidText.default : '');
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [activeType, setActiveType] = useState<string>(props.type);
 
   useImperativeHandle(ref, () => ({
     checkIsValid(): Promise<boolean> {
@@ -153,7 +156,7 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
       <input
         data-testid={`${props.name}Input`}
         ref={input}
-        type={props.type}
+        type={activeType}
         name={props.name}
         value={inputValue}
         className={classnames('form-control', { 'is-invalid': !isNull(isValid) && !isValid })}
@@ -171,6 +174,19 @@ const InputField = forwardRef((props: Props, ref: React.Ref<RefInputField>) => {
         disabled={props.disabled}
         spellCheck="false"
       />
+
+      {props.type === 'password' && props.visiblePassword && (
+        <button
+          type="button"
+          className={classnames('btn btn-link position-absolute', styles.revealBtn, {
+            'text-muted': activeType === 'password',
+            'text-secondary': activeType !== 'password',
+          })}
+          onClick={() => setActiveType(activeType === 'password' ? 'text' : 'password')}
+        >
+          {activeType === 'password' ? <FaEyeSlash /> : <FaEye />}
+        </button>
+      )}
 
       {isCheckingAvailability && (
         <div className={`position-absolute ${styles.spinner}`}>

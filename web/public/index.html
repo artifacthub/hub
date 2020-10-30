@@ -19,6 +19,9 @@
     <meta name="twitter:description" content="{{ .description }}" />
     <meta name="twitter:image:src" content="{{ .baseURL }}/static/media/artifactHub.png" />
     <script type="text/javascript">
+      window.config = {
+        allowPrivateRepositories: '{{ .allowPrivateRepositories }}',
+      };
       window.analyticsConfig = {
         gaTrackingID: '{{ .gaTrackingID }}',
       };

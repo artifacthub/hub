@@ -55,7 +55,8 @@ func TestWorker(t *testing.T) {
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
 			close(ww.queue)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, tests.ErrFake)
+			req, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", req).Return(nil, tests.ErrFake)
 			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
 
 			// Run worker and check expectations
@@ -82,7 +83,8 @@ func TestWorker(t *testing.T) {
 			}
 			ww.queue <- job
 			close(ww.queue)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(nil, tests.ErrFake)
+			req, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", req).Return(nil, tests.ErrFake)
 
 			// Run worker and check expectations
 			ww.w.Run(ww.wg, ww.queue)
@@ -94,7 +96,8 @@ func TestWorker(t *testing.T) {
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
 			close(ww.queue)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			req, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", req).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -111,12 +114,15 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(nil, tests.ErrFake)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
+			ww.hc.On("Do", reqLogo).Return(nil, tests.ErrFake)
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -134,15 +140,18 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(&http.Response{
+			reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
+			ww.hc.On("Do", reqLogo).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusUnauthorized,
 			}, nil)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -160,16 +169,19 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(&http.Response{
+			reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
+			ww.hc.On("Do", reqLogo).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
 			}, nil)
 			ww.ec.On("Append", ww.w.r.RepositoryID, mock.Anything).Return()
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -187,15 +199,18 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(&http.Response{
+			reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
+			ww.hc.On("Do", reqLogo).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -214,15 +229,18 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", logoImageURL).Return(&http.Response{
+			reqLogo, _ := http.NewRequest("GET", logoImageURL, nil)
+			ww.hc.On("Do", reqLogo).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("imageData")),
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -314,11 +332,13 @@ func TestWorker(t *testing.T) {
 			ww.queue <- job
 			close(ww.queue)
 			f, _ := os.Open("testdata/" + path.Base(job.ChartVersion.URLs[0]))
-			ww.hg.On("Get", job.ChartVersion.URLs[0]).Return(&http.Response{
+			reqChart, _ := http.NewRequest("GET", job.ChartVersion.URLs[0], nil)
+			ww.hc.On("Do", reqChart).Return(&http.Response{
 				Body:       f,
 				StatusCode: http.StatusOK,
 			}, nil)
-			ww.hg.On("Get", job.ChartVersion.URLs[0]+".prov").Return(&http.Response{
+			reqProv, _ := http.NewRequest("GET", job.ChartVersion.URLs[0]+".prov", nil)
+			ww.hc.On("Do", reqProv).Return(&http.Response{
 				Body:       ioutil.NopCloser(strings.NewReader("")),
 				StatusCode: http.StatusNotFound,
 			}, nil)
@@ -706,7 +726,7 @@ type workerWrapper struct {
 	pm    *pkg.ManagerMock
 	is    *img.StoreMock
 	ec    *tracker.ErrorsCollectorMock
-	hg    *tests.HTTPGetterMock
+	hc    *tests.HTTPClientMock
 	w     *Worker
 	queue chan *Job
 }
@@ -716,14 +736,14 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 	pm := &pkg.ManagerMock{}
 	is := &img.StoreMock{}
 	ec := &tracker.ErrorsCollectorMock{}
-	hg := &tests.HTTPGetterMock{}
+	hc := &tests.HTTPClientMock{}
 	r := &hub.Repository{RepositoryID: "repo1"}
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Pm:  pm,
 		Is:  is,
 		Ec:  ec,
-		Hg:  hg,
+		Hc:  hc,
 	}
 	w := NewWorker(svc, r)
 	queue := make(chan *Job, 100)
@@ -737,7 +757,7 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 		pm:    pm,
 		is:    is,
 		ec:    ec,
-		hg:    hg,
+		hc:    hc,
 		w:     w,
 		queue: queue,
 	}
@@ -749,5 +769,5 @@ func (ww *workerWrapper) assertExpectations(t *testing.T) {
 	ww.pm.AssertExpectations(t)
 	ww.is.AssertExpectations(t)
 	ww.ec.AssertExpectations(t)
-	ww.hg.AssertExpectations(t)
+	ww.hc.AssertExpectations(t)
 }

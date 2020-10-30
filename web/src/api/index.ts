@@ -273,7 +273,11 @@ export const API = {
   },
 
   addRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
-    const repo = renameKeysInObject(repository, { displayName: 'display_name' });
+    const repo = renameKeysInObject(repository, {
+      displayName: 'display_name',
+      authUser: 'auth_user',
+      authPass: 'auth_pass',
+    });
     return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`, {
       method: 'POST',
       headers: {
@@ -290,7 +294,11 @@ export const API = {
   },
 
   updateRepository: (repository: Repository, fromOrgName?: string): Promise<null | string> => {
-    const repo = renameKeysInObject(repository, { displayName: 'display_name' });
+    const repo = renameKeysInObject(repository, {
+      displayName: 'display_name',
+      authUser: 'auth_user',
+      authPass: 'auth_pass',
+    });
     return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repository.name}`, {
       method: 'PUT',
       headers: {
