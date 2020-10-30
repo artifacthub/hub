@@ -11,7 +11,7 @@ interface Props {
 
 const DEFAULT_LINE_HEIGHT = 21;
 
-export default (props: Props): JSX.Element => {
+const AttachedIconToText = (props: Props) => {
   const lineHeight: number = props.lineHeight || DEFAULT_LINE_HEIGHT;
   const ref = useRef<HTMLDivElement | null>(null);
   const icon = useRef<HTMLDivElement | null>(null);
@@ -65,3 +65,5 @@ export default (props: Props): JSX.Element => {
     </div>
   );
 };
+
+export default AttachedIconToText;
