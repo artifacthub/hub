@@ -18,6 +18,9 @@ export interface Repository {
   lastTrackingErrors?: string | null;
   verifiedPublisher?: boolean;
   official?: boolean;
+  private?: boolean;
+  authUser?: string | null;
+  authPass?: string | null;
 }
 
 export interface Maintainer {

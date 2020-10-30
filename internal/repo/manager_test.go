@@ -105,6 +105,38 @@ func TestAdd(t *testing.T) {
 				"invalid url",
 				"org1",
 				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  ":::///",
+				},
+				nil,
+			},
+			{
+				"urls with credentials not allowed",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "https://user:pass@repo1.com",
+				},
+				nil,
+			},
+			{
+				"private repositories not allowed",
+				"org1",
+				&hub.Repository{
+					Kind:     hub.Helm,
+					Name:     "repo1",
+					URL:      "https://repo1.com",
+					AuthUser: "user1",
+					AuthPass: "pass1",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				"org1",
+				&hub.Repository{
 					Kind: hub.OLM,
 					Name: "repo1",
 					URL:  "https://repo1.com",
@@ -164,7 +196,7 @@ func TestAdd(t *testing.T) {
 		}).Return(tests.ErrFake)
 		l := &HelmIndexLoaderMock{}
 		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(nil, nil, az, WithHelmIndexLoader(l))
+		m := NewManager(cfg, nil, az, WithHelmIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
 		assert.Equal(t, tests.ErrFake, err)
@@ -386,7 +418,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: database error getting repository", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
@@ -396,7 +428,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://repo.url/artifacthub-repo.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
@@ -415,7 +447,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("", tests.ErrFakeDB)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
@@ -432,7 +464,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("user1@email.com", nil)
 		hg := &tests.HTTPGetterMock{}
 		mdFile, _ := os.Open("testdata/artifacthub-repo.yml")
@@ -449,7 +481,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim succeeded (helm)", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(helmRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
 		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		hg := &tests.HTTPGetterMock{}
@@ -467,7 +499,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim failed (opa): error cloning repository", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
 		rc := &ClonerMock{}
 		var r *hub.Repository
 		_ = json.Unmarshal(opaRepoJSON, &r)
@@ -481,7 +513,7 @@ func TestClaimOwnership(t *testing.T) {
 
 	t.Run("ownership claim succeeded (opa)", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(opaRepoJSON, nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
 		db.On("Exec", ctx, transferRepoDBQ, "repo1", userIDP, orgP, true).Return(nil)
 		rc := &ClonerMock{}
@@ -514,7 +546,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -552,7 +584,7 @@ func TestDelete(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
@@ -578,7 +610,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("delete repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -598,7 +630,7 @@ func TestGetAll(t *testing.T) {
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, getAllReposDBQ).Return([]byte(`
+	db.On("QueryRow", ctx, getAllReposDBQ, false).Return([]byte(`
 	[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -627,7 +659,7 @@ func TestGetAll(t *testing.T) {
 	`), nil)
 	m := NewManager(cfg, db, nil)
 
-	r, err := m.GetAll(ctx)
+	r, err := m.GetAll(ctx, false)
 	require.NoError(t, err)
 	assert.Len(t, r, 3)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
@@ -659,10 +691,10 @@ func TestGetAllJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAllReposDBQ).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getAllReposDBQ, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetAllJSON(ctx)
+		dataJSON, err := m.GetAllJSON(ctx, false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -670,10 +702,10 @@ func TestGetAllJSON(t *testing.T) {
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getAllReposDBQ).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getAllReposDBQ, false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetAllJSON(ctx)
+		dataJSON, err := m.GetAllJSON(ctx, false)
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -703,7 +735,7 @@ func TestGetByID(t *testing.T) {
 			t.Run(tc.errStr, func(t *testing.T) {
 				m := NewManager(cfg, nil, nil)
 
-				_, err := m.GetByID(ctx, tc.repoID)
+				_, err := m.GetByID(ctx, tc.repoID, false)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 				assert.Contains(t, err.Error(), tc.errStr)
 			})
@@ -712,10 +744,10 @@ func TestGetByID(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		r, err := m.GetByID(context.Background(), repoID)
+		r, err := m.GetByID(context.Background(), repoID, false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
@@ -723,7 +755,7 @@ func TestGetByID(t *testing.T) {
 
 	t.Run("database query succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID).Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID, false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -736,7 +768,7 @@ func TestGetByID(t *testing.T) {
 		`), nil)
 		m := NewManager(cfg, db, nil)
 
-		r, err := m.GetByID(context.Background(), repoID)
+		r, err := m.GetByID(context.Background(), repoID, false)
 		require.NoError(t, err)
 		assert.Equal(t, repoID, r.RepositoryID)
 		assert.Equal(t, "repo1", r.Name)
@@ -753,7 +785,7 @@ func TestGetByKind(t *testing.T) {
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
-	db.On("QueryRow", ctx, getReposByKindDBQ, hub.Helm).Return([]byte(`
+	db.On("QueryRow", ctx, getReposByKindDBQ, hub.Helm, false).Return([]byte(`
 	[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -774,7 +806,7 @@ func TestGetByKind(t *testing.T) {
 	`), nil)
 	m := NewManager(cfg, db, nil)
 
-	r, err := m.GetByKind(ctx, hub.Helm)
+	r, err := m.GetByKind(ctx, hub.Helm, false)
 	require.NoError(t, err)
 	assert.Len(t, r, 2)
 	assert.Equal(t, "00000000-0000-0000-0000-000000000001", r[0].RepositoryID)
@@ -799,10 +831,10 @@ func TestGetByKindJSON(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM).Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
+		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM, false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -810,10 +842,10 @@ func TestGetByKindJSON(t *testing.T) {
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM).Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM)
+		dataJSON, err := m.GetByKindJSON(ctx, hub.OLM, false)
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -825,13 +857,13 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
-		_, err := m.GetByName(ctx, "")
+		_, err := m.GetByName(ctx, "", false)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("get existing repository by name", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -846,7 +878,7 @@ func TestGetByName(t *testing.T) {
 		`), nil)
 		m := NewManager(cfg, db, nil)
 
-		r, err := m.GetByName(context.Background(), "repo1")
+		r, err := m.GetByName(context.Background(), "repo1", false)
 		require.NoError(t, err)
 		assert.Equal(t, "00000000-0000-0000-0000-000000000001", r.RepositoryID)
 		assert.Equal(t, "repo1", r.Name)
@@ -860,10 +892,10 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		r, err := m.GetByName(context.Background(), "repo1")
+		r, err := m.GetByName(context.Background(), "repo1", false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
@@ -871,10 +903,10 @@ func TestGetByName(t *testing.T) {
 
 	t.Run("invalid json data returned from database", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte("invalid json"), nil)
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte("invalid json"), nil)
 		m := NewManager(cfg, db, nil)
 
-		r, err := m.GetByName(context.Background(), "repo1")
+		r, err := m.GetByName(context.Background(), "repo1", false)
 		assert.Error(t, err)
 		assert.Nil(t, r)
 		db.AssertExpectations(t)
@@ -1022,22 +1054,22 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName")
+			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName", false)
 		})
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
-		_, err := m.GetOwnedByOrgJSON(ctx, "")
+		_, err := m.GetOwnedByOrgJSON(ctx, "", false)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
+		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName", false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -1045,10 +1077,10 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 
 	t.Run("org repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName")
+		dataJSON, err := m.GetOwnedByOrgJSON(ctx, "orgName", false)
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -1061,16 +1093,16 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	t.Run("user id not found in ctx", func(t *testing.T) {
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
-			_, _ = m.GetOwnedByUserJSON(context.Background())
+			_, _ = m.GetOwnedByUserJSON(context.Background(), false)
 		})
 	})
 
 	t.Run("database error", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserReposDBQ, "userID").Return(nil, tests.ErrFakeDB)
+		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetOwnedByUserJSON(ctx)
+		dataJSON, err := m.GetOwnedByUserJSON(ctx, false)
 		assert.Equal(t, tests.ErrFakeDB, err)
 		assert.Nil(t, dataJSON)
 		db.AssertExpectations(t)
@@ -1078,10 +1110,10 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 
 	t.Run("user repositories data returned successfully", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getUserReposDBQ, "userID").Return([]byte("dataJSON"), nil)
+		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
 
-		dataJSON, err := m.GetOwnedByUserJSON(ctx)
+		dataJSON, err := m.GetOwnedByUserJSON(ctx, false)
 		assert.NoError(t, err)
 		assert.Equal(t, []byte("dataJSON"), dataJSON)
 		db.AssertExpectations(t)
@@ -1187,7 +1219,7 @@ func TestTransfer(t *testing.T) {
 
 	t.Run("authorization failed", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -1225,7 +1257,7 @@ func TestTransfer(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
@@ -1251,7 +1283,7 @@ func TestTransfer(t *testing.T) {
 
 	t.Run("transfer repository succeeded", func(t *testing.T) {
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -1301,6 +1333,35 @@ func TestUpdate(t *testing.T) {
 			{
 				"invalid url",
 				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  ":::///",
+				},
+				nil,
+			},
+			{
+				"urls with credentials not allowed",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "https://user:pass@repo1.com",
+				},
+				nil,
+			},
+			{
+				"private repositories not allowed",
+				&hub.Repository{
+					Kind:     hub.Helm,
+					Name:     "repo1",
+					URL:      "https://repo1.com",
+					AuthUser: "user1",
+					AuthPass: "pass1",
+				},
+				nil,
+			},
+			{
+				"invalid url",
+				&hub.Repository{
 					Kind: hub.OLM,
 					Name: "repo1",
 					URL:  "https://repo1.com",
@@ -1341,7 +1402,7 @@ func TestUpdate(t *testing.T) {
 			Kind:        hub.Helm,
 		}
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
 			"repository_id": "00000000-0000-0000-0000-000000000001",
 			"name": "repo1",
@@ -1356,7 +1417,7 @@ func TestUpdate(t *testing.T) {
 		}).Return(tests.ErrFake)
 		l := &HelmIndexLoaderMock{}
 		l.On("LoadIndex", r).Return(nil, nil)
-		m := NewManager(nil, db, az, WithHelmIndexLoader(l))
+		m := NewManager(cfg, db, az, WithHelmIndexLoader(l))
 
 		err := m.Update(ctx, r)
 		assert.Equal(t, tests.ErrFake, err)
@@ -1395,7 +1456,7 @@ func TestUpdate(t *testing.T) {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1").Return([]byte(`
+				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
 					"repository_id": "00000000-0000-0000-0000-000000000001",
 					"name": "repo1",
@@ -1449,7 +1510,7 @@ func TestUpdate(t *testing.T) {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				repoJSON, _ := json.Marshal(tc.r)
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, getRepoByNameDBQ, tc.r.Name).Return(repoJSON, nil)
+				db.On("QueryRow", ctx, getRepoByNameDBQ, tc.r.Name, false).Return(repoJSON, nil)
 				db.On("Exec", ctx, updateRepoDBQ, "userID", mock.Anything).Return(nil)
 				l := &HelmIndexLoaderMock{}
 				if tc.r.Kind == hub.Helm {

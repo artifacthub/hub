@@ -139,11 +139,12 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 	if description == "" {
 		description = "Find, install and publish Kubernetes packages"
 	}
-	data := map[string]string{
-		"baseURL":      h.cfg.GetString("server.baseURL"),
-		"title":        title,
-		"description":  description,
-		"gaTrackingID": h.cfg.GetString("analytics.gaTrackingID"),
+	data := map[string]interface{}{
+		"baseURL":                  h.cfg.GetString("server.baseURL"),
+		"title":                    title,
+		"description":              description,
+		"gaTrackingID":             h.cfg.GetString("analytics.gaTrackingID"),
+		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
 	}
 	if err := h.indexTmpl.Execute(w, data); err != nil {
 		h.logger.Error().Err(err).Msg("Error executing index template")

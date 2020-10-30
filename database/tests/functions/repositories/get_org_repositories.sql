@@ -24,7 +24,7 @@ insert into user__organization (user_id, organization_id, confirmed) values(:'us
 
 -- No repositories at this point
 select is(
-    get_org_repositories(:'user1ID', 'org1')::jsonb,
+    get_org_repositories(:'user1ID', 'org1', false)::jsonb,
     '[]'::jsonb,
     'With no repositories an empty json array is returned'
 );
@@ -97,7 +97,7 @@ insert into repository (
 
 -- Run some tests
 select is(
-    get_org_repositories(:'user1ID', 'org1')::jsonb,
+    get_org_repositories(:'user1ID', 'org1', false)::jsonb,
     '[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -128,7 +128,7 @@ select is(
     'Repositories belonging to user provided are returned as a json array of objects'
 );
 select is(
-    get_org_repositories(:'user2ID', 'org1')::jsonb,
+    get_org_repositories(:'user2ID', 'org1', false)::jsonb,
     '[]'::jsonb,
     'No repositories are returned as user provided does not belong to the organization'
 );

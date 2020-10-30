@@ -44,6 +44,11 @@ const RepositoryModal = (props: Props) => {
     isUndefined(props.repository) ? DEFAULT_SELECTED_REPOSITORY_KIND : props.repository.kind
   );
 
+  const allowPrivateRepositories =
+    (window as any).config &&
+    (window as any).config.hasOwnProperty('allowPrivateRepositories') &&
+    (window as any).config.allowPrivateRepositories === 'true';
+
   // Clean API error when form is focused after validation
   const cleanApiError = () => {
     if (!isNull(apiError)) {
@@ -113,6 +118,8 @@ const RepositoryModal = (props: Props) => {
           name: !isUndefined(props.repository) ? props.repository.name : (formData.get('name') as string),
           url: formData.get('url') as string,
           displayName: formData.get('displayName') as string,
+          authUser: formData.get('authUser') as string,
+          authPass: formData.get('authPass') as string,
         };
       }
       setIsValidated(true);
@@ -231,7 +238,7 @@ const RepositoryModal = (props: Props) => {
         </div>
       }
       open={props.open}
-      modalClassName={styles.modal}
+      modalClassName={classnames(styles.modal, { [styles.allowPrivateModal]: allowPrivateRepositories })}
       closeButton={
         <button
           data-testid="repoBtn"
@@ -343,9 +350,36 @@ const RepositoryModal = (props: Props) => {
               excluded: !isUndefined(props.repository) ? [props.repository.url] : [],
             }}
             pattern={getURLPattern()}
-            additionalInfo={getAdditionalInfo()}
             required
           />
+
+          {selectedKind === RepositoryKind.Helm && allowPrivateRepositories && (
+            <div className="form-row">
+              <InputField
+                className="col-sm-12 col-md-6"
+                type="text"
+                label="Username"
+                name="authUser"
+                value={
+                  !isUndefined(props.repository) && !isNull(props.repository.authUser) ? props.repository.authUser : ''
+                }
+              />
+
+              <InputField
+                className="col-sm-12 col-md-6"
+                type="password"
+                label="Password"
+                name="authPass"
+                autoComplete="off"
+                value={
+                  !isUndefined(props.repository) && !isNull(props.repository.authPass) ? props.repository.authPass : ''
+                }
+                visiblePassword
+              />
+            </div>
+          )}
+
+          {getAdditionalInfo()}
         </form>
       </div>
     </Modal>

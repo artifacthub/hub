@@ -37,6 +37,7 @@ hub:
       repository: artifacthub/hub
     resources: {}
   server:
+    allowPrivateRepositories: false
     baseURL: ""
     shutdownTimeout: 10s
     basicAuth:

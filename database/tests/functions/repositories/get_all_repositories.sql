@@ -11,7 +11,7 @@ select plan(2);
 
 -- No repositories at this point
 select is(
-    get_all_repositories()::jsonb,
+    get_all_repositories(false)::jsonb,
     '[]'::jsonb,
     'With no repositories an empty json array is returned'
 );
@@ -28,7 +28,7 @@ values (:'repo3ID', 'repo3', 'Repo 3', 'https://repo3.com', 1, :'user1ID');
 
 -- Run some tests
 select is(
-    get_all_repositories()::jsonb,
+    get_all_repositories(false)::jsonb,
     '[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",

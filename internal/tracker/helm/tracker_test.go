@@ -330,7 +330,6 @@ type trackerWrapper struct {
 	rm         *repo.ManagerMock
 	il         *repo.HelmIndexLoaderMock
 	ec         *tracker.ErrorsCollectorMock
-	hg         *tests.HTTPGetterMock
 	t          tracker.Tracker
 	queuedJobs *[]*Job
 }
@@ -342,14 +341,12 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	il := &repo.HelmIndexLoaderMock{}
 	rm := &repo.ManagerMock{}
 	ec := &tracker.ErrorsCollectorMock{}
-	hg := &tests.HTTPGetterMock{}
 	svc := &tracker.Services{
 		Ctx: ctx,
 		Cfg: cfg,
 		Rm:  rm,
 		Il:  il,
 		Ec:  ec,
-		Hg:  hg,
 	}
 	t := NewTracker(svc, r, WithNumWorkers(-1), WithIndexLoader(il))
 
@@ -374,7 +371,6 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 		rm:         rm,
 		il:         il,
 		ec:         ec,
-		hg:         hg,
 		t:          t,
 		queuedJobs: &queuedJobs,
 	}
@@ -386,7 +382,6 @@ func (tw *trackerWrapper) assertExpectations(t *testing.T, expectedJobs []*Job) 
 	tw.il.AssertExpectations(t)
 	tw.rm.AssertExpectations(t)
 	tw.ec.AssertExpectations(t)
-	tw.hg.AssertExpectations(t)
 
 	assert.Equal(t, len(expectedJobs), len(*tw.queuedJobs))
 	if len(*tw.queuedJobs) > 0 {

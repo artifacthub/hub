@@ -27,7 +27,9 @@ select throws_ok(
         {
             "name": "repo1",
             "display_name": "Repo 1 updated",
-            "url": "https://repo1.com/updated"
+            "url": "https://repo1.com/updated",
+            "auth_user": "user1",
+            "auth_pass": "pass1"
         }
         '::jsonb)
     $$,
@@ -43,7 +45,9 @@ select throws_ok(
         {
             "name": "repo2",
             "display_name": "Repo 2 updated",
-            "url": "https://repo2.com/updated"
+            "url": "https://repo2.com/updated",
+            "auth_user": "user1",
+            "auth_pass": "pass1"
         }
         '::jsonb)
     $$,
@@ -57,17 +61,19 @@ select update_repository(:'user1ID', '
 {
     "name": "repo1",
     "display_name": "Repo 1 updated",
-    "url": "https://repo1.com/updated"
+    "url": "https://repo1.com/updated",
+    "auth_user": "user1",
+    "auth_pass": "pass1"
 }
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url
+        select name, display_name, url, auth_user, auth_pass
         from repository
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated')
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'user1', 'pass1')
     $$,
     'Repository should have been updated by user who owns it'
 );
@@ -77,17 +83,19 @@ select update_repository(:'user1ID', '
 {
     "name": "repo2",
     "display_name": "Repo 2 updated",
-    "url": "https://repo2.com/updated"
+    "url": "https://repo2.com/updated",
+    "auth_user": "user1",
+    "auth_pass": "pass1"
 }
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url
+        select name, display_name, url, auth_user, auth_pass
         from repository
         where name = 'repo2'
     $$,
     $$
-        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated')
+        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated', 'user1', 'pass1')
     $$,
     'Repository should have been updated by user who belongs to owning organization'
 );

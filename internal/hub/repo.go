@@ -81,6 +81,9 @@ type Repository struct {
 	Name                    string         `json:"name"`
 	DisplayName             string         `json:"display_name"`
 	URL                     string         `json:"url"`
+	Private                 bool           `json:"private"`
+	AuthUser                string         `json:"auth_user"`
+	AuthPass                string         `json:"auth_pass"`
 	Kind                    RepositoryKind `json:"kind"`
 	UserID                  string         `json:"user_id"`
 	UserAlias               string         `json:"user_alias"`
@@ -99,16 +102,16 @@ type RepositoryManager interface {
 	CheckAvailability(ctx context.Context, resourceKind, value string) (bool, error)
 	ClaimOwnership(ctx context.Context, name, orgName string) error
 	Delete(ctx context.Context, name string) error
-	GetAll(ctx context.Context) ([]*Repository, error)
-	GetAllJSON(ctx context.Context) ([]byte, error)
-	GetByID(ctx context.Context, repositorID string) (*Repository, error)
-	GetByKind(ctx context.Context, kind RepositoryKind) ([]*Repository, error)
-	GetByKindJSON(ctx context.Context, kind RepositoryKind) ([]byte, error)
-	GetByName(ctx context.Context, name string) (*Repository, error)
+	GetAll(ctx context.Context, includeCredentials bool) ([]*Repository, error)
+	GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
+	GetByID(ctx context.Context, repositorID string, includeCredentials bool) (*Repository, error)
+	GetByKind(ctx context.Context, kind RepositoryKind, includeCredentials bool) ([]*Repository, error)
+	GetByKindJSON(ctx context.Context, kind RepositoryKind, includeCredentials bool) ([]byte, error)
+	GetByName(ctx context.Context, name string, includeCredentials bool) (*Repository, error)
 	GetMetadata(mdFile string) (*RepositoryMetadata, error)
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
-	GetOwnedByOrgJSON(ctx context.Context, orgName string) ([]byte, error)
-	GetOwnedByUserJSON(ctx context.Context) ([]byte, error)
+	GetOwnedByOrgJSON(ctx context.Context, orgName string, includeCredentials bool) ([]byte, error)
+	GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
 	SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
 	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
 	Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error

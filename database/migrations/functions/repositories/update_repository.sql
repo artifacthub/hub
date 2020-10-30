@@ -23,7 +23,9 @@ begin
 
     update repository set
         display_name = nullif(p_repository->>'display_name', ''),
-        url = p_repository->>'url'
+        url = p_repository->>'url',
+        auth_user = nullif(p_repository->>'auth_user', ''),
+        auth_pass = nullif(p_repository->>'auth_pass', '')
     where name = p_repository->>'name';
 end
 $$ language plpgsql;

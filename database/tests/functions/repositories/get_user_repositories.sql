@@ -14,7 +14,7 @@ values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com'
 
 -- No repositories at this point
 select is(
-    get_user_repositories(:'user1ID')::jsonb,
+    get_user_repositories(:'user1ID', false)::jsonb,
     '[]'::jsonb,
     'With no repositories an empty json array is returned'
 );
@@ -72,7 +72,7 @@ insert into repository (
 
 -- Run some tests
 select is(
-    get_user_repositories(:'user1ID')::jsonb,
+    get_user_repositories(:'user1ID', false)::jsonb,
     '[{
         "repository_id": "00000000-0000-0000-0000-000000000001",
         "name": "repo1",
@@ -103,7 +103,7 @@ select is(
     'Repositories belonging to user provided are returned as a json array of objects'
 );
 select is(
-    get_user_repositories(null)::jsonb,
+    get_user_repositories(null, false)::jsonb,
     '[]'::jsonb,
     'Repositories not belonging to any user are not returned'
 );

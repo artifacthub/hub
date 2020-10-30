@@ -116,7 +116,7 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 
 // GetAll is an http handler that returns all the repositories available.
 func (h *Handlers) GetAll(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.repoManager.GetAllJSON(r.Context())
+	dataJSON, err := h.repoManager.GetAllJSON(r.Context(), false)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetAll").Send()
 		helpers.RenderErrorJSON(w, err)
@@ -134,7 +134,7 @@ func (h *Handlers) GetByKind(w http.ResponseWriter, r *http.Request) {
 		helpers.RenderErrorJSON(w, hub.ErrInvalidInput)
 		return
 	}
-	dataJSON, err := h.repoManager.GetByKindJSON(r.Context(), kind)
+	dataJSON, err := h.repoManager.GetByKindJSON(r.Context(), kind, false)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetByKind").Send()
 		helpers.RenderErrorJSON(w, err)
@@ -148,7 +148,7 @@ func (h *Handlers) GetByKind(w http.ResponseWriter, r *http.Request) {
 // organization.
 func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 	orgName := chi.URLParam(r, "orgName")
-	dataJSON, err := h.repoManager.GetOwnedByOrgJSON(r.Context(), orgName)
+	dataJSON, err := h.repoManager.GetOwnedByOrgJSON(r.Context(), orgName, true)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByOrg").Send()
 		helpers.RenderErrorJSON(w, err)
@@ -160,7 +160,7 @@ func (h *Handlers) GetOwnedByOrg(w http.ResponseWriter, r *http.Request) {
 // GetOwnedByUser is an http handler that returns the repositories owned by the
 // user doing the request.
 func (h *Handlers) GetOwnedByUser(w http.ResponseWriter, r *http.Request) {
-	dataJSON, err := h.repoManager.GetOwnedByUserJSON(r.Context())
+	dataJSON, err := h.repoManager.GetOwnedByUserJSON(r.Context(), true)
 	if err != nil {
 		h.logger.Error().Err(err).Str("method", "GetOwnedByUser").Send()
 		helpers.RenderErrorJSON(w, err)
