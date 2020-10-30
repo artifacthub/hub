@@ -11,6 +11,7 @@ returns setof json as $$
         select version, created_at, changes
         from snapshot
         where package_id = p_package_id
+        and changes is not null
         order by created_at desc
     ) sc;
 $$ language sql;
