@@ -44,6 +44,7 @@ begin
             s.capabilities,
             s.deprecated,
             s.signed,
+            s.security_report_summary,
             s.created_at,
             r.repository_id,
             r.repository_kind_id,
@@ -137,6 +138,7 @@ begin
                         'license', license,
                         'deprecated', deprecated,
                         'signed', signed,
+                        'security_report_summary', security_report_summary,
                         'created_at', floor(extract(epoch from created_at)),
                         'repository', jsonb_build_object(
                             'repository_id', repository_id,

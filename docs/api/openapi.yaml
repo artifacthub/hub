@@ -2180,20 +2180,6 @@ components:
                 - full lifecycle
                 - deep insights
                 - auto pilot
-            security_report_summary:
-              type: object
-              properties:
-                critical:
-                  type: number
-                high:
-                  type: number
-                medium:
-                  type: number
-                low:
-                  type: number
-                unkown:
-                  type: number
-              nullable: true
             security_report_created_at:
               type: integer
             has_values_schema:
@@ -2247,6 +2233,20 @@ components:
         repository:
           $ref: "#/components/schemas/RepositorySummary"
           nullable: false
+        security_report_summary:
+          type: object
+          properties:
+            critical:
+              type: number
+            high:
+              type: number
+            medium:
+              type: number
+            low:
+              type: number
+            unkown:
+              type: number
+          nullable: true
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
