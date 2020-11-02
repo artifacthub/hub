@@ -37,7 +37,7 @@ jobs:
         run: psql -h postgres -p ${{ job.services.postgres.ports[5432] }} -U tests tests -c 'create extension pgtap;'
       - name: Run database tests
         working-directory: ./database/tests
-        run: pg_prove --host postgres --dbname tests --username tests --verbose **/*.sql
+        run: pg_prove --host postgres --dbname tests --username tests --verbose schema/*.sql functions/*/*.sql
 
   tests-backend:
     runs-on: ubuntu-latest

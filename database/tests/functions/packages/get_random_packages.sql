@@ -195,6 +195,7 @@ select is(
             "license": null,
             "deprecated": false,
             "signed": false,
+            "security_report_summary": null,
             "created_at": 1592299234,
             "repository": {
                 "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -202,6 +203,7 @@ select is(
                 "name": "repo2",
                 "display_name": "Repo 2",
                 "url": "https://repo2.com",
+                "private": false,
                 "verified_publisher": false,
                 "official": false,
                 "user_alias": null,

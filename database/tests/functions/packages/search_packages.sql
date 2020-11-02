@@ -202,6 +202,7 @@ insert into snapshot (
     description,
     keywords,
     readme,
+    security_report_summary,
     created_at
 ) values (
     :'package3ID',
@@ -210,6 +211,7 @@ insert into snapshot (
     'description',
     '{"kw3"}',
     'readme',
+    '{"high": 2, "medium": 1}',
     '2020-06-16 11:20:34+02'
 );
 
@@ -234,6 +236,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -260,6 +263,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -286,6 +290,10 @@ select is(
                 "license": null,
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": {
+                    "high": 2,
+                    "medium": 1
+                },
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -390,6 +398,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -416,6 +425,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -442,6 +452,10 @@ select is(
                 "license": null,
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": {
+                    "high": 2,
+                    "medium": 1
+                },
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -485,6 +499,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -528,6 +543,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -571,6 +587,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -616,6 +633,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -642,6 +660,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -687,6 +706,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -713,6 +733,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -809,6 +830,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -917,6 +939,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -966,6 +989,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1282,6 +1306,10 @@ select is(
                 "license": null,
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": {
+                    "high": 2,
+                    "medium": 1
+                },
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1327,6 +1355,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1375,6 +1404,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1401,6 +1431,10 @@ select is(
                 "license": null,
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": {
+                    "high": 2,
+                    "medium": 1
+                },
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000003",
@@ -1448,6 +1482,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1495,6 +1530,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1543,6 +1579,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1569,6 +1606,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1615,6 +1653,7 @@ select is(
                 "license": "Apache-2.0",
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1681,6 +1720,7 @@ select is(
                 "license": null,
                 "deprecated": true,
                 "signed": true,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",

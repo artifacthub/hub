@@ -16,11 +16,11 @@ values (:'user1ID', 'user1', 'user1@email.com');
 insert into "user" (user_id, alias, email)
 values (:'user2ID', 'user2', 'user2@email.com');
 insert into api_key (api_key_id, name, created_at, user_id)
-values (:'apikey1ID', 'apikey1', '2020-05-29 13:55:00', :'user1ID');
+values (:'apikey1ID', 'apikey1', '2020-05-29 13:55:00+02', :'user1ID');
 insert into api_key (api_key_id, name, created_at, user_id)
-values (:'apikey2ID', 'apikey2', '2020-05-29 13:55:00', :'user1ID');
+values (:'apikey2ID', 'apikey2', '2020-05-29 13:55:00+02', :'user1ID');
 insert into api_key (api_key_id, name, created_at, user_id)
-values (:'apikey3ID', 'apikey3', '2020-05-29 13:55:00', :'user2ID');
+values (:'apikey3ID', 'apikey3', '2020-05-29 13:55:00+02', :'user2ID');
 
 -- Run some tests
 select is(

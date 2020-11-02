@@ -15,6 +15,7 @@ returns setof json as $$
         'license', s.license,
         'deprecated', s.deprecated,
         'signed', s.signed,
+        'security_report_summary', s.security_report_summary,
         'created_at', floor(extract(epoch from s.created_at)),
         'repository', (select get_repository_summary(r.repository_id))
     )

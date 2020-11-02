@@ -77,9 +77,9 @@ insert into notification (
     webhook_id
 ) values (
     :'notification1ID',
-    '2020-05-29 13:55:00',
+    '2020-05-29 13:55:00+02',
     true,
-    '2020-05-29 13:57:00',
+    '2020-05-29 13:57:00+02',
     null,
     :'event1ID',
     :'webhook1ID'
@@ -94,9 +94,9 @@ insert into notification (
     webhook_id
 ) values (
     :'notification2ID',
-    '2020-05-29 13:56:00',
+    '2020-05-29 13:56:00+02',
     true,
-    '2020-05-29 13:58:00',
+    '2020-05-29 13:58:00+02',
     'fake error',
     :'event2ID',
     :'webhook1ID'
@@ -145,6 +145,7 @@ select is(
                 "license": null,
                 "deprecated": null,
                 "signed": null,
+                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -152,6 +153,7 @@ select is(
                     "name": "repo1",
                     "display_name": "Repo 1",
                     "url": "https://repo1.com",
+                    "private": false,
                     "verified_publisher": false,
                     "official": false,
                     "user_alias": "user1",

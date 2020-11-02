@@ -10,7 +10,7 @@ select plan(2);
 insert into "user" (user_id, alias, email)
 values (:'user1ID', 'user1', 'user1@email.com');
 insert into api_key (api_key_id, name, created_at, user_id)
-values (:'apikey1ID', 'apikey1', '2020-05-29 13:55:00', :'user1ID');
+values (:'apikey1ID', 'apikey1', '2020-05-29 13:55:00+02', :'user1ID');
 
 -- Run some tests
 select is(
