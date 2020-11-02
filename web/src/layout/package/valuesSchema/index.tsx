@@ -84,10 +84,12 @@ const ValuesSchema = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
+            data-testid="valuesSchemaBtn"
             className={classnames('btn btn-secondary btn-block btn-sm', {
               disabled: !props.hasValuesSchema,
             })}
             onClick={onOpenModal}
+            disabled={!props.hasValuesSchema}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (

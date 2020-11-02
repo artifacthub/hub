@@ -1,0 +1,664 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChangelogModal creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      data-testid="elementWithTooltip"
+    >
+      <button
+        class="btn btn-secondary btn-block btn-sm text-nowrap"
+        data-testid="changelogBtn"
+      >
+        <div
+          class="d-flex flex-row align-items-center justify-content-center text-uppercase"
+        >
+          <svg
+            fill="none"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M7 18H17V16H7V18Z"
+              fill="currentColor"
+            />
+            <path
+              d="M17 14H7V12H17V14Z"
+              fill="currentColor"
+            />
+            <path
+              d="M7 10H11V8H7V10Z"
+              fill="currentColor"
+            />
+            <path
+              clip-rule="evenodd"
+              d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM6 4H13V9H19V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5C5 4.44772 5.44772 4 6 4ZM15 4.10002C16.6113 4.4271 17.9413 5.52906 18.584 7H15V4.10002Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+          <span
+            class="ml-2 font-weight-bold"
+          >
+            Changelog
+          </span>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div>
+    <div
+      class="modal-backdrop activeBackdrop"
+      data-testid="modalBackdrop"
+    />
+    <div
+      class="modal modal active d-block"
+      role="dialog"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modalDialog"
+      >
+        <div
+          class="modal-content content h-100"
+        >
+          <div
+            class="modal-header d-flex flex-row align-items-center header undefined"
+          >
+            <div
+              class="h3 m-2 title"
+            >
+              Changelog
+            </div>
+            <button
+              class="close"
+              data-testid="closeModalBtn"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body p-4 h-100 d-flex flex-column"
+          >
+            <div
+              class="mx-0 mx-md-3 my-1 mw-100"
+            >
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.8.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Add JSON schema for Artifact Hub Helm chart
+                  </li>
+                  <li>
+                    Some improvements in Artifact Hub Helm chart
+                  </li>
+                  <li>
+                    Track Helm charts values schema
+                  </li>
+                  <li>
+                    Add endpoint to get Helm charts values schema
+                  </li>
+                  <li>
+                    Bump Trivy to 0.12.0
+                  </li>
+                  <li>
+                    Display containers images in Helm packages
+                  </li>
+                  <li>
+                    Remove internal requests limiter
+                  </li>
+                  <li>
+                    Upgrade frontend dependencies to fix some security vulnerabilities
+                  </li>
+                  <li>
+                    Add packages security report documentation
+                  </li>
+                  <li>
+                    Some bugs fixes and improvements
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.7.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Introduce packages security report
+                  </li>
+                  <li>
+                    Display packages' license in cards
+                  </li>
+                  <li>
+                    Allow filtering packages by license and operator capabilities
+                  </li>
+                  <li>
+                    Add support for some extra Helm and OLM annotations
+                  </li>
+                  <li>
+                    Add repositories guide
+                  </li>
+                  <li>
+                    Allow adding CRDs for operators in Helm packages
+                  </li>
+                  <li>
+                    Display search tips and add some extra sample searches
+                  </li>
+                  <li>
+                    Improve user experience in authorization configuration view
+                  </li>
+                  <li>
+                    Some bugs fixes and improvements
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.6.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Introduce fine grained authorization mechanism based on OPA policies
+                  </li>
+                  <li>
+                    Allow enriching package information using Helm annotations
+                  </li>
+                  <li>
+                    Allow entities to claim repositories ownership
+                  </li>
+                  <li>
+                    Introduce official repository concept
+                  </li>
+                  <li>
+                    Add verified publisher and official repository search filters
+                  </li>
+                  <li>
+                    Artifact Hub repositories badges
+                  </li>
+                  <li>
+                    Test Artifact Hub Helm chart
+                  </li>
+                  <li>
+                    Improve package view on mobile devices
+                  </li>
+                  <li>
+                    Add API endpoint to get repositories by kind
+                  </li>
+                  <li>
+                    Some bugs fixes and improvements
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.5.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Introduce verified publisher concept
+                  </li>
+                  <li>
+                    Add dark mode support
+                  </li>
+                  <li>
+                    Improve search facets filtering
+                  </li>
+                  <li>
+                    Notify repository owners of tracking errors
+                  </li>
+                  <li>
+                    Track and list Helm charts dependencies
+                  </li>
+                  <li>
+                    Display links to source in Helm packages
+                  </li>
+                  <li>
+                    Add repositories kind filter to tracker
+                  </li>
+                  <li>
+                    Add Monocular compatible search API
+                  </li>
+                  <li>
+                    Some bugs fixes and improvements
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.4.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Added support for OPA policies repositories (uses Artifact Hub metadata new spec draft)
+                  </li>
+                  <li>
+                    Trackers have been improved and consolidated into one
+                  </li>
+                  <li>
+                    Search filtering experience in UI has been improved
+                  </li>
+                  <li>
+                    Now it's possible to search by the name of the repository and the name of the owning organization or user
+                  </li>
+                  <li>
+                    Added support to allow filtering packages by category
+                  </li>
+                  <li>
+                    An operator flag has been added to the package entity, and it's possible to filter by it
+                  </li>
+                  <li>
+                    Repositories URL is now exposed to users in several places in the UI
+                  </li>
+                  <li>
+                    Some bugs fixes
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.3.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    Added support for OLM operators repositories
+                  </li>
+                  <li>
+                    Added support for Falco rules repositories
+                  </li>
+                  <li>
+                    Added RSS feed for packages' new version releases
+                  </li>
+                  <li>
+                    Packages now always belong to a repository
+                  </li>
+                  <li>
+                    Reorganized some API routes (breaking changes)
+                  </li>
+                  <li>
+                    Added a link to browse all packages and some sample searches to home page
+                  </li>
+                  <li>
+                    Added CNCF Sandbox logo to home page
+                  </li>
+                  <li>
+                    Some minor improvements in search page filters
+                  </li>
+                  <li>
+                    Package creation time is now tracked and displayed
+                  </li>
+                  <li>
+                    Some bugs fixes
+                  </li>
+                </ul>
+              </div>
+              <div
+                data-testid="changelogBlock"
+              >
+                <div
+                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                >
+                  <div
+                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                  >
+                    <div
+                      class="h5 text-secondary text-truncate mb-0"
+                      data-testid="changelogBlockTitle"
+                    >
+                      0.2.0
+                    </div>
+                    <button
+                      class="btn btn-link btn-sm text-secondary py-0 position-relative btnLink"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div
+                    class="ml-0 ml-md-2 text-nowrap"
+                  >
+                    <small
+                      class="text-muted"
+                    >
+                      Released 3 hours ago
+                    </small>
+                  </div>
+                </div>
+                <ul
+                  class="mb-4 list"
+                >
+                  <li>
+                    API docs
+                  </li>
+                  <li>
+                    Reorganize API routes
+                  </li>
+                  <li>
+                    Some HTTP handlers improvements
+                  </li>
+                  <li>
+                    Support for API keys
+                  </li>
+                  <li>
+                    API rate limiting
+                  </li>
+                  <li>
+                    Signed packages label (Helm provenance file)
+                  </li>
+                  <li>
+                    Home page updated
+                  </li>
+                  <li>
+                    Bug fixes
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="alertWrapper"
+              data-testid="alertWrapper"
+            />
+          </div>
+          <div
+            class="modal-footer p-3"
+          >
+            <button
+              class="btn btn-sm btn-secondary text-uppercase"
+              data-testid="closeModalFooterBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  class="mr-2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <div>
+                  Close
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -360,6 +360,7 @@ const RepositoryModal = (props: Props) => {
                 type="text"
                 label="Username"
                 name="authUser"
+                autoComplete="off"
                 value={
                   !isUndefined(props.repository) && !isNull(props.repository.authUser) ? props.repository.authUser : ''
                 }

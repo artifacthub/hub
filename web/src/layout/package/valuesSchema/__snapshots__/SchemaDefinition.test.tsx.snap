@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SchemaDefinition creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="position-relative w-100"
+  >
+    <button
+      class="btn btn-block text-reset text-left p-0 position-relative btn"
+      data-testid="expandBtn"
+    >
+      <div
+        class="d-flex flex-column"
+      >
+        <div
+          class="d-flex flex-row align-items-start"
+        >
+          <div
+            class="pr-2 text-secondary icon"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 16 16"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"
+              />
+            </svg>
+          </div>
+          <div
+            class="d-flex flex-column flex-grow-1 content"
+          >
+            <div
+              class="font-weight-bold text-truncate"
+            >
+              Database host
+            </div>
+            <div
+              class="d-flex flex-row align-items-center w-100"
+            >
+              <div
+                class="text-nowrap"
+              >
+                <small
+                  class="text-muted text-uppercase"
+                >
+                  Type
+                </small>
+                : 
+                <span
+                  class="ml-1 font-weight-bold"
+                >
+                  string
+                </span>
+              </div>
+              <div
+                class="ml-3 text-truncate"
+              >
+                <small
+                  class="text-muted text-uppercase"
+                >
+                  Default
+                </small>
+                : 
+                <span
+                  class="text-truncate default"
+                >
+                  <span
+                    class="ml-1"
+                  >
+                    value
+                  </span>
+                </span>
+              </div>
+              <div
+                class="ml-auto pl-2"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </button>
+    <div
+      class="moreInfo border-top my-2 pt-2"
+    >
+      <div
+        class="d-flex flex-column"
+      >
+        <div
+          class="d-flex flex-row align-items-between"
+        >
+          <div
+            class="font-weight-bold mb-1"
+          >
+            Annotations
+          </div>
+          <div
+            class="ml-auto"
+          >
+            <div
+              class="position-relative undefined"
+            >
+              <button
+                class="btn btn-sm btn-link text-muted p-0 btnClip"
+                data-testid="ctcBtn"
+                type="button"
+              >
+                <div
+                  class="d-flex flex-row align-items-center"
+                >
+                  <div
+                    class="mr-2"
+                  >
+                    Copy path to clipboard
+                  </div>
+                  <svg
+                    fill="none"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      height="13"
+                      rx="2"
+                      ry="2"
+                      width="13"
+                      x="9"
+                      y="9"
+                    />
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <small
+            class="text-muted text-uppercase"
+          >
+            Description
+          </small>
+          : 
+          <span
+            class="ml-1"
+          >
+            -
+          </span>
+        </div>
+        <div
+          class="font-weight-bold mt-2 mb-1"
+        >
+          Constraints
+        </div>
+        <div
+          class="d-flex align-items-baseline flex-row"
+        >
+          <div>
+            <small
+              class="text-muted text-uppercase"
+            >
+              Format
+            </small>
+            : 
+          </div>
+          <span
+            class="ml-1"
+          >
+            -
+          </span>
+        </div>
+        <div
+          class="d-flex align-items-baseline flex-row"
+        >
+          <div>
+            <small
+              class="text-muted text-uppercase"
+            >
+              Pattern
+            </small>
+            : 
+          </div>
+          <span
+            class="ml-1"
+          >
+            -
+          </span>
+        </div>
+        <div
+          class="d-flex flex-row"
+        >
+          <div
+            class="d-flex align-items-baseline mr-3 flex-row"
+          >
+            <div>
+              <small
+                class="text-muted text-uppercase"
+              >
+                Min length
+              </small>
+              : 
+            </div>
+            <span
+              class="ml-1"
+            >
+              -
+            </span>
+          </div>
+          <div
+            class="d-flex align-items-baseline mr-3 flex-row"
+          >
+            <div>
+              <small
+                class="text-muted text-uppercase"
+              >
+                Max length
+              </small>
+              : 
+            </div>
+            <span
+              class="ml-1"
+            >
+              -
+            </span>
+          </div>
+        </div>
+        <div>
+          <small
+            class="text-muted text-uppercase"
+          >
+            Enum
+          </small>
+          : 
+          <span
+            class="ml-1"
+          >
+            -
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

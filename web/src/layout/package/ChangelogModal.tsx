@@ -53,7 +53,7 @@ const ChangelogModal = (props: Props) => {
     }
   };
 
-  async function getValuesSchema() {
+  async function getChangelog() {
     try {
       setIsLoading(true);
       const changelog = await API.getChangelog(props.packageItem.packageId);
@@ -75,7 +75,7 @@ const ChangelogModal = (props: Props) => {
       if (changelog) {
         setOpenStatus(true);
       } else {
-        getValuesSchema();
+        getChangelog();
       }
       history.replace({
         search: '?modal=changelog',
@@ -105,10 +105,12 @@ const ChangelogModal = (props: Props) => {
       <ElementWithTooltip
         element={
           <button
+            data-testid="changelogBtn"
             className={classnames('btn btn-secondary btn-block btn-sm text-nowrap', {
               disabled: !props.packageItem.hasChangelog,
             })}
             onClick={onOpenModal}
+            disabled={!props.packageItem.hasChangelog}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (
@@ -143,10 +145,12 @@ const ChangelogModal = (props: Props) => {
             {changelog.map((item: ChangeLog) => {
               if (isNull(item.changes)) return null;
               return (
-                <div key={`v_${item.version}`}>
+                <div key={`v_${item.version}`} data-testid="changelogBlock">
                   <div className="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2">
                     <div className={`flex-grow-1 d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
-                      <div className="h5 text-secondary text-truncate mb-0">{item.version}</div>
+                      <div className="h5 text-secondary text-truncate mb-0" data-testid="changelogBlockTitle">
+                        {item.version}
+                      </div>
                       <button
                         className={`btn btn-link btn-sm text-secondary py-0 position-relative ${styles.btnLink}`}
                         onClick={() => openPackagePage(item.version)}

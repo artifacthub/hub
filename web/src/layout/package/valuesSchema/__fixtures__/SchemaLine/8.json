@@ -1,0 +1,15 @@
+{
+  "value": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#ingressrule-v1-networking-k8s-io"
+    },
+    "title": "Hub ingress rules",
+    "default": []
+  },
+  "name": "rules",
+  "level": 2,
+  "isRequired": false,
+  "path": "hub.ingress"
+}

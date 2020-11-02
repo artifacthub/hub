@@ -47,6 +47,7 @@ const mockCtx = {
 describe('Repository Modal - repositories section', () => {
   afterEach(() => {
     jest.resetAllMocks();
+    delete (window as any).config;
   });
 
   it('creates snapshot', () => {
@@ -213,11 +214,11 @@ describe('Repository Modal - repositories section', () => {
       });
     });
 
-    describe('Update organization', () => {
-      it('calls update organization', async () => {
+    describe('Update repository', () => {
+      it('calls update repository', async () => {
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        mocked(API).updateRepository.mockResolvedValue(null);
         const { getByTestId, getByText } = render(<Modal {...defaultProps} repository={repoMock} />);
 
         expect(getByText('Update repository')).toBeInTheDocument();
@@ -239,10 +240,10 @@ describe('Repository Modal - repositories section', () => {
         expect(onSuccessMock).toHaveBeenCalledTimes(1);
       });
 
-      it('calls update organization for org', async () => {
+      it('calls update repository for org', async () => {
         mocked(API).checkAvailability.mockResolvedValue(true);
         mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
-        mocked(API).addRepository.mockResolvedValue(null);
+        mocked(API).updateRepository.mockResolvedValue(null);
         const { getByTestId } = render(
           <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
             <Modal {...defaultProps} repository={repoMock} />
@@ -328,6 +329,90 @@ describe('Repository Modal - repositories section', () => {
         });
 
         expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('When allowPrivateRepositories is true', () => {
+      it('renders Add repo', () => {
+        (window as any).config = {
+          allowPrivateRepositories: 'true',
+        };
+
+        const { getByTestId } = render(<Modal {...defaultProps} />);
+
+        const form = getByTestId('repoForm');
+        expect(form).toBeInTheDocument();
+        expect(getByTestId('authUserInput')).toBeInTheDocument();
+        expect(getByTestId('authPassInput')).toBeInTheDocument();
+      });
+
+      it('calls add repo', async () => {
+        (window as any).config = {
+          allowPrivateRepositories: 'true',
+        };
+
+        mocked(API).checkAvailability.mockResolvedValue(false);
+        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        mocked(API).addRepository.mockResolvedValue(null);
+        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+
+        expect(getByText('Add repository')).toBeInTheDocument();
+        expect(getByText('Add')).toBeInTheDocument();
+        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
+        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
+        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
+        fireEvent.change(getByTestId('authUserInput'), { target: { value: 'username' } });
+        fireEvent.change(getByTestId('authPassInput'), { target: { value: 'pass123' } });
+        fireEvent.click(getByTestId('repoBtn'));
+
+        await waitFor(() => {
+          expect(API.addRepository).toHaveBeenCalledTimes(1);
+          expect(API.addRepository).toHaveBeenCalledWith(
+            {
+              name: 'name',
+              url: 'http://test.com',
+              displayName: 'Pretty name',
+              kind: 0,
+              authUser: 'username',
+              authPass: 'pass123',
+            },
+            undefined
+          );
+        });
+
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      });
+
+      it('calls update repository', async () => {
+        (window as any).config = {
+          allowPrivateRepositories: 'true',
+        };
+
+        mocked(API).checkAvailability.mockResolvedValue(true);
+        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        mocked(API).updateRepository.mockResolvedValue(null);
+        const { getByTestId, getByText } = render(
+          <Modal {...defaultProps} repository={{ ...repoMock, authUser: 'username', authPass: 'pass123' }} />
+        );
+
+        expect(getByText('Update repository')).toBeInTheDocument();
+        expect(getByText('Update')).toBeInTheDocument();
+        fireEvent.change(getByTestId('authPassInput'), { target: { value: 'pass1234' } });
+        fireEvent.click(getByTestId('repoBtn'));
+
+        await waitFor(() => {
+          expect(API.updateRepository).toHaveBeenCalledTimes(1);
+          expect(API.updateRepository).toHaveBeenCalledWith(
+            {
+              ...repoMock,
+              authUser: 'username',
+              authPass: 'pass1234',
+            },
+            undefined
+          );
+        });
+
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
       });
     });
   });

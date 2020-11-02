@@ -639,6 +639,8 @@ exports[`Package index creates snapshot 2`] = `
               >
                 <button
                   class="btn btn-secondary btn-block btn-sm text-nowrap disabled"
+                  data-testid="changelogBtn"
+                  disabled=""
                 >
                   <div
                     class="d-flex flex-row align-items-center justify-content-center text-uppercase"
@@ -859,6 +861,8 @@ exports[`Package index creates snapshot 2`] = `
                 >
                   <button
                     class="btn btn-secondary btn-block btn-sm disabled"
+                    data-testid="valuesSchemaBtn"
+                    disabled=""
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center text-uppercase"
@@ -899,6 +903,8 @@ exports[`Package index creates snapshot 2`] = `
                 >
                   <button
                     class="btn btn-secondary btn-block btn-sm text-nowrap disabled"
+                    data-testid="changelogBtn"
+                    disabled=""
                   >
                     <div
                       class="d-flex flex-row align-items-center justify-content-center text-uppercase"

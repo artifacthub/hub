@@ -1,0 +1,7 @@
+{
+  "value": { "type": "string", "title": "Database name", "default": "hub" },
+  "name": "database",
+  "level": 1,
+  "isRequired": true,
+  "path": "db"
+}

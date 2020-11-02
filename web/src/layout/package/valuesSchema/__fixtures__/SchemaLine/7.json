@@ -1,0 +1,7 @@
+{
+  "value": { "type": "boolean", "title": "Enable Hub secure cookies", "default": false },
+  "name": "secure",
+  "level": 3,
+  "isRequired": true,
+  "path": "hub.server.cookie"
+}
