@@ -3,6 +3,59 @@ entries:
   artifact-hub:
     - annotations:
         artifacthub.io/changes: |
+          - Display Helm chart reference doc in package view
+          - Display changelog in package view
+          - Add support for private Helm repositories
+          - Add API endpoint to get package changelog
+          - Include package version changes in new release notification email
+          - Add new `changes` annotation for Helm, OLM and OPA packages
+          - Add direct links for modals in package view
+          - Display security report generation time
+          - Upgrade frontend dependencies
+          - Some bugs fixes and improvements
+        artifacthub.io/images: |
+          - name: db-migrator
+            image: artifacthub/db-migrator:v0.9.0
+          - name: hub
+            image: artifacthub/hub:v0.9.0
+          - name: tracker
+            image: artifacthub/tracker:v0.9.0
+          - name: scanner
+            image: artifacthub/scanner:v0.9.0
+          - name: trivy
+            image: aquasec/trivy:0.12.0
+      apiVersion: v2
+      appVersion: 0.9.0
+      created: "2020-11-02T09:40:38.515972+01:00"
+      dependencies:
+        - condition: postgresql.enabled
+          name: postgresql
+          repository: https://kubernetes-charts.storage.googleapis.com/
+          version: 8.2.1
+      description:
+        Artifact Hub is a web-based application that enables finding, installing,
+        and publishing Kubernetes packages.
+      digest: de9275c555fed5d152e847f42d8d83111c277f567f99f41577af6cdb88a57b50
+      home: https://artifacthub.io
+      icon: https://artifacthub.github.io/hub/chart/logo.png
+      keywords:
+        - kubernetes
+        - helm
+        - falco
+        - opa
+        - olm
+      maintainers:
+        - email: tegioz@icloud.com
+          name: Sergio
+        - email: cynthiasg@icloud.com
+          name: Cintia
+      name: artifact-hub
+      type: application
+      urls:
+        - https://artifacthub.github.io/hub/chart/artifact-hub-0.9.0.tgz
+      version: 0.9.0
+    - annotations:
+        artifacthub.io/changes: |
           - Add JSON schema for Artifact Hub Helm chart
           - Some improvements in Artifact Hub Helm chart
           - Track Helm charts values schema
@@ -308,4 +361,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2020-10-27T08:46:16.954971+01:00"
+generated: "2020-11-02T09:40:38.484992+01:00"
