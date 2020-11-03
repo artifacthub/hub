@@ -161,7 +161,12 @@ begin
                                 ts_rank('{0.1, 0.2, 0.2, 1.0}', ts_filter(tsdoc, '{b,c}'), v_tsquery_web)
                             else 1 end) as rank
                         from packages_applying_all_filters paaf
-                        order by rank desc, name asc
+                        order by
+                            rank desc,
+                            official desc nulls last,
+                            verified_publisher desc nulls last,
+                            stars desc,
+                            name asc
                         limit (p_input->>'limit')::int
                         offset (p_input->>'offset')::int
                     ) packages_applying_all_filters_paginated
