@@ -15,6 +15,7 @@ import {
   PayloadKind,
   RepositoryKind,
   SearchTipItem,
+  SeverityRatingList,
   TsQuery,
   VulnerabilitySeverity,
 } from '../types';
@@ -318,12 +319,31 @@ export const SEVERITY_ORDER = [
   VulnerabilitySeverity.UnKnown,
 ];
 
-export const SEVERITY_COLORS = {
-  [VulnerabilitySeverity.Critical]: '#B20303',
-  [VulnerabilitySeverity.High]: '#ff5152',
-  [VulnerabilitySeverity.Medium]: '#ffb760',
-  [VulnerabilitySeverity.Low]: '#ffe258',
-  [VulnerabilitySeverity.UnKnown]: '#b2b2b2',
+export const SEVERITY_RATING: SeverityRatingList = {
+  [VulnerabilitySeverity.Critical]: {
+    color: '#960003',
+    level: 'F',
+  },
+  [VulnerabilitySeverity.High]: {
+    color: '#DF2A19',
+    level: 'D',
+  },
+  [VulnerabilitySeverity.Medium]: {
+    color: '#F7860F',
+    level: 'C',
+  },
+  [VulnerabilitySeverity.Low]: {
+    color: '#F4BD0C',
+    level: 'B',
+  },
+  [VulnerabilitySeverity.UnKnown]: {
+    color: '#b2b2b2',
+    level: 'A',
+  },
+  default: {
+    color: '#47A319',
+    level: 'A',
+  },
 };
 
 export const CVSS_VECTORS: { [key: string]: CVSSVectorMetric[] } = {

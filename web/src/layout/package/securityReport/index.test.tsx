@@ -38,10 +38,10 @@ describe('SecurityReport', () => {
       expect(items[4]).toHaveTextContent('unknown');
 
       const badges = getAllByTestId('summaryBadge');
-      expect(badges[0]).toHaveStyle('background-color: #B20303');
-      expect(badges[1]).toHaveStyle('background-color: #ff5152');
-      expect(badges[2]).toHaveStyle('background-color: #ffb760');
-      expect(badges[3]).toHaveStyle('background-color: #ffe258');
+      expect(badges[0]).toHaveStyle('background-color: #960003');
+      expect(badges[1]).toHaveStyle('background-color: #DF2A19');
+      expect(badges[2]).toHaveStyle('background-color: #F7860F');
+      expect(badges[3]).toHaveStyle('background-color: #F4BD0C');
       expect(badges[4]).toHaveStyle('background-color: #b2b2b2');
 
       expect(getByText('Open full report')).toBeInTheDocument();
@@ -68,12 +68,16 @@ describe('SecurityReport', () => {
 
   describe('Does not render component', () => {
     it('when summary is null', () => {
-      const { container } = render(<SecurityReport summary={null} packageId="pkgID" version="1.1.1" />);
+      const { container } = render(
+        <SecurityReport summary={null} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} />
+      );
       expect(container).toBeEmptyDOMElement();
     });
 
     it('when summary is empty', () => {
-      const { container } = render(<SecurityReport summary={{}} packageId="pkgID" version="1.1.1" />);
+      const { container } = render(
+        <SecurityReport summary={{}} packageId="pkgID" version="1.1.1" visibleSecurityReport={false} />
+      );
       expect(container).toBeEmptyDOMElement();
     });
   });

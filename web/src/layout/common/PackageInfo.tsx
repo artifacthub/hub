@@ -18,6 +18,7 @@ import OrganizationInfo from './OrganizationInfo';
 import styles from './PackageInfo.module.css';
 import RepositoryIcon from './RepositoryIcon';
 import RepositoryInfo from './RepositoryInfo';
+import SecurityRating from './SecutityRating';
 import SignedBadge from './SignedBadge';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
@@ -228,7 +229,9 @@ const PackageInfo = (props: Props) => {
       <div
         className={`d-flex d-${
           props.breakpointForInfoSection || 'md'
-        }-none flex-row justify-content-between align-items-center mt-3 mt-${props.breakpointForInfoSection || 'md'}-0`}
+        }-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-${
+          props.breakpointForInfoSection || 'md'
+        }-0`}
       >
         {createdAt}
         {starsAndKindInfo}
@@ -250,6 +253,7 @@ const PackageInfo = (props: Props) => {
             className="d-inline mt-3"
           />
         )}
+        <SecurityRating summary={props.package.securityReportSummary} className="d-inline mt-3" onlyBadge={false} />
       </div>
     </>
   );

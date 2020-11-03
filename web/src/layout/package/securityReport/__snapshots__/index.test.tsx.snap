@@ -31,20 +31,22 @@ exports[`SecurityReport creates snapshot 1`] = `
              vulnerabilities found
           </small>
         </div>
-        <svg
-          class="text-warning ml-2"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 576 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="position-relative position-relative"
         >
-          <path
-            d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-          />
-        </svg>
+          <div
+            data-testid="elementWithTooltip"
+          >
+            <small>
+              <div
+                class="badge badge-pill text-light font-weight-bold ml-2 badge position-relative"
+                style="background-color: rgb(150, 0, 3);"
+              >
+                F
+              </div>
+            </small>
+          </div>
+        </div>
       </div>
       <div
         class="d-flex justify-content-between align-items-center pb-2 pb-md-0 pt-1 summary"
@@ -56,7 +58,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           <span
             class="badge position-relative mr-2 badge"
             data-testid="summaryBadge"
-            style="background-color: rgb(178, 3, 3);"
+            style="background-color: rgb(150, 0, 3);"
           >
              
           </span>
@@ -82,7 +84,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           <span
             class="badge position-relative mr-2 badge"
             data-testid="summaryBadge"
-            style="background-color: rgb(255, 81, 82);"
+            style="background-color: rgb(223, 42, 25);"
           >
              
           </span>
@@ -108,7 +110,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           <span
             class="badge position-relative mr-2 badge"
             data-testid="summaryBadge"
-            style="background-color: rgb(255, 183, 96);"
+            style="background-color: rgb(247, 134, 15);"
           >
              
           </span>
@@ -134,7 +136,7 @@ exports[`SecurityReport creates snapshot 1`] = `
           <span
             class="badge position-relative mr-2 badge"
             data-testid="summaryBadge"
-            style="background-color: rgb(255, 226, 88);"
+            style="background-color: rgb(244, 189, 12);"
           >
              
           </span>

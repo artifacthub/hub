@@ -36,7 +36,7 @@ exports[`Filters creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="tooltipIcon"
+        class="position-relative tooltipIcon"
       >
         <div
           data-testid="elementWithTooltip"
@@ -88,7 +88,7 @@ exports[`Filters creates snapshot 1`] = `
         </label>
       </div>
       <div
-        class="tooltipIcon"
+        class="position-relative tooltipIcon"
       >
         <div
           data-testid="elementWithTooltip"

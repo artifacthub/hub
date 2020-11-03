@@ -6,6 +6,7 @@
   "description": "desc",
   "logoImageId": null,
   "appVersion": "1.0.0",
+  "securityReportSummary": null,
   "repository": {
     "repositoryId": "id",
     "kind": 0,

@@ -5,6 +5,7 @@ import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
 import { SecurityTargetReport, Vulnerability } from '../../../types';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
 import getTextBetweenParenthesis from '../../../utils/getTextBetweenParenthesis';
+import SecurityRating from '../../common/SecutityRating';
 import SecurityCell from './Cell';
 import styles from './Table.module.css';
 
@@ -46,17 +47,25 @@ const SecurityTable = (props: Props) => {
           ) : (
             <>
               {props.reports.map((item: SecurityTargetReport) => {
-                const sortedVulnerabilities = item.Vulnerabilities ? formatSecurityReport(item.Vulnerabilities) : [];
-                const visibleVulnerabilities = slice(sortedVulnerabilities, 0, MAX_VULNERABILITY_NUMBER);
+                const { list, summary } = formatSecurityReport(item.Vulnerabilities);
+                const visibleVulnerabilities = slice(list, 0, MAX_VULNERABILITY_NUMBER);
 
                 return (
                   <div className="ml-4 mb-4" key={`table_${item.Target}`}>
-                    <div
-                      data-testid="targetTitle"
-                      className={`${styles.tableTitle} font-weight-bold mr-2 mb-2 text-truncate`}
-                    >
-                      <span className="text-uppercase text-muted mr-2">Target:</span>
-                      <span className="font-weight-bold">{getTargetName(item.Target)}</span>
+                    <div className="d-flex flex-row align-items-center mb-2">
+                      <div
+                        data-testid="targetTitle"
+                        className={`${styles.tableTitle} font-weight-bold mr-3 text-truncate`}
+                      >
+                        <span className="text-uppercase text-muted mr-2">Target:</span>
+                        <span className="font-weight-bold">{getTargetName(item.Target)}</span>
+                      </div>
+                      <div
+                        className={`${styles.tableTitle} d-flex flex-row align-items-center font-weight-bold text-nowrap`}
+                      >
+                        <span className="text-uppercase text-muted">Rating:</span>
+                        <SecurityRating summary={summary} className={styles.securityRatingBadge} onlyBadge />
+                      </div>
                     </div>
 
                     {visibleVulnerabilities.length === 0 ? (
@@ -88,7 +97,7 @@ const SecurityTable = (props: Props) => {
                             {visibleVulnerabilities.map((item: Vulnerability) => (
                               <SecurityCell vulnerability={item} key={`cell_${item.PkgName}_${item.VulnerabilityID}`} />
                             ))}
-                            {sortedVulnerabilities.length > visibleVulnerabilities.length && (
+                            {list.length > visibleVulnerabilities.length && (
                               <tr>
                                 <td colSpan={6} className="align-middle text-right pt-3">
                                   <span className="text-muted font-italic">

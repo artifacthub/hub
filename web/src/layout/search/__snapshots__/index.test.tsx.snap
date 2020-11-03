@@ -196,7 +196,7 @@ exports[`Search index creates snapshot 2`] = `
                         </label>
                       </div>
                       <div
-                        class="tooltipIcon"
+                        class="position-relative tooltipIcon"
                       >
                         <div
                           data-testid="elementWithTooltip"
@@ -248,7 +248,7 @@ exports[`Search index creates snapshot 2`] = `
                         </label>
                       </div>
                       <div
-                        class="tooltipIcon"
+                        class="position-relative tooltipIcon"
                       >
                         <div
                           data-testid="elementWithTooltip"
@@ -917,7 +917,7 @@ exports[`Search index creates snapshot 2`] = `
                 </label>
               </div>
               <div
-                class="tooltipIcon"
+                class="position-relative tooltipIcon"
               >
                 <div
                   data-testid="elementWithTooltip"
@@ -969,7 +969,7 @@ exports[`Search index creates snapshot 2`] = `
                 </label>
               </div>
               <div
-                class="tooltipIcon"
+                class="position-relative tooltipIcon"
               >
                 <div
                   data-testid="elementWithTooltip"
@@ -1877,7 +1877,7 @@ exports[`Search index creates snapshot 2`] = `
                     Centrifugo is a real-time messaging server.
                   </div>
                   <div
-                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-lg-0"
                   >
                     <small
                       class="text-muted text-nowrap date"
@@ -2303,7 +2303,7 @@ exports[`Search index creates snapshot 2`] = `
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
                   </div>
                   <div
-                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-3 mt-lg-0"
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-lg-0"
                   >
                     <small
                       class="text-muted text-nowrap date"

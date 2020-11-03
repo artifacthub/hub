@@ -13,3 +13,7 @@
 .fitCell {
   width: 30px;
 }
+
+.securityRatingBadge {
+  top: -2px;
+}

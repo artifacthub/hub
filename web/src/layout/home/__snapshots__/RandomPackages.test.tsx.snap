@@ -314,7 +314,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                 />
                 <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
                 >
                   <small
                     class="text-muted text-nowrap date"
@@ -592,7 +592,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                 />
                 <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
                 >
                   <small
                     class="text-muted text-nowrap date"
@@ -869,7 +869,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                 />
                 <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
                 >
                   <small
                     class="text-muted text-nowrap date"
@@ -1147,7 +1147,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                 />
                 <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
                 >
                   <small
                     class="text-muted text-nowrap date"
@@ -1425,7 +1425,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                   class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
                 />
                 <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-3 mt-md-0"
+                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
                 >
                   <small
                     class="text-muted text-nowrap date"

@@ -493,7 +493,9 @@ exports[`Package index creates snapshot 2`] = `
           <div
             class="col mt-3 btnMobileWrapper"
           >
-            <div>
+            <div
+              class="position-relative undefined"
+            >
               <div
                 data-testid="elementWithTooltip"
               >
@@ -633,7 +635,9 @@ exports[`Package index creates snapshot 2`] = `
           <div
             class="col mt-3 btnMobileWrapper"
           >
-            <div>
+            <div
+              class="position-relative undefined"
+            >
               <div
                 data-testid="elementWithTooltip"
               >
@@ -715,7 +719,9 @@ exports[`Package index creates snapshot 2`] = `
             <div
               class="mb-2"
             >
-              <div>
+              <div
+                class="position-relative undefined"
+              >
                 <div
                   data-testid="elementWithTooltip"
                 >
@@ -855,7 +861,9 @@ exports[`Package index creates snapshot 2`] = `
             <div
               class="mb-2"
             >
-              <div>
+              <div
+                class="position-relative undefined"
+              >
                 <div
                   data-testid="elementWithTooltip"
                 >
@@ -897,7 +905,9 @@ exports[`Package index creates snapshot 2`] = `
             <div
               class="mb-2"
             >
-              <div>
+              <div
+                class="position-relative undefined"
+              >
                 <div
                   data-testid="elementWithTooltip"
                 >

@@ -468,6 +468,15 @@ export enum VulnerabilitySeverity {
   UnKnown = 'unknown',
 }
 
+export interface SeverityRating {
+  color: string;
+  level: 'A' | 'B' | 'C' | 'D' | 'F';
+}
+
+export type SeverityRatingList = {
+  [key in VulnerabilitySeverity | 'default']?: SeverityRating;
+};
+
 export interface CVSSVectorMetric {
   value: string;
   label: string;

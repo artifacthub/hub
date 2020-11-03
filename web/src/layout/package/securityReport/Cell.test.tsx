@@ -105,10 +105,10 @@ const references = [
 
 const badges = [
   { severity: VulnerabilitySeverity.UnKnown, color: '#b2b2b2' },
-  { severity: VulnerabilitySeverity.Low, color: '#ffe258' },
-  { severity: VulnerabilitySeverity.Medium, color: '#ffb760' },
-  { severity: VulnerabilitySeverity.High, color: '#ff5152' },
-  { severity: VulnerabilitySeverity.Critical, color: '#B20303' },
+  { severity: VulnerabilitySeverity.Low, color: '#F4BD0C' },
+  { severity: VulnerabilitySeverity.Medium, color: '#F7860F' },
+  { severity: VulnerabilitySeverity.High, color: '#DF2A19' },
+  { severity: VulnerabilitySeverity.Critical, color: '#960003' },
 ];
 
 const openMock = jest.fn();
@@ -148,7 +148,7 @@ describe('SecuritySummary', () => {
 
       const badge = getByTestId('severityBadge');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveStyle('background-color: #ffb760');
+      expect(badge).toHaveStyle('background-color: #F7860F');
 
       expect(getByText(defaultProps.vulnerability.InstalledVersion)).toBeInTheDocument();
       expect(getByText(defaultProps.vulnerability.FixedVersion)).toBeInTheDocument();

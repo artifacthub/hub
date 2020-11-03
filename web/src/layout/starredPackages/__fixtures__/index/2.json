@@ -10,6 +10,7 @@
     "stars": 1,
     "version": "6.6.0",
     "appVersion": "1.10.4",
+    "securityReportSummary": null,
     "repository": {
       "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
       "kind": 0,
@@ -31,6 +32,7 @@
     "stars": 1,
     "version": "0.15.0",
     "appVersion": "3.11.6",
+    "securityReportSummary": null,
     "repository": {
       "repositoryId": "d3945a69-2ope-4ff9-8fb3-ce3b070d0384",
       "kind": 0,
@@ -52,6 +54,7 @@
     "stars": 2,
     "version": "11.1.0",
     "appVersion": "2.16.0",
+    "securityReportSummary": null,
     "repository": {
       "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
       "kind": 0,
@@ -73,6 +76,7 @@
     "stars": 2,
     "version": "1.0.0",
     "appVersion": null,
+    "securityReportSummary": null,
     "repository": {
       "repositoryId": "0acb098c-17ab-4e50-85e9-ffc7102ea423",
       "kind": 1,
@@ -93,6 +97,7 @@
     "stars": 2,
     "version": "0.1.0",
     "appVersion": null,
+    "securityReportSummary": null,
     "repository": {
       "repositoryId": "0ac0i98c-17ab-4e50-85e9-ffc7102ea423",
       "kind": 2,

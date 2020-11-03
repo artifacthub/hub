@@ -12,6 +12,7 @@
   "userAlias": null,
   "organizationName": "artifact-hub",
   "organizationDisplayName": "Artifact Hub",
+  "securityReportSummary": null,
   "repository": {
     "repositoryId": "id",
     "kind": 0,

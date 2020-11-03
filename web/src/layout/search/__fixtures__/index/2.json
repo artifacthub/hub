@@ -8,6 +8,7 @@
         "description": "Centrifugo is a real-time messaging server.",
         "logoImageId": "cc7ac35f-abd3-4594-a375-aebfccbfe11e",
         "appVersion": "2.1.0",
+        "securityReportSummary": null,
         "repository": {
           "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
           "kind": 0,
@@ -24,6 +25,7 @@
         "description": "Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.",
         "logoImageId": null,
         "appVersion": "5.0.1",
+        "securityReportSummary": null,
         "repository": {
           "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
           "kind": 0,

@@ -1,10 +1,10 @@
 import { isEmpty, isNull } from 'lodash';
 import React from 'react';
-import { FaCheck, FaExclamationTriangle } from 'react-icons/fa';
 
 import { SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
-import { SEVERITY_COLORS, SEVERITY_ORDER } from '../../../utils/data';
+import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import sumObjectValues from '../../../utils/sumObjectValues';
+import SecurityRating from '../../common/SecutityRating';
 import SmallTitle from '../../common/SmallTitle';
 import SecurityModal from './Modal';
 import styles from './SecurityReport.module.css';
@@ -35,7 +35,7 @@ const SecurityReport = (props: Props) => {
             <div>
               <small>No vulnerabilities found</small>
             </div>
-            <FaCheck className="text-success ml-2" />
+            <SecurityRating summary={props.summary} className="position-relative" onlyBadge />
           </div>
         ) : (
           <div className="d-flex flex-row align-items-center mb-2">
@@ -44,7 +44,7 @@ const SecurityReport = (props: Props) => {
                 <span className="font-weight-bold mr-1">{total}</span> vulnerabilities found
               </small>
             </div>
-            <FaExclamationTriangle className="text-warning ml-2" />
+            <SecurityRating summary={props.summary} className="position-relative" onlyBadge />
           </div>
         )}
 
@@ -62,7 +62,7 @@ const SecurityReport = (props: Props) => {
                     <span
                       data-testid="summaryBadge"
                       className={`badge position-relative mr-2 ${styles.badge}`}
-                      style={{ backgroundColor: SEVERITY_COLORS[severity] }}
+                      style={{ backgroundColor: SEVERITY_RATING[severity]!.color }}
                     >
                       {' '}
                     </span>

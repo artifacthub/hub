@@ -62,7 +62,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
             <span
               class="badge p-2 mr-2 badge"
               data-testid="severityBadge"
-              style="background-color: rgb(255, 183, 96);"
+              style="background-color: rgb(247, 134, 15);"
             >
                
             </span>

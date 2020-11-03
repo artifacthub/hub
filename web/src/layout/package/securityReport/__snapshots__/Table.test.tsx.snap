@@ -56,19 +56,48 @@ exports[`SecurityTable creates snapshot 1`] = `
         class="ml-4 mb-4"
       >
         <div
-          class="tableTitle font-weight-bold mr-2 mb-2 text-truncate"
-          data-testid="targetTitle"
+          class="d-flex flex-row align-items-center mb-2"
         >
-          <span
-            class="text-uppercase text-muted mr-2"
+          <div
+            class="tableTitle font-weight-bold mr-3 text-truncate"
+            data-testid="targetTitle"
           >
-            Target:
-          </span>
-          <span
-            class="font-weight-bold"
+            <span
+              class="text-uppercase text-muted mr-2"
+            >
+              Target:
+            </span>
+            <span
+              class="font-weight-bold"
+            >
+              centos 7.7.1908
+            </span>
+          </div>
+          <div
+            class="tableTitle d-flex flex-row align-items-center font-weight-bold text-nowrap"
           >
-            centos 7.7.1908
-          </span>
+            <span
+              class="text-uppercase text-muted"
+            >
+              Rating:
+            </span>
+            <div
+              class="position-relative securityRatingBadge"
+            >
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <small>
+                  <div
+                    class="badge badge-pill text-light font-weight-bold ml-2 badge securityRatingBadge"
+                    style="background-color: rgb(150, 0, 3);"
+                  >
+                    F
+                  </div>
+                </small>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           class="w-100 overflow-auto"
@@ -175,7 +204,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(178, 3, 3);"
+                      style="background-color: rgb(150, 0, 3);"
                     >
                        
                     </span>
@@ -263,7 +292,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(178, 3, 3);"
+                      style="background-color: rgb(150, 0, 3);"
                     >
                        
                     </span>
@@ -351,7 +380,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(178, 3, 3);"
+                      style="background-color: rgb(150, 0, 3);"
                     >
                        
                     </span>
@@ -439,7 +468,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(178, 3, 3);"
+                      style="background-color: rgb(150, 0, 3);"
                     >
                        
                     </span>
@@ -527,7 +556,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -611,7 +640,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -695,7 +724,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -779,7 +808,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -863,7 +892,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -947,7 +976,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1031,7 +1060,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1119,7 +1148,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1207,7 +1236,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1291,7 +1320,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1375,7 +1404,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1459,7 +1488,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1543,7 +1572,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1627,7 +1656,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1711,7 +1740,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1795,7 +1824,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1879,7 +1908,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -1963,7 +1992,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -2047,7 +2076,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -2131,7 +2160,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -2219,7 +2248,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -2303,7 +2332,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 81, 82);"
+                      style="background-color: rgb(223, 42, 25);"
                     >
                        
                     </span>
@@ -2387,7 +2416,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2475,7 +2504,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2563,7 +2592,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2651,7 +2680,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2739,7 +2768,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2823,7 +2852,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2907,7 +2936,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -2995,7 +3024,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3083,7 +3112,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3171,7 +3200,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3259,7 +3288,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3347,7 +3376,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3435,7 +3464,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3523,7 +3552,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3611,7 +3640,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3699,7 +3728,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3787,7 +3816,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3871,7 +3900,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -3955,7 +3984,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4039,7 +4068,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4123,7 +4152,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4207,7 +4236,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4295,7 +4324,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4383,7 +4412,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4471,7 +4500,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4559,7 +4588,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4647,7 +4676,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4735,7 +4764,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4823,7 +4852,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4911,7 +4940,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -4999,7 +5028,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5087,7 +5116,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5171,7 +5200,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5259,7 +5288,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5347,7 +5376,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5435,7 +5464,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5523,7 +5552,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5611,7 +5640,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5699,7 +5728,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5787,7 +5816,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5875,7 +5904,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -5963,7 +5992,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6051,7 +6080,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6139,7 +6168,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6227,7 +6256,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6311,7 +6340,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6395,7 +6424,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6483,7 +6512,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6567,7 +6596,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6651,7 +6680,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6739,7 +6768,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6827,7 +6856,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6911,7 +6940,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -6999,7 +7028,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7087,7 +7116,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7175,7 +7204,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7259,7 +7288,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7347,7 +7376,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7435,7 +7464,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7523,7 +7552,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7611,7 +7640,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7699,7 +7728,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7787,7 +7816,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7875,7 +7904,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -7963,7 +7992,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8051,7 +8080,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8135,7 +8164,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8219,7 +8248,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8307,7 +8336,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8395,7 +8424,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8483,7 +8512,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8571,7 +8600,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8659,7 +8688,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8747,7 +8776,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -8797,19 +8826,48 @@ exports[`SecurityTable creates snapshot 1`] = `
         class="ml-4 mb-4"
       >
         <div
-          class="tableTitle font-weight-bold mr-2 mb-2 text-truncate"
-          data-testid="targetTitle"
+          class="d-flex flex-row align-items-center mb-2"
         >
-          <span
-            class="text-uppercase text-muted mr-2"
+          <div
+            class="tableTitle font-weight-bold mr-3 text-truncate"
+            data-testid="targetTitle"
           >
-            Target:
-          </span>
-          <span
-            class="font-weight-bold"
+            <span
+              class="text-uppercase text-muted mr-2"
+            >
+              Target:
+            </span>
+            <span
+              class="font-weight-bold"
+            >
+              usr/share/ceph/mgr/dashboard/frontend/package-lock.json
+            </span>
+          </div>
+          <div
+            class="tableTitle d-flex flex-row align-items-center font-weight-bold text-nowrap"
           >
-            usr/share/ceph/mgr/dashboard/frontend/package-lock.json
-          </span>
+            <span
+              class="text-uppercase text-muted"
+            >
+              Rating:
+            </span>
+            <div
+              class="position-relative securityRatingBadge"
+            >
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <small>
+                  <div
+                    class="badge badge-pill text-light font-weight-bold ml-2 badge securityRatingBadge"
+                    style="background-color: rgb(247, 134, 15);"
+                  >
+                    C
+                  </div>
+                </small>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           class="w-100 overflow-auto"
@@ -8916,7 +8974,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 183, 96);"
+                      style="background-color: rgb(247, 134, 15);"
                     >
                        
                     </span>
@@ -9000,7 +9058,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 226, 88);"
+                      style="background-color: rgb(244, 189, 12);"
                     >
                        
                     </span>
@@ -9084,7 +9142,7 @@ exports[`SecurityTable creates snapshot 1`] = `
                     <span
                       class="badge p-2 mr-2 badge"
                       data-testid="severityBadge"
-                      style="background-color: rgb(255, 226, 88);"
+                      style="background-color: rgb(244, 189, 12);"
                     >
                        
                     </span>
