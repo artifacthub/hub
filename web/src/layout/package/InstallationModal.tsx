@@ -61,7 +61,6 @@ const InstallationModal = (props: Props) => {
               { disabled: props.isDisabled }
             )}
             onClick={onOpenModal}
-            disabled={props.isDisabled}
           >
             <div className="d-flex align-items-center justify-content-center">
               <FiDownload className="mr-2" />

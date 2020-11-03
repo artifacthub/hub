@@ -66,7 +66,6 @@ describe('ValuesSchema', () => {
       const { getByTestId } = render(<ValuesSchema {...defaultProps} hasValuesSchema={false} />);
 
       const btn = getByTestId('valuesSchemaBtn');
-      expect(btn).toBeDisabled();
       expect(btn).toHaveClass('disabled');
 
       expect(API.getValuesSchema).toHaveBeenCalledTimes(0);

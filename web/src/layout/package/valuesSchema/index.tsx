@@ -89,7 +89,6 @@ const ValuesSchema = (props: Props) => {
               disabled: !props.hasValuesSchema,
             })}
             onClick={onOpenModal}
-            disabled={!props.hasValuesSchema}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (
