@@ -5,6 +5,7 @@
     "displayName": null,
     "logoImageId": "aca0e134-7e18-411c-9662-1245f92f438d",
     "appVersion": "1.6.8",
+    "securityReportSummary": null,
     "repository": {
       "kind": 0,
       "repositoryId": "id",
@@ -19,6 +20,7 @@
     "displayName": null,
     "logoImageId": "18db8f84-f8a7-4203-9116-60f24d34914f",
     "appVersion": "4.3.2-1",
+    "securityReportSummary": null,
     "repository": {
       "kind": 0,
       "repositoryId": "id",
@@ -33,6 +35,7 @@
     "displayName": null,
     "logoImageId": null,
     "appVersion": "1.17.8",
+    "securityReportSummary": null,
     "repository": {
       "kind": 0,
       "repositoryId": "id1",
@@ -47,6 +50,7 @@
     "displayName": null,
     "logoImageId": "56724a8a-d8de-4700-8f23-1cf828220d51",
     "appVersion": "latest",
+    "securityReportSummary": null,
     "repository": {
       "kind": 0,
       "repositoryId": "id",
@@ -61,6 +65,7 @@
     "displayName": null,
     "logoImageId": "2fbaacae-e538-4706-a9fc-bcf443218af1",
     "appVersion": "1.0",
+    "securityReportSummary": null,
     "repository": {
       "kind": 0,
       "repositoryId": "id2",

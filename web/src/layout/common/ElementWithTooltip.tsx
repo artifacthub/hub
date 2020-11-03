@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ interface Props {
   className?: string;
   tooltipClassName?: string;
   tooltipArrowClassName?: string;
+  alignmentTooltip?: 'right' | 'left';
 }
 
 const ElementWithTooltip = (props: Props) => {
@@ -40,7 +42,7 @@ const ElementWithTooltip = (props: Props) => {
   if (isUndefined(props.active) || isNull(props.active) || !props.active) return null;
 
   return (
-    <div className={props.className}>
+    <div className={`position-relative ${props.className}`}>
       <div
         data-testid="elementWithTooltip"
         onMouseEnter={(e) => {
@@ -55,7 +57,11 @@ const ElementWithTooltip = (props: Props) => {
       </div>
 
       {props.visibleTooltip && visibleTooltipStatus && (
-        <div className="position-absolute">
+        <div
+          className={classnames('position-absolute', {
+            [styles.rightAligned]: !isUndefined(props.alignmentTooltip) && props.alignmentTooltip === 'right',
+          })}
+        >
           <div className={`tooltip bs-tooltip-bottom ${styles.tooltip} ${props.tooltipClassName}`} role="tooltip">
             <div className={`arrow ${styles.tooltipArrow} ${props.tooltipArrowClassName}`} />
             <div className={`tooltip-inner ${styles.tooltipContent}`}>{props.tooltipMessage}</div>

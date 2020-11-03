@@ -4,8 +4,22 @@
   left: 0;
 }
 
+.rightAligned {
+  right: 0;
+}
+
+.rightAligned .tooltip {
+  left: auto;
+  right: 0;
+}
+
 .tooltipArrow {
   left: 10px;
+}
+
+.rightAligned .tooltipArrow {
+  left: auto;
+  right: 10px;
 }
 
 .tooltipArrow::before {

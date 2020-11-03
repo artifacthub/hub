@@ -2,7 +2,9 @@
 
 exports[`ValuesSchema creates snapshot 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    class="position-relative undefined"
+  >
     <div
       data-testid="elementWithTooltip"
     >

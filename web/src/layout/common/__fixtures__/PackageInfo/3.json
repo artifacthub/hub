@@ -6,6 +6,7 @@
   "description": "desc",
   "logoImageId": null,
   "appVersion": "1.0.0",
+  "securityReportSummary": null,
   "repository": {
     "repositoryId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
     "kind": 0,

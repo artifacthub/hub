@@ -2,7 +2,7 @@ import { isUndefined } from 'lodash';
 import React from 'react';
 
 import { VulnerabilitySeverity } from '../../../types';
-import { SEVERITY_COLORS, SEVERITY_ORDER } from '../../../utils/data';
+import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
 import sumObjectValues from '../../../utils/sumObjectValues';
 import styles from './Summary.module.css';
 
@@ -46,7 +46,7 @@ const SecuritySummary = (props: Props) => {
                 role="progressbar"
                 style={{
                   width: `${(props.summary[severity]! * 100) / total}%`,
-                  backgroundColor: SEVERITY_COLORS[severity],
+                  backgroundColor: SEVERITY_RATING[severity]!.color,
                 }}
               >
                 <span className={`badge badge-pill badge-light text-center ${styles.badgeSummary}`}>

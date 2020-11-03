@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { FaCaretDown, FaCaretRight, FaLink } from 'react-icons/fa';
 
 import { Vulnerability, VulnerabilitySeverity } from '../../../types';
-import { SEVERITY_COLORS } from '../../../utils/data';
+import { SEVERITY_RATING } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import styles from './Cell.module.css';
 import CVSSVector from './CVSSVector';
@@ -53,7 +53,7 @@ const SecurityCell = (props: Props) => {
               data-testid="severityBadge"
               className={`badge p-2 mr-2 ${styles.badge}`}
               style={{
-                backgroundColor: SEVERITY_COLORS[severity],
+                backgroundColor: SEVERITY_RATING[severity]!.color,
               }}
             >
               {' '}

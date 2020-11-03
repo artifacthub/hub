@@ -24,6 +24,7 @@ interface Props {
 
 const SecurityModal = (props: Props) => {
   const history = useHistory();
+  const [version, setVersion] = useState<string>(props.version);
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
@@ -31,6 +32,7 @@ const SecurityModal = (props: Props) => {
   async function getSecurityReports() {
     try {
       setIsLoading(true);
+      setVersion(props.version);
       setReport(await API.getSnapshotSecurityReport(props.packageId, props.version));
       setIsLoading(false);
       setOpenStatus(true);
@@ -45,7 +47,7 @@ const SecurityModal = (props: Props) => {
   }
 
   const onOpenModal = () => {
-    if (report) {
+    if (report && props.version === version) {
       setOpenStatus(true);
     } else {
       getSecurityReports();

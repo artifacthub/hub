@@ -1,0 +1,14 @@
+.badge {
+  top: -2px;
+  width: 22px;
+  box-shadow: inset 0px 0px 2px 1px var(--color-black-25);
+}
+
+.tooltip {
+  font-size: 0.75rem;
+  width: 270px;
+}
+
+.tooltipArrow {
+  right: 5px !important;
+}
