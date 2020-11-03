@@ -110,7 +110,6 @@ const ChangelogModal = (props: Props) => {
               disabled: !props.packageItem.hasChangelog,
             })}
             onClick={onOpenModal}
-            disabled={!props.packageItem.hasChangelog}
           >
             <div className="d-flex flex-row align-items-center justify-content-center text-uppercase">
               {isLoading ? (

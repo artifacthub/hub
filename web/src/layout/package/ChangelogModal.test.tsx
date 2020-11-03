@@ -94,7 +94,6 @@ describe('ChangelogModal', () => {
       const { getByTestId } = render(<ChangelogModal {...props} />);
 
       const btn = getByTestId('changelogBtn');
-      expect(btn).toBeDisabled();
       expect(btn).toHaveClass('disabled');
 
       expect(API.getChangelog).toHaveBeenCalledTimes(0);
