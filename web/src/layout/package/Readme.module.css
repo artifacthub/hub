@@ -4,6 +4,10 @@
   hyphens: auto;
 }
 
+.md p a img {
+  vertical-align: auto;
+}
+
 .md hr {
   height: 0.25em;
   padding: 0;
