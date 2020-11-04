@@ -13,7 +13,11 @@ interface Props {
 }
 
 const AnchorHeader: React.ElementType = (props: Props) => {
-  const value = !isUndefined(props.title) ? props.title : props.children![0].props.value;
+  const value = !isUndefined(props.title)
+    ? props.title
+    : props.children && props.children.length > 0
+    ? props.children![0].props.value
+    : undefined;
   if (isUndefined(value)) return null;
 
   const anchor = value
