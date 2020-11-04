@@ -1,5 +1,6 @@
+import classnames from 'classnames';
 import isNull from 'lodash/isNull';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -48,7 +49,11 @@ const Readme = (props: Props) => {
   };
 
   const Image: React.ElementType = (data: ImageProps) => {
-    return /^https?:/.test(data.src) ? <img src={data.src} alt={data.alt} /> : null;
+    const [error, setError] = useState<boolean>(false);
+
+    return /^https?:/.test(data.src) ? (
+      <img src={data.src} alt={data.alt} className={classnames({ 'd-none': error })} onError={() => setError(true)} />
+    ) : null;
   };
 
   // Only for external links and anchors
@@ -97,7 +102,7 @@ const Readme = (props: Props) => {
 
   let readme = props.markdownContent;
   if (!props.markdownContent.startsWith('#')) {
-    readme = `# ${props.packageName}\n${props.markdownContent}`;
+    readme = `# ${props.packageName}\n${readme}`;
   }
 
   return (
@@ -105,7 +110,7 @@ const Readme = (props: Props) => {
       <span data-testid="readme">
         <ReactMarkdown
           className={`mt-3 mb-5 ${styles.md}`}
-          source={readme}
+          children={readme}
           linkTarget="_blank"
           skipHtml
           renderers={{
@@ -121,4 +126,4 @@ const Readme = (props: Props) => {
   );
 };
 
-export default Readme;
+export default React.memo(Readme);

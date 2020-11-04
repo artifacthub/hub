@@ -249,15 +249,17 @@ const Filters = (props: Props) => {
           onChange={props.onOfficialChange}
         />
 
-        <ElementWithTooltip
-          className={styles.tooltipIcon}
-          tooltipClassName={styles.tooltipMessage}
-          tooltipArrowClassName={styles.arrowTooltipMessage}
-          element={<MdInfoOutline />}
-          tooltipMessage="The publisher owns the software deployed by the packages in this repository"
-          visibleTooltip
-          active
-        />
+        <div className="d-none d-md-block">
+          <ElementWithTooltip
+            className={styles.tooltipIcon}
+            tooltipClassName={styles.tooltipMessage}
+            tooltipArrowClassName={styles.arrowTooltipMessage}
+            element={<MdInfoOutline />}
+            tooltipMessage="The publisher owns the software deployed by the packages in this repository"
+            visibleTooltip
+            active
+          />
+        </div>
       </div>
 
       <div className="d-flex flex-row align-items-baseline">
@@ -270,15 +272,17 @@ const Filters = (props: Props) => {
           onChange={props.onVerifiedPublisherChange}
         />
 
-        <ElementWithTooltip
-          className={styles.tooltipIcon}
-          tooltipClassName={styles.tooltipMessage}
-          tooltipArrowClassName={styles.arrowTooltipMessage}
-          element={<MdInfoOutline />}
-          tooltipMessage="The publisher owns the repository"
-          visibleTooltip
-          active
-        />
+        <div className="d-none d-md-block">
+          <ElementWithTooltip
+            className={styles.tooltipIcon}
+            tooltipClassName={styles.tooltipMessage}
+            tooltipArrowClassName={styles.arrowTooltipMessage}
+            element={<MdInfoOutline />}
+            tooltipMessage="The publisher owns the repository"
+            visibleTooltip
+            active
+          />
+        </div>
       </div>
 
       <TsQuery active={props.activeTsQuery || []} onChange={props.onTsQueryChange} />

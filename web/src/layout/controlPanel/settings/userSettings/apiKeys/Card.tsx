@@ -56,116 +56,120 @@ const APIKeyCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item ${styles.listItem}`} data-testid="APIKeyCard">
-      <div className="d-flex flex-row w-100 justify-content-between">
-        <div className={`h5 mb-1 mr-2 ${styles.titleCard}`}>{props.apiKey.name}</div>
-        {deletionModalStatus && (
-          <Modal
-            className={`d-inline-block ${styles.modal}`}
-            closeButton={
-              <>
-                <button
-                  className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
-                  onClick={() => setDeletionModalStatus(false)}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    <IoMdCloseCircle className="mr-2" />
-                    <span>Cancel</span>
-                  </div>
-                </button>
+    <div className="col-12 col-xxl-6 py-sm-3 py-2" data-testid="APIKeyCard">
+      <div className="card h-100">
+        <div className="card-body d-flex flex-column h-100">
+          <div className="d-flex flex-row w-100 justify-content-between">
+            <div className={`h5 mb-1 mr-2 ${styles.titleCard}`}>{props.apiKey.name}</div>
+            {deletionModalStatus && (
+              <Modal
+                className={`d-inline-block ${styles.modal}`}
+                closeButton={
+                  <>
+                    <button
+                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      onClick={() => setDeletionModalStatus(false)}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <IoMdCloseCircle className="mr-2" />
+                        <span>Cancel</span>
+                      </div>
+                    </button>
+
+                    <button
+                      data-testid="deleteAPIKeyBtn"
+                      className="btn btn-sm btn-danger ml-3"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        closeDropdown();
+                        deleteAPIKey();
+                      }}
+                      disabled={isDeleting}
+                    >
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        {isDeleting ? (
+                          <>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                            <span className="ml-2">Deleting...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
+                            <span>Delete</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </>
+                }
+                header={<div className={`h3 m-2 ${styles.title}`}>Delete API key</div>}
+                onClose={() => setDeletionModalStatus(false)}
+                open
+              >
+                <div className="mt-3 mw-100 text-center">
+                  <p>Are you sure you want to remove this API key?</p>
+                </div>
+              </Modal>
+            )}
+
+            <div className="ml-auto">
+              <div
+                ref={dropdownMenu}
+                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                  show: dropdownMenuStatus,
+                })}
+              >
+                <div className={`arrow ${styles.arrow}`} />
 
                 <button
-                  data-testid="deleteAPIKeyBtn"
-                  className="btn btn-sm btn-danger ml-3"
-                  onClick={(e) => {
+                  data-testid="updateAPIKeyBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     e.preventDefault();
                     closeDropdown();
-                    deleteAPIKey();
+                    props.setModalStatus({
+                      open: true,
+                      apiKey: props.apiKey,
+                    });
                   }}
-                  disabled={isDeleting}
                 >
-                  <div className="d-flex flex-row align-items-center text-uppercase">
-                    {isDeleting ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Deleting...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaTrashAlt className={`mr-2 ${styles.btnDeleteIcon}`} />
-                        <span>Delete</span>
-                      </>
-                    )}
+                  <div className="d-flex flex-row align-items-center">
+                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Edit</span>
                   </div>
                 </button>
-              </>
-            }
-            header={<div className={`h3 m-2 ${styles.title}`}>Delete API key</div>}
-            onClose={() => setDeletionModalStatus(false)}
-            open
-          >
-            <div className="mt-3 mw-100 text-center">
-              <p>Are you sure you want to remove this API key?</p>
+
+                <button
+                  data-testid="deleteAPIKeyModalBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setDeletionModalStatus(true);
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Delete</span>
+                  </div>
+                </button>
+              </div>
+
+              <button
+                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                onClick={() => setDropdownMenuStatus(true)}
+              >
+                <BsThreeDotsVertical />
+              </button>
             </div>
-          </Modal>
-        )}
-
-        <div className="ml-auto">
-          <div
-            ref={dropdownMenu}
-            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
-              show: dropdownMenuStatus,
-            })}
-          >
-            <div className={`arrow ${styles.arrow}`} />
-
-            <button
-              data-testid="updateAPIKeyBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                props.setModalStatus({
-                  open: true,
-                  apiKey: props.apiKey,
-                });
-              }}
-            >
-              <div className="d-flex flex-row align-items-center">
-                <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
-                <span>Edit</span>
-              </div>
-            </button>
-
-            <button
-              data-testid="deleteAPIKeyModalBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                setDeletionModalStatus(true);
-              }}
-            >
-              <div className="d-flex flex-row align-items-center">
-                <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
-                <span>Delete</span>
-              </div>
-            </button>
           </div>
-
-          <button
-            className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
-            onClick={() => setDropdownMenuStatus(true)}
-          >
-            <BsThreeDotsVertical />
-          </button>
+          <div className="mt-2 text-truncate">
+            <small className="text-muted text-uppercase mr-1">Created at: </small>
+            <small>{moment(props.apiKey.createdAt! * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
+          </div>
         </div>
       </div>
-      <div className="mt-2 text-truncate">
-        <small className="text-muted text-uppercase mr-1">Created at: </small>
-        <small>{moment(props.apiKey.createdAt! * 1000).format('YYYY/MM/DD HH:mm:ss (Z)')}</small>
-      </div>
-    </li>
+    </div>
   );
 };
 

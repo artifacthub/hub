@@ -9,12 +9,17 @@ exports[`Home index creates snapshot 1`] = `
       class="jumbotron mb-0 text-center jumbotron"
     >
       <div
-        class="display-4 text-center font-weight-light mainTitle"
+        class="display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center mainTitle"
         role="heading"
       >
-        Find, install and publish
-        <br />
-        Kubernetes packages
+        <div>
+          Find, install and publish
+        </div>
+        <div
+          class="secondLine"
+        >
+          Kubernetes packages
+        </div>
       </div>
       <div
         class="mt-5 text-center"

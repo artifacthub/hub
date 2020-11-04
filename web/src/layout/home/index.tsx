@@ -60,10 +60,12 @@ const HomeView = (props: Props) => {
   return (
     <div className={`d-flex flex-column flex-grow-1 ${styles.home} home`}>
       <div className={`jumbotron mb-0 text-center ${styles.jumbotron}`}>
-        <div role="heading" className={`display-4 text-center font-weight-light ${styles.mainTitle}`}>
-          Find, install and publish
-          <br />
-          Kubernetes packages
+        <div
+          role="heading"
+          className={`display-4 text-center font-weight-light d-block d-xxl-flex justify-content-center ${styles.mainTitle}`}
+        >
+          <div>Find, install and publish</div>
+          <div className={styles.secondLine}>Kubernetes packages</div>
         </div>
 
         <div className="mt-5 text-center">

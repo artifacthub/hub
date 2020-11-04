@@ -23,7 +23,7 @@ const OPAPoliciesList = (props: Props) => {
           const fileName = pathFile.pop();
           const path = pathFile.join('/');
           return (
-            <div className="col-12 col-lg-6 mb-4" key={`policy_${index}`}>
+            <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`policy_${index}`}>
               <div className={`card h-100 ${styles.card}`} data-testid="policyCard">
                 <div className="card-body d-flex flex-column">
                   <div className="d-flex flex-row align-items-baseline">

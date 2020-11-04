@@ -18,9 +18,7 @@ exports[`SecurityModal Render renders last scan time 2`] = `<DocumentFragment />
 
 exports[`SecurityModal creates snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="text-center"
-  >
+  <div>
     <button
       class="btn btn-secondary btn-sm"
     >

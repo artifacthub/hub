@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { DEFAULT_SEARCH_LIMIT } from '../../utils/localStoragePreferences';
 import styles from './PaginationLimit.module.css';
 
 interface Props {
@@ -8,12 +9,18 @@ interface Props {
   disabled: boolean;
 }
 
-const LIMIT_VALUES: number[] = [15, 25, 50];
+const LIMIT_VALUES: number[] = [20, 40, 60];
 
 const PaginationLimit = (props: Props) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     props.updateLimit(parseInt(event.target.value));
   };
+
+  useEffect(() => {
+    if (!LIMIT_VALUES.includes(props.limit)) {
+      props.updateLimit(DEFAULT_SEARCH_LIMIT);
+    }
+  }, [props]);
 
   return (
     <div className="form-inline flex-nowrap align-items-center">

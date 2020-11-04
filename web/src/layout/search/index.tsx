@@ -521,7 +521,7 @@ const SearchView = (props: Props) => {
                   </NoData>
                 ) : (
                   <>
-                    <div className="row no-gutters mb-2">
+                    <div className="row mb-2">
                       {searchResults.data.packages.map((item: Package) => (
                         <PackageCard
                           key={item.packageId}

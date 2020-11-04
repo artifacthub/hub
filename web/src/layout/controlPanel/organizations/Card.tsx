@@ -92,173 +92,177 @@ const OrganizationCard = (props: Props) => {
         props.organization.membersCount > 1));
 
   return (
-    <li className={`list-group-item ${styles.listItem}`} data-testid="organizationCard">
-      <div className="d-flex flex-row w-100 justify-content-between align-items-start">
-        <div className="d-flex flex-row align-items-center w-100">
-          <div
-            className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
-          >
-            {!isUndefined(props.organization.logoImageId) ? (
-              <Image
-                alt={props.organization.displayName || props.organization.name}
-                imageId={props.organization.logoImageId}
-                className={styles.image}
-                placeholderIcon={<MdBusiness />}
-              />
-            ) : (
-              <MdBusiness className={styles.image} />
+    <div className="col-12 col-xxl-6 py-sm-3 py-2" data-testid="organizationCard">
+      <div className="card h-100">
+        <div className="card-body d-flex flex-column h-100">
+          <div className="d-flex flex-row w-100 justify-content-between align-items-start">
+            <div className="d-flex flex-row align-items-center w-100">
+              <div
+                className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
+              >
+                {!isUndefined(props.organization.logoImageId) ? (
+                  <Image
+                    alt={props.organization.displayName || props.organization.name}
+                    imageId={props.organization.logoImageId}
+                    className={styles.image}
+                    placeholderIcon={<MdBusiness />}
+                  />
+                ) : (
+                  <MdBusiness className={styles.image} />
+                )}
+              </div>
+
+              <div className="flex-grow-1 text-truncate">
+                <div className={`h5 mb-0 text-truncate ${styles.title}`}>
+                  {props.organization.displayName || props.organization.name}
+                </div>
+              </div>
+
+              {!isMember && (
+                <div className="ml-3">
+                  <span className="badge badge-warning">Invitation not accepted yet</span>
+                </div>
+              )}
+
+              <div className="ml-auto">
+                <div
+                  ref={dropdownMenu}
+                  className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                    show: dropdownMenuStatus,
+                  })}
+                >
+                  <div className={`arrow ${styles.arrow}`} />
+
+                  {!isUndefined(props.organization.confirmed) &&
+                  !isNull(props.organization.confirmed) &&
+                  props.organization.confirmed ? (
+                    <>
+                      {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
+                        <button
+                          data-testid="leaveOrgModalBtn"
+                          className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.preventDefault();
+                            closeDropdown();
+                            setLeaveModalStatus(true);
+                          }}
+                        >
+                          <div className="d-flex flex-row align-items-center">
+                            <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                            <span>Leave</span>
+                          </div>
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <div>
+                      <button
+                        data-testid="acceptInvitationBtn"
+                        className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          e.preventDefault();
+                          confirmOrganizationMembership();
+                          closeDropdown();
+                        }}
+                        disabled={isAccepting}
+                      >
+                        <div className="d-flex flex-row align-items-center">
+                          {isAccepting ? (
+                            <>
+                              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                              <span className="ml-2">Accepting invitation...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
+                              <span>Accept invitation</span>
+                            </>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {hasDropdownContent && (
+                  <button
+                    className={`ml-3 btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                    onClick={() => setDropdownMenuStatus(true)}
+                  >
+                    <BsThreeDotsVertical />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {leaveModalStatus && (
+              <Modal
+                className={`d-inline-block ${styles.modal}`}
+                closeButton={
+                  <>
+                    <button
+                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      onClick={() => setLeaveModalStatus(false)}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <IoMdCloseCircle className="mr-2" />
+                        <span>Cancel</span>
+                      </div>
+                    </button>
+
+                    <button
+                      data-testid="leaveOrgBtn"
+                      className="btn btn-sm btn-danger ml-3"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        leaveOrganization();
+                      }}
+                      disabled={isLeaving}
+                    >
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        {isLeaving ? (
+                          <>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                            <span className="ml-2">Leaving...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
+                            <span>Leave</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </>
+                }
+                header={<div className={`h3 m-2 ${styles.title}`}>Leave organization</div>}
+                onClose={() => setLeaveModalStatus(false)}
+                open
+              >
+                <div className="mt-3 mw-100 text-center">
+                  <p>Are you sure you want to leave this organization?</p>
+                </div>
+              </Modal>
             )}
           </div>
 
-          <div className="flex-grow-1 text-truncate">
-            <div className={`h5 mb-0 text-truncate ${styles.title}`}>
-              {props.organization.displayName || props.organization.name}
-            </div>
-          </div>
-
-          {!isMember && (
-            <div className="ml-3">
-              <span className="badge badge-warning">Invitation not accepted yet</span>
+          {!isUndefined(props.organization.homeUrl) && !isNull(props.organization.homeUrl) && (
+            <div className="mt-3 text-truncate">
+              <small className="text-muted text-uppercase mr-1">Homepage: </small>
+              <ExternalLink href={props.organization.homeUrl} className={`text-reset ${styles.link}`}>
+                {props.organization.homeUrl}
+              </ExternalLink>
             </div>
           )}
 
-          <div className="ml-auto">
-            <div
-              ref={dropdownMenu}
-              className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
-                show: dropdownMenuStatus,
-              })}
-            >
-              <div className={`arrow ${styles.arrow}`} />
-
-              {!isUndefined(props.organization.confirmed) &&
-              !isNull(props.organization.confirmed) &&
-              props.organization.confirmed ? (
-                <>
-                  {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
-                    <button
-                      data-testid="leaveOrgModalBtn"
-                      className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                        e.preventDefault();
-                        closeDropdown();
-                        setLeaveModalStatus(true);
-                      }}
-                    >
-                      <div className="d-flex flex-row align-items-center">
-                        <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
-                        <span>Leave</span>
-                      </div>
-                    </button>
-                  )}
-                </>
-              ) : (
-                <div>
-                  <button
-                    data-testid="acceptInvitationBtn"
-                    className="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      e.preventDefault();
-                      confirmOrganizationMembership();
-                      closeDropdown();
-                    }}
-                    disabled={isAccepting}
-                  >
-                    <div className="d-flex flex-row align-items-center">
-                      {isAccepting ? (
-                        <>
-                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                          <span className="ml-2">Accepting invitation...</span>
-                        </>
-                      ) : (
-                        <>
-                          <FaEnvelopeOpenText className={`mr-2 ${styles.btnIcon}`} />
-                          <span>Accept invitation</span>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </div>
-              )}
+          {!isUndefined(props.organization.description) && !isNull(props.organization.description) && (
+            <div className="mt-2">
+              <p className="mb-0">{props.organization.description}</p>
             </div>
-
-            {hasDropdownContent && (
-              <button
-                className={`ml-3 btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
-                onClick={() => setDropdownMenuStatus(true)}
-              >
-                <BsThreeDotsVertical />
-              </button>
-            )}
-          </div>
+          )}
         </div>
-
-        {leaveModalStatus && (
-          <Modal
-            className={`d-inline-block ${styles.modal}`}
-            closeButton={
-              <>
-                <button
-                  className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
-                  onClick={() => setLeaveModalStatus(false)}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    <IoMdCloseCircle className="mr-2" />
-                    <span>Cancel</span>
-                  </div>
-                </button>
-
-                <button
-                  data-testid="leaveOrgBtn"
-                  className="btn btn-sm btn-danger ml-3"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    leaveOrganization();
-                  }}
-                  disabled={isLeaving}
-                >
-                  <div className="d-flex flex-row align-items-center text-uppercase">
-                    {isLeaving ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Leaving...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaSignOutAlt className={`mr-2 ${styles.btnIcon}`} />
-                        <span>Leave</span>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </>
-            }
-            header={<div className={`h3 m-2 ${styles.title}`}>Leave organization</div>}
-            onClose={() => setLeaveModalStatus(false)}
-            open
-          >
-            <div className="mt-3 mw-100 text-center">
-              <p>Are you sure you want to leave this organization?</p>
-            </div>
-          </Modal>
-        )}
       </div>
-
-      {!isUndefined(props.organization.homeUrl) && !isNull(props.organization.homeUrl) && (
-        <div className="mt-3 text-truncate">
-          <small className="text-muted text-uppercase mr-1">Homepage: </small>
-          <ExternalLink href={props.organization.homeUrl} className={`text-reset ${styles.link}`}>
-            {props.organization.homeUrl}
-          </ExternalLink>
-        </div>
-      )}
-
-      {!isUndefined(props.organization.description) && !isNull(props.organization.description) && (
-        <div className="mt-2">
-          <p className="mb-0">{props.organization.description}</p>
-        </div>
-      )}
-    </li>
+    </div>
   );
 };
 

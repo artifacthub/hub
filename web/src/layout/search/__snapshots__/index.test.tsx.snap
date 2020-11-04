@@ -29,19 +29,19 @@ exports[`Search index creates snapshot 1`] = `
             disabled=""
           >
             <option
-              value="15"
+              value="20"
             >
-              15
+              20
             </option>
             <option
-              value="25"
+              value="40"
             >
-              25
+              40
             </option>
             <option
-              value="50"
+              value="60"
             >
-              50
+              60
             </option>
             ;
           </select>
@@ -196,24 +196,28 @@ exports[`Search index creates snapshot 2`] = `
                         </label>
                       </div>
                       <div
-                        class="position-relative tooltipIcon"
+                        class="d-none d-md-block"
                       >
                         <div
-                          data-testid="elementWithTooltip"
+                          class="position-relative tooltipIcon"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <div
+                            data-testid="elementWithTooltip"
                           >
-                            <path
-                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                            />
-                          </svg>
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                              />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -248,24 +252,28 @@ exports[`Search index creates snapshot 2`] = `
                         </label>
                       </div>
                       <div
-                        class="position-relative tooltipIcon"
+                        class="d-none d-md-block"
                       >
                         <div
-                          data-testid="elementWithTooltip"
+                          class="position-relative tooltipIcon"
                         >
-                          <svg
-                            fill="currentColor"
-                            height="1em"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <div
+                            data-testid="elementWithTooltip"
                           >
-                            <path
-                              d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                            />
-                          </svg>
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                              />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -841,19 +849,19 @@ exports[`Search index creates snapshot 2`] = `
             class="custom-select custom-select-sm select"
           >
             <option
-              value="15"
+              value="20"
             >
-              15
+              20
             </option>
             <option
-              value="25"
+              value="40"
             >
-              25
+              40
             </option>
             <option
-              value="50"
+              value="60"
             >
-              50
+              60
             </option>
             ;
           </select>
@@ -917,24 +925,28 @@ exports[`Search index creates snapshot 2`] = `
                 </label>
               </div>
               <div
-                class="position-relative tooltipIcon"
+                class="d-none d-md-block"
               >
                 <div
-                  data-testid="elementWithTooltip"
+                  class="position-relative tooltipIcon"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    data-testid="elementWithTooltip"
                   >
-                    <path
-                      d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                    />
-                  </svg>
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -969,24 +981,28 @@ exports[`Search index creates snapshot 2`] = `
                 </label>
               </div>
               <div
-                class="position-relative tooltipIcon"
+                class="d-none d-md-block"
               >
                 <div
-                  data-testid="elementWithTooltip"
+                  class="position-relative tooltipIcon"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    data-testid="elementWithTooltip"
                   >
-                    <path
-                      d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                    />
-                  </svg>
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1472,25 +1488,25 @@ exports[`Search index creates snapshot 2`] = `
         class="flex-grow-1 mt-3 list"
       >
         <div
-          class="row no-gutters mb-2"
+          class="row mb-2"
         >
           <div
-            class="col-12 py-sm-3 py-2"
+            class="col-12 col-xxl-6 py-sm-3 py-2"
             role="listitem"
           >
             <div
-              class="card cardWithHover h-100 card"
+              class="card cardWithHover h-100 card undefined"
             >
               <a
-                class="text-decoration-none text-reset link"
+                class="text-decoration-none text-reset h-100 link"
                 data-testid="link"
                 href="/packages/helm/stable/undefined"
               >
                 <div
-                  class="card-body d-flex flex-column body"
+                  class="card-body d-flex flex-column h-100 body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                    class="d-flex align-items-start justify-content-between mw-100"
                   >
                     <div
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
@@ -1877,7 +1893,7 @@ exports[`Search index creates snapshot 2`] = `
                     Centrifugo is a real-time messaging server.
                   </div>
                   <div
-                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-lg-0"
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-lg-0"
                   >
                     <small
                       class="text-muted text-nowrap date"
@@ -1895,29 +1911,29 @@ exports[`Search index creates snapshot 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-wrap justify-content-md-end labelsWrapper"
+                    class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                   />
                 </div>
               </a>
             </div>
           </div>
           <div
-            class="col-12 py-sm-3 py-2"
+            class="col-12 col-xxl-6 py-sm-3 py-2"
             role="listitem"
           >
             <div
-              class="card cardWithHover h-100 card"
+              class="card cardWithHover h-100 card undefined"
             >
               <a
-                class="text-decoration-none text-reset link"
+                class="text-decoration-none text-reset h-100 link"
                 data-testid="link"
                 href="/packages/helm/incubator/undefined"
               >
                 <div
-                  class="card-body d-flex flex-column body"
+                  class="card-body d-flex flex-column h-100 body"
                 >
                   <div
-                    class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                    class="d-flex align-items-start justify-content-between mw-100"
                   >
                     <div
                       class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
@@ -2303,7 +2319,7 @@ exports[`Search index creates snapshot 2`] = `
                     Apache Kafka is publish-subscribe messaging rethought as a distributed commit log.
                   </div>
                   <div
-                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-lg-0"
+                    class="d-flex d-lg-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-lg-0"
                   >
                     <small
                       class="text-muted text-nowrap date"
@@ -2321,7 +2337,7 @@ exports[`Search index creates snapshot 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-wrap justify-content-md-end labelsWrapper"
+                    class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                   />
                 </div>
               </a>

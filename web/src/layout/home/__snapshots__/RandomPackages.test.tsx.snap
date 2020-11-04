@@ -56,248 +56,267 @@ exports[`RandomPackages creates snapshot 2`] = `
             Explore and discover packages
           </div>
           <div
-            class="pt-2"
+            class="pt-2 row no-gutters justify-content-center"
           >
             <div
-              class="position-relative mw-100 homeCard card"
+              class="col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
             >
               <div
-                class="card-body d-flex flex-column body"
+                class="card cardWithHover h-100 card"
               >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                <a
+                  class="text-decoration-none text-reset h-100 link"
+                  data-testid="link"
+                  href="/packages/helm/halkeye/undefined"
                 >
                   <div
-                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+                    class="card-body d-flex flex-column h-100 body"
                   >
-                    <a
-                      class="text-decoration-none text-reset link"
-                      data-testid="imageLink"
-                      href="/packages/helm/halkeye/undefined"
-                    >
-                      <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
-                      >
-                        <img
-                          alt="Logo mosquitto"
-                          class="image"
-                          src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
-                          srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
-                        />
-                      </div>
-                    </a>
                     <div
-                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                      class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="text-truncate card-title mb-0"
+                        class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                         >
-                          <a
-                            class="link text-reset text-truncate"
-                            data-testid="packageLink"
-                            href="/packages/helm/halkeye/undefined"
-                          >
-                            <div
-                              class="text-truncate title"
-                            >
-                              mosquitto
-                            </div>
-                          </a>
+                          <img
+                            alt="Logo mosquitto"
+                            class="image"
+                            src="/image/aca0e134-7e18-411c-9662-1245f92f438d"
+                            srcset="/image/aca0e134-7e18-411c-9662-1245f92f438d@1x 1x, /image/aca0e134-7e18-411c-9662-1245f92f438d@2x 2x, /image/aca0e134-7e18-411c-9662-1245f92f438d@3x 3x, /image/aca0e134-7e18-411c-9662-1245f92f438d@4x 4x"
+                          />
                         </div>
-                      </div>
-                      <div
-                        class="d-block d-md-none"
-                      >
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="text-truncate card-title mb-0"
                           >
                             <div
-                              class="position-absolute"
+                              class="d-flex flex-row align-items-center"
                             >
                               <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
+                                class="text-truncate title"
                               >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        halkeye
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                mosquitto
                               </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  halkeye
-                                </div>
-                              </button>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle align-items-baseline subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User: 
-                          </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
-                            data-testid="userLink"
-                          >
-                            <div
-                              class="text-truncate"
-                            >
-                              user
-                            </div>
-                          </button>
                           <div
-                            class="mx50"
+                            class="d-block d-md-none"
                           >
                             <div
-                              class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                              class="card-subtitle align-items-baseline subtitle"
                             >
                               <div
-                                class="position-absolute"
+                                class="d-inline d-md-none text-truncate w-100"
                               >
                                 <div
-                                  class="dropdown-menu dropdown-menu-left dropdown"
-                                  data-testid="repoInfoDropdown"
+                                  class="position-absolute"
                                 >
                                   <div
-                                    class="content"
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="repoInfoDropdown"
                                   >
                                     <div
-                                      class="d-flex flex-column"
+                                      class="content"
                                     >
                                       <div
-                                        class="d-flex flex-row align-items-center"
+                                        class="d-flex flex-column"
                                       >
-                                        <small
-                                          class="text-muted text-uppercase mr-1"
-                                        >
-                                          Repo: 
-                                        </small>
-                                        <img
-                                          alt="Icon"
-                                          class="mr-1 repoIconMini repoIcon"
-                                          src="/static/media/helm-chart.svg"
-                                        />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="d-flex flex-row align-items-center"
                                         >
-                                          halkeye
+                                          <small
+                                            class="text-muted text-uppercase mr-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="mr-1 repoIconMini repoIcon"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <div
+                                            class="text-reset labelContent"
+                                          >
+                                            halkeye
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                class="d-flex flex-row aling-items-baseline text-truncate"
-                              >
                                 <div
-                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                >
-                                  <small>
-                                    Repo:
-                                  </small>
-                                </div>
-                                <button
-                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                  data-testid="repoLink"
+                                  class="d-flex flex-row aling-items-baseline text-truncate"
                                 >
                                   <div
-                                    class="text-truncate"
+                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                   >
-                                    halkeye
+                                    <small>
+                                      Repo:
+                                    </small>
                                   </div>
-                                </button>
+                                  <button
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                    data-testid="repoLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+                                data-testid="userLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left dropdown"
+                                      data-testid="repoInfoDropdown"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase mr-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="mr-1 repoIconMini repoIcon"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <div
+                                              class="text-reset labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row aling-items-baseline text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <button
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                      data-testid="repoLink"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        halkeye
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase mr-1 ml-3"
+                              >
+                                App Version: 
+                              </span>
+                              1.6.8
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
-                      >
                         <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
+                          class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="mb-2"
                           >
-                            Version: 
-                          </span>
-                          -
-                          <span
-                            class="text-muted text-uppercase mr-1 ml-3"
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                           >
-                            App Version: 
-                          </span>
-                          1.6.8
+                            <img
+                              alt="Icon"
+                              class="icon repoIcon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+                    />
+                    <div
+                      class="d-flex d-md-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-md-0"
                     >
-                      <div
-                        class="mb-2"
+                      <small
+                        class="text-muted text-nowrap date"
                       >
-                        <small
-                          class="text-muted text-nowrap date"
-                        >
-                          Updated Invalid date
-                        </small>
-                      </div>
+                        Updated Invalid date
+                      </small>
                       <div
                         class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                       >
@@ -308,274 +327,272 @@ exports[`RandomPackages creates snapshot 2`] = `
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
-                />
-                <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                  <div
-                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon repoIcon"
-                      src="/static/media/helm-chart.svg"
+                    <div
+                      class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                     />
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-md-end labelsWrapper"
-                />
+                </a>
               </div>
             </div>
             <div
-              class="position-relative mw-100 homeCard card"
+              class="col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
             >
               <div
-                class="card-body d-flex flex-column body"
+                class="card cardWithHover h-100 card"
               >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                <a
+                  class="text-decoration-none text-reset h-100 link"
+                  data-testid="link"
+                  href="/packages/helm/halkeye/undefined"
                 >
                   <div
-                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+                    class="card-body d-flex flex-column h-100 body"
                   >
-                    <a
-                      class="text-decoration-none text-reset link"
-                      data-testid="imageLink"
-                      href="/packages/helm/halkeye/undefined"
-                    >
-                      <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
-                      >
-                        <img
-                          alt="Logo pihole"
-                          class="image"
-                          src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
-                          srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
-                        />
-                      </div>
-                    </a>
                     <div
-                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                      class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="text-truncate card-title mb-0"
+                        class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                         >
-                          <a
-                            class="link text-reset text-truncate"
-                            data-testid="packageLink"
-                            href="/packages/helm/halkeye/undefined"
-                          >
-                            <div
-                              class="text-truncate title"
-                            >
-                              pihole
-                            </div>
-                          </a>
+                          <img
+                            alt="Logo pihole"
+                            class="image"
+                            src="/image/18db8f84-f8a7-4203-9116-60f24d34914f"
+                            srcset="/image/18db8f84-f8a7-4203-9116-60f24d34914f@1x 1x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@2x 2x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@3x 3x, /image/18db8f84-f8a7-4203-9116-60f24d34914f@4x 4x"
+                          />
                         </div>
-                      </div>
-                      <div
-                        class="d-block d-md-none"
-                      >
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="text-truncate card-title mb-0"
                           >
                             <div
-                              class="position-absolute"
+                              class="d-flex flex-row align-items-center"
                             >
                               <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
+                                class="text-truncate title"
                               >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        halkeye
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                pihole
                               </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  halkeye
-                                </div>
-                              </button>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle align-items-baseline subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User: 
-                          </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
-                            data-testid="userLink"
-                          >
-                            <div
-                              class="text-truncate"
-                            >
-                              user
-                            </div>
-                          </button>
                           <div
-                            class="mx50"
+                            class="d-block d-md-none"
                           >
                             <div
-                              class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                              class="card-subtitle align-items-baseline subtitle"
                             >
                               <div
-                                class="position-absolute"
+                                class="d-inline d-md-none text-truncate w-100"
                               >
                                 <div
-                                  class="dropdown-menu dropdown-menu-left dropdown"
-                                  data-testid="repoInfoDropdown"
+                                  class="position-absolute"
                                 >
                                   <div
-                                    class="content"
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="repoInfoDropdown"
                                   >
                                     <div
-                                      class="d-flex flex-column"
+                                      class="content"
                                     >
                                       <div
-                                        class="d-flex flex-row align-items-center"
+                                        class="d-flex flex-column"
                                       >
-                                        <small
-                                          class="text-muted text-uppercase mr-1"
-                                        >
-                                          Repo: 
-                                        </small>
-                                        <img
-                                          alt="Icon"
-                                          class="mr-1 repoIconMini repoIcon"
-                                          src="/static/media/helm-chart.svg"
-                                        />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="d-flex flex-row align-items-center"
                                         >
-                                          halkeye
+                                          <small
+                                            class="text-muted text-uppercase mr-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="mr-1 repoIconMini repoIcon"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <div
+                                            class="text-reset labelContent"
+                                          >
+                                            halkeye
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                class="d-flex flex-row aling-items-baseline text-truncate"
-                              >
                                 <div
-                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                >
-                                  <small>
-                                    Repo:
-                                  </small>
-                                </div>
-                                <button
-                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                  data-testid="repoLink"
+                                  class="d-flex flex-row aling-items-baseline text-truncate"
                                 >
                                   <div
-                                    class="text-truncate"
+                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                   >
-                                    halkeye
+                                    <small>
+                                      Repo:
+                                    </small>
                                   </div>
-                                </button>
+                                  <button
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                    data-testid="repoLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+                                data-testid="userLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left dropdown"
+                                      data-testid="repoInfoDropdown"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase mr-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="mr-1 repoIconMini repoIcon"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <div
+                                              class="text-reset labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row aling-items-baseline text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <button
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                      data-testid="repoLink"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        halkeye
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase mr-1 ml-3"
+                              >
+                                App Version: 
+                              </span>
+                              4.3.2-1
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
-                      >
                         <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
+                          class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="mb-2"
                           >
-                            Version: 
-                          </span>
-                          -
-                          <span
-                            class="text-muted text-uppercase mr-1 ml-3"
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                           >
-                            App Version: 
-                          </span>
-                          4.3.2-1
+                            <img
+                              alt="Icon"
+                              class="icon repoIcon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+                    />
+                    <div
+                      class="d-flex d-md-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-md-0"
                     >
-                      <div
-                        class="mb-2"
+                      <small
+                        class="text-muted text-nowrap date"
                       >
-                        <small
-                          class="text-muted text-nowrap date"
-                        >
-                          Updated Invalid date
-                        </small>
-                      </div>
+                        Updated Invalid date
+                      </small>
                       <div
                         class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                       >
@@ -586,273 +603,271 @@ exports[`RandomPackages creates snapshot 2`] = `
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
-                />
-                <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                  <div
-                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon repoIcon"
-                      src="/static/media/helm-chart.svg"
+                    <div
+                      class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                     />
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-md-end labelsWrapper"
-                />
+                </a>
               </div>
             </div>
             <div
-              class="position-relative mw-100 homeCard card"
+              class="col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
             >
               <div
-                class="card-body d-flex flex-column body"
+                class="card cardWithHover h-100 card"
               >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                <a
+                  class="text-decoration-none text-reset h-100 link"
+                  data-testid="link"
+                  href="/packages/helm/gabibbo97/undefined"
                 >
                   <div
-                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+                    class="card-body d-flex flex-column h-100 body"
                   >
-                    <a
-                      class="text-decoration-none text-reset link"
-                      data-testid="imageLink"
-                      href="/packages/helm/gabibbo97/undefined"
-                    >
-                      <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
-                      >
-                        <img
-                          alt="Logo fcgi-nginx-frontend"
-                          class="image"
-                          src="/static/media/placeholder_pkg_helm.png"
-                        />
-                      </div>
-                    </a>
                     <div
-                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                      class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="text-truncate card-title mb-0"
+                        class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                         >
-                          <a
-                            class="link text-reset text-truncate"
-                            data-testid="packageLink"
-                            href="/packages/helm/gabibbo97/undefined"
-                          >
-                            <div
-                              class="text-truncate title"
-                            >
-                              fcgi-nginx-frontend
-                            </div>
-                          </a>
+                          <img
+                            alt="Logo fcgi-nginx-frontend"
+                            class="image"
+                            src="/static/media/placeholder_pkg_helm.png"
+                          />
                         </div>
-                      </div>
-                      <div
-                        class="d-block d-md-none"
-                      >
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="text-truncate card-title mb-0"
                           >
                             <div
-                              class="position-absolute"
+                              class="d-flex flex-row align-items-center"
                             >
                               <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
+                                class="text-truncate title"
+                              >
+                                fcgi-nginx-frontend
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
                               >
                                 <div
-                                  class="content"
+                                  class="position-absolute"
                                 >
                                   <div
-                                    class="d-flex flex-column"
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="repoInfoDropdown"
                                   >
                                     <div
-                                      class="d-flex flex-row align-items-center"
+                                      class="content"
                                     >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
                                       <div
-                                        class="text-reset labelContent"
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase mr-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="mr-1 repoIconMini repoIcon"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <div
+                                            class="text-reset labelContent"
+                                          >
+                                            gabibbo97
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row aling-items-baseline text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <button
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                    data-testid="repoLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      gabibbo97
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+                                data-testid="userLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user1
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left dropdown"
+                                      data-testid="repoInfoDropdown"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase mr-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="mr-1 repoIconMini repoIcon"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <div
+                                              class="text-reset labelContent"
+                                            >
+                                              gabibbo97
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row aling-items-baseline text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <button
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                      data-testid="repoLink"
+                                    >
+                                      <div
+                                        class="text-truncate"
                                       >
                                         gabibbo97
                                       </div>
-                                    </div>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  gabibbo97
-                                </div>
-                              </button>
-                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle align-items-baseline subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User: 
-                          </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
-                            data-testid="userLink"
-                          >
-                            <div
-                              class="text-truncate"
-                            >
-                              user1
-                            </div>
-                          </button>
                           <div
-                            class="mx50"
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                           >
                             <div
-                              class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                              class="d-flex flex-row align-items-baseline text-truncate"
                             >
-                              <div
-                                class="position-absolute"
+                              <span
+                                class="text-muted text-uppercase mr-1"
                               >
-                                <div
-                                  class="dropdown-menu dropdown-menu-left dropdown"
-                                  data-testid="repoInfoDropdown"
-                                >
-                                  <div
-                                    class="content"
-                                  >
-                                    <div
-                                      class="d-flex flex-column"
-                                    >
-                                      <div
-                                        class="d-flex flex-row align-items-center"
-                                      >
-                                        <small
-                                          class="text-muted text-uppercase mr-1"
-                                        >
-                                          Repo: 
-                                        </small>
-                                        <img
-                                          alt="Icon"
-                                          class="mr-1 repoIconMini repoIcon"
-                                          src="/static/media/helm-chart.svg"
-                                        />
-                                        <div
-                                          class="text-reset labelContent"
-                                        >
-                                          gabibbo97
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="d-flex flex-row aling-items-baseline text-truncate"
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase mr-1 ml-3"
                               >
-                                <div
-                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                >
-                                  <small>
-                                    Repo:
-                                  </small>
-                                </div>
-                                <button
-                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                  data-testid="repoLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    gabibbo97
-                                  </div>
-                                </button>
-                              </div>
+                                App Version: 
+                              </span>
+                              1.17.8
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
-                      >
                         <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
+                          class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="mb-2"
                           >
-                            Version: 
-                          </span>
-                          -
-                          <span
-                            class="text-muted text-uppercase mr-1 ml-3"
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                           >
-                            App Version: 
-                          </span>
-                          1.17.8
+                            <img
+                              alt="Icon"
+                              class="icon repoIcon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+                    />
+                    <div
+                      class="d-flex d-md-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-md-0"
                     >
-                      <div
-                        class="mb-2"
+                      <small
+                        class="text-muted text-nowrap date"
                       >
-                        <small
-                          class="text-muted text-nowrap date"
-                        >
-                          Updated Invalid date
-                        </small>
-                      </div>
+                        Updated Invalid date
+                      </small>
                       <div
                         class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                       >
@@ -863,274 +878,272 @@ exports[`RandomPackages creates snapshot 2`] = `
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
-                />
-                <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                  <div
-                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon repoIcon"
-                      src="/static/media/helm-chart.svg"
+                    <div
+                      class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                     />
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-md-end labelsWrapper"
-                />
+                </a>
               </div>
             </div>
             <div
-              class="position-relative mw-100 homeCard card"
+              class="col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
             >
               <div
-                class="card-body d-flex flex-column body"
+                class="card cardWithHover h-100 card"
               >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                <a
+                  class="text-decoration-none text-reset h-100 link"
+                  data-testid="link"
+                  href="/packages/helm/halkeye/undefined"
                 >
                   <div
-                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+                    class="card-body d-flex flex-column h-100 body"
                   >
-                    <a
-                      class="text-decoration-none text-reset link"
-                      data-testid="imageLink"
-                      href="/packages/helm/halkeye/undefined"
-                    >
-                      <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
-                      >
-                        <img
-                          alt="Logo sevendaysdie"
-                          class="image"
-                          src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
-                          srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
-                        />
-                      </div>
-                    </a>
                     <div
-                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                      class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="text-truncate card-title mb-0"
+                        class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                         >
-                          <a
-                            class="link text-reset text-truncate"
-                            data-testid="packageLink"
-                            href="/packages/helm/halkeye/undefined"
-                          >
-                            <div
-                              class="text-truncate title"
-                            >
-                              sevendaysdie
-                            </div>
-                          </a>
+                          <img
+                            alt="Logo sevendaysdie"
+                            class="image"
+                            src="/image/56724a8a-d8de-4700-8f23-1cf828220d51"
+                            srcset="/image/56724a8a-d8de-4700-8f23-1cf828220d51@1x 1x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@2x 2x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@3x 3x, /image/56724a8a-d8de-4700-8f23-1cf828220d51@4x 4x"
+                          />
                         </div>
-                      </div>
-                      <div
-                        class="d-block d-md-none"
-                      >
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="text-truncate card-title mb-0"
                           >
                             <div
-                              class="position-absolute"
+                              class="d-flex flex-row align-items-center"
                             >
                               <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
+                                class="text-truncate title"
+                              >
+                                sevendaysdie
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-block d-md-none"
+                          >
+                            <div
+                              class="card-subtitle align-items-baseline subtitle"
+                            >
+                              <div
+                                class="d-inline d-md-none text-truncate w-100"
                               >
                                 <div
-                                  class="content"
+                                  class="position-absolute"
                                 >
                                   <div
-                                    class="d-flex flex-column"
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="repoInfoDropdown"
                                   >
                                     <div
-                                      class="d-flex flex-row align-items-center"
+                                      class="content"
                                     >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
                                       <div
-                                        class="text-reset labelContent"
+                                        class="d-flex flex-column"
+                                      >
+                                        <div
+                                          class="d-flex flex-row align-items-center"
+                                        >
+                                          <small
+                                            class="text-muted text-uppercase mr-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="mr-1 repoIconMini repoIcon"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <div
+                                            class="text-reset labelContent"
+                                          >
+                                            halkeye
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex flex-row aling-items-baseline text-truncate"
+                                >
+                                  <div
+                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                  >
+                                    <small>
+                                      Repo:
+                                    </small>
+                                  </div>
+                                  <button
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                    data-testid="repoLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      halkeye
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+                                data-testid="userLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left dropdown"
+                                      data-testid="repoInfoDropdown"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase mr-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="mr-1 repoIconMini repoIcon"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <div
+                                              class="text-reset labelContent"
+                                            >
+                                              halkeye
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row aling-items-baseline text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <button
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                      data-testid="repoLink"
+                                    >
+                                      <div
+                                        class="text-truncate"
                                       >
                                         halkeye
                                       </div>
-                                    </div>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  halkeye
-                                </div>
-                              </button>
-                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle align-items-baseline subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User: 
-                          </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
-                            data-testid="userLink"
-                          >
-                            <div
-                              class="text-truncate"
-                            >
-                              user
-                            </div>
-                          </button>
                           <div
-                            class="mx50"
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
                           >
                             <div
-                              class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                              class="d-flex flex-row align-items-baseline text-truncate"
                             >
-                              <div
-                                class="position-absolute"
+                              <span
+                                class="text-muted text-uppercase mr-1"
                               >
-                                <div
-                                  class="dropdown-menu dropdown-menu-left dropdown"
-                                  data-testid="repoInfoDropdown"
-                                >
-                                  <div
-                                    class="content"
-                                  >
-                                    <div
-                                      class="d-flex flex-column"
-                                    >
-                                      <div
-                                        class="d-flex flex-row align-items-center"
-                                      >
-                                        <small
-                                          class="text-muted text-uppercase mr-1"
-                                        >
-                                          Repo: 
-                                        </small>
-                                        <img
-                                          alt="Icon"
-                                          class="mr-1 repoIconMini repoIcon"
-                                          src="/static/media/helm-chart.svg"
-                                        />
-                                        <div
-                                          class="text-reset labelContent"
-                                        >
-                                          halkeye
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="d-flex flex-row aling-items-baseline text-truncate"
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase mr-1 ml-3"
                               >
-                                <div
-                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                >
-                                  <small>
-                                    Repo:
-                                  </small>
-                                </div>
-                                <button
-                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                  data-testid="repoLink"
-                                >
-                                  <div
-                                    class="text-truncate"
-                                  >
-                                    halkeye
-                                  </div>
-                                </button>
-                              </div>
+                                App Version: 
+                              </span>
+                              latest
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
-                      >
                         <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
+                          class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="mb-2"
                           >
-                            Version: 
-                          </span>
-                          -
-                          <span
-                            class="text-muted text-uppercase mr-1 ml-3"
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                           >
-                            App Version: 
-                          </span>
-                          latest
+                            <img
+                              alt="Icon"
+                              class="icon repoIcon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+                    />
+                    <div
+                      class="d-flex d-md-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-md-0"
                     >
-                      <div
-                        class="mb-2"
+                      <small
+                        class="text-muted text-nowrap date"
                       >
-                        <small
-                          class="text-muted text-nowrap date"
-                        >
-                          Updated Invalid date
-                        </small>
-                      </div>
+                        Updated Invalid date
+                      </small>
                       <div
                         class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                       >
@@ -1141,274 +1154,272 @@ exports[`RandomPackages creates snapshot 2`] = `
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
-                />
-                <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                  <div
-                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon repoIcon"
-                      src="/static/media/helm-chart.svg"
+                    <div
+                      class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                     />
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-md-end labelsWrapper"
-                />
+                </a>
               </div>
             </div>
             <div
-              class="position-relative mw-100 homeCard card"
+              class="col-12 col-xxl-5 py-sm-3 py-2 px-0 px-xxl-3 position-relative "
             >
               <div
-                class="card-body d-flex flex-column body"
+                class="card cardWithHover h-100 card"
               >
-                <div
-                  class="d-flex align-items-start justify-content-between flex-grow-1 mw-100"
+                <a
+                  class="text-decoration-none text-reset h-100 link"
+                  data-testid="link"
+                  href="/packages/helm/billimek/undefined"
                 >
                   <div
-                    class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
+                    class="card-body d-flex flex-column h-100 body"
                   >
-                    <a
-                      class="text-decoration-none text-reset link"
-                      data-testid="imageLink"
-                      href="/packages/helm/billimek/undefined"
-                    >
-                      <div
-                        class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
-                      >
-                        <img
-                          alt="Logo digitalocean-dyndns"
-                          class="image"
-                          src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
-                          srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
-                        />
-                      </div>
-                    </a>
                     <div
-                      class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
+                      class="d-flex align-items-start justify-content-between mw-100"
                     >
                       <div
-                        class="text-truncate card-title mb-0"
+                        class="d-flex align-items-strecht flex-grow-1 h-100 truncateWrapper"
                       >
                         <div
-                          class="d-flex flex-row align-items-center"
+                          class="d-flex align-items-center justify-content-center overflow-hidden rounded-circle p-1 imageWrapper imageWrapper"
                         >
-                          <a
-                            class="link text-reset text-truncate"
-                            data-testid="packageLink"
-                            href="/packages/helm/billimek/undefined"
-                          >
-                            <div
-                              class="text-truncate title"
-                            >
-                              digitalocean-dyndns
-                            </div>
-                          </a>
+                          <img
+                            alt="Logo digitalocean-dyndns"
+                            class="image"
+                            src="/image/2fbaacae-e538-4706-a9fc-bcf443218af1"
+                            srcset="/image/2fbaacae-e538-4706-a9fc-bcf443218af1@1x 1x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@2x 2x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@3x 3x, /image/2fbaacae-e538-4706-a9fc-bcf443218af1@4x 4x"
+                          />
                         </div>
-                      </div>
-                      <div
-                        class="d-block d-md-none"
-                      >
                         <div
-                          class="card-subtitle align-items-baseline subtitle"
+                          class="d-flex flex-column justify-content-between ml-3 my-1 my-md-0 flex-grow-1 truncateWrapper titleWrapper"
                         >
                           <div
-                            class="d-inline d-md-none text-truncate w-100"
+                            class="text-truncate card-title mb-0"
                           >
                             <div
-                              class="position-absolute"
+                              class="d-flex flex-row align-items-center"
                             >
                               <div
-                                class="dropdown-menu dropdown-menu-left dropdown"
-                                data-testid="repoInfoDropdown"
+                                class="text-truncate title"
                               >
-                                <div
-                                  class="content"
-                                >
-                                  <div
-                                    class="d-flex flex-column"
-                                  >
-                                    <div
-                                      class="d-flex flex-row align-items-center"
-                                    >
-                                      <small
-                                        class="text-muted text-uppercase mr-1"
-                                      >
-                                        Repo: 
-                                      </small>
-                                      <img
-                                        alt="Icon"
-                                        class="mr-1 repoIconMini repoIcon"
-                                        src="/static/media/helm-chart.svg"
-                                      />
-                                      <div
-                                        class="text-reset labelContent"
-                                      >
-                                        billimek
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                digitalocean-dyndns
                               </div>
-                            </div>
-                            <div
-                              class="d-flex flex-row aling-items-baseline text-truncate"
-                            >
-                              <div
-                                class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                              >
-                                <small>
-                                  Repo:
-                                </small>
-                              </div>
-                              <button
-                                class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                data-testid="repoLink"
-                              >
-                                <div
-                                  class="text-truncate"
-                                >
-                                  billimek
-                                </div>
-                              </button>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle align-items-baseline subtitle"
-                      >
-                        <div
-                          class="d-flex flex-row align-items-baseline"
-                        >
-                          <span
-                            class="text-muted text-uppercase mr-1"
-                          >
-                            User: 
-                          </span>
-                          <button
-                            class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
-                            data-testid="userLink"
-                          >
-                            <div
-                              class="text-truncate"
-                            >
-                              user2
-                            </div>
-                          </button>
                           <div
-                            class="mx50"
+                            class="d-block d-md-none"
                           >
                             <div
-                              class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                              class="card-subtitle align-items-baseline subtitle"
                             >
                               <div
-                                class="position-absolute"
+                                class="d-inline d-md-none text-truncate w-100"
                               >
                                 <div
-                                  class="dropdown-menu dropdown-menu-left dropdown"
-                                  data-testid="repoInfoDropdown"
+                                  class="position-absolute"
                                 >
                                   <div
-                                    class="content"
+                                    class="dropdown-menu dropdown-menu-left dropdown"
+                                    data-testid="repoInfoDropdown"
                                   >
                                     <div
-                                      class="d-flex flex-column"
+                                      class="content"
                                     >
                                       <div
-                                        class="d-flex flex-row align-items-center"
+                                        class="d-flex flex-column"
                                       >
-                                        <small
-                                          class="text-muted text-uppercase mr-1"
-                                        >
-                                          Repo: 
-                                        </small>
-                                        <img
-                                          alt="Icon"
-                                          class="mr-1 repoIconMini repoIcon"
-                                          src="/static/media/helm-chart.svg"
-                                        />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="d-flex flex-row align-items-center"
                                         >
-                                          billimek
+                                          <small
+                                            class="text-muted text-uppercase mr-1"
+                                          >
+                                            Repo: 
+                                          </small>
+                                          <img
+                                            alt="Icon"
+                                            class="mr-1 repoIconMini repoIcon"
+                                            src="/static/media/helm-chart.svg"
+                                          />
+                                          <div
+                                            class="text-reset labelContent"
+                                          >
+                                            billimek
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                class="d-flex flex-row aling-items-baseline text-truncate"
-                              >
                                 <div
-                                  class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
-                                >
-                                  <small>
-                                    Repo:
-                                  </small>
-                                </div>
-                                <button
-                                  class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
-                                  data-testid="repoLink"
+                                  class="d-flex flex-row aling-items-baseline text-truncate"
                                 >
                                   <div
-                                    class="text-truncate"
+                                    class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
                                   >
-                                    billimek
+                                    <small>
+                                      Repo:
+                                    </small>
                                   </div>
-                                </button>
+                                  <button
+                                    class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                    data-testid="repoLink"
+                                  >
+                                    <div
+                                      class="text-truncate"
+                                    >
+                                      billimek
+                                    </div>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          <div
+                            class="d-none d-md-block card-subtitle align-items-baseline subtitle"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                User: 
+                              </span>
+                              <button
+                                class="p-0 border-0 text-truncate text-dark mw-100 link mx50"
+                                data-testid="userLink"
+                              >
+                                <div
+                                  class="text-truncate"
+                                >
+                                  user2
+                                </div>
+                              </button>
+                              <div
+                                class="mx50"
+                              >
+                                <div
+                                  class="d-flex flex-row align-items-baseline ml-3 truncateWrapper"
+                                >
+                                  <div
+                                    class="position-absolute"
+                                  >
+                                    <div
+                                      class="dropdown-menu dropdown-menu-left dropdown"
+                                      data-testid="repoInfoDropdown"
+                                    >
+                                      <div
+                                        class="content"
+                                      >
+                                        <div
+                                          class="d-flex flex-column"
+                                        >
+                                          <div
+                                            class="d-flex flex-row align-items-center"
+                                          >
+                                            <small
+                                              class="text-muted text-uppercase mr-1"
+                                            >
+                                              Repo: 
+                                            </small>
+                                            <img
+                                              alt="Icon"
+                                              class="mr-1 repoIconMini repoIcon"
+                                              src="/static/media/helm-chart.svg"
+                                            />
+                                            <div
+                                              class="text-reset labelContent"
+                                            >
+                                              billimek
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex flex-row aling-items-baseline text-truncate"
+                                  >
+                                    <div
+                                      class="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase"
+                                    >
+                                      <small>
+                                        Repo:
+                                      </small>
+                                    </div>
+                                    <button
+                                      class="d-flex flex-row p-0 border-0 text-dark text-truncate link"
+                                      data-testid="repoLink"
+                                    >
+                                      <div
+                                        class="text-truncate"
+                                      >
+                                        billimek
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
+                          >
+                            <div
+                              class="d-flex flex-row align-items-baseline text-truncate"
+                            >
+                              <span
+                                class="text-muted text-uppercase mr-1"
+                              >
+                                Version: 
+                              </span>
+                              -
+                              <span
+                                class="text-muted text-uppercase mr-1 ml-3"
+                              >
+                                App Version: 
+                              </span>
+                              1.0
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        class="d-none d-md-block card-subtitle text-truncate align-items-baseline subtitle lastLine"
-                      >
                         <div
-                          class="d-flex flex-row align-items-baseline text-truncate"
+                          class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
                         >
-                          <span
-                            class="text-muted text-uppercase mr-1"
+                          <div
+                            class="mb-2"
                           >
-                            Version: 
-                          </span>
-                          -
-                          <span
-                            class="text-muted text-uppercase mr-1 ml-3"
+                            <small
+                              class="text-muted text-nowrap date"
+                            >
+                              Updated Invalid date
+                            </small>
+                          </div>
+                          <div
+                            class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                           >
-                            App Version: 
-                          </span>
-                          1.0
+                            <img
+                              alt="Icon"
+                              class="icon repoIcon"
+                              src="/static/media/helm-chart.svg"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div
-                      class="d-none d-md-flex flex-column align-items-end mb-auto ml-3"
+                      class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
+                    />
+                    <div
+                      class="d-flex d-md-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-md-0"
                     >
-                      <div
-                        class="mb-2"
+                      <small
+                        class="text-muted text-nowrap date"
                       >
-                        <small
-                          class="text-muted text-nowrap date"
-                        >
-                          Updated Invalid date
-                        </small>
-                      </div>
+                        Updated Invalid date
+                      </small>
                       <div
                         class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
                       >
@@ -1419,32 +1430,11 @@ exports[`RandomPackages creates snapshot 2`] = `
                         />
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="mb-0 mb-md-1 mt-3 overflow-hidden description lineClamp"
-                />
-                <div
-                  class="d-flex d-md-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-md-0"
-                >
-                  <small
-                    class="text-muted text-nowrap date"
-                  >
-                    Updated Invalid date
-                  </small>
-                  <div
-                    class="align-self-start d-flex align-items-center text-uppercase ml-auto kind"
-                  >
-                    <img
-                      alt="Icon"
-                      class="icon repoIcon"
-                      src="/static/media/helm-chart.svg"
+                    <div
+                      class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
                     />
                   </div>
-                </div>
-                <div
-                  class="d-flex flex-wrap justify-content-md-end labelsWrapper"
-                />
+                </a>
               </div>
             </div>
           </div>

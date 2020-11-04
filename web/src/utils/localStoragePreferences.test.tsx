@@ -2,7 +2,7 @@ import lsPreferences from './localStoragePreferences';
 
 const defaultPrefs = {
   controlPanel: {},
-  search: { limit: 15 },
+  search: { limit: 20 },
   theme: {
     configured: 'light',
     automatic: false,
@@ -10,7 +10,7 @@ const defaultPrefs = {
 };
 const initialUserPrefs = {
   controlPanel: {},
-  search: { limit: 50 },
+  search: { limit: 60 },
   theme: {
     configured: 'light',
     automatic: false,
@@ -35,7 +35,7 @@ describe('localStoragePreferences', () => {
     expect(lsPreferences.getPrefs('user1')).toStrictEqual(initialUserPrefs);
     const userPrefs = {
       controlPanel: { selectedOrg: 'testorg' },
-      search: { limit: 25 },
+      search: { limit: 60 },
       theme: {
         configured: 'light',
         automatic: false,

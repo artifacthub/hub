@@ -115,7 +115,7 @@ const WebhooksSection = (props: Props) => {
                         )}
                       </NoData>
                     ) : (
-                      <div className="list-group mt-4 mt-md-5">
+                      <div className="row mt-3 mt-md-4">
                         {webhooks.map((webhook: Webhook) => (
                           <WebhookCard
                             key={`member_${webhook.name}`}

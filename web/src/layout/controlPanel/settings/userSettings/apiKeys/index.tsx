@@ -72,7 +72,7 @@ const APIKeysSection = (props: Props) => {
             </div>
           </div>
 
-          <div className={`mx-auto mt-4 mt-md-5 ${styles.wrapper}`}>
+          <div className="mt-4">
             {!isUndefined(apiKeysList) && (
               <div className="mt-4 mt-md-5">
                 {apiKeysList.length === 0 ? (
@@ -98,7 +98,7 @@ const APIKeysSection = (props: Props) => {
                     )}
                   </NoData>
                 ) : (
-                  <div className="list-group mt-4 mt-md-5" data-testid="apiKeysList">
+                  <div className="row mt-4 mt-md-5" data-testid="apiKeysList">
                     {apiKeysList.map((apiKey: APIKey) => (
                       <APIKeyCard
                         key={apiKey.apiKeyId!}

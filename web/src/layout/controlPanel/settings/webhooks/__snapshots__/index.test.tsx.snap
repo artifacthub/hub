@@ -176,10 +176,10 @@ exports[`WebhooksSection renders correctly 2`] = `
             Webhooks notify external services when certain events happen.
           </p>
           <div
-            class="list-group mt-4 mt-md-5"
+            class="row mt-3 mt-md-4"
           >
             <div
-              class="mb-3"
+              class="col-12 col-xxl-6 py-sm-3 py-2"
               role="listitem"
             >
               <div
@@ -319,7 +319,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               </div>
             </div>
             <div
-              class="mb-3"
+              class="col-12 col-xxl-6 py-sm-3 py-2"
               role="listitem"
             >
               <div
@@ -459,7 +459,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               </div>
             </div>
             <div
-              class="mb-3"
+              class="col-12 col-xxl-6 py-sm-3 py-2"
               role="listitem"
             >
               <div
@@ -597,7 +597,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               </div>
             </div>
             <div
-              class="mb-3"
+              class="col-12 col-xxl-6 py-sm-3 py-2"
               role="listitem"
             >
               <div
@@ -737,7 +737,7 @@ exports[`WebhooksSection renders correctly 2`] = `
               </div>
             </div>
             <div
-              class="mb-3"
+              class="col-12 col-xxl-6 py-sm-3 py-2"
               role="listitem"
             >
               <div

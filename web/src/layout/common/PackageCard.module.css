@@ -102,6 +102,12 @@
   }
 }
 
+@media only screen and (min-width: 768px) {
+  .card {
+    min-height: 215px;
+  }
+}
+
 @media (hover: hover) {
   .link:hover {
     text-decoration: underline;

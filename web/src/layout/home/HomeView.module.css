@@ -87,3 +87,13 @@
     width: 90px;
   }
 }
+
+@media only screen and (min-width: 1920px) {
+  .secondLine::before {
+    content: '\00a0 ';
+  }
+
+  .search {
+    max-width: 750px;
+  }
+}

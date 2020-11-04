@@ -56,7 +56,7 @@ const mockCtx = {
   user: { alias: 'test', email: 'test@test.com' },
   prefs: {
     controlPanel: {},
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,

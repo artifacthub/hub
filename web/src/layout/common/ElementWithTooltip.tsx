@@ -58,7 +58,7 @@ const ElementWithTooltip = (props: Props) => {
 
       {props.visibleTooltip && visibleTooltipStatus && (
         <div
-          className={classnames('position-absolute', {
+          className={classnames('position-absolute d-none d-md-block', {
             [styles.rightAligned]: !isUndefined(props.alignmentTooltip) && props.alignmentTooltip === 'right',
           })}
         >

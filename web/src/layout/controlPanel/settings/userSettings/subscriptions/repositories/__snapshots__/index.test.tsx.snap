@@ -163,297 +163,305 @@ exports[`RepositoriesSection renders correctly 2`] = `
       <div
         class="mt-4 mt-md-5"
       >
-        <table
-          class="table table-bordered table-hover table"
-          data-testid="repositoriesList"
+        <div
+          class="row"
         >
-          <thead>
-            <tr
-              class="table-primary tableTitle"
+          <div
+            class="col-12 col-xxl-10"
+          >
+            <table
+              class="table table-bordered table-hover table"
+              data-testid="repositoriesList"
             >
-              <th
-                class="align-middle text-center d-none d-sm-table-cell fitCell"
-                scope="col"
-              >
-                Kind
-              </th>
-              <th
-                class="align-middle text-center w-50"
-                scope="col"
-              >
-                Repository
-              </th>
-              <th
-                class="align-middle text-center w-50 d-none d-sm-table-cell"
-                scope="col"
-              >
-                Publisher
-              </th>
-              <th
-                class="align-middle text-nowrap fitCell"
-                scope="col"
-              >
-                <div
-                  class="d-flex flex-row align-items-center justify-content-center"
+              <thead>
+                <tr
+                  class="table-primary tableTitle"
                 >
-                  <svg
-                    baseProfile="tiny"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    version="1.2"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <th
+                    class="align-middle text-center d-none d-sm-table-cell fitCell"
+                    scope="col"
                   >
-                    <path
-                      d="M21.171 15.398l-5.912-9.854c-.776-1.293-1.963-2.033-3.259-2.033s-2.483.74-3.259 2.031l-5.912 9.856c-.786 1.309-.872 2.705-.235 3.83.636 1.126 1.878 1.772 3.406 1.772h12c1.528 0 2.77-.646 3.406-1.771.637-1.125.551-2.521-.235-3.831zm-9.171 2.151c-.854 0-1.55-.695-1.55-1.549 0-.855.695-1.551 1.55-1.551s1.55.696 1.55 1.551c0 .854-.696 1.549-1.55 1.549zm1.633-7.424c-.011.031-1.401 3.468-1.401 3.468-.038.094-.13.156-.231.156s-.193-.062-.231-.156l-1.391-3.438c-.09-.233-.129-.443-.129-.655 0-.965.785-1.75 1.75-1.75s1.75.785 1.75 1.75c0 .212-.039.422-.117.625z"
+                    Kind
+                  </th>
+                  <th
+                    class="align-middle w-50"
+                    scope="col"
+                  >
+                    Repository
+                  </th>
+                  <th
+                    class="align-middle w-50 d-none d-sm-table-cell"
+                    scope="col"
+                  >
+                    Publisher
+                  </th>
+                  <th
+                    class="align-middle text-nowrap fitCell"
+                    scope="col"
+                  >
+                    <div
+                      class="d-flex flex-row align-items-center justify-content-center"
+                    >
+                      <svg
+                        baseProfile="tiny"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        version="1.2"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M21.171 15.398l-5.912-9.854c-.776-1.293-1.963-2.033-3.259-2.033s-2.483.74-3.259 2.031l-5.912 9.856c-.786 1.309-.872 2.705-.235 3.83.636 1.126 1.878 1.772 3.406 1.772h12c1.528 0 2.77-.646 3.406-1.771.637-1.125.551-2.521-.235-3.831zm-9.171 2.151c-.854 0-1.55-.695-1.55-1.549 0-.855.695-1.551 1.55-1.551s1.55.696 1.55 1.551c0 .854-.696 1.549-1.55 1.549zm1.633-7.424c-.011.031-1.401 3.468-1.401 3.468-.038.094-.13.156-.231.156s-.193-.062-.231-.156l-1.391-3.438c-.09-.233-.129-.443-.129-.655 0-.965.785-1.75 1.75-1.75s1.75.785 1.75 1.75c0 .212-.039.422-.117.625z"
+                        />
+                      </svg>
+                      <span
+                        class="d-none d-lg-inline ml-2"
+                      >
+                        Tracking errors
+                      </span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  data-testid="optOutRow"
+                >
+                  <td
+                    class="align-middle text-center d-none d-sm-table-cell"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon repoIcon"
+                      src="/static/media/helm-chart.svg"
                     />
-                  </svg>
-                  <span
-                    class="d-none d-lg-inline ml-2"
+                  </td>
+                  <td
+                    class="align-middle"
                   >
-                    Tracking errors
-                  </span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              data-testid="optOutRow"
-            >
-              <td
-                class="align-middle text-center d-none d-sm-table-cell"
-              >
-                <img
-                  alt="Icon"
-                  class="icon repoIcon"
-                  src="/static/media/helm-chart.svg"
-                />
-              </td>
-              <td
-                class="align-middle"
-              >
-                <div
-                  class="d-flex flex-row align-items-center"
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <a
+                        class="text-dark text-capitalize"
+                        data-testid="repoLink"
+                        href="/packages/search?page=1&repo=adfinis"
+                      >
+                        adfinis
+                      </a>
+                    </div>
+                  </td>
+                  <td
+                    class="align-middle position-relative d-none d-sm-table-cell"
+                  >
+                    <span
+                      class="mx-1 mb-1 tinyIcon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                        />
+                      </svg>
+                    </span>
+                     
+                    <a
+                      class="text-dark"
+                      data-testid="userLink"
+                      href="/packages/search?page=1&user=alias"
+                    >
+                      alias
+                    </a>
+                  </td>
+                  <td
+                    class="align-middle text-center"
+                  >
+                    <div
+                      class="custom-control custom-switch ml-2"
+                    >
+                      <input
+                        checked=""
+                        class="custom-control-input checkbox"
+                        data-testid="87234sf-dfgdfgfe5-tyreh7i68_trackingErrors_input"
+                        id="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2"
+                        type="checkbox"
+                      />
+                      <label
+                        class="custom-control-label"
+                        data-testid="87234sf-dfgdfgfe5-tyreh7i68_trackingErrors_label"
+                        for="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  data-testid="optOutRow"
                 >
-                  <a
-                    class="text-dark text-capitalize"
-                    data-testid="repoLink"
-                    href="/packages/search?page=1&repo=adfinis"
+                  <td
+                    class="align-middle text-center d-none d-sm-table-cell"
                   >
-                    adfinis
-                  </a>
-                </div>
-              </td>
-              <td
-                class="align-middle position-relative d-none d-sm-table-cell"
-              >
-                <span
-                  class="mx-1 mb-1 tinyIcon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    <img
+                      alt="Icon"
+                      class="icon repoIcon"
+                      src="/static/media/helm-chart.svg"
                     />
-                  </svg>
-                </span>
-                 
-                <a
-                  class="text-dark"
-                  data-testid="userLink"
-                  href="/packages/search?page=1&user=alias"
-                >
-                  alias
-                </a>
-              </td>
-              <td
-                class="align-middle text-center"
-              >
-                <div
-                  class="custom-control custom-switch ml-2"
-                >
-                  <input
-                    checked=""
-                    class="custom-control-input checkbox"
-                    data-testid="87234sf-dfgdfgfe5-tyreh7i68_trackingErrors_input"
-                    id="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2"
-                    type="checkbox"
-                  />
-                  <label
-                    class="custom-control-label"
-                    data-testid="87234sf-dfgdfgfe5-tyreh7i68_trackingErrors_label"
-                    for="subs_8cf4ae9a-d43c-4abf-86d0-615bb3864db2_2"
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr
-              data-testid="optOutRow"
-            >
-              <td
-                class="align-middle text-center d-none d-sm-table-cell"
-              >
-                <img
-                  alt="Icon"
-                  class="icon repoIcon"
-                  src="/static/media/helm-chart.svg"
-                />
-              </td>
-              <td
-                class="align-middle"
-              >
-                <div
-                  class="d-flex flex-row align-items-center"
-                >
-                  <a
-                    class="text-dark text-capitalize"
-                    data-testid="repoLink"
-                    href="/packages/search?page=1&repo=apache-pulsar-helm-chart-repo"
+                  </td>
+                  <td
+                    class="align-middle"
                   >
-                    apache-pulsar-helm-chart-repo
-                  </a>
-                </div>
-              </td>
-              <td
-                class="align-middle position-relative d-none d-sm-table-cell"
-              >
-                <span
-                  class="mx-1 mb-1 tinyIcon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <a
+                        class="text-dark text-capitalize"
+                        data-testid="repoLink"
+                        href="/packages/search?page=1&repo=apache-pulsar-helm-chart-repo"
+                      >
+                        apache-pulsar-helm-chart-repo
+                      </a>
+                    </div>
+                  </td>
+                  <td
+                    class="align-middle position-relative d-none d-sm-table-cell"
                   >
-                    <path
-                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                    <span
+                      class="mx-1 mb-1 tinyIcon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                        />
+                      </svg>
+                    </span>
+                     
+                    <a
+                      class="text-dark"
+                      data-testid="userLink"
+                      href="/packages/search?page=1&user=alias"
+                    >
+                      alias
+                    </a>
+                  </td>
+                  <td
+                    class="align-middle text-center"
+                  >
+                    <div
+                      class="custom-control custom-switch ml-2"
+                    >
+                      <input
+                        checked=""
+                        class="custom-control-input checkbox"
+                        data-testid="43543trger-gvnmbvf5u6-kjfg-utyiu8_trackingErrors_input"
+                        id="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2"
+                        type="checkbox"
+                      />
+                      <label
+                        class="custom-control-label"
+                        data-testid="43543trger-gvnmbvf5u6-kjfg-utyiu8_trackingErrors_label"
+                        for="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  data-testid="optOutRow"
+                >
+                  <td
+                    class="align-middle text-center d-none d-sm-table-cell"
+                  >
+                    <img
+                      alt="Icon"
+                      class="icon repoIcon"
+                      src="/static/media/helm-chart.svg"
                     />
-                  </svg>
-                </span>
-                 
-                <a
-                  class="text-dark"
-                  data-testid="userLink"
-                  href="/packages/search?page=1&user=alias"
-                >
-                  alias
-                </a>
-              </td>
-              <td
-                class="align-middle text-center"
-              >
-                <div
-                  class="custom-control custom-switch ml-2"
-                >
-                  <input
-                    checked=""
-                    class="custom-control-input checkbox"
-                    data-testid="43543trger-gvnmbvf5u6-kjfg-utyiu8_trackingErrors_input"
-                    id="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2"
-                    type="checkbox"
-                  />
-                  <label
-                    class="custom-control-label"
-                    data-testid="43543trger-gvnmbvf5u6-kjfg-utyiu8_trackingErrors_label"
-                    for="subs_68edcb58-ed11-42e1-953b-e52e3bfac3e5_2"
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr
-              data-testid="optOutRow"
-            >
-              <td
-                class="align-middle text-center d-none d-sm-table-cell"
-              >
-                <img
-                  alt="Icon"
-                  class="icon repoIcon"
-                  src="/static/media/helm-chart.svg"
-                />
-              </td>
-              <td
-                class="align-middle"
-              >
-                <div
-                  class="d-flex flex-row align-items-center"
-                >
-                  <a
-                    class="text-dark text-capitalize"
-                    data-testid="repoLink"
-                    href="/packages/search?page=1&repo=artifact-hub"
+                  </td>
+                  <td
+                    class="align-middle"
                   >
-                    artifact-hub
-                  </a>
-                </div>
-              </td>
-              <td
-                class="align-middle position-relative d-none d-sm-table-cell"
-              >
-                <span
-                  class="mx-1 mb-1 tinyIcon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      class="d-flex flex-row align-items-center"
+                    >
+                      <a
+                        class="text-dark text-capitalize"
+                        data-testid="repoLink"
+                        href="/packages/search?page=1&repo=artifact-hub"
+                      >
+                        artifact-hub
+                      </a>
+                    </div>
+                  </td>
+                  <td
+                    class="align-middle position-relative d-none d-sm-table-cell"
                   >
-                    <path
-                      d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
-                    />
-                  </svg>
-                </span>
-                 
-                <a
-                  class="text-dark"
-                  data-testid="orgLink"
-                  href="/packages/search?page=1&org=artifactHub"
-                >
-                  artifactHub
-                </a>
-              </td>
-              <td
-                class="align-middle text-center"
-              >
-                <div
-                  class="custom-control custom-switch ml-2"
-                >
-                  <input
-                    checked=""
-                    class="custom-control-input checkbox"
-                    data-testid="5trurt4sf-drtyrygfe5-po09rikjtr_trackingErrors_input"
-                    id="subs_a032a436-3568-4970-804a-2780f5e9d231_2"
-                    type="checkbox"
-                  />
-                  <label
-                    class="custom-control-label"
-                    data-testid="5trurt4sf-drtyrygfe5-po09rikjtr_trackingErrors_label"
-                    for="subs_a032a436-3568-4970-804a-2780f5e9d231_2"
-                  />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <span
+                      class="mx-1 mb-1 tinyIcon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"
+                        />
+                      </svg>
+                    </span>
+                     
+                    <a
+                      class="text-dark"
+                      data-testid="orgLink"
+                      href="/packages/search?page=1&org=artifactHub"
+                    >
+                      artifactHub
+                    </a>
+                  </td>
+                  <td
+                    class="align-middle text-center"
+                  >
+                    <div
+                      class="custom-control custom-switch ml-2"
+                    >
+                      <input
+                        checked=""
+                        class="custom-control-input checkbox"
+                        data-testid="5trurt4sf-drtyrygfe5-po09rikjtr_trackingErrors_input"
+                        id="subs_a032a436-3568-4970-804a-2780f5e9d231_2"
+                        type="checkbox"
+                      />
+                      <label
+                        class="custom-control-label"
+                        data-testid="5trurt4sf-drtyrygfe5-po09rikjtr_trackingErrors_label"
+                        for="subs_a032a436-3568-4970-804a-2780f5e9d231_2"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

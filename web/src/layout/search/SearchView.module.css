@@ -52,3 +52,10 @@
     background-color: var(--color-black-15) !important;
   }
 }
+
+@media only screen and (min-width: 1920px) {
+  .sidebar {
+    width: 320px;
+    min-width: 320px;
+  }
+}

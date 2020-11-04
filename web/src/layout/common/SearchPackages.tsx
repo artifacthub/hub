@@ -31,7 +31,7 @@ const SearchPackages = (props: Props) => {
         {
           tsQueryWeb: tsQueryWeb,
           filters: {},
-          limit: 15,
+          limit: 20,
           offset: 0,
         },
         false

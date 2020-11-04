@@ -177,217 +177,222 @@ const RepositoryCard = (props: Props) => {
   }
 
   return (
-    <li className={`list-group-item ${styles.listItem}`} data-testid="repoCard">
-      <div className="d-flex flex-row w-100 justify-content-between">
-        <div className="d-flex flex-row align-items-center mb-1 text-truncate">
-          <div className={`h5 mb-0 mr-3 text-truncate ${styles.titleCard}`}>
-            {props.repository.displayName || props.repository.name}
-          </div>
-
-          <OfficialBadge
-            official={props.repository.official}
-            className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
-          />
-
-          <VerifiedPublisherBadge
-            verifiedPublisher={props.repository.verifiedPublisher}
-            className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
-          />
-        </div>
-
-        {transferModalStatus && (
-          <TransferRepositoryModal
-            open={true}
-            repository={props.repository}
-            onSuccess={props.onSuccess}
-            onAuthError={props.onAuthError}
-            onClose={() => setTransferModalStatus(false)}
-          />
-        )}
-
-        {deletionModalStatus && (
-          <Modal
-            className={`d-inline-block ${styles.modal}`}
-            closeButton={
-              <>
-                <button
-                  className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
-                  onClick={() => setDeletionModalStatus(false)}
-                >
-                  <div className="d-flex flex-row align-items-center">
-                    <IoMdCloseCircle className="mr-2" />
-                    <span>Cancel</span>
-                  </div>
-                </button>
-
-                <button
-                  data-testid="deleteRepoBtn"
-                  className="btn btn-sm btn-danger ml-3"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteRepository();
-                  }}
-                  disabled={isDeleting}
-                >
-                  <div className="d-flex flex-row align-items-center text-uppercase">
-                    {isDeleting ? (
-                      <>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        <span className="ml-2">Deleting...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaTrashAlt className={`mr-2 ${styles.Icon}`} />
-                        <span>Delete</span>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </>
-            }
-            header={<div className={`h3 m-2 ${styles.title}`}>Delete repository</div>}
-            onClose={() => setDeletionModalStatus(false)}
-            open
-          >
-            <div className="mt-3 mw-100 text-center">
-              <p>If you delete this repository all packages belonging to it will be deleted.</p>
-
-              <p>
-                Please note that some other items which depend on your repository, like users subscriptions to packages,
-                will be deleted as well. <span className="font-weight-bold">This operation cannot be undone</span>.
-              </p>
-            </div>
-          </Modal>
-        )}
-
-        {badgeModalStatus && (
-          <BadgeModal
-            repository={props.repository}
-            onClose={() => setBadgeModalStatus(false)}
-            open={badgeModalStatus}
-          />
-        )}
-
-        <div className="ml-auto">
-          <RepositoryIcon kind={props.repository.kind} className={styles.kindIcon} />
-        </div>
-
-        <div className="ml-3">
-          <div
-            ref={dropdownMenu}
-            className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
-              show: dropdownMenuStatus,
-            })}
-          >
-            <div className={`arrow ${styles.arrow}`} />
-
-            <button
-              data-testid="getBadgeBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                setBadgeModalStatus(true);
-              }}
-            >
-              <div className="d-flex flex-row align-items-center">
-                <MdLabel className={`mr-2 ${styles.btnIcon}`} />
-                <span>Get badge</span>
+    <div className="col-12 col-xxl-6 py-sm-3 py-2" data-testid="repoCard">
+      <div className="card h-100">
+        <div className="card-body d-flex flex-column h-100">
+          <div className="d-flex flex-row w-100 justify-content-between">
+            <div className="d-flex flex-row align-items-center mb-1 text-truncate">
+              <div className={`h5 mb-0 mr-3 text-truncate ${styles.titleCard}`}>
+                {props.repository.displayName || props.repository.name}
               </div>
-            </button>
 
-            <ActionBtn
-              testId="transferRepoBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                setTransferModalStatus(true);
-              }}
-              action={AuthorizerAction.TransferOrganizationRepository}
-            >
-              <>
-                <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
-                <span>Transfer</span>
-              </>
-            </ActionBtn>
+              <OfficialBadge
+                official={props.repository.official}
+                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              />
 
-            <ActionBtn
-              testId="updateRepoBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                props.setModalStatus({
-                  open: true,
-                  repository: props.repository,
-                });
-              }}
-              action={AuthorizerAction.UpdateOrganizationRepository}
-            >
-              <>
-                <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
-                <span>Edit</span>
-              </>
-            </ActionBtn>
-
-            <ActionBtn
-              testId="deleteRepoDropdownBtn"
-              className="dropdown-item btn btn-sm rounded-0 text-secondary"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                closeDropdown();
-                setDeletionModalStatus(true);
-              }}
-              action={AuthorizerAction.DeleteOrganizationRepository}
-            >
-              <>
-                <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
-                <span>Delete</span>
-              </>
-            </ActionBtn>
-          </div>
-
-          <button
-            className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
-            onClick={() => setDropdownMenuStatus(true)}
-          >
-            <BsThreeDotsVertical />
-          </button>
-        </div>
-      </div>
-      {!isUndefined(props.repository.repositoryId) && (
-        <div className="mt-2 d-flex flex-row align-items-baseline">
-          <div className="text-truncate">
-            <small className="text-muted text-uppercase mr-1">ID: </small>
-            <small>{props.repository.repositoryId}</small>
-          </div>
-          <div className={`ml-1 ${styles.copyBtn}`}>
-            <div className={`position-absolute ${styles.copyBtnWrapper}`}>
-              <ButtonCopyToClipboard
-                text={props.repository.repositoryId}
-                className="btn-link border-0 text-secondary font-weight-bold"
+              <VerifiedPublisherBadge
+                verifiedPublisher={props.repository.verifiedPublisher}
+                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
               />
             </div>
+
+            {transferModalStatus && (
+              <TransferRepositoryModal
+                open={true}
+                repository={props.repository}
+                onSuccess={props.onSuccess}
+                onAuthError={props.onAuthError}
+                onClose={() => setTransferModalStatus(false)}
+              />
+            )}
+
+            {deletionModalStatus && (
+              <Modal
+                className={`d-inline-block ${styles.modal}`}
+                closeButton={
+                  <>
+                    <button
+                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
+                      onClick={() => setDeletionModalStatus(false)}
+                    >
+                      <div className="d-flex flex-row align-items-center">
+                        <IoMdCloseCircle className="mr-2" />
+                        <span>Cancel</span>
+                      </div>
+                    </button>
+
+                    <button
+                      data-testid="deleteRepoBtn"
+                      className="btn btn-sm btn-danger ml-3"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteRepository();
+                      }}
+                      disabled={isDeleting}
+                    >
+                      <div className="d-flex flex-row align-items-center text-uppercase">
+                        {isDeleting ? (
+                          <>
+                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                            <span className="ml-2">Deleting...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FaTrashAlt className={`mr-2 ${styles.Icon}`} />
+                            <span>Delete</span>
+                          </>
+                        )}
+                      </div>
+                    </button>
+                  </>
+                }
+                header={<div className={`h3 m-2 ${styles.title}`}>Delete repository</div>}
+                onClose={() => setDeletionModalStatus(false)}
+                open
+              >
+                <div className="mt-3 mw-100 text-center">
+                  <p>If you delete this repository all packages belonging to it will be deleted.</p>
+
+                  <p>
+                    Please note that some other items which depend on your repository, like users subscriptions to
+                    packages, will be deleted as well.{' '}
+                    <span className="font-weight-bold">This operation cannot be undone</span>.
+                  </p>
+                </div>
+              </Modal>
+            )}
+
+            {badgeModalStatus && (
+              <BadgeModal
+                repository={props.repository}
+                onClose={() => setBadgeModalStatus(false)}
+                open={badgeModalStatus}
+              />
+            )}
+
+            <div className="ml-auto">
+              <RepositoryIcon kind={props.repository.kind} className={styles.kindIcon} />
+            </div>
+
+            <div className="ml-3">
+              <div
+                ref={dropdownMenu}
+                className={classnames('dropdown-menu dropdown-menu-right p-0', styles.dropdownMenu, {
+                  show: dropdownMenuStatus,
+                })}
+              >
+                <div className={`arrow ${styles.arrow}`} />
+
+                <button
+                  data-testid="getBadgeBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setBadgeModalStatus(true);
+                  }}
+                >
+                  <div className="d-flex flex-row align-items-center">
+                    <MdLabel className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Get badge</span>
+                  </div>
+                </button>
+
+                <ActionBtn
+                  testId="transferRepoBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setTransferModalStatus(true);
+                  }}
+                  action={AuthorizerAction.TransferOrganizationRepository}
+                >
+                  <>
+                    <RiArrowLeftRightLine className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Transfer</span>
+                  </>
+                </ActionBtn>
+
+                <ActionBtn
+                  testId="updateRepoBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    props.setModalStatus({
+                      open: true,
+                      repository: props.repository,
+                    });
+                  }}
+                  action={AuthorizerAction.UpdateOrganizationRepository}
+                >
+                  <>
+                    <FaPencilAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Edit</span>
+                  </>
+                </ActionBtn>
+
+                <ActionBtn
+                  testId="deleteRepoDropdownBtn"
+                  className="dropdown-item btn btn-sm rounded-0 text-secondary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    setDeletionModalStatus(true);
+                  }}
+                  action={AuthorizerAction.DeleteOrganizationRepository}
+                >
+                  <>
+                    <FaTrashAlt className={`mr-2 ${styles.btnIcon}`} />
+                    <span>Delete</span>
+                  </>
+                </ActionBtn>
+              </div>
+
+              <button
+                className={`btn btn-light p-0 text-secondary text-center ${styles.btnDropdown}`}
+                onClick={() => setDropdownMenuStatus(true)}
+              >
+                <BsThreeDotsVertical />
+              </button>
+            </div>
+          </div>
+          {!isUndefined(props.repository.repositoryId) && (
+            <div className="mt-2 d-flex flex-row align-items-baseline">
+              <div className="text-truncate">
+                <small className="text-muted text-uppercase mr-1">ID: </small>
+                <small>{props.repository.repositoryId}</small>
+              </div>
+              <div className={`ml-1 ${styles.copyBtn}`}>
+                <div className={`position-absolute ${styles.copyBtnWrapper}`}>
+                  <ButtonCopyToClipboard
+                    text={props.repository.repositoryId}
+                    className="btn-link border-0 text-secondary font-weight-bold"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="text-truncate">
+            <small className="text-muted text-uppercase mr-1">Url: </small>
+            <small>{props.repository.url}</small>
+          </div>
+          {!isUndefined(props.repository.lastTrackingTs) && (
+            <div>
+              <small className="text-muted text-uppercase mr-1">Last processed: </small>
+              <small>{getLastTracking()}</small>
+            </div>
+          )}
+
+          <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
+            <OfficialBadge official={props.repository.official} className="mr-3" />
+            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} />
           </div>
         </div>
-      )}
-      <div className="text-truncate">
-        <small className="text-muted text-uppercase mr-1">Url: </small>
-        <small>{props.repository.url}</small>
       </div>
-      {!isUndefined(props.repository.lastTrackingTs) && (
-        <div>
-          <small className="text-muted text-uppercase mr-1">Last processed: </small>
-          <small>{getLastTracking()}</small>
-        </div>
-      )}
-
-      <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
-        <OfficialBadge official={props.repository.official} className="mr-3" />
-        <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} />
-      </div>
-    </li>
+    </div>
   );
 };
 

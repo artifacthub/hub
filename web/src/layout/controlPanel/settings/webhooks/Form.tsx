@@ -426,8 +426,10 @@ const WebhookForm = (props: Props) => {
                 and the configured url will be called. At least one package must be selected.
               </small>
             </div>
-            <div className="mb-3">
-              <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} />
+            <div className="mb-3 row">
+              <div className="col-12 col-xxl-8">
+                <SearchPackages disabledPackages={getPackagesIds()} onSelection={addPackage} />
+              </div>
             </div>
 
             {isValidated && selectedPackages.length === 0 && (
@@ -435,72 +437,76 @@ const WebhookForm = (props: Props) => {
             )}
 
             {selectedPackages.length > 0 && (
-              <table className={`table table-hover table-sm ${styles.table}`}>
-                <thead>
-                  <tr className={`table-primary ${styles.tableTitle}`}>
-                    <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
-                    <th scope="col" className="align-middle w-50">
-                      Package
-                    </th>
-                    <th scope="col" className="align-middle w-50">
-                      Publisher
-                    </th>
-                    <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedPackages.map((item: Package) => (
-                    <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
-                      <td className="align-middle text-center d-none d-sm-table-cell">
-                        <RepositoryIcon kind={item.repository.kind} className={`${styles.icon} mx-2`} />
-                      </td>
-                      <td className="align-middle">
-                        <div className="d-flex flex-row align-items-center">
-                          <div
-                            className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
-                          >
-                            <Image
-                              alt={item.displayName || item.name}
-                              imageId={item.logoImageId}
-                              className={styles.image}
-                            />
-                          </div>
+              <div className="row">
+                <div className="col-12 col-xxl-8">
+                  <table className={`table table-hover table-sm ${styles.table}`}>
+                    <thead>
+                      <tr className={`table-primary ${styles.tableTitle}`}>
+                        <th scope="col" className={`align-middle d-none d-sm-table-cell ${styles.fitCell}`}></th>
+                        <th scope="col" className="align-middle w-50">
+                          Package
+                        </th>
+                        <th scope="col" className="align-middle w-50">
+                          Publisher
+                        </th>
+                        <th scope="col" className={`align-middle ${styles.fitCell}`}></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedPackages.map((item: Package) => (
+                        <tr key={`subs_${item.packageId}`} data-testid="packageTableCell">
+                          <td className="align-middle text-center d-none d-sm-table-cell">
+                            <RepositoryIcon kind={item.repository.kind} className={`${styles.icon} mx-2`} />
+                          </td>
+                          <td className="align-middle">
+                            <div className="d-flex flex-row align-items-center">
+                              <div
+                                className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                              >
+                                <Image
+                                  alt={item.displayName || item.name}
+                                  imageId={item.logoImageId}
+                                  className={styles.image}
+                                />
+                              </div>
 
-                          <div className="ml-2 text-dark">{item.displayName || item.name}</div>
-                        </div>
-                      </td>
-                      <td className="align-middle position-relative text-dark">
-                        {item.repository.userAlias ||
-                          item.repository.organizationDisplayName ||
-                          item.repository.organizationName}
+                              <div className="ml-2 text-dark">{item.displayName || item.name}</div>
+                            </div>
+                          </td>
+                          <td className="align-middle position-relative text-dark">
+                            {item.repository.userAlias ||
+                              item.repository.organizationDisplayName ||
+                              item.repository.organizationName}
 
-                        <small className="ml-2">
-                          (
-                          <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
-                            Repo:{' '}
-                          </span>
-                          <span className="text-dark">{item.repository.displayName || item.repository.name}</span>)
-                        </small>
-                      </td>
+                            <small className="ml-2">
+                              (
+                              <span className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                                Repo:{' '}
+                              </span>
+                              <span className="text-dark">{item.repository.displayName || item.repository.name}</span>)
+                            </small>
+                          </td>
 
-                      <td className="align-middle">
-                        <button
-                          data-testid="deletePackageButton"
-                          className={`close text-danger mx-2 ${styles.closeBtn}`}
-                          type="button"
-                          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-                            event.preventDefault();
-                            event.stopPropagation();
-                            deletePackage(item.packageId);
-                          }}
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          <td className="align-middle">
+                            <button
+                              data-testid="deletePackageButton"
+                              className={`close text-danger mx-2 ${styles.closeBtn}`}
+                              type="button"
+                              onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                deletePackage(item.packageId);
+                              }}
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             )}
           </div>
 
@@ -599,86 +605,94 @@ const WebhookForm = (props: Props) => {
               </div>
             )}
 
-            <AutoresizeTextarea
-              name="template"
-              value={template}
-              disabled={payloadKind === PayloadKind.default}
-              required={payloadKind !== PayloadKind.default}
-              invalidText="This field is required"
-              minRows={6}
-              onChange={checkTestAvailability}
-            />
+            <div className="form-row">
+              <div className="col-xxl-8">
+                <AutoresizeTextarea
+                  name="template"
+                  value={template}
+                  disabled={payloadKind === PayloadKind.default}
+                  required={payloadKind !== PayloadKind.default}
+                  invalidText="This field is required"
+                  minRows={6}
+                  onChange={checkTestAvailability}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="mb-3">
             <label className={`font-weight-bold ${styles.label}`} htmlFor="template">
               Variables reference
             </label>
-            <small className="form-text text-muted">
-              <table className={`table table-sm ${styles.variablesTable}`}>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Event.id }}`}</span>
-                    </th>
-                    <td>Id of the event triggering the notification.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
-                    </th>
-                    <td>
-                      Kind of the event triggering notification. At the moment the only possible value is{' '}
-                      <span className="font-weight-bold">package.new-release</span>.
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.name }}`}</span>
-                    </th>
-                    <td>Name of the package.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.version }}`}</span>
-                    </th>
-                    <td>Version of the new release.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.url }}`}</span>
-                    </th>
-                    <td>ArtifactHub URL of the package.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.repository.kind }}`}</span>
-                    </th>
-                    <td>
-                      Kind of the repository associated with the notification. Possible values are{' '}
-                      <span className="font-weight-bold">helm-chart</span>,{' '}
-                      <span className="font-weight-bold">falco-rules</span> and{' '}
-                      <span className="font-weight-bold">opa-policies</span>.
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.repository.name }}`}</span>
-                    </th>
-                    <td>Name of the repository.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <span className="text-nowrap">{`{{ .Package.repository.publisher }}`}</span>
-                    </th>
-                    <td>
-                      Publisher of the repository. If the owner is a user it'll be the user alias. If it's an
-                      organization, it'll be the organization name.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </small>
+            <div className="form-row">
+              <div className="col-xxl-8">
+                <small className="form-text text-muted">
+                  <table className={`table table-sm ${styles.variablesTable}`}>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Event.id }}`}</span>
+                        </th>
+                        <td>Id of the event triggering the notification.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Event.kind }}`}</span>
+                        </th>
+                        <td>
+                          Kind of the event triggering notification. At the moment the only possible value is{' '}
+                          <span className="font-weight-bold">package.new-release</span>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.name }}`}</span>
+                        </th>
+                        <td>Name of the package.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.version }}`}</span>
+                        </th>
+                        <td>Version of the new release.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.url }}`}</span>
+                        </th>
+                        <td>ArtifactHub URL of the package.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.repository.kind }}`}</span>
+                        </th>
+                        <td>
+                          Kind of the repository associated with the notification. Possible values are{' '}
+                          <span className="font-weight-bold">helm-chart</span>,{' '}
+                          <span className="font-weight-bold">falco-rules</span> and{' '}
+                          <span className="font-weight-bold">opa-policies</span>.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.repository.name }}`}</span>
+                        </th>
+                        <td>Name of the repository.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.repository.publisher }}`}</span>
+                        </th>
+                        <td>
+                          Publisher of the repository. If the owner is a user it'll be the user alias. If it's an
+                          organization, it'll be the organization name.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </small>
+              </div>
+            </div>
           </div>
 
           <div className="mt-4 mt-md-5">
