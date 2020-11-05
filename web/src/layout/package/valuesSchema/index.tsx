@@ -26,11 +26,15 @@ const ValuesSchema = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [valuesSchema, setValuesSchema] = useState<JSONSchema | undefined | null>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentVersion, setCurrentVersion] = useState<string>(props.version);
+  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageId);
 
   async function getValuesSchema() {
     try {
       setIsLoading(true);
       const schema = await API.getValuesSchema(props.packageId, props.version);
+      setCurrentPkgId(props.packageId);
+      setCurrentVersion(props.version);
       setValuesSchema(schema);
       setIsLoading(false);
       setOpenStatus(true);
@@ -46,7 +50,7 @@ const ValuesSchema = (props: Props) => {
 
   const onOpenModal = () => {
     if (props.hasValuesSchema) {
-      if (valuesSchema) {
+      if (valuesSchema && props.version === currentVersion && props.packageId === currentPkgId) {
         setOpenStatus(true);
       } else {
         getValuesSchema();

@@ -27,6 +27,7 @@ const ChangelogModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [changelog, setChangelog] = useState<ChangeLog[] | null | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentPkgId, setCurrentPkgId] = useState<string>(props.packageItem.packageId);
 
   useEffect(() => {
     if (props.visibleChangelog && !openStatus) {
@@ -57,6 +58,7 @@ const ChangelogModal = (props: Props) => {
     try {
       setIsLoading(true);
       const changelog = await API.getChangelog(props.packageItem.packageId);
+      setCurrentPkgId(props.packageItem.packageId);
       setChangelog(sortChangelog(changelog));
       setIsLoading(false);
       setOpenStatus(true);
@@ -72,7 +74,7 @@ const ChangelogModal = (props: Props) => {
 
   const onOpenModal = () => {
     if (props.packageItem.hasChangelog) {
-      if (changelog) {
+      if (changelog && props.packageItem.packageId === currentPkgId) {
         setOpenStatus(true);
       } else {
         getChangelog();
