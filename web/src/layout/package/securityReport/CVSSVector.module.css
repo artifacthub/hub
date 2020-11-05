@@ -1,35 +1,41 @@
-.table {
-  border-color: var(--color-black-15);
+.metrics {
+  min-width: 50%;
 }
 
-.table tr:hover {
-  background-color: transparent !important;
+.legend {
+  font-size: 0.8rem;
+  min-width: 150px;
 }
 
-.tableLegend {
+.badge {
+  font-size: 0.75rem;
+  opacity: 0.45;
+  min-width: 110px;
+  border-bottom: 3px solid transparent;
   background-color: var(--color-black-5);
 }
 
 .active {
+  opacity: 1;
   font-weight: bold;
 }
 
 .active0 {
-  color: #4f8500;
-  border-bottom: 3px solid #4f8500;
+  border-color: #4f8500;
 }
 
 .active1 {
-  color: #f1a201;
-  border-bottom: 3px solid #f1a201;
+  border-color: #f1a201;
 }
 
 .active2 {
-  color: #ef6100;
-  border-bottom: 3px solid #ef6100;
+  border-color: #ef6100;
 }
 
 .active3 {
-  color: #d50014;
-  border-bottom: 3px solid #d50014;
+  border-color: #d50014;
+}
+
+.active4 {
+  border-color: #870002;
 }

@@ -25,6 +25,10 @@
   top: -2px;
 }
 
+.xsBadge {
+  font-size: 30%;
+}
+
 .wordBreak {
   word-break: break-word;
 }

@@ -4,10 +4,8 @@ import { isArray, isEmpty, isUndefined } from 'lodash';
 import React from 'react';
 import { BsFillCaretDownFill, BsFillCaretRightFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
-import { FiExternalLink } from 'react-icons/fi';
 
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
-import ExternalLink from '../../common/ExternalLink';
 import styles from './SchemaDefinition.module.css';
 
 interface Prop {
@@ -27,7 +25,6 @@ interface KeywordProp {
   label: string;
   legend?: string;
   value: KeywordProp[] | string;
-  ref?: string;
 }
 
 const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
@@ -136,7 +133,14 @@ const SchemaDefinition = (props: Prop) => {
             <div className="ml-3">
               {Object.keys(value).map((el: string) => (
                 <div key={`it_${el}`} className={`${styles.listItem} position-relative`} data-testid="listItem">
-                  {el}: <span className="text-muted">{value[el].type || '-'}</span>
+                  {el}: <span className="text-muted">{value[el].type || '-'}</span>{' '}
+                  {props.def.required && props.def.required.includes(el) && (
+                    <span
+                      className={`text-success text-uppercase position-relative ml-2 font-weight-bold ${styles.xsBadge}`}
+                    >
+                      Required
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
@@ -195,15 +199,6 @@ const SchemaDefinition = (props: Prop) => {
       >
         <div>
           <small className="text-muted text-uppercase">{item.label}</small>:
-          {item.ref && (
-            <ExternalLink href={item.ref} className="text-reset d-inline-block ml-2">
-              <div className="d-flex flex-arow align-items-center">
-                <small className="ml-1">
-                  <FiExternalLink />
-                </small>
-              </div>
-            </ExternalLink>
-          )}{' '}
         </div>
         {(() => {
           switch (item.value) {
