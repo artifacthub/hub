@@ -41,6 +41,27 @@ There is an extra metadata file that you can add at the root of your repository 
 
 Once you have added your repository, you are all set up. As you add new versions of your charts or even new charts to your repository, they'll be automatically indexed and listed in Artifact Hub.
 
+### OCI experimental support
+
+Artifact Hub is able to process chart repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md). This feature is experimental, and it's subject to change as [some changes to Helm OCI support are coming soon](https://github.com/helm/helm/pull/8843).
+
+To add a repository stored in a OCI registry, the url used **must** follow the following format:
+
+- `oci://ghcr.io/artifacthub/artifact-hub`
+
+The chart name is expected to match the OCI reference basename (`artifact-hub` in this case), and each of the chart versions are expected to match an OCI reference tag, which are expected to be valid *semver* versions. OCI specific installation instructions will be provided in the UI when appropriate (only for Helm v3).
+
+The sample URL shown above is actually valid, so you can give it a try yourself in your own Artifact Hub instance if you wish :)
+
+Please note that there are some features that are not yet available for Helm repositories stored in OCI registries:
+
+- [Verified publisher](#verified-publisher)
+- [Ownership claim](#ownership-claim)
+- Provenance files processing (signed label)
+- Force an existing version to be reindexed by changing its digest
+
+For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
+
 ## OLM operators repositories
 
 OLM operators repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:

@@ -1,9 +1,11 @@
 package helm
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 	"path"
+	"sort"
 	"strings"
 	"sync"
 
@@ -11,14 +13,22 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
+	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"helm.sh/helm/v3/pkg/chart"
 	helmrepo "helm.sh/helm/v3/pkg/repo"
 )
 
-// defaultNumWorkers is the number of workers used when none is provided.
-const defaultNumWorkers = 10
+const (
+	// defaultNumWorkers is the number of workers used when none is provided.
+	defaultNumWorkers = 10
+
+	// ociPrefix represents the prefix expected in the url when the repository
+	// is stored in a OCI registry.
+	ociPrefix = "oci://"
+)
 
 // Tracker is in charge of tracking the packages available in a Helm repository,
 // registering and unregistering them as needed.
@@ -51,6 +61,9 @@ func NewTracker(
 	if t.svc.Il == nil {
 		t.svc.Il = &repo.HelmIndexLoader{}
 	}
+	if t.svc.Tg == nil {
+		t.svc.Tg = &OCITagsGetter{}
+	}
 	return t
 }
 
@@ -70,6 +83,14 @@ func WithIndexLoader(il hub.HelmIndexLoader) func(t tracker.Tracker) {
 	}
 }
 
+// WithOCITagsGetter allows providing a specific OCI tags getter for a Tracker
+// instance.
+func WithOCITagsGetter(tg tracker.OCITagsGetter) func(t tracker.Tracker) {
+	return func(t tracker.Tracker) {
+		t.(*Tracker).svc.Tg = tg
+	}
+}
+
 // Track registers or unregisters the Helm packages available in the repository
 // provided as needed. It is in charge of generating jobs to register or
 // unregister Helm packages and dispatching them among the available workers.
@@ -86,13 +107,6 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		go w.Run(&workersWg, t.queue)
 	}
 
-	// Load repository index file
-	t.logger.Debug().Msg("loading repository index file")
-	indexFile, err := t.svc.Il.LoadIndex(t.r)
-	if err != nil {
-		return fmt.Errorf("error loading repository index file: %w", err)
-	}
-
 	// Load packages already registered from this repository
 	packagesRegistered, err := t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
 	if err != nil {
@@ -102,9 +116,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	// Generate jobs to register available packages when needed
 	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
-	for _, charts := range indexFile.Entries {
-		for i, chartVersion := range charts {
-			md := chartVersion.Metadata
+	charts, err := t.getCharts()
+	if err != nil {
+		return err
+	}
+	for _, chartVersions := range charts {
+		for i, chartVersion := range chartVersions {
 			select {
 			case <-t.svc.Ctx.Done():
 				return nil
@@ -114,6 +131,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			if i == 0 {
 				storeLogo = true
 			}
+			md := chartVersion.Metadata
 			sv, err := semver.NewVersion(md.Version)
 			if err != nil {
 				t.warn(fmt.Errorf("invalid package %s version (%s): %w", md.Name, md.Version, err))
@@ -121,7 +139,8 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			}
 			key := fmt.Sprintf("%s@%s", md.Name, sv.String())
 			packagesAvailable[key] = struct{}{}
-			if bypassDigestCheck || chartVersion.Digest != packagesRegistered[key] {
+			digest, ok := packagesRegistered[key]
+			if !ok || chartVersion.Digest != digest || bypassDigestCheck {
 				t.queue <- &Job{
 					Kind:         Register,
 					ChartVersion: chartVersion,
@@ -156,13 +175,60 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 
 	// Set verified publisher flag if needed
 	u, _ := url.Parse(t.r.URL)
-	u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, u.String())
-	if err != nil {
-		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
+	if repo.SchemeIsHTTP(u) {
+		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+		err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, u.String())
+		if err != nil {
+			t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
+		}
 	}
 
 	return nil
+}
+
+// getCharts returns the charts available in the repository.
+func (t *Tracker) getCharts() (map[string][]*helmrepo.ChartVersion, error) {
+	charts := make(map[string][]*helmrepo.ChartVersion)
+
+	u, _ := url.Parse(t.r.URL)
+	switch u.Scheme {
+	case "http", "https":
+		// Load repository index file
+		t.logger.Debug().Msg("loading repository index file")
+		indexFile, err := t.svc.Il.LoadIndex(t.r)
+		if err != nil {
+			return nil, fmt.Errorf("error loading repository index file: %w", err)
+		}
+
+		// Read available charts versions from index file
+		for name, chartVersions := range indexFile.Entries {
+			for _, chartVersion := range chartVersions {
+				charts[name] = append(charts[name], chartVersion)
+			}
+		}
+	case "oci":
+		// Get package versions available in the repository
+		versions, err := t.svc.Tg.Tags(t.svc.Ctx, strings.TrimPrefix(t.r.URL, ociPrefix))
+		if err != nil {
+			return nil, fmt.Errorf("error getting package's available versions: %w", err)
+		}
+
+		// Prepare chart versions using the list of versions available
+		name := path.Base(t.r.URL)
+		for _, version := range versions {
+			charts[name] = append(charts[name], &helmrepo.ChartVersion{
+				Metadata: &chart.Metadata{
+					Name:    name,
+					Version: version,
+				},
+				URLs: []string{t.r.URL + ":" + version},
+			})
+		}
+	default:
+		return nil, repo.ErrSchemeNotSupported
+	}
+
+	return charts, nil
 }
 
 // warn is a helper that sends the error provided to the errors collector and
@@ -190,4 +256,26 @@ type Job struct {
 	Kind         JobKind
 	ChartVersion *helmrepo.ChartVersion
 	StoreLogo    bool
+}
+
+// OCITagsGetter provides a mechanism to get all the tags available for a given
+// repository in a OCI registry.
+type OCITagsGetter struct{}
+
+// Tags returns a list with the tags available for the provided repository.
+func (tg *OCITagsGetter) Tags(ctx context.Context, rURL string) ([]string, error) {
+	r, err := name.NewRepository(rURL)
+	if err != nil {
+		return nil, err
+	}
+	tags, err := remote.ListWithContext(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+	sort.Slice(tags, func(i, j int) bool {
+		vi, _ := semver.NewVersion(tags[i])
+		vj, _ := semver.NewVersion(tags[j])
+		return vj.LessThan(vi)
+	})
+	return tags, nil
 }

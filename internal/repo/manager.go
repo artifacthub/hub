@@ -48,6 +48,10 @@ var (
 	// ErrInvalidMetadata indicates that the repository metadata is not valid.
 	ErrInvalidMetadata = errors.New("invalid metadata")
 
+	// ErrSchemeNotSupported error indicates that the scheme used in the
+	// repository url is not supported.
+	ErrSchemeNotSupported = errors.New("scheme not supported")
+
 	// GitRepoURLRE is a regexp used to validate and parse a git based
 	// repository URL.
 	GitRepoURLRE = regexp.MustCompile(`^(https:\/\/(github|gitlab)\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)\/?(.*)$`)
@@ -117,6 +121,9 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
+	if !isSchemeSupported(u) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, ErrSchemeNotSupported)
+	}
 	if u.User != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
 	}
@@ -132,7 +139,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 		}
 	}
-	if r.Kind == hub.Helm {
+	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
@@ -536,6 +543,9 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 	}
+	if !isSchemeSupported(u) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, ErrSchemeNotSupported)
+	}
 	if u.User != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
 	}
@@ -551,7 +561,7 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 		}
 	}
-	if r.Kind == hub.Helm {
+	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
 		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
@@ -579,6 +589,23 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 		return hub.ErrInsufficientPrivilege
 	}
 	return err
+}
+
+// SchemeIsHTTP is a helper that checks if the scheme of the url provided is
+// http or https.
+func SchemeIsHTTP(u *url.URL) bool {
+	return u.Scheme == "http" || u.Scheme == "https"
+}
+
+// isSchemeSupported is a helper that checks if the scheme of the url provided
+// is supported.
+func isSchemeSupported(u *url.URL) bool {
+	switch u.Scheme {
+	case "http", "https", "oci":
+		return true
+	default:
+		return false
+	}
 }
 
 // isValidKind checks if the provided repository kind is valid.

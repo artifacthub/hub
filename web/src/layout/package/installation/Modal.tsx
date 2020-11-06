@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
-import { Package, RepositoryKind, SearchFiltersURL } from '../../types';
-import ElementWithTooltip from '../common/ElementWithTooltip';
-import Modal from '../common/Modal';
+import { Package, RepositoryKind, SearchFiltersURL } from '../../../types';
+import ElementWithTooltip from '../../common/ElementWithTooltip';
+import Modal from '../../common/Modal';
+import ModalHeader from '../ModalHeader';
 import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
-import ModalHeader from './ModalHeader';
+import HelmOCIInstall from './HelmOCIInstall';
 import OLMInstall from './OLMInstall';
 import OPAInstall from './OPAInstall';
 
@@ -78,13 +79,23 @@ const InstallationModal = (props: Props) => {
           {(() => {
             switch (props.package!.repository.kind) {
               case RepositoryKind.Helm:
-                return (
-                  <HelmInstall
-                    name={props.package.name}
-                    version={props.package.version}
-                    repository={props.package.repository}
-                  />
-                );
+                if (props.package.repository.url.startsWith('oci://')) {
+                  return (
+                    <HelmOCIInstall
+                      name={props.package.name}
+                      version={props.package.version}
+                      repository={props.package.repository}
+                    />
+                  );
+                } else {
+                  return (
+                    <HelmInstall
+                      name={props.package.name}
+                      version={props.package.version}
+                      repository={props.package.repository}
+                    />
+                  );
+                }
               case RepositoryKind.Falco:
                 return <FalcoInstall normalizedName={props.package.normalizedName!} />;
               case RepositoryKind.OPA:

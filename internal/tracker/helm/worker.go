@@ -1,9 +1,11 @@
 package helm
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"image"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -15,7 +17,12 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/license"
+	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
+	"github.com/containerd/containerd/remotes/docker"
+	"github.com/deislabs/oras/pkg/content"
+	ctxo "github.com/deislabs/oras/pkg/context"
+	"github.com/deislabs/oras/pkg/oras"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/vincent-petithory/dataurl"
@@ -34,6 +41,9 @@ const (
 	maintainersAnnotation          = "artifacthub.io/maintainers"
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
+
+	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
+	helmChartContentLayerMediaType = "application/tar+gzip"
 )
 
 // githubRL represents a rate limiter used when loading charts from Github, to
@@ -105,7 +115,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		w.warn(md, fmt.Errorf("invalid chart url %s: %w", j.ChartVersion.URLs[0], err))
 		return
 	}
-	if !chartURL.IsAbs() {
+	if !chartURL.IsAbs() && repo.SchemeIsHTTP(chartURL) {
 		repoURL, _ := url.Parse(w.r.URL)
 		chartURL.Scheme = repoURL.Scheme
 		chartURL.Host = repoURL.Host
@@ -115,7 +125,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	}
 
 	// Load chart from remote archive
-	chart, err := w.loadChart(chartURL.String())
+	chart, err := w.loadChart(chartURL)
 	if err != nil {
 		w.warn(md, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err))
 		return
@@ -162,11 +172,13 @@ func (w *Worker) handleRegisterJob(j *Job) {
 	if licenseFile != nil {
 		p.License = license.Detect(licenseFile.Data)
 	}
-	hasProvenanceFile, err := w.chartVersionHasProvenanceFile(chartURL.String())
-	if err == nil {
-		p.Signed = hasProvenanceFile
-	} else {
-		w.warn(md, fmt.Errorf("error checking provenance file: %w", err))
+	if repo.SchemeIsHTTP(chartURL) {
+		hasProvenanceFile, err := w.chartVersionHasProvenanceFile(chartURL.String())
+		if err == nil {
+			p.Signed = hasProvenanceFile
+		} else {
+			w.warn(md, fmt.Errorf("error checking provenance file: %w", err))
+		}
 	}
 	var maintainers []*hub.Maintainer
 	for _, entry := range md.Maintainers {
@@ -238,29 +250,69 @@ func (w *Worker) handleUnregisterJob(j *Job) {
 }
 
 // loadChart loads a chart from a remote archive located at the url provided.
-func (w *Worker) loadChart(u string) (*chart.Chart, error) {
-	// Rate limit requests to Github to avoid them being rejected
-	if strings.HasPrefix(u, "https://github.com") {
-		_ = githubRL.Wait(w.svc.Ctx)
-	}
+func (w *Worker) loadChart(u *url.URL) (*chart.Chart, error) {
+	var r io.Reader
 
-	req, _ := http.NewRequest("GET", u, nil)
-	if w.r.AuthUser != "" || w.r.AuthPass != "" {
-		req.SetBasicAuth(w.r.AuthUser, w.r.AuthPass)
-	}
-	resp, err := w.svc.Hc.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode == http.StatusOK {
-		chart, err := loader.LoadArchive(resp.Body)
+	switch u.Scheme {
+	case "http", "https":
+		// Rate limit requests to Github to avoid them being rejected
+		if strings.HasPrefix(u.String(), "https://github.com") {
+			_ = githubRL.Wait(w.svc.Ctx)
+		}
+
+		// Get chart content
+		req, _ := http.NewRequest("GET", u.String(), nil)
+		if w.r.AuthUser != "" || w.r.AuthPass != "" {
+			req.SetBasicAuth(w.r.AuthUser, w.r.AuthPass)
+		}
+		resp, err := w.svc.Hc.Do(req)
 		if err != nil {
 			return nil, err
 		}
-		return chart, nil
+		defer resp.Body.Close()
+		if resp.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+		}
+		r = resp.Body
+	case "oci":
+		// Pull reference layers from OCI registry
+		ref := strings.TrimPrefix(u.String(), ociPrefix)
+		store := content.NewMemoryStore()
+		_, layers, err := oras.Pull(
+			ctxo.WithLoggerDiscarded(w.svc.Ctx),
+			docker.NewResolver(docker.ResolverOptions{}),
+			ref,
+			store,
+			oras.WithPullEmptyNameAllowed(),
+			oras.WithAllowedMediaTypes([]string{helmChartConfigMediaType, helmChartContentLayerMediaType}),
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create reader for Helm chart content layer, if available
+		for _, layer := range layers {
+			if layer.MediaType == helmChartContentLayerMediaType {
+				_, b, ok := store.Get(layer)
+				if ok {
+					r = bytes.NewReader(b)
+					break
+				}
+			}
+		}
+		if r == nil {
+			return nil, errors.New("content layer not found")
+		}
+	default:
+		return nil, repo.ErrSchemeNotSupported
 	}
-	return nil, fmt.Errorf("unexpected status code received: %d", resp.StatusCode)
+
+	// Load chart from reader previously setup
+	chart, err := loader.LoadArchive(r)
+	if err != nil {
+		return nil, err
+	}
+	return chart, nil
 }
 
 // chartVersionHasProvenanceFile checks if a chart version has a provenance

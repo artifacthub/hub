@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { Repository } from '../../types';
+import { Repository } from '../../../types';
 import HelmInstall from './HelmInstall';
 
 const repo: Repository = {

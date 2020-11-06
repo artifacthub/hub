@@ -112,6 +112,16 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
+				"scheme not supported",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "other://repo1.com",
+				},
+				nil,
+			},
+			{
 				"urls with credentials not allowed",
 				"org1",
 				&hub.Repository{
@@ -1336,6 +1346,15 @@ func TestUpdate(t *testing.T) {
 					Kind: hub.Helm,
 					Name: "repo1",
 					URL:  ":::///",
+				},
+				nil,
+			},
+			{
+				"scheme not supported",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "other://repo1.com",
 				},
 				nil,
 			},
