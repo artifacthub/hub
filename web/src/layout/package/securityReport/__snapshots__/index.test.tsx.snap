@@ -181,9 +181,7 @@ exports[`SecurityReport creates snapshot 1`] = `
       <div
         class="d-none d-md-block"
       >
-        <div
-          class="text-center"
-        >
+        <div>
           <button
             class="btn btn-secondary btn-sm"
           >

@@ -190,13 +190,13 @@ describe('index API', () => {
             org: ['org1', 'org2'],
           },
           deprecated: false,
-          limit: 15,
+          limit: 20,
           offset: 0,
         });
 
         expect(fetchMock.mock.calls.length).toEqual(1);
         expect(fetchMock.mock.calls[0][0]).toEqual(
-          '/api/v1/packages/search?facets=true&limit=15&offset=0&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database'
+          '/api/v1/packages/search?facets=true&limit=20&offset=0&kind=0&repo=repo1&repo=repo2&org=org1&org=org2&ts_query_web=database'
         );
         expect(response).toEqual(methods.toCamelCase(search));
       });

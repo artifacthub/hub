@@ -55,7 +55,7 @@ const SecurityRating = (props: Props) => {
         )
       }
       alignmentTooltip="right"
-      tooltipClassName={`d-none d-md-block ${styles.tooltip}`}
+      tooltipClassName={styles.tooltip}
       tooltipArrowClassName={styles.tooltipArrow}
       tooltipMessage={
         <div className="d-flex flex-column">

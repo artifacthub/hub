@@ -160,7 +160,7 @@ const InputTypeahead = (props: Props) => {
         <div
           ref={dropdownRef}
           data-testid="typeaheadDropdown"
-          className={`dropdown-menu p-0 shadow-sm show ${styles.dropdown}`}
+          className={`dropdown-menu p-0 shadow-sm w-100 show ${styles.dropdown}`}
         >
           <div className={`form-group input-group-sm p-1 mb-0 border-bottom ${styles.inputWrapper}`}>
             <input
@@ -182,8 +182,8 @@ const InputTypeahead = (props: Props) => {
                 data-testid="typeaheadClearBtn"
                 className="btn btn-sm btn-block"
                 onClick={() => {
-                  props.onResetSomeFilters(Object.keys(props.selected));
                   collapseDropdown();
+                  props.onResetSomeFilters(Object.keys(props.selected));
                 }}
               >
                 <div className="d-flex flex-row align-items-center text-muted">

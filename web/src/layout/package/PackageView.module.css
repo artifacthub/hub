@@ -192,3 +192,18 @@
     margin-top: -3px;
   }
 }
+
+@media only screen and (min-width: 1920px) {
+  .mainContent {
+    flex: 0 0 calc(100% - 380px);
+    max-width: calc(100% - 380px);
+  }
+
+  .info {
+    width: 310px;
+  }
+
+  .relatedPackagesWrapper {
+    max-width: 310px;
+  }
+}

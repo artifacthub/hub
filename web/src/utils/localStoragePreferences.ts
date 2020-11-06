@@ -7,7 +7,7 @@ interface PreferencesList {
 }
 
 const LS_ITEM = 'prefs';
-const DEFAULT_SEARCH_LIMIT = 15;
+export const DEFAULT_SEARCH_LIMIT = 20;
 const DEFAULT_THEME = 'light';
 const LS_ACTIVE_PROFILE = 'activeProfile';
 const DEFAULT_PREFS: Prefs = {

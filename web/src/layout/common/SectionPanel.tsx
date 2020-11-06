@@ -45,7 +45,7 @@ const SectionPanel = (props: Props) => {
 
   return (
     <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
-      <nav className={`mb-3 ${styles.sidebar}`}>
+      <nav className={`mb-4 ${styles.sidebar}`}>
         <div className={`list-group my-4 my-md-0 mr-md-5 ${styles.listGroup}`}>
           {props.sections.map((section: Section) => {
             const className = classnames(

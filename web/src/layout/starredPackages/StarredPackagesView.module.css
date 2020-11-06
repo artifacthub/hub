@@ -2,3 +2,9 @@
   max-width: 100%;
   width: 750px;
 }
+
+@media only screen and (min-width: 1920px) {
+  .wrapper {
+    width: 80%;
+  }
+}

@@ -3,6 +3,23 @@
 $font-family-sans-serif: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif !default;
 $font-family-monospace: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospace !default;
 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1920px,
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1860px,
+);
+
 @import '~bootstrap/scss/bootstrap.scss';
 @import './light.scss';
 @import './dark.scss';
@@ -107,4 +124,11 @@ button {
 //  Codemirror
 .CodeMirror-scroll {
   min-height: 200px;
+}
+
+@media (min-width: 1920px) {
+  .modal-lg,
+  .modal-xl {
+    max-width: 1000px;
+  }
 }

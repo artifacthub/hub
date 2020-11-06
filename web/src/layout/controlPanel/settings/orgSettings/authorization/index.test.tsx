@@ -56,7 +56,7 @@ const mockCtx = {
     controlPanel: {
       selectedOrg: 'orgTest',
     },
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,
@@ -70,7 +70,7 @@ const mockNotSelectedOrgCtx = {
     controlPanel: {
       selectedOrg: undefined,
     },
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,

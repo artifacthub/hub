@@ -67,7 +67,7 @@ const PackageInfo = (props: Props) => {
 
   return (
     <>
-      <div className="d-flex align-items-start justify-content-between flex-grow-1 mw-100">
+      <div className="d-flex align-items-start justify-content-between mw-100">
         <div className={`d-flex align-items-strecht flex-grow-1 h-100 ${styles.truncateWrapper}`}>
           {props.withPackageLinks ? (
             <Link
@@ -229,7 +229,7 @@ const PackageInfo = (props: Props) => {
       <div
         className={`d-flex d-${
           props.breakpointForInfoSection || 'md'
-        }-none flex-row justify-content-between align-items-center mt-2 mb-3 mt-${
+        }-none flex-row justify-content-between align-items-center mt-auto pt-2 pt-${
           props.breakpointForInfoSection || 'md'
         }-0`}
       >
@@ -237,7 +237,7 @@ const PackageInfo = (props: Props) => {
         {starsAndKindInfo}
       </div>
 
-      <div className={`d-flex flex-wrap justify-content-md-end ${styles.labelsWrapper}`}>
+      <div className={`d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>
         <OfficialBadge official={props.package.repository.official} className="d-inline mt-3" />
         <VerifiedPublisherBadge
           verifiedPublisher={props.package.repository.verifiedPublisher}

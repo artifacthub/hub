@@ -191,7 +191,7 @@ const RepositoriesSection = (props: Props) => {
                 )}
               </NoData>
             ) : (
-              <div className="list-group mt-4 mt-md-5" data-testid="repoList">
+              <div className="row mt-3 mt-md-4" data-testid="repoList">
                 {repositories.map((repo: Repo) => (
                   <RepositoryCard
                     key={repo.name}

@@ -84,7 +84,7 @@ const MembersSection = (props: Props) => {
 
         {(isGettingMembers || isUndefined(members)) && <Loading />}
 
-        <div className="mt-4">
+        <div className="mt-5">
           {!isUndefined(members) && (
             <>
               {members.length === 0 ? (
@@ -110,7 +110,7 @@ const MembersSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-4 mt-md-5">
+                <div className="row mt-4 mt-md-5">
                   {members.map((member: Member) => (
                     <MemberCard
                       key={`member_${member.alias}`}

@@ -134,153 +134,160 @@ const PackagesSection = (props: Props) => {
           {!isUndefined(packages) && packages.length > 0 && (
             <>
               <div className="d-none d-sm-inline" data-testid="packagesList">
-                <table className={`table table-bordered table-hover ${styles.table}`}>
-                  <thead>
-                    <tr className={`table-primary ${styles.tableTitle}`}>
-                      <th scope="col" className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}>
-                        Kind
-                      </th>
-                      <th scope="col" className="align-middle text-center w-50">
-                        Package
-                      </th>
-                      <th scope="col" className="align-middle text-center w-50">
-                        Publisher
-                      </th>
-                      {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => (
-                        <th
-                          scope="col"
-                          className={`align-middle text-nowrap ${styles.fitCell}`}
-                          key={`title_${subs.kind}`}
-                        >
-                          <div className="d-flex flex-row align-items-center justify-content-center">
-                            {subs.icon}
-                            <span className="d-none d-lg-inline ml-2">{subs.title}</span>
-                          </div>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {packages.map((item: Package) => (
-                      <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
-                        <td className="align-middle text-center d-none d-sm-table-cell">
-                          <RepositoryIcon kind={item.repository.kind} className={styles.icon} />
-                        </td>
-                        <td className="align-middle">
-                          <div className="d-flex flex-row align-items-center">
-                            <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                <div className="row">
+                  <div className="col-12 col-xxl-10">
+                    <table className={`table table-bordered table-hover ${styles.table}`}>
+                      <thead>
+                        <tr className={`table-primary ${styles.tableTitle}`}>
+                          <th
+                            scope="col"
+                            className={`align-middle text-center d-none d-sm-table-cell ${styles.fitCell}`}
+                          >
+                            Kind
+                          </th>
+                          <th scope="col" className="align-middle w-50">
+                            Package
+                          </th>
+                          <th scope="col" className="align-middle w-50">
+                            Publisher
+                          </th>
+                          {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => (
+                            <th
+                              scope="col"
+                              className={`align-middle text-nowrap ${styles.fitCell}`}
+                              key={`title_${subs.kind}`}
                             >
-                              <Image
-                                alt={item.displayName || item.name}
-                                imageId={item.logoImageId}
-                                className={styles.image}
-                                kind={item.repository.kind}
-                              />
-                            </div>
+                              <div className="d-flex flex-row align-items-center justify-content-center">
+                                {subs.icon}
+                                <span className="d-none d-lg-inline ml-2">{subs.title}</span>
+                              </div>
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {packages.map((item: Package) => (
+                          <tr key={`subs_${item.packageId}`} data-testid="subsTableCell">
+                            <td className="align-middle text-center d-none d-sm-table-cell">
+                              <RepositoryIcon kind={item.repository.kind} className={styles.icon} />
+                            </td>
+                            <td className="align-middle">
+                              <div className="d-flex flex-row align-items-center">
+                                <div
+                                  className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                                >
+                                  <Image
+                                    alt={item.displayName || item.name}
+                                    imageId={item.logoImageId}
+                                    className={styles.image}
+                                    kind={item.repository.kind}
+                                  />
+                                </div>
 
-                            <Link
-                              data-testid="packageLink"
-                              className="ml-2 text-dark"
-                              to={{
-                                pathname: buildPackageURL(item),
-                              }}
-                            >
-                              {item.displayName || item.name}
-                            </Link>
-                          </div>
-                        </td>
-                        <td className="align-middle position-relative">
-                          {!isNull(item.repository.userAlias) ? (
-                            <Link
-                              data-testid="userLink"
-                              className="text-dark"
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    user: [item.repository.userAlias!],
-                                  },
-                                }),
-                              }}
-                            >
-                              {item.repository.userAlias}
-                            </Link>
-                          ) : (
-                            <Link
-                              data-testid="orgLink"
-                              className="text-dark"
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    org: [item.repository.organizationName!],
-                                  },
-                                }),
-                              }}
-                            >
-                              {item.repository.organizationDisplayName || item.repository.organizationName}
-                            </Link>
-                          )}
-
-                          <small className="ml-2">
-                            (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
-                            <Link
-                              data-testid="repoLink"
-                              className="text-dark"
-                              to={{
-                                pathname: '/packages/search',
-                                search: prepareQueryString({
-                                  pageNumber: 1,
-                                  filters: {
-                                    repo: [item.repository.name],
-                                  },
-                                }),
-                              }}
-                            >
-                              {item.repository.displayName || item.repository.name}
-                            </Link>
-                            )
-                          </small>
-                        </td>
-                        {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
-                          const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);
-                          const id = `subs_${item.packageId}_${subs.kind}`;
-
-                          return (
-                            <td className="align-middle text-center" key={`td_${item.normalizedName}_${subs.kind}`}>
-                              <div className="custom-control custom-switch ml-2">
-                                <input
-                                  data-testid={`${item.name}_${subs.name}_input`}
-                                  id={id}
-                                  type="checkbox"
-                                  className={`custom-control-input ${styles.checkbox}`}
-                                  disabled={!subs.enabled}
-                                  onChange={() =>
-                                    changeSubscription(
-                                      item.packageId,
-                                      subs.kind,
-                                      isActive,
-                                      item.displayName || item.name
-                                    )
-                                  }
-                                  checked={isActive}
-                                />
-                                <label
-                                  data-testid={`${item.name}_${subs.name}_label`}
-                                  className="custom-control-label"
-                                  htmlFor={id}
-                                />
+                                <Link
+                                  data-testid="packageLink"
+                                  className="ml-2 text-dark"
+                                  to={{
+                                    pathname: buildPackageURL(item),
+                                  }}
+                                >
+                                  {item.displayName || item.name}
+                                </Link>
                               </div>
                             </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <td className="align-middle position-relative">
+                              {!isNull(item.repository.userAlias) ? (
+                                <Link
+                                  data-testid="userLink"
+                                  className="text-dark"
+                                  to={{
+                                    pathname: '/packages/search',
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        user: [item.repository.userAlias!],
+                                      },
+                                    }),
+                                  }}
+                                >
+                                  {item.repository.userAlias}
+                                </Link>
+                              ) : (
+                                <Link
+                                  data-testid="orgLink"
+                                  className="text-dark"
+                                  to={{
+                                    pathname: '/packages/search',
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        org: [item.repository.organizationName!],
+                                      },
+                                    }),
+                                  }}
+                                >
+                                  {item.repository.organizationDisplayName || item.repository.organizationName}
+                                </Link>
+                              )}
+
+                              <small className="ml-2">
+                                (<span className={`text-uppercase text-muted ${styles.legend}`}>Repo: </span>
+                                <Link
+                                  data-testid="repoLink"
+                                  className="text-dark"
+                                  to={{
+                                    pathname: '/packages/search',
+                                    search: prepareQueryString({
+                                      pageNumber: 1,
+                                      filters: {
+                                        repo: [item.repository.name],
+                                      },
+                                    }),
+                                  }}
+                                >
+                                  {item.repository.displayName || item.repository.name}
+                                </Link>
+                                )
+                              </small>
+                            </td>
+                            {PACKAGE_SUBSCRIPTIONS_LIST.map((subs: SubscriptionItem) => {
+                              const isActive = !isUndefined(item.eventKinds) && item.eventKinds.includes(subs.kind);
+                              const id = `subs_${item.packageId}_${subs.kind}`;
+
+                              return (
+                                <td className="align-middle text-center" key={`td_${item.normalizedName}_${subs.kind}`}>
+                                  <div className="custom-control custom-switch ml-2">
+                                    <input
+                                      data-testid={`${item.name}_${subs.name}_input`}
+                                      id={id}
+                                      type="checkbox"
+                                      className={`custom-control-input ${styles.checkbox}`}
+                                      disabled={!subs.enabled}
+                                      onChange={() =>
+                                        changeSubscription(
+                                          item.packageId,
+                                          subs.kind,
+                                          isActive,
+                                          item.displayName || item.name
+                                        )
+                                      }
+                                      checked={isActive}
+                                    />
+                                    <label
+                                      data-testid={`${item.name}_${subs.name}_label`}
+                                      className="custom-control-label"
+                                      htmlFor={id}
+                                    />
+                                  </div>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
 
               <div className="d-inline d-sm-none">

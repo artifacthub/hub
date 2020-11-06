@@ -76,9 +76,9 @@ const SecurityModal = (props: Props) => {
 
   return (
     <>
-      <div className="text-center">
+      <div>
         {props.createdAt && (
-          <div className={`text-left my-2 ${styles.created}`}>
+          <div className={`my-2 ${styles.created}`}>
             <small className="text-uppercase text-muted">Last scan: </small> {moment(props.createdAt * 1000).fromNow()}
           </div>
         )}

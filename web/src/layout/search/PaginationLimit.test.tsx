@@ -6,7 +6,7 @@ import PaginationLimit from './PaginationLimit';
 const updateLimitMock = jest.fn();
 
 const defaultProps = {
-  limit: 15,
+  limit: 20,
   updateLimit: updateLimitMock,
   disabled: false,
 };
@@ -27,19 +27,19 @@ describe('Filters', () => {
       const { getByLabelText, getByText } = render(<PaginationLimit {...defaultProps} />);
 
       expect(getByLabelText('pagination-limit')).toBeInTheDocument();
-      expect(getByText('15'));
-      expect(getByText('25'));
-      expect(getByText('50'));
+      expect(getByText('20'));
+      expect(getByText('40'));
+      expect(getByText('60'));
     });
 
     it('calls updateLimit on select change', () => {
       const { getByLabelText } = render(<PaginationLimit {...defaultProps} />);
 
       const select = getByLabelText('pagination-limit');
-      fireEvent.change(select, { target: { value: '25' } });
+      fireEvent.change(select, { target: { value: '60' } });
 
       expect(updateLimitMock).toBeCalledTimes(1);
-      expect(updateLimitMock).toHaveBeenCalledWith(25);
+      expect(updateLimitMock).toHaveBeenCalledWith(60);
     });
 
     it('renders disabled select component', () => {

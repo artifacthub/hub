@@ -98,7 +98,7 @@ const OrganizationsSection = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="list-group mt-4 mt-md-5">
+                <div className="row mt-4 mt-md-5">
                   {organizations.map((org: Organization) => (
                     <OrganizationCard
                       key={`org_${org.name}`}

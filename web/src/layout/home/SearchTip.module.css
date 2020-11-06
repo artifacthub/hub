@@ -2,3 +2,9 @@
   font-size: 80%;
   font-weight: 300;
 }
+
+@media only screen and (min-width: 1920px) {
+  .tipText {
+    font-size: 90%;
+  }
+}

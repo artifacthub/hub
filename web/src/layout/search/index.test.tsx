@@ -320,7 +320,7 @@ describe('Search index', () => {
 
       await waitFor(() => {
         const paginationLimit = getByLabelText('pagination-limit') as HTMLSelectElement;
-        expect(paginationLimit.value).toBe('15');
+        expect(paginationLimit.value).toBe('20');
       });
     });
 
@@ -340,9 +340,9 @@ describe('Search index', () => {
       );
 
       const paginationLimit = await waitFor(() => getByLabelText('pagination-limit') as HTMLSelectElement);
-      expect(paginationLimit.value).toBe('15');
+      expect(paginationLimit.value).toBe('20');
 
-      fireEvent.change(paginationLimit, { target: { value: '25' } });
+      fireEvent.change(paginationLimit, { target: { value: '60' } });
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({
@@ -459,7 +459,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledWith({
           deprecated: false,
           filters: {},
-          limit: 15,
+          limit: 20,
           offset: 0,
           tsQueryWeb: 'test',
         });
@@ -482,7 +482,7 @@ describe('Search index', () => {
         expect(API.searchPackages).toHaveBeenCalledWith({
           deprecated: false,
           filters: {},
-          limit: 15,
+          limit: 20,
           offset: 0,
           tsQueryWeb: 'test',
           tsQuery: ['database'],

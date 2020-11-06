@@ -354,757 +354,765 @@ exports[`PackagesSection renders correctly 2`] = `
               class="d-none d-sm-inline"
               data-testid="packagesList"
             >
-              <table
-                class="table table-bordered table-hover table"
+              <div
+                class="row"
               >
-                <thead>
-                  <tr
-                    class="table-primary tableTitle"
+                <div
+                  class="col-12 col-xxl-10"
+                >
+                  <table
+                    class="table table-bordered table-hover table"
                   >
-                    <th
-                      class="align-middle text-center d-none d-sm-table-cell fitCell"
-                      scope="col"
-                    >
-                      Kind
-                    </th>
-                    <th
-                      class="align-middle text-center w-50"
-                      scope="col"
-                    >
-                      Package
-                    </th>
-                    <th
-                      class="align-middle text-center w-50"
-                      scope="col"
-                    >
-                      Publisher
-                    </th>
-                    <th
-                      class="align-middle text-nowrap fitCell"
-                      scope="col"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center justify-content-center"
+                    <thead>
+                      <tr
+                        class="table-primary tableTitle"
                       >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <th
+                          class="align-middle text-center d-none d-sm-table-cell fitCell"
+                          scope="col"
                         >
-                          <path
-                            d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
-                          />
-                        </svg>
-                        <span
-                          class="d-none d-lg-inline ml-2"
+                          Kind
+                        </th>
+                        <th
+                          class="align-middle w-50"
+                          scope="col"
                         >
-                          New releases
-                        </span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
+                          Package
+                        </th>
+                        <th
+                          class="align-middle w-50"
+                          scope="col"
+                        >
+                          Publisher
+                        </th>
+                        <th
+                          class="align-middle text-nowrap fitCell"
+                          scope="col"
+                        >
+                          <div
+                            class="d-flex flex-row align-items-center justify-content-center"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M23 12l-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68L23 12zm-10 5h-2v-2h2v2zm0-4h-2V7h2v6z"
+                              />
+                            </svg>
+                            <span
+                              class="d-none d-lg-inline ml-2"
+                            >
+                              New releases
+                            </span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="airflow"
-                            class="image"
-                            src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
-                            srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/helm-chart.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/helm/stable/airflow"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          airflow
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=helm"
-                      >
-                        Helm
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="airflow"
+                                class="image"
+                                src="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc"
+                                srcset="/image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@1x 1x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@2x 2x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@3x 3x, /image/f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/airflow"
+                            >
+                              airflow
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=stable"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=helm"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=stable"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Stable
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="airflow_newRelease_input"
+                              id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="airflow_newRelease_label"
+                              for="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="airflow_newRelease_input"
-                          id="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="airflow_newRelease_label"
-                          for="subs_0acb228c-17ab-4e50-85e9-ffc7102ea423_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="cerebro"
-                            class="image"
-                            src="/static/media/placeholder_pkg_helm.png"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/helm-chart.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/helm/stable/cerebro"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          cerebro
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=helm"
-                      >
-                        Helm
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="cerebro"
+                                class="image"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/cerebro"
+                            >
+                              cerebro
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=stable"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=helm"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=stable"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Stable
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="cerebro_newRelease_input"
+                              id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="cerebro_newRelease_label"
+                              for="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="cerebro_newRelease_input"
-                          id="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="cerebro_newRelease_label"
-                          for="subs_11d84cdc-e414-43c7-9be0-1f6b11912eb2_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="elastic-stack"
-                            class="image"
-                            src="/static/media/placeholder_pkg_helm.png"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/helm-chart.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/helm/stable/elastic-stack"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          elastic-stack
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=helm"
-                      >
-                        Helm
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="elastic-stack"
+                                class="image"
+                                src="/static/media/placeholder_pkg_helm.png"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/stable/elastic-stack"
+                            >
+                              elastic-stack
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=stable"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=helm"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=stable"
+                            >
+                              Stable
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Stable
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="elastic-stack_newRelease_input"
+                              id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="elastic-stack_newRelease_label"
+                              for="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="elastic-stack_newRelease_input"
-                          id="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="elastic-stack_newRelease_label"
-                          for="subs_eedf0ee0-841e-4434-bf0b-4c2a175cb8c8_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="ibm-redis"
-                            class="image"
-                            src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
-                            srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/helm-chart.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/helm/ibm-charts/ibm-redis"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          ibm-redis
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=org1"
-                      >
-                        Org 1
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="ibm-redis"
+                                class="image"
+                                src="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88"
+                                srcset="/image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@1x 1x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@2x 2x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@3x 3x, /image/ca0a9e33-3656-4536-ac1b-4cff40bc6b88@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/ibm-charts/ibm-redis"
+                            >
+                              ibm-redis
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=ibm-charts"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=org1"
+                          >
+                            Org 1
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=ibm-charts"
+                            >
+                              IBM charts
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          IBM charts
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="ibm-redis_newRelease_input"
+                              id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="ibm-redis_newRelease_label"
+                              for="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="ibm-redis_newRelease_input"
-                          id="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="ibm-redis_newRelease_label"
-                          for="subs_cfa55ea2-eb69-4703-8be7-73937c6efc4b_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/falco-rules.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="SSH connections"
-                            class="image"
-                            src="/image/23baee82-817d-4443-bb12-164913cb631b"
-                            srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/falco-rules.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/falco/falco/ssh-connections"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          SSH connections
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=org2"
-                      >
-                        Org 2
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="SSH connections"
+                                class="image"
+                                src="/image/23baee82-817d-4443-bb12-164913cb631b"
+                                srcset="/image/23baee82-817d-4443-bb12-164913cb631b@1x 1x, /image/23baee82-817d-4443-bb12-164913cb631b@2x 2x, /image/23baee82-817d-4443-bb12-164913cb631b@3x 3x, /image/23baee82-817d-4443-bb12-164913cb631b@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/falco/falco/ssh-connections"
+                            >
+                              SSH connections
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=falco"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=org2"
+                          >
+                            Org 2
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=falco"
+                            >
+                              Falco rules
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Falco rules
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="SSH connections_newRelease_input"
+                              id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="SSH connections_newRelease_label"
+                              for="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="SSH connections_newRelease_input"
-                          id="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="SSH connections_newRelease_label"
-                          for="subs_ccd1553a-e9bd-45b5-93a3-9ee127dddcb0_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/falco-rules.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="Traefik"
-                            class="image"
-                            src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
-                            srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/falco-rules.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/falco/falco/traefik"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          Traefik
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=org2"
-                      >
-                        Org 2
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Traefik"
+                                class="image"
+                                src="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b"
+                                srcset="/image/974d12b9-c75e-46d9-9031-28bc7a00c30b@1x 1x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@2x 2x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@3x 3x, /image/974d12b9-c75e-46d9-9031-28bc7a00c30b@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/falco/falco/traefik"
+                            >
+                              Traefik
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=falco"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=org2"
+                          >
+                            Org 2
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=falco"
+                            >
+                              Falco rules
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Falco rules
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="Traefik_newRelease_input"
+                              id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="Traefik_newRelease_label"
+                              for="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="Traefik_newRelease_input"
-                          id="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="Traefik_newRelease_label"
-                          for="subs_e63b8968-a688-4525-889d-cbbf3df82f9f_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/opa-policies.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="Trusted Registry Images"
-                            class="image"
-                            src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
-                            srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/opa-policies.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/opa/opa/trusted-registry-images"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          Trusted Registry Images
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=opa"
-                      >
-                        OPA
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="Trusted Registry Images"
+                                class="image"
+                                src="/image/828583b3-e3a0-4970-899f-27a903fd72cb"
+                                srcset="/image/828583b3-e3a0-4970-899f-27a903fd72cb@1x 1x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@2x 2x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@3x 3x, /image/828583b3-e3a0-4970-899f-27a903fd72cb@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/opa/opa/trusted-registry-images"
+                            >
+                              Trusted Registry Images
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=opa"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=opa"
+                          >
+                            OPA
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=opa"
+                            >
+                              OPA policies
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          OPA policies
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="Trusted Registry Images_newRelease_input"
+                              id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="Trusted Registry Images_newRelease_label"
+                              for="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        data-testid="subsTableCell"
                       >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="Trusted Registry Images_newRelease_input"
-                          id="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="Trusted Registry Images_newRelease_label"
-                          for="subs_2052b061-2459-4d9f-8cd3-a5e8dbb4b804_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-testid="subsTableCell"
-                  >
-                    <td
-                      class="align-middle text-center d-none d-sm-table-cell"
-                    >
-                      <img
-                        alt="Icon"
-                        class="icon repoIcon"
-                        src="/static/media/helm-chart.svg"
-                      />
-                    </td>
-                    <td
-                      class="align-middle"
-                    >
-                      <div
-                        class="d-flex flex-row align-items-center"
-                      >
-                        <div
-                          class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                        <td
+                          class="align-middle text-center d-none d-sm-table-cell"
                         >
                           <img
-                            alt="zookeeper"
-                            class="image"
-                            src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
-                            srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
+                            alt="Icon"
+                            class="icon repoIcon"
+                            src="/static/media/helm-chart.svg"
                           />
-                        </div>
-                        <a
-                          class="ml-2 text-dark"
-                          data-testid="packageLink"
-                          href="/packages/helm/incubator/zookeeper"
+                        </td>
+                        <td
+                          class="align-middle"
                         >
-                          zookeeper
-                        </a>
-                      </div>
-                    </td>
-                    <td
-                      class="align-middle position-relative"
-                    >
-                      <a
-                        class="text-dark"
-                        data-testid="orgLink"
-                        href="/packages/search?page=1&org=helm"
-                      >
-                        Helm
-                      </a>
-                      <small
-                        class="ml-2"
-                      >
-                        (
-                        <span
-                          class="text-uppercase text-muted legend"
+                          <div
+                            class="d-flex flex-row align-items-center"
+                          >
+                            <div
+                              class="d-flex align-items-center justify-content-center overflow-hidden imageWrapper imageWrapper"
+                            >
+                              <img
+                                alt="zookeeper"
+                                class="image"
+                                src="/image/4c7230bf-5b08-49dc-b095-c93aef119f47"
+                                srcset="/image/4c7230bf-5b08-49dc-b095-c93aef119f47@1x 1x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@2x 2x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@3x 3x, /image/4c7230bf-5b08-49dc-b095-c93aef119f47@4x 4x"
+                              />
+                            </div>
+                            <a
+                              class="ml-2 text-dark"
+                              data-testid="packageLink"
+                              href="/packages/helm/incubator/zookeeper"
+                            >
+                              zookeeper
+                            </a>
+                          </div>
+                        </td>
+                        <td
+                          class="align-middle position-relative"
                         >
-                          Repo: 
-                        </span>
-                        <a
-                          class="text-dark"
-                          data-testid="repoLink"
-                          href="/packages/search?page=1&repo=incubator"
+                          <a
+                            class="text-dark"
+                            data-testid="orgLink"
+                            href="/packages/search?page=1&org=helm"
+                          >
+                            Helm
+                          </a>
+                          <small
+                            class="ml-2"
+                          >
+                            (
+                            <span
+                              class="text-uppercase text-muted legend"
+                            >
+                              Repo: 
+                            </span>
+                            <a
+                              class="text-dark"
+                              data-testid="repoLink"
+                              href="/packages/search?page=1&repo=incubator"
+                            >
+                              Incubator
+                            </a>
+                            )
+                          </small>
+                        </td>
+                        <td
+                          class="align-middle text-center"
                         >
-                          Incubator
-                        </a>
-                        )
-                      </small>
-                    </td>
-                    <td
-                      class="align-middle text-center"
-                    >
-                      <div
-                        class="custom-control custom-switch ml-2"
-                      >
-                        <input
-                          checked=""
-                          class="custom-control-input checkbox"
-                          data-testid="zookeeper_newRelease_input"
-                          id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
-                          type="checkbox"
-                        />
-                        <label
-                          class="custom-control-label"
-                          data-testid="zookeeper_newRelease_label"
-                          for="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <div
+                            class="custom-control custom-switch ml-2"
+                          >
+                            <input
+                              checked=""
+                              class="custom-control-input checkbox"
+                              data-testid="zookeeper_newRelease_input"
+                              id="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
+                              type="checkbox"
+                            />
+                            <label
+                              class="custom-control-label"
+                              data-testid="zookeeper_newRelease_label"
+                              for="subs_d3945a69-2aae-4ff9-8fb3-ce3b720d0384_0"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
             <div
               class="d-inline d-sm-none"

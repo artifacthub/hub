@@ -95,7 +95,7 @@ describe('Home index', () => {
       const mockStats = getMockStats('5');
       mocked(API).getStats.mockResolvedValue(mockStats);
 
-      const { getByRole } = render(
+      const { getByRole, getByText } = render(
         <Router>
           <HomeView {...defaultProps} />
         </Router>
@@ -104,7 +104,8 @@ describe('Home index', () => {
       const heading = await waitFor(() => getByRole('heading'));
 
       expect(heading).toBeInTheDocument();
-      expect(heading.innerHTML).toBe('Find, install and publish<br>Kubernetes packages');
+      expect(getByText('Find, install and publish')).toBeInTheDocument();
+      expect(getByText('Kubernetes packages')).toBeInTheDocument();
       await waitFor(() => {});
     });
   });

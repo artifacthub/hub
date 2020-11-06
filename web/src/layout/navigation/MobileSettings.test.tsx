@@ -18,7 +18,7 @@ const mockCtxLoggedIn = {
   user: { alias: 'test', email: 'test@test.com' },
   prefs: {
     controlPanel: {},
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,
@@ -30,7 +30,7 @@ const mockCtxNotLoggedIn = {
   user: null,
   prefs: {
     controlPanel: {},
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,
@@ -42,7 +42,7 @@ const mockUndefinedUser = {
   user: undefined,
   prefs: {
     controlPanel: {},
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,

@@ -360,277 +360,285 @@ exports[`Repository index creates snapshot 2`] = `
          to each of them including the repository ID provided below. This label will let users know that you own or have control over the repository. The repository metadata file must be located at the path used in the repository URL.
       </p>
       <div
-        class="list-group mt-4 mt-md-5"
+        class="row mt-3 mt-md-4"
         data-testid="repoList"
       >
-        <li
-          class="list-group-item listItem"
+        <div
+          class="col-12 col-xxl-6 py-sm-3 py-2"
           data-testid="repoCard"
         >
           <div
-            class="d-flex flex-row w-100 justify-content-between"
+            class="card h-100"
           >
             <div
-              class="d-flex flex-row align-items-center mb-1 text-truncate"
+              class="card-body d-flex flex-column h-100"
             >
               <div
-                class="h5 mb-0 mr-3 text-truncate titleCard"
-              >
-                test
-              </div>
-            </div>
-            <div
-              class="ml-auto"
-            >
-              <img
-                alt="Icon"
-                class="kindIcon repoIcon"
-                src="/static/media/helm-chart.svg"
-              />
-            </div>
-            <div
-              class="ml-3"
-            >
-              <div
-                class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+                class="d-flex flex-row w-100 justify-content-between"
               >
                 <div
-                  class="arrow arrow"
-                />
-                <button
-                  class="dropdown-item btn btn-sm rounded-0 text-secondary"
-                  data-testid="getBadgeBtn"
+                  class="d-flex flex-row align-items-center mb-1 text-truncate"
                 >
                   <div
-                    class="d-flex flex-row align-items-center"
+                    class="h5 mb-0 mr-3 text-truncate titleCard"
+                  >
+                    test
+                  </div>
+                </div>
+                <div
+                  class="ml-auto"
+                >
+                  <img
+                    alt="Icon"
+                    class="kindIcon repoIcon"
+                    src="/static/media/helm-chart.svg"
+                  />
+                </div>
+                <div
+                  class="ml-3"
+                >
+                  <div
+                    class="dropdown-menu dropdown-menu-right p-0 dropdownMenu"
+                  >
+                    <div
+                      class="arrow arrow"
+                    />
+                    <button
+                      class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                      data-testid="getBadgeBtn"
+                    >
+                      <div
+                        class="d-flex flex-row align-items-center"
+                      >
+                        <svg
+                          class="mr-2 btnIcon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"
+                          />
+                        </svg>
+                        <span>
+                          Get badge
+                        </span>
+                      </div>
+                    </button>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                        data-testid="transferRepoBtn"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="mr-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g>
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M16.05 12.05L21 17l-4.95 4.95-1.414-1.414 2.536-2.537L4 18v-2h13.172l-2.536-2.536 1.414-1.414zm-8.1-10l1.414 1.414L6.828 6 20 6v2H6.828l2.536 2.536L7.95 11.95 3 7l4.95-4.95z"
+                              />
+                            </g>
+                          </svg>
+                          <span>
+                            Transfer
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                        data-testid="updateRepoBtn"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="mr-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
+                            />
+                          </svg>
+                          <span>
+                            Edit
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                    <span
+                      class="position-relative"
+                    >
+                      <button
+                        class="dropdown-item btn btn-sm rounded-0 text-secondary"
+                        data-testid="deleteRepoDropdownBtn"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center undefined"
+                        >
+                          <svg
+                            class="mr-2 btnIcon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                            />
+                          </svg>
+                          <span>
+                            Delete
+                          </span>
+                        </div>
+                      </button>
+                    </span>
+                  </div>
+                  <button
+                    class="btn btn-light p-0 text-secondary text-center btnDropdown"
                   >
                     <svg
-                      class="mr-2 btnIcon"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
                       stroke-width="0"
-                      viewBox="0 0 24 24"
+                      viewBox="0 0 16 16"
                       width="1em"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 1.99 2 1.99L16 19c.67 0 1.27-.33 1.63-.84L22 12l-4.37-6.16z"
+                        clip-rule="evenodd"
+                        d="M9.5 13a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
+                        fill-rule="evenodd"
                       />
                     </svg>
-                    <span>
-                      Get badge
-                    </span>
-                  </div>
-                </button>
-                <span
-                  class="position-relative"
-                >
-                  <button
-                    class="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    data-testid="transferRepoBtn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex flex-row align-items-center undefined"
-                    >
-                      <svg
-                        class="mr-2 btnIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g>
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
-                            d="M16.05 12.05L21 17l-4.95 4.95-1.414-1.414 2.536-2.537L4 18v-2h13.172l-2.536-2.536 1.414-1.414zm-8.1-10l1.414 1.414L6.828 6 20 6v2H6.828l2.536 2.536L7.95 11.95 3 7l4.95-4.95z"
-                          />
-                        </g>
-                      </svg>
-                      <span>
-                        Transfer
-                      </span>
-                    </div>
-                  </button>
-                </span>
-                <span
-                  class="position-relative"
-                >
-                  <button
-                    class="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    data-testid="updateRepoBtn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex flex-row align-items-center undefined"
-                    >
-                      <svg
-                        class="mr-2 btnIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"
-                        />
-                      </svg>
-                      <span>
-                        Edit
-                      </span>
-                    </div>
-                  </button>
-                </span>
-                <span
-                  class="position-relative"
-                >
-                  <button
-                    class="dropdown-item btn btn-sm rounded-0 text-secondary"
-                    data-testid="deleteRepoDropdownBtn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex flex-row align-items-center undefined"
-                    >
-                      <svg
-                        class="mr-2 btnIcon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 448 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
-                        />
-                      </svg>
-                      <span>
-                        Delete
-                      </span>
-                    </div>
-                  </button>
-                </span>
-              </div>
-              <button
-                class="btn btn-light p-0 text-secondary text-center btnDropdown"
-              >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    clip-rule="evenodd"
-                    d="M9.5 13a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"
-                    fill-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div
-            class="mt-2 d-flex flex-row align-items-baseline"
-          >
-            <div
-              class="text-truncate"
-            >
-              <small
-                class="text-muted text-uppercase mr-1"
-              >
-                ID: 
-              </small>
-              <small>
-                test
-              </small>
-            </div>
-            <div
-              class="ml-1 copyBtn"
-            >
-              <div
-                class="position-absolute copyBtnWrapper"
-              >
-                <div
-                  class="position-relative undefined"
-                >
-                  <button
-                    class="btn btn-sm btn-link border-0 text-secondary font-weight-bold"
-                    data-testid="ctcBtn"
-                    type="button"
-                  >
-                    <div
-                      class="d-flex flex-row align-items-center"
-                    >
-                      <svg
-                        fill="none"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          height="13"
-                          rx="2"
-                          ry="2"
-                          width="13"
-                          x="9"
-                          y="9"
-                        />
-                        <path
-                          d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                        />
-                      </svg>
-                    </div>
                   </button>
                 </div>
               </div>
+              <div
+                class="mt-2 d-flex flex-row align-items-baseline"
+              >
+                <div
+                  class="text-truncate"
+                >
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    ID: 
+                  </small>
+                  <small>
+                    test
+                  </small>
+                </div>
+                <div
+                  class="ml-1 copyBtn"
+                >
+                  <div
+                    class="position-absolute copyBtnWrapper"
+                  >
+                    <div
+                      class="position-relative undefined"
+                    >
+                      <button
+                        class="btn btn-sm btn-link border-0 text-secondary font-weight-bold"
+                        data-testid="ctcBtn"
+                        type="button"
+                      >
+                        <div
+                          class="d-flex flex-row align-items-center"
+                        >
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="text-truncate"
+              >
+                <small
+                  class="text-muted text-uppercase mr-1"
+                >
+                  Url: 
+                </small>
+                <small>
+                  http://test.com
+                </small>
+              </div>
+              <div>
+                <small
+                  class="text-muted text-uppercase mr-1"
+                >
+                  Last processed: 
+                </small>
+                <small>
+                  Not processed yet, it will be processed automatically in ~ 3 minutes
+                </small>
+              </div>
+              <div
+                class="mt-3 m-md-0 d-flex flex-row d-md-none"
+              />
             </div>
           </div>
-          <div
-            class="text-truncate"
-          >
-            <small
-              class="text-muted text-uppercase mr-1"
-            >
-              Url: 
-            </small>
-            <small>
-              http://test.com
-            </small>
-          </div>
-          <div>
-            <small
-              class="text-muted text-uppercase mr-1"
-            >
-              Last processed: 
-            </small>
-            <small>
-              Not processed yet, it will be processed automatically in ~ 3 minutes
-            </small>
-          </div>
-          <div
-            class="mt-3 m-md-0 d-flex flex-row d-md-none"
-          />
-        </li>
+        </div>
       </div>
     </div>
   </main>

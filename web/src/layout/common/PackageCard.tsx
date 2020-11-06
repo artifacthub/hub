@@ -9,6 +9,7 @@ import PackageInfo from './PackageInfo';
 
 interface Props {
   package: Package;
+  className?: string;
   saveScrollPosition?: () => void;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
@@ -16,11 +17,11 @@ interface Props {
 }
 
 const PackageCard = (props: Props) => (
-  <div className="col-12 py-sm-3 py-2" role="listitem">
-    <div className={`card cardWithHover h-100 ${styles.card}`}>
+  <div className="col-12 col-xxl-6 py-sm-3 py-2" role="listitem">
+    <div className={`card cardWithHover h-100 ${styles.card} ${props.className}`}>
       <Link
         data-testid="link"
-        className={`text-decoration-none text-reset ${styles.link}`}
+        className={`text-decoration-none text-reset h-100 ${styles.link}`}
         onClick={() => {
           if (!isUndefined(props.saveScrollPosition)) {
             props.saveScrollPosition();
@@ -31,7 +32,7 @@ const PackageCard = (props: Props) => (
           state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
         }}
       >
-        <div className={`card-body d-flex flex-column ${styles.body}`}>
+        <div className={`card-body d-flex flex-column h-100 ${styles.body}`}>
           <PackageInfo
             package={props.package}
             visibleSignedBadge={props.visibleSignedBadge}

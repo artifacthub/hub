@@ -23,7 +23,7 @@ const mockUserCtx = {
   user: { alias: 'userAlias', email: 'jsmith@email.com' },
   prefs: {
     controlPanel: {},
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,
@@ -35,7 +35,7 @@ const mockOrgCtx = {
   user: { alias: 'userAlias', email: 'jsmith@email.com' },
   prefs: {
     controlPanel: { selectedOrg: 'test' },
-    search: { limit: 25 },
+    search: { limit: 60 },
     theme: {
       configured: 'light',
       automatic: false,

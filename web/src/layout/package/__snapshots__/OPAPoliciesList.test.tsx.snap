@@ -6,7 +6,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     class="row mt-4"
   >
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -46,7 +46,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -86,7 +86,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -126,7 +126,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -166,7 +166,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -206,7 +206,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -246,7 +246,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"
@@ -286,7 +286,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
       </div>
     </div>
     <div
-      class="col-12 col-lg-6 mb-4"
+      class="col-12 col-lg-6 col-xxl-4 mb-4"
     >
       <div
         class="card h-100 card"

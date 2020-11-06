@@ -124,7 +124,7 @@ describe('PackageCard', () => {
           <PackageCard package={mockPackage} />
         </Router>
       );
-      const link = getByTestId('packageLink');
+      const link = getByTestId('link');
       expect(link).toBeInTheDocument();
       fireEvent.click(link);
       expect(window.location.pathname).toBe(buildPackageURL(mockPackage));

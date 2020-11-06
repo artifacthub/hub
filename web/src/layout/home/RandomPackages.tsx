@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 
@@ -39,9 +40,15 @@ const RandomPackages = () => {
                 <div data-testid="randomPackagesList" className="mw-100 my-2">
                   <div className="h4 text-center text-secondary mt-3 mt-md-2 mb-4">Explore and discover packages</div>
 
-                  <div className="pt-2">
-                    {packages.map((item: Package) => {
-                      return <PackageCard key={`rp_${item.packageId}`} package={item} />;
+                  <div className="pt-2 row no-gutters justify-content-center">
+                    {packages.map((item: Package, index: number) => {
+                      return (
+                        <PackageCard
+                          key={`rp_${item.packageId}`}
+                          package={item}
+                          className={classnames({ 'd-none d-xxl-block': index > 4 })}
+                        />
+                      );
                     })}
                   </div>
                 </div>

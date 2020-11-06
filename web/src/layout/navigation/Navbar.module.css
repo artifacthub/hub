@@ -50,6 +50,12 @@
   }
 }
 
+@media only screen and (min-width: 1920px) {
+  .search {
+    max-width: 500px;
+  }
+}
+
 @media (hover: hover) {
   .button:hover::before {
     content: '';
