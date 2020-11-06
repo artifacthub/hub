@@ -37,7 +37,7 @@ const RandomPackages = () => {
           {!isUndefined(packages) && !isLoading ? (
             <>
               {packages.length > 0 && (
-                <div data-testid="randomPackagesList" className="mw-100 my-2">
+                <div data-testid="randomPackagesList" className="w-100 my-2">
                   <div className="h4 text-center text-secondary mt-3 mt-md-2 mb-4">Explore and discover packages</div>
 
                   <div className="pt-2 row no-gutters justify-content-center">
