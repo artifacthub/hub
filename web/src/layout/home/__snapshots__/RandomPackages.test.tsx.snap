@@ -47,7 +47,7 @@ exports[`RandomPackages creates snapshot 2`] = `
         class="d-flex flex-wrap justify-content-center"
       >
         <div
-          class="mw-100 my-2"
+          class="w-100 my-2"
           data-testid="randomPackagesList"
         >
           <div
