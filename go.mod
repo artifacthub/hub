@@ -5,16 +5,18 @@ go 1.15
 require (
 	github.com/MakeNowJust/heredoc v1.0.0 // indirect
 	github.com/Masterminds/semver/v3 v3.1.0
+	github.com/containerd/containerd v1.3.2
+	github.com/deislabs/oras v0.8.1
 	github.com/disintegration/imaging v1.6.2
 	github.com/docker/spdystream v0.0.0-20181023171402-6480d4af844c // indirect
 	github.com/domodwyer/mailyak v3.1.1+incompatible
 	github.com/emicklei/go-restful v2.13.0+incompatible // indirect
-	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-git/go-git/v5 v5.1.0
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
+	github.com/google/go-containerregistry v0.1.4
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/googleapis/gnostic v0.4.0 // indirect
@@ -39,7 +41,7 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
-	golang.org/x/crypto v0.0.0-20200728195943-123391ffb6de
+	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0
 	golang.org/x/image v0.0.0-20200801110659-972c09e46d76 // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
@@ -49,6 +51,7 @@ require (
 	gopkg.in/yaml.v2 v2.3.0
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 	helm.sh/helm/v3 v3.2.4
+	rsc.io/letsencrypt v0.0.3 // indirect
 )
 
 replace github.com/docker/docker => github.com/moby/moby v0.7.3-0.20190826074503-38ab9da00309

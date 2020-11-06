@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import NoData from '../common/NoData';
+import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import ExternalLink from '../../common/ExternalLink';
+import NoData from '../../common/NoData';
 import styles from './ContentInstall.module.css';
 
 interface Props {
-  install?: string | null;
+  normalizedName: string;
 }
 
 interface Tab {
@@ -18,12 +20,12 @@ interface Tab {
 const TABS: Tab[] = [
   {
     name: 'cli',
-    title: 'OPA policies',
+    title: 'Helm CLI',
   },
 ];
 const ACTIVE_TAB: string = 'cli';
 
-const OPAInstall = (props: Props) => {
+const FalcoInstall = (props: Props) => {
   const [activeTab, setActiveTab] = useState(ACTIVE_TAB);
 
   return (
@@ -47,10 +49,14 @@ const OPAInstall = (props: Props) => {
         {(() => {
           switch (activeTab) {
             case 'cli':
+              const block1 = `helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/${props.normalizedName}/custom-rules.yaml stable/falco`;
+
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
-                    <small className="text-muted mt-2 mb-1">Install repository</small>
+                  <div className="d-flex align-items-center justify-content-end mt-2 mb-2">
+                    <div>
+                      <ButtonCopyToClipboard text={block1} />
+                    </div>
                   </div>
 
                   <SyntaxHighlighter
@@ -60,14 +66,20 @@ const OPAInstall = (props: Props) => {
                       backgroundColor: 'var(--color-1-10)',
                     }}
                   >
-                    {props.install}
+                    {block1}
                   </SyntaxHighlighter>
+
+                  <div className="mt-2">
+                    <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
+                      Need Helm?
+                    </ExternalLink>
+                  </div>
                 </div>
               );
             default:
               return (
                 <div className="tab-pane fade show active">
-                  <NoData>Sorry, the information for Install is missing.</NoData>
+                  <NoData>Sorry, the information for installation is missing.</NoData>
                 </div>
               );
           }
@@ -77,4 +89,4 @@ const OPAInstall = (props: Props) => {
   );
 };
 
-export default OPAInstall;
+export default FalcoInstall;

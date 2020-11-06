@@ -23,6 +23,12 @@ type Tracker interface {
 	Track(wg *sync.WaitGroup) error
 }
 
+// OCITagsGetter is the interface that wraps the Tags method, used to get all
+// the tags available for a given repository in a OCI registry.
+type OCITagsGetter interface {
+	Tags(ctx context.Context, rURL string) ([]string, error)
+}
+
 // New represents a function that creates new repository trackers. Each tracker
 // is in charge of processing a given repository, and based on the concurrency
 // configured, the tracker cmd may run multiple Tracker instances concurrently.
@@ -37,6 +43,7 @@ type Services struct {
 	Rm  hub.RepositoryManager
 	Pm  hub.PackageManager
 	Il  hub.HelmIndexLoader
+	Tg  OCITagsGetter
 	Is  img.Store
 	Ec  ErrorsCollector
 	Hc  HTTPClient

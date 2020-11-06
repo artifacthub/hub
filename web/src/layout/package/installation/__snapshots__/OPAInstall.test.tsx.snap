@@ -2,19 +2,21 @@
 
 exports[`OPAInstall creates snapshot 1`] = `
 <DocumentFragment>
-  <ul
-    class="nav nav-tabs tabs"
-  >
-    <li
-      class="nav-item"
+  <div>
+    <ul
+      class="nav nav-tabs tabs"
     >
-      <button
-        class="btn btn-link nav-item btn active btn-primary active"
+      <li
+        class="nav-item"
       >
-        OPA policies
-      </button>
-    </li>
-  </ul>
+        <button
+          class="btn btn-link nav-item btn active btn-primary active"
+        >
+          OPA policies
+        </button>
+      </li>
+    </ul>
+  </div>
   <div
     class="tab-content mt-3"
   >

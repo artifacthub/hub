@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
-import NoData from '../common/NoData';
+import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import NoData from '../../common/NoData';
 import styles from './ContentInstall.module.css';
 
 interface Props {
@@ -136,7 +136,7 @@ const OLMInstall = (props: Props) => {
             default:
               return (
                 <div className="tab-pane fade show active">
-                  <NoData>Sorry, the information for Install is missing.</NoData>
+                  <NoData>Sorry, the information for installation is missing.</NoData>
                 </div>
               );
           }

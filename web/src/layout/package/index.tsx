@@ -41,7 +41,7 @@ import SubNavbar from '../navigation/SubNavbar';
 import ChangelogModal from './ChangelogModal';
 import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
-import InstallationModal from './InstallationModal';
+import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
 import OPAPoliciesList from './OPAPoliciesList';
 import styles from './PackageView.module.css';
