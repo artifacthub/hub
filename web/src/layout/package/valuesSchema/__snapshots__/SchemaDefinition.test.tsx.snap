@@ -173,7 +173,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
             >
               Format
             </small>
-            : 
+            :
           </div>
           <span
             class="ml-1"
@@ -190,7 +190,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
             >
               Pattern
             </small>
-            : 
+            :
           </div>
           <span
             class="ml-1"
@@ -210,7 +210,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
               >
                 Min length
               </small>
-              : 
+              :
             </div>
             <span
               class="ml-1"
@@ -227,7 +227,7 @@ exports[`SchemaDefinition creates snapshot 1`] = `
               >
                 Max length
               </small>
-              : 
+              :
             </div>
             <span
               class="ml-1"

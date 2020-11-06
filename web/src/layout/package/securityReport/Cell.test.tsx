@@ -4,7 +4,10 @@ import React from 'react';
 import { VulnerabilitySeverity } from '../../../types';
 import SecurityCell from './Cell';
 
+const mockSetVisibleVulnerability = jest.fn();
+
 const defaultProps = {
+  index: 1,
   vulnerability: {
     Description:
       'Python 2.7 through 2.7.17, 3.5 through 3.5.9, 3.6 through 3.6.10, 3.7 through 3.7.6, and 3.8 through 3.8.1 allows an HTTP server to conduc',
@@ -26,6 +29,7 @@ const defaultProps = {
     Title: 'python: wrong backtracking in urllib.request.AbstractBasicAuthHandler allows for a ReDoS',
     VulnerabilityID: 'CVE-2020-8492',
   },
+  setVisibleVulnerability: mockSetVisibleVulnerability,
 };
 
 const references = [
@@ -156,10 +160,12 @@ describe('SecuritySummary', () => {
 
     it('renders cell without fixed version', () => {
       const props = {
+        index: 1,
         vulnerability: {
           ...defaultProps.vulnerability,
           InstalledVersion: undefined,
         },
+        setVisibleVulnerability: mockSetVisibleVulnerability,
       };
 
       const { getByTestId } = render(
@@ -176,24 +182,6 @@ describe('SecuritySummary', () => {
     });
 
     it('opens vulnerability detail', () => {
-      const { queryByTestId, getByTestId, getByText } = render(
-        <table>
-          <tbody>
-            <SecurityCell {...defaultProps} />
-          </tbody>
-        </table>
-      );
-
-      expect(queryByTestId('vulnerabilityDetail')).toBeNull();
-      const cell = getByTestId('vulnerabilityCell');
-      fireEvent.click(cell);
-
-      expect(getByTestId('vulnerabilityDetail')).toBeInTheDocument();
-      expect(getByText(defaultProps.vulnerability.Title)).toBeInTheDocument();
-      expect(getByText(defaultProps.vulnerability.Description)).toBeInTheDocument();
-    });
-
-    it('Closes vulnerability detail', () => {
       const { queryByTestId, getByTestId } = render(
         <table>
           <tbody>
@@ -206,10 +194,25 @@ describe('SecuritySummary', () => {
       const cell = getByTestId('vulnerabilityCell');
       fireEvent.click(cell);
 
-      expect(getByTestId('vulnerabilityDetail')).toBeInTheDocument();
+      expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
+      expect(mockSetVisibleVulnerability).toHaveBeenCalledWith('CVE-2020-8492_1');
+    });
 
+    it('Closes vulnerability detail', () => {
+      const { getByTestId } = render(
+        <table>
+          <tbody>
+            <SecurityCell {...defaultProps} visibleVulnerability="CVE-2020-8492_1" />
+          </tbody>
+        </table>
+      );
+
+      expect(getByTestId('vulnerabilityDetail')).toBeInTheDocument();
+      const cell = getByTestId('vulnerabilityCell');
       fireEvent.click(cell);
-      expect(queryByTestId('vulnerabilityDetail')).toBeNull();
+
+      expect(mockSetVisibleVulnerability).toHaveBeenCalledTimes(1);
+      expect(mockSetVisibleVulnerability).toHaveBeenCalledWith(undefined);
     });
   });
 
@@ -217,10 +220,12 @@ describe('SecuritySummary', () => {
     for (let i = 0; i < badges.length; i++) {
       it('returns proper badge', () => {
         const props = {
+          index: 1,
           vulnerability: {
             ...defaultProps.vulnerability,
             Severity: badges[i].severity,
           },
+          setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
         const { getByTestId } = render(
@@ -242,11 +247,13 @@ describe('SecuritySummary', () => {
     for (let i = 0; i < references.length; i++) {
       it('returns correct one', () => {
         const props = {
+          index: 1,
           vulnerability: {
             ...defaultProps.vulnerability,
             VulnerabilityID: references[i].cve,
             References: references[i].list,
           },
+          setVisibleVulnerability: mockSetVisibleVulnerability,
         };
 
         const { getByRole } = render(

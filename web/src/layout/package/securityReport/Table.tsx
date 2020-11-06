@@ -18,6 +18,7 @@ const MAX_VULNERABILITY_NUMBER = 100;
 
 const SecurityTable = (props: Props) => {
   const [expanded, setExpanded] = useState<boolean>(true);
+  const [visibleVulnerability, setVisibleVulnerability] = useState<string | undefined>();
 
   const getEmptyMessage = (): JSX.Element => <span className="font-italic text-muted">No vulnerabilities found</span>;
   const getTargetName = (target: string): string => {
@@ -94,8 +95,14 @@ const SecurityTable = (props: Props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {visibleVulnerabilities.map((item: Vulnerability) => (
-                              <SecurityCell vulnerability={item} key={`cell_${item.PkgName}_${item.VulnerabilityID}`} />
+                            {visibleVulnerabilities.map((item: Vulnerability, index: number) => (
+                              <SecurityCell
+                                index={index}
+                                vulnerability={item}
+                                key={`cell_${item.PkgName}_${item.VulnerabilityID}`}
+                                visibleVulnerability={visibleVulnerability}
+                                setVisibleVulnerability={setVisibleVulnerability}
+                              />
                             ))}
                             {list.length > visibleVulnerabilities.length && (
                               <tr>

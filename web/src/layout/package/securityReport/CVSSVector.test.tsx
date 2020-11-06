@@ -27,28 +27,28 @@ interface Tests {
 
 const activeMetrics: Tests[] = [
   {
-    vector: 'AV:N/AC:L/Au:N/C:P/I:P/A:P',
-    active: ['AV_N', 'AC_L', 'Au_N', 'C_P', 'I_P', 'A_P'],
+    vector: 'AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H',
+    active: ['AV_N', 'AC_H', 'PR_N', 'UI_N', 'S_U', 'C_H', 'I_H', 'A_H'],
   },
   {
-    vector: 'AV:N/AC:M/Au:N/C:P/I:P/A:P',
-    active: ['AV_N', 'AC_M', 'Au_N', 'C_P', 'I_P', 'A_P'],
+    vector: 'AV:P/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:L',
+    active: ['AV_P', 'AC_H', 'PR_N', 'UI_N', 'S_U', 'C_H', 'I_H', 'A_L'],
   },
   {
-    vector: 'AV:L/AC:H/Au:N/C:P/I:P/A:P',
-    active: ['AV_L', 'AC_H', 'Au_N', 'C_P', 'I_P', 'A_P'],
+    vector: 'AV:A/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:L',
+    active: ['AV_A', 'AC_H', 'PR_N', 'UI_N', 'S_C', 'C_H', 'I_H', 'A_L'],
   },
   {
-    vector: 'AV:N/AC:M/Au:S/C:P/I:P/A:P',
-    active: ['AV_N', 'AC_M', 'Au_S', 'C_P', 'I_P', 'A_P'],
+    vector: 'AV:P/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:L',
+    active: ['AV_P', 'AC_L', 'PR_H', 'UI_N', 'S_U', 'C_H', 'I_H', 'A_L'],
   },
   {
-    vector: 'AV:N/AC:M/Au:N/C:C/I:C/A:P',
-    active: ['AV_N', 'AC_M', 'Au_N', 'C_C', 'I_C', 'A_P'],
+    vector: 'AV:P/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:L',
+    active: ['AV_P', 'AC_L', 'PR_H', 'UI_R', 'S_U', 'C_H', 'I_H', 'A_L'],
   },
   {
-    vector: 'AV:N/AC:M/Au:N/C:P/I:P/A:C',
-    active: ['AV_N', 'AC_M', 'Au_N', 'C_P', 'I_P', 'A_C'],
+    vector: 'AV:P/AC:L/PR:H/UI:R/S:U/C:L/I:N/A:L',
+    active: ['AV_P', 'AC_L', 'PR_H', 'UI_R', 'S_U', 'C_L', 'I_N', 'A_L'],
   },
 ];
 
@@ -61,26 +61,26 @@ describe('CVSSVector', () => {
   describe('Render', () => {
     it('renders component', () => {
       const { getByText, getAllByText } = render(<CVSSVector {...defaultProps} />);
-      expect(getByText('CVSS v2 Vector')).toBeInTheDocument();
+      expect(getByText('CVSS v3 Vector')).toBeInTheDocument();
+      expect(getByText('Score:')).toBeInTheDocument();
+      expect(getByText('9.8')).toBeInTheDocument();
       expect(getByText('Exploitability Metrics')).toBeInTheDocument();
-      expect(getByText('Access Vector')).toBeInTheDocument();
+      expect(getByText(/Attack Vector/g)).toBeInTheDocument();
+      expect(getByText('Physical')).toBeInTheDocument();
       expect(getByText('Local')).toBeInTheDocument();
       expect(getByText('Adjacent Network')).toBeInTheDocument();
       expect(getByText('Network')).toBeInTheDocument();
-      expect(getByText('Access Complexity')).toBeInTheDocument();
-      expect(getByText('High')).toBeInTheDocument();
-      expect(getByText('Medium')).toBeInTheDocument();
-      expect(getByText('Low')).toBeInTheDocument();
-      expect(getByText('Authentication')).toBeInTheDocument();
-      expect(getByText('Multiple')).toBeInTheDocument();
-      expect(getByText('Single')).toBeInTheDocument();
-      expect(getAllByText('None')).toHaveLength(4);
+      expect(getByText(/Attack Complexity/g)).toBeInTheDocument();
+      expect(getAllByText('High')).toHaveLength(5);
+      expect(getAllByText('Low')).toHaveLength(5);
+      expect(getByText('Changed')).toBeInTheDocument();
+      expect(getByText('Unchanged')).toBeInTheDocument();
+      expect(getByText('Required')).toBeInTheDocument();
+      expect(getAllByText('None')).toHaveLength(5);
       expect(getByText('Impact Metrics')).toBeInTheDocument();
-      expect(getByText('Confidentiality')).toBeInTheDocument();
-      expect(getAllByText('Partial')).toHaveLength(3);
-      expect(getAllByText('Complete')).toHaveLength(3);
-      expect(getByText('Integrity')).toBeInTheDocument();
-      expect(getByText('Availability')).toBeInTheDocument();
+      expect(getByText(/Confidentiality/g)).toBeInTheDocument();
+      expect(getByText(/Integrity/g)).toBeInTheDocument();
+      expect(getByText(/Availability/g)).toBeInTheDocument();
     });
 
     for (let i = 0; i < activeMetrics.length; i++) {
@@ -89,7 +89,7 @@ describe('CVSSVector', () => {
           severity: VulnerabilitySeverity.High,
           CVSS: {
             nvd: {
-              V2Vector: activeMetrics[i].vector,
+              V3Vector: activeMetrics[i].vector,
             },
           },
         };
@@ -105,38 +105,10 @@ describe('CVSSVector', () => {
   });
 
   describe('Does not render component', () => {
-    it('when severity is lower than high', () => {
+    it('when no vendor', () => {
       const props = {
         ...defaultProps,
-        severity: VulnerabilitySeverity.Low,
-      };
-      const { container } = render(<CVSSVector {...props} />);
-      expect(container).toBeEmptyDOMElement();
-    });
-
-    it('when nva is not defined', () => {
-      const props = {
-        CVSS: {
-          redhat: {
-            V3Score: 8.1,
-            V3Vector: 'CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H',
-          },
-        },
-        severity: VulnerabilitySeverity.Low,
-      };
-      const { container } = render(<CVSSVector {...props} />);
-      expect(container).toBeEmptyDOMElement();
-    });
-
-    it('when nva has not V2Vector', () => {
-      const props = {
-        CVSS: {
-          nva: {
-            V3Score: 8.1,
-            V3Vector: 'CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H',
-          },
-        },
-        severity: VulnerabilitySeverity.Low,
+        CVSS: {},
       };
       const { container } = render(<CVSSVector {...props} />);
       expect(container).toBeEmptyDOMElement();

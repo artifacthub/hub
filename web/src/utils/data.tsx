@@ -346,7 +346,7 @@ export const SEVERITY_RATING: SeverityRatingList = {
   },
 };
 
-export const CVSS_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
+export const CVSS_V2_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
   'Exploitability Metrics': [
     {
       value: 'AV',
@@ -472,6 +472,171 @@ export const CVSS_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
         {
           value: 'C',
           label: 'Complete',
+          level: 3,
+        },
+      ],
+    },
+  ],
+};
+
+export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
+  'Exploitability Metrics': [
+    {
+      value: 'AV',
+      label: 'Attack Vector',
+      options: [
+        {
+          value: 'P',
+          label: 'Physical',
+          level: 1,
+        },
+        {
+          value: 'L',
+          label: 'Local',
+          level: 2,
+        },
+        {
+          value: 'A',
+          label: 'Adjacent Network',
+          level: 3,
+        },
+        {
+          value: 'N',
+          label: 'Network',
+          level: 4,
+        },
+      ],
+    },
+    {
+      value: 'AC',
+      label: 'Attack Complexity',
+      options: [
+        {
+          value: 'H',
+          label: 'High',
+          level: 1,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'PR',
+      label: 'Privileges Required',
+      options: [
+        {
+          value: 'H',
+          label: 'High',
+          level: 1,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 2,
+        },
+        {
+          value: 'N',
+          label: 'None',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'UI',
+      label: 'User Interaction',
+      options: [
+        {
+          value: 'R',
+          label: 'Required',
+          level: 1,
+        },
+        {
+          value: 'N',
+          label: 'None',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'S',
+      label: 'Scope',
+      options: [
+        {
+          value: 'U',
+          label: 'Unchanged',
+          level: 1,
+        },
+        {
+          value: 'C',
+          label: 'Changed',
+          level: 3,
+        },
+      ],
+    },
+  ],
+  'Impact Metrics': [
+    {
+      value: 'C',
+      label: 'Confidentiality',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 2,
+        },
+        {
+          value: 'H',
+          label: 'High',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'I',
+      label: 'Integrity',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 2,
+        },
+        {
+          value: 'H',
+          label: 'High',
+          level: 3,
+        },
+      ],
+    },
+    {
+      value: 'A',
+      label: 'Availability',
+      options: [
+        {
+          value: 'N',
+          label: 'None',
+          level: 0,
+        },
+        {
+          value: 'L',
+          label: 'Low',
+          level: 2,
+        },
+        {
+          value: 'H',
+          label: 'High',
           level: 3,
         },
       ],

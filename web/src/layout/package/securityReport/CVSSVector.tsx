@@ -3,11 +3,12 @@ import { isUndefined } from 'lodash';
 import React from 'react';
 
 import { CVSSVectorMetric, CVSSVectorOpt, VulnerabilitySeverity } from '../../../types';
-import { CVSS_VECTORS } from '../../../utils/data';
+import { CVSS_V2_VECTORS, CVSS_V3_VECTORS } from '../../../utils/data';
 import formatCVSS from '../../../utils/formatCVSS';
 import styles from './CVSSVector.module.css';
 
 interface Props {
+  source?: string;
   CVSS: {
     [key: string]: {
       [key: string]: string | number;
@@ -16,61 +17,58 @@ interface Props {
   severity: VulnerabilitySeverity;
 }
 
-const AVAILABLE_SEVERITIES = [VulnerabilitySeverity.Critical, VulnerabilitySeverity.High, VulnerabilitySeverity.Medium];
-
 const CVSSVector = (props: Props) => {
-  const vector = props.CVSS && props.CVSS.nvd && props.CVSS.nvd.V2Vector;
-  if (!AVAILABLE_SEVERITIES.includes(props.severity) || isUndefined(vector)) return null;
+  const sources = Object.keys(props.CVSS);
+  if (sources.length === 0) return null;
+  const activeSource = !isUndefined(props.source) && sources.includes(props.source) ? props.source : sources[0];
+  const vectorSource = props.CVSS[activeSource];
+  const vector = vectorSource.V3Vector || vectorSource.V2Vector;
+  const vectors = isUndefined(vectorSource.V3Vector) ? CVSS_V2_VECTORS : CVSS_V3_VECTORS;
+  const score = isUndefined(vectorSource.V3Vector) ? vectorSource.V2Score : vectorSource.V3Score;
   const activeVector = formatCVSS(vector.toString());
 
   return (
     <>
-      <div className="h6 mb-3 mt-1">CVSS v2 Vector</div>
+      <div className="d-flex flex-row align-items-baseline mt-3">
+        <div className="h6">CVSS {isUndefined(vectorSource.V3Vector) ? 'v2' : 'v3'} Vector</div>
+        <div className="ml-2">
+          (<small className="text-muted text-uppercase">Source: </small>
+          {activeSource})
+        </div>
+      </div>
 
-      <div className="d-flex flex-row">
-        {Object.keys(CVSS_VECTORS).map((metric: string, index: number) => (
-          <div
-            className={classnames('w-50', { 'pr-4': index === 0 }, { 'pl-4': index === 1 })}
-            key={`metrics_${index}`}
-          >
-            <table className={`table table-bordered ${styles.table}`}>
-              <thead>
-                <tr>
-                  <th colSpan={4} className=" text-center text-muted text-uppercase">
-                    {metric}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {CVSS_VECTORS[metric].map((item: CVSSVectorMetric) => {
-                  return (
-                    <tr key={`metric_${index}_${item.value}`}>
-                      <td className={`text-nowrap align-middle text-uppercase w-25 ${styles.tableLegend}`}>
-                        <small>{item.label}</small>
-                      </td>
-                      {item.options.map((opt: CVSSVectorOpt) => {
-                        const isActive = activeVector[item.value] === opt.value;
-                        return (
-                          <td
-                            key={`metric_${index}_${item.value}_${opt.value}`}
-                            className="text-muted w-25 text-center"
-                          >
-                            <div
-                              data-testid={`metric_${item.value}_${opt.value}`}
-                              className={classnames({
-                                [`${styles.active} ${styles[`active${opt.level}`]}`]: isActive,
-                              })}
-                            >
-                              <small className="text-truncate">{opt.label}</small>
-                            </div>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      {score && (
+        <div className="d-flex flex-row align-items-baseline mt-2">
+          <div className="font-weight-bold text-muted text-uppercase mr-2">Score:</div>
+          <div className="font-weight-bold">{score}</div>
+        </div>
+      )}
+
+      <div className="d-flex flex-row flex-wrap">
+        {Object.keys(vectors).map((metric: string, index: number) => (
+          <div className={classnames('mt-3', styles.metrics, { 'pr-4': index === 0 })} key={`metrics_${index}`}>
+            <div className="font-weight-bold text-muted text-uppercase mb-3">{metric}</div>
+            {vectors[metric].map((item: CVSSVectorMetric) => {
+              return (
+                <div className="d-flex flex-row flex-nowrap mb-2" key={`metric_${index}_${item.value}`}>
+                  <div className={`text-muted text-uppercase ${styles.legend}`}>{item.label}: </div>
+                  {item.options.map((opt: CVSSVectorOpt) => {
+                    const isActive = activeVector[item.value] === opt.value;
+                    return (
+                      <div
+                        key={`metric_${index}_${item.value}_${opt.value}`}
+                        data-testid={`metric_${item.value}_${opt.value}`}
+                        className={classnames('ml-2 text-center px-1', styles.badge, {
+                          [`${styles.active} ${styles[`active${opt.level}`]}`]: isActive,
+                        })}
+                      >
+                        {opt.label}
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
