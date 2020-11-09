@@ -313,7 +313,7 @@ func TestWorker(t *testing.T) {
 				Repository: &hub.Repository{
 					RepositoryID: "repo1",
 				},
-				CreatedAt: -62135596800,
+				CreatedAt: 0,
 			}).Return(nil)
 
 			// Run worker and check expectations

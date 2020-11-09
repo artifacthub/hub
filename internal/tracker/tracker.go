@@ -26,7 +26,7 @@ type Tracker interface {
 // OCITagsGetter is the interface that wraps the Tags method, used to get all
 // the tags available for a given repository in a OCI registry.
 type OCITagsGetter interface {
-	Tags(ctx context.Context, rURL string) ([]string, error)
+	Tags(ctx context.Context, r *hub.Repository) ([]string, error)
 }
 
 // New represents a function that creates new repository trackers. Each tracker

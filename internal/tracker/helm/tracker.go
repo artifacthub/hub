@@ -13,6 +13,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
+	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 	"github.com/rs/zerolog"
@@ -208,7 +209,7 @@ func (t *Tracker) getCharts() (map[string][]*helmrepo.ChartVersion, error) {
 		}
 	case "oci":
 		// Get package versions available in the repository
-		versions, err := t.svc.Tg.Tags(t.svc.Ctx, strings.TrimPrefix(t.r.URL, ociPrefix))
+		versions, err := t.svc.Tg.Tags(t.svc.Ctx, t.r)
 		if err != nil {
 			return nil, fmt.Errorf("error getting package's available versions: %w", err)
 		}
@@ -263,12 +264,22 @@ type Job struct {
 type OCITagsGetter struct{}
 
 // Tags returns a list with the tags available for the provided repository.
-func (tg *OCITagsGetter) Tags(ctx context.Context, rURL string) ([]string, error) {
-	r, err := name.NewRepository(rURL)
+func (tg *OCITagsGetter) Tags(ctx context.Context, r *hub.Repository) ([]string, error) {
+	u := strings.TrimPrefix(r.URL, ociPrefix)
+	ociRepo, err := name.NewRepository(u)
 	if err != nil {
 		return nil, err
 	}
-	tags, err := remote.ListWithContext(ctx, r)
+	var options []remote.Option
+	if r.AuthUser != "" || r.AuthPass != "" {
+		options = []remote.Option{
+			remote.WithAuth(&authn.Basic{
+				Username: r.AuthUser,
+				Password: r.AuthPass,
+			}),
+		}
+	}
+	tags, err := remote.ListWithContext(ctx, ociRepo, options...)
 	if err != nil {
 		return nil, err
 	}

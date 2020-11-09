@@ -161,8 +161,10 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		Deprecated:   md.Deprecated,
 		ContentURL:   chartURL.String(),
 		ValuesSchema: chart.Schema,
-		CreatedAt:    j.ChartVersion.Created.Unix(),
 		Repository:   w.r,
+	}
+	if !j.ChartVersion.Created.IsZero() {
+		p.CreatedAt = j.ChartVersion.Created.Unix()
 	}
 	readme := getFile(chart, "README.md")
 	if readme != nil {
@@ -277,10 +279,18 @@ func (w *Worker) loadChart(u *url.URL) (*chart.Chart, error) {
 	case "oci":
 		// Pull reference layers from OCI registry
 		ref := strings.TrimPrefix(u.String(), ociPrefix)
+		resolverOptions := docker.ResolverOptions{}
+		if w.r.AuthUser != "" || w.r.AuthPass != "" {
+			resolverOptions.Authorizer = docker.NewDockerAuthorizer(
+				docker.WithAuthCreds(func(string) (string, string, error) {
+					return w.r.AuthUser, w.r.AuthPass, nil
+				}),
+			)
+		}
 		store := content.NewMemoryStore()
 		_, layers, err := oras.Pull(
 			ctxo.WithLoggerDiscarded(w.svc.Ctx),
-			docker.NewResolver(docker.ResolverOptions{}),
+			docker.NewResolver(resolverOptions),
 			ref,
 			store,
 			oras.WithPullEmptyNameAllowed(),
