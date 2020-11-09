@@ -4,12 +4,22 @@ import React from 'react';
 import SignedBadge from './SignedBadge';
 
 describe('SignedBadge', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<SignedBadge repositoryKind={0} signed />);
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders label for Chart package', () => {
+  it('renders label for Helm package', async () => {
     const { getByTestId, getByText, getByRole } = render(<SignedBadge repositoryKind={0} signed />);
     expect(getByText('Signed')).toBeInTheDocument();
 
@@ -17,13 +27,13 @@ describe('SignedBadge', () => {
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByText('This chart has a provenance file')).toBeInTheDocument();
       expect(getByRole('tooltip')).toBeInTheDocument();
     });
   });
 
-  it('renders label for not Chart package', () => {
+  it('does not render label for not helm package', () => {
     const { getByTestId, getByText, queryByText, queryByRole } = render(<SignedBadge repositoryKind={1} signed />);
     expect(getByText('Signed')).toBeInTheDocument();
 

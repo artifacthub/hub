@@ -22,6 +22,14 @@ describe('NotFoundView', () => {
     );
     expect(getByText('Error 404 - Page Not Found')).toBeInTheDocument();
     expect(getByText("The page you were looking for wasn't found")).toBeInTheDocument();
+  });
+
+  it('opens Home link', () => {
+    const { getByText } = render(
+      <Router>
+        <NotFoundView />
+      </Router>
+    );
 
     fireEvent.click(getByText(/Back Home/i));
     expect(window.location.pathname).toBe('/');

@@ -49,5 +49,12 @@ describe('Filters', () => {
       const select = getByLabelText('pagination-limit');
       expect(select).toBeDisabled();
     });
+
+    it('calls updateLimit with default value when limit is not valid', () => {
+      render(<PaginationLimit {...defaultProps} limit={15} />);
+
+      expect(updateLimitMock).toBeCalledTimes(1);
+      expect(updateLimitMock).toHaveBeenCalledWith(20);
+    });
   });
 });

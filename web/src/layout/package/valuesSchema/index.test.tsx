@@ -121,5 +121,85 @@ describe('ValuesSchema', () => {
         });
       });
     });
+
+    it('calls again to getValuesSchema when version is different', async () => {
+      const mockValuesSchema = getMockValuesSchema('5');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { rerender, getByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      const close = getByText('Close');
+      fireEvent.click(close);
+
+      rerender(<ValuesSchema {...defaultProps} version="1.0.0" />);
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0');
+      });
+    });
+
+    it('calls again to getValuesSchema when packageId is different', async () => {
+      const mockValuesSchema = getMockValuesSchema('6');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { rerender, getByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      const close = getByText('Close');
+      fireEvent.click(close);
+
+      rerender(<ValuesSchema {...defaultProps} packageId="id2" />);
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
+        expect(API.getValuesSchema).toHaveBeenCalledWith('id2', defaultProps.version);
+      });
+    });
+
+    it('does not call again to getValuesSchema when package is the same', async () => {
+      const mockValuesSchema = getMockValuesSchema('7');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { getByText, getByTestId, queryByRole } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      const close = getByText('Close');
+      fireEvent.click(close);
+
+      expect(queryByRole('dialog')).toBeNull();
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });

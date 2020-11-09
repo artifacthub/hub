@@ -13,7 +13,7 @@ const defaultProps = {
       V2Vector: 'AV:N/AC:L/Au:N/C:P/I:P/A:P',
       V3Vector: 'CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H',
     },
-    redhat: {
+    source1: {
       V3Score: 8.1,
       V3Vector: 'CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H',
     },
@@ -81,6 +81,47 @@ describe('CVSSVector', () => {
       expect(getByText(/Confidentiality/g)).toBeInTheDocument();
       expect(getByText(/Integrity/g)).toBeInTheDocument();
       expect(getByText(/Availability/g)).toBeInTheDocument();
+    });
+
+    it('renders CVSS v2 when v3 is not provided', () => {
+      const { getByText, getAllByText } = render(
+        <CVSSVector
+          {...defaultProps}
+          CVSS={{
+            nvd: {
+              V2Score: 7.5,
+              V2Vector: 'AV:N/AC:L/Au:N/C:P/I:P/A:P',
+            },
+          }}
+        />
+      );
+      expect(getByText('CVSS v2 Vector')).toBeInTheDocument();
+      expect(getByText('Exploitability Metrics')).toBeInTheDocument();
+      expect(getByText(/Access Vector/g)).toBeInTheDocument();
+      expect(getByText('Local')).toBeInTheDocument();
+      expect(getByText('Adjacent Network')).toBeInTheDocument();
+      expect(getByText('Network')).toBeInTheDocument();
+      expect(getByText(/Access Complexity/g)).toBeInTheDocument();
+      expect(getByText('High')).toBeInTheDocument();
+      expect(getByText('Medium')).toBeInTheDocument();
+      expect(getByText('Low')).toBeInTheDocument();
+      expect(getByText(/Authentication/g)).toBeInTheDocument();
+      expect(getByText('Multiple')).toBeInTheDocument();
+      expect(getByText('Single')).toBeInTheDocument();
+      expect(getAllByText('None')).toHaveLength(4);
+      expect(getByText('Impact Metrics')).toBeInTheDocument();
+      expect(getByText(/Confidentiality/g)).toBeInTheDocument();
+      expect(getAllByText('Partial')).toHaveLength(3);
+      expect(getAllByText('Complete')).toHaveLength(3);
+      expect(getByText(/Integrity/g)).toBeInTheDocument();
+      expect(getByText(/Availability/g)).toBeInTheDocument();
+    });
+
+    it('renders correct value when source is provided', () => {
+      const { getByText } = render(<CVSSVector {...defaultProps} source="source1" />);
+
+      expect(getByText(/source1/g)).toBeInTheDocument();
+      expect(getByText('8.1')).toBeInTheDocument();
     });
 
     for (let i = 0; i < activeMetrics.length; i++) {

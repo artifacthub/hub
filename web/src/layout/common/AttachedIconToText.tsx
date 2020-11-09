@@ -37,6 +37,7 @@ const AttachedIconToText = (props: Props) => {
 
   return (
     <div
+      data-testid="attachedIconToTextWrapper"
       ref={ref}
       className={props.className}
       style={{

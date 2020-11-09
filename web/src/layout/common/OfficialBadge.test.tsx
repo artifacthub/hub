@@ -4,12 +4,22 @@ import React from 'react';
 import OfficialBadge from './OfficialBadge';
 
 describe('OfficialBadge', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<OfficialBadge official />);
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders label', () => {
+  it('renders label', async () => {
     const { getByTestId, getByText, getByRole } = render(<OfficialBadge official />);
     expect(getByText('Official')).toBeInTheDocument();
 
@@ -17,7 +27,7 @@ describe('OfficialBadge', () => {
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         getByText('The publisher owns the software deployed by the packages in this repository')
       ).toBeInTheDocument();

@@ -40,15 +40,17 @@ describe('SecurityModal', () => {
     jest.resetAllMocks();
   });
 
-  it('creates snapshot', () => {
+  it('creates snapshot', async () => {
     const mockReport = getMockSecurityReport('1');
     mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
-    const result = render(<SecurityModal {...defaultProps} />);
+    const result = render(<SecurityModal {...defaultProps} visibleSecurityReport />);
 
-    waitFor(() => {
-      expect(result.asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
     });
+
+    expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
@@ -89,14 +91,92 @@ describe('SecurityModal', () => {
       expect(getByText('Vulnerabilities')).toBeInTheDocument();
     });
 
-    it('renders last scan time', async () => {
-      const mockReport = getMockSecurityReport('4');
-      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
-
+    it('renders last scan time', () => {
       const { getByText } = render(<SecurityModal {...defaultProps} createdAt={1603804873} />);
 
       expect(getByText('Last scan:')).toBeInTheDocument();
       expect(getByText('3 hours ago')).toBeInTheDocument();
+    });
+
+    it('calls again to getSnapshotSecurityReport when version is different', async () => {
+      const mockReport = getMockSecurityReport('4');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { rerender, getByText, getByRole } = render(<SecurityModal {...defaultProps} />);
+
+      const btn = getByText('Open full report');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+
+      rerender(<SecurityModal {...defaultProps} version="1.0.0" />);
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0');
+      });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('calls again to getSnapshotSecurityReport when packageId is different', async () => {
+      const mockReport = getMockSecurityReport('5');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { rerender, getByText, getByRole } = render(<SecurityModal {...defaultProps} />);
+
+      const btn = getByText('Open full report');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      rerender(<SecurityModal {...defaultProps} packageId="pkgID2" />);
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(2);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith('pkgID2', defaultProps.version);
+      });
+
+      expect(getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('does not call again to getSnapshotSecurityReport to open modal when packageId and version are the same', async () => {
+      const mockReport = getMockSecurityReport('6');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { queryByRole, getByText, getByTestId, getByRole } = render(
+        <SecurityModal {...defaultProps} visibleSecurityReport />
+      );
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      const btn = getByTestId('closeModalFooterBtn');
+      fireEvent.click(btn);
+
+      expect(queryByRole('dialog')).toBeNull();
+
+      const openBtn = getByText('Open full report');
+      fireEvent.click(openBtn);
+
+      await waitFor(() => {
+        expect(getByRole('dialog')).toBeInTheDocument();
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

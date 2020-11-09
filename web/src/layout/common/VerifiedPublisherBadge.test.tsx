@@ -4,12 +4,22 @@ import React from 'react';
 import VerifiedPublisherBadge from './VerifiedPublisherBadge';
 
 describe('VerifiedPublisherBadge', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<VerifiedPublisherBadge verifiedPublisher />);
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders label', () => {
+  it('renders label', async () => {
     const { getByTestId, getByText, getByRole } = render(<VerifiedPublisherBadge verifiedPublisher />);
     expect(getByText('Verified Publisher')).toBeInTheDocument();
 
@@ -17,8 +27,8 @@ describe('VerifiedPublisherBadge', () => {
     expect(badge).toBeInTheDocument();
     fireEvent.mouseEnter(badge);
 
-    waitFor(() => {
-      expect(getByText('The publisher owns this repository')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('The publisher owns the repository')).toBeInTheDocument();
       expect(getByRole('tooltip')).toBeInTheDocument();
     });
   });

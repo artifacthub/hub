@@ -686,6 +686,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
           data-testid="containerImage"
         >
           <div
+            data-testid="attachedIconToTextWrapper"
             style="line-height: 21px;"
           >
             <div
