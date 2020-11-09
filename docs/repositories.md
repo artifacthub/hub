@@ -55,6 +55,7 @@ The sample URL shown above is actually valid, so you can give it a try yourself 
 
 Please note that there are some features that are not yet available for Helm repositories stored in OCI registries:
 
+- [Private repositories](#private-repositories)
 - [Verified publisher](#verified-publisher)
 - [Ownership claim](#ownership-claim)
 - Provenance files processing (signed label)
