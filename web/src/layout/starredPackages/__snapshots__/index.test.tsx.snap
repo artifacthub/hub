@@ -1218,6 +1218,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           data-testid="repoUrl"
                                         >
                                           <div
+                                            data-testid="attachedIconToTextWrapper"
                                             style="line-height: 21px;"
                                           >
                                             <div
@@ -1399,6 +1400,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             data-testid="repoUrl"
                                           >
                                             <div
+                                              data-testid="attachedIconToTextWrapper"
                                               style="line-height: 21px;"
                                             >
                                               <div
@@ -1729,6 +1731,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           data-testid="repoUrl"
                                         >
                                           <div
+                                            data-testid="attachedIconToTextWrapper"
                                             style="line-height: 21px;"
                                           >
                                             <div
@@ -1910,6 +1913,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             data-testid="repoUrl"
                                           >
                                             <div
+                                              data-testid="attachedIconToTextWrapper"
                                               style="line-height: 21px;"
                                             >
                                               <div

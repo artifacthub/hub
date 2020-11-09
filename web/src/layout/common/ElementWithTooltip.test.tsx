@@ -11,6 +11,16 @@ const defaultProps = {
 };
 
 describe('ElementWithTooltip', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
   it('creates snapshot', () => {
     const { asFragment } = render(<ElementWithTooltip {...defaultProps} />);
     expect(asFragment).toMatchSnapshot();
@@ -31,32 +41,32 @@ describe('ElementWithTooltip', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('displays tootltip', () => {
+  it('displays tootltip', async () => {
     const { getByTestId, getByText, getByRole } = render(<ElementWithTooltip {...defaultProps} />);
 
     const badge = getByTestId('elementWithTooltip');
     fireEvent.mouseEnter(badge);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
       expect(getByRole('tooltip')).toBeInTheDocument();
     });
   });
 
-  it('hides tootltip on mouse leave', () => {
+  it('hides tootltip on mouse leave', async () => {
     const { getByTestId, getByText, getByRole, queryByRole } = render(<ElementWithTooltip {...defaultProps} />);
 
     const badge = getByTestId('elementWithTooltip');
     fireEvent.mouseEnter(badge);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(getByText(defaultProps.tooltipMessage)).toBeInTheDocument();
       expect(getByRole('tooltip')).toBeInTheDocument();
     });
 
     fireEvent.mouseLeave(badge);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(queryByRole('tooltip')).toBeNull();
     });
   });

@@ -190,5 +190,64 @@ describe('ChangelogModal', () => {
       expect(titles).toHaveLength(1);
       expect(queryByText('0.4.0')).toBeNull();
     });
+
+    it('calls again to getMockChangelog when packageId is different', async () => {
+      const mockChangelog = getMockChangelog('7');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      const props = {
+        ...defaultProps,
+        packageItem: {
+          ...defaultProps.packageItem,
+          packageId: 'id2',
+        },
+      };
+
+      const { rerender, getByText } = render(<ChangelogModal {...defaultProps} />);
+
+      const btn = getByText('Changelog');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+        expect(API.getChangelog).toHaveBeenCalledWith(defaultProps.packageItem.packageId);
+      });
+
+      rerender(<ChangelogModal {...props} />);
+
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(2);
+        expect(API.getChangelog).toHaveBeenCalledWith(props.packageItem.packageId);
+      });
+    });
+
+    it('does not call again to getChangelog to open modal when package is the same', async () => {
+      const mockReport = getMockChangelog('7');
+      mocked(API).getChangelog.mockResolvedValue(mockReport);
+
+      const { queryByRole, getByText, getByTestId, getByRole } = render(
+        <ChangelogModal {...defaultProps} visibleChangelog />
+      );
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+        expect(API.getChangelog).toHaveBeenCalledWith(defaultProps.packageItem.packageId);
+      });
+
+      const btn = getByTestId('closeModalFooterBtn');
+      fireEvent.click(btn);
+
+      expect(queryByRole('dialog')).toBeNull();
+
+      const openBtn = getByText('Changelog');
+      fireEvent.click(openBtn);
+
+      await waitFor(() => {
+        expect(getByRole('dialog')).toBeInTheDocument();
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });
