@@ -6,7 +6,6 @@ import (
 	"net/url"
 	"os"
 	"path"
-	"strings"
 	"sync"
 	"testing"
 
@@ -63,7 +62,7 @@ func TestTracker(t *testing.T) {
 		}
 		tw := newTrackerWrapper(r)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.tg.On("Tags", tw.ctx, "localhost/repo/chart").Return(nil, tests.ErrFake)
+		tw.tg.On("Tags", tw.ctx, r).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track(tw.wg)
@@ -453,7 +452,7 @@ func TestTracker(t *testing.T) {
 				tw := newTrackerWrapper(tc.r)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
 					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
-				tw.tg.On("Tags", tw.ctx, strings.TrimPrefix(tc.r.URL, ociPrefix)).Return(tc.tags, nil)
+				tw.tg.On("Tags", tw.ctx, tc.r).Return(tc.tags, nil)
 
 				// Run tracker and check expectations
 				err := tw.t.Track(tw.wg)
