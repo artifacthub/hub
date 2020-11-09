@@ -115,7 +115,7 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		w.warn(md, fmt.Errorf("invalid chart url %s: %w", j.ChartVersion.URLs[0], err))
 		return
 	}
-	if !chartURL.IsAbs() && repo.SchemeIsHTTP(chartURL) {
+	if !chartURL.IsAbs() {
 		repoURL, _ := url.Parse(w.r.URL)
 		chartURL.Scheme = repoURL.Scheme
 		chartURL.Host = repoURL.Host
