@@ -136,6 +136,10 @@ describe('ValuesSchema', () => {
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+
       const close = getByText('Close');
       fireEvent.click(close);
 
@@ -146,6 +150,10 @@ describe('ValuesSchema', () => {
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, '1.0.0');
+      });
+
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
       });
     });
 
@@ -163,6 +171,10 @@ describe('ValuesSchema', () => {
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+
       const close = getByText('Close');
       fireEvent.click(close);
 
@@ -173,6 +185,10 @@ describe('ValuesSchema', () => {
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(2);
         expect(API.getValuesSchema).toHaveBeenCalledWith('id2', defaultProps.version);
+      });
+
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
       });
     });
 
@@ -190,6 +206,10 @@ describe('ValuesSchema', () => {
         expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
       });
 
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+
       const close = getByText('Close');
       fireEvent.click(close);
 
@@ -200,6 +220,35 @@ describe('ValuesSchema', () => {
       await waitFor(() => {
         expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
       });
+
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+    });
+
+    it('renders JSON schema with refs', async () => {
+      const mockValuesSchema = getMockValuesSchema('8');
+      mocked(API).getValuesSchema.mockResolvedValue(mockValuesSchema);
+
+      const { getByText, getAllByText, getByTestId } = render(<ValuesSchema {...defaultProps} />);
+
+      const btn = getByTestId('valuesSchemaBtn');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getValuesSchema).toHaveBeenCalledTimes(1);
+        expect(API.getValuesSchema).toHaveBeenCalledWith(defaultProps.packageId, defaultProps.version);
+      });
+
+      await waitFor(() => {
+        expect(getByText('Values schema reference')).toBeInTheDocument();
+      });
+
+      expect(getByText('env:')).toBeInTheDocument();
+      expect(getByText('image:')).toBeInTheDocument();
+      expect(getByText('array')).toBeInTheDocument();
+      expect(getByText('(unique)')).toBeInTheDocument();
+      expect(getAllByText(/\[\]/g)).toHaveLength(2);
     });
   });
 });

@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "title": "Schema",
+  "description": "This is a description",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "required": ["image", "agent"],
+  "properties": {
+    "env": {
+      "$ref": "#/definitions/env",
+      "description": "Additional environment variables that may be specified in the container"
+    },
+    "image": {
+      "$ref": "#/definitions/image",
+      "description": "Docker image configuration"
+    }
+  },
+  "definitions": {
+    "env": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "default": [],
+      "minItems": 0,
+      "description": "desc",
+      "uniqueItems": true,
+      "additionalItems": false
+    },
+    "image": {
+      "type": "object",
+      "required": ["repository", "pullPolicy"],
+      "properties": {
+        "tag": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-zA-Z._-]+$",
+          "maxLength": 256,
+          "minLength": 1,
+          "description": "Docker image tag"
+        },
+        "digest": {
+          "type": ["string", "null"],
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "maxLength": 71,
+          "minLength": 71,
+          "description": "Docker image digest"
+        },
+        "pullPolicy": {
+          "enum": ["Always", "Never", "IfNotPresent"],
+          "type": "string",
+          "description": "Pull policy of Docker image"
+        },
+        "repository": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 1,
+          "description": "Docker repository"
+        }
+      },
+      "description": "Docker image configuration",
+      "additionalProperties": false
+    }
+  }
+}
