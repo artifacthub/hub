@@ -52,6 +52,7 @@ describe('CreateAnAccount', () => {
           'Please click on the link that has just been sent to your email account to verify your email and finish the registration process.'
         )
       ).toBeInTheDocument();
+      expect(getByText('is only valid for 24 hours')).toBeInTheDocument();
     });
 
     it('calls registerUser', async () => {
