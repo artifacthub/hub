@@ -131,9 +131,14 @@ const CreateAnAccount = React.forwardRef<HTMLFormElement, Props>((props, ref) =>
               <h4 className="alert-heading">A verification link has been sent to your email account</h4>
             </div>
             <hr />
-            <p className="mb-0">
+            <p>
               Please click on the link that has just been sent to your email account to verify your email and finish the
               registration process.
+            </p>
+            <p className="mb-0">
+              Please note that the verification code{' '}
+              <span className="font-weight-bold">is only valid for 24 hours</span>. If you haven't verified your account
+              by then you'll need to sign up again.
             </p>
           </div>
         </div>

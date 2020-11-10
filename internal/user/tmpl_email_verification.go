@@ -110,7 +110,8 @@ var emailVerificationTmpl = template.Must(template.New("").Parse(`
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi!</p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Welcome to Artifact Hub! You are only one step from being able to sign in on our site. Please simply click on the link below to confirm your account.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Welcome to Artifact Hub! You are only one step from being able to sign in on our site. Please simply click on the link below to confirm your account.</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 30px;">Please note that the verification code <span style="font-weight: bold;">is only valid for 24 hours</span>. If you haven't verified your account by then you'll need to sign up again.</p>
                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                           <tbody>
                             <tr>
