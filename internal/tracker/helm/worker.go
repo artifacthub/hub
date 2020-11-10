@@ -130,7 +130,12 @@ func (w *Worker) handleRegisterJob(j *Job) {
 		w.warn(md, fmt.Errorf("error loading chart (%s): %w", chartURL.String(), err))
 		return
 	}
+	indexName, indexVersion := md.Name, md.Version
 	md = chart.Metadata
+	if md.Name != indexName || md.Version != indexVersion {
+		w.warn(md, fmt.Errorf("name and version in index (%s:%s) do not match chart content", indexName, indexVersion))
+		return
+	}
 
 	// Store logo when available if requested
 	var logoURL, logoImageID string
