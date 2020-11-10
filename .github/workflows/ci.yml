@@ -53,6 +53,8 @@ jobs:
 
   tests-frontend:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max_old_space_size=4096
     steps:
       - name: Checkout code
         uses: actions/checkout@master
@@ -90,6 +92,8 @@ jobs:
 
   build-frontend:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max_old_space_size=4096
     steps:
       - name: Checkout code
         uses: actions/checkout@master
