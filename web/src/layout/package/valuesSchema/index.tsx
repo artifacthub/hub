@@ -1,4 +1,4 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
@@ -20,7 +20,6 @@ interface Props {
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
-
 const ValuesSchema = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -35,7 +34,12 @@ const ValuesSchema = (props: Props) => {
       const schema = await API.getValuesSchema(props.packageId, props.version);
       setCurrentPkgId(props.packageId);
       setCurrentVersion(props.version);
-      setValuesSchema(schema);
+      try {
+        let defs = await $RefParser.dereference(schema);
+        setValuesSchema(defs);
+      } catch (err) {
+        setValuesSchema(schema);
+      }
       setIsLoading(false);
       setOpenStatus(true);
     } catch {
