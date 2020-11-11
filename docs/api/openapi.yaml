@@ -2186,6 +2186,10 @@ components:
               type: boolean
             has_changelog:
               type: boolean
+            content_url:
+              type: string
+              format: uri
+              nullable: true
     PackageSummary:
       type: object
       properties:
