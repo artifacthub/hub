@@ -14,6 +14,7 @@ interface Props {
   name: string;
   version?: string;
   repository: Repository;
+  contentUrl?: string | null;
 }
 
 interface Tab {
@@ -91,10 +92,22 @@ const HelmInstall = (props: Props) => {
           <span className="font-weight-bold">helm install</span> command if you need to.
         </div>
 
-        <div className="mt-2">
+        <div className="mt-2 d-flex flex-row justify-content-between align-items-baseline">
           <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">
             Need Helm?
           </ExternalLink>
+
+          {props.contentUrl && (
+            <div className="d-none d-lg-block">
+              <small className="text-muted pl-2">
+                You can also download this package's content directly using{' '}
+                <ExternalLink href={props.contentUrl} className="text-reset" target="_self">
+                  <u>this link</u>
+                </ExternalLink>
+                .
+              </small>
+            </div>
+          )}
         </div>
       </div>
     );

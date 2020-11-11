@@ -41,6 +41,16 @@ describe('HelmInstall', () => {
       expect(helmLink).toHaveProperty('href', 'https://helm.sh/docs/intro/quickstart/');
     });
 
+    it('renders component with content url', () => {
+      const { getByText, getAllByRole } = render(<HelmInstall {...defaultProps} contentUrl="http://content.url" />);
+
+      expect(getByText(/You can also download this package's content directly using/g)).toBeInTheDocument();
+      const contentUrl = getAllByRole('button')[5];
+      expect(contentUrl).toBeInTheDocument();
+      expect(contentUrl).toHaveTextContent('this link');
+      expect(contentUrl).toHaveProperty('href', 'http://content.url/');
+    });
+
     it('does not render content when version is undefined', () => {
       const { container } = render(<HelmInstall {...defaultProps} version={undefined} />);
       expect(container).toBeEmptyDOMElement();

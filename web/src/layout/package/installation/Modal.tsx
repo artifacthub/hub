@@ -93,6 +93,7 @@ const InstallationModal = (props: Props) => {
                       name={props.package.name}
                       version={props.package.version}
                       repository={props.package.repository}
+                      contentUrl={props.package.contentUrl}
                     />
                   );
                 }
