@@ -37,7 +37,7 @@ Artifact Hub is able to process chart repositories as defined by the Helm projec
 
 Most of the metadata Artifact Hub needs is extracted from the `Chart.yaml` file and other files in the chart package, like the `README` or `LICENSE` files. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `Chart.yaml` file. For more information, please see the [Artifact Hub Helm annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/helm_annotations.md).
 
-There is an extra metadata file that you can add at the root of your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim).
+There is an extra metadata file that you can add at the repository URL's path named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim).
 
 Once you have added your repository, you are all set up. As you add new versions of your charts or even new charts to your repository, they'll be automatically indexed and listed in Artifact Hub.
 
@@ -154,7 +154,7 @@ Repositories and the packages they provide can display a special label named `Ve
 
 Publishers can be verified through the [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml) repository metadata file. In the repositories tab in the Artifact Hub control panel, the repository identifier is exposed on each repository's card (ID). To proceed with the verification, an `artifacthub-repo.yml` metadata file must be added to the repository including that **ID** in the `repositoryID` field. The next time the repository is processed, the verification will be checked and the flag will be enabled if it succeeds.
 
-*Please note that the **artifacthub-repo.yml** metadata file must be located at the same level of the chart repository **index.yaml**, and it must be served from the chart repository HTTP server as well. This means that depending on how your chart repository is set up, adding it to the source git repository may not be enough.*
+*Please note that the **artifacthub-repo.yml** metadata file must be located at the repository URL's path. In Helm repositories, for example, this means it must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
 ## Ownership claim
 
@@ -164,7 +164,7 @@ First, an [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/
 
 Once the repository metadata file has been set up, you can proceed from the Artifact Hub control panel. In the repositories tab, click on `Claim Ownership`. You'll need to enter the repository you'd like to claim the ownership for, as well as the destination entity, which can be the user performing the request or an organization. If the metadata file was set up correctly, the process should complete successfully.
 
-*Please note that the **artifacthub-repo.yml** metadata file must be located at the same level of the chart repository **index.yaml**, and it must be served from the chart repository HTTP server as well. This means that depending on how your chart repository is set up, adding it to the source git repository may not be enough.*
+*Please note that the **artifacthub-repo.yml** metadata file must be located at the repository URL's path. In Helm repositories, for example, this means it must be located at the same level of the chart repository **index.yaml** file, and it must be served from the chart repository HTTP server as well.*
 
 ## Private repositories
 

@@ -8,6 +8,7 @@ interface Props {
   href: string;
   className?: string;
   btnType?: boolean;
+  target?: string;
 }
 
 const ExternalLink = (props: Props) => (
@@ -20,7 +21,7 @@ const ExternalLink = (props: Props) => (
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
-          window.open(props.href, '_blank');
+          window.open(props.href, props.target || '_blank');
         }}
       >
         {props.children}
@@ -30,7 +31,7 @@ const ExternalLink = (props: Props) => (
         className={`${styles.link} ${props.className}`}
         href={props.href}
         role="button"
-        target="_blank"
+        target={props.target || '_blank'}
         rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}
       >

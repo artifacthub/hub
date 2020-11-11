@@ -90,6 +90,7 @@ insert into snapshot (
     deprecated,
     license,
     signed,
+    content_url,
     containers_images,
     provider,
     values_schema,
@@ -116,6 +117,7 @@ insert into snapshot (
     true,
     'Apache-2.0',
     true,
+    'https://content.url/pkg1.tgz',
     '[{"image": "quay.io/org/img:1.0.0"}]',
     'Org Inc',
     '{"key": "value"}',
@@ -259,6 +261,7 @@ select is(
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
+        "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {
                 "image": "quay.io/org/img:1.0.0"
@@ -367,6 +370,7 @@ select is(
         "deprecated": true,
         "license": "Apache-2.0",
         "signed": true,
+        "content_url": "https://content.url/pkg1.tgz",
         "containers_images": [
             {
                 "image": "quay.io/org/img:1.0.0"
@@ -469,6 +473,7 @@ select is(
         "deprecated": null,
         "license": null,
         "signed": null,
+        "content_url": null,
         "containers_images": null,
         "provider": null,
         "has_values_schema": false,
@@ -533,6 +538,7 @@ select is(
         "deprecated": null,
         "license": null,
         "signed": null,
+        "content_url": null,
         "containers_images": null,
         "provider": null,
         "has_values_schema": false,

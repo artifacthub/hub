@@ -53,6 +53,7 @@ begin
         'deprecated', s.deprecated,
         'license', s.license,
         'signed', s.signed,
+        'content_url', s.content_url,
         'containers_images', s.containers_images,
         'provider', s.provider,
         'has_values_schema', (s.values_schema is not null and s.values_schema <> '{}'),

@@ -74,6 +74,7 @@ export interface Package {
   securityReportCreatedAt?: number;
   hasValuesSchema?: boolean;
   hasChangelog?: boolean;
+  contentUrl?: string | null;
 }
 
 export interface ContainerImage {
