@@ -24,7 +24,8 @@ import (
 
 const (
 	indexCacheMaxAge  = 5 * time.Minute
-	staticCacheMaxAge = 365 * 24 * time.Hour
+	DocsCacheMaxAge   = 15 * time.Minute
+	StaticCacheMaxAge = 365 * 24 * time.Hour
 )
 
 // Handlers represents a group of http handlers in charge of handling
@@ -99,7 +100,7 @@ func (h *Handlers) Image(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Set headers and write image data to response writer
-	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(staticCacheMaxAge))
+	w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(StaticCacheMaxAge))
 	if svg.Is(data) {
 		w.Header().Set("Content-Type", "image/svg+xml")
 	} else {
@@ -152,7 +153,7 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 // FileServer sets up a http.FileServer handler to serve static files.
-func FileServer(r chi.Router, public, static string) {
+func FileServer(r chi.Router, public, static string, cacheMaxAge time.Duration) {
 	if strings.ContainsAny(public, "{}*") {
 		panic("FileServer does not permit URL parameters")
 	}
@@ -170,7 +171,7 @@ func FileServer(r chi.Router, public, static string) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
-		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(staticCacheMaxAge))
+		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(cacheMaxAge))
 		fsHandler.ServeHTTP(w, r)
 	}))
 }

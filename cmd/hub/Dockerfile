@@ -13,6 +13,14 @@ COPY web .
 RUN yarn install
 RUN yarn build
 
+# Build docs
+FROM klakegg/hugo:0.78.2 AS docs-builder
+WORKDIR /
+COPY scripts scripts
+COPY docs docs
+RUN scripts/prepare-docs.sh
+RUN cd docs/www && hugo
+
 # Final stage
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates && addgroup -S hub && adduser -S hub -G hub
@@ -21,5 +29,6 @@ WORKDIR /home/hub
 COPY --from=backend-builder /hub ./
 COPY --from=frontend-builder /web/build ./web
 COPY --from=frontend-builder /web/yarn.lock ./web
+COPY --from=docs-builder /web/build/docs ./web/docs
 CMD ["./hub"]
 EXPOSE 8000

@@ -56,7 +56,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
         . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
         <a
           class="link text-reset link"
-          href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
+          href="/docs/authorization"
           rel="noopener noreferrer"
           role="button"
           target="_blank"
@@ -112,7 +112,7 @@ exports[`Authorization settings index creates snapshot 2`] = `
         . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can provide your custom policy for maximum flexibility. For more information please see the 
         <a
           class="link text-reset link"
-          href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
+          href="/docs/authorization"
           rel="noopener noreferrer"
           role="button"
           target="_blank"

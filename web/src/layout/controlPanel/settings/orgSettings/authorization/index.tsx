@@ -406,10 +406,7 @@ const AuthorizationSection = (props: Props) => {
           </ExternalLink>
           . Depending on your requirements, you can use a predefined policy and only supply a data file, or you can
           provide your custom policy for maximum flexibility. For more information please see the{' '}
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/authorization.md"
-            className={`text-reset ${styles.link}`}
-          >
+          <ExternalLink href="/docs/authorization" className={`text-reset ${styles.link}`}>
             documentation
           </ExternalLink>
           .

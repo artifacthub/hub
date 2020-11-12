@@ -1,0 +1,12 @@
+baseURL: /docs
+languageCode: en-us
+title: Artifact Hub documentation
+theme: "hugo-geekdoc"
+publishdir: ../../web/build/docs
+build:
+  noJSConfigInAssets: false
+  useResourceCacheWhen: fallback
+  writeStats: false
+params:
+  AuthorName: Artifact Hub Team
+  geekdocSearch: false

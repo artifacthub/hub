@@ -165,40 +165,28 @@ const RepositoryModal = (props: Props) => {
     switch (selectedKind) {
       case RepositoryKind.Helm:
         link = (
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#helm-charts-repositories"
-            className="text-reset"
-          >
+          <ExternalLink href="/docs/repositories#helm-charts-repositories" className="text-reset">
             <u>Helm charts repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OLM:
         link = (
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#olm-operators-repositories"
-            className="text-reset"
-          >
+          <ExternalLink href="/docs/repositories#olm-operators-repositories" className="text-reset">
             <u>OLM operators repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.Falco:
         link = (
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#falco-rules-repositories"
-            className="text-reset"
-          >
+          <ExternalLink href="/docs/repositories#falco-rules-repositories" className="text-reset">
             <u>Falco rules repositories</u>
           </ExternalLink>
         );
         break;
       case RepositoryKind.OPA:
         link = (
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#opa-policies-repositories"
-            className="text-reset"
-          >
+          <ExternalLink href="/docs/repositories#opa-policies-repositories" className="text-reset">
             <u>OPA policies repositories</u>
           </ExternalLink>
         );
@@ -209,10 +197,7 @@ const RepositoryModal = (props: Props) => {
       <small className="text-muted text-break mt-1">
         <p className="mb-0">
           For more information about the url format and the repository structure, please see the {link} section in the{' '}
-          <ExternalLink
-            href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md"
-            className="text-reset"
-          >
+          <ExternalLink href="/docs/repositories" className="text-reset">
             <u>repositories guide</u>
           </ExternalLink>
           .

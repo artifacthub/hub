@@ -320,7 +320,9 @@ func (h *Handlers) setupRouter() {
 	// Static files and index
 	webBuildPath := h.cfg.GetString("server.webBuildPath")
 	staticFilesPath := path.Join(webBuildPath, "static")
-	static.FileServer(r, "/static", staticFilesPath)
+	docsFilesPath := path.Join(webBuildPath, "docs")
+	static.FileServer(r, "/static", staticFilesPath, static.StaticCacheMaxAge)
+	static.FileServer(r, "/docs", docsFilesPath, static.DocsCacheMaxAge)
 	r.Get("/image/{image}", h.Static.Image)
 	r.Get("/manifest.json", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", helpers.BuildCacheControlHeader(5*time.Minute))

@@ -1,0 +1,28 @@
+<nav>
+    {{ partial "search" . }}
+    {{ $root := "/docs/" }}
+
+    <section class="gdoc-nav--main">
+        <ul class="gdoc-nav__list">
+            <li>
+                <span class="flex">
+                    <a href="{{ $root }}" class="gdoc-nav__entry gdoc-nav__entry-root {{ if eq $root .RelPermalink }}is-active{{ end }}">
+                        Welcome
+                    </a>
+                </span>
+            </li>
+        </ul>
+        {{ if .Site.Params.GeekdocMenuBundle }}
+            {{ partial "menu-bundle" (dict "current" . "source" .Site.Data.menu.main.main) }}
+        {{ else }}
+            {{ partial "menu-filetree" . }}
+        {{ end }}
+    </section>
+
+    <section class="gdoc-nav--more">
+        {{ if .Site.Data.menu.more.more }}
+            <h2>More</h2>
+            {{ partial "menu-bundle" (dict "current" . "source" .Site.Data.menu.more.more) }}
+        {{ end }}
+    </section>
+</nav>

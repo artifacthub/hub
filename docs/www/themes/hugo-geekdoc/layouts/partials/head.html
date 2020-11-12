@@ -1,0 +1,19 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ partial "title" . }}">
+
+<title>{{ partial "title" . }} | {{ .Site.Title -}}</title>
+
+<link rel="shortcut icon" type="image/png" href="/static/media/logo.png">
+<link rel="apple-touch-icon" href="/static/media/logo192.png" />
+<link rel="apple-touch-icon" sizes="512x512" href="/static/media/logo512.png" />
+<link rel="stylesheet" href="/docs/main.min.css" media="screen">
+<link rel="stylesheet" href="/docs/custom.css" media="screen">
+
+{{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
+
+{{ "<!--" | safeHTML -}}
+    Made with Geekdoc theme https://github.com/xoxys/hugo-geekdoc
+{{- "-->" | safeHTML }}

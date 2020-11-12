@@ -93,7 +93,7 @@ func TestImage(t *testing.T) {
 
 				assert.Equal(t, http.StatusOK, resp.StatusCode)
 				assert.Equal(t, tc.expectedContentType, h.Get("Content-Type"))
-				assert.Equal(t, helpers.BuildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
+				assert.Equal(t, helpers.BuildCacheControlHeader(StaticCacheMaxAge), h.Get("Cache-Control"))
 				assert.Equal(t, imgData, data)
 				hw.is.AssertExpectations(t)
 			})
@@ -158,7 +158,7 @@ func TestServeStaticFile(t *testing.T) {
 	hw := newHandlersWrapper()
 	r := chi.NewRouter()
 	staticFilesPath := path.Join(hw.h.cfg.GetString("server.webBuildPath"), "static")
-	FileServer(r, "/static", staticFilesPath)
+	FileServer(r, "/static", staticFilesPath, StaticCacheMaxAge)
 	s := httptest.NewServer(r)
 	defer s.Close()
 
@@ -180,7 +180,7 @@ func TestServeStaticFile(t *testing.T) {
 		data, _ := ioutil.ReadAll(resp.Body)
 
 		assert.Equal(t, http.StatusOK, resp.StatusCode)
-		assert.Equal(t, helpers.BuildCacheControlHeader(staticCacheMaxAge), h.Get("Cache-Control"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(StaticCacheMaxAge), h.Get("Cache-Control"))
 		assert.Equal(t, []byte("testCssData\n"), data)
 	})
 }
