@@ -170,14 +170,17 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 	if _, err := uuid.FromString(pkg.Repository.RepositoryID); err != nil {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid repository id")
 	}
+	validMaintainers := make([]*hub.Maintainer, 0, len(pkg.Maintainers))
 	for _, m := range pkg.Maintainers {
 		if m.Email == "" {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "maintainer email not provided")
+			continue
 		}
 		if m.Name == "" {
 			m.Name = m.Email
 		}
+		validMaintainers = append(validMaintainers, m)
 	}
+	pkg.Maintainers = validMaintainers
 	for _, c := range pkg.Channels {
 		if c.Name == "" {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "channel name not provided")

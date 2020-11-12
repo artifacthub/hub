@@ -22,14 +22,29 @@ exports[`FalcoInstall creates snapshot 1`] = `
       class="tab-pane fade show active"
     >
       <div
-        class="d-flex align-items-center justify-content-end mt-2 mb-2"
+        class="d-flex align-items-start my-2 pt-2"
       >
+        <div
+          class="flex-grow-1 mr-3 blockWrapper"
+        >
+          <pre
+            style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+          >
+            <code
+              class="language-bash"
+            >
+              <span>
+                helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
+              </span>
+            </code>
+          </pre>
+        </div>
         <div>
           <div
             class="position-relative undefined"
           >
             <button
-              class="btn btn-sm btn-primary rounded-circle btn"
+              class="btn btn-sm btn-primary rounded-circle copyBtn"
               data-testid="ctcBtn"
               type="button"
             >
@@ -64,17 +79,6 @@ exports[`FalcoInstall creates snapshot 1`] = `
           </div>
         </div>
       </div>
-      <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
-      >
-        <code
-          class="language-bash"
-        >
-          <span>
-            helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
-          </span>
-        </code>
-      </pre>
       <div
         class="mt-2"
       >

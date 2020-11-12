@@ -157,6 +157,35 @@ describe('Claim Repository Modal - packages section', () => {
       expect(getByText(mockOrganizations[2].name)).toBeInTheDocument();
     });
 
+    it('does not render OCI repos', async () => {
+      const mockOrganizations = getMockOrganizations('1');
+      mocked(API).getUserOrganizations.mockResolvedValue(mockOrganizations);
+      const mockRepositories = getMockRepositories('2');
+      mocked(API).getAllRepositories.mockResolvedValue(mockRepositories);
+
+      const { getByTestId, getByText, getAllByTestId } = render(
+        <AppCtx.Provider value={{ ctx: mockWithoutSelectedOrgCtx, dispatch: jest.fn() }}>
+          <ClaimModal {...defaultProps} />
+        </AppCtx.Provider>
+      );
+
+      await waitFor(() => {
+        expect(API.getUserOrganizations).toHaveBeenCalledTimes(1);
+        expect(API.getAllRepositories).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getByText('Claim repository ownership')).toBeInTheDocument();
+
+      const input = getByTestId('searchTypeaheadRepositoryInput');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveValue('');
+
+      fireEvent.focus(input);
+
+      const buttons = getAllByTestId('repoItem');
+      expect(buttons).toHaveLength(2);
+    });
+
     describe('Claim repo', () => {
       it('from user', async () => {
         const mockOrganizations = getMockOrganizations('1');

@@ -44,6 +44,7 @@ type Services struct {
 	Pm  hub.PackageManager
 	Il  hub.HelmIndexLoader
 	Tg  OCITagsGetter
+	Re  hub.OLMRepositoryExporter
 	Is  img.Store
 	Ec  ErrorsCollector
 	Hc  HTTPClient

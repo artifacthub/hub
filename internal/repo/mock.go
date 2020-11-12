@@ -8,6 +8,30 @@ import (
 	"helm.sh/helm/v3/pkg/repo"
 )
 
+// ClonerMock is a mock implementation of the RepositoryCloner interface.
+type ClonerMock struct {
+	mock.Mock
+}
+
+// CloneRepository implements the RepositoryCloner interface.
+func (m *ClonerMock) CloneRepository(ctx context.Context, r *hub.Repository) (string, string, error) {
+	args := m.Called(ctx, r)
+	return args.String(0), args.String(1), args.Error(2)
+}
+
+// HelmIndexLoaderMock is a mock implementation of the HelmIndexLoader
+// interface.
+type HelmIndexLoaderMock struct {
+	mock.Mock
+}
+
+// LoadIndex implements the HelmIndexLoader interface.
+func (m *HelmIndexLoaderMock) LoadIndex(r *hub.Repository) (*repo.IndexFile, error) {
+	args := m.Called(r)
+	indexFile, _ := args.Get(0).(*repo.IndexFile)
+	return indexFile, args.Error(1)
+}
+
 // ManagerMock is a mock implementation of the RepositoryManager interface.
 type ManagerMock struct {
 	mock.Mock
@@ -154,26 +178,14 @@ func (m *ManagerMock) Update(ctx context.Context, r *hub.Repository) error {
 	return args.Error(0)
 }
 
-// HelmIndexLoaderMock is a mock implementation of the HelmIndexLoader
-// interface.
-type HelmIndexLoaderMock struct {
+// OLMRepositoryExporterMock is a mock implementation of the
+// OLMRepositoryExporter interface.
+type OLMRepositoryExporterMock struct {
 	mock.Mock
 }
 
-// LoadIndex implements the HelmIndexLoader interface.
-func (m *HelmIndexLoaderMock) LoadIndex(r *hub.Repository) (*repo.IndexFile, error) {
-	args := m.Called(r)
-	indexFile, _ := args.Get(0).(*repo.IndexFile)
-	return indexFile, args.Error(1)
-}
-
-// ClonerMock is a mock implementation of the RepositoryCloner interface.
-type ClonerMock struct {
-	mock.Mock
-}
-
-// CloneRepository implements the RepositoryCloner interface.
-func (m *ClonerMock) CloneRepository(ctx context.Context, r *hub.Repository) (string, string, error) {
+// ExportRepository implements the OLMRepositoryExporter interface.
+func (m *OLMRepositoryExporterMock) ExportRepository(ctx context.Context, r *hub.Repository) (string, error) {
 	args := m.Called(ctx, r)
-	return args.String(0), args.String(1), args.Error(2)
+	return args.String(0), args.Error(1)
 }

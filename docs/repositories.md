@@ -79,6 +79,21 @@ There is an extra metadata file that you can add to your repository named [artif
 
 Once you have added your repository, you are all set up. As you add new versions of your operators or even new operators to your git repository, they'll be automatically indexed and listed in Artifact Hub. To delete a specific version or operator from Artifact Hub, you just need to delete the corresponding directory from your repository. This should make it easier to keep your content up-to-date in Artifact Hub without requiring any extra effort on your side.
 
+### OLM OCI experimental support
+
+Artifact Hub is able to process OLM repositories stored in [OCI registries](https://github.com/opencontainers/distribution-spec/blob/master/spec.md). This feature is experimental, and it's subject to change when [some enhancements are incorporated into the Operator Framework](https://github.com/operator-framework/enhancements/pull/37).
+
+To add a repository stored in a OCI registry, you need to provide the **catalog index image** url when registering your repository. The url used **must** follow the following format:
+
+- `oci://docker.io/ibmcom/ibm-operator-catalog:latest`
+
+OCI specific installation instructions will be provided in the UI for packages available in OCI registries.
+
+Please note that there are some features that are not yet available for OLM repositories stored in OCI registries:
+
+- [Verified publisher](#verified-publisher)
+- [Ownership claim](#ownership-claim)
+
 ### Example repository: Ditto operator repository
 
 - Operators source Github URL: [https://github.com/ctron/ditto-operator/tree/master/olm](https://github.com/ctron/ditto-operator/tree/master/olm)

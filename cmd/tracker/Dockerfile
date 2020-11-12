@@ -6,10 +6,16 @@ COPY cmd/tracker cmd/tracker
 COPY internal internal
 RUN cd cmd/tracker && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tracker .
 
+# OPM installer
+FROM golang:1.15-alpine AS opm-installer
+RUN apk --no-cache add build-base
+RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.15.1
+
 # Final stage
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates && addgroup -S tracker && adduser -S tracker -G tracker
 USER tracker
 WORKDIR /home/tracker
 COPY --from=builder /tracker ./
+COPY --from=opm-installer /go/bin/opm /usr/local/bin
 CMD ["./tracker"]

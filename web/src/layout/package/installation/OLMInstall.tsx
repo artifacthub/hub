@@ -5,6 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import ExternalLink from '../../common/ExternalLink';
 import NoData from '../../common/NoData';
 import styles from './ContentInstall.module.css';
 
@@ -57,80 +58,77 @@ const OLMInstall = (props: Props) => {
         {(() => {
           switch (activeTab) {
             case 'cli':
-              const preBlock =
-                'curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/0.15.1/install.sh | bash -s 0.15.1';
               const block1 = `kubectl create -f https://operatorhub.io/install/${props.activeChannel}/${props.name}.yaml`;
               const block2 = `kubectl get csv -n ${namespace}`;
 
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
-                    <small className="text-muted mt-2 mb-1">
-                      Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your
-                      cluster.
-                    </small>
-                    <div>
-                      <ButtonCopyToClipboard text={preBlock} />
-                    </div>
-                  </div>
-
-                  <SyntaxHighlighter
-                    language="bash"
-                    style={docco}
-                    customStyle={{
-                      backgroundColor: 'var(--color-1-10)',
-                    }}
-                  >
-                    {preBlock}
-                  </SyntaxHighlighter>
-
-                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                  <div className="my-2">
                     <small className="text-muted mt-2 mb-1">
                       Install the operator by running the following command:
                     </small>
-                    <div>
-                      <ButtonCopyToClipboard text={block1} />
-                    </div>
                   </div>
 
-                  <SyntaxHighlighter
-                    language="bash"
-                    style={docco}
-                    customStyle={{
-                      backgroundColor: 'var(--color-1-10)',
-                    }}
-                  >
-                    {block1}
-                  </SyntaxHighlighter>
+                  <div className="d-flex align-items-start">
+                    <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+                      <SyntaxHighlighter
+                        language="bash"
+                        style={docco}
+                        customStyle={{
+                          backgroundColor: 'var(--color-1-10)',
+                        }}
+                      >
+                        {block1}
+                      </SyntaxHighlighter>
+                    </div>
+
+                    <div>
+                      <ButtonCopyToClipboard text={block1} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
+                    </div>
+                  </div>
 
                   <small>
                     This Operator will be installed in the "<span className="font-weight-bold">{namespace}</span>"
                     namespace and will be usable from all namespaces in the cluster.
                   </small>
 
-                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                  <div className="my-2">
                     <small className="text-muted mt-2 mb-1">
                       After install, watch your operator come up using next command:
                     </small>
-                    <div>
-                      <ButtonCopyToClipboard text={block2} />
-                    </div>
                   </div>
 
-                  <SyntaxHighlighter
-                    language="bash"
-                    style={docco}
-                    customStyle={{
-                      backgroundColor: 'var(--color-1-10)',
-                    }}
-                  >
-                    {block2}
-                  </SyntaxHighlighter>
+                  <div className="d-flex align-items-start">
+                    <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+                      <SyntaxHighlighter
+                        language="bash"
+                        style={docco}
+                        customStyle={{
+                          backgroundColor: 'var(--color-1-10)',
+                        }}
+                      >
+                        {block2}
+                      </SyntaxHighlighter>
+                    </div>
+
+                    <div>
+                      <ButtonCopyToClipboard text={block2} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
+                    </div>
+                  </div>
 
                   <small>
                     To use it, checkout the custom resource definitions (CRDs) introduced by this operator to start
                     using it.
                   </small>
+
+                  <div className="mt-2">
+                    <ExternalLink
+                      href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
+                      className="btn btn-link pl-0"
+                    >
+                      Need OLM?
+                    </ExternalLink>
+                  </div>
                 </div>
               );
             default:

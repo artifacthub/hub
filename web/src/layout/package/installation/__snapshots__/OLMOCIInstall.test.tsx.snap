@@ -1,0 +1,665 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OLMOCIInstall creates snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <ul
+      class="nav nav-tabs tabs"
+    >
+      <li
+        class="nav-item"
+      >
+        <button
+          class="btn btn-link nav-item btn active btn-primary active"
+        >
+          <span
+            class="d-none d-sm-block"
+          >
+            Operator Lifecycle Manager (OCI)
+          </span>
+          <span
+            class="d-block d-sm-none"
+          >
+            OLM (OCI)
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="tab-content mt-3"
+  >
+    <div
+      class="tab-pane fade show active"
+    >
+      <div
+        class="my-2"
+      >
+        <small
+          class="text-muted mt-2 mb-1"
+        >
+          Install catalog
+        </small>
+      </div>
+      <div
+        class="mb-2"
+      >
+        <span
+          class="badge badge-dark badge-sm"
+        >
+          <small
+            class="text-uppercase mr-2"
+          >
+            File:
+          </small>
+          repo-catalog.yaml
+        </span>
+      </div>
+      <div
+        class="d-flex align-items-start"
+      >
+        <div
+          class="flex-grow-1 mr-3 blockWrapper"
+        >
+          <pre
+            style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+          >
+            <code
+              class="language-yaml"
+            >
+              <span
+                class="hljs-attr"
+              >
+                apiVersion:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                operators.coreos.com/v1alpha1
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                kind:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                CatalogSource
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                metadata:
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                name:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                repo-catalog
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                namespace:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                default
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                spec:
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                displayName:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                Repo
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                publisher:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                user
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                sourceType:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                grpc
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                image:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                docker.io/ibmcom/ibm-operator-catalog:latest
+              </span>
+            </code>
+          </pre>
+        </div>
+        <div>
+          <div
+            class="position-relative undefined"
+          >
+            <button
+              class="btn btn-sm btn-primary rounded-circle copyBtn"
+              data-testid="ctcBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    ry="2"
+                    width="13"
+                    x="9"
+                    y="9"
+                  />
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex align-items-start"
+      >
+        <div
+          class="flex-grow-1 mr-3 blockWrapper"
+        >
+          <pre
+            style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+          >
+            <code
+              class="language-bash"
+            >
+              <span>
+                kubectl apply -f repo-catalog.yaml
+              </span>
+            </code>
+          </pre>
+        </div>
+        <div>
+          <div
+            class="position-relative undefined"
+          >
+            <button
+              class="btn btn-sm btn-primary rounded-circle copyBtn"
+              data-testid="ctcBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    ry="2"
+                    width="13"
+                    x="9"
+                    y="9"
+                  />
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="my-2"
+      >
+        <small
+          class="text-muted mt-2 mb-1"
+        >
+          Create subscription
+        </small>
+      </div>
+      <div
+        class="mb-2"
+      >
+        <span
+          class="badge badge-dark badge-sm"
+        >
+          <small
+            class="text-uppercase mr-2"
+          >
+            File:
+          </small>
+          packageName-subscription.yaml
+        </span>
+      </div>
+      <div
+        class="d-flex align-items-start"
+      >
+        <div
+          class="flex-grow-1 mr-3 blockWrapper"
+        >
+          <pre
+            style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+          >
+            <code
+              class="language-yaml"
+            >
+              <span
+                class="hljs-attr"
+              >
+                apiVersion:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                operators.coreos.com/v1alpha1
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                kind:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                Subscription
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                metadata:
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                name:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                packageName-subscription
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                namespace:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                default
+              </span>
+              <span>
+                
+
+              </span>
+              <span />
+              <span
+                class="hljs-attr"
+              >
+                spec:
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                channel:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                stable
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                name:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                packageName
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                source:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                repo-catalog
+              </span>
+              <span>
+                
+
+              </span>
+              <span>
+                  
+              </span>
+              <span
+                class="hljs-attr"
+              >
+                sourceNamespace:
+              </span>
+              <span>
+                 
+              </span>
+              <span
+                style="color: rgb(33, 145, 97);"
+              >
+                default
+              </span>
+            </code>
+          </pre>
+        </div>
+        <div>
+          <div
+            class="position-relative undefined"
+          >
+            <button
+              class="btn btn-sm btn-primary rounded-circle copyBtn"
+              data-testid="ctcBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    ry="2"
+                    width="13"
+                    x="9"
+                    y="9"
+                  />
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex align-items-start"
+      >
+        <div
+          class="flex-grow-1 mr-3 blockWrapper"
+        >
+          <pre
+            style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+          >
+            <code
+              class="language-bash"
+            >
+              <span>
+                kubectl apply -f packageName-subscription.yaml
+              </span>
+            </code>
+          </pre>
+        </div>
+        <div>
+          <div
+            class="position-relative undefined"
+          >
+            <button
+              class="btn btn-sm btn-primary rounded-circle copyBtn"
+              data-testid="ctcBtn"
+              type="button"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    height="13"
+                    rx="2"
+                    ry="2"
+                    width="13"
+                    x="9"
+                    y="9"
+                  />
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-2"
+      >
+        <a
+          class="link btn btn-link pl-0"
+          href="https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md"
+          rel="noopener noreferrer"
+          role="button"
+          target="_blank"
+        >
+          Need OLM?
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

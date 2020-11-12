@@ -25,7 +25,7 @@ hub_db_create
 
 ### Migrations
 
-[Database migrations](./database/migrations) are managed using [Tern](https://github.com/jackc/tern). Please [install it](https://github.com/jackc/tern#installation) before proceeding. The database schema and functions are managed with migrations.
+[Database migrations](https://github.com/artifacthub/hub/tree/master/database/migrations) are managed using [Tern](https://github.com/jackc/tern). Please [install it](https://github.com/jackc/tern#installation) before proceeding. The database schema and functions are managed with migrations.
 
 We need to create a configuration file so that Tern knows how to connect to our database. We'll create a file called `tern.conf` inside `~/.cfg` with the following content (please adjust if needed):
 
@@ -50,7 +50,7 @@ At this point our database is ready to launch our local instance of Artifact Hub
 
 ### Database tests
 
-If you plan to do some work on the database layer, some extra setup is needed to be able to run the database tests. [Schema and database functions are tested](./database/tests) using the unit testing framework [pgTap](https://pgtap.org), so you need to [install](https://pgtap.org/documentation.html#installation) the pgTap PostgreSQL extension on your machine. To run the tests you will also need to install a perl tool called [pg_prove](https://pgtap.org/pg_prove.html) from CPAN (`cpan TAP::Parser::SourceHandler::pgTAP`).
+If you plan to do some work on the database layer, some extra setup is needed to be able to run the database tests. [Schema and database functions are tested](https://github.com/artifacthub/hub/tree/master/database/tests) using the unit testing framework [pgTap](https://pgtap.org), so you need to [install](https://pgtap.org/documentation.html#installation) the pgTap PostgreSQL extension on your machine. To run the tests you will also need to install a perl tool called [pg_prove](https://pgtap.org/pg_prove.html) from CPAN (`cpan TAP::Parser::SourceHandler::pgTAP`).
 
 Similarly to what we did during our initial database setup, we'll create a configuration file for Tern for the tests database in the same folder (`~/.cfg`), called `tern-tests.conf` with the following content (please adjust if needed):
 
@@ -112,7 +112,7 @@ server:
     secure: false
 ```
 
-This sample configuration does not use all options available. For more information please see [the Chart configuration options](charts/artifact-hub/README.md#configuration) and [the Chart hub secret template file](charts/artifact-hub/templates/hub_secret.yaml).
+This sample configuration does not use all options available. For more information please see [the Chart configuration options](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=values-schema) and [the Chart hub secret template file](https://github.com/artifacthub/hub/blob/master/charts/artifact-hub/templates/hub_secret.yaml).
 
 Now you can run the `hub` server:
 
@@ -126,7 +126,7 @@ The `hub_server` alias runs the `hub` cmd, one of the two processes of the Artif
 
 ### Tracker
 
-The other backend cmd is the `tracker`, which is in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool.
+The other backend cmd is the `tracker`, which is in charge of indexing registered repositories metadata. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The tracker requires the [OPM cli tool](https://github.com/operator-framework/operator-registry/releases) to be installed and available in your PATH.
 
 If you opened the url suggested before, you probably noticed there were no packages listed yet. This happened because no repositories had been indexed yet. If you used the configuration file suggested for Tern, some sample repositories should have been registered in the database owned by the `demo` user. To index them, we need to run the `tracker`.
 
@@ -162,7 +162,7 @@ Depending on the speed of your Internet connection and machine, this may take a 
 
 ### Scanner
 
-There is another backend cmd called `scanner`, which is in charge of scanning the packages images for security vulnerabilities, generating security reports for them. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool.
+There is another backend cmd called `scanner`, which is in charge of scanning the packages images for security vulnerabilities, generating security reports for them. On production deployments, it is usually run periodically using a `cronjob` on Kubernetes. Locally while developing, you can just run it as often as you need as any other CLI tool. The scanner requires [Trivy](https://github.com/aquasecurity/trivy#installation) to be installed and available in your PATH.
 
 The `scanner` is setup and run in the same way as the `tracker`. There is also an alias for it named `hub_scanner`.
 

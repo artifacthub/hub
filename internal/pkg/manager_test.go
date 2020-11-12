@@ -541,6 +541,9 @@ func TestRegister(t *testing.T) {
 				Name:  "name2",
 				Email: "email2",
 			},
+			{
+				Name: "name3",
+			},
 		},
 		Repository: &hub.Repository{
 			RepositoryID: "00000000-0000-0000-0000-000000000001",
@@ -601,21 +604,6 @@ func TestRegister(t *testing.T) {
 					Version: "1.0.0",
 					Repository: &hub.Repository{
 						RepositoryID: "invalid",
-					},
-				},
-			},
-			{
-				"maintainer email not provided",
-				&hub.Package{
-					Name:    "package1",
-					Version: "1.0.0",
-					Repository: &hub.Repository{
-						RepositoryID: "00000000-0000-0000-0000-000000000001",
-					},
-					Maintainers: []*hub.Maintainer{
-						{
-							Name: "name",
-						},
 					},
 				},
 			},

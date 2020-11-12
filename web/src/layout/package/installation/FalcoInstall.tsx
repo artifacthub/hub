@@ -53,21 +53,23 @@ const FalcoInstall = (props: Props) => {
 
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex align-items-center justify-content-end mt-2 mb-2">
+                  <div className="d-flex align-items-start my-2 pt-2">
+                    <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+                      <SyntaxHighlighter
+                        language="bash"
+                        style={docco}
+                        customStyle={{
+                          backgroundColor: 'var(--color-1-10)',
+                        }}
+                      >
+                        {block1}
+                      </SyntaxHighlighter>
+                    </div>
+
                     <div>
-                      <ButtonCopyToClipboard text={block1} />
+                      <ButtonCopyToClipboard text={block1} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
                     </div>
                   </div>
-
-                  <SyntaxHighlighter
-                    language="bash"
-                    style={docco}
-                    customStyle={{
-                      backgroundColor: 'var(--color-1-10)',
-                    }}
-                  >
-                    {block1}
-                  </SyntaxHighlighter>
 
                   <div className="mt-2">
                     <ExternalLink href="https://helm.sh/docs/intro/quickstart/" className="btn btn-link pl-0">

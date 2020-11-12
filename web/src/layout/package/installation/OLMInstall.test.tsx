@@ -18,11 +18,6 @@ describe('OLMInstall', () => {
     it('renders component', () => {
       const { getByText } = render(<OLMInstall {...defaultProps} />);
 
-      expect(
-        getByText(
-          'Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.'
-        )
-      ).toBeInTheDocument();
       expect(getByText('Install the operator by running the following command:')).toBeInTheDocument();
       expect(
         getByText(
@@ -36,6 +31,13 @@ describe('OLMInstall', () => {
           'To use it, checkout the custom resource definitions (CRDs) introduced by this operator to start using it.'
         )
       ).toBeInTheDocument();
+
+      const olmLink = getByText('Need OLM?');
+      expect(olmLink).toBeInTheDocument();
+      expect(olmLink).toHaveProperty(
+        'href',
+        'https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md'
+      );
     });
 
     it('renders global operator', () => {
