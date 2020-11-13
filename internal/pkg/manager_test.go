@@ -716,19 +716,19 @@ func TestSearchJSON(t *testing.T) {
 			input  *hub.SearchPackageInput
 		}{
 			{
-				"invalid limit (0 < l <= 50)",
+				"invalid limit (0 < l <= 60)",
 				&hub.SearchPackageInput{
 					Limit: -1,
 				},
 			},
 			{
-				"invalid limit (0 < l <= 50)",
+				"invalid limit (0 < l <= 60)",
 				&hub.SearchPackageInput{
 					Limit: 0,
 				},
 			},
 			{
-				"invalid limit (0 < l <= 50)",
+				"invalid limit (0 < l <= 60)",
 				&hub.SearchPackageInput{
 					Limit: 100,
 				},
