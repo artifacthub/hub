@@ -253,7 +253,12 @@ const PackageInfo = (props: Props) => {
             className="d-inline mt-3"
           />
         )}
-        <SecurityRating summary={props.package.securityReportSummary} className="d-inline mt-3" onlyBadge={false} />
+        <SecurityRating
+          summary={props.package.securityReportSummary}
+          className="d-inline mt-3"
+          onlyBadge={false}
+          withLink={buildPackageURL(props.package)}
+        />
       </div>
     </>
   );

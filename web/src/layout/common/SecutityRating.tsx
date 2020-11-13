@@ -1,5 +1,6 @@
 import { isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { SecurityReportSummary, SeverityRating as SRating, VulnerabilitySeverity } from '../../types';
 import { SEVERITY_RATING } from '../../utils/data';
@@ -11,9 +12,11 @@ interface Props {
   summary: SecurityReportSummary | null;
   className?: string;
   onlyBadge: boolean;
+  withLink?: string;
 }
 
 const SecurityRating = (props: Props) => {
+  const history = useHistory();
   const [severity, setSeverity] = useState<SRating | undefined>();
 
   useEffect(() => {
@@ -30,14 +33,14 @@ const SecurityRating = (props: Props) => {
 
   if (isNull(props.summary) || isUndefined(severity)) return null;
 
-  return (
+  const badge = (className?: string) => (
     <ElementWithTooltip
-      className={props.className}
+      className={className}
       element={
         props.onlyBadge ? (
           <small>
             <div
-              className={`badge badge-pill text-light font-weight-bold ml-2 ${styles.badge} ${props.className}`}
+              className={`badge badge-pill text-light font-weight-bold ${styles.badge} ${className}`}
               style={{
                 backgroundColor: severity.color,
               }}
@@ -47,7 +50,7 @@ const SecurityRating = (props: Props) => {
           </small>
         ) : (
           <Label
-            className={props.className}
+            className={className}
             text="Images Security Rating"
             bgRightIcon={severity.color}
             rightIcon={<>{severity.level}</>}
@@ -127,6 +130,27 @@ const SecurityRating = (props: Props) => {
       visibleTooltip
       active
     />
+  );
+
+  return (
+    <>
+      {props.withLink ? (
+        <button
+          className={`btn btn-link text-reset p-0 ${styles.link} ${props.className}`}
+          onClick={(e) => {
+            e.preventDefault();
+            history.push({
+              pathname: props.withLink,
+              search: '?modal=security-report',
+            });
+          }}
+        >
+          {badge()}
+        </button>
+      ) : (
+        <>{badge(props.className)}</>
+      )}
+    </>
   );
 };
 

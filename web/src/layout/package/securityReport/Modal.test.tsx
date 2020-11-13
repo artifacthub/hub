@@ -23,6 +23,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const defaultProps = {
+  totalVulnerabilities: 109,
   summary: {
     [VulnerabilitySeverity.Critical]: 4,
     [VulnerabilitySeverity.High]: 8,
@@ -88,7 +89,7 @@ describe('SecurityModal', () => {
       expect(getByRole('dialog')).toBeInTheDocument();
       expect(getByText('Security report')).toBeInTheDocument();
       expect(getByText('Summary')).toBeInTheDocument();
-      expect(getByText('Vulnerabilities')).toBeInTheDocument();
+      expect(getByText('Vulnerabilities details')).toBeInTheDocument();
     });
 
     it('renders last scan time', () => {

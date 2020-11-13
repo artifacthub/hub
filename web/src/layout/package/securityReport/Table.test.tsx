@@ -8,8 +8,12 @@ const getMockSecurityReport = (fixtureId: string): SecurityTargetReport[] => {
   return require(`./__fixtures__/Table/${fixtureId}.json`) as SecurityTargetReport[];
 };
 
+const mockSetExpandedTarget = jest.fn();
+
 const defaultProps = {
   image: 'imgName',
+  expandedTarget: null,
+  setExpandedTarget: mockSetExpandedTarget,
 };
 
 describe('SecurityTable', () => {
@@ -31,18 +35,55 @@ describe('SecurityTable', () => {
     it('renders component', () => {
       const mockReports = getMockSecurityReport('2');
 
-      const { getAllByTestId, getByTestId, getByText } = render(
-        <SecurityTable {...defaultProps} reports={mockReports} />
-      );
-
-      const reportBtn = getByTestId('btnExpand');
-      expect(reportBtn).toBeInTheDocument();
-      expect(reportBtn).toHaveTextContent('Image:imgName');
+      const { getAllByTestId } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
 
       const targets = getAllByTestId('targetTitle');
       expect(targets).toHaveLength(2);
       expect(targets[0]).toHaveTextContent('Target:centos 7.7.1908');
       expect(targets[1]).toHaveTextContent('Target:usr/share/ceph/mgr/dashboard/frontend/package-lock.json');
+    });
+
+    it('renders empty report', () => {
+      const mockReports = getMockSecurityReport('3');
+
+      const { queryByTestId } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
+
+      expect(queryByTestId('btnExpand')).toBeNull();
+    });
+
+    it('collapses report', () => {
+      const mockReports = getMockSecurityReport('4');
+
+      const { getByTestId } = render(
+        <SecurityTable
+          {...defaultProps}
+          reports={mockReports}
+          expandedTarget="imgName_usr/share/ceph/mgr/dashboard/frontend/package-lock.json"
+        />
+      );
+
+      expect(getByTestId('securityReportInfo')).toBeInTheDocument();
+      const reportBtn = getByTestId('btnExpand');
+      fireEvent.click(reportBtn);
+
+      expect(mockSetExpandedTarget).toHaveBeenCalledTimes(1);
+      expect(mockSetExpandedTarget).toHaveBeenCalledWith(null);
+    });
+
+    it('renders expanded target report', () => {
+      const mockReports = getMockSecurityReport('5');
+
+      const { getAllByTestId, getByTestId, getByText } = render(
+        <SecurityTable
+          {...defaultProps}
+          reports={mockReports}
+          expandedTarget="imgName_rook/ceph:v1.1.1 (centos 7.7.1908)"
+        />
+      );
+
+      const reportBtn = getByTestId('btnExpand');
+      expect(reportBtn).toBeInTheDocument();
+      expect(reportBtn).toHaveTextContent('Target:centos 7.7.1908Rating:Hide vulnerabilities');
 
       expect(getByText('ID')).toBeInTheDocument();
       expect(getByText('Severity')).toBeInTheDocument();
@@ -52,26 +93,6 @@ describe('SecurityTable', () => {
       expect(getByText('Displaying only the first 100 entries')).toBeInTheDocument();
 
       expect(getAllByTestId('vulnerabilityCell')).toHaveLength(100);
-    });
-
-    it('renders empty report', () => {
-      const mockReports = getMockSecurityReport('3');
-
-      const { getByText } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
-
-      expect(getByText('No vulnerabilities found')).toBeInTheDocument();
-    });
-
-    it('collapses report', () => {
-      const mockReports = getMockSecurityReport('4');
-
-      const { queryByTestId, getByTestId } = render(<SecurityTable {...defaultProps} reports={mockReports} />);
-
-      expect(getByTestId('securityReportInfo')).toBeInTheDocument();
-      const reportBtn = getByTestId('btnExpand');
-      fireEvent.click(reportBtn);
-
-      expect(queryByTestId('securityReportInfo')).toBeNull();
     });
   });
 });

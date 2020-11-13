@@ -12,3 +12,12 @@
 .tooltipArrow {
   right: 5px !important;
 }
+
+.link {
+  position: relative;
+  top: -1px;
+}
+
+.link:hover {
+  text-decoration: none;
+}

@@ -1,0 +1,33 @@
+.table {
+  font-size: 0.9rem;
+  width: 10%;
+}
+
+.table th,
+.table td {
+  width: 100px;
+}
+
+.imageName {
+  max-width: 280px;
+}
+
+.tableTitle th {
+  border-bottom-color: var(--color-1-300) !important;
+}
+
+@media only screen and (min-width: 1200px) {
+  .table {
+    font-size: 1rem;
+  }
+
+  .imageName {
+    max-width: 380px;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  .imageName {
+    max-width: 700px;
+  }
+}

@@ -1,6 +1,7 @@
 import { isNull, slice } from 'lodash';
 import React, { useState } from 'react';
 import { FaCaretDown, FaCaretRight } from 'react-icons/fa';
+import { GoPackage } from 'react-icons/go';
 
 import { SecurityTargetReport, Vulnerability } from '../../../types';
 import formatSecurityReport from '../../../utils/formatSecurityReport';
@@ -10,6 +11,8 @@ import SecurityCell from './Cell';
 import styles from './Table.module.css';
 
 interface Props {
+  expandedTarget: string | null;
+  setExpandedTarget: React.Dispatch<React.SetStateAction<string | null>>;
   image: string;
   reports: SecurityTargetReport[];
 }
@@ -17,7 +20,6 @@ interface Props {
 const MAX_VULNERABILITY_NUMBER = 100;
 
 const SecurityTable = (props: Props) => {
-  const [expanded, setExpanded] = useState<boolean>(true);
   const [visibleVulnerability, setVisibleVulnerability] = useState<string | undefined>();
 
   const getEmptyMessage = (): JSX.Element => <span className="font-italic text-muted">No vulnerabilities found</span>;
@@ -27,51 +29,86 @@ const SecurityTable = (props: Props) => {
 
   return (
     <div className="my-1">
-      <button
-        data-testid="btnExpand"
-        className="btn btn-link text-reset pl-0 h5 btn-block position-relative"
-        onClick={() => setExpanded(!expanded)}
-      >
-        <div className="d-flex flex-row align-items-center font-weight-bold">
-          {expanded ? <FaCaretDown /> : <FaCaretRight />}
-          <div className="pl-2 text-truncate">
-            <span className={`text-uppercase text-muted mr-2 ${styles.tableTitle}`}>Image:</span>
-            {props.image}
-          </div>
+      <div className="d-flex flex-row align-items-center font-weight-bold mb-2">
+        <GoPackage />
+        <div className="pl-2 text-truncate">
+          <span className={`text-uppercase text-muted mr-2 ${styles.tableTitle}`}>Image:</span>
+          {props.image}
         </div>
-      </button>
+      </div>
 
-      {expanded && (
-        <div data-testid="securityReportInfo">
-          {isNull(props.reports) ? (
-            <div className="ml-4 mb-4">{getEmptyMessage()}</div>
-          ) : (
-            <>
-              {props.reports.map((item: SecurityTargetReport) => {
-                const { list, summary } = formatSecurityReport(item.Vulnerabilities);
-                const visibleVulnerabilities = slice(list, 0, MAX_VULNERABILITY_NUMBER);
+      <div data-testid="securityReportInfo">
+        {isNull(props.reports) ? (
+          <div className="ml-4 mb-4">{getEmptyMessage()}</div>
+        ) : (
+          <>
+            {props.reports.map((item: SecurityTargetReport) => {
+              const targetImageName = `${props.image}_${item.Target}`;
+              const { list, summary } = formatSecurityReport(item.Vulnerabilities);
+              const visibleVulnerabilities = slice(list, 0, MAX_VULNERABILITY_NUMBER);
+              const isExpanded = targetImageName === props.expandedTarget;
 
-                return (
-                  <div className="ml-4 mb-4" key={`table_${item.Target}`}>
-                    <div className="d-flex flex-row align-items-center mb-2">
-                      <div
-                        data-testid="targetTitle"
-                        className={`${styles.tableTitle} font-weight-bold mr-3 text-truncate`}
+              return (
+                <React.Fragment key={`table_${targetImageName}`}>
+                  <div className="ml-4 mb-3">
+                    {visibleVulnerabilities.length > 0 ? (
+                      <button
+                        data-testid="btnExpand"
+                        className="btn btn-link text-reset pl-0 btn-block position-relative"
+                        onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
+                        disabled={visibleVulnerabilities.length === 0}
                       >
-                        <span className="text-uppercase text-muted mr-2">Target:</span>
-                        <span className="font-weight-bold">{getTargetName(item.Target)}</span>
-                      </div>
-                      <div
-                        className={`${styles.tableTitle} d-flex flex-row align-items-center font-weight-bold text-nowrap`}
-                      >
-                        <span className="text-uppercase text-muted">Rating:</span>
-                        <SecurityRating summary={summary} className={styles.securityRatingBadge} onlyBadge />
-                      </div>
-                    </div>
+                        <div className="d-flex flex-row align-items-center mb-2">
+                          {isExpanded ? <FaCaretDown /> : <FaCaretRight />}
+                          <div
+                            data-testid="targetTitle"
+                            className={`${styles.tableTitle} font-weight-bold mr-3 text-truncate`}
+                          >
+                            <span className="text-uppercase text-muted mr-2">Target:</span>
+                            <span className="font-weight-bold">{getTargetName(item.Target)}</span>
+                          </div>
+                          <div
+                            className={`${styles.tableTitle} d-flex flex-row align-items-center font-weight-bold text-nowrap`}
+                          >
+                            <span className="text-uppercase text-muted">Rating:</span>
+                            <SecurityRating
+                              summary={summary}
+                              className={`ml-2 ${styles.securityRatingBadge}`}
+                              onlyBadge
+                            />
+                          </div>
 
-                    {visibleVulnerabilities.length === 0 ? (
-                      <>{getEmptyMessage()}</>
+                          <div className={`badge badge-secondary ml-3 ${styles.badge}`}>
+                            {isExpanded ? 'Hide' : 'Show'} vulnerabilities
+                          </div>
+                        </div>
+                      </button>
                     ) : (
+                      <div
+                        className={`d-flex flex-row align-items-center position-relative mb-2 ${styles.targetTitle}`}
+                      >
+                        <FaCaretRight />
+                        <div
+                          data-testid="targetTitle"
+                          className={`${styles.tableTitle} font-weight-bold mr-3 text-truncate`}
+                        >
+                          <span className="text-uppercase text-muted mr-2">Target:</span>
+                          <span className="font-weight-bold">{getTargetName(item.Target)}</span>
+                        </div>
+                        <div
+                          className={`${styles.tableTitle} d-flex flex-row align-items-center font-weight-bold text-nowrap`}
+                        >
+                          <span className="text-uppercase text-muted">Rating:</span>
+                          <SecurityRating
+                            summary={summary}
+                            className={`ml-2 ${styles.securityRatingBadge}`}
+                            onlyBadge
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {isExpanded && (
                       <div className="w-100 overflow-auto">
                         <table className={`table table-sm table-hover ${styles.table}`}>
                           <thead>
@@ -118,12 +155,12 @@ const SecurityTable = (props: Props) => {
                       </div>
                     )}
                   </div>
-                );
-              })}
-            </>
-          )}
-        </div>
-      )}
+                </React.Fragment>
+              );
+            })}
+          </>
+        )}
+      </div>
     </div>
   );
 };

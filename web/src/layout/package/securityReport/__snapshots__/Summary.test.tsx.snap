@@ -6,7 +6,7 @@ exports[`SecuritySummary creates snapshot 1`] = `
     class="mb-4"
   >
     <div
-      class="h5 my-3"
+      class="h5 my-3 pt-2"
     >
       <span
         class="font-weight-bold"

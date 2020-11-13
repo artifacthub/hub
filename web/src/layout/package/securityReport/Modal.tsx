@@ -10,10 +10,12 @@ import alertDispatcher from '../../../utils/alertDispatcher';
 import Modal from '../../common/Modal';
 import styles from './Modal.module.css';
 import SecuritySummary from './Summary';
+import SummaryTable from './SummaryTable';
 import SecurityTable from './Table';
 
 interface Props {
   summary: SecurityReportSummary;
+  totalVulnerabilities: number;
   packageId: string;
   version: string;
   createdAt?: number;
@@ -29,6 +31,7 @@ const SecurityModal = (props: Props) => {
   const [openStatus, setOpenStatus] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
+  const [expandedTarget, setExpandedTarget] = useState<string | null>(null);
 
   async function getSecurityReports() {
     try {
@@ -110,15 +113,27 @@ const SecurityModal = (props: Props) => {
           breakPoint="md"
         >
           <div className="m-3">
-            <div className="h5 mt-0 text-secondary text-uppercase font-weight-bold mb-2">Summary</div>
-            <SecuritySummary summary={props.summary} />
+            <div className="h5 mt-0 text-secondary text-uppercase font-weight-bold pb-2">Summary</div>
+            {props.totalVulnerabilities > 0 && <SummaryTable report={report} />}
+
+            <SecuritySummary summary={props.summary} totalVulnerabilities={props.totalVulnerabilities} />
 
             {!isEmpty(report) && (
               <>
-                <div className="h5 pt-3 text-secondary text-uppercase font-weight-bold mb-2">Vulnerabilities</div>
+                <div className="h5 pt-3 text-secondary text-uppercase font-weight-bold pb-3">
+                  Vulnerabilities details
+                </div>
                 <div className="mt-3">
                   {Object.keys(report).map((image: string) => {
-                    return <SecurityTable image={image} reports={report[image]} key={`image_${image}`} />;
+                    return (
+                      <SecurityTable
+                        image={image}
+                        reports={report[image]}
+                        key={`image_${image}`}
+                        expandedTarget={expandedTarget}
+                        setExpandedTarget={setExpandedTarget}
+                      />
+                    );
                   })}
                 </div>
               </>

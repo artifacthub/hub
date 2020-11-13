@@ -35,7 +35,7 @@ const SecurityReport = (props: Props) => {
             <div>
               <small>No vulnerabilities found</small>
             </div>
-            <SecurityRating summary={props.summary} className="position-relative" onlyBadge />
+            <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
           </div>
         ) : (
           <div className="d-flex flex-row align-items-center mb-2">
@@ -44,7 +44,7 @@ const SecurityReport = (props: Props) => {
                 <span className="font-weight-bold mr-1">{total}</span> vulnerabilities found
               </small>
             </div>
-            <SecurityRating summary={props.summary} className="position-relative" onlyBadge />
+            <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
           </div>
         )}
 
@@ -78,6 +78,7 @@ const SecurityReport = (props: Props) => {
         <div className="d-none d-md-block">
           <SecurityModal
             summary={props.summary!}
+            totalVulnerabilities={total}
             packageId={props.packageId}
             version={props.version}
             createdAt={props.createdAt}
