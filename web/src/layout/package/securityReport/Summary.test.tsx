@@ -4,6 +4,7 @@ import React from 'react';
 import SecuritySummary from './Summary';
 
 const defaultProps = {
+  totalVulnerabilities: 170,
   summary: {
     critical: 2,
     high: 10,
@@ -34,6 +35,7 @@ describe('SecuritySummary', () => {
     it('renders component with 0 vulnerabilities', () => {
       const { getByText } = render(
         <SecuritySummary
+          totalVulnerabilities={0}
           summary={{
             critical: 0,
             high: 0,

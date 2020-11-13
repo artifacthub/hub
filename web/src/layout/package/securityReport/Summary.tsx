@@ -3,21 +3,19 @@ import React from 'react';
 
 import { VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
-import sumObjectValues from '../../../utils/sumObjectValues';
 import styles from './Summary.module.css';
 
 interface Props {
+  totalVulnerabilities: number;
   summary: {
     [key in VulnerabilitySeverity]?: number;
   };
 }
 
 const SecuritySummary = (props: Props) => {
-  const total = sumObjectValues(props.summary);
-
   const getVulnerabilitiesNumber = (): JSX.Element => {
-    if (total > 0) {
-      return <span className="font-weight-bold">{total}</span>;
+    if (props.totalVulnerabilities > 0) {
+      return <span className="font-weight-bold">{props.totalVulnerabilities}</span>;
     } else {
       return <>No</>;
     }
@@ -25,12 +23,12 @@ const SecuritySummary = (props: Props) => {
 
   return (
     <div className="mb-4">
-      <div className="h5 my-3">
+      <div className="h5 my-3 pt-2">
         {getVulnerabilitiesNumber()} vulnerabilities have been detected in the{' '}
         <span className="font-weight-bold">default images</span> used by this package.
       </div>
 
-      {total > 0 && (
+      {props.totalVulnerabilities > 0 && (
         <div className="progress mb-4" style={{ height: '25px' }}>
           {SEVERITY_ORDER.map((severity: VulnerabilitySeverity) => {
             if (
@@ -45,7 +43,7 @@ const SecuritySummary = (props: Props) => {
                 className={`progress-bar text-dark px-1 font-weight-bold ${styles.progressBar}`}
                 role="progressbar"
                 style={{
-                  width: `${(props.summary[severity]! * 100) / total}%`,
+                  width: `${(props.summary[severity]! * 100) / props.totalVulnerabilities}%`,
                   backgroundColor: SEVERITY_RATING[severity]!.color,
                 }}
               >

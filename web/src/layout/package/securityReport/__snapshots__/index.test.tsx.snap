@@ -32,14 +32,14 @@ exports[`SecurityReport creates snapshot 1`] = `
           </small>
         </div>
         <div
-          class="position-relative position-relative"
+          class="position-relative position-relative ml-2"
         >
           <div
             data-testid="elementWithTooltip"
           >
             <small>
               <div
-                class="badge badge-pill text-light font-weight-bold ml-2 badge position-relative"
+                class="badge badge-pill text-light font-weight-bold badge position-relative ml-2"
                 style="background-color: rgb(150, 0, 3);"
               >
                 F
