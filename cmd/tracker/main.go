@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"sync"
 	"syscall"
@@ -45,6 +46,11 @@ func main() {
 		cancel()
 		log.Info().Msg("tracker shutting down..")
 	}()
+
+	// Check required external tools are available
+	if _, err := exec.LookPath("opm"); err != nil {
+		log.Fatal().Err(err).Msg("opm not found")
+	}
 
 	// Setup services
 	db, err := util.SetupDB(cfg)

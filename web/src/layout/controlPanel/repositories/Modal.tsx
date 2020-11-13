@@ -10,7 +10,7 @@ import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, OptionWithIcon, RefInputField, Repository, RepositoryKind, ResourceKind } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
-import { RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
+import { OCI_PREFIX, RepoKindDef, REPOSITORY_KINDS } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import InputField from '../../common/InputField';
 import Modal from '../../common/Modal';
@@ -225,6 +225,8 @@ const RepositoryModal = (props: Props) => {
     switch (selectedKind) {
       case RepositoryKind.Helm:
         return undefined;
+      case RepositoryKind.OLM:
+        return `((https://(github|gitlab).com/|${OCI_PREFIX})[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)`;
       default:
         return '(https://(github|gitlab).com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)/?(.*)';
     }

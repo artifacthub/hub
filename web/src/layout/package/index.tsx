@@ -22,6 +22,7 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
+import { OCI_PREFIX } from '../../utils/data';
 import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
@@ -153,7 +154,9 @@ const PackageView = (props: Props) => {
       isNull(detail) ||
       isUndefined(detail) ||
       (detail!.repository.kind === RepositoryKind.OPA && (isUndefined(detail.install) || isNull(detail.install))) ||
-      (detail.repository.kind === RepositoryKind.OLM && detail.repository.name !== 'community-operators')
+      (detail.repository.kind === RepositoryKind.OLM &&
+        detail.repository.name !== 'community-operators' &&
+        !detail.repository.url.startsWith(OCI_PREFIX))
     ) {
       return <div />;
     }

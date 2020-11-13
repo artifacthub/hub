@@ -18,3 +18,14 @@
 .legend {
   font-size: 75%;
 }
+
+.blockWrapper {
+  flex-basis: calc(100% - 45px);
+  max-width: calc(100% - 45px);
+}
+
+.copyBtn {
+  height: 28px;
+  width: 28px;
+  margin-top: 0.9rem;
+}

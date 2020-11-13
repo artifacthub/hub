@@ -10,6 +10,7 @@ import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import { ErrorKind, Organization, Repository } from '../../../types';
 import compoundErrorMessage from '../../../utils/compoundErrorMessage';
+import { OCI_PREFIX } from '../../../utils/data';
 import ExternalLink from '../../common/ExternalLink';
 import Modal from '../../common/Modal';
 import RepositoryIcon from '../../common/RepositoryIcon';
@@ -120,8 +121,9 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
     if (!isUndefined(repositories)) {
       repositoriesList = repositories.filter(
         (repo: Repository) =>
-          (repo.userAlias && repo.userAlias !== ctx.user!.alias) ||
-          (!isUndefined(organizations) && repo.organizationName && !disabledOrgs.includes(repo.organizationName))
+          ((repo.userAlias && repo.userAlias !== ctx.user!.alias) ||
+            (!isUndefined(organizations) && repo.organizationName && !disabledOrgs.includes(repo.organizationName))) &&
+          !repo.url.startsWith(OCI_PREFIX)
       );
     }
 

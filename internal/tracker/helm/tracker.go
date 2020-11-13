@@ -25,10 +25,6 @@ import (
 const (
 	// defaultNumWorkers is the number of workers used when none is provided.
 	defaultNumWorkers = 10
-
-	// ociPrefix represents the prefix expected in the url when the repository
-	// is stored in a OCI registry.
-	ociPrefix = "oci://"
 )
 
 // Tracker is in charge of tracking the packages available in a Helm repository,
@@ -265,7 +261,7 @@ type OCITagsGetter struct{}
 
 // Tags returns a list with the tags available for the provided repository.
 func (tg *OCITagsGetter) Tags(ctx context.Context, r *hub.Repository) ([]string, error) {
-	u := strings.TrimPrefix(r.URL, ociPrefix)
+	u := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
 	ociRepo, err := name.NewRepository(u)
 	if err != nil {
 		return nil, err

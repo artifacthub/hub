@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
+import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import NoData from '../../common/NoData';
 import styles from './ContentInstall.module.css';
 
@@ -51,19 +52,32 @@ const OPAInstall = (props: Props) => {
             case 'cli':
               return (
                 <div className="tab-pane fade show active">
-                  <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+                  <div className="my-2">
                     <small className="text-muted mt-2 mb-1">Install repository</small>
                   </div>
 
-                  <SyntaxHighlighter
-                    language="bash"
-                    style={docco}
-                    customStyle={{
-                      backgroundColor: 'var(--color-1-10)',
-                    }}
-                  >
-                    {props.install}
-                  </SyntaxHighlighter>
+                  <div className="d-flex align-items-start">
+                    <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+                      <SyntaxHighlighter
+                        language="bash"
+                        style={docco}
+                        customStyle={{
+                          backgroundColor: 'var(--color-1-10)',
+                        }}
+                      >
+                        {props.install || 'Any install instructions have been provided'}
+                      </SyntaxHighlighter>
+                    </div>
+
+                    {props.install && (
+                      <div>
+                        <ButtonCopyToClipboard
+                          text={props.install}
+                          className={`btn-primary rounded-circle ${styles.copyBtn}`}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             default:

@@ -12,6 +12,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -134,8 +135,8 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
 	}
-	if r.Kind == hub.Falco || r.Kind == hub.OLM {
-		if !GitRepoURLRE.MatchString(r.URL) {
+	if r.Kind == hub.Falco || r.Kind == hub.OLM || r.Kind == hub.OPA {
+		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 		}
 	}
@@ -218,6 +219,9 @@ func (m *Manager) ClaimOwnership(ctx context.Context, repoName, orgName string) 
 	r, err := m.GetByName(ctx, repoName, false)
 	if err != nil {
 		return err
+	}
+	if strings.HasPrefix(r.URL, hub.RepositoryOCIPrefix) {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "ownership claim not available for oci repos")
 	}
 	var mdFile string
 	switch r.Kind {
@@ -556,8 +560,8 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
 	}
-	if r.Kind == hub.Falco || r.Kind == hub.OLM {
-		if !GitRepoURLRE.MatchString(r.URL) {
+	if r.Kind == hub.Falco || r.Kind == hub.OLM || r.Kind == hub.OPA {
+		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
 			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
 		}
 	}

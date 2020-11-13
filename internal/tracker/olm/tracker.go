@@ -61,6 +61,9 @@ func NewTracker(
 	if t.svc.Rc == nil {
 		t.svc.Rc = &repo.Cloner{}
 	}
+	if t.svc.Re == nil {
+		t.svc.Re = &repo.OLMRepositoryExporter{}
+	}
 	return t
 }
 
@@ -69,11 +72,22 @@ func NewTracker(
 func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	defer wg.Done()
 
-	// Clone repository
-	t.logger.Debug().Msg("cloning repository")
-	tmpDir, packagesPath, err := t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
-	if err != nil {
-		return fmt.Errorf("error cloning repository: %w", err)
+	// Get packages available in repository
+	t.logger.Debug().Msg("getting repository packages")
+	var tmpDir, packagesPath string
+	var err error
+	if strings.HasPrefix(t.r.URL, hub.RepositoryOCIPrefix) {
+		// Repository stored in OCI registry
+		tmpDir, err = t.svc.Re.ExportRepository(t.svc.Ctx, t.r)
+		if err != nil {
+			return fmt.Errorf("error exporting repository packages: %w", err)
+		}
+	} else {
+		// Repository stored in Github / Gitlab
+		tmpDir, packagesPath, err = t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
+		if err != nil {
+			return fmt.Errorf("error cloning source repository: %w", err)
+		}
 	}
 	defer os.RemoveAll(tmpDir)
 
@@ -203,7 +217,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 // getPackageManifest reads and parses the package manifest.
 func (t *Tracker) getPackageManifest(path string) (*manifests.PackageManifest, error) {
 	// Locate package manifest file
-	matches, err := filepath.Glob(filepath.Join(path, "*.package.yaml"))
+	matches, err := filepath.Glob(filepath.Join(path, "*package.yaml"))
 	if err != nil {
 		return nil, fmt.Errorf("error locating package manifest file: %w", err)
 	}

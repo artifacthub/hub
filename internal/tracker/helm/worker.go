@@ -283,7 +283,7 @@ func (w *Worker) loadChart(u *url.URL) (*chart.Chart, error) {
 		r = resp.Body
 	case "oci":
 		// Pull reference layers from OCI registry
-		ref := strings.TrimPrefix(u.String(), ociPrefix)
+		ref := strings.TrimPrefix(u.String(), hub.RepositoryOCIPrefix)
 		resolverOptions := docker.ResolverOptions{}
 		if w.r.AuthUser != "" || w.r.AuthPass != "" {
 			resolverOptions.Authorizer = docker.NewDockerAuthorizer(

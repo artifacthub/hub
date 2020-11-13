@@ -643,3 +643,5 @@ export const CVSS_V3_VECTORS: { [key: string]: CVSSVectorMetric[] } = {
     },
   ],
 };
+
+export const OCI_PREFIX = 'oci://';

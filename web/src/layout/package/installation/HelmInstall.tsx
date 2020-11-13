@@ -43,23 +43,27 @@ const HelmInstall = (props: Props) => {
     const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
     return (
       <div className="tab-pane fade show active">
-        <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+        <div className="my-2">
           <small className="text-muted mt-2 mb-1">Add repository</small>
-
-          <div>
-            <ButtonCopyToClipboard text={block1} />
-          </div>
         </div>
 
-        <SyntaxHighlighter
-          language="bash"
-          style={docco}
-          customStyle={{
-            backgroundColor: 'var(--color-1-10)',
-          }}
-        >
-          {block1}
-        </SyntaxHighlighter>
+        <div className="d-flex align-items-start">
+          <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+            <SyntaxHighlighter
+              language="bash"
+              style={docco}
+              customStyle={{
+                backgroundColor: 'var(--color-1-10)',
+              }}
+            >
+              {block1}
+            </SyntaxHighlighter>
+          </div>
+
+          <div>
+            <ButtonCopyToClipboard text={block1} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
+          </div>
+        </div>
 
         {props.repository.private && (
           <div className={`alert alert-warning my-4 ${styles.alert}`}>
@@ -68,23 +72,27 @@ const HelmInstall = (props: Props) => {
           </div>
         )}
 
-        <div className="d-flex align-items-center justify-content-between mt-2 mb-2">
+        <div className="my-2">
           <small className="text-muted mt-2 mb-1">Install chart</small>
-          <div>
-            <ButtonCopyToClipboard text={block2} />
-          </div>
         </div>
 
-        <SyntaxHighlighter
-          language="bash"
-          style={docco}
-          customStyle={{
-            backgroundColor: 'var(--color-1-10)',
-            marginBottom: '10px',
-          }}
-        >
-          {block2}
-        </SyntaxHighlighter>
+        <div className="d-flex align-items-start">
+          <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
+            <SyntaxHighlighter
+              language="bash"
+              style={docco}
+              customStyle={{
+                backgroundColor: 'var(--color-1-10)',
+              }}
+            >
+              {block2}
+            </SyntaxHighlighter>
+          </div>
+
+          <div>
+            <ButtonCopyToClipboard text={block2} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
+          </div>
+        </div>
 
         <div className={`font-italic text-muted ${styles.legend}`}>
           <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free to change

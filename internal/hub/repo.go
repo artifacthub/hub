@@ -11,6 +11,10 @@ const (
 	// RepositoryMetadataFile represents the name of the file where the
 	// Artifact Hub metadata for a given repository is stored.
 	RepositoryMetadataFile = "artifacthub-repo"
+
+	// RepositoryOCIPrefix represents the prefix expected in the url when the
+	// repository is stored in a OCI registry.
+	RepositoryOCIPrefix = "oci://"
 )
 
 // RepositoryKind represents the kind of a given repository.
@@ -69,6 +73,12 @@ type HelmIndexLoader interface {
 	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
 }
 
+// OLMRepositoryExporter describes the methods an OLMRepositoryExporter
+// implementation must provide.
+type OLMRepositoryExporter interface {
+	ExportRepository(ctx context.Context, r *Repository) (tmpDir string, err error)
+}
+
 // Owner represents some details about a repository's owner.
 type Owner struct {
 	Name  string `yaml:"name"`
@@ -95,6 +105,16 @@ type Repository struct {
 	Official                bool           `json:"official"`
 }
 
+// RepositoryCloner describes the methods a RepositoryCloner implementation
+// must provide.
+type RepositoryCloner interface {
+	// CloneRepository clones the packages repository provided in a temporary
+	// dir, returning the temporary directory path and the path where the
+	// packages are located. It's the caller's responsibility to delete the
+	// temporary dir when done.
+	CloneRepository(ctx context.Context, r *Repository) (tmpDir string, packagesPath string, err error)
+}
+
 // RepositoryManager describes the methods an RepositoryManager
 // implementation must provide.
 type RepositoryManager interface {
@@ -116,16 +136,6 @@ type RepositoryManager interface {
 	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
 	Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error
 	Update(ctx context.Context, r *Repository) error
-}
-
-// RepositoryCloner describes the methods a RepositoryCloner implementation
-// must provide.
-type RepositoryCloner interface {
-	// CloneRepository clones the packages repository provided in a temporary
-	// dir, returning the temporary directory path and the path where the
-	// packages are located. It's the caller's responsibility to delete the
-	// temporary dir when done.
-	CloneRepository(ctx context.Context, r *Repository) (tmpDir string, packagesPath string, err error)
 }
 
 // RepositoryMetadata represents some metadata about a given repository. It's

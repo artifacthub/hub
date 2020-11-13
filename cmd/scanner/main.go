@@ -37,15 +37,17 @@ func main() {
 		log.Info().Msg("scanner shutting down..")
 	}()
 
+	// Check required external tools are available
+	if _, err := exec.LookPath("trivy"); err != nil {
+		log.Fatal().Err(err).Msg("trivy not found")
+	}
+
 	// Setup services
 	db, err := util.SetupDB(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("database setup failed")
 	}
 	pm := pkg.NewManager(db)
-	if _, err := exec.LookPath("trivy"); err != nil {
-		log.Fatal().Err(err).Msg("trivy not found")
-	}
 
 	// Scan pending snapshots
 	trivyURL := cfg.GetString("scanner.trivyURL")

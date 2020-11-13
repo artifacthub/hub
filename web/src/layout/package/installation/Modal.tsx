@@ -4,6 +4,7 @@ import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
 import { Package, RepositoryKind, SearchFiltersURL } from '../../../types';
+import { OCI_PREFIX } from '../../../utils/data';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
 import ModalHeader from '../ModalHeader';
@@ -11,6 +12,7 @@ import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
 import OLMInstall from './OLMInstall';
+import OLMOCIInstall from './OLMOCIInstall';
 import OPAInstall from './OPAInstall';
 
 interface Props {
@@ -79,7 +81,7 @@ const InstallationModal = (props: Props) => {
           {(() => {
             switch (props.package!.repository.kind) {
               case RepositoryKind.Helm:
-                if (props.package.repository.url.startsWith('oci://')) {
+                if (props.package.repository.url.startsWith(OCI_PREFIX)) {
                   return (
                     <HelmOCIInstall
                       name={props.package.name}
@@ -102,13 +104,23 @@ const InstallationModal = (props: Props) => {
               case RepositoryKind.OPA:
                 return <OPAInstall install={props.package.install} />;
               case RepositoryKind.OLM:
-                return (
-                  <OLMInstall
-                    name={props.package.name}
-                    activeChannel={props.activeChannel!}
-                    isGlobalOperator={props.package.data!.isGlobalOperator}
-                  />
-                );
+                if (props.package.repository.url.startsWith(OCI_PREFIX)) {
+                  return (
+                    <OLMOCIInstall
+                      name={props.package.name}
+                      repository={props.package.repository}
+                      activeChannel={props.activeChannel!}
+                    />
+                  );
+                } else {
+                  return (
+                    <OLMInstall
+                      name={props.package.name}
+                      activeChannel={props.activeChannel!}
+                      isGlobalOperator={props.package.data!.isGlobalOperator}
+                    />
+                  );
+                }
               default:
                 return null;
             }
