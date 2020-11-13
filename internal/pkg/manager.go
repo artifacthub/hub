@@ -212,8 +212,8 @@ func (m *Manager) Register(ctx context.Context, pkg *hub.Package) error {
 // input provided. The json object is built by the database.
 func (m *Manager) SearchJSON(ctx context.Context, input *hub.SearchPackageInput) ([]byte, error) {
 	// Validate input
-	if input.Limit <= 0 || input.Limit > 50 {
-		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid limit (0 < l <= 50)")
+	if input.Limit <= 0 || input.Limit > 60 {
+		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid limit (0 < l <= 60)")
 	}
 	if input.Offset < 0 {
 		return nil, fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid offset (o >= 0)")
