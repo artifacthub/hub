@@ -89,12 +89,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		// Parse package metadata file and validate it
 		data, err := ioutil.ReadFile(pkgPath)
 		if err != nil {
-			t.warn(fmt.Errorf("error reading package metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error reading package metadata file: %w", err))
 			return nil
 		}
 		var md *PackageMetadata
 		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			t.warn(fmt.Errorf("error unmarshaling package metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error unmarshaling package metadata file: %w", err))
 			return nil
 		}
 		if _, err := semver.StrictNewVersion(md.Version); err != nil {

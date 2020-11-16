@@ -92,11 +92,11 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		}
 		var md *hub.PackageMetadata
 		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			t.warn(fmt.Errorf("error unmarshaling package version metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error unmarshaling package version metadata file: %w", err))
 			return nil
 		}
 		if err := pkg.ValidatePackageMetadata(md); err != nil {
-			t.warn(fmt.Errorf("error validating package version metadata file %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error validating package version metadata file: %w", err))
 			return nil
 		}
 
