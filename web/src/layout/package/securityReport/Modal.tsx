@@ -33,10 +33,22 @@ const SecurityModal = (props: Props) => {
   const [report, setReport] = useState<SecurityReport | null | undefined>();
   const [expandedTarget, setExpandedTarget] = useState<string | null>(null);
 
+  const activateTargetWhenIsOnlyOne = (report: SecurityReport) => {
+    const images = Object.keys(report);
+    if (images.length === 1) {
+      const targets = report[images[0]];
+      if (targets.length === 1) {
+        setExpandedTarget(`${images[0]}_${report[images[0]][0].Target}`);
+      }
+    }
+  };
+
   async function getSecurityReports() {
     try {
       setIsLoading(true);
-      setReport(await API.getSnapshotSecurityReport(props.packageId, props.version));
+      const report = await API.getSnapshotSecurityReport(props.packageId, props.version);
+      setReport(report);
+      activateTargetWhenIsOnlyOne(report);
       setCurrentPkgId(props.packageId);
       setCurrentVersion(props.version);
       setIsLoading(false);
