@@ -112,7 +112,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 		// Get package manifest
 		manifest, err := t.getPackageManifest(pkgPath)
 		if err != nil {
-			t.warn(fmt.Errorf("error getting package manifest from %s: %w", pkgPath, err))
+			t.warn(fmt.Errorf("error getting package manifest: %w", err))
 			return nil
 		}
 		// Package manifest not found, not a package path
@@ -248,7 +248,7 @@ func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterS
 		return nil, fmt.Errorf("error locating csv file: %w", err)
 	}
 	if len(matches) != 1 {
-		return nil, fmt.Errorf("csv file not found in %s", path)
+		return nil, fmt.Errorf("csv file not found")
 	}
 	csvPath := matches[0]
 

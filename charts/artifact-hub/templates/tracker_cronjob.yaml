@@ -4,7 +4,7 @@ metadata:
   name: tracker
 spec:
   schedule: "0,30 * * * *"
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:
