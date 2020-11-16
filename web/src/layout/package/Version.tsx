@@ -40,8 +40,8 @@ const Version = (props: Props) => {
   return (
     <div className="py-1 py-sm-0 w-100 text-truncate">
       {props.isActive ? (
-        <div className="text-truncate activeVersion mw-100">
-          <span>{props.version}</span>
+        <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
+          <div className="text-truncate">{props.version}</div>
           <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
         </div>
       ) : (
