@@ -179,5 +179,30 @@ describe('SecurityModal', () => {
         expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
       });
     });
+
+    it('activates target when report has only one image and one target', async () => {
+      const mockReport = getMockSecurityReport('3');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { queryByRole, getByRole, getByText } = render(<SecurityModal {...defaultProps} />);
+
+      expect(queryByRole('dialog')).toBeNull();
+
+      const btn = getByText('Open full report');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(getByRole('dialog')).toBeInTheDocument();
+      });
+
+      waitFor(() => {
+        expect(getByText('ID')).toBeInTheDocument();
+        expect(getByText('Severity')).toBeInTheDocument();
+        expect(getByText('Package')).toBeInTheDocument();
+        expect(getByText('Version')).toBeInTheDocument();
+        expect(getByText('Fixed in')).toBeInTheDocument();
+      });
+    });
   });
 });
