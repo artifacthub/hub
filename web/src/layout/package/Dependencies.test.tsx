@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 
 import { Dependency } from '../../types';
@@ -30,6 +30,20 @@ describe('Dependencies', () => {
       expect(dependencies).toHaveLength(mockDependencies.length);
       expect(dependencies[0]).toHaveTextContent(`${mockDependencies[0].name}@${mockDependencies[0].version}`);
       expect(dependencies[1]).toHaveTextContent(`${mockDependencies[1].name}@${mockDependencies[1].version}`);
+    });
+
+    it('renders 5 dependencies max', () => {
+      const mockDependencies = getMockDependencies('3');
+      const { getByText, getAllByTestId, getByTestId } = render(<Dependencies dependencies={mockDependencies} />);
+
+      expect(getAllByTestId('dependencyItem')).toHaveLength(5);
+      expect(getByText('Show more...'));
+
+      const btn = getByTestId('expandableListBtn');
+      fireEvent.click(btn);
+
+      expect(getAllByTestId('dependencyItem')).toHaveLength(7);
+      expect(getByText('Show less...'));
     });
 
     it('does not render component when dependencies are undefined', () => {

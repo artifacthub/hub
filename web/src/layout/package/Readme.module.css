@@ -37,6 +37,10 @@
   hyphens: none;
   white-space: normal !important;
   word-wrap: break-word;
+  background-color: var(--color-black-5);
+  border: 1px solid var(--color-black-25);
+  border-radius: 3px;
+  padding: 0 0.15rem;
 }
 
 .md h3 code {
