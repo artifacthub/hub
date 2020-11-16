@@ -156,7 +156,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 
 			// Get package version CSV
 			pkgVersionPath := filepath.Join(pkgPath, version)
-			csv, err := t.getPackageVersionCSV(pkgVersionPath)
+			csv, csvData, err := t.getPackageVersionCSV(pkgVersionPath)
 			if err != nil {
 				t.warn(fmt.Errorf("error getting package %s version %s csv: %w", pkgName, version, err))
 				continue
@@ -175,7 +175,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 			if i == 0 {
 				storeLogo = true
 			}
-			err = t.registerPackage(pkgName, manifest, csv, storeLogo)
+			err = t.registerPackage(pkgName, manifest, csv, csvData, storeLogo)
 			if err != nil {
 				t.warn(fmt.Errorf("error registering package %s version %s: %w", pkgName, version, err))
 			}
@@ -241,25 +241,25 @@ func (t *Tracker) getPackageManifest(path string) (*manifests.PackageManifest, e
 
 // getPackageVersionCSV reads, parses and validates the cluster service version
 // file of the given package version.
-func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, error) {
+func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterServiceVersion, []byte, error) {
 	// Locate cluster service version file
 	matches, err := filepath.Glob(filepath.Join(path, "*.clusterserviceversion.yaml"))
 	if err != nil {
-		return nil, fmt.Errorf("error locating csv file: %w", err)
+		return nil, nil, fmt.Errorf("error locating csv file: %w", err)
 	}
 	if len(matches) != 1 {
-		return nil, fmt.Errorf("csv file not found")
+		return nil, nil, fmt.Errorf("csv file not found")
 	}
 	csvPath := matches[0]
 
 	// Read and parse cluster service version file
 	csvData, err := ioutil.ReadFile(csvPath)
 	if err != nil {
-		return nil, fmt.Errorf("error reading csv file: %w", err)
+		return nil, nil, fmt.Errorf("error reading csv file: %w", err)
 	}
 	csv := &operatorsv1alpha1.ClusterServiceVersion{}
 	if err = yaml.Unmarshal(csvData, &csv); err != nil {
-		return nil, fmt.Errorf("error unmarshaling csv file: %w", err)
+		return nil, nil, fmt.Errorf("error unmarshaling csv file: %w", err)
 	}
 
 	// Validate cluster service version
@@ -270,7 +270,7 @@ func (t *Tracker) getPackageVersionCSV(path string) (*operatorsv1alpha1.ClusterS
 		}
 	}
 
-	return csv, nil
+	return csv, csvData, nil
 }
 
 // registerPackage registers the package version provided.
@@ -278,6 +278,7 @@ func (t *Tracker) registerPackage(
 	name string,
 	manifest *manifests.PackageManifest,
 	csv *operatorsv1alpha1.ClusterServiceVersion,
+	csvData []byte,
 	storeLogo bool,
 ) error {
 	// Store logo when available if requested
@@ -296,26 +297,20 @@ func (t *Tracker) registerPackage(
 
 	// Prepare package from CSV content
 	p := &hub.Package{
-		Name:           name,
-		DisplayName:    csv.Spec.DisplayName,
-		LogoImageID:    logoImageID,
-		Description:    csv.Annotations["description"],
-		Keywords:       csv.Spec.Keywords,
-		Readme:         csv.Spec.Description,
-		Version:        getPackageVersion(csv),
-		IsOperator:     true,
-		Capabilities:   csv.Annotations["capabilities"],
-		DefaultChannel: manifest.DefaultChannelName,
-		License:        csv.Annotations[licenseAnnotation],
-		Provider:       csv.Spec.Provider.Name,
-		Repository:     t.r,
-	}
-	if containerImage, ok := csv.Annotations["containerImage"]; ok && containerImage != "" {
-		p.ContainersImages = []*hub.ContainerImage{
-			{
-				Image: containerImage,
-			},
-		}
+		Name:             name,
+		DisplayName:      csv.Spec.DisplayName,
+		LogoImageID:      logoImageID,
+		Description:      csv.Annotations["description"],
+		Keywords:         csv.Spec.Keywords,
+		Readme:           csv.Spec.Description,
+		Version:          getPackageVersion(csv),
+		IsOperator:       true,
+		Capabilities:     csv.Annotations["capabilities"],
+		DefaultChannel:   manifest.DefaultChannelName,
+		License:          csv.Annotations[licenseAnnotation],
+		Provider:         csv.Spec.Provider.Name,
+		ContainersImages: getContainersImages(csv, csvData),
+		Repository:       t.r,
 	}
 	createdAt, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])
 	if err == nil {
@@ -420,4 +415,29 @@ func (t *Tracker) warn(err error) {
 // version provided.
 func getPackageVersion(csv *operatorsv1alpha1.ClusterServiceVersion) string {
 	return csv.Spec.Version.String()
+}
+
+// getContainersImages returns all containers images declared in the csv data
+// provided.
+func getContainersImages(csv *operatorsv1alpha1.ClusterServiceVersion, csvData []byte) []*hub.ContainerImage {
+	var images []*hub.ContainerImage
+
+	// Container image annotation
+	if containerImage, ok := csv.Annotations["containerImage"]; ok && containerImage != "" {
+		images = append(images, &hub.ContainerImage{Image: containerImage})
+	}
+
+	// Related images
+	type Spec struct {
+		RelatedImages []*hub.ContainerImage `json:"relatedImages"`
+	}
+	type CSV struct {
+		Spec Spec `json:"spec"`
+	}
+	csvRI := &CSV{}
+	if err := yaml.Unmarshal(csvData, &csvRI); err == nil {
+		images = append(images, csvRI.Spec.RelatedImages...)
+	}
+
+	return images
 }
