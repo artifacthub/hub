@@ -165,6 +165,14 @@ func TestTracker(t *testing.T) {
 				{
 					Image: "repo.url:latest",
 				},
+				{
+					Name:  "image1",
+					Image: "registry.io/image1:1.0.0",
+				},
+				{
+					Name:  "image2",
+					Image: "registry.io/image2:1.0.0",
+				},
 			},
 			Provider:   "Test",
 			CreatedAt:  1561735380,

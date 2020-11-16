@@ -8,3 +8,8 @@
   min-width: 12px;
   margin-top: 6px;
 }
+
+.copyBtn {
+  position: relative;
+  top: -2px;
+}

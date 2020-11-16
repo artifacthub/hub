@@ -49,3 +49,8 @@ spec:
   version: 0.1.0
   install:
     strategy: deployment
+  relatedImages:
+    - name: image1
+      image: registry.io/image1:1.0.0
+    - name: image2
+      image: registry.io/image2:1.0.0
