@@ -136,7 +136,7 @@ exports[`Search index creates snapshot 2`] = `
                 >
                   <div>
                     <div
-                      class="h6 text-uppercase mb-0"
+                      class="h6 text-uppercase mb-0 flex-grow-1"
                     >
                       Filters
                     </div>

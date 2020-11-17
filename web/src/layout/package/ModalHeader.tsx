@@ -21,7 +21,7 @@ const ModalHeader = (props: Props) => (
       />
     </div>
 
-    <div className="ml-3">
+    <div className="ml-3 flex-grow-1">
       <div className="h5 mb-0">{props.package.displayName || props.package.name}</div>
     </div>
   </div>

@@ -112,7 +112,7 @@ const RepositoryCard = (props: Props) => {
               </div>
             }
             header={
-              <div className={`h3 m-2 text-truncate ${styles.title}`}>
+              <div className={`h3 m-2 flex-grow-1 text-truncate ${styles.title}`}>
                 Errors log - {props.repository.displayName || props.repository.name}
               </div>
             }
@@ -135,7 +135,7 @@ const RepositoryCard = (props: Props) => {
           {openErrorsModal && (
             <Modal
               className={`d-inline-block ${styles.modal}`}
-              header={<div className={`h3 m-2 ${styles.title}`}>Errors log</div>}
+              header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Errors log</div>}
               open
             >
               <div className="h5 text-center my-5 mw-100">
@@ -247,7 +247,7 @@ const RepositoryCard = (props: Props) => {
                     </button>
                   </>
                 }
-                header={<div className={`h3 m-2 ${styles.title}`}>Delete repository</div>}
+                header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete repository</div>}
                 onClose={() => setDeletionModalStatus(false)}
                 open
               >

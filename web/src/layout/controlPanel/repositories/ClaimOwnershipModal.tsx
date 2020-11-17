@@ -174,7 +174,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Claim repository ownership</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Claim repository ownership</div>}
       open={props.open}
       modalClassName={styles.modal}
       closeButton={

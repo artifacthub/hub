@@ -98,7 +98,7 @@ exports[`Organizations section index creates snapshot 1`] = `
               class="modal-header d-flex flex-row align-items-center header undefined"
             >
               <div
-                class="h3 m-2 title"
+                class="h3 m-2 flex-grow-1 title"
               >
                 Add organization
               </div>
@@ -416,7 +416,7 @@ exports[`Organizations section index creates snapshot 2`] = `
               class="modal-header d-flex flex-row align-items-center header undefined"
             >
               <div
-                class="h3 m-2 title"
+                class="h3 m-2 flex-grow-1 title"
               >
                 Add organization
               </div>

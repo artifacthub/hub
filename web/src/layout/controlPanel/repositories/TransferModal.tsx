@@ -116,7 +116,7 @@ const TransferRepositoryModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Transfer repository</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Transfer repository</div>}
       open={props.open}
       modalClassName={styles.modal}
       closeButton={

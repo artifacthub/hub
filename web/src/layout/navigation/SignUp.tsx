@@ -57,7 +57,7 @@ const SignUp = (props: Props) => {
 
   return (
     <Modal
-      header={<div className="h3 m-2">Sign up</div>}
+      header={<div className="h3 m-2 flex-grow-1">Sign up</div>}
       modalClassName={styles.modal}
       open={props.openSignUp}
       onClose={onCloseModal}

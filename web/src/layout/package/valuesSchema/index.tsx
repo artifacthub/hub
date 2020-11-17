@@ -123,7 +123,7 @@ const ValuesSchema = (props: Props) => {
         <Modal
           modalDialogClassName={styles.modalDialog}
           modalClassName="h-100"
-          header={<div className={`h3 m-2 ${styles.title}`}>Values schema reference</div>}
+          header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Values schema reference</div>}
           onClose={onCloseModal}
           open={openStatus}
           breakPoint="md"

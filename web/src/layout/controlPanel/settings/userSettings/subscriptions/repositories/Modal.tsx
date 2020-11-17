@@ -125,7 +125,7 @@ const OptOutModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Add opt-out entry</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add opt-out entry</div>}
       open={props.open}
       modalDialogClassName={styles.modal}
       closeButton={

@@ -151,7 +151,9 @@ const MemberCard = (props: Props) => {
                       </>
                     }
                     header={
-                      <div className={`h3 m-2 ${styles.title}`}>{isUser ? 'Leave ' : 'Remove from '} organization</div>
+                      <div className={`h3 flex-grow-1 m-2 ${styles.title}`}>
+                        {isUser ? 'Leave ' : 'Remove from '} organization
+                      </div>
                     }
                     onClose={() => setModalStatus(false)}
                     open

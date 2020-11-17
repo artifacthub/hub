@@ -76,7 +76,7 @@ const SubscriptionModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Add subscription</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add subscription</div>}
       open={props.open}
       modalDialogClassName={styles.modal}
       closeButton={

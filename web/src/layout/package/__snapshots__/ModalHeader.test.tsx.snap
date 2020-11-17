@@ -16,7 +16,7 @@ exports[`Links creates snapshot 1`] = `
       />
     </div>
     <div
-      class="ml-3"
+      class="ml-3 flex-grow-1"
     >
       <div
         class="h5 mb-0"

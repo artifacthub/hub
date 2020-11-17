@@ -629,7 +629,7 @@ const AuthorizationSection = (props: Props) => {
               </button>
             </>
           }
-          header={<div className={`h3 m-2 ${styles.title}`}>Confirm action</div>}
+          header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Confirm action</div>}
           onClose={() => setConfirmationModal({ open: false })}
           open
         >
