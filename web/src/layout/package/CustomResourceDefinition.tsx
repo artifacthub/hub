@@ -97,7 +97,7 @@ const CustomResourceDefinition = (props: Props) => {
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block mt-1 ${styles.modal}`}
             header={
-              <div className={`h4 m-2 ${styles.title}`}>{`${
+              <div className={`h4 m-2 flex-grow-1 ${styles.title}`}>{`${
                 selectedCustomResourceDef.displayName || selectedCustomResourceDef.name
               } - YAML example`}</div>
             }

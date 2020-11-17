@@ -32,13 +32,13 @@
   color: var(--color-1-700);
 }
 
-.md p code,
-.md li code {
+.md p > code,
+.md li > code {
   hyphens: none;
-  white-space: normal !important;
+  white-space: normal;
   word-wrap: break-word;
-  background-color: var(--color-black-5);
-  border: 1px solid var(--color-black-25);
+  background-color: var(--code-bg-md);
+  border: 1px solid var(--color-1-20);
   border-radius: 3px;
   padding: 0 0.15rem;
 }

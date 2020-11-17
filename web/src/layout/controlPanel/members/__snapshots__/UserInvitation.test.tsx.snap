@@ -21,7 +21,7 @@ exports[`UserInvitation creates snapshot 1`] = `
             class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
-              class="h6 text-uppercase mb-0"
+              class="h6 text-uppercase mb-0 flex-grow-1"
             >
               Membership confirmation
             </div>
@@ -133,7 +133,7 @@ exports[`UserInvitation creates snapshot 2`] = `
             class="modal-header d-flex flex-row align-items-center header undefined"
           >
             <div
-              class="h6 text-uppercase mb-0"
+              class="h6 text-uppercase mb-0 flex-grow-1"
             >
               Membership confirmation
             </div>

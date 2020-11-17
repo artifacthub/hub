@@ -118,7 +118,7 @@ const WebhookCard = (props: Props) => {
                     </button>
                   </>
                 }
-                header={<div className={`h3 m-2 ${styles.title}`}>Delete webhook</div>}
+                header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete webhook</div>}
                 onClose={() => setDeletionModalStatus(false)}
                 open
               >

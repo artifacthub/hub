@@ -126,7 +126,7 @@ const LogIn = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Sign in</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Sign in</div>}
       modalClassName={styles.modal}
       open={props.openLogIn}
       onClose={onCloseModal}

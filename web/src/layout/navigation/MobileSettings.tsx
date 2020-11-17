@@ -66,7 +66,7 @@ const MobileSettings = (props: Props) => {
           header={
             <>
               {!isNull(ctx.user) && (
-                <div className="h6 mb-0 text-dark">
+                <div className="h6 mb-0 text-dark flex-grow-1">
                   Signed in as <span className="font-weight-bold">{ctx.user.alias}</span>
                 </div>
               )}

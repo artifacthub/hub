@@ -102,7 +102,7 @@ const APIKeyCard = (props: Props) => {
                     </button>
                   </>
                 }
-                header={<div className={`h3 m-2 ${styles.title}`}>Delete API key</div>}
+                header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete API key</div>}
                 onClose={() => setDeletionModalStatus(false)}
                 open
               >

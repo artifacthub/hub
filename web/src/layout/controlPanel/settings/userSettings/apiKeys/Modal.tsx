@@ -168,7 +168,9 @@ const APIKeyModal = (props: Props) => {
   return (
     <Modal
       header={
-        <div className={`h3 m-2 ${styles.title}`}>{`${isUndefined(props.apiKey) ? 'Add' : 'Update'} API key`}</div>
+        <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>{`${
+          isUndefined(props.apiKey) ? 'Add' : 'Update'
+        } API key`}</div>
       }
       open={props.open}
       modalClassName={styles.modal}

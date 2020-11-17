@@ -181,7 +181,7 @@ describe('SecurityModal', () => {
     });
 
     it('activates target when report has only one image and one target', async () => {
-      const mockReport = getMockSecurityReport('3');
+      const mockReport = getMockSecurityReport('7');
       mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
 
       const { queryByRole, getByRole, getByText } = render(<SecurityModal {...defaultProps} />);
@@ -202,6 +202,31 @@ describe('SecurityModal', () => {
         expect(getByText('Package')).toBeInTheDocument();
         expect(getByText('Version')).toBeInTheDocument();
         expect(getByText('Fixed in')).toBeInTheDocument();
+      });
+    });
+
+    it('does not activate target when report has only one image and one target, but not vulnerabilities', async () => {
+      const mockReport = getMockSecurityReport('8');
+      mocked(API).getSnapshotSecurityReport.mockResolvedValue(mockReport);
+
+      const { queryByRole, getByRole, getByText, queryByText } = render(<SecurityModal {...defaultProps} />);
+
+      expect(queryByRole('dialog')).toBeNull();
+
+      const btn = getByText('Open full report');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getSnapshotSecurityReport).toHaveBeenCalledTimes(1);
+        expect(getByRole('dialog')).toBeInTheDocument();
+      });
+
+      waitFor(() => {
+        expect(queryByText('ID')).toBeNull();
+        expect(queryByText('Severity')).toBeNull();
+        expect(queryByText('Package')).toBeNull();
+        expect(queryByText('Version')).toBeNull();
+        expect(queryByText('Fixed in')).toBeNull();
       });
     });
   });

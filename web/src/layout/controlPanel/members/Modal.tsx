@@ -110,7 +110,7 @@ const MemberModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Add member</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Add member</div>}
       open={props.open}
       modalClassName={styles.modal}
       closeButton={

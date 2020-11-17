@@ -40,7 +40,7 @@ const BadgeModal = (props: Props) => {
 
   return (
     <Modal
-      header={<div className={`h3 m-2 ${styles.title}`}>Get badge</div>}
+      header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Get badge</div>}
       open={props.open}
       modalClassName={styles.modal}
       onClose={onCloseModal}

@@ -373,7 +373,7 @@ const SearchView = (props: Props) => {
                       </div>
                     </>
                   }
-                  header={<div className="h6 text-uppercase mb-0">Filters</div>}
+                  header={<div className="h6 text-uppercase mb-0 flex-grow-1">Filters</div>}
                 >
                   <Filters
                     facets={searchResults.data.facets}

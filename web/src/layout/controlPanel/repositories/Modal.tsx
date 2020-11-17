@@ -235,7 +235,7 @@ const RepositoryModal = (props: Props) => {
   return (
     <Modal
       header={
-        <div className={`h3 m-2 ${styles.title}`}>
+        <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>
           {isUndefined(props.repository) ? <>Add repository</> : <>Update repository</>}
         </div>
       }
