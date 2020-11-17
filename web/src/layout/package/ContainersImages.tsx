@@ -17,7 +17,7 @@ const ContainersImages = (props: Props) => {
   if (isUndefined(props.containers) || isNull(props.containers) || props.containers.length === 0) return null;
 
   const allContainers: JSX.Element[] = props.containers.map((containerImage: ContainerImage, index: number) => (
-    <div className="py-1 py-sm-0" key={`container-${index}-${containerImage.image}`}>
+    <div data-testid="containerImageItem" className="py-1 py-sm-0" key={`container-${index}-${containerImage.image}`}>
       <div className="d-flex flex-row align-items-start mw-100">
         <GoPackage className={`text-muted mr-2 ${styles.icon}`} />
         <div data-testid="containerImage" className={`text-truncate ${styles.containerImage}`}>

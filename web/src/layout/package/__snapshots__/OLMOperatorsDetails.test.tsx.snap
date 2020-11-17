@@ -662,6 +662,7 @@ exports[`OLMOperatorsDetails creates snapshot 1`] = `
   >
     <div
       class="py-1 py-sm-0"
+      data-testid="containerImageItem"
     >
       <div
         class="d-flex flex-row align-items-start mw-100"
