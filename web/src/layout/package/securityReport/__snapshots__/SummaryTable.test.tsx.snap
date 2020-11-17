@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SummaryTable creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="my-4 d-none d-lg-block"
+  >
+    <table
+      class="table table-bordered table-md table"
+    >
+      <thead>
+        <tr
+          class="table-primary tableTitle"
+        >
+          <th
+            scope="col"
+          >
+            Image
+          </th>
+          <th
+            class="text-center"
+            scope="col"
+          >
+            Rating
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            critical
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            high
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            medium
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            low
+          </th>
+          <th
+            class="col text-center text-capitalize"
+          >
+            unknown
+          </th>
+          <th
+            class="text-center"
+            scope="col"
+          >
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="imageName"
+          >
+            <div
+              class="text-truncate"
+            >
+              rook/ceph:v1.1.1
+            </div>
+          </td>
+          <td
+            class="text-center"
+          >
+            <div
+              class="position-relative undefined"
+            >
+              <div
+                data-testid="elementWithTooltip"
+              >
+                <small>
+                  <div
+                    class="badge badge-pill text-light font-weight-bold badge undefined"
+                    style="background-color: rgb(150, 0, 3);"
+                  >
+                    F
+                  </div>
+                </small>
+              </div>
+            </div>
+          </td>
+          <td
+            class="text-center"
+          >
+            4
+          </td>
+          <td
+            class="text-center"
+          >
+            22
+          </td>
+          <td
+            class="text-center"
+          >
+            461
+          </td>
+          <td
+            class="text-center"
+          >
+            455
+          </td>
+          <td
+            class="text-center"
+          >
+            0
+          </td>
+          <td
+            class="text-center font-weight-bold"
+          >
+            942
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</DocumentFragment>
+`;

@@ -14,6 +14,14 @@
   border-bottom-color: var(--color-1-300) !important;
 }
 
+.icon {
+  color: inherit;
+}
+
+.icon path {
+  stroke: inherit;
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;

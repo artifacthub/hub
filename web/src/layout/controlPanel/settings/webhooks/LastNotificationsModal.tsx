@@ -2,6 +2,7 @@ import isNull from 'lodash/isNull';
 import moment from 'moment';
 import React from 'react';
 import { FaCheck, FaExclamation, FaTimes } from 'react-icons/fa';
+import { GrConnect } from 'react-icons/gr';
 
 import { WebhookNotification } from '../../../../types';
 import Modal from '../../../common/Modal';
@@ -23,6 +24,7 @@ const LastNotificationsModal = (props: Props) => {
         buttonType="btn badge btn-secondary"
         buttonContent={
           <>
+            <GrConnect className={`mr-2 ${styles.icon}`} />
             <span>Show last notifications</span>
           </>
         }

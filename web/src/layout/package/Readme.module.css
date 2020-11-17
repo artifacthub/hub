@@ -32,8 +32,7 @@
   color: var(--color-1-700);
 }
 
-.md p > code,
-.md li > code {
+.md *:not(pre) > code {
   hyphens: none;
   white-space: normal;
   word-wrap: break-word;
@@ -56,7 +55,6 @@
 }
 
 .md table {
-  min-width: 100%;
   margin-bottom: 16px;
   font-size: 0.9rem;
 }

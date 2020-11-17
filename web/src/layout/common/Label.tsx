@@ -11,7 +11,6 @@ interface Props {
   text: string;
   labelStyle?: string;
   className?: string;
-  tooltipContent?: string;
 }
 
 const Label = (props: Props) => (

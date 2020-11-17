@@ -1,0 +1,306 @@
+{
+  "artifacthub/hub:v0.7.0": [
+    {
+      "Type": "alpine",
+      "Target": "artifacthub/hub:v0.7.0 (alpine 3.12.0)",
+      "Vulnerabilities": null
+    },
+    {
+      "Type": "yarn",
+      "Target": "home/hub/web/yarn.lock",
+      "Vulnerabilities": [
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 6.8,
+              "V3Score": 7.7,
+              "V2Vector": "AV:N/AC:M/Au:N/C:P/I:P/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:L"
+            },
+            "redhat": {
+              "V3Score": 7.7,
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:L"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "nodejs-elliptic: improper encoding checks allows a certain degree of signature malleability in ECDSA signatures",
+          "CweIDs": ["CWE-190"],
+          "PkgName": "elliptic",
+          "Severity": "HIGH",
+          "References": [
+            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13822",
+            "https://github.com/advisories/GHSA-vh7m-p724-62c2",
+            "https://github.com/indutny/elliptic/issues/226",
+            "https://medium.com/@herman_10687/malleability-attack-why-it-matters-7b5f59fb99a4",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-13822",
+            "https://snyk.io/vuln/SNYK-JS-ELLIPTIC-571484",
+            "https://www.npmjs.com/package/elliptic",
+            "https://yondon.blog/2019/01/01/how-not-to-use-ecdsa/"
+          ],
+          "Description": "The Elliptic package 6.5.2 for Node.js allows ECDSA signature malleability via variations in encoding, leading '\\0' bytes, or integer overflows. This could conceivably have a security-relevant impact if an application relied on a single canonical signature.",
+          "FixedVersion": "6.5.3",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-13822",
+          "InstalledVersion": "6.5.2"
+        },
+        {
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "Denial of Service in http-proxy",
+          "PkgName": "http-proxy",
+          "Severity": "HIGH",
+          "References": [
+            "https://github.com/advisories/GHSA-6x33-pw7p-hmpq",
+            "https://github.com/http-party/node-http-proxy/pull/1447/files"
+          ],
+          "Description": "Versions of `http-proxy` prior to 1.18.1 are vulnerable to Denial of Service. An HTTP request with a long body triggers an `ERR_HTTP_HEADERS_SENT` unhandled exception that crashes the proxy server. This is only possible when the proxy server sets headers in the proxy request using the `proxyReq.setHeader` function.   \n\nFor a proxy server running on `http://localhost:3000`, the following curl request triggers the unhandled exception:  \n```curl -XPOST http://localhost:3000 -d \"$(python -c 'print(\"x\"*1025)')\"```\n\n\n## Recommendation\n\nUpgrade to version 1.18.1 or later",
+          "FixedVersion": "1.18.1",
+          "VulnerabilityID": "GHSA-6x33-pw7p-hmpq",
+          "InstalledVersion": "1.18.0"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 5.8,
+              "V3Score": 7.4,
+              "V2Vector": "AV:N/AC:M/Au:N/C:N/I:P/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+            },
+            "redhat": {
+              "V3Score": 7.4,
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "nodejs-lodash: prototype pollution in zipObjectDeep function",
+          "CweIDs": ["CWE-770"],
+          "PkgName": "lodash",
+          "Severity": "HIGH",
+          "References": [
+            "https://github.com/advisories/GHSA-p6mc-m468-83gw",
+            "https://github.com/lodash/lodash/issues/4874",
+            "https://hackerone.com/reports/712065",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-8203",
+            "https://security.netapp.com/advisory/ntap-20200724-0006/",
+            "https://www.npmjs.com/advisories/1523"
+          ],
+          "Description": "Prototype pollution attack when using _.zipObjectDeep in lodash before 4.17.20.",
+          "FixedVersion": "4.17.19",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-8203",
+          "InstalledVersion": "4.17.15"
+        },
+        {
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "Allocation of Resources Without Limits or Throttling",
+          "PkgName": "lodash",
+          "Severity": "HIGH",
+          "References": [
+            "https://github.com/lodash/lodash/pull/4759",
+            "https://hackerone.com/reports/712065",
+            "https://www.npmjs.com/advisories/1523"
+          ],
+          "Description": "Prototype pollution attack (lodash)",
+          "FixedVersion": ">=4.17.19",
+          "SeveritySource": "nodejs-security-wg",
+          "VulnerabilityID": "NSWG-ECO-516",
+          "InstalledVersion": "4.17.15"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 5,
+              "V3Score": 5.3,
+              "V2Vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+            },
+            "redhat": {
+              "V3Score": 5.3,
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "node-fetch: size of data after fetch() JS thread leads to DoS",
+          "CweIDs": ["CWE-770"],
+          "PkgName": "node-fetch",
+          "Severity": "MEDIUM",
+          "References": [
+            "https://github.com/advisories/GHSA-w7rc-rwvf-8q5r",
+            "https://github.com/node-fetch/node-fetch/security/advisories/GHSA-w7rc-rwvf-8q5r",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-15168",
+            "https://www.npmjs.com/package/node-fetch"
+          ],
+          "Description": "node-fetch before versions 2.6.1 and 3.0.0-beta.9 did not honor the size option after following a redirect, which means that when a content size was over the limit, a FetchError would never get thrown and the process would end without failure. For most people, this fix will have a little or no impact. However, if you are relying on node-fetch to gate files above a size, the impact could be significant, for example: If you don't double-check the size of the data after fetch() has completed, your JS thread could get tied up doing work on a large file (DoS) and/or cost you money in computing.",
+          "FixedVersion": "3.0.0-beta.9, 2.6.1",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-15168",
+          "InstalledVersion": "2.6.0"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 7.5,
+              "V3Score": 7.3,
+              "V2Vector": "AV:N/AC:L/Au:N/C:P/I:P/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+            },
+            "redhat": {
+              "V3Score": 7.3,
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "nodejs-node-forge: prototype pollution via the util.setPath function",
+          "CweIDs": ["CWE-20"],
+          "PkgName": "node-forge",
+          "Severity": "HIGH",
+          "References": [
+            "https://github.com/advisories/GHSA-92xj-mqp7-vmcj",
+            "https://github.com/digitalbazaar/forge/blob/master/CHANGELOG.md",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-7720",
+            "https://snyk.io/vuln/SNYK-JAVA-ORGWEBJARSNPM-609293",
+            "https://snyk.io/vuln/SNYK-JS-NODEFORGE-598677"
+          ],
+          "Description": "The package node-forge before 0.10.0 is vulnerable to Prototype Pollution via the util.setPath function. Note: Version 0.10.0 is a breaking change removing the vulnerable functions.",
+          "FixedVersion": "0.10.0",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-7720",
+          "InstalledVersion": "0.9.0"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 6.8,
+              "V3Score": 9.8,
+              "V2Vector": "AV:N/AC:M/Au:N/C:P/I:P/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "Prototype pollution in object-path",
+          "CweIDs": ["CWE-20", "CWE-471"],
+          "PkgName": "object-path",
+          "Severity": "CRITICAL",
+          "References": [
+            "https://github.com/advisories/GHSA-cwx2-736x-mf6w",
+            "https://github.com/mariocasciaro/object-path/commit/2be3354c6c46215c7635eb1b76d80f1319403c68",
+            "https://github.com/mariocasciaro/object-path/security/advisories/GHSA-cwx2-736x-mf6w",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-15256"
+          ],
+          "Description": "A prototype pollution vulnerability has been found in `object-path` <= 0.11.4 affecting the `set()` method. The vulnerability is limited to the `includeInheritedProps` mode (if version >= 0.11.0 is used), which has to be explicitly enabled by creating a new instance of `object-path` and setting the option `includeInheritedProps: true`, or by using the default `withInheritedProps` instance. The default operating mode is not affected by the vulnerability if version >= 0.11.0 is used. Any usage of `set()` in versions < 0.11.0 is vulnerable. The issue is fixed in object-path version 0.11.5 As a workaround, don't use the `includeInheritedProps: true` options or the `withInheritedProps` instance if using a version >= 0.11.0.",
+          "FixedVersion": "0.11.5",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-15256",
+          "InstalledVersion": "0.11.4"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 6.8,
+              "V3Score": 8.1,
+              "V2Vector": "AV:N/AC:M/Au:N/C:P/I:P/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+            },
+            "redhat": {
+              "V3Score": 8.1,
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "npm-serialize-javascript: allows remote attackers to inject arbitrary code via the function deleteFunctions within index.js",
+          "CweIDs": ["CWE-502"],
+          "PkgName": "serialize-javascript",
+          "Severity": "HIGH",
+          "References": [
+            "https://github.com/advisories/GHSA-hxcc-f52p-wc94",
+            "https://github.com/yahoo/serialize-javascript/commit/f21a6fb3ace2353413761e79717b2d210ba6ccbd",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-7660"
+          ],
+          "Description": "serialize-javascript prior to 3.1.0 allows remote attackers to inject arbitrary code via the function \"deleteFunctions\" within \"index.js\".",
+          "FixedVersion": "3.1.0",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-7660",
+          "InstalledVersion": "2.1.2"
+        },
+        {
+          "CVSS": {
+            "nvd": {
+              "V2Score": 5,
+              "V3Score": 7.5,
+              "V2Vector": "AV:N/AC:L/Au:N/C:N/I:N/A:P",
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "redhat": {
+              "V3Score": 7.5,
+              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            }
+          },
+          "Layer": {
+            "DiffID": "sha256:292691adbcc6d61785ff4f48b2eb9c26699141b7de6e43195dd8a15ce4e78802",
+            "Digest": "sha256:e87ff7207519865cc1a4e87549731ea6f19be5e5fb00e8eb9559bf0ec804826f"
+          },
+          "Title": "npmjs-websocket-extensions: ReDoS vulnerability in Sec-WebSocket-Extensions parser",
+          "PkgName": "websocket-extensions",
+          "Severity": "HIGH",
+          "References": [
+            "https://blog.jcoglan.com/2020/06/02/redos-vulnerability-in-websocket-extensions",
+            "https://github.com/advisories/GHSA-g78m-2chm-r7qv",
+            "https://github.com/faye/websocket-extensions-node/commit/29496f6838bfadfe5a2f85dff33ed0ba33873237",
+            "https://github.com/faye/websocket-extensions-node/security/advisories/GHSA-g78m-2chm-r7qv",
+            "https://nvd.nist.gov/vuln/detail/CVE-2020-7662",
+            "https://snyk.io/vuln/SNYK-JS-WEBSOCKETEXTENSIONS-570623"
+          ],
+          "Description": "websocket-extensions npm module prior to 1.0.4 allows Denial of Service (DoS) via Regex Backtracking. The extension parser may take quadratic time when parsing a header containing an unclosed string parameter value whose content is a repeating two-byte sequence of a backslash and some other character. This could be abused by an attacker to conduct Regex Denial Of Service (ReDoS) on a single-threaded server by providing a malicious payload with the Sec-WebSocket-Extensions header.",
+          "FixedVersion": "0.1.4",
+          "SeveritySource": "nvd",
+          "VulnerabilityID": "CVE-2020-7662",
+          "InstalledVersion": "0.1.3"
+        }
+      ]
+    }
+  ],
+  "artifacthub/scanner:v0.7.0": [
+    {
+      "Type": "alpine",
+      "Target": "artifacthub/scanner:v0.7.0 (alpine 3.12.0)",
+      "Vulnerabilities": null
+    }
+  ],
+  "artifacthub/tracker:v0.7.0": [
+    {
+      "Type": "alpine",
+      "Target": "artifacthub/tracker:v0.7.0 (alpine 3.12.0)",
+      "Vulnerabilities": null
+    }
+  ],
+  "artifacthub/db-migrator:v0.7.0": [
+    {
+      "Type": "alpine",
+      "Target": "artifacthub/db-migrator:v0.7.0 (alpine 3.12.0)",
+      "Vulnerabilities": null
+    }
+  ]
+}
