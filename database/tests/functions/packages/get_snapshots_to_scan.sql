@@ -73,7 +73,10 @@ insert into snapshot (
 ) values (
     :'package2ID',
     '1.0.0',
-    '[{"image": "quay.io/org/pkg2:1.0.0"}]'
+    '[
+        {"image": "quay.io/org/pkg2:1.0.0", "whitelisted": false},
+        {"image": "quay.io/org/pkg2helper1:1.0.0", "whitelisted": true}
+    ]'
 );
 insert into package (
     package_id,
@@ -138,7 +141,8 @@ select is(
             "version": "1.0.0",
             "containers_images": [
                 {
-                    "image": "quay.io/org/pkg2:1.0.0"
+                    "image": "quay.io/org/pkg2:1.0.0",
+                    "whitelisted": false
                 }
             ]
         },

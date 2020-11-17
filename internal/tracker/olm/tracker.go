@@ -26,8 +26,9 @@ import (
 )
 
 const (
-	changesAnnotation = "artifacthub.io/changes"
-	licenseAnnotation = "artifacthub.io/license"
+	changesAnnotation         = "artifacthub.io/changes"
+	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
+	licenseAnnotation         = "artifacthub.io/license"
 )
 
 var (
@@ -438,6 +439,24 @@ func getContainersImages(csv *operatorsv1alpha1.ClusterServiceVersion, csvData [
 	if err := yaml.Unmarshal(csvData, &csvRI); err == nil {
 		images = append(images, csvRI.Spec.RelatedImages...)
 	}
+	var imagesWhitelist []string
+	if err := yaml.Unmarshal([]byte(csv.Annotations[imagesWhitelistAnnotation]), &imagesWhitelist); err == nil {
+		for _, image := range images {
+			if contains(imagesWhitelist, image.Image) {
+				image.Whitelisted = true
+			}
+		}
+	}
 
 	return images
+}
+
+// contains is a helper to check if a list contains the string provided.
+func contains(l []string, e string) bool {
+	for _, x := range l {
+		if x == e {
+			return true
+		}
+	}
+	return false
 }

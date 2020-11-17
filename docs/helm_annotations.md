@@ -8,11 +8,11 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 - **artifacthub.io/changes** *(yaml string, see example below)*
 
-This annotation is used to provide some details about the changes introduced by a given chart version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your chart versions.
+This annotation is used to provide some details about the changes introduced by a given chart version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your chart versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
 
 - **artifacthub.io/images** *(yaml string, see example below)*
 
-Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view.
+Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
 
 Please note that images using the *latest* tag won't be scanned.
 
@@ -54,6 +54,7 @@ annotations:
       image: repo/img1:1.0.0
     - name: img2
       image: repo/img2:2.0.0
+      whitelisted: true
   artifacthub.io/crds: |
     - kind: MyKind
       version: v1

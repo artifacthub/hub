@@ -302,8 +302,9 @@ func TestWorker(t *testing.T) {
 						Image: "repo/img1:1.0.0",
 					},
 					{
-						Name:  "img2",
-						Image: "repo/img2:2.0.0",
+						Name:        "img2",
+						Image:       "repo/img2:2.0.0",
+						Whitelisted: true,
 					},
 				},
 				Changes: []string{
@@ -460,6 +461,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
   image: repo/img1:1.0.0
 - name: img2
   image: repo/img2:2.0.0
+  whitelisted: true
 `,
 			},
 			&hub.Package{
@@ -469,8 +471,9 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 						Image: "repo/img1:1.0.0",
 					},
 					{
-						Name:  "img2",
-						Image: "repo/img2:2.0.0",
+						Name:        "img2",
+						Image:       "repo/img2:2.0.0",
+						Whitelisted: true,
 					},
 				},
 			},

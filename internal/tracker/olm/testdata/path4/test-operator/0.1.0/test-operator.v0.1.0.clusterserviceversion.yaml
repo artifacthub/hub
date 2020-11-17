@@ -2,10 +2,12 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
   annotations:
-    artifacthub.io/license: Apache-2.0
     artifacthub.io/changes: |
       - feature 1
       - fix 1
+    artifacthub.io/imagesWhitelist: |
+      - registry.io/image2:1.0.0
+    artifacthub.io/license: Apache-2.0
     capabilities: Basic Install
     categories: Application Runtime
     containerImage: repo.url:latest

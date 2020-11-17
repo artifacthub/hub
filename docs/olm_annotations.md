@@ -8,11 +8,15 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 - **artifacthub.io/changes** *(yaml string, see example below)*
 
-This annotation is used to provide some details about the changes introduced by a given operator version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your operator versions.
+This annotation is used to provide some details about the changes introduced by a given operator version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your operator versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
+
+- **artifacthub.io/imagesWhitelist** *(yaml string, see example below)*
+
+Use this annotation to provide a list of the images that should not be scanned for security vulnerabilities.
 
 - **artifacthub.io/license** *(string)*
 
-Use this annotation to indicate the operator's license. It must be a valid SPDX identifier (https://spdx.org/licenses/).
+Use this annotation to indicate the operator's license. It must be a valid [SPDX identifier](https://spdx.org/licenses/).
 
 ## Example
 
@@ -21,10 +25,13 @@ Artifact Hub annotations in `CSV` file:
 ```yaml
 metadata:
   annotations:
-    artifacthub.io/license: Apache-2.0
     artifacthub.io/changes: |
       - Added cool feature
       - Fixed minor bug
+    artifacthub.io/imagesWhitelist: |
+      - repo/img2:2.0.0
+      - repo/img3:3.0.0
+    artifacthub.io/license: Apache-2.0
 spec:
     ...
 ```

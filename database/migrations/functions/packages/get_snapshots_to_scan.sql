@@ -5,7 +5,10 @@ returns setof json as $$
     select coalesce(json_agg(json_build_object(
         'package_id', package_id,
         'version', version,
-        'containers_images', containers_images
+        'containers_images', jsonb_path_query_array(
+            containers_images,
+            '$[*] ? (!exists(@.whitelisted) || @.whitelisted <> true)'
+        )
     )), '[]')
     from snapshot
     where security_report is null
