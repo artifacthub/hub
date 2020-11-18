@@ -1,0 +1,322 @@
+/* You can add custom styles here. */
+html {
+  --color-1-100: #f1f6fa;
+  --color-1-300: #b2cede;
+  --color-1-500: #659dbd;
+  --color-1-700: #39596c;
+  --color-1-900: #1c2c35;
+
+  --color-font: #38383f;
+  --body-bg: #f9f9f9;
+  --color-muted: #6c757d;
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url('/static/fonts/Lato/lato-300.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-300.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url('/static/fonts/Lato/lato-700.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-700.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url('/static/fonts/Lato/lato-regular.woff2') format('woff2'),
+    url('/static/fonts/Lato/lato-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Mono'), local('RobotoMono-Regular'),
+    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff2') format('woff2'),
+    url('/static/fonts/Roboto_Mono/roboto-mono-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Archivo Black Regular'), local('ArchivoBlack-Regular'),
+    url('/static/fonts/Archivo_Black/archivo-black-regular.woff2') format('woff2'),
+    url('/static/fonts/Archivo_Black/archivo-black-regular.woff') format('woff');
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--color-font);
+  line-height: 1.5;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+body, .gdoc-mermaid, .gdoc-header {
+  font-family: 'Lato', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+code {
+  font-family: 'Roboto Mono', 'Liberation Mono', 'Courier New', monospace;
+}
+
+.gdoc-header {
+  font-size: 1rem;
+  background: var(--color-1-500);
+  box-shadow: 0 8px 6px -6px rgba(0,0,0,.15);
+  border: 0;
+}
+
+.gdoc-brand {
+  font-size: 1.25rem;
+  letter-spacing: normal;
+}
+
+.gdoc-brand__img {
+  margin-right: .5rem;
+  position: relative;
+  top: -1px;
+}
+
+.gdoc-brand__hub {
+  font-family: 'Archivo Black', cursive;
+  margin-left: .5rem;
+  letter-spacing: normal;
+}
+
+.gdoc-brand__badge {
+  position: relative;
+  top: -10px;
+  margin-left: 8px;
+  background-color: var(--color-1-700);
+  font-size: .55rem;
+  border-radius: 10rem;
+  padding: 0.15rem 0.2rem;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  align-items: center;
+}
+
+.gdoc-brand__badge-content {
+  position: relative;
+  bottom: -1px;
+}
+
+.gdoc-footer {
+  background-color: var(--color-1-900);
+}
+
+.gdoc-markdown pre {
+  overflow-x: auto;
+  border-radius: 3px;
+  padding: .5rem 1rem;
+}
+
+.gdoc-markdown *:not(pre) > code {
+  color: var(--color-1-700);
+  hyphens: none;
+  white-space: normal;
+  word-wrap: break-word;
+  background-color: #f6f8fa !important;
+  border: 1px solid rgba(28, 44, 53, 0.1) !important;
+  border-radius: 3px;
+  padding: 0 0.15rem;
+}
+
+.gdoc-markdown code {
+  background-color: transparent !important;
+  padding: 0;
+  font-size: 87.5%;
+}
+
+.gdoc-markdown pre {
+  color:#f8f8f2;
+  background-color:#272822;
+  tab-size: 4;
+}
+
+.gdoc-markdown table {
+  margin-top: 1.5rem;
+}
+
+.gdoc-page__footer a, .gdoc-page__footer a:visited, .gdoc-page__header a, .gdoc-page__header a:visited, .gdoc-markdown a, .gdoc-markdown a:visited, .gdoc-search .has-hits a, .gdoc-search .has-hits a:visited {
+  color: var(--color-1-500);
+}
+
+/* Menu */
+.gdoc-nav {
+  flex: 0 0 20rem;
+  font-size: 1rem;
+}
+
+.gdoc-nav nav {
+  width: 20rem;
+}
+
+.gdoc-nav--main {
+  border-radius: .25rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0,0,0,.125);
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  padding: 1rem 0;
+}
+
+.gdoc-nav__list ul {
+  padding-left: 0;
+}
+
+.gdoc-nav__list li {
+  margin: 0;
+}
+
+.gdoc-nav__list ul .gdoc-nav__entry, .gdoc-nav__list ul .gdoc-nav__entry:visited, .gdoc-nav__entry-root, .gdoc-nav__entry-root:visited {
+  color: var(--color-muted);
+}
+
+.gdoc-nav__entry {
+  padding: .5rem 1.15rem;
+  position: relative;
+}
+
+.gdoc-nav__list .gdoc-nav__list .gdoc-nav__list .gdoc-nav__entry {
+  padding-left: 2.3rem !important;
+}
+
+ul .gdoc-nav__item {
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: .75rem 1.25rem .25rem 1.25rem;
+}
+
+ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
+  text-transform: none;
+  font-weight: normal !important;
+}
+
+.gdoc-nav__list .gdoc-nav__entry:hover {
+  background-color: #f8f9fa;
+  text-decoration: none;
+}
+
+.gdoc-nav__entry.is-active {
+  background-color: #f8f9fa;
+  text-decoration: none;
+}
+
+.gdoc-nav__entry.is-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background-color: var(--color-1-700);
+}
+
+.gdoc-markdown em {
+  color: var(--color-muted);
+}
+
+.gdoc-markdown h1, .gdoc-markdown h2, .gdoc-markdown h3, .gdoc-markdown h4, .gdoc-markdown h5, .gdoc-markdown h6 {
+  font-weight: 700;
+  color: var(--color-1-700);
+  margin-bottom: 1.5rem;
+}
+
+.gdoc-markdown h1, .gdoc-markdown h2 {
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.gdoc-page__header {
+  padding-left: 0;
+}
+
+/* Search */
+.gdoc-search__input {
+  background-color: #ffffff;
+  border-color: rgba(0,0,0,.125);
+}
+
+.gdoc-search {
+  margin-bottom: 1.5rem;
+}
+
+.gdoc-search__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: -2rem;
+  z-index: 1000;
+}
+
+.gdoc-search .has-hits {
+  min-width: 10rem;
+  padding: .5rem 1rem;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+}
+
+.gdoc-search__arrow {
+  position: absolute;
+  display: none;
+  width: 1rem;
+  height: .5rem;
+  margin: 0 .3rem;
+  top: calc(.2rem - 1px);
+  left: 1.25rem;
+}
+
+.gdoc-search__arrow::before, .gdoc-search__arrow::after {
+  position: absolute;
+  display: block;
+  content: "";
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0 .5rem .5rem;
+}
+
+.gdoc-search__arrow::before {
+  top: 0;
+  border-bottom-color: rgba(0,0,0,.25);
+}
+
+.gdoc-search__arrow::after {
+  top: 1px;
+  border-bottom-color: #ffffff;
+}
+
+.has-hits + .gdoc-search__arrow {
+  display: block;
+}
+
+@media screen and (max-width: 39rem) {
+  .gdoc-nav {
+    margin-left: -20rem;
+  }
+}
+
+#menu-control:checked ~ main .gdoc-nav nav, #menu-control:checked ~ main .gdoc-page {
+  transform: translateX(20rem);
+}

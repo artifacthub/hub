@@ -245,7 +245,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     For more information about the url format and the repository structure, please see the 
                     <a
                       class="link text-reset"
-                      href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md#helm-charts-repositories"
+                      href="/docs/repositories#helm-charts-repositories"
                       rel="noopener noreferrer"
                       role="button"
                       target="_blank"
@@ -257,7 +257,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                      section in the 
                     <a
                       class="link text-reset"
-                      href="https://github.com/artifacthub/hub/blob/master/docs/repositories.md"
+                      href="/docs/repositories"
                       rel="noopener noreferrer"
                       role="button"
                       target="_blank"

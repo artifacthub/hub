@@ -7,6 +7,11 @@ yarn-debug.log*
 yarn-error.log*
 node_modules/
 web/build
+web/public/docs
 web/coverage
 charts/artifact-hub/charts
 Chart.lock
+docs/www/content/topics/*
+!docs/www/content/topics/annotations
+docs/www/content/topics/annotations/*
+!docs/www/content/topics/annotations/_index.md

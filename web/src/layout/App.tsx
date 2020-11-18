@@ -176,7 +176,7 @@ export default function App() {
                 <div>
                   <div className="h6 font-weight-bold text-uppercase">Project</div>
                   <div className="d-flex flex-column text-left">
-                    <ExternalLink className="text-muted mb-1" href="https://github.com/artifacthub/hub#getting-started">
+                    <ExternalLink className="text-muted mb-1" href="/docs">
                       Getting started
                     </ExternalLink>
                     <ExternalLink className="text-muted mb-1" href="https://artifacthub.github.io/hub/api/">
