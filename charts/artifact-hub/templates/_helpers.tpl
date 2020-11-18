@@ -50,3 +50,13 @@ Selector labels
 app.kubernetes.io/name: {{ include "chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+Kubernetes version
+Built-in object .Capabilities.KubeVersion.Minor can provide non-number output
+For example on GKE it returns "15+" instead of "15"
+*/}}
+{{- define "chart.KubernetesVersion" -}}
+{{- $minorVersion := .Capabilities.KubeVersion.Minor | regexFind "[0-9]+" -}}
+{{- printf "%s.%s" .Capabilities.KubeVersion.Major $minorVersion -}}
+{{- end -}}

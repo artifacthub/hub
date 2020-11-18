@@ -44,7 +44,7 @@ spec:
         command: ['sh', '-c', 'until pg_isready; do echo waiting for database; sleep 2; done;']
       {{- if .Release.IsInstall }}
       - name: check-db-migrator-run
-        image: {{ printf "bitnami/kubectl:%s.%s" .Capabilities.KubeVersion.Major .Capabilities.KubeVersion.Minor }}
+        image: "bitnami/kubectl:{{ template "chart.KubernetesVersion" . }}"
         imagePullPolicy: IfNotPresent
         command: ['kubectl', 'wait', '--namespace={{ .Release.Namespace }}', '--for=condition=complete', 'job/db-migrator-install', '--timeout=60s']
       {{- end }}
