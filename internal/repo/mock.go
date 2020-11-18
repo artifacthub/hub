@@ -147,6 +147,12 @@ func (m *ManagerMock) GetOwnedByOrgJSON(
 	return data, args.Error(1)
 }
 
+// GetRemoteDigest implements the RepositoryManager interface.
+func (m *ManagerMock) GetRemoteDigest(ctx context.Context, r *hub.Repository) (string, error) {
+	args := m.Called(ctx, r)
+	return args.String(0), args.Error(1)
+}
+
 // GetOwnedByUserJSON implements the RepositoryManager interface.
 func (m *ManagerMock) GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
 	args := m.Called(ctx)
@@ -175,6 +181,12 @@ func (m *ManagerMock) Transfer(ctx context.Context, name, orgName string, owners
 // Update implements the RepositoryManager interface.
 func (m *ManagerMock) Update(ctx context.Context, r *hub.Repository) error {
 	args := m.Called(ctx, r)
+	return args.Error(0)
+}
+
+// UpdateDigest implements the RepositoryManager interface.
+func (m *ManagerMock) UpdateDigest(ctx context.Context, repositoryID, digest string) error {
+	args := m.Called(ctx, repositoryID, digest)
 	return args.Error(0)
 }
 

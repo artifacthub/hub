@@ -1557,6 +1557,32 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
+func TestUpdateDigest(t *testing.T) {
+	ctx := context.Background()
+	repositoryID := "00000000-0000-0000-0000-000000000001"
+	digest := "digest"
+
+	t.Run("database update succeeded", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, updateRepoDigestDBQ, repositoryID, digest).Return(nil)
+		m := NewManager(cfg, db, nil)
+
+		err := m.UpdateDigest(ctx, repositoryID, digest)
+		assert.NoError(t, err)
+		db.AssertExpectations(t)
+	})
+
+	t.Run("database error", func(t *testing.T) {
+		db := &tests.DBMock{}
+		db.On("Exec", ctx, updateRepoDigestDBQ, repositoryID, digest).Return(tests.ErrFakeDB)
+		m := NewManager(cfg, db, nil)
+
+		err := m.UpdateDigest(ctx, repositoryID, digest)
+		assert.Equal(t, tests.ErrFakeDB, err)
+		db.AssertExpectations(t)
+	})
+}
+
 func withHTTPGetter(hg HTTPGetter) func(m *Manager) {
 	return func(m *Manager) {
 		m.hg = hg

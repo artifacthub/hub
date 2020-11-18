@@ -94,6 +94,7 @@ type Repository struct {
 	Private                 bool           `json:"private"`
 	AuthUser                string         `json:"auth_user"`
 	AuthPass                string         `json:"auth_pass"`
+	Digest                  string         `json:"digest"`
 	Kind                    RepositoryKind `json:"kind"`
 	UserID                  string         `json:"user_id"`
 	UserAlias               string         `json:"user_alias"`
@@ -132,10 +133,12 @@ type RepositoryManager interface {
 	GetPackagesDigest(ctx context.Context, repositoryID string) (map[string]string, error)
 	GetOwnedByOrgJSON(ctx context.Context, orgName string, includeCredentials bool) ([]byte, error)
 	GetOwnedByUserJSON(ctx context.Context, includeCredentials bool) ([]byte, error)
+	GetRemoteDigest(ctx context.Context, r *Repository) (string, error)
 	SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error
 	SetVerifiedPublisher(ctx context.Context, repositorID string, verified bool) error
 	Transfer(ctx context.Context, name, orgName string, ownershipClaim bool) error
 	Update(ctx context.Context, r *Repository) error
+	UpdateDigest(ctx context.Context, repositorID, digest string) error
 }
 
 // RepositoryMetadata represents some metadata about a given repository. It's

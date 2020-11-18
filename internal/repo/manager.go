@@ -17,6 +17,9 @@ import (
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/util"
+	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/google/go-containerregistry/pkg/v1/remote"
+	"github.com/google/go-github/github"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
@@ -40,6 +43,7 @@ const (
 	setVerifiedPublisherDBQ   = `select set_verified_publisher($1::uuid, $2::boolean)`
 	transferRepoDBQ           = `select transfer_repository($1::text, $2::uuid, $3::text, $4::boolean)`
 	updateRepoDBQ             = `select update_repository($1::uuid, $2::jsonb)`
+	updateRepoDigestDBQ       = `update repository set digest = $2 where repository_id = $1`
 )
 
 var (
@@ -71,6 +75,7 @@ type Manager struct {
 	rc              hub.RepositoryCloner
 	helmIndexLoader hub.HelmIndexLoader
 	az              hub.Authorizer
+	gh              *github.Client
 }
 
 // NewManager creates a new Manager instance.
@@ -80,6 +85,7 @@ func NewManager(cfg *viper.Viper, db hub.DB, az hub.Authorizer, opts ...func(m *
 		db:              db,
 		helmIndexLoader: &HelmIndexLoader{},
 		az:              az,
+		gh:              github.NewClient(http.DefaultClient),
 	}
 	for _, o := range opts {
 		o(m)
@@ -458,6 +464,51 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context, includeCredentials boo
 	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID, includeCredentials)
 }
 
+// GetRemoteDigest gets the repository's digest available in the remote. In the
+// case of git based repositories, the digest corresponds to the hash of the
+// last commit. In OCI based repositories, it is the digest of the image the
+// repository url points to.
+func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (string, error) {
+	var digest string
+
+	u, _ := url.Parse(r.URL)
+	switch {
+	case SchemeIsHTTP(u) && u.Host == "github.com":
+		pathParts := strings.Split(strings.TrimPrefix(u.Path, "/"), "/")
+		if len(pathParts) < 2 {
+			break
+		}
+		owner := pathParts[0]
+		repo := pathParts[1]
+		opt := &github.CommitsListOptions{
+			ListOptions: github.ListOptions{
+				Page:    0,
+				PerPage: 1,
+			},
+		}
+		commits, _, err := m.gh.Repositories.ListCommits(ctx, owner, repo, opt)
+		if err != nil {
+			return digest, err
+		}
+		if len(commits) == 1 {
+			digest = *commits[0].SHA
+		}
+	case u.Scheme == "oci":
+		refName := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
+		ref, err := name.ParseReference(refName)
+		if err != nil {
+			return digest, err
+		}
+		desc, err := remote.Head(ref)
+		if err != nil {
+			return digest, err
+		}
+		digest = desc.Digest.String()
+	}
+
+	return digest, nil
+}
+
 // SetLastTrackingResults updates the timestamp and errors of the last tracking
 // of the provided repository in the database.
 func (m *Manager) SetLastTrackingResults(ctx context.Context, repositoryID, errs string) error {
@@ -592,6 +643,12 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
+	return err
+}
+
+// UpdateDigest updates the digest of the provided repository in the database.
+func (m *Manager) UpdateDigest(ctx context.Context, repositoryID, digest string) error {
+	_, err := m.db.Exec(ctx, updateRepoDigestDBQ, repositoryID, digest)
 	return err
 }
 
