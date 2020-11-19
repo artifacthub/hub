@@ -2,8 +2,8 @@ apiVersion: v2
 name: artifact-hub
 description: Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.
 type: application
-version: 0.9.2
-appVersion: 0.9.0
+version: 0.10.0
+appVersion: 0.10.0
 home: https://artifacthub.io
 icon: https://artifacthub.github.io/hub/chart/logo.png
 keywords:
@@ -24,24 +24,30 @@ dependencies:
     condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
-    - Display Helm chart reference doc in package view
-    - Display changelog in package view
-    - Add support for private Helm repositories
-    - Add API endpoint to get package changelog
-    - Include package version changes in new release notification email
-    - Add new `changes` annotation for Helm, OLM and OPA packages
-    - Add direct links for modals in package view
-    - Display security report generation time
-    - Upgrade frontend dependencies
+    - Add experimental OCI support for Helm repositories
+    - Add experimental OCI support for OLM repositories
+    - Add support for private Helm OCI repositories
+    - Display available documentation nicely formatted in UI
+    - Display containers images security rating in packages cards
+    - Display CVSS v3 score and vector in security report
+    - Display containers images summary at the top of the security report
+    - Improve packages search results ordering
+    - Optimize UI for larger resolution screens
+    - Add support for $ref pointers in values JSON schema
+    - Add maintenance mode page
+    - Display package content link in install modal
+    - Add index page to Artifact Hub Helm charts repository
+    - Allow whitelisting containers images
+    - Track OLM packages related containers images
     - Some bugs fixes and improvements
   artifacthub.io/images: |
     - name: db-migrator
-      image: artifacthub/db-migrator:v0.9.0
+      image: artifacthub/db-migrator:v0.10.0
     - name: hub
-      image: artifacthub/hub:v0.9.0
+      image: artifacthub/hub:v0.10.0
     - name: tracker
-      image: artifacthub/tracker:v0.9.0
+      image: artifacthub/tracker:v0.10.0
     - name: scanner
-      image: artifacthub/scanner:v0.9.0
+      image: artifacthub/scanner:v0.10.0
     - name: trivy
       image: aquasec/trivy:0.12.0
