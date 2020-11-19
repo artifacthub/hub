@@ -421,6 +421,16 @@
                     "title": "Trivy server url",
                     "type": "string",
                     "default": "http://trivy:8081"
+                },
+                "dockerUsername": {
+                    "title": "Docker registry username",
+                    "type": "string",
+                    "default": ""
+                },
+                "dockerPassword": {
+                    "title": "Docker registry password",
+                    "type": "string",
+                    "default": ""
                 }
             },
             "required": ["concurrency", "cronjob", "trivyURL"]
@@ -505,11 +515,6 @@
             "title": "Trivy configuration",
             "type": "object",
             "properties": {
-                "authURL": {
-                    "title": "Trivy authentication URL",
-                    "type": "string",
-                    "default": ""
-                },
                 "deploy": {
                     "type": "object",
                     "properties": {
@@ -525,11 +530,6 @@
                         }
                     },
                     "required": ["image", "resources"]
-                },
-                "password": {
-                    "title": "Trivy authentication password",
-                    "type": "string",
-                    "default": ""
                 },
                 "persistence": {
                     "type": "object",
@@ -551,11 +551,6 @@
                         }
                     },
                     "required": ["enabled"]
-                },
-                "username": {
-                    "title": "Trivy authentication username",
-                    "type": "string",
-                    "default": ""
                 }
             },
             "required": ["deploy", "persistence"]
