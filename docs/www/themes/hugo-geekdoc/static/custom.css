@@ -119,6 +119,10 @@ code {
   background-color: var(--color-1-900);
 }
 
+.gdoc-markdown a {
+  word-wrap: break-word;
+}
+
 .gdoc-markdown pre {
   overflow-x: auto;
   border-radius: 3px;
@@ -234,6 +238,7 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
   font-weight: 700;
   color: var(--color-1-700);
   margin-bottom: 1.5rem;
+  line-height: 1.5rem;
 }
 
 .gdoc-markdown h1, .gdoc-markdown h2 {

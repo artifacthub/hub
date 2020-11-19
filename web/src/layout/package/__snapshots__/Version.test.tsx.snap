@@ -9,7 +9,7 @@ exports[`Version creates snapshot 1`] = `
       class="d-flex flex-row align-items-baseline"
     >
       <button
-        class="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100"
+        class="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
         data-testid="version"
       >
         1.0.1

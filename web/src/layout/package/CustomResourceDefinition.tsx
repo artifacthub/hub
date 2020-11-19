@@ -113,7 +113,7 @@ const CustomResourceDefinition = (props: Props) => {
                 />
               </div>
 
-              <div className="my-3">
+              <div className={`my-3 ${styles.syntaxWrapper}`}>
                 <SyntaxHighlighter
                   language="yaml"
                   style={tomorrowNight}

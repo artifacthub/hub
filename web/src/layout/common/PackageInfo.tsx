@@ -237,7 +237,7 @@ const PackageInfo = (props: Props) => {
         {starsAndKindInfo}
       </div>
 
-      <div className={`d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>
+      <div className={`d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto ${styles.labelsWrapper}`}>
         <OfficialBadge official={props.package.repository.official} className="d-inline mt-3" />
         <VerifiedPublisherBadge
           verifiedPublisher={props.package.repository.verifiedPublisher}

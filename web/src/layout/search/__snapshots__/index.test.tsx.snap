@@ -1913,7 +1913,7 @@ exports[`Search index creates snapshot 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
+                    class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
                   />
                 </div>
               </a>
@@ -2341,7 +2341,7 @@ exports[`Search index creates snapshot 2`] = `
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-wrap justify-content-md-end mt-0 mt-md-auto labelsWrapper"
+                    class="d-flex flex-wrap justify-content-lg-end mt-0 mt-md-auto labelsWrapper"
                   />
                 </div>
               </a>
