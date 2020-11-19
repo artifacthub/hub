@@ -7,14 +7,18 @@ declare
     v_snapshots_count int;
     v_semver_regexp text := '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?';
 begin
-    -- Get some package details
-    select p.package_id, p.latest_version, count(s.version)
-    into v_package_id, v_latest_version, v_snapshots_count
-    from package p
-    join snapshot s using (package_id)
-    where p.name = p_pkg->>'name'
+    -- Get package id and latest version and lock it
+    select package_id, latest_version
+    into v_package_id, v_latest_version
+    from package
+    where name = p_pkg->>'name'
     and repository_id = ((p_pkg->'repository')->>'repository_id')::uuid
-    group by p.package_id, p.latest_version;
+    for update;
+
+    -- Get package's snapshots count
+    select count(*) into v_snapshots_count
+    from snapshot
+    where package_id = v_package_id;
     if not found then
         return;
     end if;
