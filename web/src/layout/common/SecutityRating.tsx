@@ -135,18 +135,20 @@ const SecurityRating = (props: Props) => {
   return (
     <>
       {props.withLink ? (
-        <button
-          className={`btn btn-link text-reset p-0 ${styles.link} ${props.className}`}
-          onClick={(e) => {
-            e.preventDefault();
-            history.push({
-              pathname: props.withLink,
-              search: '?modal=security-report',
-            });
-          }}
-        >
-          {badge()}
-        </button>
+        <div className={props.className}>
+          <button
+            className={`btn btn-link text-reset p-0 ${styles.link}`}
+            onClick={(e) => {
+              e.preventDefault();
+              history.push({
+                pathname: props.withLink,
+                search: '?modal=security-report',
+              });
+            }}
+          >
+            {badge()}
+          </button>
+        </div>
       ) : (
         <>{badge(props.className)}</>
       )}

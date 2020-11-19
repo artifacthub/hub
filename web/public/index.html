@@ -25,6 +25,8 @@
       window.analyticsConfig = {
         gaTrackingID: '{{ .gaTrackingID }}',
       };
+      // Issue: https://github.com/mozilla-mobile/firefox-ios/issues/5772
+      if (window.__firefox__) { window.__firefox__.NightMode.setEnabled(false); }
     </script>
     <script type="application/ld+json">
       {

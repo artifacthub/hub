@@ -159,7 +159,7 @@ const SearchPackages = (props: Props) => {
                         <td className="align-middle">
                           <div className="d-flex flex-row align-items-center">
                             <div
-                              className={`d-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
+                              className={`d-none d-sm-flex align-items-center justify-content-center overflow-hidden ${styles.imageWrapper} imageWrapper`}
                             >
                               <Image
                                 imageId={item.logoImageId}
@@ -177,9 +177,9 @@ const SearchPackages = (props: Props) => {
                             {item.repository.userAlias ||
                               item.repository.organizationDisplayName ||
                               item.repository.organizationName}
-                            <small className="ml-2">
+                            <small className="ml-2 d-none d-sm-inline">
                               (
-                              <small className={`text-uppercase text-muted d-none d-sm-inline ${styles.legend}`}>
+                              <small className={`text-uppercase d-none d-md-inline text-muted ${styles.legend}`}>
                                 Repo:{' '}
                               </small>
                               {item.repository.displayName || item.repository.name})

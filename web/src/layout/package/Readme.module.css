@@ -32,7 +32,7 @@
   color: var(--color-1-700);
 }
 
-.md *:not(pre) > code {
+.md *:not(pre):not(td) > code {
   hyphens: none;
   white-space: normal;
   word-wrap: break-word;
@@ -89,5 +89,9 @@
 @media only screen and (max-width: 575.98px) {
   .md {
     margin-left: 15px;
+  }
+
+  .md *:not(pre):not(td) > code {
+    font-size: 0.8rem;
   }
 }

@@ -28,3 +28,9 @@
     padding-inline-start: 20px;
   }
 }
+
+@media only screen and (min-width: 576px) {
+  .bigTipIcon {
+    right: -37px;
+  }
+}
