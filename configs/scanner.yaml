@@ -10,3 +10,5 @@ db:
 scanner:
   concurrency: 10
   trivyURL: http://trivy:8081
+  dockerUsername: ""
+  dockerPassword: ""

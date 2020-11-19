@@ -56,6 +56,7 @@ func main() {
 	}
 	trivyScanner := &scanner.TrivyScanner{
 		Ctx: ctx,
+		Cfg: cfg,
 		URL: trivyURL,
 	}
 	snapshots, err := pm.GetSnapshotsToScan(ctx)

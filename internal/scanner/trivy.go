@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"os/exec"
 	"strings"
+
+	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/spf13/viper"
 )
 
 // ErrImageNotFound represents that the image provided was not found in the
@@ -16,15 +19,33 @@ var ErrImageNotFound = errors.New("image not found")
 // TrivyScanner is an implementation of the Scanner interface that uses Trivy.
 type TrivyScanner struct {
 	Ctx context.Context
+	Cfg *viper.Viper
 	URL string
 }
 
 // Scan implements the Scanner interface.
 func (s *TrivyScanner) Scan(image string) ([]byte, error) {
+	// Setup trivy command
 	cmd := exec.CommandContext(s.Ctx, "trivy", "client", "--quiet", "--remote", s.URL, "-f", "json", image) // #nosec
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
+
+	// If the registry is the Docker Hub, include credentials to avoid rate
+	// limiting issues. Empty registry names will also match this check as the
+	// registry name will be set to index.docker.io when parsing the reference.
+	ref, err := name.ParseReference(image)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing image %s ref: %w", image, err)
+	}
+	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
+		cmd.Env = []string{
+			fmt.Sprintf("TRIVY_USERNAME=%s", s.Cfg.GetString("scanner.dockerUsername")),
+			fmt.Sprintf("TRIVY_PASSWORD=%s", s.Cfg.GetString("scanner.dockerPassword")),
+		}
+	}
+
+	// Run trivy command
 	if err := cmd.Run(); err != nil {
 		if strings.Contains(stderr.String(), "Cannot connect to the Docker daemon") {
 			return nil, ErrImageNotFound

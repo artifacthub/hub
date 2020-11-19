@@ -82,6 +82,8 @@ scanner:
     resources: {}
   concurrency: 10
   trivyURL: http://trivy:8081
+  dockerUsername: ""
+  dockerPassword: ""
 
 tracker:
   cronjob:
@@ -103,9 +105,6 @@ trivy:
   persistence:
     enabled: false
     size: 10Gi
-  authURL: ""
-  username: ""
-  password: ""
 
 # Values for postgresql chart dependency
 postgresql:
