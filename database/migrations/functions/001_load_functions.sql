@@ -70,6 +70,7 @@
 {{ template "subscriptions/get_user_package_subscriptions.sql" }}
 {{ template "subscriptions/get_user_subscriptions.sql" }}
 
+{{ template "users/check_user_alias_availability.sql" }}
 {{ template "users/get_user_profile.sql" }}
 {{ template "users/register_session.sql" }}
 {{ template "users/register_user.sql" }}
