@@ -1,0 +1,50 @@
+image:
+  file: .gitpod/Dockerfile
+tasks:
+  - name: Frontend
+    init: |
+      touch /tmp/.frontend-built-lock
+      echo -e "\n- Downloading dependencies..\n"
+      cd web && yarn
+      echo -e "\n- Building frontend..\n"
+      yarn build
+      rm /tmp/.frontend-built-lock
+  - name: Backend
+    init: |
+      echo -e "\n- Setting up database..\n"
+      cd && go get -u github.com/jackc/tern
+      psql -c 'create database hub'
+      cd /workspace/hub/database/migrations && TERN_CONF=/workspace/hub/.gitpod/tern.conf ./migrate.sh
+      echo -e "\n- Downloading Go modules..\n"
+      cd /workspace/hub && go mod download
+      echo -e "\n- Running tracker..\n"
+      mkdir ~/.cfg
+      cp /workspace/hub/.gitpod/*.yaml ~/.cfg
+      cd /workspace/hub/cmd/tracker && go run *.go
+      echo -e "\n- Waiting for frontend build to complete..\n"
+      sleep 1 && while [ -f /tmp/.frontend-built-lock ]; do sleep 1; done
+    command: |
+      echo -e "\n- Running hub..\n"
+      echo -e "\nOnce the hub is ready, you can log in using the following credentials:\n"
+      echo -e "\tEmail: demo@artifacthub.io"
+      echo -e "\tPassword: changeme\n"
+      mkdir ~/.cfg
+      cp /workspace/hub/.gitpod/*.yaml ~/.cfg
+      cd /workspace/hub/cmd/hub && go run *.go
+ports:
+  - port: 3000
+    onOpen: ignore
+  - port: 5432
+    onOpen: ignore
+  - port: 8000
+    onOpen: notify
+  - port: 8001
+    onOpen: ignore
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: false
+    pullRequestsFromForks: true
+    addCheck: false
+    addComment: false
