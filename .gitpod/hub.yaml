@@ -1,0 +1,13 @@
+log:
+  level: debug
+  pretty: true
+db:
+  host: localhost
+  port: "5432"
+  database: hub
+  user: gitpod
+server:
+  addr: localhost:8000
+  metricsAddr: localhost:8001
+  shutdownTimeout: 10s
+  webBuildPath: ../../web/build
