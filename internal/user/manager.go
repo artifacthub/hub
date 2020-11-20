@@ -18,25 +18,19 @@ import (
 
 const (
 	// Database queries
-	checkUserAliasAvailDBQ = `
-		select user_id
-		from "user" u
-		join email_verification_code c using (user_id)
-		where u.alias = $1
-		and current_timestamp - '1 day'::interval < c.created_at
-	`
-	checkUserCredsDBQ     = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
-	deleteSessionDBQ      = `delete from session where session_id = $1`
-	getAPIKeyUserIDDBQ    = `select user_id from api_key where key = $1`
-	getSessionDBQ         = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
-	getUserIDDBQ          = `select user_id from "user" where email = $1`
-	getUserPasswordDBQ    = `select password from "user" where user_id = $1 and password is not null`
-	getUserProfileDBQ     = `select get_user_profile($1::uuid)`
-	registerSessionDBQ    = `select register_session($1::jsonb)`
-	registerUserDBQ       = `select register_user($1::jsonb)`
-	updateUserPasswordDBQ = `select update_user_password($1::uuid, $2::text, $3::text)`
-	updateUserProfileDBQ  = `select update_user_profile($1::uuid, $2::jsonb)`
-	verifyEmailDBQ        = `select verify_email($1::uuid)`
+	checkUserAliasAvailDBQ = `select check_user_alias_availability($1::text)`
+	checkUserCredsDBQ      = `select user_id, password from "user" where email = $1 and password is not null and email_verified = true`
+	deleteSessionDBQ       = `delete from session where session_id = $1`
+	getAPIKeyUserIDDBQ     = `select user_id from api_key where key = $1`
+	getSessionDBQ          = `select user_id, floor(extract(epoch from created_at)) from session where session_id = $1`
+	getUserIDDBQ           = `select user_id from "user" where email = $1`
+	getUserPasswordDBQ     = `select password from "user" where user_id = $1 and password is not null`
+	getUserProfileDBQ      = `select get_user_profile($1::uuid)`
+	registerSessionDBQ     = `select register_session($1::jsonb)`
+	registerUserDBQ        = `select register_user($1::jsonb)`
+	updateUserPasswordDBQ  = `select update_user_password($1::uuid, $2::text, $3::text)`
+	updateUserProfileDBQ   = `select update_user_profile($1::uuid, $2::jsonb)`
+	verifyEmailDBQ         = `select verify_email($1::uuid)`
 )
 
 var (
