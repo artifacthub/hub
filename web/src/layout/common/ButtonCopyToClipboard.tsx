@@ -15,22 +15,31 @@ interface Props {
   contentBtn?: string;
 }
 
-const copyToClipboard = (text: string): boolean => {
-  try {
-    const textField = document.createElement('textarea');
-    textField.innerHTML = text;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand('copy');
-    textField.remove();
-    return true;
-  } catch {
-    return false;
-  }
-};
-
 const ButtonCopyToClipboard = (props: Props) => {
   const [copyStatus, setCopyStatus] = useState(false);
+
+  async function copyToClipboard(text: string) {
+    if (!navigator.clipboard) {
+      try {
+        const textField = document.createElement('textarea');
+        textField.innerHTML = text;
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand('copy');
+        textField.remove();
+        setCopyStatus(true);
+      } catch {
+        setCopyStatus(false);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopyStatus(true);
+      } catch {
+        setCopyStatus(false);
+      }
+    }
+  }
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -65,7 +74,7 @@ const ButtonCopyToClipboard = (props: Props) => {
         onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
           e.preventDefault();
           e.stopPropagation();
-          setCopyStatus(copyToClipboard(props.text));
+          copyToClipboard(props.text);
         }}
       >
         <div className="d-flex flex-row align-items-center">
