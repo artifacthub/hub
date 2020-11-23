@@ -90,6 +90,7 @@ create table if not exists repository (
     last_tracking_errors text,
     verified_publisher boolean not null default false,
     official boolean not null default false,
+    digest text check (digest <> ''),
     repository_kind_id integer not null default 0 references repository_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
     organization_id uuid references organization on delete restrict,

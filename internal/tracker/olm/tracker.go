@@ -73,10 +73,20 @@ func NewTracker(
 func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	defer wg.Done()
 
+	// Check if repository has been updated
+	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
+	remoteDigest, err := t.svc.Rm.GetRemoteDigest(t.svc.Ctx, t.r)
+	if err != nil {
+		return fmt.Errorf("error getting repository remote digest: %w", err)
+	}
+	if remoteDigest != "" && t.r.Digest == remoteDigest && !bypassDigestCheck {
+		t.logger.Debug().Msg("repository has not been updated, skipping it")
+		return nil
+	}
+
 	// Get packages available in repository
 	t.logger.Debug().Msg("getting repository packages")
 	var tmpDir, packagesPath string
-	var err error
 	if strings.HasPrefix(t.r.URL, hub.RepositoryOCIPrefix) {
 		// Repository stored in OCI registry
 		tmpDir, err = t.svc.Re.ExportRepository(t.svc.Ctx, t.r)
@@ -99,7 +109,6 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Register available packages when needed
-	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
 	basePath := filepath.Join(tmpDir, packagesPath)
 	err = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
@@ -210,6 +219,13 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, filepath.Join(basePath, hub.RepositoryMetadataFile))
 	if err != nil {
 		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
+	}
+
+	// Update repository digest if needed
+	if remoteDigest != "" && remoteDigest != t.r.Digest {
+		if err := t.svc.Rm.UpdateDigest(t.svc.Ctx, t.r.RepositoryID, remoteDigest); err != nil {
+			t.warn(fmt.Errorf("error updating digest: %w", err))
+		}
 	}
 
 	return nil
