@@ -19,4 +19,3 @@ The documentation is organized in the following topics:
 |[Packages security report](/docs/topics/security_report)|Explains how packages are scanned for security vulnerabilities and the structure of the security report.|
 |[Development environment setup](/docs/topics/dev)|This guide will help contributors setup their development environment to do some work on Artifact Hub.|
 |[Authorization](/docs/topics/authorization)|Explains how the authorization mechanism that allows organizations to define what actions can be performed by their members works and how to set it up.|
-

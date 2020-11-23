@@ -230,6 +230,16 @@ ul ul .gdoc-nav__item, .gdoc-nav__entry-root {
   background-color: var(--color-1-700);
 }
 
+.gdoc-nav__icon {
+  display: inline;
+  position: relative;
+  top: 1px;
+}
+
+.gdoc-nav__icon svg {
+  height: 13px;
+}
+
 .gdoc-markdown em {
   color: var(--color-muted);
 }
