@@ -991,7 +991,7 @@ exports[`Package index creates snapshot 2`] = `
                       <small
                         class="card-title text-muted text-uppercase"
                       >
-                        Chart Versions
+                        Chart versions
                       </small>
                     </div>
                     <small>
@@ -1028,7 +1028,7 @@ exports[`Package index creates snapshot 2`] = `
                     </small>
                   </div>
                   <p
-                    data-testid="chartVersions"
+                    data-testid="versions"
                   >
                     -
                   </p>
