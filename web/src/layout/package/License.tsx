@@ -17,6 +17,7 @@ interface Props {
   btnType?: boolean;
 }
 
+// Source: https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
 const LICENSES_LIST: string[] = [
   '0bsd',
   'afl-3.0',

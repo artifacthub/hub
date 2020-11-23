@@ -91,7 +91,7 @@
 }
 
 .labelsWrapper > div:not(:last-child) {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .description {
@@ -126,10 +126,12 @@
     max-width: calc(100% - 4px);
     max-height: calc(100% - 4px);
   }
+}
 
+@media only screen and (min-width: 992px) {
   .labelsWrapper > div:not(:first-child) {
     margin-right: 0;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
   }
 
   .labelsWrapper > div:first-child {

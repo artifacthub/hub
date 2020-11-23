@@ -41,7 +41,7 @@ const RepositoryInfo = (props: Props) => {
     }
     if (openStatus && !onLinkHover && !onDropdownHover) {
       timeout = setTimeout(() => {
-        // Delay to hide the dropdown to avoid hide it if user changes from link to dropdown
+        // Delay to hide the dropdown to let some time for changing between dropdown and link (for copying text)
         setOpenStatus(false);
       }, 50);
     }

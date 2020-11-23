@@ -91,7 +91,7 @@
     margin-left: 15px;
   }
 
-  .md *:not(pre):not(td) > code {
+  .md code {
     font-size: 0.8rem;
   }
 }
