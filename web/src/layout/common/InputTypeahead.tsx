@@ -73,20 +73,22 @@ const InputTypeahead = (props: Props) => {
   const getOptionName = (name: string): JSX.Element => {
     if (!isNull(hightlightedText)) {
       const stringParts: string[] = compact(name.split(hightlightedText));
+      if (stringParts.length === 1) {
+        return <>{name}</>;
+      }
 
       return (
         <>
-          {stringParts.map((str: string, index: number) => {
-            if (str.toLowerCase() === inputValue.toLowerCase()) {
-              return (
-                <span key={`${name}_${index}`} className="font-weight-bold hightlighted">
-                  {str}
-                </span>
-              );
-            } else {
-              return <span key={`${name}_${index}`}>{str}</span>;
-            }
-          })}
+          {stringParts.map((str: string, index: number) => (
+            <span
+              key={`${name}_${index}`}
+              className={classnames({
+                'font-weight-bold hightlighted': str.toLowerCase() === inputValue.toLowerCase(),
+              })}
+            >
+              {str}
+            </span>
+          ))}
         </>
       );
     } else {
