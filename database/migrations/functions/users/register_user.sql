@@ -36,10 +36,12 @@ begin
         nullif(p_user->>'profile_image_id', '')::uuid
     ) returning user_id into v_user_id;
 
-    -- Register email verification code
-    insert into email_verification_code (user_id)
-    values (v_user_id)
-    returning email_verification_code_id into v_email_verification_code;
+    -- Register email verification code if email isn't already verified
+    if (p_user->>'email_verified')::boolean = false then
+        insert into email_verification_code (user_id)
+        values (v_user_id)
+        returning email_verification_code_id into v_email_verification_code;
+    end if;
 
     return v_email_verification_code;
 end

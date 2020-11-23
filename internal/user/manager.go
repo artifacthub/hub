@@ -257,7 +257,8 @@ func (m *Manager) RegisterSession(ctx context.Context, session *hub.Session) ([]
 // RegisterUser registers the user provided in the database. When the user is
 // registered a verification email will be sent to the email address provided.
 // The base url provided will be used to build the url the user will need to
-// click to complete the verification.
+// click to complete the verification. When a user is registered using oauth,
+// the email is verified automatically and no email is sent.
 func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL string) error {
 	// Validate input
 	if user.Alias == "" {
@@ -289,16 +290,16 @@ func (m *Manager) RegisterUser(ctx context.Context, user *hub.User, baseURL stri
 
 	// Register user in database
 	userJSON, _ := json.Marshal(user)
-	var code string
+	var code *string
 	err := m.db.QueryRow(ctx, registerUserDBQ, userJSON).Scan(&code)
 	if err != nil {
 		return err
 	}
 
 	// Send email verification code
-	if !user.EmailVerified && m.es != nil {
+	if code != nil && m.es != nil {
 		templateData := map[string]string{
-			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, code),
+			"link": fmt.Sprintf("%s/verify-email?code=%s", baseURL, *code),
 		}
 		var emailBody bytes.Buffer
 		if err := emailVerificationTmpl.Execute(&emailBody, templateData); err != nil {

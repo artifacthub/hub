@@ -597,6 +597,7 @@ func TestRegisterUser(t *testing.T) {
 	})
 
 	t.Run("successful user registration in database", func(t *testing.T) {
+		code := "emailVerificationCode"
 		testCases := []struct {
 			description         string
 			emailSenderResponse error
@@ -614,7 +615,7 @@ func TestRegisterUser(t *testing.T) {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
 				db := &tests.DBMock{}
-				db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return("emailVerificationCode", nil)
+				db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return(&code, nil)
 				es := &email.SenderMock{}
 				es.On("SendEmail", mock.Anything).Return(tc.emailSenderResponse)
 				m := NewManager(db, es)
@@ -637,8 +638,9 @@ func TestRegisterUser(t *testing.T) {
 	})
 
 	t.Run("database error registering user", func(t *testing.T) {
+		code := ""
 		db := &tests.DBMock{}
-		db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return("", tests.ErrFakeDB)
+		db.On("QueryRow", ctx, registerUserDBQ, mock.Anything).Return(&code, tests.ErrFakeDB)
 		m := NewManager(db, nil)
 
 		u := &hub.User{

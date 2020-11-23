@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(6);
 
 -- Register user
 select register_user('
@@ -9,7 +9,7 @@ select register_user('
     "first_name": "first_name",
     "last_name": "last_name",
     "email": "email",
-    "email_verified": true,
+    "email_verified": false,
     "password": "password",
     "profile_image_id": "00000000-0000-0000-0000-000000000001"
 }
@@ -35,7 +35,7 @@ select results_eq(
             'first_name',
             'last_name',
             'email',
-            true,
+            false,
             'password',
             '00000000-0000-0000-0000-000000000001'::uuid
         )
@@ -60,7 +60,7 @@ select throws_ok(
             "first_name": "first_name",
             "last_name": "last_name",
             "email": "email",
-            "email_verified": true,
+            "email_verified": false,
             "password": "password",
             "profile_image_id": "00000000-0000-0000-0000-000000000001"
         }
@@ -85,13 +85,62 @@ select lives_ok(
             "first_name": "first_name",
             "last_name": "last_name",
             "email": "email",
-            "email_verified": true,
+            "email_verified": false,
             "password": "password",
             "profile_image_id": "00000000-0000-0000-0000-000000000001"
         }
         ')
     $$,
     'Registering the same user again should work as the email was not verified on time'
+);
+
+-- Register new user (email already verified, oauth registration)
+select register_user('
+{
+    "alias": "alias3",
+    "first_name": "first_name",
+    "last_name": "last_name",
+    "email": "email3",
+    "email_verified": true,
+    "profile_image_id": "00000000-0000-0000-0000-000000000001"
+}
+');
+
+-- Check if user registration succeeded
+select results_eq(
+    $$
+        select
+            alias,
+            first_name,
+            last_name,
+            email,
+            email_verified,
+            password,
+            profile_image_id
+        from "user"
+        where alias = 'alias3'
+    $$,
+    $$
+        values (
+            'alias3',
+            'first_name',
+            'last_name',
+            'email3',
+            true,
+            null,
+            '00000000-0000-0000-0000-000000000001'::uuid
+        )
+    $$,
+    'User3 should exist'
+);
+select is_empty(
+    $$
+        select *
+        from email_verification_code
+        join "user" using (user_id)
+        where alias = 'alias3'
+    $$,
+    'No email verification code should be registered for user alias3'
 );
 
 -- Finish tests and rollback transaction
