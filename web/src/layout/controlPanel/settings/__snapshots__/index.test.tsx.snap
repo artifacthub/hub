@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsSection renders correctly 1`] = `
+<DocumentFragment>
+  <div>
+    user
+  </div>
+</DocumentFragment>
+`;
