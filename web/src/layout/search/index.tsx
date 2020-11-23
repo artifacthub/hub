@@ -112,6 +112,17 @@ const SearchView = (props: Props) => {
     };
   };
 
+  const updateCurrentPage = (searchChanges: any) => {
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        ...getCurrentFilters(),
+        pageNumber: 1,
+        ...searchChanges,
+      }),
+    });
+  };
+
   const onFiltersChange = (name: string, value: string, checked: boolean): void => {
     let newFilters = isUndefined(props.filters[name]) ? [] : props.filters[name].slice();
     if (checked) {
@@ -120,13 +131,8 @@ const SearchView = (props: Props) => {
       newFilters = newFilters.filter((el) => el !== value);
     }
 
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        filters: prepareSelectedFilters(name, newFilters, props.filters),
-      }),
+    updateCurrentPage({
+      filters: prepareSelectedFilters(name, newFilters, props.filters),
     });
   };
 
@@ -136,13 +142,8 @@ const SearchView = (props: Props) => {
       newFilters[fKey] = [];
     });
 
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        filters: { ...props.filters, ...newFilters },
-      }),
+    updateCurrentPage({
+      filters: { ...props.filters, ...newFilters },
     });
   };
 
@@ -155,80 +156,47 @@ const SearchView = (props: Props) => {
       query = query.filter((el) => el !== value);
     }
 
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        tsQuery: query,
-      }),
+    updateCurrentPage({
+      tsQuery: query,
     });
   };
 
   const onDeprecatedChange = (): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
-      }),
+    updateCurrentPage({
+      deprecated: !isUndefined(props.deprecated) && !isNull(props.deprecated) ? !props.deprecated : true,
     });
   };
 
   const onOperatorsChange = (): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
-      }),
+    updateCurrentPage({
+      operators: !isUndefined(props.operators) && !isNull(props.operators) ? !props.operators : true,
     });
   };
 
   const onVerifiedPublisherChange = (): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        verifiedPublisher:
-          !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
-      }),
+    updateCurrentPage({
+      verifiedPublisher:
+        !isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) ? !props.verifiedPublisher : true,
     });
   };
 
   const onOfficialChange = (): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: 1,
-        official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
-      }),
+    updateCurrentPage({
+      official: !isUndefined(props.official) && !isNull(props.official) ? !props.official : true,
     });
   };
 
   const onResetFilters = (): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        pageNumber: 1,
-        tsQueryWeb: props.tsQueryWeb,
-        tsQuery: [],
-        filters: {},
-      }),
+    updateCurrentPage({
+      tsQueryWeb: props.tsQueryWeb,
+      tsQuery: [],
+      filters: {},
     });
   };
 
   const onPageNumberChange = (pageNumber: number): void => {
-    history.push({
-      pathname: '/packages/search',
-      search: prepareQueryString({
-        ...getCurrentFilters(),
-        pageNumber: pageNumber,
-      }),
+    updateCurrentPage({
+      pageNumber: pageNumber,
     });
   };
 
