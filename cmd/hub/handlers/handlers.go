@@ -286,12 +286,22 @@ func (h *Handlers) setupRouter() {
 	// this endpoint handles the redirection to the package URL in Artifact Hub.
 	// The monocular compatible search API endpoint that we provide now returns
 	// the package url to facilitate that future versions of Helm can use it.
-	r.Get("/charts/{repoName}/{packageName}", func(w http.ResponseWriter, r *http.Request) {
-		pkgPath := fmt.Sprintf("/packages/helm/%s/%s",
-			chi.URLParam(r, "repoName"),
-			chi.URLParam(r, "packageName"),
-		)
-		http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+	r.Route("/charts/{repoName}/{packageName}", func(r chi.Router) {
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			pkgPath := fmt.Sprintf("/packages/helm/%s/%s",
+				chi.URLParam(r, "repoName"),
+				chi.URLParam(r, "packageName"),
+			)
+			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+		})
+		r.Get("/{version}", func(w http.ResponseWriter, r *http.Request) {
+			pkgPath := fmt.Sprintf("/packages/helm/%s/%s/%s",
+				chi.URLParam(r, "repoName"),
+				chi.URLParam(r, "packageName"),
+				chi.URLParam(r, "version"),
+			)
+			http.Redirect(w, r, pkgPath, http.StatusMovedPermanently)
+		})
 	})
 
 	// Oauth
