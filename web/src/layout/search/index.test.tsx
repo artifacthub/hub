@@ -502,4 +502,93 @@ describe('Search index', () => {
       await waitFor(() => {});
     });
   });
+
+  describe('Reset', () => {
+    it('resets all filters except tsQueryWeb on click', async () => {
+      const mockSearchResults = getMockSearchResults('23');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByTestId, getByRole } = render(
+        <Router>
+          <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const resetBtn = getByTestId('resetBtn');
+      expect(resetBtn).toBeInTheDocument();
+      fireEvent.click(resetBtn);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          tsQueryWeb: 'test',
+          filters: {},
+        }),
+      });
+
+      await waitFor(() => {});
+    });
+
+    it('resets all filters included tsQueryWeb when resetLink is clicked', async () => {
+      const mockSearchResults = getMockSearchResults('24');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByTestId, getByRole } = render(
+        <Router>
+          <SearchView {...defaultProps} filters={{}} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const resetLink = getByTestId('resetLink');
+      expect(resetLink).toBeInTheDocument();
+      fireEvent.click(resetLink);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          tsQueryWeb: '',
+          filters: {},
+        }),
+      });
+
+      await waitFor(() => {});
+    });
+
+    it('resets filters when resetFiltersLink is clicked', async () => {
+      const mockSearchResults = getMockSearchResults('24');
+      mocked(API).searchPackages.mockResolvedValue(mockSearchResults);
+
+      const { getByTestId, getByRole } = render(
+        <Router>
+          <SearchView {...defaultProps} verifiedPublisher official deprecated filters={{ repo: ['stable'] }} />
+        </Router>
+      );
+
+      await waitFor(() => getByRole('main'));
+
+      const resetFiltersLink = getByTestId('resetFiltersLink');
+      expect(resetFiltersLink).toBeInTheDocument();
+      fireEvent.click(resetFiltersLink);
+
+      expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+      expect(mockHistoryPush).toHaveBeenCalledWith({
+        pathname: '/packages/search',
+        search: prepareQuerystring({
+          pageNumber: 1,
+          tsQueryWeb: 'test',
+          filters: {},
+        }),
+      });
+
+      await waitFor(() => {});
+    });
+  });
 });
