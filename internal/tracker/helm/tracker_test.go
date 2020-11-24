@@ -264,17 +264,7 @@ func TestTracker(t *testing.T) {
 						"pkg1@1.0.0": "pkg1-1.0.0",
 					},
 				},
-				[]*Job{
-					{
-						Kind: Unregister,
-						ChartVersion: &helmrepo.ChartVersion{
-							Metadata: &chart.Metadata{
-								Name:    "pkg1",
-								Version: "1.0.0",
-							},
-						},
-					},
-				},
+				nil,
 			},
 			{
 				8,
@@ -426,10 +416,11 @@ func TestTracker(t *testing.T) {
 			{
 				5,
 				repo1,
-				nil,
+				[]string{"2.0.0"},
 				map[string]map[string]string{
 					repo1ID: {
 						"pkg1@1.0.0": "",
+						"pkg1@2.0.0": "",
 					},
 				},
 				[]*Job{
@@ -443,6 +434,18 @@ func TestTracker(t *testing.T) {
 						},
 					},
 				},
+			},
+			{
+				6,
+				repo1,
+				[]string{},
+				map[string]map[string]string{
+					repo1ID: {
+						"pkg1@1.0.0": "",
+						"pkg1@2.0.0": "",
+					},
+				},
+				nil,
 			},
 		}
 		for _, tc := range testCases {

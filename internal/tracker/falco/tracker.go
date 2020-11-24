@@ -136,19 +136,21 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Unregister packages not available anymore
-	for key := range packagesRegistered {
-		select {
-		case <-t.svc.Ctx.Done():
-			return nil
-		default:
-		}
-		if _, ok := packagesAvailable[key]; !ok {
-			p := strings.Split(key, "@")
-			name := p[0]
-			version := p[1]
-			t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
-			if err := t.unregisterPackage(name, version); err != nil {
-				t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
+	if len(packagesAvailable) > 0 {
+		for key := range packagesRegistered {
+			select {
+			case <-t.svc.Ctx.Done():
+				return nil
+			default:
+			}
+			if _, ok := packagesAvailable[key]; !ok {
+				p := strings.Split(key, "@")
+				name := p[0]
+				version := p[1]
+				t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
+				if err := t.unregisterPackage(name, version); err != nil {
+					t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
+				}
 			}
 		}
 	}

@@ -207,9 +207,10 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rm.On("GetRemoteDigest", tw.ctx, r).Return("digest", nil)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
+		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"test@0.1.0": "",
+			"test@0.2.0": "",
 		}, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
@@ -226,13 +227,32 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("package version unregistered successfully", func(t *testing.T) {
+	t.Run("no packages unregistered because there are no packages available", func(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rm.On("GetRemoteDigest", tw.ctx, r).Return("digest", nil)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"test@0.1.0": "",
+			"test@0.2.0": "",
+		}, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("UpdateDigest", tw.ctx, r.RepositoryID, "digest").Return(nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track(tw.wg)
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("package version unregistered successfully", func(t *testing.T) {
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(r)
+		tw.rm.On("GetRemoteDigest", tw.ctx, r).Return("digest", nil)
+		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
+			"test@0.1.0": "",
+			"test@0.2.0": "",
 		}, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
