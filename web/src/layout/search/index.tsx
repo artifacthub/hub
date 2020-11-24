@@ -187,10 +187,14 @@ const SearchView = (props: Props) => {
   };
 
   const onResetFilters = (): void => {
-    updateCurrentPage({
-      tsQueryWeb: props.tsQueryWeb,
-      tsQuery: [],
-      filters: {},
+    history.push({
+      pathname: '/packages/search',
+      search: prepareQueryString({
+        pageNumber: 1,
+        tsQueryWeb: props.tsQueryWeb,
+        tsQuery: [],
+        filters: {},
+      }),
     });
   };
 
@@ -335,7 +339,11 @@ const SearchView = (props: Props) => {
                     <>
                       <div className="d-flex align-items-center">
                         <IoMdCloseCircleOutline className={`text-secondary ${styles.resetBtnDecorator}`} />
-                        <button className="btn btn-link btn-sm p-0 pl-1 text-secondary" onClick={onResetFilters}>
+                        <button
+                          data-testid="resetBtn"
+                          className="btn btn-link btn-sm p-0 pl-1 text-secondary"
+                          onClick={onResetFilters}
+                        >
                           Reset
                         </button>
                       </div>
@@ -452,7 +460,7 @@ const SearchView = (props: Props) => {
                           You can{' '}
                           {!isEmpty(props.filters) ? (
                             <button
-                              data-testid="resetLink"
+                              data-testid="resetFiltersLink"
                               className="btn btn-link text-secondary font-weight-bold py-0 pb-1 px-0"
                               onClick={onResetFilters}
                             >
