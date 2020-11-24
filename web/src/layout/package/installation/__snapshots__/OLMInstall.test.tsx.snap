@@ -11,6 +11,7 @@ exports[`OLMInstall creates snapshot 1`] = `
       >
         <button
           class="btn btn-link nav-item btn active btn-primary active"
+          data-testid="tabBtn"
         >
           <span
             class="d-none d-sm-block"

@@ -2,19 +2,31 @@
 
 exports[`FalcoInstall creates snapshot 1`] = `
 <DocumentFragment>
-  <ul
-    class="nav nav-tabs tabs"
-  >
-    <li
-      class="nav-item"
+  <div>
+    <ul
+      class="nav nav-tabs tabs"
     >
-      <button
-        class="btn btn-link nav-item btn active btn-primary active"
+      <li
+        class="nav-item"
       >
-        Helm CLI
-      </button>
-    </li>
-  </ul>
+        <button
+          class="btn btn-link nav-item btn active btn-primary active"
+          data-testid="tabBtn"
+        >
+          <span
+            class="d-none d-sm-block"
+          >
+            Helm CLI
+          </span>
+          <span
+            class="d-block d-sm-none"
+          >
+            Helm CLI
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
   <div
     class="tab-content mt-3"
   >

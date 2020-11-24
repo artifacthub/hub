@@ -30,10 +30,12 @@ describe('Badge Modal - repositories section', () => {
 
   describe('Render', () => {
     it('renders markdown tab', () => {
-      const { getByTestId, getByText, getByAltText, getAllByTestId } = render(<BadgeModal {...defaultProps} />);
+      const { getByTestId, getByText, getByAltText, getAllByTestId, getAllByText } = render(
+        <BadgeModal {...defaultProps} />
+      );
 
       expect(getByText('Get badge')).toBeInTheDocument();
-      expect(getByText('Markdown')).toBeInTheDocument();
+      expect(getAllByText('Markdown')).toHaveLength(2);
       expect(getByTestId('badgeModalContent')).toBeInTheDocument();
       expect(getAllByTestId('tabBtn')).toHaveLength(2);
 
@@ -51,9 +53,9 @@ describe('Badge Modal - repositories section', () => {
     });
 
     it('renders ascii tab', () => {
-      const { getByText, getByAltText, getAllByTestId } = render(<BadgeModal {...defaultProps} />);
+      const { getByText, getByAltText, getAllByTestId, getAllByText } = render(<BadgeModal {...defaultProps} />);
 
-      expect(getByText('AsciiDoc')).toBeInTheDocument();
+      expect(getAllByText('AsciiDoc')).toHaveLength(2);
       const btns = getAllByTestId('tabBtn');
       expect(btns[1]).toHaveTextContent('AsciiDoc');
       fireEvent.click(btns[1]);

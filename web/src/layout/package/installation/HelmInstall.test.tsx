@@ -25,10 +25,10 @@ describe('HelmInstall', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText } = render(<HelmInstall {...defaultProps} />);
+      const { getByText, getAllByText } = render(<HelmInstall {...defaultProps} />);
 
-      expect(getByText('Helm v3')).toBeInTheDocument();
-      expect(getByText('Helm v2')).toBeInTheDocument();
+      expect(getAllByText('Helm v3')).toHaveLength(2);
+      expect(getAllByText('Helm v2')).toHaveLength(2);
       expect(getByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
       expect(
         getByText(
