@@ -520,7 +520,7 @@
                     "properties": {
                         "image": {
                             "type": "string",
-                            "default": "aquasec/trivy:0.12.0"
+                            "default": "aquasec/trivy:0.13.0"
                         },
                         "resources": {
                             "title": "Trivy pod resource requirements",
