@@ -4,7 +4,7 @@ metadata:
   name: scanner
 spec:
   schedule: "15,45 * * * *"
-  successfulJobsHistoryLimit: 10
+  successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
   jobTemplate:

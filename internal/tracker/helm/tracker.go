@@ -148,24 +148,26 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Generate jobs to unregister packages not available anymore
-	for key := range packagesRegistered {
-		select {
-		case <-t.svc.Ctx.Done():
-			return nil
-		default:
-		}
-		if _, ok := packagesAvailable[key]; !ok {
-			p := strings.Split(key, "@")
-			name := p[0]
-			version := p[1]
-			t.queue <- &Job{
-				Kind: Unregister,
-				ChartVersion: &helmrepo.ChartVersion{
-					Metadata: &chart.Metadata{
-						Name:    name,
-						Version: version,
+	if len(packagesAvailable) > 0 {
+		for key := range packagesRegistered {
+			select {
+			case <-t.svc.Ctx.Done():
+				return nil
+			default:
+			}
+			if _, ok := packagesAvailable[key]; !ok {
+				p := strings.Split(key, "@")
+				name := p[0]
+				version := p[1]
+				t.queue <- &Job{
+					Kind: Unregister,
+					ChartVersion: &helmrepo.ChartVersion{
+						Metadata: &chart.Metadata{
+							Name:    name,
+							Version: version,
+						},
 					},
-				},
+				}
 			}
 		}
 	}
