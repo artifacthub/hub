@@ -6,18 +6,15 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaCheck, FaExclamation, FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { HiExclamation } from 'react-icons/hi';
-import { IoMdCloseCircle } from 'react-icons/io';
 import { MdLabel } from 'react-icons/md';
 import { RiArrowLeftRightLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import { AuthorizerAction, ErrorKind, Repository } from '../../../types';
-import alertDispatcher from '../../../utils/alertDispatcher';
+import { AuthorizerAction, Repository } from '../../../types';
 import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import Modal from '../../common/Modal';
@@ -27,6 +24,7 @@ import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import ActionBtn from '../ActionBtn';
 import BadgeModal from './BadgeModal';
 import styles from './Card.module.css';
+import DeletionModal from './DeletionModal';
 import TransferRepositoryModal from './TransferModal';
 
 interface ModalStatus {
@@ -45,7 +43,6 @@ interface Props {
 const RepositoryCard = (props: Props) => {
   const history = useHistory();
   const { ctx } = useContext(AppCtx);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [dropdownMenuStatus, setDropdownMenuStatus] = useState<boolean>(false);
   const [transferModalStatus, setTransferModalStatus] = useState<boolean>(false);
   const [deletionModalStatus, setDeletionModalStatus] = useState<boolean>(false);
@@ -153,29 +150,6 @@ const RepositoryCard = (props: Props) => {
     }
   };
 
-  async function deleteRepository() {
-    try {
-      setIsDeleting(true);
-      await API.deleteRepository(props.repository.name, organizationName);
-      setIsDeleting(false);
-      props.onSuccess();
-    } catch (err) {
-      setIsDeleting(false);
-      if (err.kind === ErrorKind.Unauthorized) {
-        props.onAuthError();
-      } else {
-        let errorMessage = 'An error occurred deleting the repository, please try again later.';
-        if (!isUndefined(organizationName) && err.kind === ErrorKind.Forbidden) {
-          errorMessage = 'You do not have permissions to delete the repository from the organization.';
-        }
-        alertDispatcher.postAlert({
-          type: 'danger',
-          message: errorMessage,
-        });
-      }
-    }
-  }
-
   return (
     <div className="col-12 col-xxl-6 py-sm-3 py-2" data-testid="repoCard">
       <div className="card h-100">
@@ -208,59 +182,13 @@ const RepositoryCard = (props: Props) => {
             )}
 
             {deletionModalStatus && (
-              <Modal
-                className={`d-inline-block ${styles.modal}`}
-                closeButton={
-                  <>
-                    <button
-                      className={`btn btn-sm btn-light text-uppercase ${styles.btnLight}`}
-                      onClick={() => setDeletionModalStatus(false)}
-                    >
-                      <div className="d-flex flex-row align-items-center">
-                        <IoMdCloseCircle className="mr-2" />
-                        <span>Cancel</span>
-                      </div>
-                    </button>
-
-                    <button
-                      data-testid="deleteRepoBtn"
-                      className="btn btn-sm btn-danger ml-3"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deleteRepository();
-                      }}
-                      disabled={isDeleting}
-                    >
-                      <div className="d-flex flex-row align-items-center text-uppercase">
-                        {isDeleting ? (
-                          <>
-                            <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                            <span className="ml-2">Deleting...</span>
-                          </>
-                        ) : (
-                          <>
-                            <FaTrashAlt className={`mr-2 ${styles.Icon}`} />
-                            <span>Delete</span>
-                          </>
-                        )}
-                      </div>
-                    </button>
-                  </>
-                }
-                header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Delete repository</div>}
-                onClose={() => setDeletionModalStatus(false)}
-                open
-              >
-                <div className="mt-3 mw-100 text-center">
-                  <p>If you delete this repository all packages belonging to it will be deleted.</p>
-
-                  <p>
-                    Please note that some other items which depend on your repository, like users subscriptions to
-                    packages, will be deleted as well.{' '}
-                    <span className="font-weight-bold">This operation cannot be undone</span>.
-                  </p>
-                </div>
-              </Modal>
+              <DeletionModal
+                repository={props.repository}
+                organizationName={organizationName}
+                setDeletionModalStatus={setDeletionModalStatus}
+                onSuccess={props.onSuccess}
+                onAuthError={props.onAuthError}
+              />
             )}
 
             {badgeModalStatus && (

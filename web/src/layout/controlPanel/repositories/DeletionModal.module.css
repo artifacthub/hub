@@ -1,0 +1,10 @@
+.btnLight {
+  background-color: var(--color-1-20) !important;
+  border-color: var(--color-1-20) !important;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}

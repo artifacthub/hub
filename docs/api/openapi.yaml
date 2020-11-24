@@ -2256,6 +2256,9 @@ components:
         - $ref: "#/components/schemas/RepositorySummary"
         - type: object
           properties:
+            digest:
+              type: string
+              nullable: true
             last_tracking_ts:
               type: integer
               nullable: true
