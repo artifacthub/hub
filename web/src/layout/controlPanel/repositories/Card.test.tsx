@@ -1,12 +1,9 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import moment from 'moment';
 import React from 'react';
-import { mocked } from 'ts-jest/utils';
 
-import { API } from '../../../api';
 import { AppCtx } from '../../../context/AppCtx';
-import { ErrorKind, Repository } from '../../../types';
-import alertDispatcher from '../../../utils/alertDispatcher';
+import { Repository } from '../../../types';
 import Card from './Card';
 jest.mock('../../../api');
 jest.mock('../../../utils/alertDispatcher');
@@ -147,22 +144,18 @@ describe('Repository Card - packages section', () => {
       expect(getAllByText('Official')).toHaveLength(2);
     });
 
-    it('calls delete repo when delete button in dropdown is clicked', async () => {
+    it('renders deletion modal when delete button in dropdown is clicked', () => {
       const { getByTestId } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...defaultProps} />
         </AppCtx.Provider>
       );
 
-      const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
-
-      const btn = getByTestId('deleteRepoBtn');
+      const btn = getByTestId('deleteRepoDropdownBtn');
       fireEvent.click(btn);
 
-      await waitFor(() => {
-        expect(API.deleteRepository).toHaveBeenCalledTimes(1);
+      waitFor(() => {
+        expect(getByTestId('deleteRepoBtn')).toBeInTheDocument();
       });
     });
 
@@ -277,62 +270,6 @@ describe('Repository Card - packages section', () => {
 
       expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
       expect(mockHistoryReplace).toHaveBeenCalledWith({ search: '' });
-    });
-  });
-
-  describe('on deleteRepositoryError', () => {
-    it('displays generic error', async () => {
-      mocked(API).deleteRepository.mockRejectedValue({
-        kind: ErrorKind.Other,
-      });
-      const { getByTestId } = render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Card {...defaultProps} />
-        </AppCtx.Provider>
-      );
-
-      const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
-
-      const btn = getByTestId('deleteRepoBtn');
-      fireEvent.click(btn);
-
-      await waitFor(() => {
-        expect(API.deleteRepository).toHaveBeenCalledTimes(1);
-      });
-
-      expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
-      expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
-        type: 'danger',
-        message: 'An error occurred deleting the repository, please try again later.',
-      });
-    });
-
-    it('calls onAuthError', async () => {
-      mocked(API).deleteRepository.mockRejectedValue({
-        kind: ErrorKind.Unauthorized,
-      });
-      const { getByTestId } = render(
-        <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
-          <Card {...defaultProps} />
-        </AppCtx.Provider>
-      );
-
-      const dropdownBtn = getByTestId('deleteRepoDropdownBtn');
-      expect(dropdownBtn).toBeInTheDocument();
-      fireEvent.click(dropdownBtn);
-
-      await waitFor(() => {
-        const btn = getByTestId('deleteRepoBtn');
-        fireEvent.click(btn);
-      });
-
-      await waitFor(() => {
-        expect(API.deleteRepository).toHaveBeenCalledTimes(1);
-      });
-
-      expect(onAuthErrorMock).toHaveBeenCalledTimes(1);
     });
   });
 });

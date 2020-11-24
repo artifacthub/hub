@@ -57,7 +57,7 @@ const getMockRepositories = (fixtureId: string): Repository[] => {
   return require(`./__fixtures__/ClaimOwnershipModal/${fixtureId}repo.json`) as Repository[];
 };
 
-describe('Claim Repository Modal - packages section', () => {
+describe('Claim Repository Modal - repositories section', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
