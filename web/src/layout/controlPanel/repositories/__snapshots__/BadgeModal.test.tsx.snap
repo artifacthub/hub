@@ -54,17 +54,35 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                       class="btn btn-link nav-item btn active btn-primary active"
                       data-testid="tabBtn"
                     >
-                      Markdown
+                      <span
+                        class="d-none d-sm-block"
+                      >
+                        Markdown
+                      </span>
+                      <span
+                        class="d-block d-sm-none"
+                      >
+                        Markdown
+                      </span>
                     </button>
                   </li>
                   <li
                     class="nav-item"
                   >
                     <button
-                      class="btn btn-link nav-item btn text-secondary"
+                      class="btn btn-link nav-item btn"
                       data-testid="tabBtn"
                     >
-                      AsciiDoc
+                      <span
+                        class="d-none d-sm-block"
+                      >
+                        AsciiDoc
+                      </span>
+                      <span
+                        class="d-block d-sm-none"
+                      >
+                        AsciiDoc
+                      </span>
                     </button>
                   </li>
                 </ul>
@@ -73,63 +91,67 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                 class="tab-content mt-3"
               >
                 <div
-                  class="d-flex flex-row align-items-center justify-content-between mb-2"
+                  class="tab-pane fade show active"
                 >
-                  <div>
-                    <img
-                      alt="Artifact HUB badge"
-                      src="https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest"
-                    />
-                  </div>
                   <div
-                    class="position-relative undefined"
+                    class="d-flex flex-row align-items-center justify-content-between mb-2"
                   >
-                    <button
-                      class="btn btn-sm btn-primary rounded-circle btn"
-                      data-testid="ctcBtn"
-                      type="button"
+                    <div>
+                      <img
+                        alt="Artifact HUB badge"
+                        src="https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest"
+                      />
+                    </div>
+                    <div
+                      class="position-relative undefined"
                     >
-                      <div
-                        class="d-flex flex-row align-items-center"
+                      <button
+                        class="btn btn-sm btn-primary rounded-circle btn"
+                        data-testid="ctcBtn"
+                        type="button"
                       >
-                        <svg
-                          fill="none"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="d-flex flex-row align-items-center"
                         >
-                          <rect
-                            height="13"
-                            rx="2"
-                            ry="2"
-                            width="13"
-                            x="9"
-                            y="9"
-                          />
-                          <path
-                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                          />
-                        </svg>
-                      </div>
-                    </button>
+                          <svg
+                            fill="none"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              height="13"
+                              rx="2"
+                              ry="2"
+                              width="13"
+                              x="9"
+                              y="9"
+                            />
+                            <path
+                              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <pre
-                  style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
-                >
-                  <code
-                    class="language-bash"
+                  <pre
+                    style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
                   >
-                    <span>
-                      [![Artifact HUB](https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest)](http://localhost/packages/search?repo=repoTest)
-                    </span>
-                  </code>
-                </pre>
+                    <code
+                      class="language-bash"
+                    >
+                      <span>
+                        [![Artifact HUB](https://img.shields.io/endpoint?url=http://localhost/badge/repository/repoTest)](http://localhost/packages/search?repo=repoTest)
+                      </span>
+                    </code>
+                  </pre>
+                </div>
               </div>
             </div>
             <div

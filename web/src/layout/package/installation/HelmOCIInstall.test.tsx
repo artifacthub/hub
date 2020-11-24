@@ -27,7 +27,7 @@ describe('HelmOCIInstall', () => {
     it('renders component', () => {
       const { getByText, getAllByText } = render(<HelmOCIInstall {...defaultProps} />);
 
-      expect(getByText('Helm v3 (OCI)')).toBeInTheDocument();
+      expect(getAllByText('Helm v3 (OCI)')).toHaveLength(2);
       expect(getByText('Enable OCI support')).toBeInTheDocument();
       expect(getByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
       expect(getByText('Pull chart from remote')).toBeInTheDocument();
