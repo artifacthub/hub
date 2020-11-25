@@ -17,6 +17,7 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { AuthorizerAction, Repository } from '../../../types';
 import minutesToNearestInterval from '../../../utils/minutesToNearestInterval';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
+import DisabledRepositoryBadge from '../../common/DisabledRepositoryBadge';
 import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIcon from '../../common/RepositoryIcon';
@@ -73,10 +74,12 @@ const RepositoryCard = (props: Props) => {
     if (isUndefined(props.repository.lastTrackingTs) || isNull(props.repository.lastTrackingTs)) {
       return (
         <>
-          Not processed yet,{' '}
-          {nextProcessedTime > 0
-            ? `it will be processed automatically in ~ ${nextProcessedTime} minutes`
-            : 'it will be processed automatically in less than 30 minutes'}
+          Not processed yet
+          {props.repository.disabled
+            ? '.'
+            : nextProcessedTime > 0
+            ? `, it will be processed automatically in ~ ${nextProcessedTime} minutes`
+            : ', it will be processed automatically in less than 30 minutes'}
         </>
       );
     }
@@ -89,7 +92,7 @@ const RepositoryCard = (props: Props) => {
     );
 
     let messageAboutNextProcessedTime: string = '';
-    if (nextProcessedTime > 0) {
+    if (nextProcessedTime > 0 && !props.repository.disabled) {
       messageAboutNextProcessedTime = `(it will be processed again in ~ ${nextProcessedTime} minutes)`;
     }
 
@@ -156,7 +159,7 @@ const RepositoryCard = (props: Props) => {
         <div className="card-body d-flex flex-column h-100">
           <div className="d-flex flex-row w-100 justify-content-between">
             <div className="d-flex flex-row align-items-center mb-1 text-truncate">
-              <div className={`h5 mb-0 mr-3 text-truncate ${styles.titleCard}`}>
+              <div className={`h5 mb-0 text-truncate ${styles.titleCard}`}>
                 {props.repository.displayName || props.repository.name}
               </div>
 
@@ -167,6 +170,11 @@ const RepositoryCard = (props: Props) => {
 
               <VerifiedPublisherBadge
                 verifiedPublisher={props.repository.verifiedPublisher}
+                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              />
+
+              <DisabledRepositoryBadge
+                disabled={props.repository.disabled!}
                 className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
               />
             </div>
@@ -199,7 +207,7 @@ const RepositoryCard = (props: Props) => {
               />
             )}
 
-            <div className="ml-auto">
+            <div className="ml-auto pl-3">
               <RepositoryIcon kind={props.repository.kind} className={styles.kindIcon} />
             </div>
 
@@ -316,7 +324,8 @@ const RepositoryCard = (props: Props) => {
 
           <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
             <OfficialBadge official={props.repository.official} className="mr-3" />
-            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} />
+            <VerifiedPublisherBadge verifiedPublisher={props.repository.verifiedPublisher} className="mr-3" />
+            <DisabledRepositoryBadge disabled={props.repository.disabled!} />
           </div>
         </div>
       </div>

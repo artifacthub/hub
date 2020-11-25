@@ -21,6 +21,7 @@ export interface Repository {
   private?: boolean;
   authUser?: string | null;
   authPass?: string | null;
+  disabled?: boolean;
 }
 
 export interface Maintainer {

@@ -40,9 +40,18 @@ const RepositoryModal = (props: Props) => {
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
+  const [isDisabled, setIsDisabled] = useState<boolean>(
+    !isUndefined(props.repository) ? props.repository.disabled! : false
+  );
+  const [visibleDisabledConfirmation, setVisibleDisabledConfirmation] = useState<boolean>(false);
   const [selectedKind, setSelectedKind] = useState<RepositoryKind>(
     isUndefined(props.repository) ? DEFAULT_SELECTED_REPOSITORY_KIND : props.repository.kind
   );
+  const [isValidInput, setIsValidInput] = useState<boolean>(false);
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsValidInput(e.target.value === props.repository!.name);
+  };
 
   const allowPrivateRepositories =
     (window as any).config &&
@@ -118,6 +127,7 @@ const RepositoryModal = (props: Props) => {
           name: !isUndefined(props.repository) ? props.repository.name : (formData.get('name') as string),
           url: formData.get('url') as string,
           displayName: formData.get('displayName') as string,
+          disabled: isDisabled,
           authUser: formData.get('authUser') as string,
           authPass: formData.get('authPass') as string,
         };
@@ -221,154 +231,252 @@ const RepositoryModal = (props: Props) => {
     <Modal
       header={
         <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>
-          {isUndefined(props.repository) ? <>Add repository</> : <>Update repository</>}
+          {isUndefined(props.repository) ? (
+            <>Add repository</>
+          ) : (
+            <>{visibleDisabledConfirmation ? 'Disable repository' : 'Update repository'}</>
+          )}
         </div>
       }
       open={props.open}
       modalClassName={classnames(styles.modal, { [styles.allowPrivateModal]: allowPrivateRepositories })}
       closeButton={
-        <button
-          data-testid="repoBtn"
-          className="btn btn-sm btn-secondary"
-          type="button"
-          disabled={isSending}
-          onClick={submitForm}
-        >
-          {isSending ? (
+        <>
+          {visibleDisabledConfirmation ? (
             <>
-              <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-              <span className="ml-2">Validating repository...</span>
+              <button
+                data-testid="cancelDisabledRepo"
+                type="button"
+                className={`btn btn-sm btn-success ${styles.btnLight}`}
+                onClick={() => {
+                  setVisibleDisabledConfirmation(false);
+                  setIsValidInput(false);
+                }}
+              >
+                <span>I'll leave it enabled</span>
+              </button>
+
+              <button
+                data-testid="confirmDisabledRepo"
+                type="button"
+                className={classnames('btn btn-sm ml-3', { 'btn-dark': !isValidInput }, { 'btn-danger': isValidInput })}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsDisabled(!isDisabled);
+                  setVisibleDisabledConfirmation(false);
+                }}
+                disabled={!isValidInput}
+              >
+                <span>I understand, continue</span>
+              </button>
             </>
           ) : (
-            <div className="d-flex flex-row align-items-center text-uppercase">
-              {isUndefined(props.repository) ? (
+            <button
+              data-testid="repoBtn"
+              className="btn btn-sm btn-secondary"
+              type="button"
+              disabled={isSending || visibleDisabledConfirmation}
+              onClick={submitForm}
+            >
+              {isSending ? (
                 <>
-                  <MdAddCircle className="mr-2" />
-                  <div>Add</div>
+                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                  <span className="ml-2">Validating repository...</span>
                 </>
               ) : (
-                <>
-                  <FaPencilAlt className="mr-2" />
-                  <div>Update</div>
-                </>
+                <div className="d-flex flex-row align-items-center text-uppercase">
+                  {isUndefined(props.repository) ? (
+                    <>
+                      <MdAddCircle className="mr-2" />
+                      <div>Add</div>
+                    </>
+                  ) : (
+                    <>
+                      <FaPencilAlt className="mr-2" />
+                      <div>Update</div>
+                    </>
+                  )}
+                </div>
               )}
-            </div>
+            </button>
           )}
-        </button>
+        </>
       }
       onClose={onCloseModal}
       error={apiError}
       cleanError={cleanApiError}
     >
-      <div className="w-100">
-        <form
-          data-testid="repoForm"
-          ref={form}
-          className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
-          onFocus={cleanApiError}
-          autoComplete="on"
-          noValidate
-        >
-          <div className="form-group w-75 mb-2">
-            <SelectWithIcon
-              label="Kind"
-              options={getActiveRepositoryKinds()}
-              onChange={handleKindChange}
-              selected={selectedKind.toString()}
+      <div className={`w-100 ${styles.body}`}>
+        {visibleDisabledConfirmation ? (
+          <>
+            <div className="alert alert-warning my-4">
+              <span className="font-weight-bold text-uppercase">Important:</span> Please read this carefully.
+            </div>
+
+            <p>If you disable this repository all packages belonging to it will be deleted.</p>
+
+            <p>
+              All information related to the packages in your repository will be permanently deleted as well. This
+              includes packages' stars, subscriptions, webhooks, events and notifications.{' '}
+              <span className="font-weight-bold">This operation cannot be undone.</span>
+            </p>
+
+            <p>
+              You can enable back your repository at any time and the information available in the source repository
+              will be indexed and made available in Artifact Hub again.
+            </p>
+
+            <p>
+              Please type <span className="font-weight-bold">{props.repository!.name}</span> to confirm:
+            </p>
+
+            <InputField type="text" name="repoName" autoComplete="off" value="" onChange={onInputChange} />
+          </>
+        ) : (
+          <form
+            data-testid="repoForm"
+            ref={form}
+            className={classnames('w-100', { 'needs-validation': !isValidated }, { 'was-validated': isValidated })}
+            onFocus={cleanApiError}
+            autoComplete="on"
+            noValidate
+          >
+            <div className="form-group w-75 mb-2">
+              <SelectWithIcon
+                label="Kind"
+                options={getActiveRepositoryKinds()}
+                onChange={handleKindChange}
+                selected={selectedKind.toString()}
+                disabled={!isUndefined(props.repository)}
+                required
+              />
+            </div>
+
+            <InputField
+              ref={nameInput}
+              type="text"
+              label="Name"
+              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              name="name"
+              value={!isUndefined(props.repository) ? props.repository.name : ''}
+              readOnly={!isUndefined(props.repository)}
+              invalidText={{
+                default: 'This field is required',
+                patternMismatch: 'Only lower case letters, numbers or hyphens. Must start with a letter',
+                customError: 'There is another repository with this name',
+              }}
+              validateOnBlur
+              checkAvailability={{
+                isAvailable: true,
+                resourceKind: ResourceKind.repositoryName,
+                excluded: !isUndefined(props.repository) ? [props.repository.name] : [],
+              }}
+              pattern="[a-z][a-z0-9-]*"
+              autoComplete="off"
               disabled={!isUndefined(props.repository)}
               required
             />
-          </div>
 
-          <InputField
-            ref={nameInput}
-            type="text"
-            label="Name"
-            labelLegend={<small className="ml-1 font-italic">(Required)</small>}
-            name="name"
-            value={!isUndefined(props.repository) ? props.repository.name : ''}
-            readOnly={!isUndefined(props.repository)}
-            invalidText={{
-              default: 'This field is required',
-              patternMismatch: 'Only lower case letters, numbers or hyphens. Must start with a letter',
-              customError: 'There is another repository with this name',
-            }}
-            validateOnBlur
-            checkAvailability={{
-              isAvailable: true,
-              resourceKind: ResourceKind.repositoryName,
-              excluded: !isUndefined(props.repository) ? [props.repository.name] : [],
-            }}
-            pattern="[a-z][a-z0-9-]*"
-            autoComplete="off"
-            disabled={!isUndefined(props.repository)}
-            required
-          />
+            <InputField
+              type="text"
+              label="Display name"
+              name="displayName"
+              value={
+                !isUndefined(props.repository) && !isNull(props.repository.displayName)
+                  ? props.repository.displayName
+                  : ''
+              }
+            />
 
-          <InputField
-            type="text"
-            label="Display name"
-            name="displayName"
-            value={
-              !isUndefined(props.repository) && !isNull(props.repository.displayName)
-                ? props.repository.displayName
-                : ''
-            }
-          />
+            <InputField
+              ref={urlInput}
+              type="url"
+              label="Url"
+              labelLegend={<small className="ml-1 font-italic">(Required)</small>}
+              name="url"
+              value={!isUndefined(props.repository) ? props.repository.url : ''}
+              invalidText={{
+                default: 'This field is required',
+                typeMismatch: 'Please enter a valid url',
+                patternMismatch: 'Please enter a valid reposiroty url for this repository kind',
+                customError: 'There is another repository using this url',
+              }}
+              onKeyDown={handleOnReturnKeyDown}
+              validateOnBlur
+              checkAvailability={{
+                isAvailable: true,
+                resourceKind: ResourceKind.repositoryURL,
+                excluded: !isUndefined(props.repository) ? [props.repository.url] : [],
+              }}
+              pattern={getURLPattern()}
+              required
+            />
 
-          <InputField
-            ref={urlInput}
-            type="url"
-            label="Url"
-            labelLegend={<small className="ml-1 font-italic">(Required)</small>}
-            name="url"
-            value={!isUndefined(props.repository) ? props.repository.url : ''}
-            invalidText={{
-              default: 'This field is required',
-              typeMismatch: 'Please enter a valid url',
-              patternMismatch: 'Please enter a valid reposiroty url for this repository kind',
-              customError: 'There is another repository using this url',
-            }}
-            onKeyDown={handleOnReturnKeyDown}
-            validateOnBlur
-            checkAvailability={{
-              isAvailable: true,
-              resourceKind: ResourceKind.repositoryURL,
-              excluded: !isUndefined(props.repository) ? [props.repository.url] : [],
-            }}
-            pattern={getURLPattern()}
-            required
-          />
+            {selectedKind === RepositoryKind.Helm && allowPrivateRepositories && (
+              <div className="form-row">
+                <InputField
+                  className="col-sm-12 col-md-6"
+                  type="text"
+                  label="Username"
+                  name="authUser"
+                  autoComplete="off"
+                  value={
+                    !isUndefined(props.repository) && !isNull(props.repository.authUser)
+                      ? props.repository.authUser
+                      : ''
+                  }
+                />
 
-          {selectedKind === RepositoryKind.Helm && allowPrivateRepositories && (
-            <div className="form-row">
-              <InputField
-                className="col-sm-12 col-md-6"
-                type="text"
-                label="Username"
-                name="authUser"
-                autoComplete="off"
-                value={
-                  !isUndefined(props.repository) && !isNull(props.repository.authUser) ? props.repository.authUser : ''
-                }
-              />
+                <InputField
+                  className="col-sm-12 col-md-6"
+                  type="password"
+                  label="Password"
+                  name="authPass"
+                  autoComplete="off"
+                  value={
+                    !isUndefined(props.repository) && !isNull(props.repository.authPass)
+                      ? props.repository.authPass
+                      : ''
+                  }
+                  visiblePassword
+                />
+              </div>
+            )}
 
-              <InputField
-                className="col-sm-12 col-md-6"
-                type="password"
-                label="Password"
-                name="authPass"
-                autoComplete="off"
-                value={
-                  !isUndefined(props.repository) && !isNull(props.repository.authPass) ? props.repository.authPass : ''
-                }
-                visiblePassword
-              />
+            {getAdditionalInfo()}
+
+            <div className="mt-4 mb-3">
+              <div className="custom-control custom-switch pl-0">
+                <input
+                  data-testid="toggleDisabledRepo"
+                  id="disabledRepo"
+                  type="checkbox"
+                  className="custom-control-input"
+                  value="true"
+                  onChange={() => {
+                    // Confirmation content is displayed when an existing repo is going to be disabled and it was not disabled before
+                    if (!isUndefined(props.repository) && !isDisabled && !props.repository.disabled) {
+                      setVisibleDisabledConfirmation(true);
+                    } else {
+                      setIsDisabled(!isDisabled);
+                    }
+                  }}
+                  checked={isDisabled}
+                />
+                <label
+                  htmlFor="disabledRepo"
+                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                >
+                  Disabled
+                </label>
+              </div>
+
+              <small className="form-text text-muted mt-2">
+                Use this switch to disable the repository temporarily o permanently.
+              </small>
             </div>
-          )}
-
-          {getAdditionalInfo()}
-        </form>
+          </form>
+        )}
       </div>
     </Modal>
   );

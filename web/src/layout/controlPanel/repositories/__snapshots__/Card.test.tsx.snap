@@ -19,13 +19,13 @@ exports[`Repository Card - packages section creates snapshot 1`] = `
             class="d-flex flex-row align-items-center mb-1 text-truncate"
           >
             <div
-              class="h5 mb-0 mr-3 text-truncate titleCard"
+              class="h5 mb-0 text-truncate titleCard"
             >
               Repo test
             </div>
           </div>
           <div
-            class="ml-auto"
+            class="ml-auto pl-3"
           >
             <img
               alt="Icon"

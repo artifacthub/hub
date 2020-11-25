@@ -68,10 +68,12 @@ exports[`UserConfirmation creates snapshot 1`] = `
                 We are verifying your email...
               </small>
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"
@@ -171,10 +173,12 @@ exports[`UserConfirmation creates snapshot 2`] = `
               </svg>
               You email has been verified! Please, login to Artifact Hub.
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"

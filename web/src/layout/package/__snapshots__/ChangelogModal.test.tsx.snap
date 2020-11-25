@@ -622,10 +622,12 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 </ul>
               </div>
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"

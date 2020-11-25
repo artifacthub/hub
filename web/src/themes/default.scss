@@ -46,6 +46,27 @@ $container-max-widths: (
     no-repeat right 0.75rem center/8px 10px;
 }
 
+.was-validated .custom-control-input:valid ~ .custom-control-label::before {
+  border-color: inherit;
+}
+
+.was-validated .custom-control-input:valid ~ .custom-control-label {
+  color: inherit;
+}
+
+.was-validated .form-control:valid {
+  border-color: #ced4da !important;
+}
+
+.was-validated .custom-control-input:valid ~ .custom-control-label::before,
+.custom-control-input.is-valid ~ .custom-control-label::before,
+.was-validated .custom-select:valid,
+.custom-select.is-valid,
+.was-validated .custom-select:valid:focus,
+.custom-select.is-valid:focus {
+  border-color: #adb5bd;
+}
+
 .dropdown-menu > .arrow {
   position: absolute;
   display: block;

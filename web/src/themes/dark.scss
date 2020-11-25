@@ -55,6 +55,19 @@
   $font-color-light: #cbd3da;
   $font-color-lighter: #f8f9fa;
 
+  .was-validated .form-check-input:valid ~ .form-check-label,
+  .form-check-input.is-valid ~ .form-check-label,
+  .was-validated .custom-control-input:valid ~ .custom-control-label,
+  .custom-control-input.is-valid ~ .custom-control-label {
+    color: var(--color-font);
+  }
+
+  .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before,
+  .custom-control-input.is-valid:checked ~ .custom-control-label::before {
+    border-color: var(--hightlighted);
+    background-color: var(--hightlighted);
+  }
+
   .table {
     background-color: var(--color-1-700) !important;
     border-top: var(--border-md) !important;
@@ -161,6 +174,19 @@
 
   .custom-select:focus {
     border-color: var(--border-md);
+  }
+
+  .was-validated .form-control:valid {
+    border-color: var(--color2) !important;
+  }
+
+  .was-validated .custom-control-input:valid ~ .custom-control-label::before,
+  .custom-control-input.is-valid ~ .custom-control-label::before,
+  .was-validated .custom-select:valid,
+  .custom-select.is-valid,
+  .was-validated .custom-select:valid:focus,
+  .custom-select.is-valid:focus {
+    border-color: var(--color2);
   }
 
   .dropdown-item,

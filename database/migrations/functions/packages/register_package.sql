@@ -21,14 +21,22 @@ declare
     v_provider text := nullif(p_pkg->>'provider', '');
     v_ts_repository text[];
     v_ts_publisher text[];
+    v_repository_disabled boolean;
 begin
-    -- Get repository and publisher name for tsdoc
-    select array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider]
-    into v_ts_repository, v_ts_publisher
+    -- Get some repository information (some of it for tsdoc)
+    select r.disabled, array[r.name, r.display_name], array[u.alias, o.name, o.display_name, v_provider]
+    into v_repository_disabled, v_ts_repository, v_ts_publisher
     from repository r
     left join "user" u using (user_id)
     left join organization o using (organization_id)
     where repository_id = v_repository_id;
+
+    -- If repository is disabled, package registration will be canceled. This
+    -- may happen if a repository is disabled while it's being processed by the
+    -- tracker.
+    if v_repository_disabled then
+        raise 'repository is disabled';
+    end if;
 
     -- Get package's latest version before registration, if available
     select latest_version into v_previous_latest_version
