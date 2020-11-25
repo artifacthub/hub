@@ -177,6 +177,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
       header={<div className={`h3 m-2 flex-grow-1 ${styles.title}`}>Claim repository ownership</div>}
       open={props.open}
       modalClassName={styles.modal}
+      size="xl"
       closeButton={
         <button
           data-testid="claimRepoBtn"
@@ -245,7 +246,10 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                           <RepositoryIcon kind={repoItem.kind} className={`mx-3 ${styles.icon}`} />
                         </div>
 
-                        <div className="ml-2 font-weight-bold mb-0 text-truncate text-capitalize">{repoItem.name}</div>
+                        <div className="ml-2 font-weight-bold mb-0 text-truncate text-muted">
+                          <span className="text-dark">{repoItem.name}</span>{' '}
+                          <small className="text-muted">({repoItem.url})</small>
+                        </div>
 
                         <div className="px-2 ml-auto w-50 text-dark text-truncate">
                           <small className="d-flex flex-row align-items-baseline ml-2">
@@ -279,6 +283,7 @@ const ClaimRepositoryOwnerShipModal = (props: Props) => {
                     isLoading={isFetchingRepositories}
                     onSelect={onRepoSelect}
                     placeholder="There aren't any repositories whose ownership you can claim at the moment."
+                    searchInUrl
                   />
                 </div>
               )}

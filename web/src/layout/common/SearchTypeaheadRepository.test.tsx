@@ -96,8 +96,26 @@ describe('SearchTypeaheadRepository', () => {
     fireEvent.change(input, { target: { value: 'hu' } });
 
     expect(getAllByTestId('repoItem')).toHaveLength(2);
+    expect(getAllByTestId('repoItem')[0]).toHaveTextContent('artifact-hub');
+    expect(getAllByTestId('repoItem')[1]).toHaveTextContent('security-hubdemo');
     expect(getAllByText('hu')).toHaveLength(2);
     expect(getAllByText('hu')[0]).toHaveClass('hightlighted');
+  });
+
+  it('filters options on input change by name and url', () => {
+    const { getByTestId, getAllByTestId } = render(<SearchTypeaheadRepository {...defaultProps} searchInUrl />);
+
+    const input = getByTestId('searchTypeaheadRepositoryInput');
+    fireEvent.change(input, { target: { value: 'hu' } });
+
+    expect(getAllByTestId('repoItem')).toHaveLength(3);
+    expect(getAllByTestId('repoItem')[0]).toHaveTextContent('artifact-hub');
+    expect(getAllByTestId('repoItem')[1]).toHaveTextContent(
+      'community-operatorshttps://github.com/operator-framework/community-operators/upstream-community-operatorsdemo'
+    );
+    expect(getAllByTestId('repoItem')[2]).toHaveTextContent(
+      'security-hubhttps://github.com/falcosecurity/cloud-native-security-hub/resources/falcodemo'
+    );
   });
 
   it('renders placeholder when any results', () => {

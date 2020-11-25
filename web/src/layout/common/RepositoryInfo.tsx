@@ -70,7 +70,7 @@ const RepositoryInfo = (props: Props) => {
                 <div className="d-flex flex-row align-items-center">
                   <small className="text-muted text-uppercase mr-1">Repo: </small>
                   <RepositoryIcon kind={props.repository.kind} className={`mr-1 ${styles.repoIconMini}`} />
-                  <div className={`text-reset ${styles.labelContent}`}>
+                  <div className={`text-reset text-truncate ${styles.labelContent}`}>
                     {props.repository.displayName || props.repository.name}
                   </div>
                 </div>

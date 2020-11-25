@@ -140,7 +140,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             halkeye
                                           </div>
@@ -227,7 +227,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <div
-                                              class="text-reset labelContent"
+                                              class="text-reset text-truncate labelContent"
                                             >
                                               halkeye
                                             </div>
@@ -416,7 +416,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             halkeye
                                           </div>
@@ -503,7 +503,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <div
-                                              class="text-reset labelContent"
+                                              class="text-reset text-truncate labelContent"
                                             >
                                               halkeye
                                             </div>
@@ -691,7 +691,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             gabibbo97
                                           </div>
@@ -778,7 +778,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <div
-                                              class="text-reset labelContent"
+                                              class="text-reset text-truncate labelContent"
                                             >
                                               gabibbo97
                                             </div>
@@ -967,7 +967,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             halkeye
                                           </div>
@@ -1054,7 +1054,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <div
-                                              class="text-reset labelContent"
+                                              class="text-reset text-truncate labelContent"
                                             >
                                               halkeye
                                             </div>
@@ -1243,7 +1243,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             billimek
                                           </div>
@@ -1330,7 +1330,7 @@ exports[`RandomPackages creates snapshot 2`] = `
                                               src="/static/media/helm-chart.svg"
                                             />
                                             <div
-                                              class="text-reset labelContent"
+                                              class="text-reset text-truncate labelContent"
                                             >
                                               billimek
                                             </div>

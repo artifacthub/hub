@@ -148,8 +148,11 @@ button {
 }
 
 @media (min-width: 1920px) {
-  .modal-lg,
-  .modal-xl {
+  .modal-lg {
     max-width: 1000px;
+  }
+
+  .modal-xl {
+    max-width: 1400px;
   }
 }

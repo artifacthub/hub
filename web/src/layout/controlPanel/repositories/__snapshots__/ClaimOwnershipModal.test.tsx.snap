@@ -12,7 +12,7 @@ exports[`Claim Repository Modal - repositories section creates snapshot 1`] = `
       role="dialog"
     >
       <div
-        class="modal-dialog modal-lg"
+        class="modal-dialog modal-xl"
       >
         <div
           class="modal-content content modal"

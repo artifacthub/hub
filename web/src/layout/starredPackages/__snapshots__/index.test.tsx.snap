@@ -159,7 +159,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="text-reset text-truncate labelContent"
                                         >
                                           Stable
                                         </div>
@@ -264,7 +264,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             Stable
                                           </div>
@@ -506,7 +506,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="text-reset text-truncate labelContent"
                                         >
                                           Incubator
                                         </div>
@@ -611,7 +611,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             Incubator
                                           </div>
@@ -853,7 +853,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           src="/static/media/helm-chart.svg"
                                         />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="text-reset text-truncate labelContent"
                                         >
                                           Stable
                                         </div>
@@ -958,7 +958,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             src="/static/media/helm-chart.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             Stable
                                           </div>
@@ -1200,7 +1200,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           src="/static/media/falco-rules.svg"
                                         />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="text-reset text-truncate labelContent"
                                         >
                                           falco
                                         </div>
@@ -1382,7 +1382,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             src="/static/media/falco-rules.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             falco
                                           </div>
@@ -1713,7 +1713,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                           src="/static/media/opa-policies.svg"
                                         />
                                         <div
-                                          class="text-reset labelContent"
+                                          class="text-reset text-truncate labelContent"
                                         >
                                           opa
                                         </div>
@@ -1895,7 +1895,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
                                             src="/static/media/opa-policies.svg"
                                           />
                                           <div
-                                            class="text-reset labelContent"
+                                            class="text-reset text-truncate labelContent"
                                           >
                                             opa
                                           </div>
