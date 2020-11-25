@@ -195,6 +195,15 @@
                                 "type": "object"
                             },
                             "default": []
+                        },
+                        "tls": {
+                            "title": "Hub ingress tls",
+                            "type": "array",
+                            "items": {
+                                "description": "More information here: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#ingresstls-v1-networking-k8s-io",
+                                "type": "object"
+                            },
+                            "default": []
                         }
                     },
                     "required": ["annotations", "enabled"]
