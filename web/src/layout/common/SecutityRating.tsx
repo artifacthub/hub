@@ -125,6 +125,19 @@ const SecurityRating = (props: Props) => {
               Vulnerabilities of severity <span className="font-weight-bold">CRITICAL</span> found
             </div>
           </div>
+          <div className="d-flex flex-row align-items-center my-1">
+            <span
+              className={`badge badge-pill text-light font-weight-bold mr-2 ${styles.badge}`}
+              style={{
+                backgroundColor: SEVERITY_RATING[VulnerabilitySeverity.UnKnown]!.color,
+              }}
+            >
+              {SEVERITY_RATING[VulnerabilitySeverity.UnKnown]!.level}
+            </span>
+            <div>
+              Vulnerabilities of severity <span className="font-weight-bold">UNKNOWN</span> found
+            </div>
+          </div>
         </div>
       }
       visibleTooltip

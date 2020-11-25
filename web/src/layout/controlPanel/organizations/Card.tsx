@@ -112,7 +112,7 @@ const OrganizationCard = (props: Props) => {
                 )}
               </div>
 
-              <div className="flex-grow-1 text-truncate">
+              <div className="text-truncate">
                 <div className={`h5 mb-0 text-truncate ${styles.title}`}>
                   {props.organization.displayName || props.organization.name}
                 </div>

@@ -472,7 +472,7 @@ export enum VulnerabilitySeverity {
 
 export interface SeverityRating {
   color: string;
-  level: 'A' | 'B' | 'C' | 'D' | 'F';
+  level: 'A' | 'B' | 'C' | 'D' | 'F' | '-';
 }
 
 export type SeverityRatingList = {

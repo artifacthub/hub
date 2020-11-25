@@ -263,7 +263,7 @@ exports[`Organizations section index creates snapshot 2`] = `
                       </svg>
                     </div>
                     <div
-                      class="flex-grow-1 text-truncate"
+                      class="text-truncate"
                     >
                       <div
                         class="h5 mb-0 text-truncate title"
@@ -349,7 +349,7 @@ exports[`Organizations section index creates snapshot 2`] = `
                       </svg>
                     </div>
                     <div
-                      class="flex-grow-1 text-truncate"
+                      class="text-truncate"
                     >
                       <div
                         class="h5 mb-0 text-truncate title"

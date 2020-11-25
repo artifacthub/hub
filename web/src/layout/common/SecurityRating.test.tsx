@@ -42,7 +42,7 @@ describe('SecurityRating', () => {
     await waitFor(() => {
       expect(getByRole('tooltip')).toBeInTheDocument();
       expect(getByText('No vulnerabilities found')).toBeInTheDocument();
-      expect(getAllByText(/Vulnerabilities of severity/g)).toHaveLength(4);
+      expect(getAllByText(/Vulnerabilities of severity/g)).toHaveLength(5);
     });
   });
 
@@ -124,6 +124,22 @@ describe('SecurityRating', () => {
       />
     );
     expect(getByText('F')).toBeInTheDocument();
+  });
+
+  it('renders - label', () => {
+    const { getByText } = render(
+      <SecurityRating
+        summary={{
+          low: 0,
+          high: 0,
+          medium: 0,
+          unknown: 3,
+          critical: 0,
+        }}
+        onlyBadge
+      />
+    );
+    expect(getByText('-')).toBeInTheDocument();
   });
 
   it('does not full label when onlyBadge is true', () => {
