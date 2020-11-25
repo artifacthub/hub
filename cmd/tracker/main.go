@@ -131,6 +131,7 @@ L:
 //   kinds will be returned.
 // - Otherwise, all the repositories will be returned.
 //
+// NOTE: disabled repositories will be filtered out.
 func getRepositories(
 	cfg *viper.Viper,
 	rm hub.RepositoryManager,
@@ -166,5 +167,13 @@ func getRepositories(
 			return nil, fmt.Errorf("error getting all repositories: %w", err)
 		}
 	}
-	return repos, nil
+
+	var reposFiltered []*hub.Repository
+	for _, repo := range repos {
+		if !repo.Disabled {
+			reposFiltered = append(reposFiltered, repo)
+		}
+	}
+
+	return reposFiltered, nil
 }

@@ -117,10 +117,12 @@ exports[`Organizations section index creates snapshot 1`] = `
             <div
               class="modal-body p-4 h-100 d-flex flex-column"
             >
-              <div
-                class="alertWrapper"
-                data-testid="alertWrapper"
-              />
+              <div>
+                <div
+                  class="alertWrapper"
+                  data-testid="alertWrapper"
+                />
+              </div>
             </div>
             <div
               class="modal-footer p-3"
@@ -435,10 +437,12 @@ exports[`Organizations section index creates snapshot 2`] = `
             <div
               class="modal-body p-4 h-100 d-flex flex-column"
             >
-              <div
-                class="alertWrapper"
-                data-testid="alertWrapper"
-              />
+              <div>
+                <div
+                  class="alertWrapper"
+                  data-testid="alertWrapper"
+                />
+              </div>
             </div>
             <div
               class="modal-footer p-3"

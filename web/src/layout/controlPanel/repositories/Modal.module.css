@@ -3,8 +3,12 @@
   width: 620px !important;
 }
 
-.allowPrivateModal {
-  min-height: 715px;
+.body {
+  min-height: 505px;
+}
+
+.allowPrivateModal .body {
+  min-height: 600px;
 }
 
 .inputAdditionalInfoURL {
@@ -14,6 +18,20 @@
 .kindIcon {
   height: auto;
   width: 18px;
+}
+
+.label {
+  font-size: 0.875rem;
+}
+
+.customControlRightLabel::before {
+  right: -2.25rem;
+  left: auto !important;
+}
+
+.customControlRightLabel::after {
+  right: -1.38rem;
+  left: auto !important;
 }
 
 @media only screen and (max-width: 767.98px) {

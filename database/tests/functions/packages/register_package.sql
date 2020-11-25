@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(13);
+select plan(14);
 
 -- Declare some variables
 \set org1ID '00000000-0000-0000-0000-000000000001'
@@ -472,6 +472,26 @@ select is_empty(
         and e.package_version = '0.0.9'
     $$,
     'No new release event should exist for package1 version 0.0.9'
+);
+
+-- Disable repository and check that trying to register a package raises an error
+update repository set disabled = true where repository_id = :'repo1ID';
+select throws_ok(
+    $$
+        select register_package('
+        {
+            "name": "package2",
+            "display_name": "Package 2",
+            "version": "1.0.0",
+            "repository": {
+                "repository_id": "00000000-0000-0000-0000-000000000001"
+            }
+        }
+        ')
+    $$,
+    'P0001',
+    'repository is disabled',
+    'It should not be possible to register packages in a disabled repository'
 );
 
 -- Finish tests and rollback transaction

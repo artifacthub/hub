@@ -69,6 +69,12 @@
     color: var(--color-font);
   }
 
+  .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before,
+  .custom-control-input.is-valid:checked ~ .custom-control-label::before {
+    border-color: var(--color-1-500);
+    background-color: var(--color-1-500);
+  }
+
   .page-item {
     &.active .page-link {
       background-color: $color1;
@@ -152,19 +158,6 @@
   .dropdown-item:hover,
   .dropdown-item:focus {
     background-color: rgba(101, 157, 189, 0.5);
-  }
-
-  .was-validated .form-control:valid {
-    border-color: #ced4da !important;
-  }
-
-  .was-validated .custom-control-input:valid ~ .custom-control-label::before,
-  .custom-control-input.is-valid ~ .custom-control-label::before,
-  .was-validated .custom-select:valid,
-  .custom-select.is-valid,
-  .was-validated .custom-select:valid:focus,
-  .custom-select.is-valid:focus {
-    border-color: #adb5bd;
   }
 
   button.text-dark:hover,

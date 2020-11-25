@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(4);
+select plan(6);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -8,6 +8,8 @@ select plan(4);
 \set org1ID '00000000-0000-0000-0000-000000000001'
 \set repo1ID '00000000-0000-0000-0000-000000000001'
 \set repo2ID '00000000-0000-0000-0000-000000000002'
+\set package1ID '00000000-0000-0000-0000-000000000001'
+\set package2ID '00000000-0000-0000-0000-000000000002'
 
 -- Seed some data
 insert into "user" (user_id, alias, email)
@@ -19,6 +21,28 @@ insert into repository (repository_id, name, display_name, url, repository_kind_
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
 insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
 values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package1ID',
+    'Package 1',
+    '1.0.0',
+    :'repo1ID'
+);
+insert into package (
+    package_id,
+    name,
+    latest_version,
+    repository_id
+) values (
+    :'package2ID',
+    'Package 2',
+    '1.0.0',
+    :'repo2ID'
+);
 
 -- Try to update repository owned by a user by other user
 select throws_ok(
@@ -29,7 +53,8 @@ select throws_ok(
             "display_name": "Repo 1 updated",
             "url": "https://repo1.com/updated",
             "auth_user": "user1",
-            "auth_pass": "pass1"
+            "auth_pass": "pass1",
+            "disabled": false
         }
         '::jsonb)
     $$,
@@ -47,7 +72,8 @@ select throws_ok(
             "display_name": "Repo 2 updated",
             "url": "https://repo2.com/updated",
             "auth_user": "user1",
-            "auth_pass": "pass1"
+            "auth_pass": "pass1",
+            "disabled": false
         }
         '::jsonb)
     $$,
@@ -63,19 +89,24 @@ select update_repository(:'user1ID', '
     "display_name": "Repo 1 updated",
     "url": "https://repo1.com/updated",
     "auth_user": "user1",
-    "auth_pass": "pass1"
+    "auth_pass": "pass1",
+    "disabled": true
 }
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, auth_user, auth_pass
+        select name, display_name, url, auth_user, auth_pass, disabled
         from repository
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'user1', 'pass1')
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'user1', 'pass1', true)
     $$,
     'Repository should have been updated by user who owns it'
+);
+select is_empty(
+    $$ select * from package where repository_id = '00000000-0000-0000-0000-000000000001' $$,
+    'Packages belonging to repo1 should have been deleted'
 );
 
 -- Update repository owned by organization (requesting user belongs to organization)
@@ -85,19 +116,24 @@ select update_repository(:'user1ID', '
     "display_name": "Repo 2 updated",
     "url": "https://repo2.com/updated",
     "auth_user": "user1",
-    "auth_pass": "pass1"
+    "auth_pass": "pass1",
+    "disabled": false
 }
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, auth_user, auth_pass
+        select name, display_name, url, auth_user, auth_pass, disabled
         from repository
         where name = 'repo2'
     $$,
     $$
-        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated', 'user1', 'pass1')
+        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated', 'user1', 'pass1', false)
     $$,
     'Repository should have been updated by user who belongs to owning organization'
+);
+select isnt_empty(
+    $$ select * from package where repository_id = '00000000-0000-0000-0000-000000000002' $$,
+    'Packages belonging to repo2 should not have been deleted'
 );
 
 -- Finish tests and rollback transaction

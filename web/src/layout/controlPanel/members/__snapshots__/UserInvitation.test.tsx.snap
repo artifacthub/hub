@@ -68,10 +68,12 @@ exports[`UserInvitation creates snapshot 1`] = `
                 Your are accepting the invitation...
               </small>
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"
@@ -171,10 +173,12 @@ exports[`UserInvitation creates snapshot 2`] = `
               </svg>
               You have accepted the invitation to join the organization.
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"

@@ -154,10 +154,12 @@ exports[`Badge Modal - repositories section creates snapshot 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              class="alertWrapper"
-              data-testid="alertWrapper"
-            />
+            <div>
+              <div
+                class="alertWrapper"
+                data-testid="alertWrapper"
+              />
+            </div>
           </div>
           <div
             class="modal-footer p-3"

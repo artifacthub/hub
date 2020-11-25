@@ -26,6 +26,7 @@ const repoMock: Repository = {
   name: 'repoTest',
   displayName: 'Repo test',
   url: 'http://test.repo',
+  disabled: false,
   authUser: null,
   authPass: null,
 };
@@ -65,6 +66,7 @@ describe('Repository Modal - repositories section', () => {
       expect(getByTestId('nameInput')).toBeInTheDocument();
       expect(getByTestId('displayNameInput')).toBeInTheDocument();
       expect(getByTestId('urlInput')).toBeInTheDocument();
+      expect(getByTestId('toggleDisabledRepo')).toBeInTheDocument();
     });
 
     it('renders component with existing repo', () => {
@@ -75,6 +77,7 @@ describe('Repository Modal - repositories section', () => {
       expect(getByDisplayValue(repoMock.name)).toBeInTheDocument();
       expect(getByDisplayValue(repoMock.displayName!)).toBeInTheDocument();
       expect(getByDisplayValue(repoMock.url)).toBeInTheDocument();
+      expect(getByTestId('toggleDisabledRepo')).toBeInTheDocument();
     });
 
     describe('Add repo', () => {
@@ -99,6 +102,7 @@ describe('Repository Modal - repositories section', () => {
               url: 'http://test.com',
               displayName: 'Pretty name',
               kind: 0,
+              disabled: false,
               authUser: null,
               authPass: null,
             },
@@ -132,6 +136,7 @@ describe('Repository Modal - repositories section', () => {
               url: 'http://test.com',
               displayName: 'Pretty name',
               kind: 0,
+              disabled: false,
               authUser: null,
               authPass: null,
             },
@@ -332,6 +337,174 @@ describe('Repository Modal - repositories section', () => {
       });
     });
 
+    describe('Disable repository', () => {
+      it('new repo', async () => {
+        mocked(API).checkAvailability.mockResolvedValue(false);
+        mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+        mocked(API).addRepository.mockResolvedValue(null);
+        const { getByTestId, getByText } = render(<Modal {...defaultProps} />);
+
+        expect(getByText('Add repository')).toBeInTheDocument();
+        expect(getByText('Add')).toBeInTheDocument();
+        fireEvent.change(getByTestId('nameInput'), { target: { value: 'name' } });
+        fireEvent.change(getByTestId('displayNameInput'), { target: { value: 'Pretty name' } });
+        fireEvent.change(getByTestId('urlInput'), { target: { value: 'http://test.com' } });
+
+        const toggle = getByTestId('toggleDisabledRepo');
+        expect(toggle).toBeInTheDocument();
+        expect(toggle).not.toBeChecked();
+        fireEvent.click(toggle);
+
+        fireEvent.click(getByTestId('repoBtn'));
+
+        await waitFor(() => {
+          expect(API.addRepository).toHaveBeenCalledTimes(1);
+          expect(API.addRepository).toHaveBeenCalledWith(
+            {
+              name: 'name',
+              url: 'http://test.com',
+              displayName: 'Pretty name',
+              kind: 0,
+              disabled: true,
+              authUser: null,
+              authPass: null,
+            },
+            undefined
+          );
+        });
+
+        expect(onSuccessMock).toHaveBeenCalledTimes(1);
+      });
+
+      describe('existing repo', () => {
+        it('confirms action', async () => {
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+
+          const { getByTestId, getByText } = render(
+            <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+              <Modal {...defaultProps} repository={repoMock} />
+            </AppCtx.Provider>
+          );
+
+          const toggle = getByTestId('toggleDisabledRepo');
+          expect(toggle).toBeInTheDocument();
+          expect(toggle).not.toBeChecked();
+          fireEvent.click(toggle);
+
+          await waitFor(() => {
+            expect(getByText('Disable repository')).toBeInTheDocument();
+            expect(getByText(/Please read this carefully./g)).toBeInTheDocument();
+            expect(getByText('This operation cannot be undone.')).toBeInTheDocument();
+            expect(getByTestId('repoNameInput')).toBeInTheDocument();
+            expect(getByTestId('confirmDisabledRepo')).toBeInTheDocument();
+          });
+
+          fireEvent.change(getByTestId('repoNameInput'), { target: { value: 'repoTest' } });
+          fireEvent.click(getByTestId('confirmDisabledRepo'));
+
+          await waitFor(() => {
+            expect(getByText('Update repository')).toBeInTheDocument();
+          });
+
+          fireEvent.click(getByTestId('repoBtn'));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock,
+                disabled: true,
+              },
+              'orgTest'
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
+
+        it('does not confirm action', async () => {
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+
+          const { getByTestId, getByText } = render(
+            <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+              <Modal {...defaultProps} repository={repoMock} />
+            </AppCtx.Provider>
+          );
+
+          const toggle = getByTestId('toggleDisabledRepo');
+          expect(toggle).toBeInTheDocument();
+          expect(toggle).not.toBeChecked();
+          fireEvent.click(toggle);
+
+          await waitFor(() => {
+            expect(getByText('Disable repository')).toBeInTheDocument();
+            expect(getByText(/Please read this carefully./g)).toBeInTheDocument();
+            expect(getByText('This operation cannot be undone.')).toBeInTheDocument();
+            expect(getByTestId('repoNameInput')).toBeInTheDocument();
+            expect(getByTestId('confirmDisabledRepo')).toBeInTheDocument();
+          });
+
+          fireEvent.change(getByTestId('repoNameInput'), { target: { value: 'repoTest' } });
+          fireEvent.click(getByTestId('cancelDisabledRepo'));
+
+          await waitFor(() => {
+            expect(getByText('Update repository')).toBeInTheDocument();
+          });
+
+          fireEvent.click(getByTestId('repoBtn'));
+
+          await waitFor(() => {
+            expect(API.updateRepository).toHaveBeenCalledTimes(1);
+            expect(API.updateRepository).toHaveBeenCalledWith(
+              {
+                ...repoMock,
+              },
+              'orgTest'
+            );
+          });
+
+          expect(onSuccessMock).toHaveBeenCalledTimes(1);
+        });
+
+        it('does not render confirmation info', async () => {
+          mocked(API).checkAvailability.mockResolvedValue(true);
+          mocked(API).saveImage.mockResolvedValue({ imageId: '123' });
+          mocked(API).updateRepository.mockResolvedValue(null);
+
+          const { getByTestId } = render(
+            <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
+              <Modal
+                {...defaultProps}
+                repository={{
+                  ...repoMock,
+                  disabled: true,
+                }}
+              />
+            </AppCtx.Provider>
+          );
+
+          const toggle = getByTestId('toggleDisabledRepo');
+          expect(toggle).toBeInTheDocument();
+          expect(toggle).toBeChecked();
+          fireEvent.click(toggle);
+
+          await waitFor(() => {
+            expect(toggle).not.toBeChecked();
+          });
+
+          fireEvent.click(toggle);
+
+          await waitFor(() => {
+            expect(toggle).toBeChecked();
+          });
+        });
+      });
+    });
+
     describe('When allowPrivateRepositories is true', () => {
       it('renders Add repo', () => {
         (window as any).config = {
@@ -373,6 +546,7 @@ describe('Repository Modal - repositories section', () => {
               url: 'http://test.com',
               displayName: 'Pretty name',
               kind: 0,
+              disabled: false,
               authUser: 'username',
               authPass: 'pass123',
             },

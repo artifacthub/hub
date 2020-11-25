@@ -2265,6 +2265,9 @@ components:
             last_tracking_errors:
               type: string
               example: Error
+            disabled:
+              type: boolean
+              nullable: false
     RepositoryKind:
       type: integer
       enum:

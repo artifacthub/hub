@@ -29,6 +29,7 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
+        "disabled": false,
         "digest": null,
         "last_tracking_ts": null,
         "last_tracking_errors": null,
