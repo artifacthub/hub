@@ -22,4 +22,8 @@ spec:
   rules:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.hub.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}

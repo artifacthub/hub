@@ -27,6 +27,7 @@ hub:
     annotations:
       kubernetes.io/ingress.class: nginx
     rules: []
+    tls: []
   service:
     type: NodePort
     port: 80
