@@ -390,100 +390,74 @@ func TestGetValuesSchema(t *testing.T) {
 }
 
 func TestInjectIndexMeta(t *testing.T) {
-	t.Run("get package failed", func(t *testing.T) {
-		testCases := []struct {
-			pmErr              error
-			expectedStatusCode int
-		}{
-			{
-				hub.ErrInvalidInput,
-				http.StatusBadRequest,
-			},
-			{
-				hub.ErrNotFound,
-				http.StatusNotFound,
-			},
-			{
-				tests.ErrFakeDB,
-				http.StatusInternalServerError,
-			},
+	checkIndexMeta := func(expectedTitle, expectedDescription interface{}) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			title, _ := r.Context().Value(hub.IndexMetaTitleKey).(string)
+			description, _ := r.Context().Value(hub.IndexMetaDescriptionKey).(string)
+			assert.Equal(t, expectedTitle, title)
+			assert.Equal(t, expectedDescription, description)
 		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.pmErr.Error(), func(t *testing.T) {
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
-
-				hw := newHandlersWrapper()
-				hw.pm.On("Get", r.Context(), mock.Anything).Return(nil, tc.pmErr)
-				hw.h.InjectIndexMeta(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
-
-				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
-			})
-		}
-	})
-
-	t.Run("get package succeeded", func(t *testing.T) {
-		checkIndexMeta := func(expectedTitle, expectedDescription interface{}) http.HandlerFunc {
-			return func(w http.ResponseWriter, r *http.Request) {
-				assert.Equal(t, expectedTitle, r.Context().Value(hub.IndexMetaTitleKey).(string))
-				assert.Equal(t, expectedDescription, r.Context().Value(hub.IndexMetaDescriptionKey).(string))
-			}
-		}
-		testCases := []struct {
-			p                   *hub.Package
-			expectedTitle       string
-			expectedDescription string
-			expectedStatusCode  int
-		}{
-			{
-				&hub.Package{
-					NormalizedName: "pkg1",
-					Version:        "1.0.0",
-					Description:    "description",
-					Repository: &hub.Repository{
-						Name:             "repo1",
-						OrganizationName: "org1",
-					},
+	}
+	testCases := []struct {
+		p                   *hub.Package
+		err                 error
+		expectedTitle       string
+		expectedDescription string
+	}{
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Version:        "1.0.0",
+				Description:    "description",
+				Repository: &hub.Repository{
+					Name:             "repo1",
+					OrganizationName: "org1",
 				},
-				"pkg1 1.0.0 · org1/repo1",
-				"description",
-				http.StatusOK,
 			},
-			{
-				&hub.Package{
-					NormalizedName: "pkg1",
-					Version:        "1.0.0",
-					Repository: &hub.Repository{
-						Name:      "repo1",
-						UserAlias: "user1",
-					},
+			nil,
+			"pkg1 1.0.0 · org1/repo1",
+			"description",
+		},
+		{
+			&hub.Package{
+				NormalizedName: "pkg1",
+				Version:        "1.0.0",
+				Repository: &hub.Repository{
+					Name:      "repo1",
+					UserAlias: "user1",
 				},
-				"pkg1 1.0.0 · user1/repo1",
-				"",
-				http.StatusOK,
 			},
-		}
-		for _, tc := range testCases {
-			tc := tc
-			t.Run(tc.expectedDescription, func(t *testing.T) {
-				w := httptest.NewRecorder()
-				r, _ := http.NewRequest("GET", "/", nil)
+			nil,
+			"pkg1 1.0.0 · user1/repo1",
+			"",
+		},
+		{
+			nil,
+			tests.ErrFake,
+			"",
+			"",
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			w := httptest.NewRecorder()
+			r, _ := http.NewRequest("GET", "/", nil)
 
-				hw := newHandlersWrapper()
+			hw := newHandlersWrapper()
+			if tc.err == nil {
 				hw.pm.On("Get", r.Context(), mock.Anything).Return(tc.p, nil)
-				hw.h.InjectIndexMeta(checkIndexMeta(tc.expectedTitle, tc.expectedDescription)).ServeHTTP(w, r)
-				resp := w.Result()
-				defer resp.Body.Close()
+			} else {
+				hw.pm.On("Get", r.Context(), mock.Anything).Return(nil, tc.err)
+			}
+			hw.h.InjectIndexMeta(checkIndexMeta(tc.expectedTitle, tc.expectedDescription)).ServeHTTP(w, r)
+			resp := w.Result()
+			defer resp.Body.Close()
 
-				assert.Equal(t, tc.expectedStatusCode, resp.StatusCode)
-				hw.pm.AssertExpectations(t)
-			})
-		}
-	})
+			assert.Equal(t, http.StatusOK, resp.StatusCode)
+			hw.pm.AssertExpectations(t)
+		})
+	}
 }
 
 func TestRssFeed(t *testing.T) {
@@ -784,8 +758,6 @@ func TestToggleStar(t *testing.T) {
 		hw.pm.AssertExpectations(t)
 	})
 }
-
-func testsOK(w http.ResponseWriter, r *http.Request) {}
 
 type handlersWrapper struct {
 	pm *pkg.ManagerMock
