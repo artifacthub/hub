@@ -27,6 +27,7 @@ import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
+import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
 import Label from '../common/Label';
 import Loading from '../common/Loading';
@@ -76,7 +77,7 @@ const PackageView = (props: Props) => {
   const { tsQueryWeb, tsQuery, pageNumber, filters, deprecated, operators, verifiedPublisher, official } =
     props.searchUrlReferer || {};
   const { isLoadingPackage, setIsLoadingPackage } = props;
-  const [apiError, setApiError] = useState<null | string>(null);
+  const [apiError, setApiError] = useState<null | string | JSX.Element>(null);
   const [activeChannel, setActiveChannel] = useState<string | undefined>(props.channel);
 
   useScrollRestorationFix();
@@ -115,7 +116,27 @@ const PackageView = (props: Props) => {
       setIsLoadingPackage(false);
     } catch (err) {
       if (err.kind === ErrorKind.NotFound) {
-        setApiError('Sorry, the package you requested was not found.');
+        setApiError(
+          <>
+            <div className={`mb-4 mb-lg-5 h2 ${styles.noDataTitleContent}`}>
+              Sorry, the package you requested was not found.
+            </div>
+
+            <p className={`h5 mb-4 mb-lg-5 ${styles.noDataTitleContent}`}>
+              The package you are looking for may have been deleted by the provider, or it may now belong to a different
+              repository. Please try searching for it, as it may help locating the package in a different repository or
+              discovering other alternatives.
+            </p>
+
+            <p className={`h6 ${styles.noDataContent}`}>
+              NOTE: The official Helm <span className="font-weight-bold">stable</span> and{' '}
+              <span className="font-weight-bold">incubator</span> repositories were removed from Artifact Hub on
+              November 6th as part of the deprecation plan announced by the Helm project. For more information please
+              see <ExternalLink href="https://helm.sh/blog/charts-repo-deprecation/">this blog post</ExternalLink> and{' '}
+              <ExternalLink href="https://github.com/helm/charts/issues/23944">this Github issue</ExternalLink>.
+            </p>
+          </>
+        );
       } else if (!isUndefined(err.message)) {
         setApiError(err.message);
       }
@@ -487,7 +508,7 @@ const PackageView = (props: Props) => {
 
             <div className="container">
               {isNull(detail) && !isLoadingPackage ? (
-                <NoData issuesLinkVisible={!isNull(apiError)}>
+                <NoData className={styles.noDataWrapper}>
                   {isNull(apiError) ? (
                     <>An error occurred getting this package, please try again later.</>
                   ) : (
