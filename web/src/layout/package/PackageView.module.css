@@ -127,6 +127,18 @@
   max-width: 50%;
 }
 
+.noDataWrapper {
+  margin-top: 6rem !important;
+}
+
+.noDataTitleContent {
+  line-height: 1.75rem;
+}
+
+.noDataContent {
+  line-height: 1.5rem;
+}
+
 @media only screen and (max-width: 767.98px) {
   .mainContent {
     max-width: 100%;
@@ -165,6 +177,10 @@
   .optsWrapper {
     justify-content: space-between;
     padding-right: 0;
+  }
+
+  .noDataWrapper {
+    margin-top: 3rem !important;
   }
 }
 

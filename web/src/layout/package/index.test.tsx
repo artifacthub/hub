@@ -121,15 +121,14 @@ describe('Package index', () => {
 
     it('not found package', async () => {
       mocked(API).getPackage.mockRejectedValue({
-        kind: ErrorKind.Other,
-        message: 'Sorry, the package you requested was not found.',
+        kind: ErrorKind.NotFound,
       });
 
       const props = {
         ...defaultProps,
       };
 
-      const { getByTestId } = render(
+      const { getByTestId, getByText } = render(
         <Router>
           <PackageView {...props} />
         </Router>
@@ -142,6 +141,11 @@ describe('Package index', () => {
       const noData = getByTestId('noData');
       expect(noData).toBeInTheDocument();
       expect(noData).toHaveTextContent('Sorry, the package you requested was not found.');
+      expect(
+        getByText(
+          'The package you are looking for may have been deleted by the provider, or it may now belong to a different repository. Please try searching for it, as it may help locating the package in a different repository or discovering other alternatives.'
+        )
+      ).toBeInTheDocument();
     });
   });
 
