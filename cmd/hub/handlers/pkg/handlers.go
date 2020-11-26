@@ -159,8 +159,9 @@ func (h *Handlers) InjectIndexMeta(next http.Handler) http.Handler {
 		}
 		p, err := h.pkgManager.Get(r.Context(), input)
 		if err != nil {
+			// We proceed without injecting the metadata and log the error
 			h.logger.Error().Err(err).Interface("input", input).Str("method", "InjectIndexMeta").Send()
-			helpers.RenderErrorJSON(w, err)
+			next.ServeHTTP(w, r)
 			return
 		}
 		publisher := p.Repository.OrganizationName
