@@ -1,33 +1,24 @@
 .table {
   font-size: 0.9rem;
-  width: 10%;
 }
 
-.table th,
-.table td {
-  width: 100px;
-}
-
-.imageName {
-  max-width: 280px;
+.imageNameWrapper {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .tableTitle th {
+  width: 100px;
   border-bottom-color: var(--color-1-300) !important;
+}
+
+.tableTitle th.image {
+  width: auto;
 }
 
 @media only screen and (min-width: 1200px) {
   .table {
     font-size: 1rem;
-  }
-
-  .imageName {
-    max-width: 380px;
-  }
-}
-
-@media only screen and (min-width: 1920px) {
-  .imageName {
-    max-width: 700px;
   }
 }

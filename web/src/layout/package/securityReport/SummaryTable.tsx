@@ -17,7 +17,9 @@ const SummaryTable = (props: Props) => {
       <table className={`table table-bordered table-md ${styles.table}`}>
         <thead>
           <tr className={`table-primary ${styles.tableTitle}`}>
-            <th scope="col">Image</th>
+            <th className={styles.image} scope="col">
+              Image
+            </th>
             <th scope="col" className="text-center">
               Rating
             </th>
@@ -44,8 +46,10 @@ const SummaryTable = (props: Props) => {
 
             return (
               <tr key={`tr_${image}`}>
-                <td className={styles.imageName}>
-                  <div className="text-truncate">{image}</div>
+                <td>
+                  <div className={styles.imageNameWrapper}>
+                    <div className="text-truncate">{image}</div>
+                  </div>
                 </td>
                 <td className="text-center">
                   <SecurityRating summary={summary} onlyBadge />

@@ -91,6 +91,7 @@ exports[`SecurityModal creates snapshot 1`] = `
                       class="table-primary tableTitle"
                     >
                       <th
+                        class="image"
                         scope="col"
                       >
                         Image
@@ -136,13 +137,15 @@ exports[`SecurityModal creates snapshot 1`] = `
                   </thead>
                   <tbody>
                     <tr>
-                      <td
-                        class="imageName"
-                      >
+                      <td>
                         <div
-                          class="text-truncate"
+                          class="imageNameWrapper"
                         >
-                          rook/ceph:v1.1.1
+                          <div
+                            class="text-truncate"
+                          >
+                            rook/ceph:v1.1.1
+                          </div>
                         </div>
                       </td>
                       <td

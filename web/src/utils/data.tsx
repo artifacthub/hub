@@ -338,7 +338,7 @@ export const SEVERITY_RATING: SeverityRatingList = {
   },
   [VulnerabilitySeverity.UnKnown]: {
     color: '#b2b2b2',
-    level: 'A',
+    level: '-',
   },
   default: {
     color: '#47A319',

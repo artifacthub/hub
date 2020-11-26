@@ -95,9 +95,7 @@ const MemberCard = (props: Props) => {
                 </div>
                 {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
                   <div className={classnames('ml-3', { 'mr-3': props.membersNumber > 1 })}>
-                    <small>
-                      <span className="badge badge-warning">Invitation not accepted yet</span>
-                    </small>
+                    <span className="badge badge-warning">Invitation not accepted yet</span>
                   </div>
                 )}
               </div>
