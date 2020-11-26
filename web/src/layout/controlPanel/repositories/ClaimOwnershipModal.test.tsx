@@ -220,7 +220,9 @@ describe('Claim Repository Modal - repositories section', () => {
         const activeRepo = getByTestId('activeRepoItem');
 
         expect(activeRepo).toBeInTheDocument();
-        expect(activeRepo).toHaveTextContent('community-operators(Publisher: demo)');
+        expect(activeRepo).toHaveTextContent(
+          'community-operators (https://github.com/operator-framework/community-operators/upstream-community-operators)(Publisher: demo)'
+        );
 
         const btn = getByTestId('claimRepoBtn');
         fireEvent.click(btn);

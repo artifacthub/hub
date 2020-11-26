@@ -30,6 +30,7 @@ interface Props {
   tooltipMessage?: string;
   excludedRefs?: React.MutableRefObject<HTMLDivElement | null>[];
   breakPoint?: string;
+  size?: string;
 }
 
 const Modal = (props: Props) => {
@@ -92,7 +93,7 @@ const Modal = (props: Props) => {
       <div className={classnames('modal', styles.modal, { [`${styles.active} d-block`]: openStatus })} role="dialog">
         <div
           className={classnames(
-            'modal-dialog modal-lg',
+            `modal-dialog modal-${props.size || 'lg'}`,
             { 'modal-dialog-centered modal-dialog-scrollable': isUndefined(props.noScrollable) || !props.noScrollable },
             props.modalDialogClassName
           )}

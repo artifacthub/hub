@@ -141,7 +141,7 @@ exports[`Package index creates snapshot 2`] = `
                               src="/static/media/helm-chart.svg"
                             />
                             <div
-                              class="text-reset labelContent"
+                              class="text-reset text-truncate labelContent"
                             >
                               incubator
                             </div>

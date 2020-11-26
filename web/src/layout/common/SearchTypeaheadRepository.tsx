@@ -15,6 +15,7 @@ interface Props {
   disabledList: string[];
   onSelect: (repo: Repository) => void;
   placeholder?: string;
+  searchInUrl?: boolean;
 }
 
 const SearchTypeaheadRepository = (props: Props) => {
@@ -32,34 +33,36 @@ const SearchTypeaheadRepository = (props: Props) => {
     }
 
     const filteredItems: Repository[] = props.repositories.filter((repo: Repository) => {
-      return repo.name.toLowerCase().includes(inputValue.toLowerCase());
+      const stringForSearching = `${repo.name} ${props.searchInUrl ? repo.url : ''}`;
+      return stringForSearching.toLowerCase().includes(inputValue.toLowerCase());
     });
 
-    const elements: any[] = orderBy(filteredItems, ['displayName', 'name'], ['asc', 'asc']);
+    const elements: any[] = orderBy(filteredItems, ['displayName', 'name', 'url'], ['asc', 'asc', 'asc']);
     return elements;
-  }, [inputValue, props.repositories]);
+  }, [inputValue, props.repositories, props.searchInUrl]);
 
-  const getOptionName = (name: string): JSX.Element => {
+  const getOptionContent = (text: string): JSX.Element => {
     if (!isNull(hightlightedText)) {
-      const stringParts: string[] = compact(name.split(hightlightedText));
+      const stringNameParts: string[] = compact(text.split(hightlightedText));
 
       return (
         <>
-          {stringParts.map((str: string, index: number) => {
-            if (str.toLowerCase() === inputValue.toLowerCase()) {
-              return (
-                <span key={`${name}_${index}`} className={`font-weight-bold ${styles.hightlighted}`}>
-                  {str}
-                </span>
-              );
-            } else {
-              return <span key={`${name}_${index}`}>{str}</span>;
-            }
+          {stringNameParts.map((str: string, index: number) => {
+            return (
+              <span
+                key={`${text}_${index}`}
+                className={classnames('text-dark', {
+                  [`font-weight-bold ${styles.hightlighted}`]: str.toLowerCase() === inputValue.toLowerCase(),
+                })}
+              >
+                {str}
+              </span>
+            );
           })}
         </>
       );
     } else {
-      return <>{name}</>;
+      return <span className="text-dark">{text}</span>;
     }
   };
 
@@ -127,13 +130,22 @@ const SearchTypeaheadRepository = (props: Props) => {
             <p className="m-3 text-center">Sorry, no matches found</p>
           ) : (
             <div className={styles.tableWrapper}>
-              <table className={`table table-hover table-sm mb-0 ${styles.table}`}>
+              <table
+                className={classnames('table table-hover table-sm mb-0', styles.table, {
+                  [styles.activeUrlColumn]: props.searchInUrl,
+                })}
+              >
                 <thead>
                   <tr>
                     <th scope="col" className={`${styles.fitCell} d-none d-sm-table-cell border-top-0`}></th>
                     <th scope="col" className={`border-top-0 ${styles.repoCell}`}>
                       Repository
                     </th>
+                    {props.searchInUrl && (
+                      <th scope="col" className={`border-top-0 d-none d-md-table-cell ${styles.urlCell}`}>
+                        Url
+                      </th>
+                    )}
                     <th scope="col" className="border-top-0">
                       Publisher
                     </th>
@@ -163,8 +175,19 @@ const SearchTypeaheadRepository = (props: Props) => {
                           </div>
                         </td>
                         <td className="align-middle">
-                          <div className="text-dark text-capitalize">{getOptionName(repo.name)}</div>
+                          <div className={styles.truncateWrapper}>
+                            <div className="text-truncate">{getOptionContent(repo.name)}</div>
+                          </div>
                         </td>
+                        {props.searchInUrl && (
+                          <td className="align-middle d-none d-md-table-cell">
+                            <div className={styles.truncateWrapper}>
+                              <div className="text-truncate">
+                                <small>{getOptionContent(repo.url)}</small>
+                              </div>
+                            </div>
+                          </td>
+                        )}
                         <td className="align-middle">
                           <div className="text-dark d-flex flex-row align-items-center">
                             <span className={`mr-1 ${styles.tinyIcon}`}>

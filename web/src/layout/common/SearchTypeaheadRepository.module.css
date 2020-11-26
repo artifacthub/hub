@@ -104,13 +104,31 @@
   width: 65%;
 }
 
+.activeUrlColumn .repoCell {
+  width: 25%;
+}
+
+.urlCell {
+  width: 45%;
+}
+
 .fieldFeedback {
   left: 0;
   top: 35px;
 }
 
+.truncateWrapper {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
 @media only screen and (max-width: 767.98px) {
   .tableWrapper td {
     font-size: 0.85rem;
+  }
+
+  .activeUrlColumn .repoCell {
+    width: 65%;
   }
 }
