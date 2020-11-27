@@ -58,12 +58,14 @@ func DBTransact(ctx context.Context, db hub.DB, txFunc func(pgx.Tx) error) (err 
 		return
 	}
 	defer func() {
-		if p := recover(); p != nil {
+		p := recover()
+		switch {
+		case p != nil:
 			_ = tx.Rollback(ctx)
 			panic(p)
-		} else if err != nil {
+		case err != nil:
 			_ = tx.Rollback(ctx)
-		} else {
+		default:
 			err = tx.Commit(ctx)
 		}
 	}()

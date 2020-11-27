@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"os"
 	"os/signal"
@@ -74,7 +75,7 @@ func main() {
 		Handler:      handlers.Setup(cfg, hSvc).Router,
 	}
 	go func() {
-		if err := srv.ListenAndServe(); err != http.ErrServerClosed {
+		if err := srv.ListenAndServe(); errors.Is(err, http.ErrServerClosed) {
 			log.Fatal().Err(err).Msg("hub server ListenAndServe failed")
 		}
 	}()
@@ -126,7 +127,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.GetDuration("server.shutdownTimeout"))
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal().Err(err).Msg("hub server shutdown failed")
+		log.Error().Err(err).Msg("hub server shutdown failed")
+		return
 	}
 	log.Info().Msg("hub server stopped")
 }

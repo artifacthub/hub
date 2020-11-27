@@ -1,10 +1,13 @@
 linters:
   disable-all: true
   enable:
+    - asciicheck
     - bodyclose
     - deadcode
     - errcheck
+    - exportloopref
     - goconst
+    - gocritic
     - goimports
     - golint
     - gosec
@@ -18,17 +21,22 @@ linters:
     - scopelint
     - staticcheck
     - structcheck
+    - stylecheck
     - typecheck
     - unconvert
+    - unparam
     - unused
     - varcheck
   fast: false
 
 linters-settings:
+  gocritic:
+    disabled-checks:
+      - singleCaseSwitch
+  gocyclo:
+    min-complexity: 15
   goconst:
     min-occurrences: 5
-  golint:
-    min-confidence: 0
 
 service:
-  golangci-lint-version: 1.23.x
+  golangci-lint-version: 1.33.x

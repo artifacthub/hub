@@ -172,8 +172,8 @@ type SearchPackageInput struct {
 	Limit             int              `json:"limit,omitempty"`
 	Offset            int              `json:"offset,omitempty"`
 	Facets            bool             `json:"facets"`
-	TsQueryWeb        string           `json:"ts_query_web,omitempty"`
-	TsQuery           string           `json:"ts_query,omitempty"`
+	TSQueryWeb        string           `json:"ts_query_web,omitempty"`
+	TSQuery           string           `json:"ts_query,omitempty"`
 	Users             []string         `json:"users,omitempty"`
 	Orgs              []string         `json:"orgs,omitempty"`
 	Repositories      []string         `json:"repositories,omitempty"`
@@ -186,7 +186,7 @@ type SearchPackageInput struct {
 	Capabilities      []string         `json:"capabilities,omitempty"`
 }
 
-// Version represents a package's version
+// Version represents a package's version.
 type Version struct {
 	Version   string `json:"version"`
 	CreatedAt int64  `json:"created_at"`

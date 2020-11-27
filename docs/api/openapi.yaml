@@ -834,8 +834,8 @@ paths:
         - $ref: "#/components/parameters/OffsetParam"
         - $ref: "#/components/parameters/LimitParam"
         - $ref: "#/components/parameters/FacetsParam"
-        - $ref: "#/components/parameters/TsQueryWebParam"
-        - $ref: "#/components/parameters/TsQueryParam"
+        - $ref: "#/components/parameters/TSQueryWebParam"
+        - $ref: "#/components/parameters/TSQueryParam"
         - $ref: "#/components/parameters/RepositoryKindsListParam"
         - $ref: "#/components/parameters/UsersListParam"
         - $ref: "#/components/parameters/OrgsListParam"
@@ -2697,7 +2697,7 @@ components:
         $ref: "#/components/schemas/ResourceKindName"
       required: true
       description: Resource kind name
-    TsQueryWebParam:
+    TSQueryWebParam:
       in: query
       name: ts_query_web
       schema:
@@ -2705,7 +2705,7 @@ components:
         example: database
       required: false
       description: Text search query (websearch format)
-    TsQueryParam:
+    TSQueryParam:
       in: query
       name: ts_query
       schema:
