@@ -31,7 +31,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'TsQueryWeb: package1 | No packages in db yet | No packages or facets expected'
+    'TSQueryWeb: package1 | No packages in db yet | No packages or facets expected'
 );
 
 -- Seed some data
@@ -376,7 +376,7 @@ select is(
             "total": 3
         }
     }'::jsonb,
-    'TsQueryWeb: - | Three packages expected (all) - Facets expected'
+    'TSQueryWeb: - | Three packages expected (all) - Facets expected'
 );
 select is(
     search_packages('{
@@ -478,7 +478,7 @@ select is(
             "total": 3
         }
     }'::jsonb,
-    'TsQuery: kw1 | kw3 | Three packages expected (all) - No facets expected'
+    'TSQuery: kw1 | kw3 | Three packages expected (all) - No facets expected'
 );
 select is(
     search_packages('{
@@ -683,7 +683,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'TsQuery: kw1 | TsQueryWeb: kw2 | Two packages expected | No facets expected'
+    'TSQuery: kw1 | TSQueryWeb: kw2 | Two packages expected | No facets expected'
 );
 select is(
     search_packages('{
@@ -808,7 +808,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: kw1 | Two packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 | Two packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -897,7 +897,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: package1 | Package 1 expected - Facets expected'
+    'Facets: true TSQueryWeb: package1 | Package 1 expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -914,7 +914,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'TsQueryWeb: kw9 (inexistent) | No packages or facets expected'
+    'TSQueryWeb: kw9 (inexistent) | No packages or facets expected'
 );
 
 -- Tests with kind and repositories filters
@@ -962,7 +962,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'TsQueryWeb: - Repo: repo1 | Package 1 expected - Facets not expected'
+    'TSQueryWeb: - Repo: repo1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages(
@@ -1064,7 +1064,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: kw1 Repo: repo2 | Package 2 expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: repo2 | Package 2 expected - Facets expected'
 );
 select is(
     search_packages(
@@ -1131,7 +1131,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: false | No packages expected - Facets expected'
 );
 select is(
     search_packages(
@@ -1197,7 +1197,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: repo2 Deprecated: not provided | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -1262,7 +1262,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: true TsQueryWeb: kw1 Repo: inexistent | No packages expected - Facets expected'
+    'Facets: true TSQueryWeb: kw1 Repo: inexistent | No packages expected - Facets expected'
 );
 select is(
     search_packages('{
@@ -1281,7 +1281,7 @@ select is(
             "total": 0
         }
     }'::jsonb,
-    'Facets: false TsQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
+    'Facets: false TSQueryWeb: kw1 Kinds: 1, 2 | No packages or facets expected'
 );
 
 -- Tests with with orgs and users filters
@@ -1332,7 +1332,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'TsQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
+    'TSQueryWeb: - Org: org1 | Package 3 expected - Facets not expected'
 );
 select is(
     search_packages('{
@@ -1378,7 +1378,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'TsQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
+    'TSQueryWeb: - User: user1 | Package 1 expected - Facets not expected'
 );
 select is(
     search_packages('{
@@ -1457,7 +1457,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'TsQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
+    'TSQueryWeb: - Org: org1 User: user1 | Packages 1 and 3 expected - Facets not expected'
 );
 
 -- Tests with with license filter
@@ -1505,7 +1505,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'TsQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
+    'TSQueryWeb: - License: Apache-2.0 | Package 1 expected - Facets not expected'
 );
 
 -- Tests with with capabilities filter
@@ -1553,7 +1553,7 @@ select is(
             "total": 1
         }
     }'::jsonb,
-    'TsQueryWeb: - Capabilities: basic install | Package 1 expected - Facets not expected'
+    'TSQueryWeb: - Capabilities: basic install | Package 1 expected - Facets not expected'
 );
 
 -- Tests with limit and offset
@@ -1629,7 +1629,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 2 Offset: 0 TsQueryWeb: kw1 | Packages 1 and 2 expected'
+    'Limit: 2 Offset: 0 TSQueryWeb: kw1 | Packages 1 and 2 expected'
 );
 select is(
     search_packages('{
@@ -1676,7 +1676,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 0 TsQueryWeb: kw1 | Package 1 expected'
+    'Limit: 1 Offset: 0 TSQueryWeb: kw1 | Package 1 expected'
 );
 select is(
     search_packages('{
@@ -1696,7 +1696,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 2 TsQueryWeb: kw1 | No packages expected'
+    'Limit: 1 Offset: 2 TSQueryWeb: kw1 | No packages expected'
 );
 select is(
     search_packages('{
@@ -1743,7 +1743,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 1 TsQueryWeb: kw1 | Package 2 expected'
+    'Limit: 1 Offset: 1 TSQueryWeb: kw1 | Package 2 expected'
 );
 select is(
     search_packages('{
@@ -1763,7 +1763,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 0 Offset: 0 TsQueryWeb: kw1 | No packages expected'
+    'Limit: 0 Offset: 0 TSQueryWeb: kw1 | No packages expected'
 );
 select is(
     search_packages('{
@@ -1836,7 +1836,7 @@ select is(
             "total": 2
         }
     }'::jsonb,
-    'Limit: 1 Offset: 2 TsQueryWeb: kw1 | No packages expected - Facets expected'
+    'Limit: 1 Offset: 2 TSQueryWeb: kw1 | No packages expected - Facets expected'
 );
 
 -- Finish tests and rollback transaction

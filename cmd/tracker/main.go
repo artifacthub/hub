@@ -140,7 +140,8 @@ func getRepositories(
 	reposKinds := cfg.GetStringSlice("tracker.repositoriesKinds")
 
 	var repos []*hub.Repository
-	if len(reposNames) > 0 {
+	switch {
+	case len(reposNames) > 0:
 		for _, name := range reposNames {
 			repo, err := rm.GetByName(context.Background(), name, true)
 			if err != nil {
@@ -148,7 +149,7 @@ func getRepositories(
 			}
 			repos = append(repos, repo)
 		}
-	} else if len(reposKinds) > 0 {
+	case len(reposKinds) > 0:
 		for _, kindName := range reposKinds {
 			kind, err := hub.GetKindFromName(kindName)
 			if err != nil {
@@ -160,7 +161,7 @@ func getRepositories(
 			}
 			repos = append(repos, kindRepos...)
 		}
-	} else {
+	default:
 		var err error
 		repos, err = rm.GetAll(context.Background(), true)
 		if err != nil {

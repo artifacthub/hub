@@ -36,14 +36,14 @@ func (w *Worker) Run(ctx context.Context, wg *sync.WaitGroup) {
 
 	for {
 		err := w.processEvent(ctx)
-		switch err {
-		case nil:
+		switch {
+		case err == nil:
 			select {
 			case <-ctx.Done():
 				return
 			default:
 			}
-		case pgx.ErrNoRows:
+		case errors.Is(err, pgx.ErrNoRows):
 			select {
 			case <-time.After(pauseOnEmptyQueue):
 			case <-ctx.Done():

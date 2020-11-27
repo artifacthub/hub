@@ -707,7 +707,7 @@ func TestSearchJSON(t *testing.T) {
 	ctx := context.Background()
 	input := &hub.SearchPackageInput{
 		Limit:      10,
-		TsQueryWeb: "kw1",
+		TSQueryWeb: "kw1",
 	}
 
 	t.Run("invalid input", func(t *testing.T) {

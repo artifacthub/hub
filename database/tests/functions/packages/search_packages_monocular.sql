@@ -11,7 +11,7 @@ select plan(3);
 select is(
     search_packages_monocular('https://artifacthub.io', 'package1')::jsonb,
     '{"data": []}'::jsonb,
-    'TsQueryWeb: package1 | No packages expected'
+    'TSQueryWeb: package1 | No packages expected'
 );
 
 -- Seed some data
@@ -69,12 +69,12 @@ select is(
             }
         }]
     }'::jsonb,
-    'TsQueryWeb: package1 | Package1 expected'
+    'TSQueryWeb: package1 | Package1 expected'
 );
 select is(
     search_packages_monocular('https://artifacthub.io', 'package2')::jsonb,
     '{"data": []}'::jsonb,
-    'TsQueryWeb: package2 | No packages expected'
+    'TSQueryWeb: package2 | No packages expected'
 );
 
 -- Finish tests and rollback transaction

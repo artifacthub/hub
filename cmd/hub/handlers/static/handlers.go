@@ -23,8 +23,12 @@ import (
 )
 
 const (
-	indexCacheMaxAge  = 5 * time.Minute
-	DocsCacheMaxAge   = 15 * time.Minute
+	indexCacheMaxAge = 5 * time.Minute
+
+	// DocsCacheMaxAge is the cache max age used when serving the docs.
+	DocsCacheMaxAge = 15 * time.Minute
+
+	// StaticCacheMaxAge is the cache max age used when serving static assets.
 	StaticCacheMaxAge = 365 * 24 * time.Hour
 )
 
@@ -159,7 +163,7 @@ func FileServer(r chi.Router, public, static string, cacheMaxAge time.Duration) 
 	}
 
 	if public != "/" && public[len(public)-1] != '/' {
-		r.Get(public, http.RedirectHandler(public+"/", 301).ServeHTTP)
+		r.Get(public, http.RedirectHandler(public+"/", http.StatusMovedPermanently).ServeHTTP)
 		public += "/"
 	}
 
