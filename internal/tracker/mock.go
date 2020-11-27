@@ -18,3 +18,14 @@ func (m *ErrorsCollectorMock) Append(repositoryID string, err error) {
 func (m *ErrorsCollectorMock) Flush() {
 	m.Called()
 }
+
+// Mock is mock Tracker implementation.
+type Mock struct {
+	mock.Mock
+}
+
+// Track implements the Tracker interface.
+func (m *Mock) Track() error {
+	args := m.Called()
+	return args.Error(0)
+}

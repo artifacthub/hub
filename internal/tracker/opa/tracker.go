@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/pkg"
@@ -49,20 +48,7 @@ func NewTracker(
 }
 
 // Track registers or unregisters the OPA policies packages available as needed.
-func (t *Tracker) Track(wg *sync.WaitGroup) error {
-	defer wg.Done()
-
-	// Check if repository has been updated
-	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
-	remoteDigest, err := t.svc.Rm.GetRemoteDigest(t.svc.Ctx, t.r)
-	if err != nil {
-		return fmt.Errorf("error getting repository remote digest: %w", err)
-	}
-	if remoteDigest != "" && remoteDigest == t.r.Digest && !bypassDigestCheck {
-		t.logger.Debug().Msg("repository has not been updated, skipping it")
-		return nil
-	}
-
+func (t *Tracker) Track() error {
 	// Clone repository
 	t.logger.Debug().Msg("cloning repository")
 	tmpDir, packagesPath, err := t.svc.Rc.CloneRepository(t.svc.Ctx, t.r)
@@ -78,6 +64,7 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Register available packages when needed
+	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
 	basePath := filepath.Join(tmpDir, packagesPath)
 	err = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
@@ -166,16 +153,14 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	}
 
 	// Set verified publisher flag if needed
-	err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, filepath.Join(basePath, hub.RepositoryMetadataFile))
+	err = tracker.SetVerifiedPublisherFlag(
+		t.svc.Ctx,
+		t.svc.Rm,
+		t.r,
+		filepath.Join(basePath, hub.RepositoryMetadataFile),
+	)
 	if err != nil {
 		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
-	}
-
-	// Update repository digest if needed
-	if remoteDigest != "" && remoteDigest != t.r.Digest {
-		if err := t.svc.Rm.UpdateDigest(t.svc.Ctx, t.r.RepositoryID, remoteDigest); err != nil {
-			t.warn(fmt.Errorf("error updating digest: %w", err))
-		}
 	}
 
 	return nil

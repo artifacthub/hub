@@ -23,7 +23,7 @@ type HTTPClientMock struct {
 	mock.Mock
 }
 
-// Get implements the HTTPClient interface.
+// Do implements the HTTPClient interface.
 func (m *HTTPClientMock) Do(req *http.Request) (*http.Response, error) {
 	args := m.Called(req)
 	resp, _ := args.Get(0).(*http.Response)

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"os/exec"
@@ -22,7 +21,6 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/opa"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
-	"github.com/spf13/viper"
 )
 
 func main() {
@@ -67,7 +65,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("image store setup failed")
 	}
-	repos, err := getRepositories(cfg, rm)
+	repos, err := tracker.GetRepositories(ctx, cfg, rm)
 	if err != nil {
 		log.Fatal().Err(err).Msg("error getting repositories")
 	}
@@ -96,85 +94,29 @@ L:
 
 		limiter <- struct{}{}
 		wg.Add(1)
-		var t tracker.Tracker
-		switch r.Kind {
-		case hub.Falco:
-			t = falco.NewTracker(svc, r)
-		case hub.Helm:
-			t = helm.NewTracker(svc, r)
-		case hub.OLM:
-			t = olm.NewTracker(svc, r)
-		case hub.OPA:
-			t = opa.NewTracker(svc, r)
-		}
-
 		go func(r *hub.Repository) {
-			log.Info().Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Msg("tracking repository")
-			if err := t.Track(&wg); err != nil {
-				ec.Append(r.RepositoryID, err)
-				log.Err(err).Str("repo", r.Name).Interface("kind", r.Kind).Send()
+			defer func() {
+				<-limiter
+				wg.Done()
+			}()
+			var t tracker.Tracker
+			switch r.Kind {
+			case hub.Falco:
+				t = falco.NewTracker(svc, r)
+			case hub.Helm:
+				t = helm.NewTracker(svc, r)
+			case hub.OLM:
+				t = olm.NewTracker(svc, r)
+			case hub.OPA:
+				t = opa.NewTracker(svc, r)
 			}
-			<-limiter
+			if err := tracker.TrackRepository(ctx, cfg, rm, t, r); err != nil {
+				svc.Ec.Append(r.RepositoryID, err)
+				log.Error().Err(err).Str("repo", r.Name).Str("kind", hub.GetKindName(r.Kind)).Send()
+			}
 		}(r)
 	}
 	wg.Wait()
 	ec.Flush()
 	log.Info().Msg("tracker finished")
-}
-
-// getRepositories gets the repositories the tracker will process based on the
-// configuration provided:
-//
-// - If a list of repositories names, those will be the repositories returned
-//   provided they are found.
-// - If a list of repositories kinds is provided, all repositories of those
-//   kinds will be returned.
-// - Otherwise, all the repositories will be returned.
-//
-// NOTE: disabled repositories will be filtered out.
-func getRepositories(
-	cfg *viper.Viper,
-	rm hub.RepositoryManager,
-) ([]*hub.Repository, error) {
-	reposNames := cfg.GetStringSlice("tracker.repositoriesNames")
-	reposKinds := cfg.GetStringSlice("tracker.repositoriesKinds")
-
-	var repos []*hub.Repository
-	switch {
-	case len(reposNames) > 0:
-		for _, name := range reposNames {
-			repo, err := rm.GetByName(context.Background(), name, true)
-			if err != nil {
-				return nil, fmt.Errorf("error getting repository %s: %w", name, err)
-			}
-			repos = append(repos, repo)
-		}
-	case len(reposKinds) > 0:
-		for _, kindName := range reposKinds {
-			kind, err := hub.GetKindFromName(kindName)
-			if err != nil {
-				return nil, fmt.Errorf("invalid repository kind found in config: %s", kindName)
-			}
-			kindRepos, err := rm.GetByKind(context.Background(), kind, true)
-			if err != nil {
-				return nil, fmt.Errorf("error getting repositories by kind (%s): %w", kindName, err)
-			}
-			repos = append(repos, kindRepos...)
-		}
-	default:
-		var err error
-		repos, err = rm.GetAll(context.Background(), true)
-		if err != nil {
-			return nil, fmt.Errorf("error getting all repositories: %w", err)
-		}
-	}
-
-	var reposFiltered []*hub.Repository
-	for _, repo := range repos {
-		if !repo.Disabled {
-			reposFiltered = append(reposFiltered, repo)
-		}
-	}
-
-	return reposFiltered, nil
 }

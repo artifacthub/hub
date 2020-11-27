@@ -8,6 +8,7 @@ linters:
     - exportloopref
     - goconst
     - gocritic
+    - gocyclo
     - goimports
     - golint
     - gosec
@@ -33,8 +34,6 @@ linters-settings:
   gocritic:
     disabled-checks:
       - singleCaseSwitch
-  gocyclo:
-    min-complexity: 15
   goconst:
     min-occurrences: 5
 
