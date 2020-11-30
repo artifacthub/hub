@@ -1,3 +1,4 @@
+import { isNumber } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
@@ -69,7 +70,7 @@ const StarButton = (props: Props) => {
 
   return (
     <>
-      {!isNull(packageStars.stars) && (
+      {isNumber(packageStars.stars) && (
         <div className={`d-inline d-md-none badge badge-pill badge-light ${styles.mobileStarBadge}`}>
           <div className="d-flex align-items-center">
             <FaStar className="mr-1" />
@@ -93,7 +94,7 @@ const StarButton = (props: Props) => {
         </button>
 
         <span className={`badge badge-light text-center px-3 ${styles.starBadge}`}>
-          {isNull(packageStars.stars) ? '-' : prettifyNumber(packageStars.stars)}
+          {isNumber(packageStars.stars) ? prettifyNumber(packageStars.stars) : '-'}
         </span>
 
         {isNull(ctx.user) && (

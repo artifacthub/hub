@@ -294,9 +294,7 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": "user1",
-            "organization_name": null,
-            "organization_display_name": null
+            "user_alias": "user1"
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -403,9 +401,7 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": "user1",
-            "organization_name": null,
-            "organization_display_name": null
+            "user_alias": "user1"
         }
     }'::jsonb,
     'Last package1 version is returned as a json object'
@@ -449,11 +445,7 @@ select is(
                 "url": "https://link2"
             }
         ],
-        "crds": null,
-        "crds_examples": null,
         "capabilities": "basic install",
-        "security_report_summary": null,
-        "security_report_created_at": null,
         "data": {
             "key": "value"
         },
@@ -470,15 +462,8 @@ select is(
         ],
         "app_version": "12.0.0",
         "digest": "digest-package1-0.0.9",
-        "deprecated": null,
-        "license": null,
-        "signed": null,
-        "content_url": null,
-        "containers_images": null,
-        "provider": null,
         "has_values_schema": false,
         "has_changelog": true,
-        "changes": null,
         "created_at": 1592299233,
         "maintainers": [
             {
@@ -499,9 +484,7 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": "user1",
-            "organization_name": null,
-            "organization_display_name": null
+            "user_alias": "user1"
         }
     }'::jsonb,
     'Requested package version is returned as a json object'
@@ -516,44 +499,24 @@ select is(
         "name": "package2",
         "normalized_name": "package2",
         "logo_image_id": "00000000-0000-0000-0000-000000000002",
-        "is_operator": null,
-        "channels": null,
-        "default_channel": null,
         "display_name": "Package 2",
         "description": "description",
         "keywords": ["kw1", "kw2"],
-        "home_url": null,
         "readme": "readme-version-1.0.0",
         "install": "install-version-1.0.0",
-        "links": null,
-        "digest": null,
-        "crds": null,
-        "crds_examples": null,
-        "capabilities": null,
-        "security_report_summary": null,
-        "security_report_created_at": null,
         "data": {
             "key": "value"
         },
-        "deprecated": null,
-        "license": null,
-        "signed": null,
-        "content_url": null,
-        "containers_images": null,
-        "provider": null,
         "has_values_schema": false,
         "has_changelog": false,
-        "changes": null,
         "created_at": 1592299234,
         "version": "1.0.0",
-        "app_version": null,
         "available_versions": [
             {
                 "version": "1.0.0",
                 "created_at": 1592299234
             }
         ],
-        "maintainers": null,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000002",
             "kind": 0,
@@ -563,7 +526,6 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
         }

@@ -1,6 +1,4 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
@@ -187,7 +185,7 @@ const WebhookCard = (props: Props) => {
               <small>{props.webhook.url}</small>
             </div>
 
-            {!isUndefined(props.webhook.lastNotifications) && !isNull(props.webhook.lastNotifications) && (
+            {props.webhook.lastNotifications && (
               <div className="d-none d-md-inline mt-2">
                 <LastNotificationsModal notifications={props.webhook.lastNotifications} />
               </div>

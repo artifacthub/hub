@@ -11,7 +11,7 @@ export class Authorizer {
 
   public init(selectedOrg?: string) {
     this.selectedOrg = selectedOrg;
-    if (!isUndefined(selectedOrg)) {
+    if (selectedOrg) {
       this.getAllowedActionsList();
     }
   }
@@ -27,12 +27,12 @@ export class Authorizer {
   }
 
   public check(input: AuthorizerInput): boolean {
-    if (!isUndefined(input.organizationName) && input.organizationName !== this.selectedOrg) {
+    if (input.organizationName && input.organizationName !== this.selectedOrg) {
       this.selectedOrg = input.organizationName;
       this.getAllowedActionsList();
       return true;
     } else {
-      if (this.gettingActions && !isUndefined(input.onCompletion) && input.organizationName) {
+      if (this.gettingActions && input.onCompletion && input.organizationName) {
         this.pendingActions.push(input.onCompletion);
         return true;
       } else {
@@ -51,7 +51,7 @@ export class Authorizer {
         this.gettingActions = true;
         this.allowedActions = await API.getUserAllowedActions(this.selectedOrg!);
         this.gettingActions = false;
-        if (!isUndefined(onCompletion)) {
+        if (onCompletion) {
           onCompletion();
         }
         if (this.pendingActions.length > 0) {
@@ -64,7 +64,7 @@ export class Authorizer {
       }
     };
 
-    if (!isUndefined(this.selectedOrg)) {
+    if (this.selectedOrg) {
       getUserAllowedActions();
     }
   }

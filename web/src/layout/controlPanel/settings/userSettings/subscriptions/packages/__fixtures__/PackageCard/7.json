@@ -8,9 +8,7 @@
     "kind": 0,
     "name": "ibm-charts",
     "displayName": "IBM charts",
-    "userAlias": "jsmith",
-    "organizationName": null,
-    "organizationDisplayName": null
+    "userAlias": "jsmith"
   },
   "eventKinds": [0]
 }

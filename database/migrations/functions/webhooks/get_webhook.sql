@@ -7,7 +7,7 @@ begin
         raise insufficient_privilege;
     end if;
 
-    return query select json_build_object(
+    return query select json_strip_nulls(json_build_object(
         'webhook_id', wh.webhook_id,
         'name', wh.name,
         'description', wh.description,
@@ -48,7 +48,7 @@ begin
                 limit 10
             ) ln
         )
-    )
+    ))
     from webhook wh
     where wh.webhook_id = p_webhook_id;
 end

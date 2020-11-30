@@ -3,7 +3,6 @@
   "name": "Webhook name",
   "description": "this is a test description",
   "url": "http://jksdhfkjfds",
-  "secret": null,
   "contentType": "application/json",
   "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.id }}\",\n        \"kind\": {{ .Event.kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.kind }},\n        \"name\": \"{{ .Package.name }}\",\n        \"version\": \"{{ .Package.version }}\",\n        \"publisher\": \"{{ .Package.publisher }}\",\n        \"url\": \"{{ .Package.url }}\"\n    }\n}",
   "active": true,
@@ -18,7 +17,6 @@
         "kind": 0,
         "name": "stable",
         "displayName": "Stable",
-        "userAlias": null,
         "organizationName": "helm",
         "organizationDisplayName": "Helm"
       }
@@ -29,8 +27,7 @@
       "notificationId": "0f1c1a3f-55f7-4d7c-91e6-8ed081a1f400",
       "createdAt": 1590852609,
       "processed": true,
-      "processedAt": 1590852610,
-      "error": null
+      "processedAt": 1590852610
     }
   ]
 }

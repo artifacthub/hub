@@ -8,12 +8,12 @@ begin
     end if;
 
     return query
-    select json_agg(json_build_object(
+    select json_agg(json_strip_nulls(json_build_object(
         'alias', u.alias,
         'first_name', u.first_name,
         'last_name', u.last_name,
         'confirmed', u.confirmed
-    ))
+    )))
     from (
         select u.alias, u.first_name, u.last_name, uo.confirmed
         from "user" u

@@ -12,8 +12,6 @@
     "name": "test",
     "displayName": "test org",
     "description": "This is a sample org",
-    "homeUrl": null,
-    "logoImageId": null,
     "confirmed": true,
     "membersCount": 1
   }

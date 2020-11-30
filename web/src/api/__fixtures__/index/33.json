@@ -1,6 +1,5 @@
 {
   "authorization_enabled": true,
-  "predefined_policy": null,
   "custom_policy": "package artifacthub.authz\n\nallow = true\nallowed_actions = [\"all\"]",
   "policy_data": {}
 }

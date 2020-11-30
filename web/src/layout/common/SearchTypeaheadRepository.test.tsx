@@ -9,17 +9,14 @@ const mockRepositories = [
   {
     repositoryId: 'f0cebfe4-c4b2-4310-a6f8-e34525177ff6',
     name: 'security-hub',
-    displayName: null,
     url: 'https://github.com/falcosecurity/cloud-native-security-hub/resources/falco',
     kind: 1,
     lastTrackingTs: 1598614633,
-    lastTrackingErrors: null,
     userAlias: 'demo',
   },
   {
     repositoryId: '6a7563d6-2145-4039-9bdc-2730928db115',
     name: 'community-operators',
-    displayName: null,
     url: 'https://github.com/operator-framework/community-operators/upstream-community-operators',
     kind: 3,
     lastTrackingTs: 1598614633,
@@ -33,7 +30,6 @@ const mockRepositories = [
     displayName: 'Artifact Hub',
     url: 'https://artifacthub.github.io/hub/chart/',
     lastTrackingTs: 1598967025,
-    lastTrackingErrors: null,
     kind: 0,
   },
 ];

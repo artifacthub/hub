@@ -55,14 +55,12 @@ select is(
         "event": {
             "event_id": "00000000-0000-0000-0000-000000000001",
             "event_kind": 0,
-            "repository_id": null,
             "package_id": "00000000-0000-0000-0000-000000000001",
             "package_version": "1.0.0"
         },
         "user": {
             "email": "user1@email.com"
-        },
-        "webhook": null
+        }
 	}'::jsonb,
     'A notification for user1 should be returned'
 );
@@ -78,11 +76,9 @@ select is(
         "event": {
             "event_id": "00000000-0000-0000-0000-000000000001",
             "event_kind": 0,
-            "repository_id": null,
             "package_id": "00000000-0000-0000-0000-000000000001",
             "package_version": "1.0.0"
         },
-        "user": null,
         "webhook": {
             "name": "webhook1",
             "url": "http://webhook1.url",

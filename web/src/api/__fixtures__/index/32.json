@@ -2,51 +2,41 @@
   {
     "repository_id": "730824cd-4da3-438e-b6d7-9693ca27e818",
     "name": "security-hub",
-    "display_name": null,
     "url": "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco",
     "kind": 1,
     "verified_publisher": false,
-    "user_alias": "demo",
-    "organization_name": null
+    "user_alias": "demo"
   },
   {
     "repository_id": "c65940e6-eb95-440d-8cbe-9a6f56766431",
     "name": "stable",
-    "display_name": null,
     "url": "https://kubernetes-charts.storage.googleapis.com",
     "kind": 0,
     "verified_publisher": false,
-    "user_alias": "demo",
-    "organization_name": null
+    "user_alias": "demo"
   },
   {
     "repository_id": "93bde754-e484-497d-9e80-ed6961553e9e",
     "name": "incubator",
-    "display_name": null,
     "url": "https://kubernetes-charts-incubator.storage.googleapis.com",
     "kind": 0,
     "verified_publisher": false,
-    "user_alias": "demo",
-    "organization_name": null
+    "user_alias": "demo"
   },
   {
     "repository_id": "6a8a9480-5c85-4b8d-a4f9-9cd422022a29",
     "name": "community-operators",
-    "display_name": null,
     "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
     "kind": 3,
     "verified_publisher": false,
-    "user_alias": null,
     "organization_name": "test"
   },
   {
     "repository_id": "2f34ea81-a12f-4843-8082-ab46b2d81e56",
     "name": "repo",
-    "display_name": null,
     "url": "http://localhost:8080",
     "kind": 0,
     "verified_publisher": false,
-    "user_alias": "cintia",
-    "organization_name": null
+    "user_alias": "cintia"
   }
 ]

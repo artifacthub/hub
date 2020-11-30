@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull, isUndefined } from 'lodash';
+import { isUndefined } from 'lodash';
 import React from 'react';
 import Select, { components, ValueType } from 'react-select';
 
@@ -31,14 +31,14 @@ const CustomSelectValue = (props: any) => (
 
 const SelectWithIcon = (props: Props) => {
   const handleOnChange = (selectedOption: ValueType<OptionWithIcon>) => {
-    if (!isNull(selectedOption) && !isUndefined(selectedOption)) {
+    if (selectedOption) {
       const value = (selectedOption as OptionWithIcon).value;
       props.onChange(value);
     }
   };
 
   const getSelectedValue = (): OptionWithIcon | undefined => {
-    if (!isUndefined(props.selected)) {
+    if (props.selected) {
       const selected = props.options.find((opt: OptionWithIcon) => props.selected === opt.value);
       return selected;
     }

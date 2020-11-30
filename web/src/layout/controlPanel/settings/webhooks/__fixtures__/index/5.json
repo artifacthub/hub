@@ -19,7 +19,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -33,7 +32,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -47,7 +45,6 @@
           "kind": 1,
           "name": "falco",
           "displayName": "Falco",
-          "userAlias": null,
           "organizationName": "org1",
           "organizationDisplayName": "Org 1"
         }
@@ -61,7 +58,6 @@
           "kind": 1,
           "name": "falco",
           "displayName": "Falco",
-          "userAlias": null,
           "organizationName": "org1",
           "organizationDisplayName": "Org 1"
         }
@@ -75,7 +71,6 @@
           "kind": 1,
           "name": "falco",
           "displayName": "Falco",
-          "userAlias": null,
           "organizationName": "org1",
           "organizationDisplayName": "Org 1"
         }
@@ -89,7 +84,6 @@
           "kind": 1,
           "name": "falco",
           "displayName": "Falco",
-          "userAlias": null,
           "organizationName": "org1",
           "organizationDisplayName": "Org 1"
         }
@@ -103,7 +97,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -117,7 +110,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -129,9 +121,6 @@
     "name": "test1",
     "description": "retry",
     "url": "http://skdhkdhjdfs",
-    "secret": null,
-    "contentType": null,
-    "template": null,
     "active": true,
     "eventKinds": [0],
     "packages": [
@@ -144,7 +133,6 @@
           "kind": 1,
           "name": "falco",
           "displayName": "Falco",
-          "userAlias": null,
           "organizationName": "org1",
           "organizationDisplayName": "Org 1"
         }
@@ -154,24 +142,18 @@
   {
     "webhookId": "840d01ac-ff85-4778-8b1b-9b5e699994e8",
     "name": "dfgfgdhg",
-    "description": null,
     "url": "http://sdkljflkjds",
-    "secret": null,
-    "contentType": null,
-    "template": null,
     "active": true,
     "eventKinds": [0],
     "packages": [
       {
         "packageId": "f7f79967-da1c-41b2-be4c-ac353cd729cc",
         "name": "cosbench",
-        "logoImageId": null,
         "repository": {
           "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -183,7 +165,6 @@
     "name": "testdefault",
     "description": "lkdjklfsd",
     "url": "http://lksdjfkdl",
-    "secret": null,
     "contentType": "dfsdfggdfs",
     "template": "{\n    \"text\": \"Package {{ .Package.name }} version {{ .Package.version }} released! {{ .Package.url }}\"}\nslkdjfdlkslskdfjkldf jldksjg kljdflk gsdjfkl lgfdks\n}",
     "active": false,
@@ -198,7 +179,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }
@@ -210,7 +190,6 @@
     "name": "ffdsffdfgdsd",
     "description": "fgdfg",
     "url": "http://jksdhfkjfds",
-    "secret": null,
     "contentType": "dsafddadsg",
     "template": "{\n    \"event\": {\n        \"id\": \"{{ .Event.id }}\",\n        \"kind\": {{ .Event.kind }}\n    },\n    \"package\": {\n        \"kind\": {{ .Package.kind }},\n        \"name\": \"{{ .Package.name }}\",\n        \"version\": \"{{ .Package.version }}\",\n        \"publisher\": \"{{ .Package.publisher }}\",\n        \"url\": \"{{ .Package.url }}\"\n    }\n}",
     "active": true,
@@ -225,7 +204,6 @@
           "kind": 0,
           "name": "stable",
           "displayName": "Stable",
-          "userAlias": null,
           "organizationName": "helm",
           "organizationDisplayName": "Helm"
         }

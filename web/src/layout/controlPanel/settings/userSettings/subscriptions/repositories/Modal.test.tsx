@@ -24,11 +24,9 @@ const mockOptOutList: OptOutItem[] = [
     repository: {
       kind: 0,
       name: 'artifact-hub',
-      userAlias: null,
       displayName: 'Artifact Hub',
       repositoryId: 'a032a436-3568-4970-804a-2780f5e9d231',
       organizationName: 'artifactHub',
-      organizationDisplayName: null,
       url: 'http://url2.com',
     },
     eventKind: 2,

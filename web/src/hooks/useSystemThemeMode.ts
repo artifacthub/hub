@@ -5,12 +5,9 @@ import detectActiveThemeMode from '../utils/detectActiveThemeMode';
 
 export default function useSystemThemeMode(enabled: boolean, dispatch: React.Dispatch<any>) {
   const [mediaQuery, setMediaQuery] = useState<MediaQueryList | null>(null);
-  const themeDarkModeFn = useCallback(
-    (e: MediaQueryListEvent) => {
-      dispatch({ type: 'updateEfectiveTheme', theme: detectActiveThemeMode() });
-    },
-    [dispatch]
-  );
+  const themeDarkModeFn = useCallback(() => {
+    dispatch({ type: 'updateEfectiveTheme', theme: detectActiveThemeMode() });
+  }, [dispatch]);
 
   useEffect(() => {
     const removeListener = () => {

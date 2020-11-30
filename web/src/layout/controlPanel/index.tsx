@@ -62,7 +62,7 @@ const ControlPanelView = (props: Props) => {
   };
 
   useEffect(() => {
-    if (!isUndefined(ctx.user) && !isNull(ctx.user)) {
+    if (ctx.user) {
       let context: 'user' | 'org' = isUndefined(ctx.prefs.controlPanel.selectedOrg) ? 'user' : 'org';
       if (
         ctx.user.alias === props.userAlias &&
@@ -87,12 +87,12 @@ const ControlPanelView = (props: Props) => {
         });
       }
 
-      if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+      if (ctx.prefs.controlPanel.selectedOrg) {
         setLastSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
       }
 
       // On /settings/authorization, if user doesn't want to lose unsaved changes
-      if (!isUndefined(lastSelectedOrg) && checkIfAuthorizationIsActive(context)) {
+      if (lastSelectedOrg && checkIfAuthorizationIsActive(context)) {
         dispatch(updateOrg(lastSelectedOrg));
       } else {
         setContext(context);
@@ -101,7 +101,7 @@ const ControlPanelView = (props: Props) => {
   }, [ctx]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (!isUndefined(ctx.user) && !isNull(ctx.user) && !isNull(context)) {
+    if (ctx.user && !isNull(context)) {
       if (isControlPanelSectionAvailable(context, props.section, props.subsection)) {
         if (!isUndefined(props.section)) {
           setActiveSection(props.section);

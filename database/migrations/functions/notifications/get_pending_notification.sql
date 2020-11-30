@@ -1,7 +1,7 @@
 -- get_pending_notification returns a pending notification if available.
 create or replace function get_pending_notification()
 returns setof json as $$
-    select json_build_object(
+    select json_strip_nulls(json_build_object(
         'notification_id', n.notification_id,
         'event', json_build_object(
             'event_id', e.event_id,
@@ -26,7 +26,7 @@ returns setof json as $$
             ),
             '{"name": null, "url": null, "secret": null, "content_type": null, "template": null}'::jsonb
         ))
-    )
+    ))
     from notification n
     join event e using (event_id)
     left join "user" u using (user_id)

@@ -22,12 +22,9 @@ select is(
     }')::jsonb,
     '{
         "data": {
-            "packages": [],
-            "facets": null
+            "packages": []
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -234,9 +231,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -246,9 +240,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
@@ -260,10 +252,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -273,7 +263,6 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -286,10 +275,6 @@ select is(
                 "display_name": "Package 3",
                 "description": "description",
                 "version": "1.0.0",
-                "app_version": null,
-                "license": null,
-                "deprecated": null,
-                "signed": null,
                 "security_report_summary": {
                     "high": 2,
                     "medium": 1
@@ -303,7 +288,6 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -371,8 +355,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 3
         }
     }'::jsonb,
@@ -396,9 +378,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -408,9 +387,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
@@ -422,10 +399,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -435,7 +410,6 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -448,10 +422,6 @@ select is(
                 "display_name": "Package 3",
                 "description": "description",
                 "version": "1.0.0",
-                "app_version": null,
-                "license": null,
-                "deprecated": null,
-                "signed": null,
                 "security_report_summary": {
                     "high": 2,
                     "medium": 1
@@ -465,16 +435,12 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 3
         }
     }'::jsonb,
@@ -497,9 +463,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -509,16 +472,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -541,9 +499,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -553,16 +508,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -585,9 +535,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -597,16 +544,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -631,9 +573,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -643,9 +582,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
@@ -657,10 +594,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -670,16 +605,12 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 2
         }
     }'::jsonb,
@@ -704,9 +635,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -716,9 +644,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
@@ -730,10 +656,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -743,7 +667,6 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -803,8 +726,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 2
         }
     }'::jsonb,
@@ -828,9 +749,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -840,9 +758,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }],
             "facets": [{
@@ -892,8 +808,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -905,12 +819,9 @@ select is(
     }')::jsonb,
     '{
         "data": {
-            "packages": [],
-            "facets": null
+            "packages": []
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -937,9 +848,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -949,16 +857,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -986,10 +889,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -999,7 +900,6 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
@@ -1059,8 +959,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -1126,8 +1024,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -1192,8 +1088,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -1257,8 +1151,6 @@ select is(
             }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -1272,12 +1164,9 @@ select is(
     }')::jsonb,
     '{
         "data": {
-            "packages": [],
-            "facets": null
+            "packages": []
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 0
         }
     }'::jsonb,
@@ -1302,10 +1191,6 @@ select is(
                 "display_name": "Package 3",
                 "description": "description",
                 "version": "1.0.0",
-                "app_version": null,
-                "license": null,
-                "deprecated": null,
-                "signed": null,
                 "security_report_summary": {
                     "high": 2,
                     "medium": 1
@@ -1319,16 +1204,12 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -1353,9 +1234,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1365,16 +1243,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -1402,9 +1275,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1414,9 +1284,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000003",
@@ -1427,10 +1295,6 @@ select is(
                 "display_name": "Package 3",
                 "description": "description",
                 "version": "1.0.0",
-                "app_version": null,
-                "license": null,
-                "deprecated": null,
-                "signed": null,
                 "security_report_summary": {
                     "high": 2,
                     "medium": 1
@@ -1444,16 +1308,12 @@ select is(
                     "url": "https://repo3.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 2
         }
     }'::jsonb,
@@ -1480,9 +1340,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1492,16 +1349,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -1528,9 +1380,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1540,16 +1389,11 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
-            "limit": null,
-            "offset": null,
             "total": 1
         }
     }'::jsonb,
@@ -1577,9 +1421,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1589,9 +1430,7 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
             }, {
                 "package_id": "00000000-0000-0000-0000-000000000002",
@@ -1603,10 +1442,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1616,12 +1453,10 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
             "limit": 2,
@@ -1651,9 +1486,6 @@ select is(
                 "version": "1.0.0",
                 "app_version": "12.1.0",
                 "license": "Apache-2.0",
-                "deprecated": null,
-                "signed": null,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -1663,12 +1495,9 @@ select is(
                     "url": "https://repo1.com",
                     "verified_publisher": true,
                     "official": true,
-                    "user_alias": "user1",
-                    "organization_name": null,
-                    "organization_display_name": null
+                    "user_alias": "user1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
             "limit": 1,
@@ -1687,8 +1516,7 @@ select is(
     }')::jsonb,
     '{
         "data": {
-            "packages": [],
-            "facets": null
+            "packages": []
         },
         "metadata": {
             "limit": 1,
@@ -1717,10 +1545,8 @@ select is(
                 "description": "description",
                 "version": "1.0.0",
                 "app_version": "12.1.0",
-                "license": null,
                 "deprecated": true,
                 "signed": true,
-                "security_report_summary": null,
                 "created_at": 1592299234,
                 "repository": {
                     "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -1730,12 +1556,10 @@ select is(
                     "url": "https://repo2.com",
                     "verified_publisher": false,
                     "official": false,
-                    "user_alias": null,
                     "organization_name": "org1",
                     "organization_display_name": "Organization 1"
                 }
-            }],
-            "facets": null
+            }]
         },
         "metadata": {
             "limit": 1,
@@ -1754,8 +1578,7 @@ select is(
     }')::jsonb,
     '{
         "data": {
-            "packages": [],
-            "facets": null
+            "packages": []
         },
         "metadata": {
             "limit": 0,

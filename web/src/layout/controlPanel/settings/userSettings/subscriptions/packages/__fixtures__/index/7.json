@@ -9,7 +9,6 @@
       "kind": 0,
       "name": "stable",
       "displayName": "Stable",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },
@@ -19,13 +18,11 @@
     "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
     "name": "cerebro",
     "normalizedName": "cerebro",
-    "logoImageId": null,
     "repository": {
       "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
       "kind": 0,
       "name": "stable",
       "displayName": "Stable",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },
@@ -36,8 +33,6 @@
     "kind": 0,
     "name": "elastic-stack",
     "normalizedName": "elastic-stack",
-    "logoImageId": null,
-    "userAlias": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
     "repository": {
@@ -45,7 +40,6 @@
       "kind": 0,
       "name": "stable",
       "displayName": "Stable",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },
@@ -57,14 +51,11 @@
     "normalizedName": "ibm-redis",
     "logoImageId": "ca0a9e33-3656-4536-ac1b-4cff40bc6b88",
     "userAlias": "jsmith",
-    "organizationName": null,
-    "organizationDisplayName": null,
     "repository": {
       "repositoryId": "d3945a69-2aae-4ff9-8oi3-ce3b070d0384",
       "kind": 0,
       "name": "ibm-charts",
       "displayName": "IBM charts",
-      "userAlias": null,
       "organizationName": "org1",
       "organizationDisplayName": "Org 1"
     },
@@ -75,7 +66,6 @@
     "name": "SSH connections",
     "normalizedName": "ssh-connections",
     "logoImageId": "23baee82-817d-4443-bb12-164913cb631b",
-    "userAlias": null,
     "organizationName": "falco",
     "organizationDisplayName": "Falco",
     "repository": {
@@ -83,7 +73,6 @@
       "kind": 1,
       "name": "falco",
       "displayName": "Falco rules",
-      "userAlias": null,
       "organizationName": "org2",
       "organizationDisplayName": "Org 2"
     },
@@ -99,7 +88,6 @@
       "kind": 1,
       "name": "falco",
       "displayName": "Falco rules",
-      "userAlias": null,
       "organizationName": "org2",
       "organizationDisplayName": "Org 2"
     },
@@ -110,13 +98,11 @@
     "name": "Trusted Registry Images",
     "normalizedName": "trusted-registry-images",
     "logoImageId": "828583b3-e3a0-4970-899f-27a903fd72cb",
-    "userAlias": null,
     "repository": {
       "repositoryId": "d394iu69-2aae-4ff9-8oi3-ce3b070d0384",
       "kind": 2,
       "name": "opa",
       "displayName": "OPA policies",
-      "userAlias": null,
       "organizationName": "opa",
       "organizationDisplayName": "OPA"
     },
@@ -132,7 +118,6 @@
       "kind": 0,
       "name": "incubator",
       "displayName": "Incubator",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },

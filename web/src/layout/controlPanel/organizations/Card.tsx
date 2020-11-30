@@ -133,9 +133,7 @@ const OrganizationCard = (props: Props) => {
                 >
                   <div className={`arrow ${styles.arrow}`} />
 
-                  {!isUndefined(props.organization.confirmed) &&
-                  !isNull(props.organization.confirmed) &&
-                  props.organization.confirmed ? (
+                  {props.organization.confirmed ? (
                     <>
                       {isMember && props.organization.membersCount && props.organization.membersCount > 1 && (
                         <button
@@ -246,7 +244,7 @@ const OrganizationCard = (props: Props) => {
             )}
           </div>
 
-          {!isUndefined(props.organization.homeUrl) && !isNull(props.organization.homeUrl) && (
+          {props.organization.homeUrl && (
             <div className="mt-3 text-truncate">
               <small className="text-muted text-uppercase mr-1">Homepage: </small>
               <ExternalLink href={props.organization.homeUrl} className={`text-reset ${styles.link}`}>
@@ -255,7 +253,7 @@ const OrganizationCard = (props: Props) => {
             </div>
           )}
 
-          {!isUndefined(props.organization.description) && !isNull(props.organization.description) && (
+          {props.organization.description && (
             <div className="mt-2">
               <p className="mb-0">{props.organization.description}</p>
             </div>

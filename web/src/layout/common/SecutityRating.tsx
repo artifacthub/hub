@@ -9,7 +9,7 @@ import Label from './Label';
 import styles from './SecurityRating.module.css';
 
 interface Props {
-  summary: SecurityReportSummary | null;
+  summary?: SecurityReportSummary | null;
   className?: string;
   onlyBadge: boolean;
   withLink?: string;
@@ -20,18 +20,20 @@ const SecurityRating = (props: Props) => {
   const [severity, setSeverity] = useState<SRating | undefined>();
 
   useEffect(() => {
-    let rating = SEVERITY_RATING.default!;
-    for (const key in VulnerabilitySeverity) {
-      const sev = key.toLowerCase();
-      if (!isNull(props.summary) && props.summary.hasOwnProperty(sev) && (props.summary as any)[sev] > 0) {
-        rating = SEVERITY_RATING[sev as VulnerabilitySeverity]!;
-        break;
+    if (props.summary) {
+      let rating = SEVERITY_RATING.default!;
+      for (const key in VulnerabilitySeverity) {
+        const sev = key.toLowerCase();
+        if (props.summary && props.summary.hasOwnProperty(sev) && (props.summary as any)[sev] > 0) {
+          rating = SEVERITY_RATING[sev as VulnerabilitySeverity]!;
+          break;
+        }
       }
+      setSeverity(rating);
     }
-    setSeverity(rating);
   }, [props.summary]);
 
-  if (isNull(props.summary) || isUndefined(severity)) return null;
+  if (isNull(props.summary) || isUndefined(props.summary) || isUndefined(severity)) return null;
 
   const badge = (className?: string) => (
     <ElementWithTooltip

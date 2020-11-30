@@ -411,7 +411,7 @@ const PackageView = (props: Props) => {
                         </div>
 
                         <div className={`d-none d-md-flex flex-row align-items-baseline mt-2 ${styles.subtitle}`}>
-                          {!isNull(detail.repository.userAlias) ? (
+                          {detail.repository.userAlias ? (
                             <div className={`mr-2 text-truncate ${styles.mw50}`}>
                               <small className="mr-1 text-uppercase text-muted">User: </small>
 

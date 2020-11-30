@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -49,18 +48,17 @@ const PackageCard = (props: Props) => {
                     </div>
 
                     <div className={`card-subtitle d-flex flex-wrap mw-100 mt-1 ${styles.subtitle}`}>
-                      {!isUndefined(props.package.repository.organizationName) &&
-                        props.package.repository.organizationName && (
-                          <div className="mr-2 text-truncate">
-                            <span className="text-muted text-uppercase mr-1">Org:</span>
-                            <p className="d-inline mb-0 text-dark">
-                              {props.package.repository.organizationDisplayName ||
-                                props.package.repository.organizationName}
-                            </p>
-                          </div>
-                        )}
+                      {props.package.repository.organizationName && (
+                        <div className="mr-2 text-truncate">
+                          <span className="text-muted text-uppercase mr-1">Org:</span>
+                          <p className="d-inline mb-0 text-dark">
+                            {props.package.repository.organizationDisplayName ||
+                              props.package.repository.organizationName}
+                          </p>
+                        </div>
+                      )}
 
-                      {!isNull(props.package.repository.userAlias) && (
+                      {props.package.repository.userAlias && (
                         <div className="mr-2 text-truncate">
                           <span className="text-muted text-uppercase mr-1">User:</span>
                           <p className="d-inline mb-0 text-dark">{props.package.repository.userAlias}</p>

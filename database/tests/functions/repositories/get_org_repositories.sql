@@ -107,10 +107,8 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
-        "digest": null,
         "last_tracking_ts": 0,
         "last_tracking_errors": "error1\\nerror2\\nerror3",
-        "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1"
     }, {
@@ -122,10 +120,6 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
-        "digest": null,
-        "last_tracking_ts": null,
-        "last_tracking_errors": null,
-        "user_alias": null,
         "organization_name": "org1",
         "organization_display_name": "Organization 1"
     }]'::jsonb,

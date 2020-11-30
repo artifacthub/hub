@@ -66,7 +66,7 @@ const SearchPackages = (props: Props) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    if (!isNull(packages)) {
+    if (packages) {
       setPackages(null);
     }
   };

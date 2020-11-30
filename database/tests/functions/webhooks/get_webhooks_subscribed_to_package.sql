@@ -98,14 +98,7 @@ select is(
                     "normalized_name": "package-1",
                     "logo_image_id": "00000000-0000-0000-0000-000000000001",
                     "stars": 0,
-                    "display_name": null,
-                    "description": null,
                     "version": "1.0.0",
-                    "app_version": null,
-                    "license": null,
-                    "deprecated": null,
-                    "signed": null,
-                    "security_report_summary": null,
                     "created_at": 1592299234,
                     "repository": {
                         "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -116,13 +109,10 @@ select is(
                         "private": false,
                         "verified_publisher": false,
                         "official": false,
-                        "user_alias": "user1",
-                        "organization_name": null,
-                        "organization_display_name": null
+                        "user_alias": "user1"
                     }
                 }
-            ],
-            "last_notifications": null
+            ]
         }
     ]'::jsonb,
     'Webhook1 should be returned when asking for kind0 and package1'

@@ -75,13 +75,13 @@ describe('Member Card - members section', () => {
           confirmed: false,
         },
       };
-      const { getByText } = render(
+      const { getAllByText } = render(
         <AppCtx.Provider value={{ ctx: mockCtx, dispatch: jest.fn() }}>
           <Card {...props} />
         </AppCtx.Provider>
       );
 
-      expect(getByText('test')).toBeInTheDocument();
+      expect(getAllByText('test')).toHaveLength(2);
     });
 
     it('calls deleteOrganizationMember to delete member', async () => {

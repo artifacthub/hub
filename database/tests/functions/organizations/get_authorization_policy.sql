@@ -32,7 +32,6 @@ select is(
     '{
         "authorization_enabled": true,
         "predefined_policy": "rbac.v1",
-        "custom_policy": null,
         "policy_data": {"k1": "v1"}
     }'::jsonb,
     'Organizations authorization policy is returned as a json object'

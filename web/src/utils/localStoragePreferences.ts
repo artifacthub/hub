@@ -1,5 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-
 import { Prefs } from '../types';
 
 interface PreferencesList {
@@ -49,7 +47,7 @@ export class LocalStoragePreferences {
 
   public setPrefs(prefs: Prefs, alias?: string) {
     let preferences;
-    if (!isUndefined(alias)) {
+    if (alias) {
       preferences = { ...this.savedPreferences, [alias]: prefs };
     } else {
       preferences = { ...this.savedPreferences, guest: prefs };
@@ -68,8 +66,8 @@ export class LocalStoragePreferences {
       ...DEFAULT_PREFS,
       ...this.savedPreferences.guest,
     };
-    if (!isUndefined(alias)) {
-      if (!isUndefined(this.savedPreferences[alias])) {
+    if (alias) {
+      if (this.savedPreferences[alias]) {
         prefs = {
           ...DEFAULT_PREFS,
           ...this.savedPreferences[alias],

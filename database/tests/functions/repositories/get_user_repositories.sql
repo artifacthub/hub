@@ -82,12 +82,9 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
-        "digest": null,
         "last_tracking_ts": 0,
         "last_tracking_errors": "error1\\nerror2\\nerror3",
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
         "name": "repo2",
@@ -97,12 +94,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
-        "digest": null,
-        "last_tracking_ts": null,
-        "last_tracking_errors": null,
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }]'::jsonb,
     'Repositories belonging to user provided are returned as a json array of objects'
 );

@@ -61,12 +61,10 @@ select is(
         "org1": {
             "authorization_enabled": true,
             "predefined_policy": "rbac.v1",
-            "custom_policy": null,
             "policy_data": {"k1": "v1"}
         },
         "org2": {
             "authorization_enabled": true,
-            "predefined_policy": null,
             "custom_policy": "org2 custom policy",
             "policy_data": {"k2": "v2"}
         }

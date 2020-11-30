@@ -1,6 +1,3 @@
 {
-  "authorizationEnabled": false,
-  "predefinedPolicy": null,
-  "customPolicy": null,
-  "policyData": null
+  "authorizationEnabled": false
 }

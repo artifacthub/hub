@@ -1524,11 +1524,9 @@ describe('index API', () => {
 
         const mockRepo = {
           name: 'repo1',
-          displayName: null,
           url: 'https://url.repo',
           kind: 0,
           verified_publisher: false,
-          userAlias: null,
           organizationName: 'org1',
         };
 
@@ -1550,11 +1548,9 @@ describe('index API', () => {
 
         const mockRepo = {
           name: 'repo1',
-          displayName: null,
           url: 'https://url.repo',
           kind: 0,
           verified_publisher: false,
-          userAlias: null,
           organizationName: 'org1',
         };
 
@@ -1576,12 +1572,10 @@ describe('index API', () => {
 
         const mockRepo = {
           name: 'repo1',
-          displayName: null,
           url: 'https://url.repo',
           kind: 0,
           verified_publisher: false,
           userAlias: 'user1',
-          organizationName: null,
         };
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo, 'org1');
@@ -1602,12 +1596,10 @@ describe('index API', () => {
 
         const mockRepo = {
           name: 'repo1',
-          displayName: null,
           url: 'https://url.repo',
           kind: 0,
           verified_publisher: false,
           userAlias: 'user1',
-          organizationName: null,
         };
 
         const response = await methods.API.claimRepositoryOwnership(mockRepo);
@@ -1648,7 +1640,6 @@ describe('index API', () => {
 
         const policy = {
           authorizationEnabled: true,
-          predefinedPolicy: null,
           customPolicy: 'custom',
           policyData: '{}',
         };

@@ -8,7 +8,6 @@
     "kind": 0,
     "name": "stable",
     "displayName": "Stable",
-    "userAlias": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm"
   },

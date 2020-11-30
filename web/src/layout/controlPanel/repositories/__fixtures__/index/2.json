@@ -3,10 +3,7 @@
     "kind": 0,
     "repositoryId": "test",
     "name": "test",
-    "displayName": null,
     "url": "http://test.com",
-    "userAlias": "user",
-    "lastTrackingTs": null,
-    "lastTrackingErrors": null
+    "userAlias": "user"
   }
 ]

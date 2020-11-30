@@ -1,4 +1,4 @@
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty, isNull, isUndefined } from 'lodash';
 import React from 'react';
 
 import { SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
@@ -11,7 +11,7 @@ import styles from './SecurityReport.module.css';
 
 interface Props {
   className?: string;
-  summary: SecurityReportSummary | null;
+  summary?: SecurityReportSummary | null;
   packageId: string;
   version: string;
   createdAt?: number;
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const SecurityReport = (props: Props) => {
-  if (isNull(props.summary) || isEmpty(props.summary)) return null;
+  if (isNull(props.summary) || isUndefined(props.summary) || isEmpty(props.summary)) return null;
 
   const total: number = sumObjectValues(props.summary);
 

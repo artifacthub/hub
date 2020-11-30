@@ -8,7 +8,6 @@
     "kind": 1,
     "name": "repo",
     "displayName": "Repo",
-    "userAlias": null,
     "organizationName": "falco",
     "organizationDisplayName": "Falco"
   },

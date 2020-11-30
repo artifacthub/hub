@@ -1,4 +1,4 @@
-import { isNull, isUndefined } from 'lodash';
+import { isNumber } from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { AiOutlineStop } from 'react-icons/ai';
@@ -40,7 +40,7 @@ const PackageInfo = (props: Props) => {
 
   const starsAndKindInfo = (
     <div className={`align-self-start d-flex align-items-center text-uppercase ml-auto ${styles.kind}`}>
-      {!isUndefined(props.package.stars) && !isNull(props.package.stars) && (
+      {isNumber(props.package.stars) && (
         <span className={`badge badge-pill badge-light mr-2 ${styles.starBadge}`}>
           <div className="d-flex align-items-center">
             <FaStar className="mr-1" />
@@ -48,6 +48,7 @@ const PackageInfo = (props: Props) => {
           </div>
         </span>
       )}
+
       <RepositoryIcon className={styles.icon} kind={props.package.repository.kind} />
     </div>
   );
@@ -122,19 +123,18 @@ const PackageInfo = (props: Props) => {
 
             <div className={`d-none d-md-block card-subtitle align-items-baseline ${styles.subtitle}`}>
               <div className="d-flex flex-row align-items-baseline">
-                {!isUndefined(props.package.repository.organizationName) &&
-                  props.package.repository.organizationName && (
-                    <OrganizationInfo
-                      className={`mr-0 d-flex flex-row align-items-baseline ${styles.mx50} `}
-                      btnClassName="text-truncate mw-100"
-                      organizationName={props.package.repository.organizationName}
-                      organizationDisplayName={props.package.repository.organizationDisplayName}
-                      deprecated={props.package.deprecated}
-                      visibleLegend
-                    />
-                  )}
+                {props.package.repository.organizationName && (
+                  <OrganizationInfo
+                    className={`mr-0 d-flex flex-row align-items-baseline ${styles.mx50} `}
+                    btnClassName="text-truncate mw-100"
+                    organizationName={props.package.repository.organizationName}
+                    organizationDisplayName={props.package.repository.organizationDisplayName}
+                    deprecated={props.package.deprecated}
+                    visibleLegend
+                  />
+                )}
 
-                {!isNull(props.package.repository.userAlias) && (
+                {props.package.repository.userAlias && (
                   <>
                     <span className="text-muted text-uppercase mr-1">User: </span>
                     <button
@@ -246,7 +246,7 @@ const PackageInfo = (props: Props) => {
         {props.package.deprecated && (
           <Label text="Deprecated" icon={<AiOutlineStop />} labelStyle="danger" className="d-inline mt-3" />
         )}
-        {!isUndefined(props.visibleSignedBadge) && props.visibleSignedBadge && (
+        {props.visibleSignedBadge && (
           <SignedBadge
             signed={props.package.signed}
             repositoryKind={props.package.repository.kind}

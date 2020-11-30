@@ -28,10 +28,10 @@ describe('Image', () => {
     );
   });
 
-  it('renders placeholder image when imageId is null', () => {
+  it('renders placeholder image when imageId is not defined', () => {
     const props = {
       ...defaultProps,
-      imageId: null,
+      imageId: undefined,
     };
     const { getByAltText } = render(<Image {...props} />);
     const image = getByAltText(defaultProps.alt);
@@ -54,7 +54,7 @@ describe('Image', () => {
   it('renders default placeholder when kind is undefined', () => {
     const props = {
       ...defaultProps,
-      imageId: null,
+      imageId: undefined,
       kind: undefined,
     };
     const { getByAltText } = render(<Image {...props} />);

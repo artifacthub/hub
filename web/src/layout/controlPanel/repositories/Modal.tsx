@@ -394,7 +394,7 @@ const RepositoryModal = (props: Props) => {
               label="Url"
               labelLegend={<small className="ml-1 font-italic">(Required)</small>}
               name="url"
-              value={!isUndefined(props.repository) ? props.repository.url : ''}
+              value={props.repository ? props.repository.url || '' : ''}
               invalidText={{
                 default: 'This field is required',
                 typeMismatch: 'Please enter a valid url',
@@ -406,7 +406,7 @@ const RepositoryModal = (props: Props) => {
               checkAvailability={{
                 isAvailable: true,
                 resourceKind: ResourceKind.repositoryURL,
-                excluded: !isUndefined(props.repository) ? [props.repository.url] : [],
+                excluded: props.repository ? [props.repository.url] : [],
               }}
               pattern={getURLPattern()}
               required
@@ -420,11 +420,7 @@ const RepositoryModal = (props: Props) => {
                   label="Username"
                   name="authUser"
                   autoComplete="off"
-                  value={
-                    !isUndefined(props.repository) && !isNull(props.repository.authUser)
-                      ? props.repository.authUser
-                      : ''
-                  }
+                  value={props.repository ? props.repository.authUser || '' : ''}
                 />
 
                 <InputField
@@ -433,11 +429,7 @@ const RepositoryModal = (props: Props) => {
                   label="Password"
                   name="authPass"
                   autoComplete="off"
-                  value={
-                    !isUndefined(props.repository) && !isNull(props.repository.authPass)
-                      ? props.repository.authPass
-                      : ''
-                  }
+                  value={props.repository ? props.repository.authPass || '' : ''}
                   visiblePassword
                 />
               </div>

@@ -1,4 +1,4 @@
-import { isEmpty, isNull } from 'lodash';
+import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { HiClipboardList } from 'react-icons/hi';
@@ -39,7 +39,7 @@ const SecurityModal = (props: Props) => {
       const targets = report[images[0]];
       if (
         targets.length === 1 &&
-        !isNull(report[images[0]][0].Vulnerabilities) &&
+        report[images[0]][0].Vulnerabilities &&
         report[images[0]][0].Vulnerabilities!.length > 0
       ) {
         setExpandedTarget(`${images[0]}_${report[images[0]][0].Target}`);

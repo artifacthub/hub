@@ -14,7 +14,7 @@ interface Props {
 
 const LastNotificationsModal = (props: Props) => {
   const notificationsWithErrors: WebhookNotification[] = props.notifications.filter(
-    (notif: WebhookNotification) => !isNull(notif.error)
+    (notif: WebhookNotification) => notif.error
   );
 
   return (
@@ -60,10 +60,10 @@ const LastNotificationsModal = (props: Props) => {
                   <td className="align-middle text-center">
                     {item.processed && (
                       <>
-                        {isNull(item.error) ? (
-                          <FaCheck className="text-success" data-testid="succeededIcon" />
-                        ) : (
+                        {item.error ? (
                           <FaTimes className="text-danger" data-testid="failedIcon" />
+                        ) : (
+                          <FaCheck className="text-success" data-testid="succeededIcon" />
                         )}
                       </>
                     )}

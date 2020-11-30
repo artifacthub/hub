@@ -1,6 +1,5 @@
 {
   "packageId": "0acb228c-17ab-4e50-85e9-ffc7102ea423",
-  "displayName": null,
   "name": "airflow",
   "normalizedName": "airflow",
   "logoImageId": "f4a6b5c4-b8e2-4ab3-ad49-f792785f4ddc",
@@ -9,7 +8,6 @@
     "kind": 0,
     "name": "stable",
     "displayName": "Stable",
-    "userAlias": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm"
   },

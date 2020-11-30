@@ -1,7 +1,6 @@
 {
   "authorizationEnabled": true,
   "predefinedPolicy": "rbac.v1",
-  "customPolicy": null,
   "policyData": {
     "roles": {
       "owner": {

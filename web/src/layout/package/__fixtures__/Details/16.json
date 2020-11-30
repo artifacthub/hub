@@ -2,16 +2,12 @@
   "packageId": "pkgId",
   "name": "deprek8ion",
   "normalizedName": "deprek8ion",
-  "logoImageId": null,
   "isOperator": false,
-  "channels": null,
-  "defaultChannel": null,
   "displayName": "Deprek8ion",
   "description": "A set of rego policies to monitor Kubernetes APIs deprecations",
   "keywords": ["monitoring", "kubernetes", "deprecations", "policies", "opa"],
   "homeUrl": "https://github.com/swade1987/deprek8ion",
   "readme": "# Deprek8ion 🕵️‍\n\nA set of rego policies to monitor Kubernetes APIs deprecations.\n\nThe Kubernetes API deprecations can be found using <https://relnotes.k8s.io/?markdown=deprecated>.\n\n## Docker image\n\nThe docker container contains the most recent version of [conftest](https://github.com/instrumenta/conftest) as well as the policies at `/policies`.\n\nImage tags can be found at [https://eu.gcr.io/swade1987/deprek8ion](https://eu.gcr.io/swade1987/deprek8ion)\n\n## Example usage\n\nAn example of how to use the docker container can be seen below:\n\n```sh\ndocker run --rm --name demo -v $(pwd)/demo:/demo eu.gcr.io/swade1987/deprek8ion:1.1.17 /demo/ingress.yaml\n```\n\nOr directly pipe some resources into the container:\n\n```sh\ncat ./demo/ingress.yaml | docker run --rm -i eu.gcr.io/swade1987/deprek8ion:1.1.17 -\n```\n",
-  "install": null,
   "links": [
     {
       "url": "https://github.com/swade1987/deprek8ion/tree/master/policies",
@@ -37,8 +33,6 @@
       "createdAt": 1595872800
     }
   ],
-  "appVersion": null,
-  "digest": null,
   "deprecated": false,
   "license": "MIT",
   "signed": false,
@@ -61,8 +55,6 @@
     "name": "deprek8ion",
     "userAlias": "alias",
     "displayName": "deprek8ion",
-    "repositoryId": "repoId",
-    "organizationName": null,
-    "organizationDisplayName": null
+    "repositoryId": "repoId"
   }
 }

@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useRef, useState } from 'react';
 import { MdBusiness } from 'react-icons/md';
@@ -79,13 +78,13 @@ const OrganizationInfo = (props: Props) => {
           onMouseEnter={() => setOnDropdownHover(true)}
           onMouseLeave={() => setOnDropdownHover(false)}
         >
-          {!isUndefined(organization) && !isNull(organization) && (
+          {organization && (
             <div className={styles.content}>
               <div className="d-flex flex-row align-items-center">
                 <div
                   className={`d-flex align-items-center justify-content-center p-1 overflow-hidden mr-2 ${styles.imageWrapper} imageWrapper`}
                 >
-                  {!isUndefined(organization.logoImageId) ? (
+                  {organization.logoImageId ? (
                     <Image
                       alt={organization.displayName || organization.name}
                       imageId={organization.logoImageId}
@@ -102,7 +101,7 @@ const OrganizationInfo = (props: Props) => {
                 </div>
               </div>
 
-              {!isUndefined(organization.homeUrl) && !isNull(organization.homeUrl) && (
+              {organization.homeUrl && (
                 <div className="mt-1 text-truncate d-flex flex-row align-items-baseline">
                   <small className="text-muted text-uppercase mr-1">Homepage: </small>
                   <ExternalLink
@@ -115,7 +114,7 @@ const OrganizationInfo = (props: Props) => {
                 </div>
               )}
 
-              {!isUndefined(organization.description) && !isNull(organization.description) && (
+              {organization.description && (
                 <div className={`mt-2 text-muted ${styles.description}`}>{organization.description}</div>
               )}
             </div>
@@ -160,11 +159,7 @@ const OrganizationInfo = (props: Props) => {
               'text-truncate': isUndefined(props.multiLine) || !props.multiLine,
             })}
           >
-            {!isUndefined(props.organizationDisplayName) && props.organizationDisplayName ? (
-              <>{props.organizationDisplayName}</>
-            ) : (
-              <>{props.organizationName}</>
-            )}
+            {props.organizationDisplayName || props.organizationName}
           </div>
         </button>
       </div>

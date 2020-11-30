@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { isNull } from 'lodash';
+import { isNull, isUndefined } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
@@ -144,7 +144,7 @@ const ChangelogModal = (props: Props) => {
         >
           <div className="mx-0 mx-md-3 my-1 mw-100">
             {changelog.map((item: ChangeLog) => {
-              if (isNull(item.changes)) return null;
+              if (isNull(item.changes) || isUndefined(item.changes)) return null;
               return (
                 <div key={`v_${item.version}`} data-testid="changelogBlock">
                   <div className="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2">

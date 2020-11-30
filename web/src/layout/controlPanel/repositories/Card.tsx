@@ -295,7 +295,7 @@ const RepositoryCard = (props: Props) => {
               </button>
             </div>
           </div>
-          {!isUndefined(props.repository.repositoryId) && (
+          {props.repository.repositoryId && (
             <div className="mt-2 d-flex flex-row align-items-baseline">
               <div className="text-truncate">
                 <small className="text-muted text-uppercase mr-1">ID: </small>
@@ -315,12 +315,10 @@ const RepositoryCard = (props: Props) => {
             <small className="text-muted text-uppercase mr-1">Url: </small>
             <small>{props.repository.url}</small>
           </div>
-          {!isUndefined(props.repository.lastTrackingTs) && (
-            <div>
-              <small className="text-muted text-uppercase mr-1">Last processed: </small>
-              <small>{getLastTracking()}</small>
-            </div>
-          )}
+          <div>
+            <small className="text-muted text-uppercase mr-1">Last processed: </small>
+            <small>{getLastTracking()}</small>
+          </div>
 
           <div className="mt-3 m-md-0 d-flex flex-row d-md-none">
             <OfficialBadge official={props.repository.official} className="mr-3" />
