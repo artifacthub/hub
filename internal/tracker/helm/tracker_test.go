@@ -6,7 +6,6 @@ import (
 	"net/url"
 	"os"
 	"path"
-	"sync"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -33,7 +32,7 @@ func TestTracker(t *testing.T) {
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
-		err := tw.t.Track(tw.wg)
+		err := tw.t.Track()
 		assert.Error(t, err)
 		tw.assertExpectations(t, nil)
 	})
@@ -49,7 +48,7 @@ func TestTracker(t *testing.T) {
 		tw.il.On("LoadIndex", r).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
-		err := tw.t.Track(tw.wg)
+		err := tw.t.Track()
 		assert.Error(t, err)
 		tw.assertExpectations(t, nil)
 	})
@@ -65,7 +64,7 @@ func TestTracker(t *testing.T) {
 		tw.tg.On("Tags", tw.ctx, r).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
-		err := tw.t.Track(tw.wg)
+		err := tw.t.Track()
 		assert.Error(t, err)
 		tw.assertExpectations(t, nil)
 	})
@@ -324,7 +323,7 @@ func TestTracker(t *testing.T) {
 				tw.rm.On("SetVerifiedPublisher", tw.ctx, tc.r.RepositoryID, true).Return(nil)
 
 				// Run tracker and check expectations
-				err := tw.t.Track(tw.wg)
+				err := tw.t.Track()
 				assert.NoError(t, err)
 				tw.assertExpectations(t, tc.expectedJobs)
 			})
@@ -458,7 +457,7 @@ func TestTracker(t *testing.T) {
 				tw.tg.On("Tags", tw.ctx, tc.r).Return(tc.tags, nil)
 
 				// Run tracker and check expectations
-				err := tw.t.Track(tw.wg)
+				err := tw.t.Track()
 				assert.NoError(t, err)
 				tw.assertExpectations(t, tc.expectedJobs)
 			})
@@ -467,15 +466,15 @@ func TestTracker(t *testing.T) {
 }
 
 type trackerWrapper struct {
-	ctx        context.Context
-	cfg        *viper.Viper
-	wg         *sync.WaitGroup
-	rm         *repo.ManagerMock
-	il         *repo.HelmIndexLoaderMock
-	tg         *OCITagsGetterMock
-	ec         *tracker.ErrorsCollectorMock
-	t          tracker.Tracker
-	queuedJobs *[]*Job
+	ctx          context.Context
+	cfg          *viper.Viper
+	rm           *repo.ManagerMock
+	il           *repo.HelmIndexLoaderMock
+	tg           *OCITagsGetterMock
+	ec           *tracker.ErrorsCollectorMock
+	t            tracker.Tracker
+	queuedJobs   *[]*Job
+	jobsConsumed chan struct{}
 }
 
 func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
@@ -496,35 +495,31 @@ func newTrackerWrapper(r *hub.Repository) *trackerWrapper {
 	}
 	t := NewTracker(svc, r, WithNumWorkers(-1), WithIndexLoader(il), WithOCITagsGetter(tg))
 
-	// Wait group used for Track()
-	var wg sync.WaitGroup
-	wg.Add(1)
-
 	// Consume queued jobs from tracker queue and store them
+	jobsConsumed := make(chan struct{})
 	var queuedJobs []*Job
-	wg.Add(1)
 	go func() {
-		defer wg.Done()
 		for job := range t.(*Tracker).queue {
 			queuedJobs = append(queuedJobs, job)
 		}
+		jobsConsumed <- struct{}{}
 	}()
 
 	return &trackerWrapper{
-		ctx:        ctx,
-		cfg:        cfg,
-		wg:         &wg,
-		rm:         rm,
-		il:         il,
-		tg:         tg,
-		ec:         ec,
-		t:          t,
-		queuedJobs: &queuedJobs,
+		ctx:          ctx,
+		cfg:          cfg,
+		rm:           rm,
+		il:           il,
+		tg:           tg,
+		ec:           ec,
+		t:            t,
+		queuedJobs:   &queuedJobs,
+		jobsConsumed: jobsConsumed,
 	}
 }
 
 func (tw *trackerWrapper) assertExpectations(t *testing.T, expectedJobs []*Job) {
-	tw.wg.Wait()
+	<-tw.jobsConsumed
 
 	tw.il.AssertExpectations(t)
 	tw.tg.AssertExpectations(t)

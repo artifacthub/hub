@@ -388,7 +388,7 @@ func TestGetAll(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetAllJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.rm.On("GetAllJSON", r.Context(), false).Return([]byte("dataJSON"), nil)
 		hw.h.GetAll(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -408,7 +408,7 @@ func TestGetAll(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetAllJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.rm.On("GetAllJSON", r.Context(), false).Return(nil, tests.ErrFakeDB)
 		hw.h.GetAll(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -447,7 +447,7 @@ func TestGetByKind(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return([]byte("dataJSON"), nil)
+		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM, false).Return([]byte("dataJSON"), nil)
 		hw.h.GetByKind(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()
@@ -468,7 +468,7 @@ func TestGetByKind(t *testing.T) {
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
 
 		hw := newHandlersWrapper()
-		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM).Return(nil, tests.ErrFakeDB)
+		hw.rm.On("GetByKindJSON", r.Context(), hub.OLM, false).Return(nil, tests.ErrFakeDB)
 		hw.h.GetByKind(w, r)
 		resp := w.Result()
 		defer resp.Body.Close()

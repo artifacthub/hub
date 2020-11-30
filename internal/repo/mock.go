@@ -63,14 +63,14 @@ func (m *ManagerMock) Delete(ctx context.Context, name string) error {
 
 // GetAll implements the RepositoryManager interface.
 func (m *ManagerMock) GetAll(ctx context.Context, includeCredentials bool) ([]*hub.Repository, error) {
-	args := m.Called(ctx)
+	args := m.Called(ctx, includeCredentials)
 	data, _ := args.Get(0).([]*hub.Repository)
 	return data, args.Error(1)
 }
 
 // GetAllJSON implements the RepositoryManager interface.
 func (m *ManagerMock) GetAllJSON(ctx context.Context, includeCredentials bool) ([]byte, error) {
-	args := m.Called(ctx)
+	args := m.Called(ctx, includeCredentials)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
@@ -92,7 +92,7 @@ func (m *ManagerMock) GetByKind(
 	kind hub.RepositoryKind,
 	includeCredentials bool,
 ) ([]*hub.Repository, error) {
-	args := m.Called(ctx, kind)
+	args := m.Called(ctx, kind, includeCredentials)
 	data, _ := args.Get(0).([]*hub.Repository)
 	return data, args.Error(1)
 }
@@ -103,7 +103,7 @@ func (m *ManagerMock) GetByKindJSON(
 	kind hub.RepositoryKind,
 	includeCredentials bool,
 ) ([]byte, error) {
-	args := m.Called(ctx, kind)
+	args := m.Called(ctx, kind, includeCredentials)
 	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
@@ -114,7 +114,7 @@ func (m *ManagerMock) GetByName(
 	name string,
 	includeCredentials bool,
 ) (*hub.Repository, error) {
-	args := m.Called(ctx, name)
+	args := m.Called(ctx, name, includeCredentials)
 	data, _ := args.Get(0).(*hub.Repository)
 	return data, args.Error(1)
 }

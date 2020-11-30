@@ -75,7 +75,7 @@ func main() {
 		Handler:      handlers.Setup(cfg, hSvc).Router,
 	}
 	go func() {
-		if err := srv.ListenAndServe(); errors.Is(err, http.ErrServerClosed) {
+		if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal().Err(err).Msg("hub server ListenAndServe failed")
 		}
 	}()

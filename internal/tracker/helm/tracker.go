@@ -91,9 +91,7 @@ func WithOCITagsGetter(tg tracker.OCITagsGetter) func(t tracker.Tracker) {
 // Track registers or unregisters the Helm packages available in the repository
 // provided as needed. It is in charge of generating jobs to register or
 // unregister Helm packages and dispatching them among the available workers.
-func (t *Tracker) Track(wg *sync.WaitGroup) error {
-	defer wg.Done()
-
+func (t *Tracker) Track() error {
 	// Launch workers
 	var workersWg sync.WaitGroup
 	defer workersWg.Wait()
@@ -176,7 +174,12 @@ func (t *Tracker) Track(wg *sync.WaitGroup) error {
 	u, _ := url.Parse(t.r.URL)
 	if repo.SchemeIsHTTP(u) {
 		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-		err = tracker.SetVerifiedPublisherFlag(t.svc, t.r, u.String())
+		err = tracker.SetVerifiedPublisherFlag(
+			t.svc.Ctx,
+			t.svc.Rm,
+			t.r,
+			u.String(),
+		)
 		if err != nil {
 			t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 		}
