@@ -8,6 +8,7 @@ import (
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
 	"github.com/spf13/viper"
+	"golang.org/x/time/rate"
 )
 
 // HTTPClient defines the methods an HTTPClient implementation must provide.
@@ -35,17 +36,18 @@ type New func(svc *Services, r *hub.Repository, opts ...func(t Tracker)) Tracker
 // Services represents a set of services that must be provided to a Tracker
 // instance so that it can perform its tasks.
 type Services struct {
-	Ctx context.Context
-	Cfg *viper.Viper
-	Rc  hub.RepositoryCloner
-	Rm  hub.RepositoryManager
-	Pm  hub.PackageManager
-	Il  hub.HelmIndexLoader
-	Tg  OCITagsGetter
-	Re  hub.OLMRepositoryExporter
-	Is  img.Store
-	Ec  ErrorsCollector
-	Hc  HTTPClient
+	Ctx      context.Context
+	Cfg      *viper.Viper
+	Rc       hub.RepositoryCloner
+	Rm       hub.RepositoryManager
+	Pm       hub.PackageManager
+	Il       hub.HelmIndexLoader
+	Tg       OCITagsGetter
+	Re       hub.OLMRepositoryExporter
+	Is       img.Store
+	Ec       ErrorsCollector
+	Hc       HTTPClient
+	GithubRL *rate.Limiter
 }
 
 // GetRepositories gets the repositories the tracker will process based on the

@@ -18,6 +18,7 @@ import (
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"golang.org/x/time/rate"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
 )
@@ -742,11 +743,12 @@ func newWorkerWrapper(ctx context.Context) *workerWrapper {
 	hc := &tests.HTTPClientMock{}
 	r := &hub.Repository{RepositoryID: "repo1"}
 	svc := &tracker.Services{
-		Ctx: ctx,
-		Pm:  pm,
-		Is:  is,
-		Ec:  ec,
-		Hc:  hc,
+		Ctx:      ctx,
+		Pm:       pm,
+		Is:       is,
+		Ec:       ec,
+		Hc:       hc,
+		GithubRL: rate.NewLimiter(rate.Inf, 0),
 	}
 	w := NewWorker(svc, r)
 	queue := make(chan *Job, 100)
