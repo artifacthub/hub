@@ -2,6 +2,8 @@ package repo
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -164,7 +166,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 		}
 	}
 	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
-		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
+		if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
 	}
@@ -481,16 +483,40 @@ func (m *Manager) GetOwnedByUserJSON(ctx context.Context, includeCredentials boo
 	return util.DBQueryJSON(ctx, m.db, getUserReposDBQ, userID, includeCredentials)
 }
 
-// GetRemoteDigest gets the repository's digest available in the remote. In the
-// case of git based repositories, the digest corresponds to the hash of the
-// last commit. In OCI based repositories, it is the digest of the image the
-// repository url points to.
+// GetRemoteDigest gets the repository's digest available in the remote.
 func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (string, error) {
 	var digest string
-
 	u, _ := url.Parse(r.URL)
+
 	switch {
+	case r.Kind == hub.Helm && SchemeIsHTTP(u):
+		// Digest is obtained hashing the repository index.yaml file
+		_, indexPath, err := m.helmIndexLoader.LoadIndex(r)
+		if err != nil {
+			return "", err
+		}
+		indexBytes, err := ioutil.ReadFile(indexPath)
+		if err != nil {
+			return "", err
+		}
+		hash := sha256.Sum256(indexBytes)
+		digest = hex.EncodeToString(hash[:])
+
+	case r.Kind == hub.OLM && u.Scheme == "oci":
+		// Digest is obtained from the index image digest
+		refName := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
+		ref, err := name.ParseReference(refName)
+		if err != nil {
+			return digest, err
+		}
+		desc, err := remote.Head(ref)
+		if err != nil {
+			return digest, err
+		}
+		digest = desc.Digest.String()
+
 	case SchemeIsHTTP(u) && u.Host == "github.com":
+		// Digest is obtained from the last commit in the repository
 		pathParts := strings.Split(strings.TrimPrefix(u.Path, "/"), "/")
 		if len(pathParts) < 2 {
 			break
@@ -510,17 +536,6 @@ func (m *Manager) GetRemoteDigest(ctx context.Context, r *hub.Repository) (strin
 		if len(commits) == 1 {
 			digest = *commits[0].SHA
 		}
-	case u.Scheme == "oci":
-		refName := strings.TrimPrefix(r.URL, hub.RepositoryOCIPrefix)
-		ref, err := name.ParseReference(refName)
-		if err != nil {
-			return digest, err
-		}
-		desc, err := remote.Head(ref)
-		if err != nil {
-			return digest, err
-		}
-		digest = desc.Digest.String()
 	}
 
 	return digest, nil
@@ -634,7 +649,7 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 		}
 	}
 	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
-		if _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
+		if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
 			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
 		}
 	}

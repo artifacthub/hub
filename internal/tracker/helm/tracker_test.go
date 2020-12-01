@@ -45,7 +45,7 @@ func TestTracker(t *testing.T) {
 		}
 		tw := newTrackerWrapper(r)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.il.On("LoadIndex", r).Return(nil, tests.ErrFake)
+		tw.il.On("LoadIndex", r).Return(nil, "", tests.ErrFake)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -314,7 +314,7 @@ func TestTracker(t *testing.T) {
 				tw := newTrackerWrapper(tc.r)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
 					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
-				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], nil)
+				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], "", nil)
 				u, _ := url.Parse(tc.r.URL)
 				u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
 				tw.rm.On("GetMetadata", u.String()).Return(&hub.RepositoryMetadata{

@@ -197,7 +197,7 @@ func (t *Tracker) getCharts() (map[string][]*helmrepo.ChartVersion, error) {
 	case "http", "https":
 		// Load repository index file
 		t.logger.Debug().Msg("loading repository index file")
-		indexFile, err := t.svc.Il.LoadIndex(t.r)
+		indexFile, _, err := t.svc.Il.LoadIndex(t.r)
 		if err != nil {
 			return nil, fmt.Errorf("error loading repository index file: %w", err)
 		}
