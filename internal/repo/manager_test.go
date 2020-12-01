@@ -580,7 +580,7 @@ func TestDelete(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.DeleteOrganizationRepository,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, db, az)
+		m := NewManager(cfg, db, az)
 
 		err := m.Delete(ctx, "repo1")
 		assert.Equal(t, tests.ErrFake, err)
@@ -936,7 +936,7 @@ func TestGetByName(t *testing.T) {
 
 func TestGetMetadata(t *testing.T) {
 	t.Run("local file: error reading repository metadata file", func(t *testing.T) {
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/not-exists.yaml")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error reading repository metadata file")
@@ -946,7 +946,7 @@ func TestGetMetadata(t *testing.T) {
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/not-found.yml").Return(nil, tests.ErrFake)
 		hg.On("Get", "http://url.test/not-found.yaml").Return(nil, tests.ErrFake)
-		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		m := NewManager(cfg, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/not-found")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error downloading repository metadata file")
@@ -962,7 +962,7 @@ func TestGetMetadata(t *testing.T) {
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		m := NewManager(cfg, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/not-found")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "unexpected status code received")
@@ -978,34 +978,34 @@ func TestGetMetadata(t *testing.T) {
 			Body:       ioutil.NopCloser(tests.ErrReader(0)),
 			StatusCode: http.StatusOK,
 		}, nil)
-		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		m := NewManager(cfg, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/not-found")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error reading repository metadata file")
 	})
 
 	t.Run("error unmarshaling repository metadata file", func(t *testing.T) {
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/invalid")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "error unmarshaling repository metadata file")
 	})
 
 	t.Run("invalid repository id", func(t *testing.T) {
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/invalid-repo-id")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "invalid repository id")
 	})
 
 	t.Run("local file: success fetching .yml", func(t *testing.T) {
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/artifacthub-repo")
 		assert.NoError(t, err)
 	})
 
 	t.Run("local file: success .yaml", func(t *testing.T) {
-		m := NewManager(nil, nil, nil)
+		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/test-yaml-repo")
 		assert.NoError(t, err)
 	})
@@ -1016,7 +1016,7 @@ func TestGetMetadata(t *testing.T) {
 			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
 			StatusCode: http.StatusOK,
 		}, nil)
-		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		m := NewManager(cfg, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/ok")
 		assert.NoError(t, err)
 	})
@@ -1031,7 +1031,7 @@ func TestGetMetadata(t *testing.T) {
 			Body:       ioutil.NopCloser(strings.NewReader("")),
 			StatusCode: http.StatusNotFound,
 		}, nil)
-		m := NewManager(nil, nil, nil, withHTTPGetter(hg))
+		m := NewManager(cfg, nil, nil, withHTTPGetter(hg))
 		_, err := m.GetMetadata("http://url.test/ok")
 		assert.NoError(t, err)
 	})
@@ -1253,7 +1253,7 @@ func TestTransfer(t *testing.T) {
 			UserID:           "userID",
 			Action:           hub.TransferOrganizationRepository,
 		}).Return(tests.ErrFake)
-		m := NewManager(nil, db, az)
+		m := NewManager(cfg, db, az)
 
 		err := m.Transfer(ctx, "repo1", "orgDest", false)
 		assert.Equal(t, tests.ErrFake, err)

@@ -22,6 +22,7 @@ import (
 	"github.com/google/go-github/github"
 	"github.com/satori/uuid"
 	"github.com/spf13/viper"
+	"golang.org/x/oauth2"
 	"gopkg.in/yaml.v2"
 )
 
@@ -80,22 +81,38 @@ type Manager struct {
 
 // NewManager creates a new Manager instance.
 func NewManager(cfg *viper.Viper, db hub.DB, az hub.Authorizer, opts ...func(m *Manager)) *Manager {
+	// Setup manager
 	m := &Manager{
 		cfg:             cfg,
 		db:              db,
 		helmIndexLoader: &HelmIndexLoader{},
 		az:              az,
-		gh:              github.NewClient(http.DefaultClient),
 	}
 	for _, o := range opts {
 		o(m)
 	}
+
+	// Setup Github token
+	githubToken := cfg.GetString("tracker.githubToken")
+	if githubToken != "" {
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: githubToken},
+		)
+		m.gh = github.NewClient(oauth2.NewClient(context.TODO(), ts))
+	} else {
+		m.gh = github.NewClient(http.DefaultClient)
+	}
+
+	// Setup HTTP getter
 	if m.hg == nil {
 		m.hg = &http.Client{Timeout: 10 * time.Second}
 	}
+
+	// Setup repository cloner
 	if m.rc == nil {
 		m.rc = &Cloner{}
 	}
+
 	return m
 }
 

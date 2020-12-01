@@ -21,7 +21,10 @@ import (
 	"github.com/artifacthub/hub/internal/tracker/opa"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
+	"golang.org/x/time/rate"
 )
+
+const githubMaxRequestsPerHour = 5000
 
 func main() {
 	// Setup configuration and logger
@@ -70,14 +73,20 @@ func main() {
 		log.Fatal().Err(err).Msg("error getting repositories")
 	}
 	ec := tracker.NewDBErrorsCollector(rm, repos)
+	githubRL := rate.NewLimiter(rate.Every(1*time.Hour), githubMaxRequestsPerHour)
+	go func() {
+		<-time.After(1 * time.Hour)
+		githubRL.SetLimit(rate.Every(1 * time.Hour / githubMaxRequestsPerHour))
+	}()
 	svc := &tracker.Services{
-		Ctx: ctx,
-		Cfg: cfg,
-		Rm:  rm,
-		Pm:  pm,
-		Is:  is,
-		Ec:  ec,
-		Hc:  &http.Client{Timeout: 10 * time.Second},
+		Ctx:      ctx,
+		Cfg:      cfg,
+		Rm:       rm,
+		Pm:       pm,
+		Is:       is,
+		Ec:       ec,
+		Hc:       &http.Client{Timeout: 10 * time.Second},
+		GithubRL: githubRL,
 	}
 
 	// Track registered repositories

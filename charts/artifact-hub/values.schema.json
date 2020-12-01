@@ -492,6 +492,11 @@
                         }
                     }
                 },
+                "githubToken": {
+                    "title": "Authentication token used in Github requests (increases rate limit)",
+                    "type": "string",
+                    "default": ""
+                },
                 "imageStore": {
                     "title": "Store for images",
                     "type": "string",
@@ -528,6 +533,7 @@
                     "type": "object",
                     "properties": {
                         "image": {
+                            "title": "Trivy container image",
                             "type": "string",
                             "default": "aquasec/trivy:0.13.0"
                         },
