@@ -26,10 +26,10 @@ type HelmIndexLoaderMock struct {
 }
 
 // LoadIndex implements the HelmIndexLoader interface.
-func (m *HelmIndexLoaderMock) LoadIndex(r *hub.Repository) (*repo.IndexFile, error) {
+func (m *HelmIndexLoaderMock) LoadIndex(r *hub.Repository) (*repo.IndexFile, string, error) {
 	args := m.Called(r)
 	indexFile, _ := args.Get(0).(*repo.IndexFile)
-	return indexFile, args.Error(1)
+	return indexFile, args.String(1), args.Error(2)
 }
 
 // ManagerMock is a mock implementation of the RepositoryManager interface.

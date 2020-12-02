@@ -12,7 +12,7 @@ import (
 type HelmIndexLoader struct{}
 
 // LoadIndex downloads and parses the index file of the provided repository.
-func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, error) {
+func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, string, error) {
 	repoConfig := &helmrepo.Entry{
 		Name:     r.Name,
 		URL:      r.URL,
@@ -22,15 +22,15 @@ func (l *HelmIndexLoader) LoadIndex(r *hub.Repository) (*helmrepo.IndexFile, err
 	getters := getter.All(&cli.EnvSettings{})
 	chartRepository, err := helmrepo.NewChartRepository(repoConfig, getters)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-	path, err := chartRepository.DownloadIndexFile()
+	indexPath, err := chartRepository.DownloadIndexFile()
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-	indexFile, err := helmrepo.LoadIndexFile(path)
+	indexFile, err := helmrepo.LoadIndexFile(indexPath)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
-	return indexFile, nil
+	return indexFile, indexPath, nil
 }

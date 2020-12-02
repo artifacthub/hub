@@ -22,10 +22,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var (
-	cfg     = viper.New()
-	errFake = errors.New("fake error for tests")
-)
+var cfg = viper.New()
 
 func TestAdd(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
@@ -179,7 +176,7 @@ func TestAdd(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
-					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
+					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
 				}
 				m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
 
@@ -205,7 +202,7 @@ func TestAdd(t *testing.T) {
 			Action:           hub.AddOrganizationRepository,
 		}).Return(tests.ErrFake)
 		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, "", nil)
 		m := NewManager(cfg, nil, az, WithHelmIndexLoader(l))
 
 		err := m.Add(ctx, "orgName", r)
@@ -252,7 +249,7 @@ func TestAdd(t *testing.T) {
 					Action:           hub.AddOrganizationRepository,
 				}).Return(nil)
 				l := &HelmIndexLoaderMock{}
-				l.On("LoadIndex", tc.r).Return(nil, nil)
+				l.On("LoadIndex", tc.r).Return(nil, "", nil)
 				m := NewManager(cfg, db, az, WithHelmIndexLoader(l))
 
 				err := m.Add(ctx, "orgName", tc.r)
@@ -298,7 +295,7 @@ func TestAdd(t *testing.T) {
 				}).Return(nil)
 				l := &HelmIndexLoaderMock{}
 				if tc.r.Kind == hub.Helm {
-					l.On("LoadIndex", tc.r).Return(nil, nil)
+					l.On("LoadIndex", tc.r).Return(nil, "", nil)
 				}
 				m := NewManager(cfg, db, az, WithHelmIndexLoader(l))
 
@@ -524,11 +521,11 @@ func TestClaimOwnership(t *testing.T) {
 		rc := &ClonerMock{}
 		var r *hub.Repository
 		_ = json.Unmarshal(opaRepoJSON, &r)
-		rc.On("CloneRepository", ctx, r).Return("", "", errFake)
+		rc.On("CloneRepository", ctx, r).Return("", "", tests.ErrFake)
 		m := NewManager(cfg, db, nil, withRepositoryCloner(rc))
 
 		err := m.ClaimOwnership(ctx, "repo1", org)
-		assert.Equal(t, errFake, err)
+		assert.Equal(t, tests.ErrFake, err)
 		db.AssertExpectations(t)
 	})
 
@@ -1141,6 +1138,50 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	})
 }
 
+func TestGetRemoteDigest(t *testing.T) {
+	ctx := context.Background()
+	helmHTTP := &hub.Repository{
+		Kind: hub.Helm,
+		Name: "repo1",
+		URL:  "https://myrepo.url",
+	}
+
+	t.Run("helm-http: error loading index", func(t *testing.T) {
+		l := &HelmIndexLoaderMock{}
+		l.On("LoadIndex", helmHTTP).Return(nil, "", tests.ErrFake)
+		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
+
+		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
+		assert.Empty(t, digest)
+		assert.Equal(t, tests.ErrFake, err)
+	})
+
+	t.Run("helm-http: error reading index file", func(t *testing.T) {
+		l := &HelmIndexLoaderMock{}
+		l.On("LoadIndex", helmHTTP).Return(nil, "invalid-path", nil)
+		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
+
+		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
+		assert.Empty(t, digest)
+		assert.Error(t, err)
+	})
+
+	t.Run("helm-http: success", func(t *testing.T) {
+		f, err := ioutil.TempFile("", "")
+		require.NoError(t, err)
+		_, _ = f.Write([]byte("indexFileContent"))
+		require.NoError(t, err)
+
+		l := &HelmIndexLoaderMock{}
+		l.On("LoadIndex", helmHTTP).Return(nil, f.Name(), nil)
+		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
+
+		digest, err := m.GetRemoteDigest(ctx, helmHTTP)
+		assert.Equal(t, "a1cbe8e02116f43084632fbf313c4ed02772f93af327bbc16989a30bc04ddc89", digest)
+		assert.Nil(t, err)
+	})
+}
+
 func TestSetLastTrackingResults(t *testing.T) {
 	ctx := context.Background()
 	repoID := "00000000-0000-0000-0000-000000000001"
@@ -1413,7 +1454,7 @@ func TestUpdate(t *testing.T) {
 			t.Run(tc.errMsg, func(t *testing.T) {
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
-					l.On("LoadIndex", mock.Anything).Return(nil, tc.lErr)
+					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
 				}
 				m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
 
@@ -1446,7 +1487,7 @@ func TestUpdate(t *testing.T) {
 			Action:           hub.UpdateOrganizationRepository,
 		}).Return(tests.ErrFake)
 		l := &HelmIndexLoaderMock{}
-		l.On("LoadIndex", r).Return(nil, nil)
+		l.On("LoadIndex", r).Return(nil, "", nil)
 		m := NewManager(cfg, db, az, WithHelmIndexLoader(l))
 
 		err := m.Update(ctx, r)
@@ -1502,7 +1543,7 @@ func TestUpdate(t *testing.T) {
 				}).Return(nil)
 
 				l := &HelmIndexLoaderMock{}
-				l.On("LoadIndex", tc.r).Return(nil, nil)
+				l.On("LoadIndex", tc.r).Return(nil, "", nil)
 				m := NewManager(cfg, db, az, WithHelmIndexLoader(l))
 
 				err := m.Update(ctx, tc.r)
@@ -1544,7 +1585,7 @@ func TestUpdate(t *testing.T) {
 				db.On("Exec", ctx, updateRepoDBQ, "userID", mock.Anything).Return(nil)
 				l := &HelmIndexLoaderMock{}
 				if tc.r.Kind == hub.Helm {
-					l.On("LoadIndex", tc.r).Return(nil, nil)
+					l.On("LoadIndex", tc.r).Return(nil, "", nil)
 				}
 				m := NewManager(cfg, db, nil, WithHelmIndexLoader(l))
 

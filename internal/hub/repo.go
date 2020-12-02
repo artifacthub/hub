@@ -70,7 +70,7 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 // HelmIndexLoader interface defines the methods a Helm index loader
 // implementation should provide.
 type HelmIndexLoader interface {
-	LoadIndex(r *Repository) (*helmrepo.IndexFile, error)
+	LoadIndex(r *Repository) (*helmrepo.IndexFile, string, error)
 }
 
 // OLMRepositoryExporter describes the methods an OLMRepositoryExporter
