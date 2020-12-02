@@ -243,7 +243,14 @@ const SearchView = (props: Props) => {
             },
           };
         }
-        setSearchResults({ ...newSearchResults });
+        setSearchResults({
+          ...newSearchResults,
+          metadata: {
+            offset: newSearchResults.metadata.offset || 0,
+            total: newSearchResults.metadata.total,
+            limit: ctx.prefs.search.limit,
+          },
+        });
         setApiError(null);
 
         // Preload next page if required
