@@ -38,6 +38,10 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - alias
+                - email
+                - password
               properties:
                 alias:
                   type: string
@@ -56,10 +60,6 @@ paths:
                   type: string
                   format: password
                   example: pass123
-              required:
-                - alias
-                - email
-                - password
       responses:
         "201":
           $ref: "#/components/responses/Created"
@@ -859,22 +859,29 @@ paths:
                     properties:
                       packages:
                         type: array
+                        nullable: false
                         items:
                           $ref: "#/components/schemas/PackageSummary"
                       facets:
-                        nullable: true
                         type: array
+                        nullable: false
                         items:
                           $ref: "#/components/schemas/Facets"
                   metadata:
                     type: object
+                    nullable: false
+                    required:
+                      - total
                     properties:
                       limit:
                         type: integer
+                        nullable: false
                       offset:
                         type: integer
+                        nullable: false
                       total:
                         type: integer
+                        nullable: false
               examples:
                 s1:
                   value:
@@ -1245,7 +1252,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                nullable: true
+                nullable: false
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -1268,7 +1275,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                nullable: true
+                nullable: false
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "404":
@@ -1291,15 +1298,21 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - version
+                    - created_at
                   properties:
                     version:
                       type: string
+                      nullable: false
                     created_at:
                       type: integer
+                      nullable: false
                     changes:
                       type: array
                       items:
                         type: string
+                      nullable: false
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "404":
@@ -1323,26 +1336,37 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - package_id
+                    - name
+                    - normalized_name
+                    - repository
+                    - event_kinds
                   properties:
                     package_id:
                       type: string
                       format: uuid
+                      nullable: false
                     name:
                       type: string
                       nullable: false
                       example: pkg1
                     normalized_name:
                       type: string
+                      nullable: false
                       example: pkg1
                     logo_image_id:
                       type: string
+                      nullable: false
                       example: 12345abcde
                     repository:
                       $ref: "#/components/schemas/RepositorySummary"
+                      nullable: false
                     event_kinds:
                       type: array
                       items:
                         $ref: "#/components/schemas/EventKindId"
+                      nullable: false
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -1405,9 +1429,12 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - event_kind
                   properties:
                     event_kind:
                       $ref: "#/components/schemas/EventKindId"
+                      nullable: false
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "429":
@@ -1431,14 +1458,21 @@ paths:
                 type: array
                 items:
                   type: object
+                  required:
+                    - opt_out_id
+                    - repository
+                    - event_kind
                   properties:
                     opt_out_id:
                       type: string
                       format: uuid
+                      nullable: false
                     repository:
                       $ref: "#/components/schemas/RepositorySummary"
+                      nullable: false
                     event_kind:
                       $ref: "#/components/schemas/EventKindId"
+                      nullable: false
                       example: 2
         "401":
           $ref: "#/components/responses/UnauthorizedError"
@@ -1805,15 +1839,19 @@ components:
         * `updateOrganizationRepository` - Update repository from organization
     AuthorizationPolicy:
       type: object
+      required:
+        - authorization_enabled
       properties:
         authorization_enabled:
           type: boolean
           nullable: false
         predefined_policy:
           type: string
+          nullable: false
           example: rbac.v1
         custom_policy:
           type: string
+          nullable: false
           example: |
             package artifacthub.authz
 
@@ -1846,6 +1884,7 @@ components:
             }
         policy_data:
           type: object
+          nullable: false
           additionalProperties: true
           example:
             roles:
@@ -1876,23 +1915,37 @@ components:
           * `2` - Repository tracking errors
     Facets:
       type: object
+      required:
+        - filter_key
+        - title
+        - options
       properties:
         filter_key:
           type: string
+          nullable: false
         title:
           type: string
+          nullable: false
         options:
           type: array
+          nullable: false
           items:
             type: object
+            required:
+              - id
+              - name
+              - total
             properties:
               id:
                 type: string
                 format: uuid
+                nullable: false
               name:
                 type: string
+                nullable: false
               total:
                 type: integer
+                nullable: false
       example:
         title: Organization
         filter_key: org
@@ -1910,6 +1963,7 @@ components:
           properties:
             data:
               type: object
+              nullable: false
               properties:
                 policies:
                   type: object
@@ -1926,57 +1980,88 @@ components:
           properties:
             crds:
               type: array
+              nullable: false
               items:
                 type: object
+                required:
+                  - kind
+                  - name
+                  - version
+                  - description
+                  - displayName
                 properties:
                   kind:
                     type: string
+                    nullable: false
                   name:
                     type: string
+                    nullable: false
                   version:
                     type: string
+                    nullable: false
                   description:
                     type: string
+                    nullable: false
                   displayName:
                     type: string
-              nullable: true
+                    nullable: false
             crds_examples:
               type: array
+              nullable: false
               items:
                 type: object
                 additionalProperties: true
-              nullable: true
             data:
               type: object
+              nullable: false
               properties:
                 dependencies:
                   type: object
+                  nullable: false
+                  required:
+                    - name
+                    - version
+                    - repository
                   properties:
                     name:
                       type: string
+                      nullable: false
                       example: mysql
                     version:
                       type: string
+                      nullable: false
                       example: 1.6.4
                     repository:
                       type: string
+                      nullable: false
                       example: "http://repo.url"
     Link:
       type: object
+      nullable: false
+      required:
+        - url
+        - name
       properties:
         url:
           type: string
           format: uri
+          nullable: false
           example: "http://url"
         name:
           type: string
+          nullable: false
           example: link
     Maintainer:
       type: object
+      nullable: false
+      required:
+        - name
+        - email
       properties:
         maintainer_id:
           type: string
           format: uuid
+          nullable: false
         name:
           type: string
           nullable: false
@@ -1987,6 +2072,9 @@ components:
           example: maintainer@email.com
     Member:
       type: object
+      required:
+        - alias
+        - confirmed
       properties:
         alias:
           type: string
@@ -1994,9 +2082,11 @@ components:
           example: jdoe
         first_name:
           type: string
+          nullable: false
           example: John
         last_name:
           type: string
+          nullable: false
           example: Doe
         confirmed:
           type: boolean
@@ -2009,50 +2099,76 @@ components:
           properties:
             crds:
               type: array
+              nullable: false
               items:
                 type: object
+                nullable: false
+                required:
+                  - kind
+                  - name
+                  - version
+                  - description
+                  - displayName
                 properties:
                   kind:
                     type: string
+                    nullable: false
                   name:
                     type: string
+                    nullable: false
                   version:
                     type: string
+                    nullable: false
                   description:
                     type: string
+                    nullable: false
                   displayName:
                     type: string
-              nullable: true
+                    nullable: false
             crds_examples:
               type: array
+              nullable: false
               items:
                 type: object
                 additionalProperties: true
-              nullable: true
             data:
               type: object
+              required:
+                - isGlobalOperator
               properties:
                 isGlobalOperator:
                   type: boolean
-                  nullable: true
+                  nullable: false
                 customResourcesDefinitions:
                   type: array
+                  nullable: false
                   items:
                     type: object
+                    required:
+                      - kind
+                      - name
+                      - version
+                      - description
+                      - displayName
                     properties:
                       kind:
                         type: string
+                        nullable: false
                       name:
                         type: string
+                        nullable: false
                       version:
                         type: string
+                        nullable: false
                       description:
                         type: string
+                        nullable: false
                       displayName:
                         type: string
-                  nullable: true
+                        nullable: false
                 customResourcesDefinitionsExamples:
                   type: string
+                  nullable: false
                   example: |-
                     [{"apiVersion": v1alpha
                     , "kind": CustomResource
@@ -2070,6 +2186,7 @@ components:
               properties:
                 rules:
                   type: object
+                  nullable: false
                   properties:
                     Raw:
                       type: string
@@ -2080,16 +2197,24 @@ components:
       allOf:
         - $ref: "#/components/schemas/PackageSummary"
         - type: object
+          required:
+            - repository
+            - latest_version
+            - available_versions
+            - created_at
+            - has_values_schema
+            - has_changelog
           properties:
             signed:
               type: boolean
-              nullable: true
+              nullable: false
             repository:
               $ref: "#/components/schemas/RepositorySummary"
+              nullable: false
             is_operator:
               type: boolean
+              nullable: false
               example: false
-              nullable: true
             latest_version:
               type: string
               nullable: false
@@ -2097,68 +2222,80 @@ components:
             logo_url:
               type: string
               format: uri
+              nullable: false
               example: "http://logo"
             keywords:
               type: array
+              nullable: false
               items:
                 type: string
-              nullable: true
               example:
                 - key1
                 - key2
             home_url:
               type: string
               format: uri
-              nullable: true
+              nullable: false
               example: "http://home"
             readme:
               type: string
-              nullable: true
+              nullable: false
               example: "###Readme"
             links:
               type: array
+              nullable: false
               items:
                 $ref: "#/components/schemas/Link"
-              nullable: true
             available_versions:
               type: array
+              nullable: false
               items:
                 type: object
+                required:
+                  - version
+                  - created_at
                 properties:
                   version:
                     type: string
+                    nullable: false
                     example: 1.0.0
                   created_at:
                     type: integer
+                    nullable: false
                     example: 1552082346
-              nullable: true
             maintainers:
               type: array
+              nullable: false
               items:
                 $ref: "#/components/schemas/Maintainer"
-              nullable: true
             default_channel:
               type: string
-              nullable: true
+              nullable: false
               example: stable
             channels:
               type: array
+              nullable: false
               items:
                 type: object
+                nullable: false
                 properties:
                   name:
                     type: string
+                    nullable: false
                     example: stable
                   version:
                     type: string
+                    nullable: false
                     example: 2.0.0
-              nullable: true
             provider:
               type: string
-              nullable: true
+              nullable: false
               example: Provider 1
             containers_images:
               type: object
+              nullable: false
+              required:
+                - image
               properties:
                 image:
                   type: string
@@ -2166,14 +2303,14 @@ components:
                   example: "url.io/name/operator:v0.2.0"
                 name:
                   type: string
-                  nullable: true
-              nullable: true
+                  nullable: false
             created_at:
               type: integer
+              nullable: false
               example: 1552082346
             capabilities:
               type: string
-              nullable: true
+              nullable: false
               example:
                 - basic install
                 - seamless upgrades
@@ -2182,29 +2319,43 @@ components:
                 - auto pilot
             security_report_created_at:
               type: integer
+              nullable: false
             has_values_schema:
               type: boolean
+              nullable: false
             has_changelog:
               type: boolean
+              nullable: false
             content_url:
               type: string
               format: uri
-              nullable: true
+              nullable: false
     PackageSummary:
       type: object
+      required:
+        - package_id
+        - name
+        - normalized_name
+        - stars
+        - version
+        - created_at
+        - repository
       properties:
         package_id:
           type: string
           format: uuid
+          nullable: false
         name:
           type: string
           nullable: false
           example: pkg1
         normalized_name:
           type: string
+          nullable: false
           example: pkg1
         logo_image_id:
           type: string
+          nullable: false
           example: 12345abcde
         stars:
           type: integer
@@ -2212,57 +2363,74 @@ components:
           example: 3
         display_name:
           type: string
+          nullable: false
           example: Package 1
         description:
           type: string
+          nullable: false
           example: This is a package sample
         version:
           type: string
+          nullable: false
           example: 1.0.0
         app_version:
           type: string
+          nullable: false
           example: 0.1.0
         license:
           type: string
-          nullable: true
+          nullable: false
           example: MIT
         deprecated:
           type: boolean
+          nullable: false
           example: false
         signed:
           type: boolean
-          nullable: true
+          nullable: false
         created_at:
           type: integer
+          nullable: false
         repository:
           $ref: "#/components/schemas/RepositorySummary"
           nullable: false
         security_report_summary:
           type: object
+          nullable: false
           properties:
             critical:
               type: number
+              nullable: false
             high:
               type: number
+              nullable: false
             medium:
               type: number
+              nullable: false
             low:
               type: number
+              nullable: false
             unkown:
               type: number
+              nullable: false
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
         - type: object
+          required:
+            - digest
+            - last_tracking_ts
+            - disabled
           properties:
             digest:
               type: string
-              nullable: true
+              nullable: false
             last_tracking_ts:
               type: integer
-              nullable: true
+              nullable: false
             last_tracking_errors:
               type: string
+              nullable: false
               example: Error
             disabled:
               type: boolean
@@ -2295,6 +2463,13 @@ components:
         * `olm` - OLM operators
     RepositorySummary:
       type: object
+      required:
+        - repository_id
+        - kind
+        - name
+        - url
+        - verified_publisher
+        - official
       properties:
         repository_id:
           type: string
@@ -2307,6 +2482,7 @@ components:
           example: repo1
         display_name:
           type: string
+          nullable: false
           example: Repository 1
         url:
           type: string
@@ -2321,24 +2497,33 @@ components:
           nullable: false
         private:
           type: boolean
+          nullable: false
         user_alias:
           type: string
+          nullable: false
           example: jdoe
         organization_name:
           type: string
+          nullable: false
           example: org1
         organization_display_name:
           type: string
+          nullable: false
           example: Organization 1
     Organization:
       allOf:
         - $ref: "#/components/schemas/OrganizationSummary"
         - type: object
+          required:
+            - members_count
+            - confirmed
           properties:
             members_count:
               type: integer
+              nullable: false
             confirmed:
               type: boolean
+              nullable: false
     ResourceKindName:
       type: string
       enum:
@@ -2354,6 +2539,8 @@ components:
           * `userAlias` - User alias
     OrganizationSummary:
       type: object
+      required:
+        - name
       properties:
         name:
           type: string
@@ -2361,21 +2548,26 @@ components:
           example: org1
         display_name:
           type: string
+          nullable: false
           example: Organization 1
         description:
           type: string
+          nullable: false
           example: description
         home_url:
           type: string
           format: uri
+          nullable: false
           example: "http://url"
         logo_image_id:
           type: string
+          nullable: false
           example: 12345abcde
-      required:
-        - name
     User:
       type: object
+      required:
+        - alias
+        - email
       properties:
         alias:
           type: string
@@ -2383,9 +2575,11 @@ components:
           example: jdoe
         first_name:
           type: string
+          nullable: false
           example: John
         last_name:
           type: string
+          nullable: false
           example: Doe
         email:
           type: string
@@ -2394,45 +2588,62 @@ components:
           example: jdoe@email.com
         profile_image_id:
           type: string
+          nullable: false
           example: 12345abcde
-      required:
-        - alias
-        - email
     Webhook:
       allOf:
         - $ref: "#/components/schemas/WebhookSummary"
         - type: object
+          required:
+            - webhook_id
+            - packages
+            - last_notifications
           properties:
+            webhook_id:
+              type: string
+              format: uuid
+              nullable: false
             packages:
               type: array
               items:
                 $ref: "#/components/schemas/PackageSummary"
-            webhook_id:
-              type: string
-              format: uuid
+              nullable: false
             last_notifications:
               type: array
               items:
                 $ref: "#/components/schemas/WebhookNotification"
+              nullable: false
     WebhookNotification:
       type: object
+      required:
+        - notification_id
+        - created_at
+        - processed
+        - processed_at
       properties:
         notification_id:
           type: string
           format: uuid
+          nullable: false
         created_at:
           type: integer
+          nullable: false
         processed:
           type: boolean
           nullable: false
         processed_at:
           type: integer
+          nullable: false
         error:
           type: string
-          nullable: true
+          nullable: false
           example: error
     WebhookSummary:
       type: object
+      required:
+        - name
+        - url
+        - active
       properties:
         name:
           type: string
@@ -2440,6 +2651,7 @@ components:
           example: webhook1
         description:
           type: string
+          nullable: false
           example: description
         url:
           type: string
@@ -2448,12 +2660,15 @@ components:
           example: "http://url"
         secret:
           type: string
+          nullable: false
           example: 123abc
         content_type:
           type: string
+          nullable: false
           example: application/json
         template:
           type: string
+          nullable: false
           example: >-
             {"text": "Package {{ .Package.name }} version {{ .Package.version }}
             released! {{ .Package.url }}"}
@@ -2464,27 +2679,35 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/EventKindId"
+          nullable: false
     WebhookSummaryWithPackages:
       allOf:
         - $ref: "#/components/schemas/WebhookSummary"
         - type: object
-          properties:
-            packages:
-              type: array
-              items:
-                type: object
-                properties:
-                  package_id:
-                    type: string
-                    format: uuid
           required:
             - name
             - url
             - active
             - event_kinds
             - packages
+          properties:
+            packages:
+              type: array
+              items:
+                type: object
+                required:
+                  - package_id
+                properties:
+                  package_id:
+                    type: string
+                    format: uuid
+                    nullable: false
+              nullable: false
     WebhookTest:
       type: object
+      required:
+        - url
+        - event_kinds
       properties:
         url:
           type: string
@@ -2493,9 +2716,11 @@ components:
           example: "http://url"
         content_type:
           type: string
+          nullable: false
           example: application/json
         template:
           type: string
+          nullable: false
           example: >-
             {"text": "Package {{ .Package.name }} version {{ .Package.version }}
             released! {{ .Package.url }}"}
@@ -2503,11 +2728,9 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/EventKindId"
+          nullable: false
           example:
             - 0
-      required:
-        - url
-        - event_kinds
   parameters:
     RepositoriesListParam:
       in: query
