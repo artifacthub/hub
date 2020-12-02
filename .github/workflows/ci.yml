@@ -48,6 +48,13 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.15
+      - name: Cache Go modules
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: Run backend tests
         run: go test -cover -race -v -mod=readonly ./...
 
@@ -58,6 +65,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./web/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install dependencies
         working-directory: ./web
         run: yarn install
@@ -80,6 +94,13 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.15
+      - name: Cache Go modules
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
       - name: Build hub
         working-directory: ./cmd/hub
         run: go build -v
@@ -97,6 +118,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ./web/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Install dependencies
         working-directory: ./web
         run: yarn install
