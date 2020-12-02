@@ -289,7 +289,7 @@ export interface ThemePrefs {
 }
 
 export interface PackageStars {
-  starredByUser: boolean | null;
+  starredByUser?: boolean | null;
   stars: number | null;
 }
 

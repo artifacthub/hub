@@ -38,10 +38,9 @@ insert into user_starred_package(user_id, package_id) values (:'user1ID', :'pack
 select is(
     get_package_stars(null, :'package1ID')::jsonb,
     '{
-        "stars": 10,
-        "starred_by_user": null
+        "stars": 10
     }'::jsonb,
-    'starred_by_user should be null when using a null user_id'
+    'package stars expected, starred_by_user field not expected as user_id provided is null'
 );
 select is(
     get_package_stars(:'user1ID', :'package1ID')::jsonb,
@@ -49,7 +48,7 @@ select is(
         "stars": 10,
         "starred_by_user": true
     }'::jsonb,
-    'starred_by_user should be true'
+    'package stars expected, starred_by_user should be true'
 );
 select is(
     get_package_stars(:'user2ID', :'package1ID')::jsonb,
@@ -57,17 +56,15 @@ select is(
         "stars": 10,
         "starred_by_user": false
     }'::jsonb,
-    'starred_by_user should be false'
+    'package stars expected, starred_by_user should be false'
 );
 select is(
     get_package_stars(:'user2ID', :'package2ID')::jsonb,
     '{
-        "stars": null,
         "starred_by_user": false
     }'::jsonb,
-    'stars should be null as package does not exist'
+    'package stars not expected and starred_by_user expected to be false as package does not exist'
 );
-
 
 -- Finish tests and rollback transaction
 select * from finish();

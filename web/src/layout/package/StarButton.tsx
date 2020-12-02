@@ -5,8 +5,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 
 import { API } from '../../api';
-import { AppCtx } from '../../context/AppCtx';
-import { PackageStars } from '../../types';
+import { AppCtx, signOut } from '../../context/AppCtx';
+import { ErrorKind, PackageStars } from '../../types';
 import alertDispatcher from '../../utils/alertDispatcher';
 import prettifyNumber from '../../utils/prettifyNumber';
 import styles from './StarButton.module.css';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const StarButton = (props: Props) => {
-  const { ctx } = useContext(AppCtx);
+  const { ctx, dispatch } = useContext(AppCtx);
   const [packageStars, setPackageStars] = useState<PackageStars | undefined | null>(undefined);
   const [isSending, setIsSending] = useState(false);
   const [isGettingIfStarred, setIsGettingIfStarred] = useState<boolean | undefined>(undefined);
@@ -37,8 +37,8 @@ const StarButton = (props: Props) => {
     if (
       (!isUndefined(ctx.user) &&
         (isUndefined(packageStars) ||
-          (!isNull(ctx.user) && isNull(packageStars!.starredByUser)) ||
-          (isNull(ctx.user) && !isNull(packageStars!.starredByUser)))) ||
+          (!isNull(ctx.user) && isUndefined(packageStars!.starredByUser)) ||
+          (isNull(ctx.user) && packageStars!.starredByUser))) ||
       props.packageId !== pkgId
     ) {
       setPkgId(props.packageId);
@@ -49,7 +49,11 @@ const StarButton = (props: Props) => {
   const notStarred =
     !isUndefined(ctx.user) &&
     (isNull(ctx.user) ||
-      (!isNull(ctx.user) && !isUndefined(packageStars) && !isNull(packageStars) && !packageStars.starredByUser));
+      (!isNull(ctx.user) &&
+        !isUndefined(packageStars) &&
+        !isNull(packageStars) &&
+        !isUndefined(packageStars.starredByUser) &&
+        !packageStars.starredByUser));
 
   async function handleToggleStar() {
     try {
@@ -57,11 +61,19 @@ const StarButton = (props: Props) => {
       await API.toggleStar(props.packageId);
       getPackageStars();
       setIsSending(false);
-    } catch {
+    } catch (err) {
+      let errMessage = `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later.`;
       setIsSending(false);
+
+      // On unauthorized, we force sign out
+      if (err.kind === ErrorKind.Unauthorized) {
+        errMessage = `You must be signed in to ${notStarred ? 'star' : 'unstar'} a package`;
+        dispatch(signOut());
+      }
+
       alertDispatcher.postAlert({
         type: 'danger',
-        message: `An error occurred ${notStarred ? 'staring' : 'unstaring'} the package, please try again later.`,
+        message: errMessage,
       });
     }
   }
