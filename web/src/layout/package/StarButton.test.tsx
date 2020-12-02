@@ -26,6 +26,8 @@ const mockCtx = {
   },
 };
 
+const mockDispatch = jest.fn();
+
 describe('StarButton', () => {
   afterEach(() => {
     jest.resetAllMocks();
@@ -160,11 +162,40 @@ describe('StarButton', () => {
           });
         });
       });
+
+      it('when user is not logged in', async () => {
+        mocked(API).getStars.mockResolvedValue({ stars: 4 });
+        mocked(API).toggleStar.mockRejectedValue({ kind: ErrorKind.Unauthorized });
+
+        const { getByTestId } = render(
+          <AppCtx.Provider value={{ ctx: mockCtx, dispatch: mockDispatch }}>
+            <StarButton {...defaultProps} />
+          </AppCtx.Provider>
+        );
+
+        await waitFor(() => {
+          expect(API.getStars).toHaveBeenCalledTimes(1);
+        });
+
+        const btn = getByTestId('toggleStarBtn');
+        expect(btn).toBeInTheDocument();
+        fireEvent.click(btn);
+
+        await waitFor(() => {
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(mockDispatch).toHaveBeenCalledWith({ type: 'signOut' });
+          expect(alertDispatcher.postAlert).toHaveBeenCalledTimes(1);
+          expect(alertDispatcher.postAlert).toHaveBeenCalledWith({
+            type: 'danger',
+            message: 'You must be signed in to unstar a package',
+          });
+        });
+      });
     });
 
     describe('when user is not signed in', () => {
       it('displays tooltip', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: null });
+        mocked(API).getStars.mockResolvedValue({ stars: 4 });
         const { getByRole } = render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: null }, dispatch: jest.fn() }}>
             <StarButton {...defaultProps} />
@@ -206,7 +237,7 @@ describe('StarButton', () => {
 
     describe('on init', () => {
       it('does not call getStars if ctx.user is not initialized', async () => {
-        mocked(API).getStars.mockResolvedValue({ stars: 4, starredByUser: null });
+        mocked(API).getStars.mockResolvedValue({ stars: 4 });
 
         render(
           <AppCtx.Provider value={{ ctx: { ...mockCtx, user: undefined }, dispatch: jest.fn() }}>
