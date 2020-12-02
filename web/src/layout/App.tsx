@@ -182,6 +182,9 @@ export default function App() {
                     <ExternalLink className="text-muted mb-1" href="https://artifacthub.github.io/hub/api/">
                       API docs
                     </ExternalLink>
+                    <ExternalLink className="text-muted mb-1" href="https://blog.artifacthub.io/blog/">
+                      Blog
+                    </ExternalLink>
                     <ExternalLink
                       className="text-muted mb-1"
                       href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md"
