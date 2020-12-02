@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
@@ -66,10 +65,10 @@ const MemberCard = (props: Props) => {
 
   const getFullName = (): string => {
     let fullName = '';
-    if (!isNull(props.member.firstName)) {
+    if (props.member.firstName) {
       fullName += `${props.member.firstName} `;
     }
-    if (!isNull(props.member.lastName)) {
+    if (props.member.lastName) {
       fullName += props.member.lastName;
     }
     return fullName;
@@ -89,9 +88,7 @@ const MemberCard = (props: Props) => {
             <div className="flex-grow-1">
               <div className="d-flex flex-row align-items-start">
                 <div className="h5 mb-1">
-                  {!isNull(props.member.firstName) || !isNull(props.member.lastName)
-                    ? getFullName()
-                    : props.member.alias}
+                  {props.member.firstName || props.member.lastName ? getFullName() : props.member.alias}
                 </div>
                 {!isUndefined(props.member.confirmed) && !props.member.confirmed && (
                   <div className={classnames('ml-3', { 'mr-3': props.membersNumber > 1 })}>

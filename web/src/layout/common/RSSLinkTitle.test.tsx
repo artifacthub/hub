@@ -16,7 +16,6 @@ const defaultProps = {
       repositoryId: '0acb228c-17ab-4e50-85e9-ffc7102ea423',
       kind: 0,
       name: 'stable',
-      displayName: null,
       url: 'repoUrl',
       userAlias: 'user',
     },

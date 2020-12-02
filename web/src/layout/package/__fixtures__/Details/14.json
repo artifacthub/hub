@@ -9,9 +9,7 @@
   "displayName": "Akka Cluster Operator",
   "description": "Run Akka Cluster applications on Kubernetes.",
   "keywords": ["Akka", "Akka Cluster", "Lightbend", "Application Runtime"],
-  "homeUrl": null,
   "readme": "The Akka Cluster Operator allows you to manage applications designed for\n[Akka Cluster](https://doc.akka.io/docs/akka/current/common/cluster.html).\nClustering with [Akka](https://doc.akka.io/docs/akka/current/guide/introduction.html) provides a\nfault-tolerant, decentralized, peer-to-peer based cluster\nfor building stateful, distributed applications with no single point of failure.\nDevelopers should use Akka Management v1.x or newer, with both Bootstrap and HTTP modules enabled.\nWhen deploying using the Akka Cluster Operator, only the `management port` needs to be defined.\nDefaults are provided by the Operator for all other required configuration.\nThe Akka Cluster Operator provides scalability control and membership status information\nfor deployed applications using Akka Cluster. As part of supervising membership of running clusters,\nthis Operator creates a pod-listing ServiceAccount, Role, and RoleBinding suitable for\neach application. See the project [Readme](https://github.com/lightbend/akka-cluster-operator/blob/master/README.md)\nfor more information and details.\n",
-  "install": null,
   "links": [
     { "url": "https://github.com/lightbend/akka-cluster-operator", "name": "source" },
     { "url": "https://doc.akka.io/docs/akka/current/guide/introduction.html", "name": "Intro to Akka" },
@@ -42,8 +40,6 @@
     { "version": "0.2.0", "createdAt": 1561735380 },
     { "version": "0.2.3", "createdAt": 1561735380 }
   ],
-  "appVersion": null,
-  "digest": null,
   "deprecated": false,
   "license": "MIT",
   "signed": false,
@@ -59,7 +55,6 @@
     "url": "https://github.com/operator-framework/community-operators/upstream-community-operators",
     "kind": 3,
     "name": "community-operators",
-    "userAlias": null,
     "displayName": "Community Operators",
     "repositoryId": "0f467c6e-3eb4-4b6c-8140-410c084de5b8",
     "organizationName": "operator-framework",

@@ -5,7 +5,6 @@
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "userAlias": null,
   "normalizedName": "pr",
   "deprecated": false,
   "isOperator": false,
@@ -15,10 +14,8 @@
     "repositoryid": "id",
     "kind": 0,
     "name": "incubator",
-    "displayName": null,
     "organizationName": "helm",
     "organizationDisplayName": "Helm",
-    "userAlias": null,
     "url": "https://repo.url"
   }
 }

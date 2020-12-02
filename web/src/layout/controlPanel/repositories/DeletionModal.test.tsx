@@ -19,7 +19,6 @@ const repoMock: Repository = {
   name: 'repoTest',
   displayName: 'Repo test',
   url: 'http://test.repo',
-  lastTrackingTs: null,
   userAlias: 'user',
   verifiedPublisher: false,
   official: false,

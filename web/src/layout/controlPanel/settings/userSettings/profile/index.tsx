@@ -1,5 +1,3 @@
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useState } from 'react';
 
 import { API } from '../../../../../api';
@@ -15,9 +13,7 @@ interface Props {
 
 const ProfileSection = (props: Props) => {
   const { ctx } = useContext(AppCtx);
-  const [profile, setProfile] = useState<Profile | null | undefined>(
-    !isNull(ctx.user) && !isUndefined(ctx.user) ? ctx.user : undefined
-  );
+  const [profile, setProfile] = useState<Profile | null | undefined>(ctx.user || undefined);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -36,7 +32,7 @@ const ProfileSection = (props: Props) => {
 
   return (
     <main role="main" className="container p-0">
-      {!isNull(profile) && !isUndefined(profile) && (
+      {profile && (
         <div className="mb-5">
           <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 

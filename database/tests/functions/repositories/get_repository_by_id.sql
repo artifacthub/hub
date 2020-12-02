@@ -57,9 +57,7 @@ select is(
         "digest": "digest",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }'::jsonb,
     'Repository just seeded is returned as a json object'
 );
@@ -79,9 +77,7 @@ select is(
         "digest": "digest",
         "last_tracking_ts": 1592299234,
         "last_tracking_errors": "error1\\nerror2\\n",
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }'::jsonb,
     'Repository just seeded is returned as a json object which includes the credentials'
 );

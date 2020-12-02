@@ -65,9 +65,7 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }'::jsonb,
     'Repository 1 is returned as a json object'
 );
@@ -82,9 +80,7 @@ select is(
         "kind": 0,
         "verified_publisher": false,
         "official": false,
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }'::jsonb,
     'Repository 2 is returned as a json object'
 );

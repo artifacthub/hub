@@ -62,12 +62,12 @@ const SearchView = (props: Props) => {
   const [apiError, setApiError] = useState<string | null>(null);
 
   const isEmptyFacets = (): boolean => {
-    if (isNull(searchResults.data.facets)) {
-      return true;
-    } else {
+    if (searchResults.data.facets) {
       return every(searchResults.data.facets, (f: Facets) => {
         return f.options.length === 0;
       });
+    } else {
+      return true;
     }
   };
 
@@ -234,7 +234,7 @@ const SearchView = (props: Props) => {
 
       try {
         let newSearchResults = await API.searchPackages(query);
-        if (newSearchResults.metadata.total === 0 && !isEmpty(searchResults.data.facets)) {
+        if (newSearchResults.metadata.total === 0 && searchResults.data.facets && !isEmpty(searchResults.data.facets)) {
           newSearchResults = {
             ...newSearchResults,
             data: {
@@ -385,7 +385,7 @@ const SearchView = (props: Props) => {
                   )}
                   {searchResults.metadata.total}
                   <span className="pl-1"> results </span>
-                  {!isUndefined(props.tsQueryWeb) && props.tsQueryWeb !== '' && (
+                  {props.tsQueryWeb && props.tsQueryWeb !== '' && (
                     <span className="d-none d-sm-inline pl-1">
                       for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                     </span>
@@ -449,7 +449,7 @@ const SearchView = (props: Props) => {
                         We're sorry!
                         <p className={`h6 mb-0 mt-3 ${styles.noDataMessage}`}>
                           <span> We can't seem to find any packages that match your search </span>
-                          {!isUndefined(props.tsQueryWeb) && (
+                          {props.tsQueryWeb && (
                             <span className="pl-1">
                               for "<span className="font-weight-bold">{props.tsQueryWeb}</span>"
                             </span>

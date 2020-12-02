@@ -82,7 +82,6 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
         }

@@ -1,13 +1,10 @@
 {
   "packageId": "da70904e-2add-4a5f-bb5d-6684f5959f3b",
   "name": "chartmuseum",
-  "displayName": null,
   "description": "Helm Chart Repository with support for Amazon S3 and Google Cloud Storage",
   "homeUrl": "https://github.com/chartmuseum/chartmuseum",
   "logoImageId": "f83e00ec-d460-4f14-a4b2-918b594eb107",
   "keywords": ["chartmuseum", "helm", "charts repo"],
-  "readme": null,
-  "links": null,
   "version": "1.1.1",
   "availableVersions": [
     { "version": "0.1.0", "createdAt": 1 },
@@ -17,15 +14,12 @@
   ],
   "appVersion": "0.5.1",
   "digest": "4213f8b0a86bcd063a253ec2395586ec1ff932594ced221ce25a1e75d681ccd2",
-  "maintainers": null,
   "repository": {
     "repositoryid": "id",
     "kind": 0,
     "name": "incubator",
-    "displayName": null,
     "url": "https://kubernetes-charts-incubator.storage.googleapis.com",
     "organizationName": "helm",
-    "organizationDisplayName": "Helm",
-    "userAlias": null
+    "organizationDisplayName": "Helm"
   }
 }

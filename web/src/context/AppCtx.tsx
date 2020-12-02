@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
@@ -182,7 +181,7 @@ export function appReducer(state: AppState, action: Action) {
           limit: action.limit,
         },
       };
-      lsStorage.setPrefs(updatedPrefs, !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined);
+      lsStorage.setPrefs(updatedPrefs, state.user ? state.user.alias : undefined);
       return {
         ...state,
         prefs: updatedPrefs,
@@ -197,10 +196,7 @@ export function appReducer(state: AppState, action: Action) {
           automatic: false,
         },
       };
-      lsStorage.setPrefs(
-        updatedUserPrefs,
-        !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined
-      );
+      lsStorage.setPrefs(updatedUserPrefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(action.theme);
       return {
         ...state,
@@ -215,10 +211,7 @@ export function appReducer(state: AppState, action: Action) {
           efective: action.theme,
         },
       };
-      lsStorage.setPrefs(
-        updatedThemePrefs,
-        !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined
-      );
+      lsStorage.setPrefs(updatedThemePrefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(action.theme);
       return {
         ...state,
@@ -227,10 +220,7 @@ export function appReducer(state: AppState, action: Action) {
 
     case 'enableAutomaticTheme':
       const updatedThemeUserPrefs = updateAutomaticTheme(state.prefs, action.enabled);
-      lsStorage.setPrefs(
-        updatedThemeUserPrefs,
-        !isNull(state.user) && !isUndefined(state.user) ? state.user.alias : undefined
-      );
+      lsStorage.setPrefs(updatedThemeUserPrefs, state.user ? state.user.alias : undefined);
       updateActiveStyleSheet(updatedThemeUserPrefs.theme.efective || updatedThemeUserPrefs.theme.configured);
       return {
         ...state,

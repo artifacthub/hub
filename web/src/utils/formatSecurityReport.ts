@@ -1,4 +1,4 @@
-import { groupBy, isUndefined, orderBy } from 'lodash';
+import { groupBy, orderBy } from 'lodash';
 
 import { SecurityReportSummary, Vulnerability, VulnerabilitySeverity } from '../types';
 import { SEVERITY_ORDER } from './data';
@@ -13,7 +13,7 @@ export default (vulnerabilities: Vulnerability[] | null): { list: Vulnerability[
           (vulnerability: Vulnerability) => {
             const sources = vulnerability.CVSS ? Object.keys(vulnerability.CVSS) : [];
             const activeSource =
-              !isUndefined(vulnerability.SeveritySource) && sources.includes(vulnerability.SeveritySource)
+              vulnerability.SeveritySource && sources.includes(vulnerability.SeveritySource)
                 ? vulnerability.SeveritySource
                 : sources[0];
             if (sources.length > 0 && vulnerability.CVSS[activeSource]) {

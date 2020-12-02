@@ -22,7 +22,7 @@ const SectionPanel = (props: Props) => {
   const [activeSection, setActiveSection] = useState<string>(props.activeSection || props.defaultSection);
 
   useEffect(() => {
-    if (!isUndefined(props.activeSection)) {
+    if (props.activeSection) {
       setActiveSection(props.activeSection);
     }
   }, [props.activeSection]);
@@ -30,8 +30,8 @@ const SectionPanel = (props: Props) => {
   const getBtnContent = (section: Section): JSX.Element => {
     return (
       <>
-        {!isUndefined(section.icon) && <div className={`${styles.icon} sectionIcon`}>{section.icon}</div>}
-        {!isUndefined(section.shortName) ? (
+        {section.icon && <div className={`${styles.icon} sectionIcon`}>{section.icon}</div>}
+        {section.shortName ? (
           <div className="d-none d-sm-inline ml-1 ml-sm-2">
             <span className="d-none d-md-inline">{section.displayName}</span>
             <span className="d-inline d-md-none">{section.shortName}</span>

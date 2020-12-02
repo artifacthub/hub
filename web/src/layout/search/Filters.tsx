@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React from 'react';
 import { FaBuilding, FaUser } from 'react-icons/fa';
@@ -28,7 +27,7 @@ interface Props {
     [key: string]: string[];
   };
   activeTsQuery?: string[];
-  facets: Facets[] | null;
+  facets?: Facets[] | null;
   visibleTitle: boolean;
   onChange: (name: string, value: string, checked: boolean) => void;
   onResetSomeFilters: (filterKeys: string[]) => void;
@@ -55,7 +54,7 @@ const Filters = (props: Props) => {
       user: [],
       org: [],
     };
-    if (!isNull(props.facets)) {
+    if (props.facets) {
       const user = getFacetsByFilterKey('user');
       let usersList: Option[] = [];
       if (!isUndefined(user)) {
@@ -245,7 +244,7 @@ const Filters = (props: Props) => {
           value="official"
           className={styles.checkbox}
           label="Official repositories"
-          checked={!isUndefined(props.official) && !isNull(props.official) && props.official}
+          checked={props.official || false}
           onChange={props.onOfficialChange}
         />
 
@@ -268,7 +267,7 @@ const Filters = (props: Props) => {
           value="verifiedPublisher"
           className={styles.checkbox}
           label="Verified publishers"
-          checked={!isUndefined(props.verifiedPublisher) && !isNull(props.verifiedPublisher) && props.verifiedPublisher}
+          checked={props.verifiedPublisher || false}
           onChange={props.onVerifiedPublisherChange}
         />
 
@@ -301,7 +300,7 @@ const Filters = (props: Props) => {
             value="operators"
             className={styles.checkbox}
             label="Only operators"
-            checked={!isUndefined(props.operators) && !isNull(props.operators) && props.operators}
+            checked={props.operators || false}
             onChange={props.onOperatorsChange}
           />
 
@@ -310,7 +309,7 @@ const Filters = (props: Props) => {
             value="deprecated"
             className={styles.checkbox}
             label="Include deprecated"
-            checked={!isUndefined(props.deprecated) && !isNull(props.deprecated) && props.deprecated}
+            checked={props.deprecated || false}
             onChange={props.onDeprecatedChange}
           />
         </div>

@@ -54,18 +54,18 @@ const APIKeyModal = (props: Props) => {
 
   async function handleAPIKey(name: string) {
     try {
-      if (!isUndefined(props.apiKey)) {
+      if (props.apiKey) {
         await API.updateAPIKey(props.apiKey.apiKeyId!, name);
       } else {
         setApiKeyCode(await API.addAPIKey(name));
       }
-      if (!isUndefined(props.onSuccess)) {
+      if (props.onSuccess) {
         props.onSuccess();
       }
       setIsSending(false);
 
       // Modal is closed only when updating API key
-      if (!isUndefined(props.apiKey)) {
+      if (props.apiKey) {
         onCloseModal();
       }
     } catch (err) {
@@ -85,7 +85,7 @@ const APIKeyModal = (props: Props) => {
     setIsSending(true);
     if (form.current) {
       const { isValid, apiKey } = validateForm(form.current);
-      if (isValid && !isNull(apiKey)) {
+      if (isValid && apiKey) {
         handleAPIKey(apiKey.name);
       } else {
         setIsSending(false);
@@ -109,7 +109,7 @@ const APIKeyModal = (props: Props) => {
   };
 
   const handleOnReturnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter' && !isNull(form)) {
+    if (event.key === 'Enter' && form) {
       event.preventDefault();
       event.stopPropagation();
       submitForm();
@@ -129,7 +129,7 @@ const APIKeyModal = (props: Props) => {
       }
     }
 
-    if (!isUndefined(props.apiKey) && isUndefined(apiKey)) {
+    if (props.apiKey && isUndefined(apiKey)) {
       getAPIKey();
     }
   }, [apiKey, props, props.apiKey]);
@@ -145,7 +145,7 @@ const APIKeyModal = (props: Props) => {
       {isSending ? (
         <>
           <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-          <span className="ml-2">{`${isUndefined(props.apiKey) ? 'Adding' : 'Updating'} API key`}</span>
+          <span className="ml-2">{`${props.apiKey ? 'Updating' : 'Adding'} API key`}</span>
         </>
       ) : (
         <div className="d-flex flex-row align-items-center text-uppercase">
@@ -168,9 +168,7 @@ const APIKeyModal = (props: Props) => {
   return (
     <Modal
       header={
-        <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>{`${
-          isUndefined(props.apiKey) ? 'Add' : 'Update'
-        } API key`}</div>
+        <div className={`h3 m-2 flex-grow-1 ${styles.title}`}>{`${props.apiKey ? 'Update' : 'Add'} API key`}</div>
       }
       open={props.open}
       modalClassName={styles.modal}
@@ -180,7 +178,7 @@ const APIKeyModal = (props: Props) => {
       cleanError={cleanApiError}
     >
       <div className={`w-100 ${styles.contentWrapper}`}>
-        {!isUndefined(apiKeyCode) ? (
+        {apiKeyCode ? (
           <>
             <div className="d-flex justify-content-between mb-2">
               <SmallTitle text="Key" />

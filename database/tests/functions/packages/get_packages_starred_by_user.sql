@@ -125,10 +125,6 @@ select is(
         "description": "description",
         "version": "1.0.0",
         "app_version": "12.1.0",
-        "license": null,
-        "deprecated": null,
-        "signed": null,
-        "security_report_summary": null,
         "created_at": 1592299234,
         "repository": {
             "repository_id": "00000000-0000-0000-0000-000000000001",
@@ -139,7 +135,6 @@ select is(
             "private": false,
             "verified_publisher": false,
             "official": false,
-            "user_alias": null,
             "organization_name": "org1",
             "organization_display_name": "Organization 1"
         }

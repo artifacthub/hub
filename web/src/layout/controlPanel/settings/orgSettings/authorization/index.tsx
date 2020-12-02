@@ -99,14 +99,14 @@ const AuthorizationSection = (props: Props) => {
     const value = e.target.value;
     let updatedOrgPolicy: OrganizationPolicy | undefined = undefined;
     if (value === 'predefined') {
-      if (!isUndefined(savedOrgPolicy) && !isNull(savedOrgPolicy.predefinedPolicy)) {
+      if (savedOrgPolicy && savedOrgPolicy.predefinedPolicy) {
         updatedOrgPolicy = {
           ...savedOrgPolicy,
           authorizationEnabled: true,
         };
       } else {
         const defaultPolicy = getPredefinedPolicy(DEFAULT_POLICY_NAME);
-        if (!isUndefined(defaultPolicy)) {
+        if (defaultPolicy) {
           updatedOrgPolicy = {
             ...orgPolicy!,
             customPolicy: null,
@@ -123,7 +123,7 @@ const AuthorizationSection = (props: Props) => {
     } else {
       let updatedOrgPolicy: OrganizationPolicy | undefined = undefined;
 
-      if (!isUndefined(savedOrgPolicy) && !isNull(savedOrgPolicy.customPolicy)) {
+      if (savedOrgPolicy && savedOrgPolicy.customPolicy) {
         updatedOrgPolicy = {
           ...savedOrgPolicy,
           authorizationEnabled: true,
@@ -153,9 +153,9 @@ const AuthorizationSection = (props: Props) => {
     try {
       setIsTesting(true);
       let policy: string = '';
-      if (!isNull(orgPolicy!.predefinedPolicy)) {
+      if (orgPolicy!.predefinedPolicy) {
         const predefined = getPredefinedPolicy(orgPolicy!.predefinedPolicy);
-        if (!isUndefined(predefined)) {
+        if (predefined) {
           policy = predefined.policy;
         }
       } else {
@@ -187,8 +187,10 @@ const AuthorizationSection = (props: Props) => {
       setIsLoading(true);
       const policy = await API.getAuthorizationPolicy(selectedOrg!);
       const formattedPolicy = {
-        ...policy,
-        policyData: !isNull(policy.policyData) ? stringifyPolicyData(policy.policyData) : null,
+        authorizationEnabled: policy.authorizationEnabled,
+        predefinedPolicy: policy.predefinedPolicy || null,
+        customPolicy: policy.customPolicy || null,
+        policyData: policy.policyData ? stringifyPolicyData(policy.policyData) : null,
       };
       setSavedOrgPolicy(formattedPolicy);
       setOrgPolicy(formattedPolicy);
@@ -265,7 +267,7 @@ const AuthorizationSection = (props: Props) => {
 
   const onSaveAuthorizationPolicy = () => {
     const policy = orgPolicy!.customPolicy || orgPolicy!.predefinedPolicy;
-    if (isNull(policy) || trim(policy) === '') {
+    if (isNull(policy) || isUndefined(policy) || trim(policy) === '') {
       setInvalidPolicy(true);
     } else if (!isValidJSON(orgPolicy!.policyData || '')) {
       setInvalidPolicyDataJSON(true);
@@ -280,8 +282,8 @@ const AuthorizationSection = (props: Props) => {
     const defaultPolicy = getPredefinedPolicy(DEFAULT_POLICY_NAME);
     if (
       authorized &&
-      isNull(savedOrgPolicy!.customPolicy) &&
-      isNull(savedOrgPolicy!.predefinedPolicy) &&
+      (isNull(savedOrgPolicy!.customPolicy) || isUndefined(savedOrgPolicy!.customPolicy)) &&
+      (isNull(savedOrgPolicy!.predefinedPolicy) || isUndefined(savedOrgPolicy!.predefinedPolicy)) &&
       !isUndefined(defaultPolicy)
     ) {
       extraData = {
@@ -336,14 +338,14 @@ const AuthorizationSection = (props: Props) => {
   };
 
   useEffect(() => {
-    if (!isUndefined(selectedOrg)) {
+    if (selectedOrg) {
       getAuthorizationPolicy();
       fetchMembers();
     }
   }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   useEffect(() => {
-    if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+    if (ctx.prefs.controlPanel.selectedOrg) {
       if (selectedOrg !== ctx.prefs.controlPanel.selectedOrg) {
         if (!checkIfUnsavedChanges()) {
           setSelectedOrg(ctx.prefs.controlPanel.selectedOrg);
@@ -384,7 +386,7 @@ const AuthorizationSection = (props: Props) => {
     <main role="main" className="container p-0">
       {(isUndefined(orgPolicy) || isLoading) && <Loading />}
       <Prompt
-        when={!isNull(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
+        when={!isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}
         message="You have some unsaved changes in your policy data. If you continue without saving, those changes will be lost."
       />
 
@@ -412,7 +414,7 @@ const AuthorizationSection = (props: Props) => {
           .
         </p>
 
-        {isNull(orgPolicy) && notGetPolicyAllowed && (
+        {(isNull(orgPolicy) || isUndefined(orgPolicy)) && notGetPolicyAllowed && (
           <NoData>You are not allowed to manage this organization's authorization policy</NoData>
         )}
 
@@ -462,7 +464,7 @@ const AuthorizationSection = (props: Props) => {
                     );
                   })}
                 </div>
-                {!isNull(orgPolicy.predefinedPolicy) && (
+                {orgPolicy.predefinedPolicy && (
                   <div className="form-group w-75 mb-4">
                     <select
                       data-testid="selectPredefinedPolicies"
@@ -493,7 +495,7 @@ const AuthorizationSection = (props: Props) => {
                       <CodeEditor
                         mode="rego"
                         value={
-                          !isNull(orgPolicy.predefinedPolicy)
+                          orgPolicy.predefinedPolicy
                             ? getPredefinedPolicy(orgPolicy.predefinedPolicy)!.policy
                             : orgPolicy.customPolicy
                         }
@@ -506,7 +508,7 @@ const AuthorizationSection = (props: Props) => {
                             customPolicy: value || null,
                           });
                         }}
-                        disabled={!isNull(orgPolicy.predefinedPolicy) || !updatePolicyAllowed}
+                        disabled={orgPolicy.predefinedPolicy || !updatePolicyAllowed}
                       />
                       {invalidPolicy && (
                         <small className="text-danger">

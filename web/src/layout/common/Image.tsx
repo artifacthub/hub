@@ -6,7 +6,7 @@ import { RepositoryKind } from '../../types';
 import getHubBaseURL from '../../utils/getHubBaseURL';
 
 interface Props {
-  imageId: string | null;
+  imageId?: string | null;
   alt: string;
   className?: string;
   placeholderIcon?: JSX.Element;
@@ -43,7 +43,7 @@ const Image = (props: Props) => {
 
   return (
     <>
-      {error || isNull(props.imageId) ? (
+      {error || isNull(props.imageId) || isUndefined(props.imageId) ? (
         <>
           {isUndefined(props.placeholderIcon) ? (
             <img alt={props.alt} src={getPlaceholder()} className={props.className} />

@@ -30,12 +30,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
-        "digest": null,
-        "last_tracking_ts": null,
-        "last_tracking_errors": null,
-        "user_alias": "user1",
-        "organization_name": null,
-        "organization_display_name": null
+        "user_alias": "user1"
     }'::jsonb,
     'Repository just seeded is returned as a json object'
 );

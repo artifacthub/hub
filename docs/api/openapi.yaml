@@ -1808,10 +1808,10 @@ components:
       properties:
         authorization_enabled:
           type: boolean
+          nullable: false
         predefined_policy:
           type: string
           example: rbac.v1
-          nullable: true
         custom_policy:
           type: string
           example: |
@@ -1844,7 +1844,6 @@ components:
             user_roles[role] {
               data.roles[role].users[_] == input.user
             }
-          nullable: true
         policy_data:
           type: object
           additionalProperties: true
@@ -1860,7 +1859,6 @@ components:
                 allowed_actions:
                   - addOrganizationMember
                   - addOrganizationRepository
-          nullable: true
     Error:
       type: object
       properties:
@@ -1981,9 +1979,11 @@ components:
           format: uuid
         name:
           type: string
+          nullable: false
           example: maintainer1
         email:
           type: string
+          nullable: false
           example: maintainer@email.com
     Member:
       type: object
@@ -2250,7 +2250,6 @@ components:
               type: number
             unkown:
               type: number
-          nullable: true
     Repository:
       allOf:
         - $ref: "#/components/schemas/RepositorySummary"
@@ -2316,8 +2315,10 @@ components:
           example: "http://repourl"
         verified_publisher:
           type: boolean
+          nullable: false
         official:
           type: boolean
+          nullable: false
         private:
           type: boolean
         user_alias:
@@ -2423,6 +2424,7 @@ components:
           type: integer
         processed:
           type: boolean
+          nullable: false
         processed_at:
           type: integer
         error:

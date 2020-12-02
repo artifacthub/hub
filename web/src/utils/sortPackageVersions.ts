@@ -1,10 +1,9 @@
-import { isNull, isUndefined } from 'lodash';
 import semver from 'semver';
 
 import { Version } from '../types';
 
 export default (availableVersions: Version[]): Version[] => {
-  if (!isUndefined(availableVersions) && !isNull(availableVersions)) {
+  if (availableVersions) {
     const validVersions: Version[] = availableVersions.filter((version: Version) => semver.valid(version.version));
     const invalidVersions: Version[] = availableVersions.filter((version: Version) => !semver.valid(version.version));
     try {

@@ -31,7 +31,7 @@ begin
             else true end
         order by rank desc, package_name asc
     )
-    select json_build_object(
+    select json_strip_nulls(json_build_object(
         'data', (
             select coalesce(json_agg(json_build_object(
                 'id', format('%s/%s', repository_name, package_name),
@@ -61,6 +61,6 @@ begin
             )), '[]')
             from packages_found
         )
-    );
+    ));
 end
 $$ language plpgsql;

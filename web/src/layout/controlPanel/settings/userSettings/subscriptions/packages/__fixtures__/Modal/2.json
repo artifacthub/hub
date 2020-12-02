@@ -9,7 +9,6 @@
       "kind": 0,
       "name": "stable",
       "displayName": "Stable",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },
@@ -19,13 +18,11 @@
     "packageId": "11d84cdc-e414-43c7-9be0-1f6b11912eb2",
     "name": "cerebro",
     "normalizedName": "cerebro",
-    "logoImageId": null,
     "repository": {
       "repositoryId": "d3945a69-2aae-4ff9-8fb3-ce3b070d0384",
       "kind": 0,
       "name": "stable",
       "displayName": "Stable",
-      "userAlias": null,
       "organizationName": "helm",
       "organizationDisplayName": "Helm"
     },

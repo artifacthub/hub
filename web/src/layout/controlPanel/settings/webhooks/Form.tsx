@@ -716,7 +716,7 @@ const WebhookForm = (props: Props) => {
                     <div className="d-flex flex-row align-items-center text-uppercase">
                       <RiTestTubeFill className="mr-2" />{' '}
                       <div>
-                        Test <span className="d-none d-sm-block">webhook</span>
+                        Test <span className="d-none d-sm-inline-block">webhook</span>
                       </div>
                     </div>
                   )}

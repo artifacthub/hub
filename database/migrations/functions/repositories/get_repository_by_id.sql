@@ -5,7 +5,7 @@ returns setof json as $$
 begin
     if p_include_credentials then
         return query
-        select json_build_object(
+        select json_strip_nulls(json_build_object(
             'repository_id', r.repository_id,
             'name', r.name,
             'display_name', r.display_name,
@@ -22,14 +22,14 @@ begin
             'user_alias', u.alias,
             'organization_name', o.name,
             'organization_display_name', o.display_name
-        )
+        ))
         from repository r
         left join "user" u using (user_id)
         left join organization o using (organization_id)
         where repository_id = p_repository_id;
     else
         return query
-        select json_build_object(
+        select json_strip_nulls(json_build_object(
             'repository_id', r.repository_id,
             'name', r.name,
             'display_name', r.display_name,
@@ -44,7 +44,7 @@ begin
             'user_alias', u.alias,
             'organization_name', o.name,
             'organization_display_name', o.display_name
-        )
+        ))
         from repository r
         left join "user" u using (user_id)
         left join organization o using (organization_id)

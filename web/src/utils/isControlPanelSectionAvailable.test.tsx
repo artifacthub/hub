@@ -1,5 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-
 import isControlPanelSectionAvailable from './isControlPanelSectionAvailable';
 
 interface Test {
@@ -110,11 +108,9 @@ const tests: Test[] = [
 
 describe('isControlPanelSectionAvailable', () => {
   for (let i = 0; i < tests.length; i++) {
-    it(`check if control panel path${
-      !isUndefined(tests[i].data.sectionToCheck) ? ` \\${tests[i].data.sectionToCheck}` : ''
-    }${!isUndefined(tests[i].data.subsectionToCheck) ? `\\${tests[i].data.subsectionToCheck}` : ''} for context ${
-      tests[i].data.context
-    } is available`, () => {
+    it(`check if control panel path${tests[i].data.sectionToCheck ? ` \\${tests[i].data.sectionToCheck}` : ''}${
+      tests[i].data.subsectionToCheck ? `\\${tests[i].data.subsectionToCheck}` : ''
+    } for context ${tests[i].data.context} is available`, () => {
       const actual = isControlPanelSectionAvailable(
         tests[i].data.context,
         tests[i].data.sectionToCheck,

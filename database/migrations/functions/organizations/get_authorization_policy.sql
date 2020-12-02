@@ -8,12 +8,12 @@ begin
     end if;
 
     return query
-    select json_build_object(
+    select json_strip_nulls(json_build_object(
         'authorization_enabled', authorization_enabled,
         'predefined_policy', predefined_policy,
         'custom_policy', custom_policy,
         'policy_data', policy_data
-    )
+    ))
     from organization
     where name = p_org_name;
 end

@@ -103,9 +103,7 @@ const RepositoryInfo = (props: Props) => {
         <div className="d-flex flex-row aling-items-baseline text-truncate">
           <div className="d-flex flex-row align-items-baseline mr-1 text-muted text-uppercase">
             <small>Repo:</small>
-            {!isUndefined(props.visibleIcon) && props.visibleIcon && (
-              <RepositoryIcon kind={props.repository.kind} className={`ml-1 ${styles.repoIcon}`} />
-            )}
+            {props.visibleIcon && <RepositoryIcon kind={props.repository.kind} className={`ml-1 ${styles.repoIcon}`} />}
           </div>
 
           <button
@@ -135,7 +133,7 @@ const RepositoryInfo = (props: Props) => {
             <>
               <div className="text-truncate">{props.repository.displayName || props.repository.name}</div>
 
-              {!isUndefined(props.repository.url) && !isUndefined(props.visibleInfoIcon) && props.visibleInfoIcon && (
+              {props.repository.url && props.visibleInfoIcon && (
                 <MdInfoOutline className={`d-none d-sm-inline-block ml-1 ${styles.infoIcon}`} />
               )}
             </>

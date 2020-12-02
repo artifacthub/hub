@@ -71,7 +71,7 @@ export interface Package {
   capabilities?: string | null;
   crds?: { [key: string]: any } | null;
   crdsExamples?: CustomResourcesDefinitionExample[] | null;
-  securityReportSummary: SecurityReportSummary | null;
+  securityReportSummary?: SecurityReportSummary | null;
   securityReportCreatedAt?: number;
   hasValuesSchema?: boolean;
   hasChangelog?: boolean;
@@ -325,7 +325,7 @@ export interface WebhookNotification {
   createdAt: number;
   processed: boolean;
   processedAt: number;
-  error: null | string;
+  error?: null | string;
 }
 
 export enum PayloadKind {
@@ -424,9 +424,9 @@ export interface RegoPlaygroundResult {
 
 export interface OrganizationPolicy {
   authorizationEnabled: boolean;
-  predefinedPolicy: string | null;
-  customPolicy: string | null;
-  policyData: string | null;
+  predefinedPolicy?: string | null;
+  customPolicy?: string | null;
+  policyData?: string | null;
 }
 
 export interface AuthorizationPolicy {
@@ -494,5 +494,5 @@ export interface CVSSVectorOpt {
 export interface ChangeLog {
   version: string;
   createdAt: number;
-  changes: string[];
+  changes?: string[] | null;
 }

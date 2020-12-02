@@ -5,7 +5,6 @@
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "userAlias": null,
   "normalizedName": "pr",
   "deprecated": false,
   "isOperator": false,
@@ -14,9 +13,6 @@
     "repositoryid": "id",
     "kind": 1,
     "name": "repo",
-    "displayName": null,
-    "organizationName": null,
-    "organizationDisplayName": null,
     "userAlias": "userAlias"
   }
 }

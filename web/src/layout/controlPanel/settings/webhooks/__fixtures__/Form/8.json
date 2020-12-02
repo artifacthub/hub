@@ -16,7 +16,6 @@
         "kind": 0,
         "name": "stable",
         "displayName": "Stable",
-        "userAlias": null,
         "organizationName": "helm",
         "organizationDisplayName": "Helm"
       }
@@ -30,7 +29,6 @@
         "kind": 0,
         "name": "stable",
         "displayName": "Stable",
-        "userAlias": null,
         "organizationName": "helm",
         "organizationDisplayName": "Helm"
       }
@@ -44,7 +42,6 @@
         "kind": 1,
         "name": "falco",
         "displayName": "Falco",
-        "userAlias": null,
         "organizationName": "org1",
         "organizationDisplayName": "Org 1"
       }
@@ -58,7 +55,6 @@
         "kind": 1,
         "name": "falco",
         "displayName": "Falco",
-        "userAlias": null,
         "organizationName": "org1",
         "organizationDisplayName": "Org 1"
       }
@@ -72,7 +68,6 @@
         "kind": 1,
         "name": "falco",
         "displayName": "Falco",
-        "userAlias": null,
         "organizationName": "org1",
         "organizationDisplayName": "Org 1"
       }
@@ -86,7 +81,6 @@
         "kind": 1,
         "name": "falco",
         "displayName": "Falco",
-        "userAlias": null,
         "organizationName": "org1",
         "organizationDisplayName": "Org 1"
       }
@@ -100,7 +94,6 @@
         "kind": 0,
         "name": "stable",
         "displayName": "Stable",
-        "userAlias": null,
         "organizationName": "helm",
         "organizationDisplayName": "Helm"
       }
@@ -114,7 +107,6 @@
         "kind": 0,
         "name": "stable",
         "displayName": "Stable",
-        "userAlias": null,
         "organizationName": "helm",
         "organizationDisplayName": "Helm"
       }

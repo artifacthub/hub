@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { Alert } from '../types';
@@ -21,25 +20,22 @@ export class AlertDispatcher {
   public postAlert(alert: Alert | null) {
     this.visibleAlert = alert;
     this.dismissAlert();
-    if (!isUndefined(this.updatesHandler)) {
+    if (this.updatesHandler) {
       this.updatesHandler.updateAlertWrapper(this.visibleAlert);
     }
   }
 
   private dismissAlert() {
     this.clearTimeout();
-    if (!isNull(this.visibleAlert) && (isUndefined(this.visibleAlert.autoClose) || this.visibleAlert.autoClose)) {
-      this.timeout = setTimeout(
-        () => {
-          this.postAlert(null);
-        },
-        !isUndefined(this.visibleAlert.dismissOn) ? this.visibleAlert.dismissOn : DEFUALT_TIME
-      );
+    if (this.visibleAlert && (isUndefined(this.visibleAlert.autoClose) || this.visibleAlert.autoClose)) {
+      this.timeout = setTimeout(() => {
+        this.postAlert(null);
+      }, this.visibleAlert.dismissOn || DEFUALT_TIME);
     }
   }
 
   private clearTimeout() {
-    if (!isUndefined(this.timeout)) {
+    if (this.timeout) {
       clearTimeout(this.timeout);
     }
   }

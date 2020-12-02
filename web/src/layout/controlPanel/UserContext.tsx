@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -39,7 +38,7 @@ const UserContext = () => {
       setIsLoading(true);
       const allOrganizations = await API.getUserOrganizations();
       const confirmedOrganizations = allOrganizations.filter((org: Organization) => org.confirmed);
-      if (!isUndefined(ctx.prefs.controlPanel.selectedOrg)) {
+      if (ctx.prefs.controlPanel.selectedOrg) {
         const selectedOrg = confirmedOrganizations.find(
           (org: Organization) => org.name === ctx.prefs.controlPanel.selectedOrg
         );
@@ -124,7 +123,7 @@ const UserContext = () => {
             )}
           </div>
         </button>
-        {!isNull(organizations) && (
+        {organizations && (
           <>
             {organizations.map((org: Organization) => (
               <button

@@ -1,5 +1,3 @@
-import isUndefined from 'lodash/isUndefined';
-
 import { Package } from '../types';
 import { RepoKindDef, REPOSITORY_KINDS } from './data';
 
@@ -11,7 +9,7 @@ export default (packageItem: Package, withVersion?: boolean): string => {
 
   let url = `/packages/${getRepositoryKindName()}/${packageItem.repository.name}/${packageItem.normalizedName}`;
 
-  if (!isUndefined(packageItem.version) && !isUndefined(withVersion) && withVersion) {
+  if (packageItem.version && withVersion) {
     url += `/${packageItem.version}`;
   }
 

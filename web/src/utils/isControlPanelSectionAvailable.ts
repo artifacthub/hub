@@ -15,18 +15,18 @@ export default (context: 'user' | 'org', sectionToCheck?: string, subsectionToCh
 
   const isSubsectionAvailable = (): boolean => {
     const activeSection = CONTROL_PANEL_SECTIONS[context].find((sect: Section) => sect.name === sectionToCheck);
-    if (!isUndefined(activeSection) && !isUndefined(activeSection.subsections)) {
+    if (activeSection && activeSection.subsections) {
       return some(activeSection.subsections, (subSsect: Section) => subSsect.name === subsectionToCheck);
     } else {
       return false;
     }
   };
 
-  if (!isUndefined(sectionToCheck) && !isSectionAvailable()) {
+  if (sectionToCheck && !isSectionAvailable()) {
     return false;
   }
 
-  if (!isUndefined(sectionToCheck) && !isUndefined(subsectionToCheck) && !isSubsectionAvailable()) {
+  if (sectionToCheck && subsectionToCheck && !isSubsectionAvailable()) {
     return false;
   }
 

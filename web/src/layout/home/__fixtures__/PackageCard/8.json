@@ -5,15 +5,11 @@
   "description": "desc",
   "logoImageId": "imageId",
   "appVersion": "1.0.0",
-  "securityReportSummary": null,
   "repository": {
     "repositoryId": "id",
     "kind": 1,
     "name": "repo",
-    "displayName": null,
     "url": "repoUrl",
-    "userAlias": null,
-    "organizationName": "org1",
-    "organizationDisplayName": null
+    "organizationName": "org1"
   }
 }

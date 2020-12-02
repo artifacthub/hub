@@ -4,22 +4,17 @@
   "normalizedName": "artifact-hub",
   "logoImageId": "95f2e608-3deb-4997-9d2b-7cc9ad5cd08d",
   "stars": 1,
-  "displayName": null,
   "description": "Artifact Hub is a web-based application that enables finding, installing, and publishing Kubernetes packages.",
   "version": "0.1.0",
   "appVersion": "0.1.0",
   "deprecated": false,
-  "userAlias": null,
   "organizationName": "artifact-hub",
   "organizationDisplayName": "Artifact Hub",
-  "securityReportSummary": null,
   "repository": {
     "repositoryId": "id",
     "kind": 0,
     "name": "ah",
-    "displayName": null,
     "url": "repoUrl",
-    "userAlias": null,
     "organizationName": "artifact-hub",
     "organizationDisplayName": "Artifact Hub"
   }

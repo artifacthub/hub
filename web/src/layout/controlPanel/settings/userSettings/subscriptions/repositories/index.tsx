@@ -1,4 +1,4 @@
-import { isNull, isUndefined } from 'lodash';
+import { isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { IoMdLogOut } from 'react-icons/io';
@@ -188,7 +188,7 @@ const RepositoriesSection = (props: Props) => {
                           <span className={`mx-1 mb-1 ${styles.tinyIcon}`}>
                             {item.repository.userAlias ? <FaUser /> : <MdBusiness />}
                           </span>{' '}
-                          {!isNull(item.repository.userAlias) ? (
+                          {item.repository.userAlias ? (
                             <Link
                               data-testid="userLink"
                               className="text-dark"

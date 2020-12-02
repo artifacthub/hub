@@ -1,4 +1,3 @@
-import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import React, { useEffect, useState } from 'react';
 import { MdAdd, MdAddCircle } from 'react-icons/md';
@@ -29,17 +28,15 @@ const PackagesSection = (props: Props) => {
   const getNotificationTitle = (kind: EventKind): string => {
     let title = '';
     const notif = PACKAGE_SUBSCRIPTIONS_LIST.find((subs: SubscriptionItem) => subs.kind === kind);
-    if (!isUndefined(notif)) {
+    if (notif) {
       title = notif.title.toLowerCase();
     }
     return title;
   };
 
   const updateSubscriptionsPackagesOptimistically = (kind: EventKind, isActive: boolean, packageId: string) => {
-    const packageToUpdate = !isUndefined(packages)
-      ? packages.find((item: Package) => item.packageId === packageId)
-      : undefined;
-    if (!isUndefined(packageToUpdate) && !isUndefined(packageToUpdate.eventKinds)) {
+    const packageToUpdate = packages ? packages.find((item: Package) => item.packageId === packageId) : undefined;
+    if (packageToUpdate && packageToUpdate.eventKinds) {
       const newPackages = packages!.filter((item: Package) => item.packageId !== packageId);
       if (isActive) {
         packageToUpdate.eventKinds = packageToUpdate.eventKinds.filter((notifKind: number) => notifKind !== kind);
@@ -196,7 +193,7 @@ const PackagesSection = (props: Props) => {
                               </div>
                             </td>
                             <td className="align-middle position-relative">
-                              {!isNull(item.repository.userAlias) ? (
+                              {item.repository.userAlias ? (
                                 <Link
                                   data-testid="userLink"
                                   className="text-dark"

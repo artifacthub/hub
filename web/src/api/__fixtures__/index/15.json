@@ -10,10 +10,6 @@
   },
   {
     "name": "test",
-    "display_name": null,
-    "description": null,
-    "home_url": null,
-    "logo_image_id": null,
     "confirmed": true,
     "members_count": 1
   }

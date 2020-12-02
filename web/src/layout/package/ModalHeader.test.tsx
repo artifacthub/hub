@@ -18,7 +18,6 @@ const packageItem: Package = {
   repository: {
     kind: 0,
     name: 'stable',
-    displayName: null,
     url: 'repoUrl',
     userAlias: 'user',
   },

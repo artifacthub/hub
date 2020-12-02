@@ -7,7 +7,6 @@
     "repository": {
       "kind": 0,
       "name": "helm-stable",
-      "user_alias": null,
       "display_name": "Stable",
       "organization_name": "helm",
       "organization_display_name": "Helm"
@@ -22,7 +21,6 @@
     "repository": {
       "kind": 0,
       "name": "artifact-hub",
-      "user_alias": null,
       "display_name": "Artifact Hub",
       "organization_name": "artifacthub",
       "organization_display_name": "Artifact Hub"
@@ -38,9 +36,7 @@
       "kind": 0,
       "name": "mox",
       "user_alias": "mox",
-      "display_name": "mox",
-      "organization_name": null,
-      "organization_display_name": null
+      "display_name": "mox"
     },
     "event_kinds": [0]
   },
@@ -52,7 +48,6 @@
     "repository": {
       "kind": 3,
       "name": "community-operators",
-      "user_alias": null,
       "display_name": "Community Operators",
       "organization_name": "operator-framework",
       "organization_display_name": "Operator Framework"
@@ -67,7 +62,6 @@
     "repository": {
       "kind": 0,
       "name": "helm-stable",
-      "user_alias": null,
       "display_name": "Stable",
       "organization_name": "helm",
       "organization_display_name": "Helm"
@@ -82,7 +76,6 @@
     "repository": {
       "kind": 0,
       "name": "helm-stable",
-      "user_alias": null,
       "display_name": "Stable",
       "organization_name": "helm",
       "organization_display_name": "Helm"
@@ -97,7 +90,6 @@
     "repository": {
       "kind": 0,
       "name": "helm-stable",
-      "user_alias": null,
       "display_name": "Stable",
       "organization_name": "helm",
       "organization_display_name": "Helm"

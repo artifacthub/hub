@@ -4,11 +4,9 @@
   "normalizedName": "test",
   "displayName": "Pretty name",
   "description": "desc",
-  "logoImageId": null,
   "repository": {
     "kind": 2,
     "name": "repo",
-    "displayName": null,
     "url": "repoUrl"
   }
 }

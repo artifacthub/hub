@@ -2,7 +2,7 @@
 -- object.
 create or replace function get_package_summary(p_package_id uuid)
 returns setof json as $$
-    select json_build_object(
+    select json_strip_nulls(json_build_object(
         'package_id', p.package_id,
         'name', p.name,
         'normalized_name', p.normalized_name,
@@ -18,7 +18,7 @@ returns setof json as $$
         'security_report_summary', s.security_report_summary,
         'created_at', floor(extract(epoch from s.created_at)),
         'repository', (select get_repository_summary(r.repository_id))
-    )
+    ))
     from package p
     join snapshot s using (package_id)
     join repository r using (repository_id)

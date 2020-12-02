@@ -29,7 +29,7 @@ interface Props {
 const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
   const { ctx, dispatch } = useContext(AppCtx);
   const [imageId, setImageId] = useState<string | undefined>(
-    !isUndefined(props.organization) ? props.organization.logoImageId : undefined
+    props.organization ? props.organization.logoImageId : undefined
   );
   const nameInput = useRef<RefInputField>(null);
   const homeUrlInput = useRef<RefInputField>(null);
@@ -51,10 +51,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
       if (isUndefined(props.organization)) {
         await API.addOrganization(organization);
       } else {
-        if (
-          !isUndefined(ctx.prefs.controlPanel.selectedOrg) &&
-          ctx.prefs.controlPanel.selectedOrg === organization.name
-        ) {
+        if (ctx.prefs.controlPanel.selectedOrg && ctx.prefs.controlPanel.selectedOrg === organization.name) {
           dispatch(updateOrg(organization.name));
         }
         await API.updateOrganization(organization);
@@ -156,7 +153,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         label="Name"
         labelLegend={<small className="ml-1 font-italic">(Required)</small>}
         name="name"
-        value={!isUndefined(props.organization) ? props.organization.name : ''}
+        value={props.organization ? props.organization.name : ''}
         readOnly={!isUndefined(props.organization)}
         invalidText={{
           default: 'This field is required',
@@ -167,7 +164,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         checkAvailability={{
           isAvailable: true,
           resourceKind: ResourceKind.organizationName,
-          excluded: !isUndefined(props.organization) ? [props.organization.name] : [],
+          excluded: props.organization ? [props.organization.name] : [],
         }}
         pattern="[a-z0-9-]+"
         autoComplete="off"
@@ -178,11 +175,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
         type="text"
         label="Display name"
         name="displayName"
-        value={
-          !isUndefined(props.organization) && !isNull(props.organization.displayName)
-            ? props.organization.displayName
-            : ''
-        }
+        value={props.organization ? props.organization.displayName || '' : ''}
       />
 
       <InputField
@@ -194,9 +187,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           default: 'Please enter a valid url',
         }}
         validateOnBlur
-        value={
-          !isUndefined(props.organization) && !isNull(props.organization.homeUrl) ? props.organization.homeUrl : ''
-        }
+        value={props.organization ? props.organization.homeUrl || '' : ''}
       />
 
       <div className="form-group">
@@ -208,11 +199,7 @@ const OrganizationForm = React.forwardRef<HTMLFormElement, Props>((props, ref) =
           className="form-control"
           id="description"
           name="description"
-          defaultValue={
-            !isUndefined(props.organization) && !isNull(props.organization.description)
-              ? props.organization.description
-              : ''
-          }
+          defaultValue={props.organization ? props.organization.description || '' : ''}
         />
       </div>
 

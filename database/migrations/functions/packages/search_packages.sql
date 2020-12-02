@@ -121,7 +121,7 @@ begin
             case when cardinality(v_capabilities) > 0
             then capabilities = any(v_capabilities) else true end
     )
-    select json_build_object(
+    select json_strip_nulls(json_build_object(
         'data', (
             select json_build_object(
                 'packages', (
@@ -350,6 +350,6 @@ begin
                 'total', (select count(*) from packages_applying_all_filters)
             )
         )
-    );
+    ));
 end
 $$ language plpgsql;

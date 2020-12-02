@@ -2,7 +2,7 @@
 -- as a json array.
 create or replace function get_user_subscriptions(p_user_id uuid)
 returns setof json as $$
-    select coalesce(json_agg(json_build_object(
+    select coalesce(json_agg(json_strip_nulls(json_build_object(
         'package_id', package_id,
         'name', name,
         'normalized_name', normalized_name,
@@ -14,7 +14,7 @@ returns setof json as $$
             where package_id = sp.package_id
             and user_id = p_user_id
         )
-    )), '[]')
+    ))), '[]')
     from (
         select
             p.package_id,
