@@ -9,6 +9,7 @@ import getTextBetweenParenthesis from '../../../utils/getTextBetweenParenthesis'
 import SecurityRating from '../../common/SecutityRating';
 import SecurityCell from './Cell';
 import styles from './Table.module.css';
+import TargetImageBtn from './TargetImageBtn';
 
 interface Props {
   expandedTarget: string | null;
@@ -52,9 +53,8 @@ const SecurityTable = (props: Props) => {
                 <React.Fragment key={`table_${targetImageName}`}>
                   <div className="ml-4 mb-3">
                     {visibleVulnerabilities.length > 0 ? (
-                      <button
-                        data-testid="btnExpand"
-                        className="btn btn-link text-reset pl-0 btn-block position-relative"
+                      <TargetImageBtn
+                        isExpanded={isExpanded}
                         onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
                         disabled={visibleVulnerabilities.length === 0}
                       >
@@ -82,7 +82,7 @@ const SecurityTable = (props: Props) => {
                             {isExpanded ? 'Hide' : 'Show'} vulnerabilities
                           </div>
                         </div>
-                      </button>
+                      </TargetImageBtn>
                     ) : (
                       <div
                         className={`d-flex flex-row align-items-center position-relative mb-2 ${styles.targetTitle}`}

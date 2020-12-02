@@ -11,6 +11,7 @@ import styles from './ContainersImages.module.css';
 
 interface Props {
   containers?: ContainerImage[] | null;
+  packageId: string;
 }
 
 const ContainersImages = (props: Props) => {
@@ -35,7 +36,7 @@ const ContainersImages = (props: Props) => {
     <>
       <SmallTitle text="Containers Images" />
       <div className="mb-3">
-        <ExpandableList items={allContainers} visibleItems={5} />
+        <ExpandableList items={allContainers} visibleItems={5} resetStatusOnChange={props.packageId} />
       </div>
     </>
   );

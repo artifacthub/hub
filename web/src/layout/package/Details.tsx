@@ -28,9 +28,9 @@ interface Props {
 }
 
 const Details = (props: Props) => {
-  const allVersions: JSX.Element[] = props.sortedVersions.map((av_version: VersionData) => (
+  const allVersions: JSX.Element[] = props.sortedVersions.map((av_version: VersionData, index: number) => (
     <Version
-      key={av_version.version}
+      key={`${av_version.version}_${index}`}
       isActive={av_version.version === props.package.version}
       {...av_version}
       packageItem={{
@@ -90,7 +90,7 @@ const Details = (props: Props) => {
           <p data-testid="versions">-</p>
         ) : (
           <div className="mb-3" data-testid="versions">
-            <ExpandableList items={allVersions} visibleItems={3} />
+            <ExpandableList items={allVersions} visibleItems={3} resetStatusOnChange={props.package.packageId} />
           </div>
         )}
       </div>
@@ -133,11 +133,13 @@ const Details = (props: Props) => {
         </>
       )}
 
-      <ContainersImages containers={props.package.containersImages} />
+      <ContainersImages containers={props.package.containersImages} packageId={props.package.packageId} />
 
       {props.package.repository.kind === RepositoryKind.Helm &&
         !isUndefined(props.package.data) &&
-        !isNull(props.package.data) && <Dependencies dependencies={props.package.data.dependencies} />}
+        !isNull(props.package.data) && (
+          <Dependencies dependencies={props.package.data.dependencies} packageId={props.package.packageId} />
+        )}
 
       <SmallTitle text="Keywords" />
       <Keywords keywords={props.package.keywords} deprecated={props.package.deprecated} />

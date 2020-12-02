@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import ExpandableList from './ExpandableList';
@@ -62,5 +62,35 @@ describe('ExpandableList', () => {
     const btn = getByTestId('expandableListBtn');
     expect(btn).toHaveTextContent('Show less...');
     expect(queryAllByTestId('item')).toHaveLength(12);
+  });
+
+  it('closes list when value in resetStatusOnChange is a new one', () => {
+    const { getByTestId, rerender } = render(<ExpandableList items={getItems(12)} open resetStatusOnChange="pkg1" />);
+
+    const btn = getByTestId('expandableListBtn');
+    expect(btn).toHaveTextContent('Show less...');
+
+    rerender(<ExpandableList items={getItems(12)} open resetStatusOnChange="pkg2" />);
+
+    waitFor(() => {
+      expect(btn).toHaveTextContent('Show more...');
+    });
+  });
+
+  it('closes list when value in resetStatusOnChange is the same', () => {
+    const { getByTestId, queryAllByTestId, rerender } = render(
+      <ExpandableList items={getItems(12)} open resetStatusOnChange="pkg1" />
+    );
+
+    const btn = getByTestId('expandableListBtn');
+    expect(btn).toHaveTextContent('Show less...');
+    expect(queryAllByTestId('item')).toHaveLength(12);
+
+    rerender(<ExpandableList items={getItems(15)} open resetStatusOnChange="pkg1" />);
+
+    waitFor(() => {
+      expect(btn).toHaveTextContent('Show less...');
+      expect(queryAllByTestId('item')).toHaveLength(15);
+    });
   });
 });

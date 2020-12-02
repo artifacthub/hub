@@ -292,7 +292,7 @@ const PackageView = (props: Props) => {
     try {
       const element = document.querySelector(elId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
 
         if (id) {
           history.replace({
