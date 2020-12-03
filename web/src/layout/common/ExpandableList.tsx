@@ -7,6 +7,7 @@ interface Props {
   items: JSX.Element[];
   open?: boolean;
   onBtnClick?: (open: boolean) => void;
+  resetStatusOnChange?: string;
 }
 
 const DEFAULT_VISIBLE_ITEMS = 5;
@@ -28,6 +29,12 @@ const ExpandableList = (props: Props) => {
       setOpenStatus(props.open);
     }
   }, [props.open, open]);
+
+  useEffect(() => {
+    if (props.resetStatusOnChange && open) {
+      setOpenStatus(!open);
+    }
+  }, [props.resetStatusOnChange]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>

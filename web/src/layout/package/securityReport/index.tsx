@@ -3,6 +3,7 @@ import React from 'react';
 
 import { SearchFiltersURL, SecurityReportSummary, VulnerabilitySeverity } from '../../../types';
 import { SEVERITY_ORDER, SEVERITY_RATING } from '../../../utils/data';
+import prettifyNumber from '../../../utils/prettifyNumber';
 import sumObjectValues from '../../../utils/sumObjectValues';
 import SecurityRating from '../../common/SecutityRating';
 import SmallTitle from '../../common/SmallTitle';
@@ -41,10 +42,10 @@ const SecurityReport = (props: Props) => {
           <div className="d-flex flex-row align-items-center mb-2">
             <div>
               <small>
-                <span className="font-weight-bold mr-1">{total}</span> vulnerabilities found
+                <span className="font-weight-bold mr-1">{prettifyNumber(total, 1)}</span>vulnerabilities found
               </small>
             </div>
-            <SecurityRating summary={props.summary} className="position-relative ml-2" onlyBadge />
+            <SecurityRating summary={props.summary} className="position-relative ml-1" onlyBadge />
           </div>
         )}
 

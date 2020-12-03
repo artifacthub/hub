@@ -9,6 +9,7 @@ import styles from './Dependencies.module.css';
 
 interface Props {
   dependencies?: Dependency[];
+  packageId: string;
 }
 
 const Dependencies = (props: Props) => {
@@ -26,7 +27,7 @@ const Dependencies = (props: Props) => {
   return (
     <div className="mb-3">
       <SmallTitle text="Dependencies" />
-      <ExpandableList items={allDependencies} visibleItems={5} />
+      <ExpandableList items={allDependencies} visibleItems={5} resetStatusOnChange={props.packageId} />
     </div>
   );
 };

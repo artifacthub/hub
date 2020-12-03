@@ -9,6 +9,9 @@ const getMockSecurityReport = (fixtureId: string): SecurityTargetReport[] => {
 };
 
 const mockSetExpandedTarget = jest.fn();
+const scrollIntoViewMock = jest.fn();
+
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   image: 'imgName',

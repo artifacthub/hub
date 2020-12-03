@@ -64,6 +64,24 @@ describe('SecurityReport', () => {
       expect(getByText('No vulnerabilities found')).toBeInTheDocument();
       expect(getByText('Open full report')).toBeInTheDocument();
     });
+
+    it('renders component with a big number of vulnerabilities', () => {
+      const props = {
+        ...defaultProps,
+        summary: {
+          low: 14873,
+          high: 2901,
+          medium: 6062,
+          unknown: 208,
+          critical: 480,
+        },
+      };
+
+      const { getByText } = render(<SecurityReport {...props} />);
+
+      expect(getByText('24.5k')).toBeInTheDocument();
+      expect(getByText(/vulnerabilities found/g)).toBeInTheDocument();
+    });
   });
 
   describe('Does not render component', () => {

@@ -28,18 +28,18 @@ exports[`SecurityReport creates snapshot 1`] = `
             >
               179
             </span>
-             vulnerabilities found
+            vulnerabilities found
           </small>
         </div>
         <div
-          class="position-relative position-relative ml-2"
+          class="position-relative position-relative ml-1"
         >
           <div
             data-testid="elementWithTooltip"
           >
             <small>
               <div
-                class="badge badge-pill text-light font-weight-bold badge position-relative ml-2"
+                class="badge badge-pill text-light font-weight-bold badge position-relative ml-1"
                 style="background-color: rgb(150, 0, 3);"
               >
                 F
