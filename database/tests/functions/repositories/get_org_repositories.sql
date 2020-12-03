@@ -107,6 +107,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "last_tracking_ts": 0,
         "last_tracking_errors": "error1\\nerror2\\nerror3",
         "organization_name": "org1",
@@ -120,6 +121,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "organization_name": "org1",
         "organization_display_name": "Organization 1"
     }]'::jsonb,

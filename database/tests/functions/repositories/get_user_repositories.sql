@@ -82,6 +82,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "last_tracking_ts": 0,
         "last_tracking_errors": "error1\\nerror2\\nerror3",
         "user_alias": "user1"
@@ -94,6 +95,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }]'::jsonb,
     'Repositories belonging to user provided are returned as a json array of objects'

@@ -21,6 +21,7 @@ import DisabledRepositoryBadge from '../../common/DisabledRepositoryBadge';
 import Modal from '../../common/Modal';
 import OfficialBadge from '../../common/OfficialBadge';
 import RepositoryIcon from '../../common/RepositoryIcon';
+import ScannerDisabledRepositoryBadge from '../../common/ScannerDisabledRepositoryBadge';
 import VerifiedPublisherBadge from '../../common/VerifiedPublisherBadge';
 import ActionBtn from '../ActionBtn';
 import BadgeModal from './BadgeModal';
@@ -175,6 +176,11 @@ const RepositoryCard = (props: Props) => {
 
               <DisabledRepositoryBadge
                 disabled={props.repository.disabled!}
+                className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
+              />
+
+              <ScannerDisabledRepositoryBadge
+                scannerDisabled={props.repository.scannerDisabled!}
                 className={`ml-3 d-none d-md-inline ${styles.labelWrapper}`}
               />
             </div>

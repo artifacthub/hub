@@ -142,6 +142,7 @@ select columns_are('repository', array[
     'verified_publisher',
     'official',
     'disabled',
+    'scanner_disabled',
     'digest',
     'repository_kind_id',
     'user_id',

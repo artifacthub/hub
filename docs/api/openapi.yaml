@@ -2421,6 +2421,7 @@ components:
             - digest
             - last_tracking_ts
             - disabled
+            - scanner_disabled
           properties:
             digest:
               type: string
@@ -2433,6 +2434,9 @@ components:
               nullable: false
               example: Error
             disabled:
+              type: boolean
+              nullable: false
+            scanner_disabled:
               type: boolean
               nullable: false
     RepositoryKind:

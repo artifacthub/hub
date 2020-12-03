@@ -105,6 +105,7 @@ type Repository struct {
 	VerifiedPublisher       bool           `json:"verified_publisher"`
 	Official                bool           `json:"official"`
 	Disabled                bool           `json:"disabled"`
+	ScannerDisabled         bool           `json:"scanner_disabled"`
 }
 
 // RepositoryCloner describes the methods a RepositoryCloner implementation

@@ -91,6 +91,7 @@ create table if not exists repository (
     verified_publisher boolean not null default false,
     official boolean not null default false,
     disabled boolean not null default false,
+    scanner_disabled boolean not null default false,
     digest text check (digest <> ''),
     repository_kind_id integer not null default 0 references repository_kind on delete restrict,
     user_id uuid references "user" on delete restrict,
