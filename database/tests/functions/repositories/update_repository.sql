@@ -1,6 +1,6 @@
 -- Start transaction and plan tests
 begin;
-select plan(6);
+select plan(7);
 
 -- Declare some variables
 \set user1ID '00000000-0000-0000-0000-000000000001'
@@ -43,6 +43,19 @@ insert into package (
     '1.0.0',
     :'repo2ID'
 );
+insert into snapshot (
+    package_id,
+    version,
+    security_report,
+    security_report_created_at,
+    security_report_summary
+) values (
+    :'package2ID',
+    '1.0.0',
+    '{"k": "v"}',
+    '2020-06-16 11:20:38+02',
+    '{"k": "v"}'
+);
 
 -- Try to update repository owned by a user by other user
 select throws_ok(
@@ -54,7 +67,8 @@ select throws_ok(
             "url": "https://repo1.com/updated",
             "auth_user": "user1",
             "auth_pass": "pass1",
-            "disabled": false
+            "disabled": false,
+            "scanner_disabled": false
         }
         '::jsonb)
     $$,
@@ -73,7 +87,8 @@ select throws_ok(
             "url": "https://repo2.com/updated",
             "auth_user": "user1",
             "auth_pass": "pass1",
-            "disabled": false
+            "disabled": false,
+            "scanner_disabled": false
         }
         '::jsonb)
     $$,
@@ -82,7 +97,7 @@ select throws_ok(
     'Repository update should fail because requesting user does not belong to owning organization'
 );
 
--- Update repository owned by user
+-- Update repository owned by user disabling it
 select update_repository(:'user1ID', '
 {
     "name": "repo1",
@@ -90,7 +105,8 @@ select update_repository(:'user1ID', '
     "url": "https://repo1.com/updated",
     "auth_user": "user1",
     "auth_pass": "pass1",
-    "disabled": true
+    "disabled": true,
+    "scanner_disabled": false
 }
 '::jsonb);
 select results_eq(
@@ -109,7 +125,8 @@ select is_empty(
     'Packages belonging to repo1 should have been deleted'
 );
 
--- Update repository owned by organization (requesting user belongs to organization)
+-- Update repository owned by organization (requesting user belongs to
+-- organization) disabling security scanning
 select update_repository(:'user1ID', '
 {
     "name": "repo2",
@@ -117,7 +134,8 @@ select update_repository(:'user1ID', '
     "url": "https://repo2.com/updated",
     "auth_user": "user1",
     "auth_pass": "pass1",
-    "disabled": false
+    "disabled": false,
+    "scanner_disabled": true
 }
 '::jsonb);
 select results_eq(
@@ -134,6 +152,17 @@ select results_eq(
 select isnt_empty(
     $$ select * from package where repository_id = '00000000-0000-0000-0000-000000000002' $$,
     'Packages belonging to repo2 should not have been deleted'
+);
+select results_eq(
+    $$
+        select security_report, security_report_created_at, security_report_summary
+        from snapshot
+        where package_id = '00000000-0000-0000-0000-000000000002'
+    $$,
+    $$
+        values (null::jsonb, null::timestamptz, null::jsonb)
+    $$,
+    'Security reports in packages belonging to repo2 should have been deleted'
 );
 
 -- Finish tests and rollback transaction

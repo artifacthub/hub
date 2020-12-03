@@ -277,6 +277,7 @@ export const API = {
       displayName: 'display_name',
       authUser: 'auth_user',
       authPass: 'auth_pass',
+      scannerDisabled: 'scanner_disabled',
     });
     return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}`, {
       method: 'POST',
@@ -298,6 +299,7 @@ export const API = {
       displayName: 'display_name',
       authUser: 'auth_user',
       authPass: 'auth_pass',
+      scannerDisabled: 'scanner_disabled',
     });
     return apiFetch(`${API_BASE_URL}/repositories${getUrlContext(fromOrgName)}/${repository.name}`, {
       method: 'PUT',

@@ -10,7 +10,13 @@ returns setof json as $$
             '$[*] ? (!exists(@.whitelisted) || @.whitelisted <> true)'
         )
     )), '[]')
-    from snapshot
-    where security_report is null
-    or security_report_created_at < (current_timestamp - '1 week'::interval);
+    from (
+        select s.package_id, s.version, s.containers_images
+        from snapshot s
+        join package p using (package_id)
+        join repository r using (repository_id)
+        where (security_report is null or security_report_created_at < (current_timestamp - '1 week'::interval))
+        and r.scanner_disabled = false
+        order by s.created_at desc
+    ) s;
 $$ language sql;

@@ -30,6 +30,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }'::jsonb,
     'Repository just seeded is returned as a json object'

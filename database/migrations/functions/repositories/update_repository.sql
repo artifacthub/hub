@@ -6,9 +6,10 @@ declare
     v_owner_user_id uuid;
     v_owner_organization_name text;
     v_disabled boolean;
+    v_scanner_disabled boolean;
 begin
     -- Get some information about the repository
-    select repository_id, disabled into v_repository_id, v_disabled
+    select repository_id, disabled, scanner_disabled into v_repository_id, v_disabled, v_scanner_disabled
     from repository r
     where r.name = p_repository->>'name'
     for update;
@@ -35,12 +36,24 @@ begin
         url = p_repository->>'url',
         auth_user = nullif(p_repository->>'auth_user', ''),
         auth_pass = nullif(p_repository->>'auth_pass', ''),
-        disabled = (p_repository->>'disabled')::boolean
+        disabled = (p_repository->>'disabled')::boolean,
+        scanner_disabled = (p_repository->>'scanner_disabled')::boolean
     where repository_id = v_repository_id;
 
     -- If the repository has been disabled, remove packages belonging to it
     if (p_repository->>'disabled')::boolean = true and v_disabled = false then
         delete from package where repository_id = v_repository_id;
+    end if;
+
+    -- If security scanning has been disabled, remove existing security reports
+    if (p_repository->>'scanner_disabled')::boolean = true and v_scanner_disabled = false then
+        update snapshot set
+            security_report = null,
+            security_report_created_at = null,
+            security_report_summary = null
+        where package_id in (
+            select package_id from package where repository_id = v_repository_id
+        );
     end if;
 end
 $$ language plpgsql;

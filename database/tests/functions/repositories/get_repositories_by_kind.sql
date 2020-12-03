@@ -38,6 +38,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }, {
         "repository_id": "00000000-0000-0000-0000-000000000002",
@@ -48,6 +49,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }]'::jsonb,
     'Repositories 1 and 2 are returned'
@@ -63,6 +65,7 @@ select is(
         "verified_publisher": false,
         "official": false,
         "disabled": false,
+        "scanner_disabled": false,
         "user_alias": "user1"
     }]'::jsonb,
     'Repository 3 is returned'

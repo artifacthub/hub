@@ -295,6 +295,31 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                     Use this switch to disable the repository temporarily o permanently.
                   </small>
                 </div>
+                <div
+                  class="mt-4 mb-3"
+                >
+                  <div
+                    class="custom-control custom-switch pl-0"
+                  >
+                    <input
+                      class="custom-control-input"
+                      id="scannerDisabledRepo"
+                      type="checkbox"
+                      value="true"
+                    />
+                    <label
+                      class="custom-control-label font-weight-bold label customControlRightLabel"
+                      for="scannerDisabledRepo"
+                    >
+                      Security scanner disabled
+                    </label>
+                  </div>
+                  <small
+                    class="form-text text-muted mt-2"
+                  >
+                    Use this switch to disable the security scanning of the packages in this repository.
+                  </small>
+                </div>
               </form>
             </div>
             <div>

@@ -40,8 +40,9 @@ const RepositoryModal = (props: Props) => {
   const [isValidated, setIsValidated] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const organizationName = ctx.prefs.controlPanel.selectedOrg;
-  const [isDisabled, setIsDisabled] = useState<boolean>(
-    !isUndefined(props.repository) ? props.repository.disabled! : false
+  const [isDisabled, setIsDisabled] = useState<boolean>(props.repository ? props.repository.disabled! : false);
+  const [isScannerDisabled, setIsScannerDisabled] = useState<boolean>(
+    props.repository ? props.repository.scannerDisabled! : false
   );
   const [visibleDisabledConfirmation, setVisibleDisabledConfirmation] = useState<boolean>(false);
   const [selectedKind, setSelectedKind] = useState<RepositoryKind>(
@@ -128,6 +129,7 @@ const RepositoryModal = (props: Props) => {
           url: formData.get('url') as string,
           displayName: formData.get('displayName') as string,
           disabled: isDisabled,
+          scannerDisabled: isScannerDisabled,
           authUser: formData.get('authUser') as string,
           authPass: formData.get('authPass') as string,
         };
@@ -447,7 +449,7 @@ const RepositoryModal = (props: Props) => {
                   value="true"
                   onChange={() => {
                     // Confirmation content is displayed when an existing repo is going to be disabled and it was not disabled before
-                    if (!isUndefined(props.repository) && !isDisabled && !props.repository.disabled) {
+                    if (props.repository && !isDisabled && !props.repository.disabled) {
                       setVisibleDisabledConfirmation(true);
                     } else {
                       setIsDisabled(!isDisabled);
@@ -465,6 +467,29 @@ const RepositoryModal = (props: Props) => {
 
               <small className="form-text text-muted mt-2">
                 Use this switch to disable the repository temporarily o permanently.
+              </small>
+            </div>
+
+            <div className="mt-4 mb-3">
+              <div className="custom-control custom-switch pl-0">
+                <input
+                  id="scannerDisabledRepo"
+                  type="checkbox"
+                  className="custom-control-input"
+                  value="true"
+                  onChange={() => setIsScannerDisabled(!isScannerDisabled)}
+                  checked={isScannerDisabled}
+                />
+                <label
+                  htmlFor="scannerDisabledRepo"
+                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                >
+                  Security scanner disabled
+                </label>
+              </div>
+
+              <small className="form-text text-muted mt-2">
+                Use this switch to disable the security scanning of the packages in this repository.
               </small>
             </div>
           </form>

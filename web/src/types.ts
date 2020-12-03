@@ -22,6 +22,7 @@ export interface Repository {
   authUser?: string | null;
   authPass?: string | null;
   disabled?: boolean;
+  scannerDisabled?: boolean;
 }
 
 export interface Maintainer {
