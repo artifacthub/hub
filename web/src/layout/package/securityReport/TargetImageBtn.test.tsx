@@ -13,6 +13,7 @@ const defaultProps = {
   onClick: onClickMock,
   children: <>content</>,
   disabled: false,
+  hasOnlyOneTarget: false,
 };
 
 describe('TargetImageBtn', () => {
@@ -61,6 +62,16 @@ describe('TargetImageBtn', () => {
 
       waitFor(() => {
         expect(scrollIntoViewMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it('does not scrolls into view when target is expanded but is only one', () => {
+      const { rerender } = render(<TargetImageBtn {...defaultProps} isExpanded={false} hasOnlyOneTarget />);
+
+      rerender(<TargetImageBtn {...defaultProps} isExpanded={true} hasOnlyOneTarget />);
+
+      waitFor(() => {
+        expect(scrollIntoViewMock).toHaveBeenCalledTimes(0);
       });
     });
   });

@@ -466,7 +466,7 @@ const RepositoryModal = (props: Props) => {
               </div>
 
               <small className="form-text text-muted mt-2">
-                Use this switch to disable the repository temporarily o permanently.
+                Use this switch to disable the repository temporarily or permanently.
               </small>
             </div>
 

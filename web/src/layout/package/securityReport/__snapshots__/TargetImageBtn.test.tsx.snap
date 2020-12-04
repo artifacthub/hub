@@ -4,6 +4,10 @@ exports[`TargetImageBtn Render calls onClick 1`] = `<DocumentFragment />`;
 
 exports[`TargetImageBtn Render calls onClick 2`] = `<DocumentFragment />`;
 
+exports[`TargetImageBtn Render does not scrolls into view when target is expanded but is only one 1`] = `<DocumentFragment />`;
+
+exports[`TargetImageBtn Render does not scrolls into view when target is expanded but is only one 2`] = `<DocumentFragment />`;
+
 exports[`TargetImageBtn Render renders component 1`] = `<DocumentFragment />`;
 
 exports[`TargetImageBtn Render renders component 2`] = `<DocumentFragment />`;

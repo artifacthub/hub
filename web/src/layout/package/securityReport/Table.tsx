@@ -16,6 +16,7 @@ interface Props {
   setExpandedTarget: React.Dispatch<React.SetStateAction<string | null>>;
   image: string;
   reports: SecurityTargetReport[];
+  hasOnlyOneTarget: boolean;
 }
 
 const MAX_VULNERABILITY_NUMBER = 100;
@@ -57,6 +58,7 @@ const SecurityTable = (props: Props) => {
                         isExpanded={isExpanded}
                         onClick={() => props.setExpandedTarget(isExpanded ? null : targetImageName)}
                         disabled={visibleVulnerabilities.length === 0}
+                        hasOnlyOneTarget={props.hasOnlyOneTarget}
                       >
                         <div className="d-flex flex-row align-items-center mb-2">
                           {isExpanded ? <FaCaretDown /> : <FaCaretRight />}

@@ -24,11 +24,11 @@ const MobileSettings = (props: Props) => {
   const [openSideBarStatus, setOpenSideBarStatus] = useState(false);
 
   const getSidebarIcon = (): JSX.Element => {
-    if (!isNull(ctx.user) && !isUndefined(ctx.user)) {
+    if (ctx.user) {
       if (ctx.user.profileImageId) {
         return (
           <Image
-            imageId={ctx.user!.profileImageId}
+            imageId={ctx.user.profileImageId}
             alt="User profile"
             className={`rounded-circle mw-100 mh-100 ${styles.profileImage}`}
             placeholderIcon={<FaUserCircle />}

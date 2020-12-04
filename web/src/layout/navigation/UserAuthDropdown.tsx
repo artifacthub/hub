@@ -38,8 +38,8 @@ const UserAuthDropdown = (props: Props) => {
               { [styles.iconWrapper]: isUndefined(ctx.user!.profileImageId) || isNull(ctx.user!.profileImageId) }
             )}
           >
-            {ctx.user!.profileImageId ? (
-              <Image imageId={ctx.user!.profileImageId} alt="User profile" className="mw-100 mh-100" />
+            {ctx.user && ctx.user.profileImageId ? (
+              <Image imageId={ctx.user.profileImageId} alt="User profile" className="mw-100 mh-100" />
             ) : (
               <FaUser data-testid="profileIcon" className="rounded-circle" />
             )}

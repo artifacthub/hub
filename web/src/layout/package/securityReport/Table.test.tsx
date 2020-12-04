@@ -16,6 +16,7 @@ window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 const defaultProps = {
   image: 'imgName',
   expandedTarget: null,
+  hasOnlyOneTarget: false,
   setExpandedTarget: mockSetExpandedTarget,
 };
 
