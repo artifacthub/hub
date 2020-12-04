@@ -32,6 +32,7 @@ const SecurityModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [report, setReport] = useState<SecurityReport | null | undefined>();
   const [expandedTarget, setExpandedTarget] = useState<string | null>(null);
+  const [hasOnlyOneTarget, setHasOnlyOneTarget] = useState<boolean>(false);
 
   const activateTargetWhenIsOnlyOne = (report: SecurityReport) => {
     const images = Object.keys(report);
@@ -43,6 +44,7 @@ const SecurityModal = (props: Props) => {
         report[images[0]][0].Vulnerabilities!.length > 0
       ) {
         setExpandedTarget(`${images[0]}_${report[images[0]][0].Target}`);
+        setHasOnlyOneTarget(true);
       }
     }
   };
@@ -148,6 +150,7 @@ const SecurityModal = (props: Props) => {
                         key={`image_${image}`}
                         expandedTarget={expandedTarget}
                         setExpandedTarget={setExpandedTarget}
+                        hasOnlyOneTarget={hasOnlyOneTarget}
                       />
                     );
                   })}

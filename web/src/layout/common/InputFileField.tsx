@@ -83,7 +83,7 @@ const InputFileField = (props: Props) => {
       <div className="d-flex flex-column">
         <label className={styles.label} htmlFor={props.name}>
           <span className="font-weight-bold">{props.label}</span>
-          {!isUndefined(props.labelLegend) && <>{props.labelLegend}</>}
+          {props.labelLegend && <>{props.labelLegend}</>}
         </label>
 
         <div className="position-relative">
@@ -93,16 +93,10 @@ const InputFileField = (props: Props) => {
             type="button"
             onClick={onClick}
           >
-            {!isUndefined(props.value) ? (
+            {props.value ? (
               <Image imageId={props.value} className={styles.image} alt="Logo" />
             ) : (
-              <>
-                {!isUndefined(props.placeholderIcon) ? (
-                  <>{props.placeholderIcon}</>
-                ) : (
-                  <MdAddAPhoto data-testid="defaultIcon" />
-                )}
-              </>
+              <>{props.placeholderIcon ? <>{props.placeholderIcon}</> : <MdAddAPhoto data-testid="defaultIcon" />}</>
             )}
           </button>
           {isSending && (

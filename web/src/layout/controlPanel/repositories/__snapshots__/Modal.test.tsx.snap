@@ -292,7 +292,7 @@ exports[`Repository Modal - repositories section creates snapshot 1`] = `
                   <small
                     class="form-text text-muted mt-2"
                   >
-                    Use this switch to disable the repository temporarily o permanently.
+                    Use this switch to disable the repository temporarily or permanently.
                   </small>
                 </div>
                 <div

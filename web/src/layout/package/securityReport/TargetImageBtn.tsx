@@ -5,6 +5,7 @@ interface Props {
   isExpanded: boolean;
   children: JSX.Element;
   disabled: boolean;
+  hasOnlyOneTarget: boolean;
 }
 
 const TargetImageBtn = (props: Props) => {
@@ -12,10 +13,10 @@ const TargetImageBtn = (props: Props) => {
 
   useEffect(() => {
     // Scrolls content into view when a target is expanded
-    if (props.isExpanded && ref && ref.current) {
+    if (props.isExpanded && ref && ref.current && !props.hasOnlyOneTarget) {
       ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     }
-  }, [props.isExpanded]);
+  }, [props.hasOnlyOneTarget, props.isExpanded]);
 
   return (
     <button
