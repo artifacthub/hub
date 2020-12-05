@@ -1,10 +1,9 @@
-import isNull from 'lodash/isNull';
 import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { OPAPolicies } from '../../types';
-import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import BlockCodeButtons from '../common/BlockCodeButtons';
 import Modal from '../common/Modal';
 import styles from './OPAPoliciesList.module.css';
 
@@ -12,8 +11,13 @@ interface Props {
   policies: OPAPolicies;
 }
 
+interface SelectedPolicy {
+  name: string;
+  filename: string;
+}
+
 const OPAPoliciesList = (props: Props) => {
-  const [selectedPolicy, setSelectedPolicy] = useState<string | null>(null);
+  const [selectedPolicy, setSelectedPolicy] = useState<SelectedPolicy | null>(null);
 
   return (
     <>
@@ -22,6 +26,8 @@ const OPAPoliciesList = (props: Props) => {
           const pathFile = policy.split('/');
           const fileName = pathFile.pop();
           const path = pathFile.join('/');
+          const isSelected = selectedPolicy && selectedPolicy.filename === fileName;
+
           return (
             <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`policy_${index}`}>
               <div className={`card h-100 ${styles.card}`} data-testid="policyCard">
@@ -34,7 +40,7 @@ const OPAPoliciesList = (props: Props) => {
                   {path !== '' && (
                     <div className="d-flex flex-row align-items-baseline">
                       <small className="text-muted text-uppercase mr-1">Path:</small>
-                      <span className="text-truncate">{pathFile.join('/')}</span>
+                      <span className="text-truncate">{path}</span>
                     </div>
                   )}
 
@@ -44,7 +50,9 @@ const OPAPoliciesList = (props: Props) => {
                     <button
                       data-testid="policyBtn"
                       className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-                      onClick={() => setSelectedPolicy(policy === selectedPolicy ? null : policy)}
+                      onClick={() =>
+                        setSelectedPolicy(isSelected ? null : { name: policy, filename: fileName as string })
+                      }
                     >
                       View Policy
                     </button>
@@ -56,38 +64,32 @@ const OPAPoliciesList = (props: Props) => {
         })}
       </div>
 
-      {!isNull(selectedPolicy) && (
+      {selectedPolicy && (
         <div className="mt-auto ml-auto">
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block mt-1 ${styles.modal}`}
             header={
               <div className={`h4 m-2 flex-grow-1 ${styles.title}`}>
-                Policy file: <span className="text-muted">{selectedPolicy}</span>
+                Policy file: <span className="text-muted">{selectedPolicy.name}</span>
               </div>
             }
             onClose={() => setSelectedPolicy(null)}
             open
           >
-            <div className="my-3 mw-100">
+            <div className="mw-100">
               <>
-                <div className="text-right">
-                  <ButtonCopyToClipboard
-                    text={props.policies[selectedPolicy]}
-                    className={`btn-link border-0 text-secondary font-weight-bold ${styles.copyBtn}`}
-                    visibleBtnText
-                  />
-                </div>
+                <div className="position-relative">
+                  <BlockCodeButtons filename={selectedPolicy.filename} content={props.policies[selectedPolicy.name]} />
 
-                <div className="my-3">
                   <SyntaxHighlighter
                     language="text"
                     style={tomorrowNight}
-                    customStyle={{ padding: '1.5rem' }}
+                    customStyle={{ padding: '1.5rem', marginBottom: '0' }}
                     lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
                     showLineNumbers
                   >
-                    {props.policies[selectedPolicy]}
+                    {props.policies[selectedPolicy.name]}
                   </SyntaxHighlighter>
                 </div>
               </>

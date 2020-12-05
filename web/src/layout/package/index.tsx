@@ -27,6 +27,7 @@ import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
 import AnchorHeader from '../common/AnchorHeader';
+import BlockCodeButtons from '../common/BlockCodeButtons';
 import ExternalLink from '../common/ExternalLink';
 import Image from '../common/Image';
 import Label from '../common/Label';
@@ -539,13 +540,20 @@ const PackageView = (props: Props) => {
                                   {!isUndefined(rules) && (
                                     <div className={`mb-5 ${styles.codeWrapper}`}>
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
-                                      <SyntaxHighlighter
-                                        language="yaml"
-                                        style={tomorrowNight}
-                                        customStyle={{ padding: '1.5rem' }}
-                                      >
-                                        {rules}
-                                      </SyntaxHighlighter>
+
+                                      <div className="position-relative">
+                                        <BlockCodeButtons
+                                          content={rules}
+                                          filename={`${detail.normalizedName}-rules.yaml`}
+                                        />
+                                        <SyntaxHighlighter
+                                          language="yaml"
+                                          style={tomorrowNight}
+                                          customStyle={{ padding: '1.5rem' }}
+                                        >
+                                          {rules}
+                                        </SyntaxHighlighter>
+                                      </div>
                                     </div>
                                   )}
                                 </>
@@ -587,6 +595,7 @@ const PackageView = (props: Props) => {
                               hasValuesSchema={detail.hasValuesSchema}
                               packageId={detail.packageId}
                               version={detail.version!}
+                              pkgName={detail.normalizedName}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                               visibleValuesSchema={

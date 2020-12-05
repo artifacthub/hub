@@ -39,7 +39,9 @@ describe('OPAPoliciesDetails', () => {
 
     it('opens OPA details', () => {
       const mockPolicies = getMockPolicies('2');
-      const { queryByRole, getByText, getAllByTestId } = render(<OPAPoliciesList policies={mockPolicies} />);
+      const { queryByRole, getByText, getAllByTestId, getByTestId } = render(
+        <OPAPoliciesList policies={mockPolicies} />
+      );
 
       const modal = queryByRole('dialog');
       expect(modal).toBeNull();
@@ -53,6 +55,9 @@ describe('OPAPoliciesDetails', () => {
         expect(modal).toBeInTheDocument();
         expect(modal).toHaveClass('d-block');
         expect(getByText('obj := input.items[_]')).toBeInTheDocument();
+
+        expect(getByTestId('ctcBtn')).toBeInTheDocument();
+        expect(getByTestId('downloadBtn')).toBeInTheDocument();
       });
     });
   });

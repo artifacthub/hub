@@ -46,7 +46,9 @@ describe('CustomResourceDefinition', () => {
 
     it('opens example resource definition modal', () => {
       const mockResources = getMockResources('4');
-      const { getAllByTestId, queryByRole, getByText } = render(<CustomResourceDefinition resources={mockResources} />);
+      const { getAllByTestId, queryByRole, getByText, getByTestId } = render(
+        <CustomResourceDefinition resources={mockResources} />
+      );
 
       const modal = queryByRole('dialog');
       expect(modal).toBeNull();
@@ -58,6 +60,9 @@ describe('CustomResourceDefinition', () => {
       waitFor(() => {
         expect(modal).toBeInTheDocument();
         expect(getByText(`${mockResources[0].displayName!} - YAML example`)).toBeInTheDocument();
+
+        expect(getByTestId('ctcBtn')).toBeInTheDocument();
+        expect(getByTestId('downloadBtn')).toBeInTheDocument();
       });
     });
   });

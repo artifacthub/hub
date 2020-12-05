@@ -6,7 +6,7 @@ exports[`Schema creates snapshot 1`] = `
     class="row"
   >
     <div
-      class="col-7 pt-3 bg-dark"
+      class="col-7 pt-3 bg-dark position-relative"
     >
       <div
         class="text-muted text-truncate text-monospace comment"
