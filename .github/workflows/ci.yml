@@ -141,42 +141,40 @@ jobs:
       - tests-frontend
       - build-backend
       - build-frontend
-    env:
-      AWS_DEFAULT_REGION: us-east-2
-      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Setup AWS ECR credentials
-        run: $( aws ecr get-login --no-include-email )
-      - name: Build hub image
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag and push hub image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build \
-            -f cmd/hub/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hub:$GITHUB_SHA .
-      - name: Push hub image
-        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/hub:$GITHUB_SHA
-      - name: Build db-migrator image
+          docker build -f cmd/hub/Dockerfile -t $ECR_REGISTRY/hub:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/hub:$GITHUB_SHA
+      - name: Build, tag and push db-migrator image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build \
-            -f database/migrations/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA .
-      - name: Push db-migrator image
-        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/db-migrator:$GITHUB_SHA
-      - name: Build scanner image
+          docker build -f database/migrations/Dockerfile -t $ECR_REGISTRY/db-migrator:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/db-migrator:$GITHUB_SHA
+      - name: Build, tag and push scanner image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build \
-            -f cmd/scanner/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/scanner:$GITHUB_SHA .
-      - name: Push scanner image
-        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/scanner:$GITHUB_SHA
-      - name: Build tracker image
+          docker build -f cmd/scanner/Dockerfile -t $ECR_REGISTRY/scanner:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/scanner:$GITHUB_SHA
+      - name: Build, tag and push tracker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build \
-            -f cmd/tracker/Dockerfile \
-            -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/tracker:$GITHUB_SHA .
-      - name: Push tracker image
-        run: docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/tracker:$GITHUB_SHA
+          docker build -f cmd/tracker/Dockerfile -t $ECR_REGISTRY/tracker:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/tracker:$GITHUB_SHA
