@@ -99,7 +99,7 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
-				"invalid url",
+				"missing protocol scheme",
 				"org1",
 				&hub.Repository{
 					Kind: hub.Helm,
@@ -129,6 +129,36 @@ func TestAdd(t *testing.T) {
 				nil,
 			},
 			{
+				"invalid url format",
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"invalid url format",
+				"org1",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "https://github.com/incomplete",
+				},
+				nil,
+			},
+			{
+				"error loading index file",
+				"org1",
+				&hub.Repository{
+					Kind: hub.Helm,
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				errors.New("error loading index file"),
+			},
+			{
 				"private repositories not allowed",
 				"org1",
 				&hub.Repository{
@@ -140,36 +170,6 @@ func TestAdd(t *testing.T) {
 				},
 				nil,
 			},
-			{
-				"invalid url",
-				"org1",
-				&hub.Repository{
-					Kind: hub.OLM,
-					Name: "repo1",
-					URL:  "https://repo1.com",
-				},
-				nil,
-			},
-			{
-				"invalid url",
-				"org1",
-				&hub.Repository{
-					Kind: hub.OLM,
-					Name: "repo1",
-					URL:  "https://github.com/incomplete",
-				},
-				nil,
-			},
-			{
-				"invalid url",
-				"org1",
-				&hub.Repository{
-					Kind: hub.Helm,
-					Name: "repo1",
-					URL:  "https://repo1.com",
-				},
-				errors.New("invalid url"),
-			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -177,6 +177,8 @@ func TestAdd(t *testing.T) {
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
+				} else {
+					l.On("LoadIndex", tc.r).Return(nil, "", nil).Maybe()
 				}
 				m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
 
@@ -1393,7 +1395,7 @@ func TestUpdate(t *testing.T) {
 				nil,
 			},
 			{
-				"invalid url",
+				"missing protocol scheme",
 				&hub.Repository{
 					Kind: hub.Helm,
 					Name: "repo1",
@@ -1420,6 +1422,24 @@ func TestUpdate(t *testing.T) {
 				nil,
 			},
 			{
+				"invalid url format",
+				&hub.Repository{
+					Kind: hub.OLM,
+					Name: "repo1",
+					URL:  "https://repo1.com",
+				},
+				nil,
+			},
+			{
+				"error loading index file",
+				&hub.Repository{
+					Name: "repo1",
+					URL:  "https://repo1.com",
+					Kind: hub.Helm,
+				},
+				errors.New("error loading index file"),
+			},
+			{
 				"private repositories not allowed",
 				&hub.Repository{
 					Kind:     hub.Helm,
@@ -1430,24 +1450,6 @@ func TestUpdate(t *testing.T) {
 				},
 				nil,
 			},
-			{
-				"invalid url",
-				&hub.Repository{
-					Kind: hub.OLM,
-					Name: "repo1",
-					URL:  "https://repo1.com",
-				},
-				nil,
-			},
-			{
-				"invalid url",
-				&hub.Repository{
-					Name: "repo1",
-					URL:  "https://repo1.com",
-					Kind: hub.Helm,
-				},
-				errors.New("invalid url"),
-			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -1455,6 +1457,8 @@ func TestUpdate(t *testing.T) {
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
+				} else {
+					l.On("LoadIndex", tc.r).Return(nil, "", nil).Maybe()
 				}
 				m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
 
