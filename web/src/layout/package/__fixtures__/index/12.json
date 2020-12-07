@@ -1,0 +1,46 @@
+{
+  "packageId": "3875ec59-4ce4-4645-b3f1-4971779956cf",
+  "name": "CVE-2019-14287",
+  "normalizedName": "cve-2019-14287",
+  "logoImageId": "1a707b47-2cbc-45cd-82ff-5cf73591ae06",
+  "isOperator": false,
+  "description": "Falco rules for detecting CVE-2019-14287",
+  "keywords": ["CVE"],
+  "readme": "# CVE-2019-14287\n\nThe issue exists in the way sudo has implemented running commands with an arbitrary user ID in versions earlier than 1.8.28. The CVSS v3 score is 7.8, so we are talking about a high severity vulnerability, easy to exploit, although the attack vector is local and requires a non-default configuration.\n\nInvoking sudo with -u#-1 or -u#4294967295 specified in the sudo command, the malicious user can run arbitrary commands as root, as long as the sudoers meets the previously described conditions.\n\nIn addition to that, the malicious sudo operation will not log correctly through the syslog facility. It supposed to be logged as root, however, it turned out to be -1 or 4294967295.\n\nYou can read more info about this CVE:\n\n* [CVE-2019-14287 on Mitre](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-14287)\n* [How to detect CVE-2019-14287 using Falco](https://sysdig.com/blog/detecting-cve-2019-14287/)\n",
+  "links": [
+    {
+      "url": "https://github.com/falcosecurity/cloud-native-security-hub/blob/master/resources/falco/cve/2019-14287.yaml",
+      "name": "source"
+    }
+  ],
+  "securityReportCreatedAt": 1607111067,
+  "data": {
+    "rules": [
+      {
+        "Raw": "- rule: Sudo Potential bypass of Runas user restrictions (CVE-2019-14287)\n  desc: When sudo is configured to allow a user to run commands as an arbitrary user via the ALL keyword in a Runas specification, it is possible to run commands as root by specifying the user ID -1 or 4294967295. This can be used by a user with sufficient sudo privileges to run commands as root even if the Runas specification explicitly disallows root access as long as the ALL keyword is listed first in the Runas specification\n  condition: >\n    spawned_process and\n    proc.name=\"sudo\" and\n    (proc.cmdline contains \"-u#-1\" or proc.cmdline contains \"-u#4294967295\")\n  output: \"Detect sudo exploit (CVE-2019-14287) (user=%user.name command=%proc.cmdline container=%container.info)\"\n  priority: CRITICAL\n"
+      }
+    ]
+  },
+  "version": "1.0.0",
+  "availableVersions": [
+    {
+      "version": "1.0.0",
+      "createdAt": 1607079152
+    }
+  ],
+  "deprecated": false,
+  "signed": false,
+  "hasValuesSchema": false,
+  "hasChangelog": false,
+  "createdAt": 1607079152,
+  "repository": {
+    "repositoryId": "973ca9f8-45bd-48e3-8c7e-7ea433325467",
+    "name": "falco",
+    "url": "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco",
+    "private": false,
+    "kind": 1,
+    "verifiedPublisher": false,
+    "official": false,
+    "organizationName": "test"
+  }
+}

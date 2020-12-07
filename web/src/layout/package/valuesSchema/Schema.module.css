@@ -1,3 +1,7 @@
 .comment {
   font-size: 80%;
 }
+
+.btns {
+  z-index: 1;
+}

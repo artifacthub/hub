@@ -326,4 +326,28 @@ describe('Package index', () => {
       await waitFor(() => {});
     });
   });
+
+  describe('Falco rules', () => {
+    it('renders rules properly', async () => {
+      const mockPackage = getMockPackage('12');
+      mocked(API).getPackage.mockResolvedValue(mockPackage);
+
+      const { getByTestId, getByText } = render(
+        <Router>
+          <PackageView {...defaultProps} />
+        </Router>
+      );
+
+      await waitFor(() => getByTestId('mainPackage'));
+
+      waitFor(() => {
+        expect(getByText('Rules')).toBeInTheDocument();
+
+        expect(getByTestId('ctcBtn')).toBeInTheDocument();
+        expect(getByTestId('downloadBtn')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {});
+    });
+  });
 });

@@ -5,7 +5,7 @@ import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import YAML from 'yaml';
 
 import { CustomResourcesDefinition } from '../../types';
-import ButtonCopyToClipboard from '../common/ButtonCopyToClipboard';
+import BlockCodeButtons from '../common/BlockCodeButtons';
 import Modal from '../common/Modal';
 import styles from './CustomResourceDefinition.module.css';
 
@@ -104,20 +104,14 @@ const CustomResourceDefinition = (props: Props) => {
             onClose={() => setSelectedCustomResourceDef(null)}
             open
           >
-            <div className="my-3 mw-100">
-              <div className="text-right">
-                <ButtonCopyToClipboard
-                  text={yamlExample}
-                  className={`btn-link border-0 text-secondary font-weight-bold ${styles.copyBtn}`}
-                  visibleBtnText
-                />
-              </div>
+            <div className="mw-100">
+              <div className={`position-relative ${styles.syntaxWrapper}`}>
+                <BlockCodeButtons filename={`${selectedCustomResourceDef.kind}.yaml`} content={yamlExample} />
 
-              <div className={`my-3 ${styles.syntaxWrapper}`}>
                 <SyntaxHighlighter
                   language="yaml"
                   style={tomorrowNight}
-                  customStyle={{ padding: '1.5rem' }}
+                  customStyle={{ padding: '1.5rem', marginBottom: '0' }}
                   lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
                   showLineNumbers
                 >
