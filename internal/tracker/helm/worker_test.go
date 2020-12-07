@@ -52,6 +52,8 @@ func TestWorker(t *testing.T) {
 		}
 
 		t.Run("error downloading chart", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -66,6 +68,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("error downloading chart (deprecated chart)", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			job := &Job{
@@ -93,6 +97,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("unexpected status downloading chart", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -110,6 +116,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("error downloading logo image", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -136,6 +144,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("unexpected status downloading logo image", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -165,6 +175,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("error saving logo image", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -195,6 +207,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("error registering package", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -225,6 +239,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("package registered successfully", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -324,6 +340,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("package with logo in data url registered successfully", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			job := &Job{
@@ -366,6 +384,8 @@ func TestWorker(t *testing.T) {
 		}
 
 		t.Run("error unregistering package", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -379,6 +399,8 @@ func TestWorker(t *testing.T) {
 		})
 
 		t.Run("package unregistered successfully", func(t *testing.T) {
+			t.Parallel()
+
 			// Setup worker and expectations
 			ww := newWorkerWrapper(context.Background())
 			ww.queue <- job
@@ -713,6 +735,7 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			err := enrichPackageFromAnnotations(tc.pkg, tc.annotations)
 			if tc.expectedErrMsg != "" {
 				assert.Error(t, err)

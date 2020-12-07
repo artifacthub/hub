@@ -11,6 +11,8 @@ import (
 )
 
 func TestDispatcher(t *testing.T) {
+	t.Parallel()
+
 	// Setup dispatcher
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "http://localhost:8000")

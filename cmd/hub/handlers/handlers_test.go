@@ -96,6 +96,7 @@ func TestRealIP(t *testing.T) {
 		tc := tc
 		desc := fmt.Sprintf("XFF: %s Index: %d", tc.xForwardedFor, tc.xffIndex)
 		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r := &http.Request{
 				RemoteAddr: "1.1.1.1:",

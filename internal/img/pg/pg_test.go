@@ -14,6 +14,7 @@ import (
 )
 
 func TestNewImageStore(t *testing.T) {
+	t.Parallel()
 	db := &tests.DBMock{}
 	s := NewImageStore(db)
 
@@ -25,6 +26,7 @@ func TestGetImage(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("existing image", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageDBQ, "imageID", "2x").Return([]byte("image2xData"), nil)
 		s := NewImageStore(db)
@@ -36,6 +38,7 @@ func TestGetImage(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageDBQ, "imageID", "2x").Return(nil, tests.ErrFakeDB)
 		s := NewImageStore(db)
@@ -59,6 +62,7 @@ func TestSaveImage(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("successful png image registration", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return(nil, pgx.ErrNoRows)
 		for _, version := range []string{"1x", "2x", "3x", "4x"} {
@@ -73,6 +77,7 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("successful svg image registration", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, svgImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, svgImgHash, "svg", mock.Anything).Return("svgImgID", nil)
@@ -85,6 +90,7 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("try to register existing png image", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return("existingImageID", nil)
 		s := NewImageStore(db)
@@ -96,6 +102,7 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("database error calling get_image_id", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return(nil, tests.ErrFakeDB)
 		s := NewImageStore(db)
@@ -107,6 +114,7 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("database error calling register_image", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getImageIDDBQ, pngImgHash).Return(nil, pgx.ErrNoRows)
 		db.On("QueryRow", ctx, registerImageDBQ, pngImgHash, "1x", mock.Anything).Return(nil, tests.ErrFakeDB)

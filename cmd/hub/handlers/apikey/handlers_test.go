@@ -60,6 +60,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.akJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -79,6 +80,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("error adding api key", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader(akJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -94,6 +96,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("api key added successfully", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader(akJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -141,6 +144,7 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -159,6 +163,7 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("delete api key succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -200,6 +205,7 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -218,6 +224,7 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("api key get succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -241,6 +248,7 @@ func TestGet(t *testing.T) {
 
 func TestGetOwnedByUser(t *testing.T) {
 	t.Run("error getting api keys owned by user", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -256,6 +264,7 @@ func TestGetOwnedByUser(t *testing.T) {
 	})
 
 	t.Run("get api keys owned by user succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -302,6 +311,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.akJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -346,6 +356,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", bytes.NewReader(akJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))

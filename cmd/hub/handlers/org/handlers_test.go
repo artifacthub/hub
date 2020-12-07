@@ -59,6 +59,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -107,6 +108,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -153,6 +155,7 @@ func TestAddMember(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("POST", "/", nil)
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -178,6 +181,7 @@ func TestAddMember(t *testing.T) {
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
@@ -215,6 +219,7 @@ func TestCheckAvailability(t *testing.T) {
 			for _, tc := range testCases {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+					t.Parallel()
 					w := httptest.NewRecorder()
 					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 					rctx := &chi.Context{
@@ -244,6 +249,7 @@ func TestCheckAvailability(t *testing.T) {
 		})
 
 		t.Run("check availability failed", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 			rctx := &chi.Context{
@@ -292,6 +298,7 @@ func TestConfirmMembership(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("PUT", "/", nil)
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -344,6 +351,7 @@ func TestDeleteMember(t *testing.T) {
 			desc = tc.omErr.Error()
 		}
 		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("DELETE", "/", nil)
 			r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -392,6 +400,7 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -410,6 +419,7 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("get organization succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -456,6 +466,7 @@ func TestGetAuthorizationPolicy(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -474,6 +485,7 @@ func TestGetAuthorizationPolicy(t *testing.T) {
 	})
 
 	t.Run("get authorization policy succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -497,6 +509,7 @@ func TestGetAuthorizationPolicy(t *testing.T) {
 
 func TestGetByUser(t *testing.T) {
 	t.Run("get user organizations succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -517,6 +530,7 @@ func TestGetByUser(t *testing.T) {
 	})
 
 	t.Run("error getting user organizations", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -557,6 +571,7 @@ func TestGetMembers(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.omErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -575,6 +590,7 @@ func TestGetMembers(t *testing.T) {
 	})
 
 	t.Run("get organization members succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -622,6 +638,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -675,6 +692,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(orgJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -732,6 +750,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.policyJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -787,6 +806,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(policyJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -820,6 +840,7 @@ func TestGetUserAllowedActions(t *testing.T) {
 	}
 
 	t.Run("get allowed actions failed", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -836,6 +857,7 @@ func TestGetUserAllowedActions(t *testing.T) {
 	})
 
 	t.Run("get allowed actions succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))

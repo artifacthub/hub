@@ -36,6 +36,7 @@ func TestImage(t *testing.T) {
 	}
 
 	t.Run("non existing image", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -51,6 +52,7 @@ func TestImage(t *testing.T) {
 	})
 
 	t.Run("other internal error", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -77,6 +79,7 @@ func TestImage(t *testing.T) {
 			i := i
 			tc := tc
 			t.Run(fmt.Sprintf("Test %d: %s", i, tc.expectedContentType), func(t *testing.T) {
+				t.Parallel()
 				imgData, err := ioutil.ReadFile(tc.imgPath)
 				require.NoError(t, err)
 				w := httptest.NewRecorder()
@@ -105,6 +108,7 @@ func TestSaveImage(t *testing.T) {
 	fakeSaveImageError := errors.New("fake save image error")
 
 	t.Run("imageStore.SaveImage failed", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
 
@@ -119,6 +123,7 @@ func TestSaveImage(t *testing.T) {
 	})
 
 	t.Run("imageStore.SaveImage succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader("imageData"))
 
@@ -139,6 +144,7 @@ func TestSaveImage(t *testing.T) {
 }
 
 func TestServeIndex(t *testing.T) {
+	t.Parallel()
 	w := httptest.NewRecorder()
 	r, _ := http.NewRequest("GET", "/", nil)
 

@@ -8,6 +8,8 @@ import (
 )
 
 func TestSetupImageStore(t *testing.T) {
+	t.Parallel()
+
 	// Check a valid image store provider must be provided
 	cfg := viper.New()
 	cfg.Set("tracker.imageStore", "invalid")

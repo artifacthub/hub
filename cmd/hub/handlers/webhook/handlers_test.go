@@ -61,6 +61,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -118,6 +119,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -165,6 +167,7 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -183,6 +186,7 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("delete webhook succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -228,6 +232,7 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -246,6 +251,7 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("webhook get succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -276,6 +282,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 	}
 
 	t.Run("get webhooks owned by organization succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -313,6 +320,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -333,6 +341,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 
 func TestGetOwnedByUser(t *testing.T) {
 	t.Run("error getting webhooks owned by user", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -348,6 +357,7 @@ func TestGetOwnedByUser(t *testing.T) {
 	})
 
 	t.Run("get webhook owned by user succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -386,6 +396,7 @@ func TestTriggerTest(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
 
@@ -426,6 +437,7 @@ func TestTriggerTest(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.webhookJSON))
 
@@ -442,6 +454,7 @@ func TestTriggerTest(t *testing.T) {
 	})
 
 	t.Run("error calling webhook endpoint", func(t *testing.T) {
+		t.Parallel()
 		webhookJSON := `
 		{
 			"name": "webhook1",
@@ -463,6 +476,7 @@ func TestTriggerTest(t *testing.T) {
 	})
 
 	t.Run("received unexpected status code", func(t *testing.T) {
+		t.Parallel()
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 		}))
@@ -530,6 +544,7 @@ func TestTriggerTest(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.id, func(t *testing.T) {
+				t.Parallel()
 				ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					contentType := tc.contentType
 					if contentType == "" {
@@ -591,6 +606,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -648,6 +664,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(webhookJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))

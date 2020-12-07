@@ -10,6 +10,8 @@ import (
 )
 
 func TestSetupLogger(t *testing.T) {
+	t.Parallel()
+
 	// Check a valid log level must be provided
 	cfg := viper.New()
 	cfg.Set("log.level", "invalid")

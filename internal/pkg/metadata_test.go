@@ -112,6 +112,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			pkg, err := PreparePackageFromMetadata(tc.md)
 			if tc.expectedErr == nil {
 				assert.Nil(t, err)
@@ -182,6 +183,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				err := ValidatePackageMetadata(tc.md)
 				assert.True(t, errors.Is(err, ErrInvalidMetadata))
 				assert.Contains(t, err.Error(), tc.errMsg)
@@ -190,6 +192,7 @@ func TestValidatePackageMetadata(t *testing.T) {
 	})
 
 	t.Run("valid metadata", func(t *testing.T) {
+		t.Parallel()
 		md := &hub.PackageMetadata{
 			Version:     "1.0.0",
 			Name:        "pkg1",

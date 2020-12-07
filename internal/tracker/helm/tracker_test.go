@@ -26,6 +26,8 @@ func TestMain(m *testing.M) {
 
 func TestTracker(t *testing.T) {
 	t.Run("error loading registered packages digest", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		r := &hub.Repository{RepositoryID: "repo1"}
 		tw := newTrackerWrapper(r)
@@ -38,6 +40,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("error loading repository index file", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		r := &hub.Repository{
 			RepositoryID: "repo1",
@@ -54,6 +58,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("error loading repository tags", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		r := &hub.Repository{
 			RepositoryID: "repo1",
@@ -310,6 +316,8 @@ func TestTracker(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("Test case %d", tc.n), func(t *testing.T) {
+				t.Parallel()
+
 				// Setup tracker and expectations
 				tw := newTrackerWrapper(tc.r)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
@@ -450,6 +458,8 @@ func TestTracker(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("Test case %d", tc.n), func(t *testing.T) {
+				t.Parallel()
+
 				// Setup tracker and expectations
 				tw := newTrackerWrapper(tc.r)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).

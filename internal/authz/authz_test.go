@@ -80,6 +80,7 @@ func TestMain(m *testing.M) {
 
 func TestNewAuthorizer(t *testing.T) {
 	t.Run("error getting authorization policies", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(nil, tests.ErrFakeDB)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
@@ -89,6 +90,7 @@ func TestNewAuthorizer(t *testing.T) {
 	})
 
 	t.Run("error unmarshalling authorization policies", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return([]byte(`{"invalid`), nil)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
@@ -98,6 +100,7 @@ func TestNewAuthorizer(t *testing.T) {
 	})
 
 	t.Run("authorizer created successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", context.Background(), getAuthzPoliciesDBQ).Return(testsAuthorizationPoliciesJSON, nil)
 		db.On("Acquire", context.Background()).Return(nil, tests.ErrFakeDB).Maybe()
@@ -231,6 +234,7 @@ func TestAuthorize(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			err := az.Authorize(context.Background(), tc.input)
 			if tc.allow {
 				assert.Nil(t, err)
@@ -320,6 +324,7 @@ func TestGetAllowedActions(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			allowedActions, _ := az.GetAllowedActions(context.Background(), tc.userID, tc.orgName)
 			assert.Equal(t, tc.expectedAllowedActions, allowedActions)
 		})
@@ -457,6 +462,7 @@ func TestWillUserBeLockedOut(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			policyDataJSON, _ := json.Marshal(tc.policyData)
 			p := &hub.AuthorizationPolicy{
 				PredefinedPolicy: tc.predefinedPolicy,
@@ -492,6 +498,7 @@ func TestIsPredefinedPolicyValid(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			valid := IsPredefinedPolicyValid(tc.predefinedPolicy)
 			assert.Equal(t, tc.expectedValid, valid)
 		})
@@ -533,6 +540,7 @@ func TestIsActionAllowed(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			allowed := IsActionAllowed(tc.allowedActions, tc.action)
 			assert.Equal(t, tc.expectedAllowed, allowed)
 		})
@@ -579,6 +587,7 @@ func TestAreActionsAllowed(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			allowed := AreActionsAllowed(tc.allowedActions, tc.actions)
 			assert.Equal(t, tc.expectedAllowed, allowed)
 		})

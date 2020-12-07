@@ -33,6 +33,8 @@ func TestTracker(t *testing.T) {
 	imageData, _ := ioutil.ReadFile("testdata/path4/red-dot.png")
 
 	t.Run("error cloning repository", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", tests.ErrFake)
@@ -44,6 +46,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("error loading repository registered packages", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", nil)
@@ -56,6 +60,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("no packages in path, nothing to do", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
@@ -69,6 +75,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("invalid package metadata file", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path2", nil)
@@ -83,6 +91,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("invalid version in package metadata file", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path3", nil)
@@ -97,6 +107,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("error registering package version", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -114,6 +126,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("no need to register package version because it is already registered", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -130,6 +144,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("package version registered successfully", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
@@ -190,6 +206,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("package version not registered as there are no policies files available", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
@@ -204,6 +222,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("error unregistering package version", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path6", nil)
@@ -226,6 +246,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("no packages unregistered because there are no packages available", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
@@ -242,6 +264,8 @@ func TestTracker(t *testing.T) {
 	})
 
 	t.Run("package version unregistered successfully", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path6", nil)

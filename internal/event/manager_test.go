@@ -21,6 +21,7 @@ func TestGetPending(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("QueryRow", ctx, getPendingEventDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager()
@@ -32,6 +33,7 @@ func TestGetPending(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		expectedEvent := &hub.Event{
 			EventID:        "00000000-0000-0000-0000-000000000001",
 			PackageVersion: "1.0.0",

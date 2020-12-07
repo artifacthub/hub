@@ -28,6 +28,7 @@ func TestAdd(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), "orgName", wh)
@@ -105,6 +106,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 
 				err := m.Add(ctx, tc.orgName, tc.wh)
@@ -131,6 +133,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, addWebhookDBQ, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				m := NewManager(db)
@@ -143,6 +146,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("add webhook succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, addWebhookDBQ, "userID", "orgName", mock.Anything).Return(nil)
 		m := NewManager(db)
@@ -157,6 +161,7 @@ func TestDelete(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.Delete(context.Background(), validUUID)
@@ -164,6 +169,7 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		err := m.Delete(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -186,6 +192,7 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, deleteWebhookDBQ, "userID", validUUID).Return(tc.dbErr)
 				m := NewManager(db)
@@ -198,6 +205,7 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("delete webhook succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, deleteWebhookDBQ, "userID", validUUID).Return(nil)
 		m := NewManager(db)
@@ -212,6 +220,7 @@ func TestGetJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetJSON(context.Background(), validUUID)
@@ -219,6 +228,7 @@ func TestGetJSON(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		_, err := m.GetJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -241,6 +251,7 @@ func TestGetJSON(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getWebhookDBQ, "userID", validUUID).Return(nil, tc.dbErr)
 				m := NewManager(db)
@@ -254,6 +265,7 @@ func TestGetJSON(t *testing.T) {
 	})
 
 	t.Run("webhook data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getWebhookDBQ, "userID", validUUID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -269,6 +281,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName")
@@ -276,12 +289,14 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		_, err := m.GetOwnedByOrgJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -293,6 +308,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	})
 
 	t.Run("org webhooks data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgWebhooksDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -308,6 +324,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByUserJSON(context.Background())
@@ -315,6 +332,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -326,6 +344,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	})
 
 	t.Run("user webhooks data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserWebhooksDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -360,6 +379,7 @@ func TestGetSubscribedTo(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 
 				webhooks, err := m.GetSubscribedTo(ctx, tc.e)
@@ -371,6 +391,7 @@ func TestGetSubscribedTo(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getWebhooksSubscribedToPkgDBQ, hub.NewRelease, validUUID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -382,6 +403,7 @@ func TestGetSubscribedTo(t *testing.T) {
 	})
 
 	t.Run("webhooks returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getWebhooksSubscribedToPkgDBQ, hub.NewRelease, validUUID).Return([]byte(`
 		[{
@@ -423,6 +445,7 @@ func TestUpdate(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), wh)
@@ -505,6 +528,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 
 				err := m.Update(ctx, tc.wh)
@@ -531,6 +555,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, updateWebhookDBQ, "userID", mock.Anything).Return(tc.dbErr)
 				m := NewManager(db)
@@ -543,6 +568,7 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("update webhook succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateWebhookDBQ, "userID", mock.Anything).Return(nil)
 		m := NewManager(db)
