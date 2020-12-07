@@ -180,7 +180,7 @@ export interface Facets {
 export interface FacetOption {
   id: string | number;
   name: string;
-  total: number;
+  total?: number;
 }
 
 export interface Option extends FacetOption {
@@ -249,6 +249,12 @@ export interface RefInputField {
   reset: () => void;
   getValue: () => string;
   checkValidity: () => boolean;
+  updateValue: (value: string) => void;
+}
+
+export interface RefInputTypeaheadField {
+  reset: () => void;
+  getValue: () => string;
   updateValue: (value: string) => void;
 }
 

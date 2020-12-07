@@ -4,7 +4,7 @@ import React from 'react';
 import InputTypeahead from './InputTypeahead';
 
 const onChangeMock = jest.fn();
-const onResetSomeFiltersMock = jest.fn();
+const onClearMock = jest.fn();
 
 const defaultProps = {
   label: 'test',
@@ -38,7 +38,8 @@ const defaultProps = {
     key1: ['opt1', 'opt2'],
   },
   onChange: onChangeMock,
-  onResetSomeFilters: onResetSomeFiltersMock,
+  onClear: onClearMock,
+  visibleClear: true,
 };
 
 describe('InputTypeahead', () => {
@@ -51,55 +52,8 @@ describe('InputTypeahead', () => {
     expect(asFragment).toMatchSnapshot();
   });
 
-  it('renders proper content with selectedValues', () => {
-    const { getByTestId, getAllByTestId, getByText } = render(<InputTypeahead {...defaultProps} />);
-
-    expect(getByTestId('typeaheadBtn')).toBeInTheDocument();
-    expect(getAllByTestId('typeaheadSelectedItem')).toHaveLength(2);
-    expect(getByText(defaultProps.label)).toBeInTheDocument();
-  });
-
-  it('renders proper content without selectedValues', () => {
-    const { getByTestId, getByText } = render(<InputTypeahead {...defaultProps} selected={{}} />);
-
-    expect(getByTestId('typeaheadBtn')).toBeInTheDocument();
-    expect(getByText(defaultProps.label)).toBeInTheDocument();
-    expect(getByText('No test selected')).toBeInTheDocument();
-  });
-
-  it('opens dropdown', () => {
-    const { getByTestId, getAllByTestId, getByText, getByPlaceholderText } = render(
-      <InputTypeahead {...defaultProps} />
-    );
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
-
-    expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
-    expect(getByTestId('typeaheadInput')).toBeInTheDocument();
-    expect(getByPlaceholderText('Search test')).toBeInTheDocument();
-    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
-    expect(getByText('Clear all')).toBeInTheDocument();
-    expect(getByTestId('typeaheadClearBtn')).toBeInTheDocument();
-  });
-
-  it('opens dropdown to click over selected item', () => {
-    const { getByText, getByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const item = getByText('Option key 1');
-
-    fireEvent.click(item);
-
-    expect(getByTestId('typeaheadDropdown')).toBeInTheDocument();
-  });
-
   it('renders options in correct order', () => {
-    const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
+    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 
     const opts = getAllByTestId('typeaheadDropdownBtn');
     expect(opts[0]).toHaveTextContent('Option key 2 (12)');
@@ -108,20 +62,8 @@ describe('InputTypeahead', () => {
     expect(opts[3]).toHaveTextContent('Option 2 (17)');
   });
 
-  it('renders selected options in correct order', () => {
-    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const opts = getAllByTestId('typeaheadSelectedItem');
-    expect(opts[0]).toHaveTextContent('Option key 2 (12)');
-    expect(opts[1]).toHaveTextContent('Option key 1 (7)');
-  });
-
   it('unselects option', () => {
-    const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
+    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 
     const opts = getAllByTestId('typeaheadDropdownBtn');
 
@@ -132,11 +74,7 @@ describe('InputTypeahead', () => {
   });
 
   it('selects option', () => {
-    const { getByTestId, getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
+    const { getAllByTestId } = render(<InputTypeahead {...defaultProps} />);
 
     const opts = getAllByTestId('typeaheadDropdownBtn');
 
@@ -149,29 +87,24 @@ describe('InputTypeahead', () => {
   it('calls Clear all', () => {
     const { getByTestId } = render(<InputTypeahead {...defaultProps} />);
 
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
-
     const clearBtn = getByTestId('typeaheadClearBtn');
-
     fireEvent.click(clearBtn);
 
-    expect(onResetSomeFiltersMock).toHaveBeenCalledTimes(1);
-    expect(onResetSomeFiltersMock).toHaveBeenCalledWith(['key1']);
+    expect(onClearMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not render clear button', () => {
+    const { queryByTestId } = render(<InputTypeahead {...defaultProps} visibleClear={false} />);
+
+    expect(queryByTestId('typeaheadClearBtn')).toBeNull();
   });
 
   it('filters options on input change', () => {
     const { getByTestId, getAllByTestId, getAllByText } = render(<InputTypeahead {...defaultProps} />);
 
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
-
     expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
     const input = getByTestId('typeaheadInput');
-
     fireEvent.change(input, { target: { value: 'ke' } });
 
     expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
@@ -179,17 +112,31 @@ describe('InputTypeahead', () => {
     expect(getAllByText('ke')[0]).toHaveClass('hightlighted');
   });
 
+  it('filters options on input change when displayItemsInValueLength is defined', () => {
+    const { getByTestId, queryAllByTestId, getAllByTestId, getAllByText } = render(
+      <InputTypeahead {...defaultProps} displayItemsInValueLength={3} />
+    );
+
+    expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
+
+    const input = getByTestId('typeaheadInput');
+    fireEvent.change(input, { target: { value: 'key' } });
+
+    expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(2);
+    expect(getAllByText('key')).toHaveLength(2);
+    expect(getAllByText('key')[0]).toHaveClass('hightlighted');
+
+    fireEvent.change(input, { target: { value: 'ke' } });
+
+    expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);
+  });
+
   it('renders placeholder when any results', () => {
     const { getByTestId, getAllByTestId, queryAllByTestId, getByText } = render(<InputTypeahead {...defaultProps} />);
-
-    const btn = getByTestId('typeaheadBtn');
-
-    fireEvent.click(btn);
 
     expect(getAllByTestId('typeaheadDropdownBtn')).toHaveLength(4);
 
     const input = getByTestId('typeaheadInput');
-
     fireEvent.change(input, { target: { value: 'test' } });
 
     expect(queryAllByTestId('typeaheadDropdownBtn')).toHaveLength(0);

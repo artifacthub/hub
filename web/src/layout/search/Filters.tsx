@@ -13,7 +13,7 @@ import { FacetOption, Facets, Option } from '../../types';
 import { OPERATOR_CAPABILITIES } from '../../utils/data';
 import CheckBox from '../common/Checkbox';
 import ElementWithTooltip from '../common/ElementWithTooltip';
-import InputTypeahead from '../common/InputTypeahead';
+import InputTypeaheadWithDropdown from '../common/InputTypeaheadWithDropdown';
 import SmallTitle from '../common/SmallTitle';
 import styles from './Filters.module.css';
 import TsQuery from './TsQuery';
@@ -75,7 +75,7 @@ const Filters = (props: Props) => {
 
       const options = [...usersList, ...orgsList];
       publishersList = (
-        <InputTypeahead
+        <InputTypeaheadWithDropdown
           label="publisher"
           options={options}
           selected={selectedPublishers}
@@ -174,7 +174,7 @@ const Filters = (props: Props) => {
       const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoPackage />, filterKey: 'repo' }));
 
       crElement = (
-        <InputTypeahead
+        <InputTypeaheadWithDropdown
           label="repository"
           options={options}
           selected={{
@@ -197,7 +197,7 @@ const Filters = (props: Props) => {
       const options = repo.options.map((facet: FacetOption) => ({ ...facet, icon: <GoLaw />, filterKey: 'license' }));
 
       crElement = (
-        <InputTypeahead
+        <InputTypeaheadWithDropdown
           label="license"
           options={options}
           selected={{

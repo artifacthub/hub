@@ -1,8 +1,16 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isUndefined, repeat } from 'lodash';
 
-export default (schema: JSONSchema): string => {
-  let content = schema.title ? `# ${schema.title}` : '';
+import getJMESPathForValuesSchema from './getJMESPathForValuesSchema';
+
+interface FormattedValuesSchema {
+  yamlContent: string;
+  paths: string[];
+}
+
+export default (schema: JSONSchema): FormattedValuesSchema => {
+  let content: string = schema.title ? `# ${schema.title}` : '';
+  let paths: string[] = [];
 
   const getValue = (value: JSONSchema, level: number): string => {
     if (isUndefined(value.default)) {
@@ -34,8 +42,10 @@ export default (schema: JSONSchema): string => {
     }
   };
 
-  const checkProperties = (props: any, level: number) => {
+  const checkProperties = (props: any, level: number, path?: string) => {
     Object.keys(props).forEach((propName: string) => {
+      const currentPath = getJMESPathForValuesSchema(propName, path);
+      paths.push(currentPath);
       const value = props[propName] as JSONSchema;
       if (isUndefined(value)) return;
 
@@ -44,7 +54,7 @@ export default (schema: JSONSchema): string => {
       }${repeat(' ', level * 2)}${propName}: ${getValue(value, level)}`;
 
       if (value.properties) {
-        checkProperties(value.properties, level + 1);
+        checkProperties(value.properties, level + 1, currentPath);
       }
     });
   };
@@ -53,5 +63,8 @@ export default (schema: JSONSchema): string => {
     checkProperties(schema.properties, 0);
   }
 
-  return content;
+  return {
+    yamlContent: content,
+    paths: paths,
+  };
 };

@@ -4,13 +4,13 @@ import compoundJSONSchemaYAML from './compoundJSONSchemaYAML';
 
 interface Tests {
   input: JSONSchema;
-  output: string;
+  output: { yamlContent: string; paths: string[] };
 }
 
 const tests: Tests[] = [
   {
     input: {},
-    output: '',
+    output: { yamlContent: '', paths: [] },
   },
   {
     input: {
@@ -25,7 +25,8 @@ const tests: Tests[] = [
         password: { type: 'string', title: 'Database password', default: 'postgres' },
       },
     },
-    output: `# Database configuration
+    output: {
+      yamlContent: `# Database configuration
 
 # Database host
 host: ""
@@ -41,6 +42,8 @@ database: hub
 
 # Database password
 password: postgres`,
+      paths: ['host', 'port', 'user', 'database', 'password'],
+    },
   },
   {
     input: {
@@ -70,7 +73,8 @@ password: postgres`,
         },
       },
     },
-    output: `
+    output: {
+      yamlContent: `
 
 # SMTP host
 host: ""
@@ -83,6 +87,8 @@ password: ""
 
 # SMTP username
 username: ""`,
+      paths: ['host', 'port', 'password', 'username'],
+    },
   },
   {
     input: {
@@ -124,7 +130,8 @@ username: ""`,
         },
       },
     },
-    output: `
+    output: {
+      yamlContent: `
 
 image:${' '}
   # Hub image repository (without the tag)
@@ -138,6 +145,8 @@ replicaCount: 1
 
 # Hub pod readiness gates
 readinessGates: []`,
+      paths: ['image', 'image.repository', 'resources', 'replicaCount', 'readinessGates'],
+    },
   },
   {
     input: {
@@ -156,12 +165,15 @@ readinessGates: []`,
         },
       },
     },
-    output: `# Ingress definition
+    output: {
+      yamlContent: `# Ingress definition
 
 # Enables TLS
 tls: false
 
 annotations: {}`,
+      paths: ['tls', 'annotations'],
+    },
   },
   {
     input: {
@@ -196,7 +208,8 @@ annotations: {}`,
         },
       },
     },
-    output: `# Cluster resources definition
+    output: {
+      yamlContent: `# Cluster resources definition
 
 limits:${` `}
   cpu: 100m
@@ -205,6 +218,8 @@ limits:${` `}
 requests:${` `}
   cpu: 100m
   memory: 128Mi`,
+      paths: ['limits', 'limits.cpu', 'limits.memory', 'requests', 'requests.cpu', 'requests.memory'],
+    },
   },
   {
     input: {
@@ -241,7 +256,8 @@ requests:${` `}
         },
       },
     },
-    output: `# KlustAIR frontend application
+    output: {
+      yamlContent: `# KlustAIR frontend application
 
 # URL the application is listening on
 url: ""
@@ -257,6 +273,8 @@ phpfpm: false
 
 # apache document root
 apachedocumentroot: /var/www/public`,
+      paths: ['url', 'debug', 'appkey', 'phpfpm', 'apachedocumentroot'],
+    },
   },
   {
     input: {
@@ -268,9 +286,12 @@ apachedocumentroot: /var/www/public`,
         },
       },
     },
-    output: `
+    output: {
+      yamlContent: `
 
 podSecurityContext: {}`,
+      paths: ['podSecurityContext'],
+    },
   },
 ];
 

@@ -129,7 +129,7 @@ const ValuesSchema = (props: Props) => {
           open={openStatus}
           breakPoint="md"
         >
-          <div className="m-3 mw-100">
+          <div className="mb-3 mx-3 mw-100">
             <Schema schema={valuesSchema} normalizedName={props.normalizedName} />
             <div className="row">
               <div className="col-7 pt-3 bg-dark" />

@@ -8,6 +8,9 @@ const getProps = (fixtureId: string): any => {
 };
 
 const setActivePathMock = jest.fn();
+const scrollIntoViewMock = jest.fn();
+
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
 const defaultProps = {
   isRequired: false,
