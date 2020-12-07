@@ -140,35 +140,11 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 	if !repositoryNameRE.MatchString(r.Name) {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid name")
 	}
-	if r.URL == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
+	if err := m.validateURL(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
-	u, err := url.Parse(r.URL)
-	if err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
-	}
-	if !isSchemeSupported(u) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, ErrSchemeNotSupported)
-	}
-	if u.User != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
-	}
-	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
-	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "private repositories not allowed")
-	}
-	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
-	}
-	if r.Kind == hub.Falco || r.Kind == hub.OLM || r.Kind == hub.OPA {
-		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
-		}
-	}
-	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
-		if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
-			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
-		}
+	if err := m.validateCredentials(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
 
 	// Authorize action if the repository will be added to an organization
@@ -184,7 +160,7 @@ func (m *Manager) Add(ctx context.Context, orgName string, r *hub.Repository) er
 
 	// Add repository to the database
 	rJSON, _ := json.Marshal(r)
-	_, err = m.db.Exec(ctx, addRepoDBQ, userID, orgName, rJSON)
+	_, err := m.db.Exec(ctx, addRepoDBQ, userID, orgName, rJSON)
 	if err != nil && err.Error() == util.ErrDBInsufficientPrivilege.Error() {
 		return hub.ErrInsufficientPrivilege
 	}
@@ -623,35 +599,11 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 	if r.Name == "" {
 		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "name not provided")
 	}
-	if r.URL == "" {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "url not provided")
+	if err := m.validateURL(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
-	u, err := url.Parse(r.URL)
-	if err != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
-	}
-	if !isSchemeSupported(u) {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, ErrSchemeNotSupported)
-	}
-	if u.User != nil {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "urls with credentials not allowed")
-	}
-	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
-	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "private repositories not allowed")
-	}
-	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
-		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "only helm private repositories are allowed")
-	}
-	if r.Kind == hub.Falco || r.Kind == hub.OLM || r.Kind == hub.OPA {
-		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
-			return fmt.Errorf("%w: %s", hub.ErrInvalidInput, "invalid url")
-		}
-	}
-	if r.Kind == hub.Helm && SchemeIsHTTP(u) {
-		if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
-			return fmt.Errorf("%w: %s: %s", hub.ErrInvalidInput, "invalid url", err.Error())
-		}
+	if err := m.validateCredentials(r); err != nil {
+		return fmt.Errorf("%w: %s", hub.ErrInvalidInput, err.Error())
 	}
 
 	// Authorize action if the repository is owned by an organization
@@ -682,6 +634,48 @@ func (m *Manager) Update(ctx context.Context, r *hub.Repository) error {
 func (m *Manager) UpdateDigest(ctx context.Context, repositoryID, digest string) error {
 	_, err := m.db.Exec(ctx, updateRepoDigestDBQ, repositoryID, digest)
 	return err
+}
+
+// validateURL validates the url of the repository provided.
+func (m *Manager) validateURL(r *hub.Repository) error {
+	if r.URL == "" {
+		return errors.New("url not provided")
+	}
+	u, err := url.Parse(r.URL)
+	if err != nil {
+		return err
+	}
+	if !isSchemeSupported(u) {
+		return ErrSchemeNotSupported
+	}
+	if u.User != nil {
+		return errors.New("urls with credentials not allowed")
+	}
+	switch r.Kind {
+	case hub.Helm:
+		if SchemeIsHTTP(u) {
+			if _, _, err := m.helmIndexLoader.LoadIndex(r); err != nil {
+				return err
+			}
+		}
+	case hub.Falco, hub.OLM, hub.OPA:
+		if SchemeIsHTTP(u) && !GitRepoURLRE.MatchString(r.URL) {
+			return errors.New("invalid url format")
+		}
+	}
+	return nil
+}
+
+// validateCredentials validates the credentials of the repository provided.
+func (m *Manager) validateCredentials(r *hub.Repository) error {
+	allowPrivateRepos := m.cfg.GetBool("server.allowPrivateRepositories")
+	if !allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") {
+		return errors.New("private repositories not allowed")
+	}
+	if allowPrivateRepos && (r.AuthUser != "" || r.AuthPass != "") && r.Kind != hub.Helm {
+		return errors.New("only helm private repositories are allowed")
+	}
+	return nil
 }
 
 // SchemeIsHTTP is a helper that checks if the scheme of the url provided is
