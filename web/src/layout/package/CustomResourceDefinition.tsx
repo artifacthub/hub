@@ -10,6 +10,7 @@ import Modal from '../common/Modal';
 import styles from './CustomResourceDefinition.module.css';
 
 interface Props {
+  normalizedName: string;
   resources?: CustomResourcesDefinition[];
 }
 
@@ -106,7 +107,10 @@ const CustomResourceDefinition = (props: Props) => {
           >
             <div className="mw-100">
               <div className={`position-relative ${styles.syntaxWrapper}`}>
-                <BlockCodeButtons filename={`${selectedCustomResourceDef.kind}.yaml`} content={yamlExample} />
+                <BlockCodeButtons
+                  filename={`${props.normalizedName}-${selectedCustomResourceDef.kind}.yaml`}
+                  content={yamlExample}
+                />
 
                 <SyntaxHighlighter
                   language="yaml"

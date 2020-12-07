@@ -9,7 +9,7 @@ import SchemaLine from './SchemaLine';
 
 interface Props {
   schema: JSONSchema;
-  pkgName: string;
+  normalizedName: string;
   definitions?: any;
 }
 
@@ -30,7 +30,11 @@ const Schema = (props: Props) => {
             <div className={`text-muted text-truncate text-monospace ${styles.comment}`}># {props.schema.title}</div>
           )}
           {valuesYAML && (
-            <BlockCodeButtons className={styles.btns} content={valuesYAML} filename={`${props.pkgName}.yaml`} />
+            <BlockCodeButtons
+              className={styles.btns}
+              content={valuesYAML}
+              filename={`values-${props.normalizedName}.yaml`}
+            />
           )}
         </div>
       </div>

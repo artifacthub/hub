@@ -11,14 +11,16 @@ const getMockResources = (fixtureId: string): CustomResourcesDefinition[] => {
 describe('CustomResourceDefinition', () => {
   it('creates snapshot', () => {
     const mockResources = getMockResources('1');
-    const result = render(<CustomResourceDefinition resources={mockResources} />);
+    const result = render(<CustomResourceDefinition resources={mockResources} normalizedName="pkg-name" />);
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   describe('Render', () => {
     it('renders component with example', () => {
       const mockResources = getMockResources('2');
-      const { getByTestId, getByText } = render(<CustomResourceDefinition resources={mockResources} />);
+      const { getByTestId, getByText } = render(
+        <CustomResourceDefinition resources={mockResources} normalizedName="pkg-name" />
+      );
 
       expect(getByTestId('resourceDefinition')).toBeInTheDocument();
       expect(getByText('View YAML example')).toBeInTheDocument();
@@ -32,7 +34,9 @@ describe('CustomResourceDefinition', () => {
 
     it('renders component without example', () => {
       const mockResources = getMockResources('3');
-      const { getByTestId, getByText, queryByText } = render(<CustomResourceDefinition resources={mockResources} />);
+      const { getByTestId, getByText, queryByText } = render(
+        <CustomResourceDefinition resources={mockResources} normalizedName="pkg-name" />
+      );
 
       expect(getByTestId('resourceDefinition')).toBeInTheDocument();
       expect(queryByText('View YAML example')).toBeNull();
@@ -47,7 +51,7 @@ describe('CustomResourceDefinition', () => {
     it('opens example resource definition modal', () => {
       const mockResources = getMockResources('4');
       const { getAllByTestId, queryByRole, getByText, getByTestId } = render(
-        <CustomResourceDefinition resources={mockResources} />
+        <CustomResourceDefinition resources={mockResources} normalizedName="pkg-name" />
       );
 
       const modal = queryByRole('dialog');
