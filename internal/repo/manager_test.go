@@ -367,7 +367,7 @@ func TestCheckAvailability(t *testing.T) {
 				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
 				m := NewManager(cfg, db, nil)
 
-				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value")
+				available, err := m.CheckAvailability(ctx, tc.resourceKind, "value/")
 				assert.NoError(t, err)
 				assert.Equal(t, tc.available, available)
 				db.AssertExpectations(t)

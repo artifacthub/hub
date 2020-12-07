@@ -294,7 +294,7 @@ select indexes_are('package__maintainer', array[
 select indexes_are('repository', array[
     'repository_pkey',
     'repository_name_key',
-    'repository_url_key',
+    'repository_url_idx',
     'repository_repository_kind_id_idx',
     'repository_user_id_idx',
     'repository_organization_id_idx'

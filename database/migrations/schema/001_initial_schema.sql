@@ -83,7 +83,7 @@ create table if not exists repository (
     repository_id uuid primary key default gen_random_uuid(),
     name text not null check (name <> '') unique,
     display_name text check (display_name <> ''),
-    url text not null check (url <> '') unique,
+    url text not null check (url <> ''),
     auth_user text check (auth_user <> ''),
     auth_pass text check (auth_pass <> ''),
     last_tracking_ts timestamptz,
@@ -102,6 +102,7 @@ create table if not exists repository (
 create index repository_repository_kind_id_idx on repository (repository_kind_id);
 create index repository_user_id_idx on repository (user_id);
 create index repository_organization_id_idx on repository (organization_id);
+create unique index repository_url_idx on repository (trim(trailing '/' from url));
 
 create table if not exists package (
     package_id uuid primary key default gen_random_uuid(),

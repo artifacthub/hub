@@ -32,7 +32,7 @@ const (
 	// Database queries
 	addRepoDBQ                = `select add_repository($1::uuid, $2::text, $3::jsonb)`
 	checkRepoNameAvailDBQ     = `select repository_id from repository where name = $1`
-	checkRepoURLAvailDBQ      = `select repository_id from repository where url = $1`
+	checkRepoURLAvailDBQ      = `select repository_id from repository where trim(trailing '/' from url) = $1`
 	deleteRepoDBQ             = `select delete_repository($1::uuid, $2::text)`
 	getAllReposDBQ            = `select get_all_repositories($1::boolean)`
 	getOrgReposDBQ            = `select get_org_repositories($1::uuid, $2::text, $3::boolean)`
@@ -201,6 +201,7 @@ func (m *Manager) CheckAvailability(ctx context.Context, resourceKind, value str
 		query = checkRepoURLAvailDBQ
 	}
 	query = fmt.Sprintf("select not exists (%s)", query)
+	value = strings.TrimSuffix(value, "/")
 	err := m.db.QueryRow(ctx, query, value).Scan(&available)
 	return available, err
 }
