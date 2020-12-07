@@ -37,6 +37,7 @@ func TestBasicAuth(t *testing.T) {
 	hw.cfg.Set("server.basicAuth.password", "test")
 
 	t.Run("without basic auth credentials", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		hw.h.BasicAuth(http.HandlerFunc(testsOK)).ServeHTTP(w, r)
@@ -47,6 +48,7 @@ func TestBasicAuth(t *testing.T) {
 	})
 
 	t.Run("with basic auth credentials", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r.SetBasicAuth("test", "test")
@@ -60,6 +62,7 @@ func TestBasicAuth(t *testing.T) {
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
@@ -97,6 +100,7 @@ func TestCheckAvailability(t *testing.T) {
 			for _, tc := range testCases {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+					t.Parallel()
 					w := httptest.NewRecorder()
 					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 					rctx := &chi.Context{
@@ -126,6 +130,7 @@ func TestCheckAvailability(t *testing.T) {
 		})
 
 		t.Run("check availability failed", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 			rctx := &chi.Context{
@@ -150,6 +155,7 @@ func TestCheckAvailability(t *testing.T) {
 
 func TestGetProfile(t *testing.T) {
 	t.Run("error getting profile", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -165,6 +171,7 @@ func TestGetProfile(t *testing.T) {
 	})
 
 	t.Run("profile get succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -197,6 +204,7 @@ func TestInjectUserID(t *testing.T) {
 	}
 
 	t.Run("session cookie not provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -209,6 +217,7 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("invalid session cookie provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r.AddCookie(&http.Cookie{
@@ -225,6 +234,7 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("error checking session", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -245,6 +255,7 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("invalid session provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -266,6 +277,7 @@ func TestInjectUserID(t *testing.T) {
 	})
 
 	t.Run("inject user id succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -288,6 +300,7 @@ func TestInjectUserID(t *testing.T) {
 
 func TestLogin(t *testing.T) {
 	t.Run("invalid", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email" ...`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -301,6 +314,7 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("credentials not provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{}`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -315,6 +329,7 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("error checking credentials", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -330,6 +345,7 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("invalid credentials provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email", "password": "pass2"}`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -346,6 +362,7 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("error registering session", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -364,6 +381,7 @@ func TestLogin(t *testing.T) {
 	})
 
 	t.Run("login succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"email": "email", "password": "pass"}`)
 		r, _ := http.NewRequest("POST", "/", body)
@@ -413,6 +431,7 @@ func TestLogout(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				if tc.cookie != nil {
@@ -450,6 +469,7 @@ func TestLogout(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 
@@ -477,6 +497,7 @@ func TestLogout(t *testing.T) {
 
 func TestRegisterUser(t *testing.T) {
 	t.Run("no user provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("POST", "/", strings.NewReader(""))
 
@@ -518,6 +539,7 @@ func TestRegisterUser(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.userJSON))
 
@@ -567,6 +589,7 @@ func TestRegisterUser(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(userJSON))
 
@@ -588,6 +611,7 @@ func TestRequireLogin(t *testing.T) {
 
 	t.Run("session cookie based authentication", func(t *testing.T) {
 		t.Run("invalid session cookie provided", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 			r.AddCookie(&http.Cookie{
@@ -604,6 +628,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("error checking session", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 
@@ -624,6 +649,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("invalid session provided", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 
@@ -644,6 +670,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("session cookie based authentication succeeded", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 
@@ -669,6 +696,7 @@ func TestRequireLogin(t *testing.T) {
 		keyB64 := base64.StdEncoding.EncodeToString(key)
 
 		t.Run("invalid api key provided", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 			r.Header.Add(apiKeyHeader, "invalidB64")
@@ -682,6 +710,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("error checking api key", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 			r.Header.Add(apiKeyHeader, keyB64)
@@ -697,6 +726,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("invalid api key provided", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 			r.Header.Add(apiKeyHeader, keyB64)
@@ -713,6 +743,7 @@ func TestRequireLogin(t *testing.T) {
 		})
 
 		t.Run("api key based authentication succeeded", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 			r.Header.Add(apiKeyHeader, keyB64)
@@ -730,6 +761,7 @@ func TestRequireLogin(t *testing.T) {
 	})
 
 	t.Run("no authentication method used", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -744,6 +776,7 @@ func TestRequireLogin(t *testing.T) {
 
 func TestUpdatePassword(t *testing.T) {
 	t.Run("no old password provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"new": "new"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
@@ -759,6 +792,7 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("no new password provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"old": "old"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
@@ -774,6 +808,7 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("invalid old password provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"old": "invalid", "new": "new"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
@@ -791,6 +826,7 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("error updating password", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"old": "old", "new": "new"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
@@ -808,6 +844,7 @@ func TestUpdatePassword(t *testing.T) {
 	})
 
 	t.Run("password updated successfully", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		body := strings.NewReader(`{"old": "old", "new": "new"}`)
 		r, _ := http.NewRequest("PUT", "/", body)
@@ -854,6 +891,7 @@ func TestUpdateProfile(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.desc, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.userJSON))
 
@@ -872,6 +910,7 @@ func TestUpdateProfile(t *testing.T) {
 	})
 
 	t.Run("error updating profile", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -887,6 +926,7 @@ func TestUpdateProfile(t *testing.T) {
 	})
 
 	t.Run("user profile updated successfully", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", strings.NewReader(userJSON))
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -932,6 +972,7 @@ func TestVerifyEmail(t *testing.T) {
 	for _, tc := range testCases {
 		tc := tc
 		t.Run(tc.description, func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("POST", "/", strings.NewReader(`{"code": "1234"}`))
 

@@ -49,6 +49,7 @@ func TestGet(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -66,6 +67,7 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("get package succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -95,6 +97,7 @@ func TestGetChangeLog(t *testing.T) {
 	}
 
 	t.Run("get changelog succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -115,6 +118,7 @@ func TestGetChangeLog(t *testing.T) {
 	})
 
 	t.Run("error getting changelog", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -132,6 +136,7 @@ func TestGetChangeLog(t *testing.T) {
 
 func TestGetRandom(t *testing.T) {
 	t.Run("get random packages succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -151,6 +156,7 @@ func TestGetRandom(t *testing.T) {
 	})
 
 	t.Run("error getting random packages", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -174,6 +180,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 	}
 
 	t.Run("get snapshot security report succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -194,6 +201,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 	})
 
 	t.Run("error getting snapshot security report", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -211,6 +219,7 @@ func TestGetSnapshotSecurityReport(t *testing.T) {
 
 func TestGetStarredByUser(t *testing.T) {
 	t.Run("get packages starred by user succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -231,6 +240,7 @@ func TestGetStarredByUser(t *testing.T) {
 	})
 
 	t.Run("error getting packages starred by user", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -271,6 +281,7 @@ func TestGetStars(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -289,6 +300,7 @@ func TestGetStars(t *testing.T) {
 	})
 
 	t.Run("get stars succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -312,6 +324,7 @@ func TestGetStars(t *testing.T) {
 
 func TestGetStats(t *testing.T) {
 	t.Run("get stats succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -331,6 +344,7 @@ func TestGetStats(t *testing.T) {
 	})
 
 	t.Run("error getting stats", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -354,6 +368,7 @@ func TestGetValuesSchema(t *testing.T) {
 	}
 
 	t.Run("get values schema succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -374,6 +389,7 @@ func TestGetValuesSchema(t *testing.T) {
 	})
 
 	t.Run("error getting values schema", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), chi.RouteCtxKey, rctx))
@@ -441,6 +457,7 @@ func TestInjectIndexMeta(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("GET", "/", nil)
 
@@ -484,6 +501,7 @@ func TestRssFeed(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.pmErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 
@@ -565,6 +583,7 @@ func TestRssFeed(t *testing.T) {
 		for i, tc := range testCases {
 			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 
@@ -605,6 +624,7 @@ func TestSearch(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("%s: %s", tc.desc, tc.params), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/?"+tc.params, nil)
 
@@ -619,6 +639,7 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("invalid search input", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -632,6 +653,7 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("valid request, search succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -651,6 +673,7 @@ func TestSearch(t *testing.T) {
 	})
 
 	t.Run("error searching packages", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 
@@ -667,6 +690,7 @@ func TestSearch(t *testing.T) {
 
 func TestSearchMonocular(t *testing.T) {
 	t.Run("search succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/?q=text", nil)
 
@@ -686,6 +710,7 @@ func TestSearchMonocular(t *testing.T) {
 	})
 
 	t.Run("search failed", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/?q=text", nil)
 
@@ -725,6 +750,7 @@ func TestToggleStar(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.err.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -743,6 +769,7 @@ func TestToggleStar(t *testing.T) {
 	})
 
 	t.Run("toggle star succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))

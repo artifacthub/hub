@@ -10,6 +10,8 @@ import (
 )
 
 func TestSetupConfig(t *testing.T) {
+	t.Parallel()
+
 	// Check config file must exist for test cmd
 	cfg, err := SetupConfig("test")
 	require.Error(t, err)

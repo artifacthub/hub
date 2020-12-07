@@ -59,6 +59,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(tc.repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -113,6 +114,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("POST", "/", strings.NewReader(repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -133,6 +135,7 @@ func TestAdd(t *testing.T) {
 
 func TestBadge(t *testing.T) {
 	t.Run("badge info returned successfully", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		rctx := &chi.Context{
@@ -160,6 +163,7 @@ func TestBadge(t *testing.T) {
 
 func TestCheckAvailability(t *testing.T) {
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 		rctx := &chi.Context{
@@ -200,6 +204,7 @@ func TestCheckAvailability(t *testing.T) {
 			for _, tc := range testCases {
 				tc := tc
 				t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+					t.Parallel()
 					w := httptest.NewRecorder()
 					r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 					rctx := &chi.Context{
@@ -230,6 +235,7 @@ func TestCheckAvailability(t *testing.T) {
 		})
 
 		t.Run("check availability failed", func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			r, _ := http.NewRequest("HEAD", "/?v=value", nil)
 			rctx := &chi.Context{
@@ -255,6 +261,7 @@ func TestCheckAvailability(t *testing.T) {
 
 func TestClaimOwnership(t *testing.T) {
 	t.Run("invalid input - missing repo name", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -294,6 +301,7 @@ func TestClaimOwnership(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/?org=org1", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -327,6 +335,7 @@ func TestDelete(t *testing.T) {
 	}
 
 	t.Run("delete repository succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("DELETE", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -363,6 +372,7 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.rmErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("DELETE", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -383,6 +393,7 @@ func TestDelete(t *testing.T) {
 
 func TestGetAll(t *testing.T) {
 	t.Run("get all repositories succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -403,6 +414,7 @@ func TestGetAll(t *testing.T) {
 	})
 
 	t.Run("error getting all repositories", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -427,6 +439,7 @@ func TestGetByKind(t *testing.T) {
 	}
 
 	t.Run("invalid kind provided", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -441,6 +454,7 @@ func TestGetByKind(t *testing.T) {
 	})
 
 	t.Run("get repositories by kind succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -462,6 +476,7 @@ func TestGetByKind(t *testing.T) {
 	})
 
 	t.Run("error getting repositories by kind", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -487,6 +502,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 	}
 
 	t.Run("get repositories owned by organization succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -524,6 +540,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.rmErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("GET", "/", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -544,6 +561,7 @@ func TestGetOwnedByOrg(t *testing.T) {
 
 func TestGetOwnedByUser(t *testing.T) {
 	t.Run("get repositories owned by user succeeded", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -564,6 +582,7 @@ func TestGetOwnedByUser(t *testing.T) {
 	})
 
 	t.Run("error getting repositories owned by user", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("GET", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -581,6 +600,7 @@ func TestGetOwnedByUser(t *testing.T) {
 
 func TestTransfer(t *testing.T) {
 	t.Run("invalid input - missing repo name", func(t *testing.T) {
+		t.Parallel()
 		w := httptest.NewRecorder()
 		r, _ := http.NewRequest("PUT", "/", nil)
 		r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -620,6 +640,7 @@ func TestTransfer(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/?org=org1", nil)
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -670,6 +691,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(tc.repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))
@@ -722,6 +744,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				w := httptest.NewRecorder()
 				r, _ := http.NewRequest("PUT", "/", strings.NewReader(repoJSON))
 				r = r.WithContext(context.WithValue(r.Context(), hub.UserIDKey, "userID"))

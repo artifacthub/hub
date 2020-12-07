@@ -28,6 +28,7 @@ func TestAdd(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), "orgName", nil)
@@ -174,6 +175,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
@@ -191,6 +193,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		r := &hub.Repository{
 			Name:        "repo1",
 			DisplayName: "Repository 1",
@@ -242,6 +245,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, addRepoDBQ, "userID", "orgName", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
@@ -287,6 +291,7 @@ func TestAdd(t *testing.T) {
 		for i, tc := range testCases {
 			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, addRepoDBQ, "userID", "orgName", mock.Anything).Return(nil)
 				az := &authz.AuthorizerMock{}
@@ -334,6 +339,7 @@ func TestCheckAvailability(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(cfg, nil, nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -362,6 +368,7 @@ func TestCheckAvailability(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+				t.Parallel()
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
@@ -376,6 +383,7 @@ func TestCheckAvailability(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkRepoNameAvailDBQ)
 		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
@@ -399,6 +407,7 @@ func TestClaimOwnership(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, userID)
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.ClaimOwnership(context.Background(), "repo1", "")
@@ -418,6 +427,7 @@ func TestClaimOwnership(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(cfg, nil, nil)
 
 				err := m.ClaimOwnership(ctx, tc.repoName, "")
@@ -427,6 +437,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed: database error getting repository", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -437,6 +448,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed: error getting repository metadata", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		hg := &tests.HTTPGetterMock{}
@@ -456,6 +468,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed: oci repo", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(ociRepoJSON, nil)
 		m := NewManager(cfg, db, nil)
@@ -466,6 +479,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed: database error getting user email", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("", tests.ErrFakeDB)
@@ -483,6 +497,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed: user not in repository owners list", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("user1@email.com", nil)
@@ -500,6 +515,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim succeeded (helm)", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(helmRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
@@ -518,6 +534,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim failed (opa): error cloning repository", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
 		rc := &ClonerMock{}
@@ -532,6 +549,7 @@ func TestClaimOwnership(t *testing.T) {
 	})
 
 	t.Run("ownership claim succeeded (opa)", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(opaRepoJSON, nil)
 		db.On("QueryRow", ctx, getUserEmailDBQ, userID).Return("owner1@email.com", nil)
@@ -552,6 +570,7 @@ func TestDelete(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Delete(context.Background(), "repo1")
@@ -559,12 +578,14 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		err := m.Delete(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
@@ -603,6 +624,7 @@ func TestDelete(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
@@ -629,6 +651,7 @@ func TestDelete(t *testing.T) {
 	})
 
 	t.Run("delete repository succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
@@ -647,6 +670,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
+	t.Parallel()
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
@@ -710,6 +734,7 @@ func TestGetAllJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getAllReposDBQ, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -721,6 +746,7 @@ func TestGetAllJSON(t *testing.T) {
 	})
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getAllReposDBQ, false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
@@ -753,6 +779,7 @@ func TestGetByID(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errStr, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(cfg, nil, nil)
 
 				_, err := m.GetByID(ctx, tc.repoID, false)
@@ -763,6 +790,7 @@ func TestGetByID(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -774,6 +802,7 @@ func TestGetByID(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByIDDBQ, repoID, false).Return([]byte(`
 		{
@@ -802,6 +831,7 @@ func TestGetByID(t *testing.T) {
 }
 
 func TestGetByKind(t *testing.T) {
+	t.Parallel()
 	ctx := context.Background()
 
 	db := &tests.DBMock{}
@@ -850,6 +880,7 @@ func TestGetByKindJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -861,6 +892,7 @@ func TestGetByKindJSON(t *testing.T) {
 	})
 
 	t.Run("all repositories data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getReposByKindDBQ, hub.OLM, false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
@@ -876,12 +908,14 @@ func TestGetByName(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetByName(ctx, "", false)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("get existing repository by name", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
@@ -911,6 +945,7 @@ func TestGetByName(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -922,6 +957,7 @@ func TestGetByName(t *testing.T) {
 	})
 
 	t.Run("invalid json data returned from database", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte("invalid json"), nil)
 		m := NewManager(cfg, db, nil)
@@ -935,6 +971,7 @@ func TestGetByName(t *testing.T) {
 
 func TestGetMetadata(t *testing.T) {
 	t.Run("local file: error reading repository metadata file", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/not-exists.yaml")
 		assert.Error(t, err)
@@ -942,6 +979,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("remote file: error downloading repository metadata file", func(t *testing.T) {
+		t.Parallel()
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/not-found.yml").Return(nil, tests.ErrFake)
 		hg.On("Get", "http://url.test/not-found.yaml").Return(nil, tests.ErrFake)
@@ -952,6 +990,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("remote file: unexpected status code received", func(t *testing.T) {
+		t.Parallel()
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/not-found.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("")),
@@ -968,6 +1007,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("remote file: error reading repository metadata file", func(t *testing.T) {
+		t.Parallel()
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/not-found.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(tests.ErrReader(0)),
@@ -984,6 +1024,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("error unmarshaling repository metadata file", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/invalid")
 		assert.Error(t, err)
@@ -991,6 +1032,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("invalid repository id", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/invalid-repo-id")
 		assert.Error(t, err)
@@ -998,18 +1040,21 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("local file: success fetching .yml", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/artifacthub-repo")
 		assert.NoError(t, err)
 	})
 
 	t.Run("local file: success .yaml", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetMetadata("testdata/test-yaml-repo")
 		assert.NoError(t, err)
 	})
 
 	t.Run("remote file: success", func(t *testing.T) {
+		t.Parallel()
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/ok.yml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
@@ -1021,6 +1066,7 @@ func TestGetMetadata(t *testing.T) {
 	})
 
 	t.Run("remote file: success on yaml", func(t *testing.T) {
+		t.Parallel()
 		hg := &tests.HTTPGetterMock{}
 		hg.On("Get", "http://url.test/ok.yaml").Return(&http.Response{
 			Body:       ioutil.NopCloser(strings.NewReader("repositoryID: 00000000-0000-0000-0000-000000000001")),
@@ -1040,12 +1086,14 @@ func TestGetPackagesDigest(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetPackagesDigest(context.Background(), "invalid")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoPkgsDigestDBQ, "00000000-0000-0000-0000-000000000001").Return([]byte(`
 		{
@@ -1072,6 +1120,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByOrgJSON(context.Background(), "orgName", false)
@@ -1079,12 +1128,14 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		_, err := m.GetOwnedByOrgJSON(ctx, "", false)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -1096,6 +1147,7 @@ func TestGetOwnedByOrgJSON(t *testing.T) {
 	})
 
 	t.Run("org repositories data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgReposDBQ, "userID", "orgName", false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
@@ -1111,6 +1163,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetOwnedByUserJSON(context.Background(), false)
@@ -1118,6 +1171,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return(nil, tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -1129,6 +1183,7 @@ func TestGetOwnedByUserJSON(t *testing.T) {
 	})
 
 	t.Run("user repositories data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserReposDBQ, "userID", false).Return([]byte("dataJSON"), nil)
 		m := NewManager(cfg, db, nil)
@@ -1149,6 +1204,7 @@ func TestGetRemoteDigest(t *testing.T) {
 	}
 
 	t.Run("helm-http: error loading index", func(t *testing.T) {
+		t.Parallel()
 		l := &HelmIndexLoaderMock{}
 		l.On("LoadIndex", helmHTTP).Return(nil, "", tests.ErrFake)
 		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
@@ -1159,6 +1215,7 @@ func TestGetRemoteDigest(t *testing.T) {
 	})
 
 	t.Run("helm-http: error reading index file", func(t *testing.T) {
+		t.Parallel()
 		l := &HelmIndexLoaderMock{}
 		l.On("LoadIndex", helmHTTP).Return(nil, "invalid-path", nil)
 		m := NewManager(cfg, nil, nil, WithHelmIndexLoader(l))
@@ -1169,6 +1226,7 @@ func TestGetRemoteDigest(t *testing.T) {
 	})
 
 	t.Run("helm-http: success", func(t *testing.T) {
+		t.Parallel()
 		f, err := ioutil.TempFile("", "")
 		require.NoError(t, err)
 		_, _ = f.Write([]byte("indexFileContent"))
@@ -1189,12 +1247,14 @@ func TestSetLastTrackingResults(t *testing.T) {
 	repoID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		err := m.SetLastTrackingResults(ctx, "invalid", "errors")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, setLastTrackingResultsDBQ, repoID, "errors", false).Return(nil)
 		m := NewManager(cfg, db, nil)
@@ -1205,6 +1265,7 @@ func TestSetLastTrackingResults(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, setLastTrackingResultsDBQ, repoID, "errors", false).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -1220,12 +1281,14 @@ func TestSetVerifiedPublisher(t *testing.T) {
 	repoID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		err := m.SetVerifiedPublisher(ctx, "invalid", true)
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, setVerifiedPublisherDBQ, repoID, true).Return(nil)
 		m := NewManager(cfg, db, nil)
@@ -1236,6 +1299,7 @@ func TestSetVerifiedPublisher(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, setVerifiedPublisherDBQ, repoID, true).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)
@@ -1254,6 +1318,7 @@ func TestTransfer(t *testing.T) {
 	orgP := &org
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Transfer(context.Background(), "repo1", "", false)
@@ -1273,6 +1338,7 @@ func TestTransfer(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(cfg, nil, nil)
 
 				err := m.Transfer(ctx, tc.repoName, "", false)
@@ -1282,6 +1348,7 @@ func TestTransfer(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
@@ -1320,6 +1387,7 @@ func TestTransfer(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
@@ -1346,6 +1414,7 @@ func TestTransfer(t *testing.T) {
 	})
 
 	t.Run("transfer repository succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 		{
@@ -1367,6 +1436,7 @@ func TestUpdate(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(cfg, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), nil)
@@ -1454,6 +1524,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				l := &HelmIndexLoaderMock{}
 				if tc.lErr != nil {
 					l.On("LoadIndex", tc.r).Return(nil, "", tc.lErr)
@@ -1470,6 +1541,7 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		r := &hub.Repository{
 			Name:        "repo1",
 			DisplayName: "Repository 1",
@@ -1530,6 +1602,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getRepoByNameDBQ, "repo1", false).Return([]byte(`
 				{
@@ -1583,6 +1656,7 @@ func TestUpdate(t *testing.T) {
 		for i, tc := range testCases {
 			tc := tc
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
+				t.Parallel()
 				repoJSON, _ := json.Marshal(tc.r)
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getRepoByNameDBQ, tc.r.Name, false).Return(repoJSON, nil)
@@ -1608,6 +1682,7 @@ func TestUpdateDigest(t *testing.T) {
 	digest := "digest"
 
 	t.Run("database update succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateRepoDigestDBQ, repositoryID, digest).Return(nil)
 		m := NewManager(cfg, db, nil)
@@ -1618,6 +1693,7 @@ func TestUpdateDigest(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateRepoDigestDBQ, repositoryID, digest).Return(tests.ErrFakeDB)
 		m := NewManager(cfg, db, nil)

@@ -17,12 +17,14 @@ func TestGet(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		_, err := m.Get(ctx, &hub.GetPackageInput{})
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -34,6 +36,7 @@ func TestGet(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		expectedPackage := &hub.Package{
 			PackageID:      "00000000-0000-0000-0000-000000000001",
 			Name:           "Package 1",
@@ -233,6 +236,7 @@ func TestGetChangeLogJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -244,6 +248,7 @@ func TestGetChangeLogJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgChangeLogDBQ, "pkg1").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -259,12 +264,14 @@ func TestGetJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		_, err := m.GetJSON(ctx, &hub.GetPackageInput{})
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -276,6 +283,7 @@ func TestGetJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgDBQ, mock.Anything, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -291,6 +299,7 @@ func TestGetRandomJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRandomPkgsDBQ).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -302,6 +311,7 @@ func TestGetRandomJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getRandomPkgsDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -317,6 +327,7 @@ func TestGetSnapshotSecurityReportJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getSnapshotSecurityReportDBQ, "pkg1", "1.0.0").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -328,6 +339,7 @@ func TestGetSnapshotSecurityReportJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getSnapshotSecurityReportDBQ, "pkg1", "1.0.0").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -343,6 +355,7 @@ func TestGetSnapshotsToScan(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getSnapshotsToScanDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -354,6 +367,7 @@ func TestGetSnapshotsToScan(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getSnapshotsToScanDBQ).Return([]byte(`
 		[
@@ -387,6 +401,7 @@ func TestGetStarredByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetStarredByUserJSON(context.Background())
@@ -394,6 +409,7 @@ func TestGetStarredByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgsStarredByUserDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -405,6 +421,7 @@ func TestGetStarredByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgsStarredByUserDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -421,6 +438,7 @@ func TestGetStarsJSON(t *testing.T) {
 	pkgID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		testCases := []struct {
 			errMsg    string
 			packageID string
@@ -440,6 +458,7 @@ func TestGetStarsJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgStarsDBQ, mock.Anything, pkgID).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -450,6 +469,7 @@ func TestGetStarsJSON(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgStarsDBQ, mock.Anything, pkgID).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -465,6 +485,7 @@ func TestGetStatsJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("packages stats data returned successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgsStatsDBQ).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -476,6 +497,7 @@ func TestGetStatsJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getPkgsStatsDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -491,6 +513,7 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getValuesSchemaDBQ, "pkg1", "1.0.0").Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -502,6 +525,7 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getValuesSchemaDBQ, "pkg1", "1.0.0").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -516,38 +540,40 @@ func TestGetValuesSchemaJSON(t *testing.T) {
 func TestRegister(t *testing.T) {
 	ctx := context.Background()
 
-	p := &hub.Package{
-		Name:        "package1",
-		Description: "description",
-		HomeURL:     "home_url",
-		LogoImageID: "image_id",
-		Keywords:    []string{"kw1", "kw2"},
-		Readme:      "readme-version-1.0.0",
-		Links: []*hub.Link{
-			{
-				Name: "Source",
-				URL:  "source_url",
+	newTestPkg := func() *hub.Package {
+		return &hub.Package{
+			Name:        "package1",
+			Description: "description",
+			HomeURL:     "home_url",
+			LogoImageID: "image_id",
+			Keywords:    []string{"kw1", "kw2"},
+			Readme:      "readme-version-1.0.0",
+			Links: []*hub.Link{
+				{
+					Name: "Source",
+					URL:  "source_url",
+				},
 			},
-		},
-		Version:    "1.0.0",
-		AppVersion: "12.1.0",
-		Digest:     "digest-package1-1.0.0",
-		Maintainers: []*hub.Maintainer{
-			{
-				Name:  "name1",
-				Email: "email1",
+			Version:    "1.0.0",
+			AppVersion: "12.1.0",
+			Digest:     "digest-package1-1.0.0",
+			Maintainers: []*hub.Maintainer{
+				{
+					Name:  "name1",
+					Email: "email1",
+				},
+				{
+					Name:  "name2",
+					Email: "email2",
+				},
+				{
+					Name: "name3",
+				},
 			},
-			{
-				Name:  "name2",
-				Email: "email2",
+			Repository: &hub.Repository{
+				RepositoryID: "00000000-0000-0000-0000-000000000001",
 			},
-			{
-				Name: "name3",
-			},
-		},
-		Repository: &hub.Repository{
-			RepositoryID: "00000000-0000-0000-0000-000000000001",
-		},
+		}
 	}
 
 	t.Run("invalid input", func(t *testing.T) {
@@ -674,6 +700,7 @@ func TestRegister(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 				err := m.Register(ctx, tc.p)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -683,21 +710,23 @@ func TestRegister(t *testing.T) {
 	})
 
 	t.Run("successful package registration", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, registerPkgDBQ, mock.Anything).Return(nil)
 		m := NewManager(db)
 
-		err := m.Register(ctx, p)
+		err := m.Register(ctx, newTestPkg())
 		assert.NoError(t, err)
 		db.AssertExpectations(t)
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, registerPkgDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db)
 
-		err := m.Register(ctx, p)
+		err := m.Register(ctx, newTestPkg())
 		assert.Equal(t, tests.ErrFakeDB, err)
 		db.AssertExpectations(t)
 	})
@@ -765,6 +794,7 @@ func TestSearchJSON(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 				dataJSON, err := m.SearchJSON(ctx, tc.input)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -775,6 +805,7 @@ func TestSearchJSON(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -786,6 +817,7 @@ func TestSearchJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, searchPkgsDBQ, mock.Anything).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -803,6 +835,7 @@ func TestSearchMonocularJSON(t *testing.T) {
 	searchTerm := "text"
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, searchPkgsMonocularDBQ, baseURL, searchTerm).Return([]byte("dataJSON"), nil)
 		m := NewManager(db)
@@ -814,6 +847,7 @@ func TestSearchMonocularJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, searchPkgsMonocularDBQ, baseURL, searchTerm).Return(nil, tests.ErrFakeDB)
 		m := NewManager(db)
@@ -830,6 +864,7 @@ func TestToggleStar(t *testing.T) {
 	pkgID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil)
 		assert.Panics(t, func() {
 			_ = m.ToggleStar(context.Background(), "pkgID")
@@ -847,6 +882,7 @@ func TestToggleStar(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 				err := m.ToggleStar(ctx, tc.packageID)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -856,6 +892,7 @@ func TestToggleStar(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, togglePkgStarDBQ, "userID", pkgID).Return(nil)
 		m := NewManager(db)
@@ -866,6 +903,7 @@ func TestToggleStar(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, togglePkgStarDBQ, "userID", pkgID).Return(tests.ErrFakeDB)
 		m := NewManager(db)
@@ -897,6 +935,7 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	sJSON, _ := json.Marshal(s)
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(tests.ErrFakeDB)
 		m := NewManager(db)
@@ -907,6 +946,7 @@ func TestUpdateSnapshotSecurityReport(t *testing.T) {
 	})
 
 	t.Run("database update succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateSnapshotSecurityReportDBQ, sJSON).Return(nil)
 		m := NewManager(db)
@@ -954,6 +994,7 @@ func TestUnregister(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil)
 				err := m.Unregister(ctx, tc.p)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -963,6 +1004,7 @@ func TestUnregister(t *testing.T) {
 	})
 
 	t.Run("successful package unregistration", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, unregisterPkgDBQ, mock.Anything).Return(nil)
 		m := NewManager(db)
@@ -973,6 +1015,7 @@ func TestUnregister(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, unregisterPkgDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db)

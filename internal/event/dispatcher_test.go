@@ -10,6 +10,8 @@ import (
 )
 
 func TestDispatcher(t *testing.T) {
+	t.Parallel()
+
 	// Setup dispatcher
 	d := NewDispatcher(&Services{}, WithNumWorkers(0))
 

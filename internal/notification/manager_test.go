@@ -67,6 +67,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager()
 				err := m.Add(context.Background(), nil, tc.n)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -81,6 +82,7 @@ func TestAdd(t *testing.T) {
 	}
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("Exec", ctx, addNotificationDBQ, mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager()
@@ -91,6 +93,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("Exec", ctx, addNotificationDBQ, mock.Anything).Return(nil)
 		m := NewManager()
@@ -105,6 +108,7 @@ func TestGetPending(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("QueryRow", ctx, getPendingNotificationDBQ).Return(nil, tests.ErrFakeDB)
 		m := NewManager()
@@ -116,6 +120,7 @@ func TestGetPending(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		expectedNotification := &hub.Notification{
 			NotificationID: "notificationID",
 			Event: &hub.Event{
@@ -168,6 +173,7 @@ func TestUpdateStatus(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager()
 				err := m.UpdateStatus(ctx, nil, "invalidNotificationID", false, nil)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -177,6 +183,7 @@ func TestUpdateStatus(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("Exec", ctx, updateNotificationStatusDBQ, notificationID, true, "").Return(tests.ErrFakeDB)
 		m := NewManager()
@@ -187,6 +194,7 @@ func TestUpdateStatus(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		tx := &tests.TXMock{}
 		tx.On("Exec", ctx, updateNotificationStatusDBQ, notificationID, true, "").Return(nil)
 		m := NewManager()

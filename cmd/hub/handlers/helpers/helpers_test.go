@@ -36,6 +36,7 @@ func TestBuildCacheControlHeader(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			cacheControlHeader := BuildCacheControlHeader(tc.cacheMaxAge)
 			assert.Equal(t, tc.expectedCacheControlHeader, cacheControlHeader)
 		})
@@ -67,6 +68,7 @@ func TestRenderJSON(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			RenderJSON(w, tc.data, tc.cacheMaxAge, tc.code)
 			resp := w.Result()
@@ -121,6 +123,7 @@ func TestRenderErrorJSON(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			RenderErrorJSON(w, tc.err)
 			resp := w.Result()
@@ -162,6 +165,7 @@ func TestRenderErrorWithCodeJSON(t *testing.T) {
 	for i, tc := range testCases {
 		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Parallel()
 			w := httptest.NewRecorder()
 			RenderErrorWithCodeJSON(w, tc.err, tc.code)
 			resp := w.Result()

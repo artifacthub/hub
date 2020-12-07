@@ -19,6 +19,7 @@ func TestAdd(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Add(context.Background(), &hub.Organization{})
@@ -59,6 +60,7 @@ func TestAdd(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil, nil, nil)
 				err := m.Add(ctx, tc.org)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -68,6 +70,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(nil)
 		m := NewManager(db, nil, nil)
@@ -78,6 +81,7 @@ func TestAdd(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, addOrgDBQ, "userID", mock.Anything).Return(tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
@@ -92,6 +96,7 @@ func TestAddMember(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.AddMember(context.Background(), "orgName", "userAlias", "")
@@ -133,6 +138,7 @@ func TestAddMember(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil, nil, nil)
 				err := m.AddMember(ctx, tc.orgName, tc.userAlias, tc.baseURL)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -142,6 +148,7 @@ func TestAddMember(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "orgName",
@@ -172,6 +179,7 @@ func TestAddMember(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.description, func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, addOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
 				db.On("QueryRow", ctx, getUserEmailDBQ, mock.Anything).Return("email", nil)
@@ -211,6 +219,7 @@ func TestAddMember(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, addOrgMemberDBQ, "userID", "orgName", "userAlias").Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
@@ -253,6 +262,7 @@ func TestCheckAvailability(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil, nil, nil)
 				_, err := m.CheckAvailability(context.Background(), tc.resourceKind, tc.value)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -276,6 +286,7 @@ func TestCheckAvailability(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(fmt.Sprintf("resource kind: %s", tc.resourceKind), func(t *testing.T) {
+				t.Parallel()
 				tc.dbQuery = fmt.Sprintf("select not exists (%s)", tc.dbQuery)
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, tc.dbQuery, "value").Return(tc.available, nil)
@@ -290,6 +301,7 @@ func TestCheckAvailability(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		dbQuery := fmt.Sprintf(`select not exists (%s)`, checkOrgNameAvailDBQ)
 		db.On("QueryRow", ctx, dbQuery, "value").Return(false, tests.ErrFakeDB)
@@ -306,6 +318,7 @@ func TestConfirmMembership(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.ConfirmMembership(context.Background(), "orgName")
@@ -313,12 +326,14 @@ func TestConfirmMembership(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		err := m.ConfirmMembership(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(nil)
 		m := NewManager(db, nil, nil)
@@ -329,6 +344,7 @@ func TestConfirmMembership(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, confirmMembershipDBQ, "userID", "orgName").Return(tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
@@ -343,6 +359,7 @@ func TestDeleteMember(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.DeleteMember(context.Background(), "orgName", "userAlias")
@@ -369,6 +386,7 @@ func TestDeleteMember(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil, nil, nil)
 				err := m.DeleteMember(ctx, tc.orgName, tc.userAlias)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -378,6 +396,7 @@ func TestDeleteMember(t *testing.T) {
 	})
 
 	t.Run("get requesting user alias failed", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("", tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
@@ -388,6 +407,7 @@ func TestDeleteMember(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
 		az := &authz.AuthorizerMock{}
@@ -404,6 +424,7 @@ func TestDeleteMember(t *testing.T) {
 	})
 
 	t.Run("member deleted successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
 		db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
@@ -422,6 +443,7 @@ func TestDeleteMember(t *testing.T) {
 	})
 
 	t.Run("user left organization successfully", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("userAlias", nil)
 		db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(nil)
@@ -449,6 +471,7 @@ func TestDeleteMember(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getUserAliasDBQ, "userID").Return("requestingUserAlias", nil)
 				db.On("Exec", ctx, deleteOrgMemberDBQ, "userID", "orgName", "userAlias").Return(tc.dbErr)
@@ -473,6 +496,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetAuthorizationPolicyJSON(context.Background(), "org1")
@@ -480,12 +504,14 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		_, err := m.GetAuthorizationPolicyJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "org1",
@@ -501,6 +527,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getAuthzPolicyDBQ, "userID", "org1").Return([]byte("dataJSON"), nil)
 		az := &authz.AuthorizerMock{}
@@ -535,6 +562,7 @@ func TestGetAuthorizationPolicyJSON(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getAuthzPolicyDBQ, "userID", "org1").Return(nil, tc.dbErr)
 				az := &authz.AuthorizerMock{}
@@ -559,6 +587,7 @@ func TestGetByUserJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetByUserJSON(context.Background())
@@ -566,6 +595,7 @@ func TestGetByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
@@ -577,6 +607,7 @@ func TestGetByUserJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getUserOrgsDBQ, "userID").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
@@ -592,12 +623,14 @@ func TestGetJSON(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		_, err := m.GetJSON(context.Background(), "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
@@ -609,6 +642,7 @@ func TestGetJSON(t *testing.T) {
 	})
 
 	t.Run("database error", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgDBQ, "orgName").Return(nil, tests.ErrFakeDB)
 		m := NewManager(db, nil, nil)
@@ -624,6 +658,7 @@ func TestGetMembersJSON(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_, _ = m.GetMembersJSON(context.Background(), "orgName")
@@ -631,12 +666,14 @@ func TestGetMembersJSON(t *testing.T) {
 	})
 
 	t.Run("invalid input", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		_, err := m.GetMembersJSON(ctx, "")
 		assert.True(t, errors.Is(err, hub.ErrInvalidInput))
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return([]byte("dataJSON"), nil)
 		m := NewManager(db, nil, nil)
@@ -664,6 +701,7 @@ func TestGetMembersJSON(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("QueryRow", ctx, getOrgMembersDBQ, "userID", "orgName").Return(nil, tc.dbErr)
 				m := NewManager(db, nil, nil)
@@ -681,6 +719,7 @@ func TestUpdate(t *testing.T) {
 	ctx := context.WithValue(context.Background(), hub.UserIDKey, "userID")
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.Update(context.Background(), &hub.Organization{})
@@ -703,6 +742,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				m := NewManager(nil, nil, nil)
 				err := m.Update(ctx, tc.org)
 				assert.True(t, errors.Is(err, hub.ErrInvalidInput))
@@ -712,6 +752,7 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		az := &authz.AuthorizerMock{}
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
 			OrganizationName: "orgName",
@@ -726,6 +767,7 @@ func TestUpdate(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
@@ -759,6 +801,7 @@ func TestUpdate(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, updateOrgDBQ, "userID", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}
@@ -787,6 +830,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 	}
 
 	t.Run("user id not found in ctx", func(t *testing.T) {
+		t.Parallel()
 		m := NewManager(nil, nil, nil)
 		assert.Panics(t, func() {
 			_ = m.UpdateAuthorizationPolicy(context.Background(), "org1", &hub.AuthorizationPolicy{})
@@ -888,6 +932,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.errMsg, func(t *testing.T) {
+				t.Parallel()
 				az := &authz.AuthorizerMock{}
 				az.On("WillUserBeLockedOut", ctx, tc.policy, "userID").Return(true, nil).Maybe()
 				m := NewManager(nil, nil, az)
@@ -899,6 +944,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 	})
 
 	t.Run("authorization failed", func(t *testing.T) {
+		t.Parallel()
 		az := &authz.AuthorizerMock{}
 		az.On("WillUserBeLockedOut", ctx, validPolicy, "userID").Return(false, nil).Maybe()
 		az.On("Authorize", ctx, &hub.AuthorizeInput{
@@ -914,6 +960,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 	})
 
 	t.Run("database query succeeded", func(t *testing.T) {
+		t.Parallel()
 		db := &tests.DBMock{}
 		db.On("Exec", ctx, updateAuthzPolicyDBQ, "userID", "org1", mock.Anything).Return(nil)
 		az := &authz.AuthorizerMock{}
@@ -948,6 +995,7 @@ func TestUpdateAuthorizationPolicy(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.dbErr.Error(), func(t *testing.T) {
+				t.Parallel()
 				db := &tests.DBMock{}
 				db.On("Exec", ctx, updateAuthzPolicyDBQ, "userID", "org1", mock.Anything).Return(tc.dbErr)
 				az := &authz.AuthorizerMock{}

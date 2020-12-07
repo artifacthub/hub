@@ -29,6 +29,8 @@ func TestGetRepositories(t *testing.T) {
 	}
 
 	t.Run("error getting repository by name", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetByName", ctx, "repo1", true).Return(nil, tests.ErrFake)
@@ -43,6 +45,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("get repositories by name", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetByName", ctx, "repo1", true).Return(repo1, nil)
@@ -58,6 +62,7 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("error getting kind from name", func(t *testing.T) {
+		t.Parallel()
 		cfg := viper.New()
 		cfg.Set("tracker.repositoriesKinds", []string{"invalid"})
 		repos, err := GetRepositories(ctx, cfg, nil)
@@ -66,6 +71,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("error getting repository by kind", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetByKind", ctx, hub.Helm, true).Return(nil, tests.ErrFake)
@@ -80,6 +87,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("get repositories by kind", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetByKind", ctx, hub.Helm, true).Return([]*hub.Repository{repo1}, nil)
@@ -95,6 +104,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("names have preference over kinds when both are provided", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetByName", ctx, "repo1", true).Return(repo1, nil)
@@ -111,6 +122,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("error getting all repositories", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetAll", ctx, true).Return(nil, tests.ErrFake)
@@ -124,6 +137,8 @@ func TestGetRepositories(t *testing.T) {
 	})
 
 	t.Run("get all repositories", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		rm := &repo.ManagerMock{}
 		rm.On("GetAll", ctx, true).Return([]*hub.Repository{repo1, repo2, repo3}, nil)
@@ -141,6 +156,8 @@ func TestTrackRepository(t *testing.T) {
 	ctx := context.Background()
 
 	t.Run("error getting repository remote digest", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{}
 		rm := &repo.ManagerMock{}
@@ -154,6 +171,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("repository has't been updated, same digest", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			Digest: "digest",
@@ -169,6 +188,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("repository hasn't been updated, but bypassDigestCheck is enabled", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			Digest: "digest",
@@ -187,6 +208,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("error tracking repository", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{}
 		rm := &repo.ManagerMock{}
@@ -201,6 +224,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("repository tracked successfully, no need to update digest", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{}
 		rm := &repo.ManagerMock{}
@@ -215,6 +240,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("repository tracked successfully, digest updated", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			Digest: "digest1",
@@ -232,6 +259,8 @@ func TestTrackRepository(t *testing.T) {
 	})
 
 	t.Run("error updating repository digest", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			Digest: "digest1",
@@ -256,6 +285,8 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	repo1ID := "00000000-0000-0000-0000-000000000001"
 
 	t.Run("verified publisher flag set to true successfully (remote url)", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			RepositoryID:      repo1ID,
@@ -272,6 +303,8 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	})
 
 	t.Run("verified publisher flag not set as it was already true", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			RepositoryID:      repo1ID,
@@ -287,6 +320,8 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	})
 
 	t.Run("verified publisher flag not set: it was false and md file did not exist", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			RepositoryID:      repo1ID,
@@ -302,6 +337,8 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	})
 
 	t.Run("verified publisher flag set to false: it was true and md file did not exist", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			RepositoryID:      repo1ID,
@@ -318,6 +355,8 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 	})
 
 	t.Run("set verified publisher flag failed", func(t *testing.T) {
+		t.Parallel()
+
 		// Setup expectations
 		r := &hub.Repository{
 			RepositoryID:      repo1ID,

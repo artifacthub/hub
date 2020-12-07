@@ -10,6 +10,8 @@ import (
 )
 
 func TestDBErrorsCollector(t *testing.T) {
+	t.Parallel()
+
 	// Setup errors collector
 	rm := &repo.ManagerMock{}
 	repos := []*hub.Repository{

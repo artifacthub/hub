@@ -13,6 +13,8 @@ import (
 var update = flag.Bool("update", false, "Write image versions to testdata directory")
 
 func TestGenerateImageVersions(t *testing.T) {
+	t.Parallel()
+
 	// Read sample images
 	validImgData, err := ioutil.ReadFile("testdata/valid.png")
 	require.NoError(t, err)

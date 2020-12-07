@@ -19,6 +19,7 @@ func TestScanSnapshot(t *testing.T) {
 	image := "repo/image:tag"
 
 	t.Run("error scanning image", func(t *testing.T) {
+		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(nil, tests.ErrFake)
 
@@ -37,6 +38,7 @@ func TestScanSnapshot(t *testing.T) {
 	})
 
 	t.Run("image using latest tag", func(t *testing.T) {
+		t.Parallel()
 		scannerMock := &Mock{}
 
 		snapshot := &hub.SnapshotToScan{
@@ -59,6 +61,7 @@ func TestScanSnapshot(t *testing.T) {
 	})
 
 	t.Run("image not found", func(t *testing.T) {
+		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(nil, ErrImageNotFound)
 
@@ -82,6 +85,7 @@ func TestScanSnapshot(t *testing.T) {
 	})
 
 	t.Run("error unmarshalling report", func(t *testing.T) {
+		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(`invalid: "`, nil)
 
@@ -100,6 +104,7 @@ func TestScanSnapshot(t *testing.T) {
 	})
 
 	t.Run("image report generated successfully", func(t *testing.T) {
+		t.Parallel()
 		scannerMock := &Mock{}
 		scannerMock.On("Scan", image).Return(sampleReportData, nil)
 

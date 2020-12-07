@@ -34,6 +34,7 @@ func TestWorker(t *testing.T) {
 	}
 
 	t.Run("error getting pending event", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
@@ -45,6 +46,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error getting subscriptors", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -57,6 +59,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("no subscriptors nor webhooks found", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -70,6 +73,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error adding email notification", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -83,6 +87,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("adding one email notification succeeded", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -97,6 +102,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("adding two email notifications succeeded", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -112,6 +118,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error adding webhook notification", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -126,6 +133,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("adding one webhook notification succeeded", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)
@@ -140,6 +148,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("adding two webhook notifications succeeded", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.em.On("GetPending", sw.ctx, sw.tx).Return(e, nil)

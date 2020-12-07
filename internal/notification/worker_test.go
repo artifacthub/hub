@@ -76,6 +76,7 @@ func TestWorker(t *testing.T) {
 	}
 
 	t.Run("error getting pending notification", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(nil, tests.ErrFake)
@@ -87,6 +88,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error getting package preparing email data", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
@@ -99,6 +101,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error getting repository preparing email data", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
@@ -111,6 +114,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error sending package notification email", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
@@ -125,6 +129,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error sending repository notification email", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
@@ -139,6 +144,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("package email notification delivered successfully", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n1, nil)
@@ -153,6 +159,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("repository email notification delivered successfully", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n3, nil)
@@ -167,6 +174,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("error getting package preparing webhook payload", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
@@ -179,6 +187,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("webhook call returned an error", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
@@ -193,6 +202,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("webhook call returned an unexpected status code", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
@@ -210,6 +220,7 @@ func TestWorker(t *testing.T) {
 	})
 
 	t.Run("webhook notification delivered successfully", func(t *testing.T) {
+		t.Parallel()
 		sw := newServicesWrapper()
 		sw.db.On("Begin", sw.ctx).Return(sw.tx, nil)
 		sw.nm.On("GetPending", sw.ctx, sw.tx).Return(n2, nil)
@@ -272,6 +283,7 @@ func TestWorker(t *testing.T) {
 		for _, tc := range testCases {
 			tc := tc
 			t.Run(tc.id, func(t *testing.T) {
+				t.Parallel()
 				ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 					contentType := tc.contentType
 					if contentType == "" {
