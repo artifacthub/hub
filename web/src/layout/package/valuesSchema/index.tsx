@@ -15,7 +15,7 @@ import styles from './ValuesSchema.module.css';
 interface Props {
   packageId: string;
   version: string;
-  pkgName: string;
+  normalizedName: string;
   visibleValuesSchema: boolean;
   hasValuesSchema?: boolean;
   searchUrlReferer?: SearchFiltersURL;
@@ -130,7 +130,7 @@ const ValuesSchema = (props: Props) => {
           breakPoint="md"
         >
           <div className="m-3 mw-100">
-            <Schema schema={valuesSchema} pkgName={props.pkgName} />
+            <Schema schema={valuesSchema} normalizedName={props.normalizedName} />
             <div className="row">
               <div className="col-7 pt-3 bg-dark" />
             </div>

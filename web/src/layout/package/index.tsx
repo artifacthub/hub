@@ -251,7 +251,7 @@ const PackageView = (props: Props) => {
         <div className={`mb-5 ${styles.codeWrapper}`}>
           <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Custom Resource Definitions" />
 
-          <CustomResourceDefinition resources={resources} />
+          <CustomResourceDefinition resources={resources} normalizedName={detail!.normalizedName} />
         </div>
       );
     } else {
@@ -595,7 +595,7 @@ const PackageView = (props: Props) => {
                               hasValuesSchema={detail.hasValuesSchema}
                               packageId={detail.packageId}
                               version={detail.version!}
-                              pkgName={detail.normalizedName}
+                              normalizedName={detail.normalizedName}
                               searchUrlReferer={props.searchUrlReferer}
                               fromStarredPage={props.fromStarredPage}
                               visibleValuesSchema={
