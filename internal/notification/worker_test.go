@@ -63,6 +63,11 @@ func TestWorker(t *testing.T) {
 		Name:           "package1",
 		NormalizedName: "package1",
 		Version:        "1.0.0",
+		Changes: []string{
+			"Cool feature",
+			"Bug fixed",
+		},
+		ContainsSecurityUpdates: true,
 		Repository: &hub.Repository{
 			Kind:             hub.Helm,
 			Name:             "repo1",
@@ -262,6 +267,8 @@ func TestWorker(t *testing.T) {
 			"name": "package1",
 			"version": "1.0.0",
 			"url": "http://baseURL/packages/helm/repo1/package1/1.0.0",
+			"changes": ["Cool feature", "Bug fixed"],
+			"containsSecurityUpdates": true,
 			"repository": {
 				"kind": "helm",
 				"name": "repo1",
