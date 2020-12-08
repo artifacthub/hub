@@ -10,6 +10,10 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 This annotation is used to provide some details about the changes introduced by a given chart version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your chart versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
 
+- **artifacthub.io/containsSecurityUpdates** *(boolean string, see example below)*
+
+Use this annotation to indicate that this chart version contains security updates. When a package release contains security updates, a special message will be displayed in the Artifact Hub UI as well as in the new release email notification.
+
 - **artifacthub.io/images** *(yaml string, see example below)*
 
 Use this annotation to provide a list of the images used by this chart. Images listed will be scanned for security vulnerabilities. The security report generated will be available in the package detail view. It is possible to whitelist images so that they are not scanned by setting the `whitelisted` flag to true.
@@ -49,6 +53,7 @@ annotations:
   artifacthub.io/changes: |
     - Added cool feature
     - Fixed minor bug
+  artifacthub.io/containsSecurityUpdates: "true"
   artifacthub.io/images: |
     - name: img1
       image: repo/img1:1.0.0

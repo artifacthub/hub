@@ -5,6 +5,7 @@ metadata:
     artifacthub.io/changes: |
       - feature 1
       - fix 1
+    artifacthub.io/containsSecurityUpdates: "true"
     artifacthub.io/imagesWhitelist: |
       - registry.io/image2:1.0.0
     artifacthub.io/license: Apache-2.0

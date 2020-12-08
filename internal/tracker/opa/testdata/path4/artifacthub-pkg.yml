@@ -10,6 +10,7 @@ homeURL: https://home.url
 appVersion: 10.0.0
 containersImages:
   - image: registry/test/test:latest
+containsSecurityUpdates: true
 operator: false
 deprecated: false
 keywords:

@@ -1301,6 +1301,7 @@ paths:
                   required:
                     - version
                     - created_at
+                    - contains_security_updates
                   properties:
                     version:
                       type: string
@@ -1312,6 +1313,9 @@ paths:
                       type: array
                       items:
                         type: string
+                      nullable: false
+                    contains_security_updates:
+                      type: boolean
                       nullable: false
         "429":
           $ref: "#/components/responses/TooManyRequests"
@@ -2204,6 +2208,7 @@ components:
             - created_at
             - has_values_schema
             - has_changelog
+            - contains_security_updates
           properties:
             signed:
               type: boolean
@@ -2329,6 +2334,9 @@ components:
             content_url:
               type: string
               format: uri
+              nullable: false
+            contains_security_updates:
+              type: boolean
               nullable: false
     PackageSummary:
       type: object

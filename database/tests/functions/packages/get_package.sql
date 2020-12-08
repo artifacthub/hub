@@ -95,6 +95,7 @@ insert into snapshot (
     provider,
     values_schema,
     changes,
+    contains_security_updates,
     created_at
 ) values (
     :'package1ID',
@@ -122,6 +123,7 @@ insert into snapshot (
     'Org Inc',
     '{"key": "value"}',
     '{"feature 1", "fix 1"}',
+    true,
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -139,6 +141,7 @@ insert into snapshot (
     capabilities,
     data,
     values_schema,
+    contains_security_updates,
     created_at
 ) values (
     :'package1ID',
@@ -155,6 +158,7 @@ insert into snapshot (
     'basic install',
     '{"key": "value"}',
     '{}',
+    false,
     '2020-06-16 11:20:33+02'
 );
 insert into package (
@@ -249,10 +253,12 @@ select is(
         "available_versions": [
             {
                 "version": "0.0.9",
+                "contains_security_updates": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
+                "contains_security_updates": true,
                 "created_at": 1592299234
             }
         ],
@@ -356,10 +362,12 @@ select is(
         "available_versions": [
             {
                 "version": "0.0.9",
+                "contains_security_updates": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
+                "contains_security_updates": true,
                 "created_at": 1592299234
             }
         ],
@@ -453,10 +461,12 @@ select is(
         "available_versions": [
             {
                 "version": "0.0.9",
+                "contains_security_updates": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
+                "contains_security_updates": true,
                 "created_at": 1592299234
             }
         ],

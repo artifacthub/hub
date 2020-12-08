@@ -2,13 +2,14 @@
 -- id provided as a json array.
 create or replace function get_package_changelog(p_package_id uuid)
 returns setof json as $$
-    select coalesce(json_agg(json_build_object(
+    select coalesce(json_agg(json_strip_nulls(json_build_object(
         'version', version,
         'created_at', floor(extract(epoch from created_at)),
-        'changes', changes
-    )), '[]')
+        'changes', changes,
+        'contains_security_updates', contains_security_updates
+    ))), '[]')
     from (
-        select version, created_at, changes
+        select version, created_at, changes, contains_security_updates
         from snapshot
         where package_id = p_package_id
         and changes is not null
