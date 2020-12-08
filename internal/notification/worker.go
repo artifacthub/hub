@@ -354,6 +354,8 @@ var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 			"name": "{{ .Package.name }}",
 			"version": "{{ .Package.version }}",
 			"url": "{{ .Package.url }}",
+			"changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
+			"containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
 			"repository": {
 				"kind": "{{ .Package.repository.kind }}",
 				"name": "{{ .Package.repository.name }}",

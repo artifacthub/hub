@@ -523,6 +523,8 @@ func TestTriggerTest(t *testing.T) {
 			"name": "sample-package",
 			"version": "1.0.0",
 			"url": "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
+			"changes": ["Cool feature", "Bug fixed"],
+			"containsSecurityUpdates": true,
 			"repository": {
 				"kind": "helm",
 				"name": "repo1",

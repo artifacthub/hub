@@ -179,6 +179,11 @@ var webhookTestTemplateData = &hub.PackageNotificationTemplateData{
 		"name":    "sample-package",
 		"version": "1.0.0",
 		"url":     "https://artifacthub.io/packages/helm/artifacthub/sample-package/1.0.0",
+		"changes": []string{
+			"Cool feature",
+			"Bug fixed",
+		},
+		"containsSecurityUpdates": true,
 		"repository": map[string]interface{}{
 			"kind":      "helm",
 			"name":      "repo1",

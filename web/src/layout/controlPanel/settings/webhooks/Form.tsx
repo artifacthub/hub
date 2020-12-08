@@ -51,7 +51,9 @@ export const DEFAULT_PAYLOAD_TEMPLATE = `{
         "package": {
             "name": "{{ .Package.name }}",
             "version": "{{ .Package.version }}",
-            "url": "{{ .Package.url }}"
+            "url": "{{ .Package.url }}",
+            "changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
+            "containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
             "repository": {
                 "kind": "{{ .Package.repository.kind }}",
                 "name": "{{ .Package.repository.name }}",
@@ -664,13 +666,25 @@ const WebhookForm = (props: Props) => {
                       </tr>
                       <tr>
                         <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.changes }}`}</span>
+                        </th>
+                        <td>List of strings describing the changes this package version introduces.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.containsSecurityUpdates }}`}</span>
+                        </th>
+                        <td>Boolean flag that indicates whether this package contains security updates or not.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
                           <span className="text-nowrap">{`{{ .Package.repository.kind }}`}</span>
                         </th>
                         <td>
                           Kind of the repository associated with the notification. Possible values are{' '}
-                          <span className="font-weight-bold">helm-chart</span>,{' '}
-                          <span className="font-weight-bold">falco-rules</span> and{' '}
-                          <span className="font-weight-bold">opa-policies</span>.
+                          <span className="font-weight-bold">falco</span>,{' '}
+                          <span className="font-weight-bold">helm</span>, <span className="font-weight-bold">olm</span>{' '}
+                          and <span className="font-weight-bold">opa</span>.
                         </td>
                       </tr>
                       <tr>
