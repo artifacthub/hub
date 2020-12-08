@@ -1,7 +1,7 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import { isArray, isEmpty, isUndefined } from 'lodash';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BsFillCaretDownFill, BsFillCaretRightFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
 
@@ -107,6 +107,15 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
 };
 
 const SchemaDefinition = (props: Prop) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scrolls content into view when a def is expanded
+    if (props.isExpanded && ref && ref.current) {
+      ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    }
+  }, [props.isExpanded]);
+
   if (isUndefined(props.def.type) || isArray(props.def.type)) return null;
 
   const typeDef = SCHEMA_PROPS_PER_TYPE[props.def.type];
@@ -213,7 +222,7 @@ const SchemaDefinition = (props: Prop) => {
   };
 
   return (
-    <div className="position-relative w-100">
+    <div className="position-relative w-100" ref={ref}>
       <button
         data-testid="expandBtn"
         className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}

@@ -1,61 +1,66 @@
 import classnames from 'classnames';
 import { compact, isNull, isUndefined, orderBy } from 'lodash';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { IoIosCheckmark, IoIosClose } from 'react-icons/io';
-import { MdFilterList } from 'react-icons/md';
 
-import useOutsideClick from '../../hooks/useOutsideClick';
-import { Option } from '../../types';
+import { Option, RefInputTypeaheadField } from '../../types';
 import styles from './InputTypeahead.module.css';
-import SmallTitle from './SmallTitle';
+import InputTypeaheadOptionItem from './InputTypeaheadOptionItem';
 
 interface Props {
   label: string;
   options: Option[];
   selected: { [key: string]: string[] };
-  className?: string;
+  inputWrapperClassName?: string;
+  listClassName?: string;
+  optClassName?: string;
+  searchIcon?: boolean;
   onChange: (name: string, value: string, checked: boolean) => void;
-  onResetSomeFilters: (filterKeys: string[]) => void;
+  onClear?: () => void;
+  visibleClear: boolean;
+  onChangeSelection?: () => void;
+  displayItemsInValueLength?: number;
 }
 
-const OptionItem = (opt: Option, name: string | JSX.Element) => (
-  <>
-    {!isUndefined(opt.icon) && <div className={styles.icon}>{opt.icon}</div>}
-    <div className="ml-2 text-truncate">{name}</div>
-    <div>
-      {' '}
-      <small className="ml-1">({opt.total})</small>
-    </div>
-  </>
-);
-
-const InputTypeahead = (props: Props) => {
+const InputTypeahead = forwardRef((props: Props, ref: React.Ref<RefInputTypeaheadField>) => {
   const inputEl = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const [hightlightedText, setHightlightedText] = useState<RegExp | null>(null);
-  const [collapsed, setCollapsed] = useState<boolean>(true);
 
-  useOutsideClick([dropdownRef], !collapsed, () => collapseDropdown());
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      setInputValue('');
+    },
+    getValue(): string {
+      return inputValue;
+    },
+    updateValue(newValue: string): void {
+      setInputValue(newValue);
+    },
+  }));
 
-  const getVisibleItems = useCallback((): Option[] => {
-    const filteredItems: Option[] = props.options.filter((opt: Option) =>
-      opt.name.toLowerCase().includes(inputValue.toLowerCase())
-    );
+  const getVisibleItems = useCallback((): Option[] | null => {
+    let filteredItems: Option[] = [];
+    let elements: any[] | null = null;
 
-    const elements: any[] = orderBy(
-      filteredItems,
-      [
-        (item: Option) =>
-          props.selected.hasOwnProperty(item.filterKey) && props.selected[item.filterKey].includes(item.id.toString())
-            ? -1
-            : 1,
-        'total',
-      ],
-      ['asc', 'desc']
-    );
+    if (isUndefined(props.displayItemsInValueLength) || inputValue.length >= props.displayItemsInValueLength) {
+      filteredItems = props.options.filter((opt: Option) => opt.name.toLowerCase().includes(inputValue.toLowerCase()));
+      elements = orderBy(
+        filteredItems,
+        [
+          (item: Option) =>
+            props.selected.hasOwnProperty(item.filterKey) && props.selected[item.filterKey].includes(item.id.toString())
+              ? -1
+              : 1,
+          'total',
+        ],
+        ['asc', 'desc']
+      );
+    }
+
     return elements;
-  }, [inputValue, props.options, props.selected]);
+  }, [inputValue, props.options, props.selected, props.displayItemsInValueLength]);
 
   const getSelectedItems = useCallback((): Option[] => {
     let selectedItems: Option[] = [];
@@ -96,12 +101,7 @@ const InputTypeahead = (props: Props) => {
     }
   };
 
-  const collapseDropdown = () => {
-    setCollapsed(true);
-    setInputValue('');
-  };
-
-  const [visibleItems, setVisibleItems] = useState<Option[]>(getVisibleItems());
+  const [visibleItems, setVisibleItems] = useState<Option[] | null>(getVisibleItems());
   const [selectedItems, setSelectedItems] = useState<Option[]>(getSelectedItems());
 
   useEffect(() => {
@@ -123,98 +123,73 @@ const InputTypeahead = (props: Props) => {
   if (props.options.length === 0) return null;
 
   return (
-    <div className={`position-relative ${props.className}`}>
-      <button
-        data-testid="typeaheadBtn"
-        className="btn text-left p-0 btn-block"
-        onClick={() => {
-          if (collapsed) setCollapsed(false);
-        }}
-      >
-        <div className="d-flex flex-row align-items-center justify-content-between">
-          <SmallTitle text={props.label} className="text-secondary font-weight-bold pt-2" />
-
-          <MdFilterList className="mt-2 mb-1 text-secondary" />
-        </div>
-
-        <div>
-          {selectedItems.length === 0 ? (
-            <div className={`text-muted ${styles.option}`}>
-              <i>No {props.label} selected</i>
-            </div>
-          ) : (
-            <>
-              {selectedItems.map((opt: Option) => (
-                <div
-                  data-testid="typeaheadSelectedItem"
-                  className={`d-flex flex-row align-items-center mt-2 ${styles.option}`}
-                  key={`selected_${opt.filterKey}_${opt.id}`}
-                >
-                  {OptionItem(opt, opt.name)}
-                </div>
-              ))}
-            </>
+    <>
+      <div className={`form-group input-group-sm ${styles.inputWrapper} ${props.inputWrapperClassName}`}>
+        <input
+          data-testid="typeaheadInput"
+          ref={inputEl}
+          type="text"
+          placeholder={`Search ${props.label}`}
+          className={classnames(
+            'flex-grow-1 form-control',
+            styles.input,
+            { 'pl-3 pr-4': props.searchIcon },
+            { 'px-3': isUndefined(props.searchIcon) || !props.searchIcon }
           )}
-        </div>
-      </button>
+          name={`inputTypeahead_${props.label}`}
+          value={inputValue}
+          onChange={onChange}
+          spellCheck="false"
+        />
 
-      {!collapsed && (
-        <div
-          ref={dropdownRef}
-          data-testid="typeaheadDropdown"
-          className={`dropdown-menu p-0 shadow-sm w-100 show ${styles.dropdown}`}
-        >
-          <div className={`form-group input-group-sm p-1 mb-0 border-bottom ${styles.inputWrapper}`}>
-            <input
-              data-testid="typeaheadInput"
-              ref={inputEl}
-              type="text"
-              placeholder={`Search ${props.label}`}
-              className={`flex-grow-1 px-3 form-control ${styles.input}`}
-              name={`inputTypeahead_${props.label}`}
-              value={inputValue}
-              onChange={onChange}
-              spellCheck="false"
-            />
-          </div>
+        {props.searchIcon && <FaSearch className={`text-muted position-absolute ${styles.searchIcon}`} />}
+      </div>
 
-          {selectedItems.length > 0 && (
-            <div className="py-1 border-bottom">
-              <button
-                data-testid="typeaheadClearBtn"
-                className="btn btn-sm btn-block"
-                onClick={() => {
-                  collapseDropdown();
-                  props.onResetSomeFilters(Object.keys(props.selected));
-                }}
-              >
-                <div className="d-flex flex-row align-items-center text-muted">
-                  <IoIosClose />
-                  <small className="ml-2">Clear all</small>
-                </div>
-              </button>
+      {selectedItems.length > 0 && props.visibleClear && (
+        <div className="py-1 border-bottom">
+          <button
+            data-testid="typeaheadClearBtn"
+            className="btn btn-sm btn-block"
+            onClick={() => {
+              if (props.onClear) {
+                props.onClear();
+              }
+            }}
+          >
+            <div className="d-flex flex-row align-items-center text-muted">
+              <IoIosClose />
+              <small className="ml-2">Clear all</small>
             </div>
-          )}
+          </button>
+        </div>
+      )}
 
+      {visibleItems && (
+        <>
           {visibleItems.length === 0 ? (
-            <div className="p-3 text-center">
+            <div className={`p-3 text-center ${props.listClassName}`}>
               <small className="text-muted">Sorry, no matches found</small>
             </div>
           ) : (
-            <div className={styles.itemsList}>
+            <div className={`${styles.itemsList} ${props.listClassName}`}>
               {visibleItems.map((opt: Option) => {
                 const isSelected =
                   props.selected.hasOwnProperty(opt.filterKey) &&
                   props.selected[opt.filterKey].includes(opt.id.toString());
+                const name = getOptionName(opt.name);
 
                 return (
                   <button
                     key={`opt_${opt.filterKey}_${opt.id}`}
                     data-testid="typeaheadDropdownBtn"
-                    className={classnames('dropdown-item', styles.option, { [styles.selected]: isSelected })}
+                    className={classnames('dropdown-item', styles.option, props.optClassName, {
+                      [styles.selected]: isSelected,
+                    })}
                     onClick={() => {
                       props.onChange(opt.filterKey, opt.id.toString(), !isSelected);
-                      collapseDropdown();
+                      if (props.onChangeSelection) {
+                        props.onChangeSelection();
+                      }
                     }}
                   >
                     <div className="d-flex flex-row align-items-center position-relative">
@@ -223,7 +198,8 @@ const InputTypeahead = (props: Props) => {
                           <IoIosCheckmark />
                         </div>
                       )}
-                      {OptionItem(opt, getOptionName(opt.name))}
+                      <InputTypeaheadOptionItem opt={opt} name={name} iconClassName={styles.icon} />
+
                       {isSelected && (
                         <div className={`position-absolute ${styles.close}`}>
                           <IoIosClose />
@@ -235,10 +211,10 @@ const InputTypeahead = (props: Props) => {
               })}
             </div>
           )}
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
-};
+});
 
 export default InputTypeahead;

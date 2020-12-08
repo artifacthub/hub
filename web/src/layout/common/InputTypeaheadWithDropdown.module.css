@@ -1,0 +1,18 @@
+.option {
+  font-size: 0.875rem;
+}
+
+.icon {
+  font-size: 0.5rem;
+}
+
+.dropdown {
+  top: 40px;
+  overflow-x: auto;
+}
+
+@media only screen and (max-width: 575.98px) {
+  .dropdown {
+    max-width: 100%;
+  }
+}

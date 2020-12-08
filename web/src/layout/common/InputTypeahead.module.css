@@ -28,6 +28,12 @@
   right: -18px;
 }
 
+.searchIcon {
+  font-size: 0.85rem;
+  right: 7px;
+  top: 9px;
+}
+
 @media only screen and (max-width: 575.98px) {
   .input {
     font-size: 16px !important;

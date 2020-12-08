@@ -6,6 +6,7 @@ import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import BlockCodeButtons from '../../common/BlockCodeButtons';
 import styles from './Schema.module.css';
 import SchemaLine from './SchemaLine';
+import SchemaValuesSearch from './SchemaValuesSearch';
 
 interface Props {
   schema: JSONSchema;
@@ -16,14 +17,21 @@ interface Props {
 const Schema = (props: Props) => {
   const [activePath, setActivePath] = useState<string | undefined>();
   const [valuesYAML, setValuesYAML] = useState<string | null>(null);
+  const [availablePaths, setAvailablePaths] = useState<string[] | null>(null);
 
   useEffect(() => {
-    const yamlContent = compoundJSONSchemaYAML(props.schema);
+    const { yamlContent, paths } = compoundJSONSchemaYAML(props.schema);
     setValuesYAML(yamlContent);
+    setAvailablePaths(paths);
   }, [props.schema]);
+
+  const onSearch = (selectedPath?: string) => {
+    setActivePath(selectedPath);
+  };
 
   return (
     <>
+      {availablePaths && <SchemaValuesSearch paths={availablePaths} activePath={activePath} onSearch={onSearch} />}
       <div className="row">
         <div className="col-7 pt-3 bg-dark position-relative">
           {props.schema.title && (

@@ -5,8 +5,6 @@ import React from 'react';
 import compoundJSONSchemaYAML from '../../../utils/compoundJSONSchemaYAML';
 import Schema from './Schema';
 
-jest.mock('../../../utils/compoundJSONSchemaYAML');
-
 const defaultSchema = require('./__fixtures__/index/1.json') as JSONSchema;
 
 const defaultProps = {
