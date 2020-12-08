@@ -78,6 +78,7 @@ select register_package('
         "Added cool feature",
         "Fixed minor bug"
     ],
+    "contains_security_updates": true,
     "created_at": 1592299234,
     "maintainers": [
         {
@@ -156,6 +157,7 @@ select results_eq(
             s.provider,
             s.values_schema,
             s.changes,
+            s.contains_security_updates,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -189,6 +191,7 @@ select results_eq(
                 "Added cool feature",
                 "Fixed minor bug"
             }'::text[],
+            true,
             '2020-06-16 11:20:34+02'::timestamptz
         )
     $$,
@@ -289,6 +292,7 @@ select results_eq(
             s.provider,
             s.values_schema,
             s.changes,
+            s.contains_security_updates,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -314,6 +318,7 @@ select results_eq(
             'Org Inc 2',
             null::jsonb,
             null::text[],
+            null::boolean,
             '2020-06-16 11:20:35+02'::timestamptz
         )
     $$,
@@ -378,6 +383,7 @@ select register_package('
         }
     ],
     "provider": "Org Inc",
+    "contains_security_updates": false,
     "created_at": 1592299233,
     "maintainers": [
         {
@@ -421,6 +427,7 @@ select results_eq(
             s.signed,
             s.containers_images,
             s.provider,
+            s.contains_security_updates,
             s.created_at
         from snapshot s
         join package p using (package_id)
@@ -444,6 +451,7 @@ select results_eq(
             true,
             '[{"image": "quay.io/org/img:0.0.9"}]'::jsonb,
             'Org Inc',
+            false,
             '2020-06-16 11:20:33+02'::timestamptz
         )
     $$,

@@ -40,6 +40,7 @@ const (
 	maintainersAnnotation          = "artifacthub.io/maintainers"
 	operatorAnnotation             = "artifacthub.io/operator"
 	operatorCapabilitiesAnnotation = "artifacthub.io/operatorCapabilities"
+	securityUpdatesAnnotation      = "artifacthub.io/containsSecurityUpdates"
 
 	helmChartConfigMediaType       = "application/vnd.cncf.helm.config.v1+json"
 	helmChartContentLayerMediaType = "application/tar+gzip"
@@ -487,6 +488,12 @@ func enrichPackageFromAnnotations(p *hub.Package, annotations map[string]string)
 
 	// Operator capabilities
 	p.Capabilities = annotations[operatorCapabilitiesAnnotation]
+
+	// Security updates
+	containsSecurityUpdates, err := strconv.ParseBool(annotations[securityUpdatesAnnotation])
+	if err == nil {
+		p.ContainsSecurityUpdates = containsSecurityUpdates
+	}
 
 	return nil
 }

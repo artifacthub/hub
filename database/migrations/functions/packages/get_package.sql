@@ -43,6 +43,7 @@ begin
         'available_versions', (
             select json_agg(json_build_object(
                 'version', version,
+                'contains_security_updates', contains_security_updates,
                 'created_at', floor(extract(epoch from created_at))
             ))
             from snapshot

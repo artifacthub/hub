@@ -13,6 +13,7 @@ containersImages: # (optional)
   - name: Image identifier (optional)
     image: The format should match ${REGISTRYHOST}/${USERNAME}/${NAME}:${TAG}
     whitelisted: When set to true, this image won't be scanned for security vulnerabilities
+containsSecurityUpdates: Whether this package version contains security updates (optional, boolean)
 operator: Whether this package is an Operator (optional, boolean)
 deprecated: Whether this package is deprecated (optional, boolean)
 keywords: # (optional)

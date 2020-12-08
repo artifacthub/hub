@@ -183,6 +183,7 @@ func TestTracker(t *testing.T) {
 				"feature 1",
 				"fix 1",
 			},
+			ContainsSecurityUpdates: true,
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "Maintainer",

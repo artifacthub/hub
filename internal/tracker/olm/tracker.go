@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -28,6 +29,7 @@ const (
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
 	licenseAnnotation         = "artifacthub.io/license"
+	securityUpdatesAnnotation = "artifacthub.io/containsSecurityUpdates"
 )
 
 var (
@@ -390,6 +392,10 @@ func (t *Tracker) registerPackage(
 	var changes []string
 	if err := yaml.Unmarshal([]byte(csv.Annotations[changesAnnotation]), &changes); err == nil {
 		p.Changes = changes
+	}
+	containsSecurityUpdates, err := strconv.ParseBool(csv.Annotations[securityUpdatesAnnotation])
+	if err == nil {
+		p.ContainsSecurityUpdates = containsSecurityUpdates
 	}
 	p.Data = map[string]interface{}{
 		"isGlobalOperator": isGlobalOperator,

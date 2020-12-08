@@ -328,6 +328,7 @@ func TestWorker(t *testing.T) {
 					"Added cool feature",
 					"Fixed minor bug",
 				},
+				ContainsSecurityUpdates: true,
 				Repository: &hub.Repository{
 					RepositoryID: "repo1",
 				},
@@ -421,6 +422,23 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 		expectedPkg    *hub.Package
 		expectedErrMsg string
 	}{
+		// Changes
+		{
+			&hub.Package{},
+			map[string]string{
+				changesAnnotation: `
+- Added cool feature
+- Fixed minor bug
+`,
+			},
+			&hub.Package{
+				Changes: []string{
+					"Added cool feature",
+					"Fixed minor bug",
+				},
+			},
+			"",
+		},
 		// CRDs
 		{
 			&hub.Package{},
@@ -714,20 +732,14 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			"",
 		},
-		// What's new
+		// Security updates
 		{
 			&hub.Package{},
 			map[string]string{
-				changesAnnotation: `
-- Added cool feature
-- Fixed minor bug
-`,
+				securityUpdatesAnnotation: "true",
 			},
 			&hub.Package{
-				Changes: []string{
-					"Added cool feature",
-					"Fixed minor bug",
-				},
+				ContainsSecurityUpdates: true,
 			},
 			"",
 		},

@@ -82,6 +82,7 @@ type Package struct {
 	ValuesSchema            json.RawMessage        `json:"values_schema"`
 	HasChangeLog            bool                   `json:"has_changelog"`
 	Changes                 []string               `json:"changes"`
+	ContainsSecurityUpdates bool                   `json:"contains_security_updates"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	Repository              *Repository            `json:"repository"`
 	CreatedAt               int64                  `json:"created_at,omitempty"`
@@ -112,28 +113,29 @@ type PackageManager interface {
 // provided by repositories publishers, to provide the required information
 // about the content they'd like to be indexed.
 type PackageMetadata struct {
-	Version          string            `yaml:"version"`
-	Name             string            `yaml:"name"`
-	DisplayName      string            `yaml:"displayName"`
-	CreatedAt        string            `yaml:"createdAt"`
-	Description      string            `yaml:"description"`
-	LogoPath         string            `yaml:"logoPath"`
-	Digest           string            `yaml:"digest"`
-	License          string            `yaml:"license"`
-	HomeURL          string            `yaml:"homeURL"`
-	AppVersion       string            `yaml:"appVersion"`
-	PublisherID      string            `yaml:"publisherID"`
-	ContainersImages []*ContainerImage `yaml:"containersImages"`
-	Operator         bool              `yaml:"operator"`
-	Deprecated       bool              `yaml:"deprecated"`
-	Keywords         []string          `yaml:"keywords"`
-	Links            []*Link           `yaml:"links"`
-	Readme           string            `yaml:"readme"`
-	Install          string            `yaml:"install"`
-	Changes          []string          `yaml:"changes"`
-	Maintainers      []*Maintainer     `yaml:"maintainers"`
-	Provider         *Provider         `yaml:"provider"`
-	Ignore           []string          `yaml:"ignore"`
+	Version                 string            `yaml:"version"`
+	Name                    string            `yaml:"name"`
+	DisplayName             string            `yaml:"displayName"`
+	CreatedAt               string            `yaml:"createdAt"`
+	Description             string            `yaml:"description"`
+	LogoPath                string            `yaml:"logoPath"`
+	Digest                  string            `yaml:"digest"`
+	License                 string            `yaml:"license"`
+	HomeURL                 string            `yaml:"homeURL"`
+	AppVersion              string            `yaml:"appVersion"`
+	PublisherID             string            `yaml:"publisherID"`
+	ContainersImages        []*ContainerImage `yaml:"containersImages"`
+	Operator                bool              `yaml:"operator"`
+	Deprecated              bool              `yaml:"deprecated"`
+	Keywords                []string          `yaml:"keywords"`
+	Links                   []*Link           `yaml:"links"`
+	Readme                  string            `yaml:"readme"`
+	Install                 string            `yaml:"install"`
+	Changes                 []string          `yaml:"changes"`
+	ContainsSecurityUpdates bool              `yaml:"containsSecurityUpdates"`
+	Maintainers             []*Maintainer     `yaml:"maintainers"`
+	Provider                *Provider         `yaml:"provider"`
+	Ignore                  []string          `yaml:"ignore"`
 }
 
 // SnapshotSecurityReport represents some information about the security

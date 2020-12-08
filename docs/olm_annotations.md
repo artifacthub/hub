@@ -10,6 +10,10 @@ However, sometimes there might be cases in which it may be useful to provide som
 
 This annotation is used to provide some details about the changes introduced by a given operator version. Artifact Hub can generate and display a **ChangeLog** based on the entries in the `changes` field in all your operator versions. You can see an example of how the changelog would look like in the Artifact Hub UI [here](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub?modal=changelog).
 
+- **artifacthub.io/containsSecurityUpdates** *(boolean string, see example below)*
+
+Use this annotation to indicate that this operator version contains security updates. When a package release contains security updates, a special message will be displayed in the Artifact Hub UI as well as in the new release email notification.
+
 - **artifacthub.io/imagesWhitelist** *(yaml string, see example below)*
 
 Use this annotation to provide a list of the images that should not be scanned for security vulnerabilities.
@@ -28,6 +32,7 @@ metadata:
     artifacthub.io/changes: |
       - Added cool feature
       - Fixed minor bug
+    artifacthub.io/containsSecurityUpdates: "true"
     artifacthub.io/imagesWhitelist: |
       - repo/img2:2.0.0
       - repo/img3:3.0.0

@@ -156,6 +156,7 @@ begin
         provider,
         values_schema,
         changes,
+        contains_security_updates,
         created_at
     ) values (
         v_package_id,
@@ -181,6 +182,7 @@ begin
         v_provider,
         nullif(p_pkg->'values_schema', 'null'),
         v_changes,
+        (p_pkg->>'contains_security_updates')::boolean,
         v_created_at
     )
     on conflict (package_id, version) do update
@@ -206,6 +208,7 @@ begin
         provider = excluded.provider,
         values_schema = excluded.values_schema,
         changes = excluded.changes,
+        contains_security_updates = excluded.contains_security_updates,
         created_at = v_created_at;
 
     -- Register new release event if package's latest version has been updated
