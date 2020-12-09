@@ -1,4 +1,4 @@
-package opa
+package generic
 
 import (
 	"context"
@@ -30,7 +30,13 @@ func TestTracker(t *testing.T) {
 		Name:         "repo1",
 		URL:          "https://github.com/org1/repo1/path/to/packages",
 	}
-	imageData, _ := ioutil.ReadFile("testdata/path4/red-dot.png")
+	rOPA := &hub.Repository{
+		Kind:         hub.OPA,
+		RepositoryID: "00000000-0000-0000-0000-000000000002",
+		Name:         "repo2",
+		URL:          "https://github.com/org1/repo2/path/to/packages",
+	}
+	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
 
 	t.Run("error cloning repository", func(t *testing.T) {
 		t.Parallel()
@@ -106,18 +112,34 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("error registering package version", func(t *testing.T) {
+	t.Run("(opa) package version not registered as it doesn't contain policies files", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup tracker and expectations
-		tw := newTrackerWrapper(r)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r.RepositoryID}, nil)
-		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
+		tw := newTrackerWrapper(rOPA)
+		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path4", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.ec.On("Append", rOPA.RepositoryID, mock.Anything).Return()
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("(opa) error registering package version", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(rOPA)
+		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, mock.Anything).Return(tests.ErrFake)
-		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
+		tw.ec.On("Append", rOPA.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -125,17 +147,17 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("no need to register package version because it is already registered", func(t *testing.T) {
+	t.Run("(opa) no need to register package version because it is already registered", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup tracker and expectations
-		tw := newTrackerWrapper(r)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
+		tw := newTrackerWrapper(rOPA)
+		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "0123456789",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r.RepositoryID}, nil)
-		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -143,15 +165,15 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("package version registered successfully", func(t *testing.T) {
+	t.Run("(opa) package version registered successfully", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup tracker and expectations
-		tw := newTrackerWrapper(r)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r.RepositoryID}, nil)
-		tw.rm.On("SetVerifiedPublisher", tw.ctx, r.RepositoryID, true).Return(nil)
+		tw := newTrackerWrapper(rOPA)
+		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
 			Version:     "1.0.0",
@@ -196,25 +218,9 @@ func TestTracker(t *testing.T) {
 					"policy1.rego": "policy content\n",
 				},
 			},
-			Repository:  r,
+			Repository:  rOPA,
 			LogoImageID: "logoImageID",
 		}).Return(nil)
-
-		// Run tracker and check expectations
-		err := tw.t.Track()
-		assert.NoError(t, err)
-		tw.assertExpectations(t)
-	})
-
-	t.Run("package version not registered as there are no policies files available", func(t *testing.T) {
-		t.Parallel()
-
-		// Setup tracker and expectations
-		tw := newTrackerWrapper(r)
-		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path5", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
-		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
 		err := tw.t.Track()

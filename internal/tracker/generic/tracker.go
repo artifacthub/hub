@@ -1,4 +1,4 @@
-package opa
+package generic
 
 import (
 	"errors"
@@ -19,8 +19,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Tracker is in charge of tracking the packages available in a OPA policies
-// repository, registering and unregistering them as needed.
+// Tracker is in charge of tracking the packages available in repository,
+// registering and unregistering them as needed.
 type Tracker struct {
 	svc    *tracker.Services
 	r      *hub.Repository
@@ -47,7 +47,7 @@ func NewTracker(
 	return t
 }
 
-// Track registers or unregisters the OPA policies packages available as needed.
+// Track registers or unregisters the packages available as needed.
 func (t *Tracker) Track() error {
 	// Clone repository
 	t.logger.Debug().Msg("cloning repository")
@@ -177,11 +177,48 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 	p.LogoImageID = logoImageID
 	p.Repository = t.r
 
-	// Read policies files and add them to the package data field
+	// Include kind specific data into package
+	var data map[string]interface{}
+	switch t.r.Kind {
+	case hub.OPA:
+		data, err = prepareOPAData(pkgPath, md)
+	}
+	if err != nil {
+		return err
+	}
+	p.Data = data
+
+	// Register package
+	return t.svc.Pm.Register(t.svc.Ctx, p)
+}
+
+// unregisterPackage unregisters the package version provided.
+func (t *Tracker) unregisterPackage(name, version string) error {
+	p := &hub.Package{
+		Name:       name,
+		Version:    version,
+		Repository: t.r,
+	}
+	return t.svc.Pm.Unregister(t.svc.Ctx, p)
+}
+
+// warn is a helper that sends the error provided to the errors collector and
+// logs it as a warning.
+func (t *Tracker) warn(err error) {
+	t.svc.Ec.Append(t.r.RepositoryID, err)
+	t.logger.Warn().Err(err).Send()
+}
+
+// prepareOPAData reads and formats OPA specific data available in the path
+// provided, returning the resulting data structure.
+func prepareOPAData(pkgPath string, md *hub.PackageMetadata) (map[string]interface{}, error) {
+	// Setup file ignorer
 	ignorer, err := ignore.CompileIgnoreLines(md.Ignore...)
 	if err != nil {
-		return fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
+		return nil, fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
 	}
+
+	// Read policies files
 	policies := make(map[string]string)
 	err = filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -205,32 +242,13 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 		return nil
 	})
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if len(policies) == 0 {
-		return errors.New("no policies files found")
+		return nil, errors.New("no policies files found")
 	}
-	p.Data = map[string]interface{}{
+
+	return map[string]interface{}{
 		"policies": policies,
-	}
-
-	// Register package
-	return t.svc.Pm.Register(t.svc.Ctx, p)
-}
-
-// unregisterPackage unregisters the package version provided.
-func (t *Tracker) unregisterPackage(name, version string) error {
-	p := &hub.Package{
-		Name:       name,
-		Version:    version,
-		Repository: t.r,
-	}
-	return t.svc.Pm.Unregister(t.svc.Ctx, p)
-}
-
-// warn is a helper that sends the error provided to the errors collector and
-// logs it as a warning.
-func (t *Tracker) warn(err error) {
-	t.svc.Ec.Append(t.r.RepositoryID, err)
-	t.logger.Warn().Err(err).Send()
+	}, nil
 }

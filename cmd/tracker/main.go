@@ -16,9 +16,9 @@ import (
 	"github.com/artifacthub/hub/internal/repo"
 	"github.com/artifacthub/hub/internal/tracker"
 	"github.com/artifacthub/hub/internal/tracker/falco"
+	"github.com/artifacthub/hub/internal/tracker/generic"
 	"github.com/artifacthub/hub/internal/tracker/helm"
 	"github.com/artifacthub/hub/internal/tracker/olm"
-	"github.com/artifacthub/hub/internal/tracker/opa"
 	"github.com/artifacthub/hub/internal/util"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/time/rate"
@@ -117,7 +117,7 @@ L:
 			case hub.OLM:
 				t = olm.NewTracker(svc, r)
 			case hub.OPA:
-				t = opa.NewTracker(svc, r)
+				t = generic.NewTracker(svc, r)
 			}
 			if err := tracker.TrackRepository(ctx, cfg, rm, t, r); err != nil {
 				svc.Ec.Append(r.RepositoryID, err)
