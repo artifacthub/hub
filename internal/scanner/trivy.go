@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -30,7 +31,12 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-
+	// clean environment
+	cmd.Env = []string{
+		"PATH=" + os.Getenv("PATH"),
+		"USER=" + os.Getenv("USER"),
+		"HOME=" + os.Getenv("HOME"),
+	}
 	// If the registry is the Docker Hub, include credentials to avoid rate
 	// limiting issues. Empty registry names will also match this check as the
 	// registry name will be set to index.docker.io when parsing the reference.
@@ -39,10 +45,10 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 		return nil, fmt.Errorf("error parsing image %s ref: %w", image, err)
 	}
 	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
-		cmd.Env = []string{
+		cmd.Env = append(cmd.Env,
 			fmt.Sprintf("TRIVY_USERNAME=%s", s.Cfg.GetString("scanner.dockerUsername")),
 			fmt.Sprintf("TRIVY_PASSWORD=%s", s.Cfg.GetString("scanner.dockerPassword")),
-		}
+		)
 	}
 
 	// Run trivy command
