@@ -7,7 +7,7 @@ COPY internal internal
 RUN cd cmd/hub && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
 
 # Build frontend
-FROM node:13-alpine AS frontend-builder
+FROM node:14-alpine3.12 AS frontend-builder
 WORKDIR /web
 COPY web .
 RUN yarn install
