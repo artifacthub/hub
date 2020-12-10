@@ -3,8 +3,8 @@ module github.com/artifacthub/hub
 go 1.15
 
 require (
-	github.com/Masterminds/semver/v3 v3.1.0
-	github.com/containerd/containerd v1.4.1
+	github.com/Masterminds/semver/v3 v3.1.1
+	github.com/containerd/containerd v1.4.3
 	github.com/deislabs/oras v0.8.1
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible
@@ -14,7 +14,7 @@ require (
 	github.com/go-git/go-git/v5 v5.2.0
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.11 // indirect
-	github.com/google/go-containerregistry v0.1.4
+	github.com/google/go-containerregistry v0.2.1
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gorilla/feeds v1.1.1
@@ -26,8 +26,8 @@ require (
 	github.com/jackc/pgx/v4 v4.9.2
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
-	github.com/open-policy-agent/opa v0.24.0
-	github.com/operator-framework/api v0.3.20
+	github.com/open-policy-agent/opa v0.25.2
+	github.com/operator-framework/api v0.3.25
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/prometheus/client_golang v1.8.0
@@ -38,16 +38,16 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1
 	github.com/vincent-petithory/dataurl v0.0.0-20191104211930-d1553a71de50
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
+	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
-	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43
-	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
-	google.golang.org/api v0.35.0
+	golang.org/x/oauth2 v0.0.0-20201208152858-08078c50e5b5
+	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324
+	google.golang.org/api v0.36.0
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/src-d/go-license-detector.v3 v3.1.0
-	gopkg.in/yaml.v2 v2.3.0
+	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
-	helm.sh/helm/v3 v3.4.0
+	helm.sh/helm/v3 v3.4.2
 	rsc.io/letsencrypt v0.0.3 // indirect
 )
 
