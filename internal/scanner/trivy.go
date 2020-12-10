@@ -37,6 +37,7 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 		"USER=" + os.Getenv("USER"),
 		"HOME=" + os.Getenv("HOME"),
 	}
+
 	// If the registry is the Docker Hub, include credentials to avoid rate
 	// limiting issues. Empty registry names will also match this check as the
 	// registry name will be set to index.docker.io when parsing the reference.
@@ -46,8 +47,8 @@ func (s *TrivyScanner) Scan(image string) ([]byte, error) {
 	}
 	if strings.HasSuffix(ref.Context().Registry.Name(), "docker.io") {
 		cmd.Env = append(cmd.Env,
-			fmt.Sprintf("TRIVY_USERNAME=%s", s.Cfg.GetString("scanner.dockerUsername")),
-			fmt.Sprintf("TRIVY_PASSWORD=%s", s.Cfg.GetString("scanner.dockerPassword")),
+			"TRIVY_USERNAME="+s.Cfg.GetString("scanner.dockerUsername"),
+			"TRIVY_PASSWORD="+s.Cfg.GetString("scanner.dockerPassword"),
 		)
 	}
 

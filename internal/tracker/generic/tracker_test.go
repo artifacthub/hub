@@ -30,11 +30,17 @@ func TestTracker(t *testing.T) {
 		Name:         "repo1",
 		URL:          "https://github.com/org1/repo1/path/to/packages",
 	}
-	rOPA := &hub.Repository{
-		Kind:         hub.OPA,
+	rFalco := &hub.Repository{
+		Kind:         hub.Falco,
 		RepositoryID: "00000000-0000-0000-0000-000000000002",
 		Name:         "repo2",
 		URL:          "https://github.com/org1/repo2/path/to/packages",
+	}
+	rOPA := &hub.Repository{
+		Kind:         hub.OPA,
+		RepositoryID: "00000000-0000-0000-0000-000000000003",
+		Name:         "repo3",
+		URL:          "https://github.com/org1/repo3/path/to/packages",
 	}
 	imageData, _ := ioutil.ReadFile("testdata/red-dot.png")
 
@@ -112,6 +118,22 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
+	t.Run("(falco) package version not registered as it doesn't contain rules files", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(rFalco)
+		tw.rc.On("CloneRepository", tw.ctx, rFalco).Return(".", "testdata/path4", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.ec.On("Append", rFalco.RepositoryID, mock.Anything).Return()
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
 	t.Run("(opa) package version not registered as it doesn't contain policies files", func(t *testing.T) {
 		t.Parallel()
 
@@ -158,6 +180,69 @@ func TestTracker(t *testing.T) {
 		}, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("(falco) package version registered successfully", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(rFalco)
+		tw.rc.On("CloneRepository", tw.ctx, rFalco).Return(".", "testdata/path7", nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rFalco.RepositoryID}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, rFalco.RepositoryID, true).Return(nil)
+		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
+		tw.pm.On("Register", tw.ctx, &hub.Package{
+			Version:     "1.0.0",
+			Name:        "package-name",
+			DisplayName: "Package name",
+			CreatedAt:   1561735380,
+			Description: "Description",
+			Digest:      "0123456789",
+			License:     "Apache-2.0",
+			HomeURL:     "https://home.url",
+			AppVersion:  "10.0.0",
+			ContainersImages: []*hub.ContainerImage{
+				{
+					Image: "registry/test/test:latest",
+				},
+			},
+			IsOperator: false,
+			Deprecated: false,
+			Keywords:   []string{"kw1", "kw2"},
+			Links: []*hub.Link{
+				{
+					Name: "Link1",
+					URL:  "https://link1.url",
+				},
+			},
+			Readme:  "Package documentation in markdown format",
+			Install: "Brief install instructions in markdown format",
+			Changes: []string{
+				"feature 1",
+				"fix 1",
+			},
+			ContainsSecurityUpdates: true,
+			Maintainers: []*hub.Maintainer{
+				{
+					Name:  "Maintainer",
+					Email: "test@email.com",
+				},
+			},
+			Provider: "Provider",
+			Data: map[string]interface{}{
+				"rules": map[string]string{
+					"file1-rules.yaml": "falco rules\n",
+				},
+			},
+			Repository:  rFalco,
+			LogoImageID: "logoImageID",
+		}).Return(nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()

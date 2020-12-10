@@ -172,13 +172,19 @@ func (t *Tracker) registerPackage(pkgPath string, md *hub.PackageMetadata, logoI
 	p.Repository = t.r
 
 	// Include kind specific data into package
+	ignorer, err := ignore.CompileIgnoreLines(md.Ignore...)
+	if err != nil {
+		return fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
+	}
 	var data map[string]interface{}
 	switch t.r.Kind {
+	case hub.Falco:
+		data, err = prepareFalcoData(pkgPath, ignorer)
 	case hub.OPA:
-		data, err = prepareOPAData(pkgPath, md)
+		data, err = prepareOPAData(pkgPath, ignorer)
 	}
 	if err != nil {
-		return err
+		return fmt.Errorf("error preparing package %s version %s data: %w", md.Name, md.Version, err)
 	}
 	p.Data = data
 
@@ -203,46 +209,66 @@ func (t *Tracker) warn(err error) {
 	t.logger.Warn().Err(err).Send()
 }
 
-// prepareOPAData reads and formats OPA specific data available in the path
+// prepareFalcoData reads and formats Falco specific data available in the path
 // provided, returning the resulting data structure.
-func prepareOPAData(pkgPath string, md *hub.PackageMetadata) (map[string]interface{}, error) {
-	// Setup file ignorer
-	ignorer, err := ignore.CompileIgnoreLines(md.Ignore...)
+func prepareFalcoData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
+	// Read rules files
+	files, err := getFilesWithSuffix("-rules.yaml", pkgPath, ignorer)
 	if err != nil {
-		return nil, fmt.Errorf("error processing package %s version %s ignore entries: %w", md.Name, md.Version, err)
+		return nil, err
 	}
 
+	// Return package data field
+	return map[string]interface{}{
+		"rules": files,
+	}, nil
+}
+
+// prepareOPAData reads and formats OPA specific data available in the path
+// provided, returning the resulting data structure.
+func prepareOPAData(pkgPath string, ignorer ignore.IgnoreParser) (map[string]interface{}, error) {
 	// Read policies files
-	policies := make(map[string]string)
-	err = filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
+	files, err := getFilesWithSuffix(".rego", pkgPath, ignorer)
+	if err != nil {
+		return nil, err
+	}
+
+	// Return package data field
+	return map[string]interface{}{
+		"policies": files,
+	}, nil
+}
+
+// getFilesWithSuffix returns the files with a given suffix in the path
+// provided, ignoring the ones the ignorer matches.
+func getFilesWithSuffix(suffix, pkgPath string, ignorer ignore.IgnoreParser) (map[string]string, error) {
+	files := make(map[string]string)
+	err := filepath.Walk(pkgPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			return fmt.Errorf("error reading policy files: %w", err)
+			return fmt.Errorf("error reading files: %w", err)
 		}
 		if info.IsDir() {
 			return nil
 		}
-		policyKey := strings.TrimPrefix(path, pkgPath+"/")
-		if ignorer.MatchesPath(policyKey) {
+		name := strings.TrimPrefix(path, pkgPath+"/")
+		if ignorer.MatchesPath(name) {
 			return nil
 		}
-		if !strings.HasSuffix(info.Name(), ".rego") {
+		if !strings.HasSuffix(info.Name(), suffix) {
 			return nil
 		}
-		policy, err := ioutil.ReadFile(path)
+		content, err := ioutil.ReadFile(path)
 		if err != nil {
-			return fmt.Errorf("error reading policy for package %s version %s: %w", md.Name, md.Version, err)
+			return fmt.Errorf("error reading file: %w", err)
 		}
-		policies[policyKey] = string(policy)
+		files[name] = string(content)
 		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
-	if len(policies) == 0 {
-		return nil, errors.New("no policies files found")
+	if len(files) == 0 {
+		return nil, errors.New("no files found")
 	}
-
-	return map[string]interface{}{
-		"policies": policies,
-	}, nil
+	return files, nil
 }

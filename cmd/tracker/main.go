@@ -24,7 +24,10 @@ import (
 	"golang.org/x/time/rate"
 )
 
-const githubMaxRequestsPerHour = 5000
+const (
+	githubMaxRequestsPerHour = 5000
+	cloudNativeSecurityHub   = "https://github.com/falcosecurity/cloud-native-security-hub/resources/falco"
+)
 
 func main() {
 	// Setup configuration and logger
@@ -111,7 +114,15 @@ L:
 			var t tracker.Tracker
 			switch r.Kind {
 			case hub.Falco:
-				t = falco.NewTracker(svc, r)
+				// Temporary solution to maintain backwards compatibility with
+				// the only Falco rules repository registered at the moment in
+				// artifacthub.io using the structure and metadata format used
+				// by the cloud native security hub.
+				if r.URL == cloudNativeSecurityHub {
+					t = falco.NewTracker(svc, r)
+				} else {
+					t = generic.NewTracker(svc, r)
+				}
 			case hub.Helm:
 				t = helm.NewTracker(svc, r)
 			case hub.OLM:
