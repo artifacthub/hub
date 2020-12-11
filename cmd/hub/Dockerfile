@@ -10,6 +10,7 @@ RUN cd cmd/hub && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /hub .
 FROM node:14-alpine3.12 AS frontend-builder
 WORKDIR /web
 COPY web .
+ENV NODE_OPTIONS=--max_old_space_size=4096
 RUN yarn install
 RUN yarn build
 
