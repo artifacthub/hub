@@ -1,23 +1,29 @@
 import classnames from 'classnames';
+import { isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 
-import { Package, RepositoryKind, SearchFiltersURL } from '../../../types';
-import { OCI_PREFIX } from '../../../utils/data';
+import { Package, SearchFiltersURL, Version } from '../../../types';
+import getInstallMethods, {
+  InstallMethod,
+  InstallMethodKind,
+  InstallMethodOutput,
+} from '../../../utils/getInstallMethods';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
 import Modal from '../../common/Modal';
+import Tabs from '../../common/Tabs';
 import ModalHeader from '../ModalHeader';
+import CustomInstall from './CustomInstall';
 import FalcoInstall from './FalcoInstall';
 import HelmInstall from './HelmInstall';
 import HelmOCIInstall from './HelmOCIInstall';
 import OLMInstall from './OLMInstall';
 import OLMOCIInstall from './OLMOCIInstall';
-import OPAInstall from './OPAInstall';
 
 interface Props {
-  package: Package;
-  isDisabled: boolean;
+  package?: Package | null;
+  sortedVersions: Version[];
   activeChannel?: string;
   visibleInstallationModal: boolean;
   searchUrlReferer?: SearchFiltersURL;
@@ -27,9 +33,11 @@ interface Props {
 const InstallationModal = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
+  const [installMethods, setInstallMethods] = useState<InstallMethodOutput | null>(null);
+  const isDisabled = !isNull(installMethods) && !isUndefined(installMethods.errorMessage);
 
   const onOpenModal = () => {
-    if (!props.isDisabled) {
+    if (!isDisabled) {
       setOpenStatus(true);
       history.replace({
         search: '?modal=install',
@@ -52,6 +60,19 @@ const InstallationModal = (props: Props) => {
     }
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
+  useEffect(() => {
+    setInstallMethods(
+      getInstallMethods({
+        pkg: props.package,
+        sortedVersions: props.sortedVersions,
+        activeChannel: props.activeChannel,
+      })
+    );
+  }, [props.package, props.activeChannel]); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  if (isNull(installMethods) || (installMethods.methods.length === 0 && isUndefined(installMethods.errorMessage)))
+    return null;
+
   return (
     <>
       <ElementWithTooltip
@@ -61,7 +82,7 @@ const InstallationModal = (props: Props) => {
             type="button"
             className={classnames(
               'btn font-weight-bold text-uppercase position-relative btn-block btn-secondary btn-sm text-nowrap',
-              { disabled: props.isDisabled }
+              { disabled: isDisabled }
             )}
             onClick={onOpenModal}
           >
@@ -71,60 +92,72 @@ const InstallationModal = (props: Props) => {
             </div>
           </button>
         }
-        visibleTooltip={props.isDisabled}
-        tooltipMessage="Only the current version can be installed"
+        visibleTooltip={isDisabled}
+        tooltipMessage={installMethods.errorMessage || ''}
         active
       />
 
       <Modal header={<ModalHeader package={props.package!} />} onClose={onCloseModal} open={openStatus}>
         <>
-          {(() => {
-            switch (props.package!.repository.kind) {
-              case RepositoryKind.Helm:
-                if (props.package.repository.url.startsWith(OCI_PREFIX)) {
-                  return (
-                    <HelmOCIInstall
-                      name={props.package.name}
-                      version={props.package.version}
-                      repository={props.package.repository}
-                    />
-                  );
-                } else {
-                  return (
-                    <HelmInstall
-                      name={props.package.name}
-                      version={props.package.version}
-                      repository={props.package.repository}
-                      contentUrl={props.package.contentUrl}
-                    />
-                  );
-                }
-              case RepositoryKind.Falco:
-                return <FalcoInstall normalizedName={props.package.normalizedName!} />;
-              case RepositoryKind.OPA:
-                return <OPAInstall install={props.package.install} />;
-              case RepositoryKind.OLM:
-                if (props.package.repository.url.startsWith(OCI_PREFIX)) {
-                  return (
-                    <OLMOCIInstall
-                      name={props.package.name}
-                      repository={props.package.repository}
-                      activeChannel={props.activeChannel!}
-                    />
-                  );
-                } else {
-                  return (
-                    <OLMInstall
-                      name={props.package.name}
-                      activeChannel={props.activeChannel!}
-                      isGlobalOperator={props.package.data!.isGlobalOperator}
-                    />
-                  );
-                }
-              default:
-                return null;
-            }
-          })()}
+          {installMethods.methods.length > 0 && (
+            <Tabs
+              tabs={installMethods.methods.map((method: InstallMethod) => ({
+                name: method.label,
+                title: method.title,
+                shortTitle: method.shortTitle,
+                content: (
+                  <>
+                    {(() => {
+                      switch (method.kind) {
+                        case InstallMethodKind.Custom:
+                          return <CustomInstall install={method.props.install!} />;
+                        case InstallMethodKind.Helm:
+                          return (
+                            <HelmInstall
+                              name={method.props.name!}
+                              version={method.props.version}
+                              repository={method.props.repository!}
+                              contentUrl={method.props.contentUrl}
+                              label={method.label}
+                            />
+                          );
+                        case InstallMethodKind.HelmOCI:
+                          return (
+                            <HelmOCIInstall
+                              name={method.props.name!}
+                              version={method.props.version}
+                              repository={method.props.repository!}
+                            />
+                          );
+                        case InstallMethodKind.OLM:
+                          return (
+                            <OLMInstall
+                              name={method.props.name!}
+                              activeChannel={method.props.activeChannel!}
+                              isGlobalOperator={method.props.isGlobalOperator}
+                            />
+                          );
+                        case InstallMethodKind.OLMOCI:
+                          return (
+                            <OLMOCIInstall
+                              name={method.props.name!}
+                              repository={method.props.repository!}
+                              activeChannel={method.props.activeChannel!}
+                            />
+                          );
+                        case InstallMethodKind.Falco:
+                          return <FalcoInstall normalizedName={method.props.normalizedName!} />;
+                        default:
+                          return null;
+                      }
+                    })()}
+                  </>
+                ),
+              }))}
+              active={installMethods.methods[0].label}
+              noDataContent="Sorry, the information for installation is missing."
+            />
+          )}
         </>
       </Modal>
     </>

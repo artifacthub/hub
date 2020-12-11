@@ -211,19 +211,19 @@ describe('Package index', () => {
     });
   });
 
-  describe('Modals', () => {
-    it('renders all of them', async () => {
+  describe('Modal', () => {
+    it('renders properly', async () => {
       const mockPackage = getMockPackage('6');
       mocked(API).getPackage.mockResolvedValue(mockPackage);
 
-      const { getAllByRole } = render(
+      const { getByRole } = render(
         <Router>
           <PackageView {...defaultProps} />
         </Router>
       );
 
-      const dialogs = await waitFor(() => getAllByRole('dialog'));
-      expect(dialogs).toHaveLength(3);
+      const dialog = await waitFor(() => getByRole('dialog'));
+      expect(dialog).toBeInTheDocument();
 
       await waitFor(() => {});
     });

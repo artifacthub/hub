@@ -17,7 +17,7 @@ describe('FalcoInstall', () => {
         getByText(
           'helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco'
         )
-      );
+      ).toBeInTheDocument();
 
       const helmLink = getByText('Need Helm?');
       expect(helmLink).toBeInTheDocument();
