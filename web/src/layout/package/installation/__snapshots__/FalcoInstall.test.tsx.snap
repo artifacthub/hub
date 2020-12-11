@@ -3,75 +3,79 @@
 exports[`FalcoInstall creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="d-flex align-items-start"
+    class="mt-3"
   >
     <div
-      class="flex-grow-1 mr-3 blockWrapper"
+      class="d-flex align-items-start"
     >
-      <pre
-        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
-      >
-        <code
-          class="language-bash"
-        >
-          <span>
-            helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
-          </span>
-        </code>
-      </pre>
-    </div>
-    <div>
       <div
-        class="position-relative undefined"
+        class="flex-grow-1 mr-3 blockWrapper"
       >
-        <button
-          class="btn btn-sm btn-primary rounded-circle copyBtn"
-          data-testid="ctcBtn"
-          type="button"
+        <pre
+          style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
         >
-          <div
-            class="d-flex flex-row align-items-center"
+          <code
+            class="language-bash"
           >
-            <svg
-              fill="none"
-              height="1em"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <span>
+              helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/falco-repo/custom-rules.yaml stable/falco
+            </span>
+          </code>
+        </pre>
+      </div>
+      <div>
+        <div
+          class="position-relative undefined"
+        >
+          <button
+            class="btn btn-sm btn-primary rounded-circle copyBtn"
+            data-testid="ctcBtn"
+            type="button"
+          >
+            <div
+              class="d-flex flex-row align-items-center"
             >
-              <rect
-                height="13"
-                rx="2"
-                ry="2"
-                width="13"
-                x="9"
-                y="9"
-              />
-              <path
-                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-              />
-            </svg>
-          </div>
-        </button>
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  height="13"
+                  rx="2"
+                  ry="2"
+                  width="13"
+                  x="9"
+                  y="9"
+                />
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    class="mt-2"
-  >
-    <a
-      class="link btn btn-link pl-0"
-      href="https://helm.sh/docs/intro/quickstart/"
-      rel="noopener noreferrer"
-      role="button"
-      target="_blank"
+    <div
+      class="mt-2"
     >
-      Need Helm?
-    </a>
+      <a
+        class="link btn btn-link pl-0"
+        href="https://helm.sh/docs/intro/quickstart/"
+        rel="noopener noreferrer"
+        role="button"
+        target="_blank"
+      >
+        Need Helm?
+      </a>
+    </div>
   </div>
 </DocumentFragment>
 `;

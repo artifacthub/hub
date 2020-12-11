@@ -107,7 +107,7 @@ const PackageView = (props: Props) => {
       updateMetaIndex(metaTitle, detail.description);
       setDetail(detail);
       if (isUndefined(activeChannel) && detail.repository.kind === RepositoryKind.OLM) {
-        if (!isNull(detail.defaultChannel)) {
+        if (detail.defaultChannel) {
           setActiveChannel(detail.defaultChannel);
         } else if (detail.channels && detail.channels.length > 0) {
           setActiveChannel(detail.channels[0].name);
