@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -31,6 +32,11 @@ func (e *OLMRepositoryExporter) ExportRepository(ctx context.Context, r *hub.Rep
 	cmd := exec.CommandContext(ctx, "opm", "index", "export", "-i", indexRef, "-f", tmpDir) // #nosec
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
+	cmd.Env = []string{
+		"PATH=" + os.Getenv("PATH"),
+		"USER=" + os.Getenv("USER"),
+		"HOME=" + os.Getenv("HOME"),
+	}
 	if err := cmd.Run(); err != nil {
 		return "", fmt.Errorf("error running opm index export (%s): %w: %s", indexRef, err, stderr.String())
 	}
