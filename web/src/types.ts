@@ -115,7 +115,7 @@ export interface Dependency {
 
 export interface PackageData {
   policies?: OPAPolicies;
-  rules?: { raw: string }[];
+  rules?: { Raw: string }[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
@@ -123,6 +123,10 @@ export interface PackageData {
 }
 
 export interface OPAPolicies {
+  [key: string]: string;
+}
+
+export interface FalcoRules {
   [key: string]: string;
 }
 

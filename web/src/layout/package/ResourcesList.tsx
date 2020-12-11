@@ -2,35 +2,37 @@ import React, { useState } from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-import { OPAPolicies } from '../../types';
+import { FalcoRules, OPAPolicies, RepositoryKind } from '../../types';
 import BlockCodeButtons from '../common/BlockCodeButtons';
 import Modal from '../common/Modal';
-import styles from './OPAPoliciesList.module.css';
+import styles from './ResourcesList.module.css';
 
 interface Props {
-  policies: OPAPolicies;
+  resources: OPAPolicies | FalcoRules;
+  normalizedName: string;
+  kind: RepositoryKind.OPA | RepositoryKind.Falco;
 }
 
-interface SelectedPolicy {
+interface SelectedResource {
   name: string;
   filename: string;
 }
 
-const OPAPoliciesList = (props: Props) => {
-  const [selectedPolicy, setSelectedPolicy] = useState<SelectedPolicy | null>(null);
+const ResourcesList = (props: Props) => {
+  const [selectedResource, setSelectedResource] = useState<SelectedResource | null>(null);
 
   return (
     <>
       <div className="row mt-4">
-        {Object.keys(props.policies).map((policy: string, index: number) => {
-          const pathFile = policy.split('/');
+        {Object.keys(props.resources).map((resource: string, index: number) => {
+          const pathFile = resource.split('/');
           const fileName = pathFile.pop();
           const path = pathFile.join('/');
-          const isSelected = selectedPolicy && selectedPolicy.filename === fileName;
+          const isSelected = selectedResource && selectedResource.filename === fileName;
 
           return (
-            <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`policy_${index}`}>
-              <div className={`card h-100 ${styles.card}`} data-testid="policyCard">
+            <div className="col-12 col-lg-6 col-xxl-4 mb-4" key={`resource_${index}`}>
+              <div className={`card h-100 ${styles.card}`} data-testid="resourceCard">
                 <div className="card-body d-flex flex-column">
                   <div className="d-flex flex-row align-items-baseline">
                     <small className="text-muted text-uppercase mr-1">File:</small>
@@ -48,13 +50,13 @@ const OPAPoliciesList = (props: Props) => {
                     <div className={`separator ${styles.separator}`} />
 
                     <button
-                      data-testid="policyBtn"
+                      data-testid="resourceBtn"
                       className="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
                       onClick={() =>
-                        setSelectedPolicy(isSelected ? null : { name: policy, filename: fileName as string })
+                        setSelectedResource(isSelected ? null : { name: resource, filename: fileName as string })
                       }
                     >
-                      View Policy
+                      View {props.kind === RepositoryKind.Falco ? 'rules file' : 'Policy'}
                     </button>
                   </div>
                 </div>
@@ -64,32 +66,36 @@ const OPAPoliciesList = (props: Props) => {
         })}
       </div>
 
-      {selectedPolicy && (
+      {selectedResource && (
         <div className="mt-auto ml-auto">
           <Modal
             modalDialogClassName={styles.modalDialog}
             className={`d-inline-block mt-1 ${styles.modal}`}
             header={
               <div className={`h4 m-2 flex-grow-1 ${styles.title}`}>
-                Policy file: <span className="text-muted">{selectedPolicy.name}</span>
+                {props.kind === RepositoryKind.Falco ? 'Rules' : 'Policy'} file:{' '}
+                <span className="text-muted">{selectedResource.name}</span>
               </div>
             }
-            onClose={() => setSelectedPolicy(null)}
+            onClose={() => setSelectedResource(null)}
             open
           >
             <div className="mw-100">
               <>
                 <div className="position-relative">
-                  <BlockCodeButtons filename={selectedPolicy.filename} content={props.policies[selectedPolicy.name]} />
+                  <BlockCodeButtons
+                    filename={`${props.normalizedName}-${selectedResource.filename}`}
+                    content={props.resources[selectedResource.name]}
+                  />
 
                   <SyntaxHighlighter
-                    language="text"
+                    language={props.kind === RepositoryKind.Falco ? 'yaml' : 'text'}
                     style={tomorrowNight}
                     customStyle={{ padding: '1.5rem', marginBottom: '0' }}
                     lineNumberStyle={{ color: 'gray', marginRight: '15px' }}
                     showLineNumbers
                   >
-                    {props.policies[selectedPolicy.name]}
+                    {props.resources[selectedResource.name]}
                   </SyntaxHighlighter>
                 </div>
               </>
@@ -101,4 +107,4 @@ const OPAPoliciesList = (props: Props) => {
   );
 };
 
-export default OPAPoliciesList;
+export default ResourcesList;
