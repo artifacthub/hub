@@ -9,11 +9,11 @@ RUN cd cmd/scanner && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /scanner
 # Trivy installer
 FROM alpine:3.12 AS trivy-installer
 RUN apk --no-cache add curl
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin
+RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin v0.14.0
 
 # Final stage
 FROM alpine:3.12
-RUN apk --no-cache add ca-certificates rpm && addgroup -S scanner && adduser -S scanner -G scanner
+RUN apk --no-cache add ca-certificates && addgroup -S scanner && adduser -S scanner -G scanner
 USER scanner
 WORKDIR /home/scanner
 COPY --from=scanner-builder /scanner ./
