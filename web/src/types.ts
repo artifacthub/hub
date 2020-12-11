@@ -46,8 +46,8 @@ export interface Package {
   displayName: string | null;
   normalizedName: string;
   description: string;
-  logoImageId: string | null;
-  appVersion: string;
+  logoImageId?: string;
+  appVersion?: string;
   repository: Repository;
   readme?: string | null;
   install?: string | null;
@@ -76,7 +76,7 @@ export interface Package {
   securityReportCreatedAt?: number;
   hasValuesSchema?: boolean;
   hasChangelog?: boolean;
-  contentUrl?: string | null;
+  contentUrl?: string;
 }
 
 export interface ContainerImage {

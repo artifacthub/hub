@@ -27,7 +27,6 @@ describe('HelmOCIInstall', () => {
     it('renders component', () => {
       const { getByText, getAllByText } = render(<HelmOCIInstall {...defaultProps} />);
 
-      expect(getAllByText('Helm v3 (OCI)')).toHaveLength(2);
       expect(getByText('Enable OCI support')).toBeInTheDocument();
       expect(getByText('HELM_EXPERIMENTAL_OCI=1')).toBeInTheDocument();
       expect(getByText('Pull chart from remote')).toBeInTheDocument();
@@ -35,11 +34,6 @@ describe('HelmOCIInstall', () => {
       expect(getByText('Export chart to directory')).toBeInTheDocument();
       expect(getByText('Install chart')).toBeInTheDocument();
       expect(getByText('helm install my-packageName ./packageName')).toBeInTheDocument();
-    });
-
-    it('does not render content when version is undefined', () => {
-      const { container } = render(<HelmOCIInstall {...defaultProps} version={undefined} />);
-      expect(container).toBeEmptyDOMElement();
     });
   });
 });

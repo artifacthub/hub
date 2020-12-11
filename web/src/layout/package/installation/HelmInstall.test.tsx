@@ -15,6 +15,7 @@ const defaultProps = {
   name: 'packageName',
   version: '1.0.0',
   repository: repo,
+  label: 'v3',
 };
 
 describe('HelmInstall', () => {
@@ -25,10 +26,8 @@ describe('HelmInstall', () => {
 
   describe('Render', () => {
     it('renders component', () => {
-      const { getByText, getAllByText } = render(<HelmInstall {...defaultProps} />);
+      const { getByText } = render(<HelmInstall {...defaultProps} />);
 
-      expect(getAllByText('Helm v3')).toHaveLength(2);
-      expect(getAllByText('Helm v2')).toHaveLength(2);
       expect(getByText(`helm repo add ${repo.name} ${repo.url}`)).toBeInTheDocument();
       expect(
         getByText(
@@ -45,15 +44,10 @@ describe('HelmInstall', () => {
       const { getByText, getAllByRole } = render(<HelmInstall {...defaultProps} contentUrl="http://content.url" />);
 
       expect(getByText(/You can also download this package's content directly using/g)).toBeInTheDocument();
-      const contentUrl = getAllByRole('button')[5];
+      const contentUrl = getAllByRole('button')[3];
       expect(contentUrl).toBeInTheDocument();
       expect(contentUrl).toHaveTextContent('this link');
       expect(contentUrl).toHaveProperty('href', 'http://content.url/');
-    });
-
-    it('does not render content when version is undefined', () => {
-      const { container } = render(<HelmInstall {...defaultProps} version={undefined} />);
-      expect(container).toBeEmptyDOMElement();
     });
   });
 });

@@ -1,49 +1,26 @@
-import isUndefined from 'lodash/isUndefined';
 import React from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import { Repository } from '../../../types';
-import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import ExternalLink from '../../common/ExternalLink';
-import Tabs from '../../common/Tabs';
+import CommandBlock from './CommandBlock';
 import styles from './ContentInstall.module.css';
 
 interface Props {
   name: string;
   version?: string;
   repository: Repository;
-  contentUrl?: string | null;
+  contentUrl?: string;
+  label?: string;
 }
 
 const HelmInstall = (props: Props) => {
-  if (isUndefined(props.version)) return null;
-
-  const getInstallationVersionInfo = (block2: string) => {
-    const block1 = `helm repo add ${props.repository.name} ${props.repository.url}`;
+  const getInstallationVersionInfo = (installCmd: string) => {
     return (
       <>
-        <div className="my-2">
-          <small className="text-muted mt-2 mb-1">Add repository</small>
-        </div>
-
-        <div className="d-flex align-items-start">
-          <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
-            <SyntaxHighlighter
-              language="bash"
-              style={docco}
-              customStyle={{
-                backgroundColor: 'var(--color-1-10)',
-              }}
-            >
-              {block1}
-            </SyntaxHighlighter>
-          </div>
-
-          <div>
-            <ButtonCopyToClipboard text={block1} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
-          </div>
-        </div>
+        <CommandBlock
+          command={`helm repo add ${props.repository.name} ${props.repository.url}`}
+          title="Add repository"
+        />
 
         {props.repository.private && (
           <div className={`alert alert-warning my-4 ${styles.alert}`}>
@@ -52,27 +29,7 @@ const HelmInstall = (props: Props) => {
           </div>
         )}
 
-        <div className="my-2">
-          <small className="text-muted mt-2 mb-1">Install chart</small>
-        </div>
-
-        <div className="d-flex align-items-start">
-          <div className={`flex-grow-1 mr-3 ${styles.blockWrapper}`}>
-            <SyntaxHighlighter
-              language="bash"
-              style={docco}
-              customStyle={{
-                backgroundColor: 'var(--color-1-10)',
-              }}
-            >
-              {block2}
-            </SyntaxHighlighter>
-          </div>
-
-          <div>
-            <ButtonCopyToClipboard text={block2} className={`btn-primary rounded-circle ${styles.copyBtn}`} />
-          </div>
-        </div>
+        <CommandBlock command={installCmd} title="Install chart" />
 
         <div className={`font-italic text-muted ${styles.legend}`}>
           <span className="font-weight-bold">my-{props.name}</span> corresponds to the release name, feel free to change
@@ -102,34 +59,28 @@ const HelmInstall = (props: Props) => {
   };
 
   return (
-    <Tabs
-      tabs={[
-        {
-          name: 'v3',
-          title: 'Helm v3',
-          content: (
-            <>
-              {getInstallationVersionInfo(
-                `helm install my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`
-              )}
-            </>
-          ),
-        },
-        {
-          name: 'v2',
-          title: 'Helm v2',
-          content: (
-            <>
-              {getInstallationVersionInfo(
-                `helm install --name my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`
-              )}
-            </>
-          ),
-        },
-      ]}
-      active="v3"
-      noDataContent="Sorry, the information for installation is missing."
-    />
+    <>
+      {(() => {
+        switch (props.label) {
+          case 'v3':
+            return (
+              <>
+                {getInstallationVersionInfo(
+                  `helm install my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`
+                )}
+              </>
+            );
+          case 'v2':
+            return (
+              <>
+                {getInstallationVersionInfo(
+                  `helm install --name my-${props.name} ${props.repository.name}/${props.name} --version ${props.version}`
+                )}
+              </>
+            );
+        }
+      })()}
+    </>
   );
 };
 

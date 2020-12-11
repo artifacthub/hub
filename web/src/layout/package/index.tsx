@@ -22,7 +22,6 @@ import {
   SearchFiltersURL,
   Version,
 } from '../../types';
-import { OCI_PREFIX } from '../../utils/data';
 import prepareQueryString from '../../utils/prepareQueryString';
 import sortPackageVersions from '../../utils/sortPackageVersions';
 import updateMetaIndex from '../../utils/updateMetaIndex';
@@ -171,36 +170,18 @@ const PackageView = (props: Props) => {
     setActiveChannel(channel);
   };
 
-  const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => {
-    if (
-      isNull(detail) ||
-      isUndefined(detail) ||
-      (detail!.repository.kind === RepositoryKind.OPA && (isUndefined(detail.install) || isNull(detail.install))) ||
-      (detail.repository.kind === RepositoryKind.OLM &&
-        detail.repository.name !== 'community-operators' &&
-        !detail.repository.url.startsWith(OCI_PREFIX))
-    ) {
-      return <div />;
-    }
-
-    const isDisabled =
-      detail.repository.kind === RepositoryKind.OLM &&
-      sortedVersions.length > 0 &&
-      detail!.version !== sortedVersions[0].version;
-
-    return (
-      <div className={wrapperClassName}>
-        <InstallationModal
-          isDisabled={isDisabled}
-          package={detail!}
-          activeChannel={activeChannel}
-          visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
-          searchUrlReferer={props.searchUrlReferer}
-          fromStarredPage={props.fromStarredPage}
-        />
-      </div>
-    );
-  };
+  const getInstallationModal = (wrapperClassName?: string): JSX.Element | null => (
+    <div className={wrapperClassName}>
+      <InstallationModal
+        package={detail}
+        sortedVersions={sortedVersions}
+        activeChannel={activeChannel}
+        visibleInstallationModal={!isUndefined(props.visibleModal) && props.visibleModal === 'install'}
+        searchUrlReferer={props.searchUrlReferer}
+        fromStarredPage={props.fromStarredPage}
+      />
+    </div>
+  );
 
   const getFalcoRules = (): string | undefined => {
     let rules: string | undefined;
