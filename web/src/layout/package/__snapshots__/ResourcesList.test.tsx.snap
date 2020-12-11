@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OPAPoliciesDetails creates snapshot 1`] = `
+exports[`ResourcesList creates snapshot 1`] = `
 <DocumentFragment>
   <div
     class="row mt-4"
@@ -10,7 +10,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -37,7 +37,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -50,7 +50,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -77,7 +77,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -90,7 +90,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -117,7 +117,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -130,7 +130,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -157,7 +157,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -170,7 +170,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -197,7 +197,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -210,7 +210,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -237,7 +237,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -250,7 +250,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -277,7 +277,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>
@@ -290,7 +290,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
     >
       <div
         class="card h-100 card"
-        data-testid="policyCard"
+        data-testid="resourceCard"
       >
         <div
           class="card-body d-flex flex-column"
@@ -317,7 +317,7 @@ exports[`OPAPoliciesDetails creates snapshot 1`] = `
             />
             <button
               class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-              data-testid="policyBtn"
+              data-testid="resourceBtn"
             >
               View Policy
             </button>

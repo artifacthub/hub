@@ -1969,14 +1969,21 @@ components:
               type: object
               nullable: false
               properties:
-                policies:
-                  type: object
-                  additionalProperties:
-                    type: string
-                  example:
-                    policy1: |
-                      - macro: text
-                        condition: (evt.num < 0)
+                rules:
+                  oneOf:
+                    - type: array
+                      items:
+                        type: object
+                        nullable: false
+                        properties:
+                          Raw:
+                            type: string
+                            example: |
+                              - macro: text
+                                condition: (evt.num < 0)
+                    - type: object
+                      nullable: false
+                      additionalProperties: true
     HelmPackage:
       allOf:
         - $ref: "#/components/schemas/Package"
@@ -2188,15 +2195,14 @@ components:
             data:
               type: object
               properties:
-                rules:
+                policies:
                   type: object
-                  nullable: false
-                  properties:
-                    Raw:
-                      type: string
-                      example: |
-                        - macro: text
-                          condition: (evt.num < 0)
+                  additionalProperties:
+                    type: string
+                  example:
+                    policy1: |
+                      - macro: text
+                        condition: (evt.num < 0)
     Package:
       allOf:
         - $ref: "#/components/schemas/PackageSummary"

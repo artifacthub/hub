@@ -1,3 +1,4 @@
+import { isArray } from 'lodash';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import map from 'lodash/map';
@@ -16,6 +17,7 @@ import {
   CustomResourcesDefinition,
   CustomResourcesDefinitionExample,
   ErrorKind,
+  FalcoRules,
   OPAPolicies,
   Package,
   RepositoryKind,
@@ -45,10 +47,10 @@ import CustomResourceDefinition from './CustomResourceDefinition';
 import Details from './Details';
 import InstallationModal from './installation/Modal';
 import ModalHeader from './ModalHeader';
-import OPAPoliciesList from './OPAPoliciesList';
 import styles from './PackageView.module.css';
 import Readme from './Readme';
 import RelatedPackages from './RelatedPackages';
+import ResourcesList from './ResourcesList';
 import StarButton from './StarButton';
 import SubscriptionsButton from './SubscriptionsButton';
 import ValuesSchema from './valuesSchema';
@@ -183,8 +185,8 @@ const PackageView = (props: Props) => {
     </div>
   );
 
-  const getFalcoRules = (): string | undefined => {
-    let rules: string | undefined;
+  const getFalcoRules = (): string | FalcoRules | undefined => {
+    let rules: string | FalcoRules | undefined;
     if (
       !isUndefined(detail) &&
       !isNull(detail) &&
@@ -192,7 +194,11 @@ const PackageView = (props: Props) => {
       !isUndefined(detail.data) &&
       !isUndefined(detail.data.rules)
     ) {
-      rules = map(detail.data.rules, 'raw').join(' ');
+      if (isArray(detail.data.rules)) {
+        rules = map(detail.data.rules, 'Raw').join(' ');
+      } else {
+        rules = detail.data.rules as FalcoRules;
+      }
     }
     return rules;
   };
@@ -515,26 +521,41 @@ const PackageView = (props: Props) => {
                         {(() => {
                           switch (detail.repository.kind) {
                             case RepositoryKind.Falco:
-                              let rules: string | undefined = getFalcoRules();
+                              let rules: string | FalcoRules | undefined = getFalcoRules();
                               return (
                                 <>
                                   {!isUndefined(rules) && (
                                     <div className={`mb-5 ${styles.codeWrapper}`}>
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Rules" />
 
-                                      <div className="position-relative">
-                                        <BlockCodeButtons
-                                          content={rules}
-                                          filename={`${detail.normalizedName}-rules.yaml`}
-                                        />
-                                        <SyntaxHighlighter
-                                          language="yaml"
-                                          style={tomorrowNight}
-                                          customStyle={{ padding: '1.5rem' }}
-                                        >
-                                          {rules}
-                                        </SyntaxHighlighter>
-                                      </div>
+                                      {(() => {
+                                        switch (typeof rules) {
+                                          case 'string':
+                                            return (
+                                              <div className="position-relative">
+                                                <BlockCodeButtons
+                                                  content={rules}
+                                                  filename={`${detail.normalizedName}-rules.yaml`}
+                                                />
+                                                <SyntaxHighlighter
+                                                  language="yaml"
+                                                  style={tomorrowNight}
+                                                  customStyle={{ padding: '1.5rem' }}
+                                                >
+                                                  {rules}
+                                                </SyntaxHighlighter>
+                                              </div>
+                                            );
+                                          default:
+                                            return (
+                                              <ResourcesList
+                                                resources={rules}
+                                                normalizedName={detail.normalizedName}
+                                                kind={detail.repository.kind}
+                                              />
+                                            );
+                                        }
+                                      })()}
                                     </div>
                                   )}
                                 </>
@@ -547,7 +568,11 @@ const PackageView = (props: Props) => {
                                   {!isUndefined(policies) && (
                                     <div className={`mb-5 ${styles.codeWrapper}`}>
                                       <AnchorHeader level={2} scrollIntoView={scrollIntoView} title="Policies files" />
-                                      <OPAPoliciesList policies={policies} />
+                                      <ResourcesList
+                                        resources={policies}
+                                        normalizedName={detail.normalizedName}
+                                        kind={detail.repository.kind}
+                                      />
                                     </div>
                                   )}
                                 </>

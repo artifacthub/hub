@@ -64,7 +64,7 @@ interface FetchOptions {
   body?: any;
 }
 
-const EXCEPTIONS = ['policies', 'policyData', 'roles', 'crds', 'crdsExamples'];
+const EXCEPTIONS = ['policies', 'rules', 'policyData', 'roles', 'crds', 'crdsExamples'];
 
 export const toCamelCase = (r: any): Result => {
   if (isArray(r)) {
