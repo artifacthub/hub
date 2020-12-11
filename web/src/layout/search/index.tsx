@@ -252,14 +252,6 @@ const SearchView = (props: Props) => {
           },
         });
         setApiError(null);
-
-        // Preload next page if required
-        if (newSearchResults.metadata.total > ctx.prefs.search.limit + newSearchResults.metadata.offset) {
-          API.searchPackages({
-            ...query,
-            offset: props.pageNumber * ctx.prefs.search.limit,
-          });
-        }
       } catch {
         setSearchResults({
           data: {
