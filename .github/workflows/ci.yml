@@ -157,7 +157,6 @@ jobs:
       - name: Build, tag and push hub image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          NODE_OPTIONS: --max_old_space_size=4096
         run: |
           docker build -f cmd/hub/Dockerfile -t $ECR_REGISTRY/hub:$GITHUB_SHA .
           docker push $ECR_REGISTRY/hub:$GITHUB_SHA
