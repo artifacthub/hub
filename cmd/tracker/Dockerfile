@@ -9,7 +9,7 @@ RUN cd cmd/tracker && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tracker
 # OPM installer
 FROM golang:1.15-alpine3.12 AS opm-installer
 RUN apk --no-cache add build-base
-RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.15.1
+RUN GO111MODULE=on go get github.com/operator-framework/operator-registry/cmd/opm@v1.15.3
 
 # Final stage
 FROM alpine:3.12
