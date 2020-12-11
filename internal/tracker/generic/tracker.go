@@ -16,7 +16,6 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	ignore "github.com/sabhiram/go-gitignore"
-	"gopkg.in/yaml.v2"
 )
 
 // Tracker is in charge of tracking the packages available in repository,
@@ -82,18 +81,13 @@ func (t *Tracker) Track() error {
 		default:
 		}
 
-		// Read and parse package version metadata
-		data, err := ioutil.ReadFile(filepath.Join(pkgPath, hub.PackageMetadataFile))
+		// Get package version metadata
+		md, err := pkg.GetPackageMetadata(filepath.Join(pkgPath, hub.PackageMetadataFile))
 		if err != nil {
-			return nil
-		}
-		var md *hub.PackageMetadata
-		if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
-			t.warn(fmt.Errorf("error unmarshaling package version metadata file: %w", err))
-			return nil
-		}
-		if err := pkg.ValidatePackageMetadata(md); err != nil {
-			t.warn(fmt.Errorf("error validating package version metadata file: %w", err))
+			if errors.Is(err, os.ErrNotExist) {
+				return nil
+			}
+			t.warn(fmt.Errorf("error getting package metadata: %w", err))
 			return nil
 		}
 

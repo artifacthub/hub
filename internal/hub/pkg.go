@@ -8,7 +8,7 @@ import (
 const (
 	// PackageMetadataFile represents the name of the file where the Artifact
 	// Hub metadata for a given package is stored.
-	PackageMetadataFile = "artifacthub-pkg.yml"
+	PackageMetadataFile = "artifacthub-pkg"
 )
 
 // Channel represents a package's channel.
