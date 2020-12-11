@@ -80,7 +80,7 @@ func TestTracker(t *testing.T) {
 		tw.assertExpectations(t)
 	})
 
-	t.Run("invalid package metadata file", func(t *testing.T) {
+	t.Run("error getting package metadata file", func(t *testing.T) {
 		t.Parallel()
 
 		// Setup tracker and expectations

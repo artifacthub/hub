@@ -393,6 +393,7 @@ func (m *Manager) GetMetadata(mdFile string) (*hub.RepositoryMetadata, error) {
 	return md, nil
 }
 
+// readMetadataFile reads the repository metadata from the provided file.
 func (m *Manager) readMetadataFile(mdFile string) ([]byte, error) {
 	var data []byte
 	u, err := url.Parse(mdFile)

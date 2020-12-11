@@ -33,6 +33,13 @@ func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) (
 	return data, args.Error(1)
 }
 
+// GetRandomJSON implements the PackageManager interface.
+func (m *ManagerMock) GetRandomJSON(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetSnapshotSecurityReportJSON implements the PackageManager interface.
 func (m *ManagerMock) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
 	args := m.Called(ctx, pkgID, version)
@@ -44,13 +51,6 @@ func (m *ManagerMock) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, 
 func (m *ManagerMock) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotToScan, error) {
 	args := m.Called(ctx)
 	data, _ := args.Get(0).([]*hub.SnapshotToScan)
-	return data, args.Error(1)
-}
-
-// GetRandomJSON implements the PackageManager interface.
-func (m *ManagerMock) GetRandomJSON(ctx context.Context) ([]byte, error) {
-	args := m.Called(ctx)
-	data, _ := args.Get(0).([]byte)
 	return data, args.Error(1)
 }
 

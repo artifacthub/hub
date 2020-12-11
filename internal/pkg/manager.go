@@ -86,6 +86,12 @@ func (m *Manager) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]by
 	return util.DBQueryJSON(ctx, m.db, getPkgDBQ, inputJSON)
 }
 
+// GetRandomJSON returns a json object with some random packages. The json
+// object is built by the database.
+func (m *Manager) GetRandomJSON(ctx context.Context) ([]byte, error) {
+	return util.DBQueryJSON(ctx, m.db, getRandomPkgsDBQ)
+}
+
 // GetSnapshotSecurityReportJSON returns the security report of the package's
 // snapshot identified by the package id and version provided.
 func (m *Manager) GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error) {
@@ -98,12 +104,6 @@ func (m *Manager) GetSnapshotsToScan(ctx context.Context) ([]*hub.SnapshotToScan
 	var s []*hub.SnapshotToScan
 	err := util.DBQueryUnmarshal(ctx, m.db, &s, getSnapshotsToScanDBQ)
 	return s, err
-}
-
-// GetRandomJSON returns a json object with some random packages. The json
-// object is built by the database.
-func (m *Manager) GetRandomJSON(ctx context.Context) ([]byte, error) {
-	return util.DBQueryJSON(ctx, m.db, getRandomPkgsDBQ)
 }
 
 // GetStarredByUserJSON returns a json object with packages starred by the user

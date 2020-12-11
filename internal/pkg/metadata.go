@@ -3,16 +3,43 @@ package pkg
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"time"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/artifacthub/hub/internal/hub"
+	"gopkg.in/yaml.v2"
 )
 
 var (
 	// ErrInvalidMetadata indicates that the metadata provided is not valid.
 	ErrInvalidMetadata = errors.New("invalid metadata")
 )
+
+// GetPackageMetadata reads, parses and validates the package metadata file provided.
+func GetPackageMetadata(mdFile string) (*hub.PackageMetadata, error) {
+	var data []byte
+	var err error
+	for _, extension := range []string{".yml", ".yaml"} {
+		data, err = ioutil.ReadFile(mdFile + extension)
+		if err == nil {
+			break
+		}
+	}
+	if err != nil {
+		return nil, fmt.Errorf("error reading package metadata file: %w", err)
+	}
+
+	var md *hub.PackageMetadata
+	if err = yaml.Unmarshal(data, &md); err != nil || md == nil {
+		return nil, fmt.Errorf("error unmarshaling package metadata file: %w", err)
+	}
+	if err := ValidatePackageMetadata(md); err != nil {
+		return nil, fmt.Errorf("error validating package metadata file: %w", err)
+	}
+
+	return md, nil
+}
 
 // PreparePackageFromMetadata prepares a Package struct that will be used to
 // proceed with a package registration from the PackageMetadata provided by the

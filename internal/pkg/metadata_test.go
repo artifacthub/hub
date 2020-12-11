@@ -2,12 +2,49 @@ package pkg
 
 import (
 	"errors"
+	"os"
 	"strconv"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestGetPackageMetadata(t *testing.T) {
+	t.Run("error reading package metadata file", func(t *testing.T) {
+		t.Parallel()
+		_, err := GetPackageMetadata("testdata/not-exists")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error reading package metadata file")
+		assert.True(t, errors.Is(err, os.ErrNotExist))
+	})
+
+	t.Run("error unmarshaling package metadata file", func(t *testing.T) {
+		t.Parallel()
+		_, err := GetPackageMetadata("testdata/invalid")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error unmarshaling package metadata file")
+	})
+
+	t.Run("error validating package metadata file", func(t *testing.T) {
+		t.Parallel()
+		_, err := GetPackageMetadata("testdata/no-version")
+		assert.Error(t, err)
+		assert.Contains(t, err.Error(), "error validating package metadata file")
+	})
+
+	t.Run("success with .yml", func(t *testing.T) {
+		t.Parallel()
+		_, err := GetPackageMetadata("testdata/valid1")
+		assert.NoError(t, err)
+	})
+
+	t.Run("success with .yaml", func(t *testing.T) {
+		t.Parallel()
+		_, err := GetPackageMetadata("testdata/valid2")
+		assert.NoError(t, err)
+	})
+}
 
 func TestPreparePackageFromMetadata(t *testing.T) {
 	testCases := []struct {
