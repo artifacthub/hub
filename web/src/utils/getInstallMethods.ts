@@ -111,8 +111,8 @@ export default (props: PackageInfo): InstallMethodOutput => {
         case RepositoryKind.OLM:
           if (pkg.repository.url.startsWith(OCI_PREFIX)) {
             output.methods.push({
-              label: 'v3',
-              title: 'Helm v3 (OCI)',
+              label: 'cli',
+              title: 'OLM OCI',
               kind: InstallMethodKind.OLMOCI,
               props: {
                 name: pkg.name,
@@ -121,7 +121,7 @@ export default (props: PackageInfo): InstallMethodOutput => {
               },
             });
           } else {
-            if (pkg.repository.name === SPECIAL_OLM) {
+            if (pkg.repository.name === SPECIAL_OLM && props.activeChannel) {
               output.methods.push({
                 label: 'cli',
                 title: 'Operator Lifecycle Manager',

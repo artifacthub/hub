@@ -8,7 +8,7 @@ interface Props {
 }
 
 const FalcoInstall = (props: Props) => (
-  <>
+  <div className="mt-3">
     <CommandBlock
       command={`helm upgrade falco -f https://api.securityhub.dev/resources/falco-rules/${props.normalizedName}/custom-rules.yaml stable/falco`}
     />
@@ -18,7 +18,7 @@ const FalcoInstall = (props: Props) => (
         Need Helm?
       </ExternalLink>
     </div>
-  </>
+  </div>
 );
 
 export default FalcoInstall;
