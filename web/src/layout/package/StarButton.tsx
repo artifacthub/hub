@@ -100,7 +100,7 @@ const StarButton = (props: Props) => {
           onClick={handleToggleStar}
         >
           <div className="d-flex align-items-center">
-            {notStarred ? <FaStar /> : <FaRegStar />}
+            {notStarred ? <FaRegStar /> : <FaStar />}
             <span className="ml-2">{notStarred ? 'Star' : 'Unstar'}</span>
           </div>
         </button>
