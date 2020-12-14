@@ -1,4 +1,4 @@
-import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { CgListTree } from 'react-icons/cg';
@@ -8,6 +8,7 @@ import { API } from '../../../api';
 import { SearchFiltersURL } from '../../../types';
 import alertDispatcher from '../../../utils/alertDispatcher';
 import ElementWithTooltip from '../../common/ElementWithTooltip';
+import ErrorBoundary from '../../common/ErrorBoundary';
 import Modal from '../../common/Modal';
 import Schema from './Schema';
 import styles from './ValuesSchema.module.css';
@@ -21,6 +22,7 @@ interface Props {
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
 }
+
 const ValuesSchema = (props: Props) => {
   const history = useHistory();
   const [openStatus, setOpenStatus] = useState<boolean>(false);
@@ -32,15 +34,9 @@ const ValuesSchema = (props: Props) => {
   async function getValuesSchema() {
     try {
       setIsLoading(true);
-      const schema = await API.getValuesSchema(props.packageId, props.version);
       setCurrentPkgId(props.packageId);
       setCurrentVersion(props.version);
-      try {
-        let defs = await $RefParser.dereference(schema);
-        setValuesSchema(defs);
-      } catch (err) {
-        setValuesSchema(schema);
-      }
+      setValuesSchema(await API.getValuesSchema(props.packageId, props.version));
       setIsLoading(false);
       setOpenStatus(true);
     } catch {
@@ -129,12 +125,14 @@ const ValuesSchema = (props: Props) => {
           open={openStatus}
           breakPoint="md"
         >
-          <div className="mb-3 mx-3 mw-100">
-            <Schema schema={valuesSchema} normalizedName={props.normalizedName} />
-            <div className="row">
-              <div className="col-7 pt-3 bg-dark" />
+          <ErrorBoundary message="Something went wrong rendering the VALUES SCHEMA of this package.">
+            <div className="mb-3 mx-3 mw-100">
+              <Schema schema={valuesSchema} normalizedName={props.normalizedName} />
+              <div className="row">
+                <div className="col-7 pt-3 bg-dark" />
+              </div>
             </div>
-          </div>
+          </ErrorBoundary>
         </Modal>
       )}
     </>

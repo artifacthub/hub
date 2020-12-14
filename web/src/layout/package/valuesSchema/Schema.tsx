@@ -11,22 +11,31 @@ import SchemaValuesSearch from './SchemaValuesSearch';
 interface Props {
   schema: JSONSchema;
   normalizedName: string;
-  definitions?: any;
 }
 
 const Schema = (props: Props) => {
   const [activePath, setActivePath] = useState<string | undefined>();
   const [valuesYAML, setValuesYAML] = useState<string | null>(null);
   const [availablePaths, setAvailablePaths] = useState<string[] | null>(null);
+  const [savedOpts, setSavedOpts] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    const { yamlContent, paths } = compoundJSONSchemaYAML(props.schema);
-    setValuesYAML(yamlContent);
+    const { yamlContent, paths } = compoundJSONSchemaYAML(props.schema, props.schema.definitions || {}, savedOpts);
+    if (yamlContent) {
+      setValuesYAML(yamlContent);
+    }
     setAvailablePaths(paths);
-  }, [props.schema]);
+  }, [props.schema, savedOpts]);
 
   const onSearch = (selectedPath?: string) => {
     setActivePath(selectedPath);
+  };
+
+  const saveSelectedOption = (path: string, index: number) => {
+    setSavedOpts({
+      ...savedOpts,
+      [path]: index,
+    });
   };
 
   return (
@@ -56,6 +65,7 @@ const Schema = (props: Props) => {
             return (
               <React.Fragment key={propName}>
                 <SchemaLine
+                  definitions={props.schema.definitions}
                   value={value}
                   name={propName}
                   level={0}
@@ -63,6 +73,7 @@ const Schema = (props: Props) => {
                   className="pt-4"
                   activePath={activePath}
                   setActivePath={setActivePath}
+                  saveSelectedOption={saveSelectedOption}
                 />
               </React.Fragment>
             );

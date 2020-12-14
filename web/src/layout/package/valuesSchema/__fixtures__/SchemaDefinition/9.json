@@ -1,0 +1,52 @@
+{
+  "def": {
+    "active": 0,
+    "combinationType": "anyOf",
+    "options": [
+      { "type": "object", "additionalProperties": false },
+      {
+        "type": "object",
+        "required": ["cloudUrl", "username", "password", "agentGroupId"],
+        "properties": {
+          "cloudUrl": { "type": "string", "description": "Base URL of the Jitterbit Harmony Cloud" },
+          "password": {
+            "type": "string",
+            "description": "Encrypted password of the Agent Installer user (encrypted using JitterbitUtils)"
+          },
+          "username": {
+            "type": "string",
+            "description": "Encrypted username of the Agent Installer user (encrypted using JitterbitUtils)"
+          },
+          "retryCount": {
+            "type": "integer",
+            "maximum": 300,
+            "minimum": 0,
+            "description": "Number of retries if agent is having issues making the call to Harmony cloud for registration (defaults to 10, valid range is 0-300)"
+          },
+          "agentGroupId": {
+            "type": "number",
+            "description": "Agent group ID from Management Console (hover over an agent group to see its ID)"
+          },
+          "agentNamePrefix": { "type": "string", "description": "Prefix for each auto-registered agent's name" },
+          "retryIntervalSeconds": {
+            "type": "integer",
+            "maximum": 600,
+            "minimum": 5,
+            "description": "Number of seconds the agent will wait before retrying. This number doubles every retry to a maximum of 600 seconds (10 minutes). Defaults to 5, valid range 5-600."
+          },
+          "deregisterAgentOnDrainstop": {
+            "type": "boolean",
+            "description": "Performs agent deregistration on drainstop/JVM shutdown (defaults to false)"
+          }
+        },
+        "additionalProperties": false
+      },
+      { "type": "null" }
+    ],
+    "error": false
+  },
+  "isRequired": true,
+  "defaultValue": null,
+  "isExpanded": false,
+  "path": "agent.registerjson"
+}

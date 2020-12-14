@@ -1,16 +1,27 @@
 {
   "def": {
-    "type": "object",
-    "title": "Scanner configuration",
-    "description": "this is a description",
-    "required": ["concurrency", "cronjob", "trivyURL"],
-    "properties": {
-      "cronjob": {
-        "type": "string"
-      },
-      "trivyURL": { "type": "string", "title": "Trivy server url", "default": "http://trivy:8081" },
-      "concurrency": { "type": "integer", "title": "Snapshots to process concurrently", "default": 10, "minimum": 1 }
-    }
+    "active": 0,
+    "combinationtype": null,
+    "options": [
+      {
+        "type": "object",
+        "title": "Scanner configuration",
+        "description": "this is a description",
+        "required": ["concurrency", "cronjob", "trivyURL"],
+        "properties": {
+          "cronjob": {
+            "type": "string"
+          },
+          "trivyURL": { "type": "string", "title": "Trivy server url", "default": "http://trivy:8081" },
+          "concurrency": {
+            "type": "integer",
+            "title": "Snapshots to process concurrently",
+            "default": 10,
+            "minimum": 1
+          }
+        }
+      }
+    ]
   },
   "defaultValue": "2"
 }

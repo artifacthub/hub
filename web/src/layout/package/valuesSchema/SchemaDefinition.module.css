@@ -13,7 +13,7 @@
 }
 
 .content {
-  margin-top: 2px;
+  margin-top: 1px;
   min-width: 0px;
 }
 
@@ -49,4 +49,8 @@
   content: '- ';
   position: absolute;
   left: 0px;
+}
+
+.errorMsg {
+  line-height: 1.15rem;
 }
