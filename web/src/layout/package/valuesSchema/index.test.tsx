@@ -25,6 +25,7 @@ const defaultProps = {
   version: '0.1.0',
   hasValuesSchema: true,
   visibleValuesSchema: false,
+  normalizedName: 'pkg',
 };
 
 describe('ValuesSchema', () => {
@@ -241,10 +242,9 @@ describe('ValuesSchema', () => {
       });
 
       await waitFor(() => {
-        expect(getByText('Values schema reference')).toBeInTheDocument();
+        expect(getByText('env:')).toBeInTheDocument();
       });
 
-      expect(getByText('env:')).toBeInTheDocument();
       expect(getByText('image:')).toBeInTheDocument();
       expect(getByText('array')).toBeInTheDocument();
       expect(getByText('(unique)')).toBeInTheDocument();

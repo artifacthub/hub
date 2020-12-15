@@ -1,4 +1,8 @@
 {
-  "def": { "type": "string", "title": "Database host", "default": "" },
+  "def": {
+    "active": 0,
+    "combinationtype": null,
+    "options": [{ "type": "string", "title": "Database host", "default": "" }]
+  },
   "defaultValue": "value"
 }

@@ -4,13 +4,15 @@ import compoundJSONSchemaYAML from './compoundJSONSchemaYAML';
 
 interface Tests {
   input: JSONSchema;
-  output: { yamlContent: string; paths: string[] };
+  opts?: { [key: string]: number };
+  definitions?: { [key: string]: JSONSchema };
+  output: { yamlContent?: string; paths: string[] };
 }
 
 const tests: Tests[] = [
   {
     input: {},
-    output: { yamlContent: '', paths: [] },
+    output: { yamlContent: undefined, paths: [] },
   },
   {
     input: {
@@ -293,12 +295,137 @@ podSecurityContext: {}`,
       paths: ['podSecurityContext'],
     },
   },
+  {
+    input: {
+      type: 'object',
+      title: 'Agent Group Chart Configuration',
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      required: [
+        'image',
+        'agent',
+        'hpa',
+        'replicas',
+        'resources',
+        'revisionHistoryLimit',
+        'affinity',
+        'readinessProbe',
+        'livenessProbe',
+        'env',
+      ],
+      properties: {
+        agent: {
+          type: 'object',
+          required: ['registerjson'],
+          properties: {
+            registerjson: {
+              oneOf: [
+                { type: 'object', additionalProperties: false },
+                {
+                  type: 'object',
+                  required: ['cloudUrl', 'username', 'password', 'agentGroupId'],
+                  properties: {
+                    cloudUrl: { type: 'string', description: 'Base URL of the Jitterbit Harmony Cloud' },
+                    password: {
+                      type: 'string',
+                      description: 'Encrypted password of the Agent Installer user (encrypted using JitterbitUtils)',
+                    },
+                    username: {
+                      type: 'string',
+                      description: 'Encrypted username of the Agent Installer user (encrypted using JitterbitUtils)',
+                    },
+                    retryCount: {
+                      type: 'integer',
+                      maximum: 300,
+                      minimum: 0,
+                      description:
+                        'Number of retries if agent is having issues making the call to Harmony cloud for registration (defaults to 10, valid range is 0-300)',
+                    },
+                    agentGroupId: {
+                      type: 'number',
+                      description: 'Agent group ID from Management Console (hover over an agent group to see its ID)',
+                    },
+                    agentNamePrefix: { type: 'string', description: "Prefix for each auto-registered agent's name" },
+                    retryIntervalSeconds: {
+                      type: 'integer',
+                      maximum: 600,
+                      minimum: 5,
+                      description:
+                        'Number of seconds the agent will wait before retrying. This number doubles every retry to a maximum of 600 seconds (10 minutes). Defaults to 5, valid range 5-600.',
+                    },
+                    deregisterAgentOnDrainstop: {
+                      type: 'boolean',
+                      description: 'Performs agent deregistration on drainstop/JVM shutdown (defaults to false)',
+                    },
+                  },
+                  additionalProperties: false,
+                },
+                { type: 'null' },
+              ],
+              description: "agent group's register.json file",
+            },
+            jitterbitconf: { type: ['string', 'null'], description: "Agent group's jitterbit.conf file" },
+          },
+          description: 'Agent Group specific configuration',
+          additionalProperties: false,
+        },
+      },
+      definitions: {
+        env: {
+          type: 'array',
+          items: {
+            $ref:
+              'https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.12.8-standalone-strict/_definitions.json#/definitions/io.k8s.api.core.v1.EnvVar',
+          },
+          minItems: 0,
+          description: 'List of additional environment variables that may be specified in the container',
+          uniqueItems: true,
+          additionalItems: false,
+        },
+        replicas: {
+          type: 'integer',
+          minimum: 1,
+          description: 'Number of replicas set if the horizontal pod autoscaler is disabled or malfunctioning',
+        },
+      },
+      description: 'agent-group chart configuration',
+      additionalProperties: false,
+    },
+    opts: { 'agent.registerjson': 1 },
+    output: {
+      paths: [
+        'agent',
+        'agent.registerjson',
+        'agent.registerjson.cloudUrl',
+        'agent.registerjson.password',
+        'agent.registerjson.username',
+        'agent.registerjson.retryCount',
+        'agent.registerjson.agentGroupId',
+        'agent.registerjson.agentNamePrefix',
+        'agent.registerjson.retryIntervalSeconds',
+        'agent.registerjson.deregisterAgentOnDrainstop',
+        'agent.jitterbitconf',
+      ],
+      yamlContent: `# Agent Group Chart Configuration
+
+agent:${` `}
+  registerjson:${` `}
+    cloudUrl:${` `}
+    password:${` `}
+    username:${` `}
+    retryCount:${` `}
+    agentGroupId:${` `}
+    agentNamePrefix:${` `}
+    retryIntervalSeconds:${` `}
+    deregisterAgentOnDrainstop:${` `}
+  jitterbitconf:${` `}`,
+    },
+  },
 ];
 
 describe('compoundJSONSchemaYAML', () => {
   for (let i = 0; i < tests.length; i++) {
     it('returns proper content', () => {
-      const actual = compoundJSONSchemaYAML(tests[i].input);
+      const actual = compoundJSONSchemaYAML(tests[i].input, tests[i].opts || {}, tests[i].opts || {});
       expect(actual).toEqual(tests[i].output);
     });
   }

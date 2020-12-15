@@ -1,3 +1,5 @@
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+
 export enum RepositoryKind {
   Helm = 0,
   Falco,
@@ -506,4 +508,11 @@ export interface ChangeLog {
   version: string;
   createdAt: number;
   changes?: string[] | null;
+}
+
+export interface ActiveJSONSchemaValue {
+  active: number;
+  combinationType: string | null;
+  options: JSONSchema[];
+  error?: boolean;
 }

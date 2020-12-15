@@ -40,6 +40,15 @@ exports[`SchemaDefinition creates snapshot 1`] = `
             >
               Database host
             </div>
+            <select
+              class="w-50 my-2"
+            >
+              <option
+                value="0"
+              >
+                Option 1
+              </option>
+            </select>
             <div
               class="d-flex flex-row align-items-center w-100"
             >

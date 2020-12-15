@@ -1,12 +1,18 @@
-import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { isArray, isEmpty, isUndefined } from 'lodash';
-import React from 'react';
+import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import { JSONSchema4, JSONSchema6 } from 'json-schema';
+import merger from 'json-schema-merge-allof';
+import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
+import React, { useEffect, useState } from 'react';
 
+import { ActiveJSONSchemaValue } from '../../../types';
 import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchema';
 import SchemaDefinition from './SchemaDefinition';
 import styles from './SchemaLine.module.css';
 
 interface Prop {
+  definitions?: {
+    [k: string]: any;
+  };
   name: string;
   value: JSONSchema;
   level: number;
@@ -15,6 +21,7 @@ interface Prop {
   path?: string;
   activePath?: string;
   setActivePath: React.Dispatch<React.SetStateAction<string | undefined>>;
+  saveSelectedOption: (path: string, index: number) => void;
 }
 
 interface ValueProp {
@@ -23,29 +30,104 @@ interface ValueProp {
 }
 
 const SchemaLine = (props: Prop) => {
+  async function getCurrentJSON() {
+    let currentValue = props.value;
+    let error = false;
+
+    let options = [currentValue];
+    let comb = null;
+
+    const checkCombinations = (valueToCheck: JSONSchema) => {
+      if (valueToCheck.allOf) {
+        try {
+          options = [merger(valueToCheck)];
+        } catch {
+          error = true;
+        }
+      } else if (valueToCheck.oneOf) {
+        options = valueToCheck.oneOf as JSONSchema[];
+        comb = 'anyOf';
+      } else if (valueToCheck.anyOf) {
+        options = valueToCheck.anyOf as JSONSchema[];
+        comb = 'oneOf';
+      }
+    };
+
+    if (currentValue.$ref) {
+      const sample: JSONSchema4 | JSONSchema6 = {
+        title: 'deref',
+        type: 'object',
+        properties: { test: currentValue as any },
+        definitions: props.definitions,
+      };
+
+      try {
+        const formattedValue = (await $RefParser.dereference(sample)) as any;
+        if (formattedValue && formattedValue.properties && formattedValue.properties.test) {
+          if (formattedValue.properties.test.$ref) {
+            error = true;
+          } else {
+            options = formattedValue ? [formattedValue.properties.test as JSONSchema] : options;
+            checkCombinations(formattedValue.properties.test);
+          }
+        } else {
+          error = true;
+        }
+      } catch (err) {
+        error = true;
+      }
+    } else {
+      checkCombinations(currentValue);
+    }
+
+    setValue({
+      active: 0,
+      combinationType: comb,
+      options: options,
+      error: error,
+    });
+  }
+
+  const [value, setValue] = useState<ActiveJSONSchemaValue | null>(null);
+  const activeValue = value ? value.options[value.active] : null;
+
+  useEffect(() => {
+    getCurrentJSON();
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  if (isNull(value) || isNull(activeValue)) return null;
+
   const getValue = (): ValueProp => {
-    if (isUndefined(props.value.default)) {
+    if (isUndefined(activeValue.default)) {
       return {
         content: null,
       };
     }
-    switch (props.value.type) {
+
+    if (isNull(activeValue.default)) {
+      return {
+        content: <span>null</span>,
+        className: 'text-danger',
+      };
+    }
+
+    switch (isArray(activeValue.type) ? activeValue.type[0] : activeValue.type) {
       case 'object':
         return {
-          content: <span>{isEmpty(props.value.default) ? '{}' : JSON.stringify(props.value.default)}</span>,
+          content: <span>{isEmpty(activeValue.default) ? '{}' : JSON.stringify(activeValue.default)}</span>,
           className: 'text-warning',
         };
       case 'array':
         return {
           content: (
             <>
-              {isArray(props.value.default) && (
+              {isArray(activeValue.default) && (
                 <>
-                  {props.value.default.length === 0 ? (
+                  {activeValue.default.length === 0 ? (
                     <>{`[]`}</>
                   ) : (
                     <>
-                      {(props.value.default as string[]).map((listItem: string) => (
+                      {(activeValue.default as string[]).map((listItem: string) => (
                         <div
                           className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}
                           key={listItem}
@@ -62,28 +144,32 @@ const SchemaLine = (props: Prop) => {
           className: 'text-warning',
         };
       case 'boolean':
-      case 'bigint':
       case 'integer':
         return {
-          content: <span>{props.value.default!.toString()}</span>,
+          content: <span>{activeValue.default!.toString()}</span>,
+          className: 'text-danger',
+        };
+      case 'null':
+        return {
+          content: <span>null</span>,
           className: 'text-danger',
         };
       case 'string':
-        const isLongText = (props.value.default as string).length > 40;
+        const isLongText = (activeValue.default as string).length > 40;
         if (isLongText) {
           return {
             content: (
               <>
                 |-
                 <br />
-                <div className={`${styles.line} ${styles.level1}`}>{props.value.default}</div>
+                <div className={`${styles.line} ${styles.level1}`}>{activeValue.default}</div>
               </>
             ),
             className: 'text-warning',
           };
         } else {
           return {
-            content: <span>{props.value.default === '' ? `""` : props.value.default}</span>,
+            content: <span>{activeValue.default === '' ? `""` : activeValue.default}</span>,
             className: 'text-warning',
           };
         }
@@ -98,6 +184,11 @@ const SchemaLine = (props: Prop) => {
   const currentPath = getJMESPathForValuesSchema(props.name, props.path);
   const isExpanded = !isUndefined(props.activePath) && props.activePath === currentPath;
 
+  const onChangeSelectedValue = (newValue: ActiveJSONSchemaValue) => {
+    setValue(newValue);
+    props.saveSelectedOption(currentPath, newValue.active);
+  };
+
   return (
     <React.Fragment>
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
@@ -106,7 +197,7 @@ const SchemaLine = (props: Prop) => {
           onClick={() => props.setActivePath(!isExpanded ? currentPath : undefined)}
         >
           <div className={`${styles[`level${props.level}`]} text-monospace`}>
-            {props.value.title && <div className="text-muted text-truncate"># {props.value.title}</div>}
+            {activeValue.title && <div className="text-muted text-truncate"># {activeValue.title}</div>}
             {props.name}:{' '}
             <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
               {content}
@@ -116,7 +207,8 @@ const SchemaLine = (props: Prop) => {
 
         <div className={`col-5 position-relative py-1 ${styles.description}`}>
           <SchemaDefinition
-            def={props.value}
+            def={value}
+            setValue={onChangeSelectedValue}
             isRequired={props.isRequired}
             defaultValue={content}
             isExpanded={isExpanded}
@@ -126,22 +218,24 @@ const SchemaLine = (props: Prop) => {
         </div>
       </div>
 
-      {props.value.properties && (
+      {activeValue.properties && (
         <>
-          {Object.keys(props.value.properties).map((propName: string) => {
-            const value = props.value.properties![propName] as JSONSchema;
+          {Object.keys(activeValue.properties).map((propName: string) => {
+            const currentValue = activeValue.properties![propName] as JSONSchema;
             if (isUndefined(value)) return null;
-            const isRequired = props.value.required ? props.value.required.includes(propName) : false;
+            const isRequired = activeValue.required ? activeValue.required.includes(propName) : false;
             return (
               <React.Fragment key={`${props.name}_${propName}`}>
                 <SchemaLine
-                  value={value}
+                  definitions={props.definitions}
+                  value={currentValue}
                   name={propName}
                   level={props.level + 1}
                   isRequired={isRequired}
                   path={currentPath}
                   activePath={props.activePath}
                   setActivePath={props.setActivePath}
+                  saveSelectedOption={props.saveSelectedOption}
                 />
               </React.Fragment>
             );
