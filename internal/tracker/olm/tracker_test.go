@@ -70,6 +70,7 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return("", "", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
@@ -84,8 +85,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path1", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -99,8 +100,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path2", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -114,8 +115,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path3", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.ec.On("Append", r1.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -130,8 +131,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, mock.Anything).Return(tests.ErrFake)
 		tw.ec.On("Append", r1.RepositoryID, mock.Anything).Return()
@@ -148,10 +149,31 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path4", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("package version not registered because it is ignored", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(r1)
+		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path4", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: "test-operator",
+				},
+			},
+		}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -165,8 +187,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(nil, nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
 			Name:         "test-operator",
@@ -256,11 +278,11 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 			"test-operator@0.2.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, r1.RepositoryID, true).Return(nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "test-operator",
@@ -281,11 +303,11 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path1", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 			"test-operator@0.2.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, r1.RepositoryID, true).Return(nil)
 
 		// Run tracker and check expectations
@@ -300,15 +322,51 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r1)
 		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(map[string]string{
 			"test-operator@0.1.0": "",
 			"test-operator@0.2.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: r1.RepositoryID}, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, r1.RepositoryID, true).Return(nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "test-operator",
 			Version:    "0.1.0",
+			Repository: r1,
+		}).Return(nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("all package versions unregistered because package is ignored", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(r1)
+		tw.rc.On("CloneRepository", tw.ctx, r1).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{
+			RepositoryID: r1.RepositoryID,
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: "test-operator",
+				},
+			},
+		}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r1.RepositoryID).Return(map[string]string{
+			"test-operator@0.1.0": "",
+			"test-operator@0.2.0": "",
+		}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, r1.RepositoryID, true).Return(nil)
+		tw.pm.On("Unregister", tw.ctx, &hub.Package{
+			Name:       "test-operator",
+			Version:    "0.1.0",
+			Repository: r1,
+		}).Return(nil)
+		tw.pm.On("Unregister", tw.ctx, &hub.Package{
+			Name:       "test-operator",
+			Version:    "0.2.0",
 			Repository: r1,
 		}).Return(nil)
 

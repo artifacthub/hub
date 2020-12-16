@@ -3,6 +3,7 @@ package tracker
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -292,12 +293,14 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			RepositoryID:      repo1ID,
 			VerifiedPublisher: false,
 		}
+		md := &hub.RepositoryMetadata{
+			RepositoryID: r.RepositoryID,
+		}
 		rm := &repo.ManagerMock{}
 		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, true).Return(nil)
-		rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, "mdFile")
+		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
 		assert.Nil(t, err)
 		rm.AssertExpectations(t)
 	})
@@ -310,11 +313,13 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			RepositoryID:      repo1ID,
 			VerifiedPublisher: true,
 		}
+		md := &hub.RepositoryMetadata{
+			RepositoryID: r.RepositoryID,
+		}
 		rm := &repo.ManagerMock{}
-		rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, "mdFile")
+		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
 		assert.Nil(t, err)
 		rm.AssertExpectations(t)
 	})
@@ -328,10 +333,9 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: false,
 		}
 		rm := &repo.ManagerMock{}
-		rm.On("GetMetadata", "mdFile").Return(nil, tests.ErrFake)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, "mdFile")
+		err := SetVerifiedPublisherFlag(ctx, rm, r, nil)
 		assert.Nil(t, err)
 		rm.AssertExpectations(t)
 	})
@@ -345,11 +349,10 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			VerifiedPublisher: true,
 		}
 		rm := &repo.ManagerMock{}
-		rm.On("GetMetadata", "mdFile").Return(nil, tests.ErrFake)
 		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, false).Return(nil)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, "mdFile")
+		err := SetVerifiedPublisherFlag(ctx, rm, r, nil)
 		assert.Nil(t, err)
 		rm.AssertExpectations(t)
 	})
@@ -362,13 +365,111 @@ func TestSetVerifiedPublisherFlag(t *testing.T) {
 			RepositoryID:      repo1ID,
 			VerifiedPublisher: false,
 		}
+		md := &hub.RepositoryMetadata{
+			RepositoryID: r.RepositoryID,
+		}
 		rm := &repo.ManagerMock{}
-		rm.On("GetMetadata", "mdFile").Return(&hub.RepositoryMetadata{RepositoryID: repo1ID}, nil)
 		rm.On("SetVerifiedPublisher", ctx, r.RepositoryID, true).Return(tests.ErrFake)
 
 		// Run test and check expectations
-		err := SetVerifiedPublisherFlag(ctx, rm, r, "mdFile")
+		err := SetVerifiedPublisherFlag(ctx, rm, r, md)
 		assert.True(t, errors.Is(err, tests.ErrFake))
 		rm.AssertExpectations(t)
 	})
+}
+
+func TestShouldIgnorePackage(t *testing.T) {
+	testCases := []struct {
+		md             *hub.RepositoryMetadata
+		name           string
+		version        string
+		expectedResult bool
+	}{
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{
+					{
+						Name: "pkg1",
+					},
+				},
+			},
+			"pkg1",
+			"1.0.0",
+			true,
+		},
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{
+					{
+						Name: "pkg2",
+					},
+				},
+			},
+			"pkg1",
+			"1.0.0",
+			false,
+		},
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{},
+			},
+			"pkg1",
+			"1.0.0",
+			false,
+		},
+		{
+			nil,
+			"pkg1",
+			"1.0.0",
+			false,
+		},
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{
+					{
+						Name:    "pkg1",
+						Version: "beta",
+					},
+				},
+			},
+			"pkg1",
+			"1.0.0-beta1",
+			true,
+		},
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{
+					{
+						Name:    "pkg1",
+						Version: "1.0.0",
+					},
+				},
+			},
+			"pkg1",
+			"1.0.0",
+			true,
+		},
+		{
+			&hub.RepositoryMetadata{
+				Ignore: []*hub.RepositoryIgnoreEntry{
+					{
+						Name:    "pkg1",
+						Version: "1.0.0",
+					},
+				},
+			},
+			"pkg1",
+			"1.0.1",
+			false,
+		},
+	}
+	for i, tc := range testCases {
+		tc := tc
+		t.Run(fmt.Sprintf("Test case %d", i), func(t *testing.T) {
+			t.Parallel()
+
+			result := ShouldIgnorePackage(tc.md, tc.name, tc.version)
+			assert.Equal(t, tc.expectedResult, result)
+		})
+	}
 }
