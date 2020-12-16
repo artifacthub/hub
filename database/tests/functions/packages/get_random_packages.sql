@@ -65,7 +65,7 @@ insert into snapshot (
     'readme',
     false,
     false,
-    '2020-06-16 11:20:34+02'
+    '2020-12-16 12:31:27'
 );
 insert into package (
     package_id,
@@ -193,7 +193,7 @@ select is(
             "version": "1.0.0",
             "deprecated": false,
             "signed": false,
-            "created_at": 1592299234,
+            "created_at": 1608121887,
             "repository": {
                 "repository_id": "00000000-0000-0000-0000-000000000002",
                 "kind": 0,

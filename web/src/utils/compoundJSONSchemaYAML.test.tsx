@@ -5,7 +5,6 @@ import compoundJSONSchemaYAML from './compoundJSONSchemaYAML';
 interface Tests {
   input: JSONSchema;
   opts?: { [key: string]: number };
-  definitions?: { [key: string]: JSONSchema };
   output: { yamlContent?: string; paths: string[] };
 }
 
@@ -425,7 +424,7 @@ agent:${` `}
 describe('compoundJSONSchemaYAML', () => {
   for (let i = 0; i < tests.length; i++) {
     it('returns proper content', () => {
-      const actual = compoundJSONSchemaYAML(tests[i].input, tests[i].opts || {}, tests[i].opts || {});
+      const actual = compoundJSONSchemaYAML(tests[i].input, tests[i].opts || {});
       expect(actual).toEqual(tests[i].output);
     });
   }
