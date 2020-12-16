@@ -5,3 +5,7 @@ owners: # (optional, used to claim repository ownership)
     email: user1@email.com
   - name: user2
     email: user2@email.com
+ignore: # (optional, packages that should not be indexed by Artifact Hub)
+  - name: package1
+  - name: package2 # Exact match
+    version: beta # Regular expression (when omitted, all versions are ignored)

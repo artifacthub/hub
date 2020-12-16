@@ -63,6 +63,7 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return("", "", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, tests.ErrFake)
 
 		// Run tracker and check expectations
@@ -77,8 +78,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -92,8 +93,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path2", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -108,8 +109,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path3", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.ec.On("Append", r.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -124,8 +125,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rFalco)
 		tw.rc.On("CloneRepository", tw.ctx, rFalco).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
 		tw.ec.On("Append", rFalco.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -140,8 +141,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rOPA)
 		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path4", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.ec.On("Append", rOPA.RepositoryID, mock.Anything).Return()
 
 		// Run tracker and check expectations
@@ -156,8 +157,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rOPA)
 		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, mock.Anything).Return(tests.ErrFake)
@@ -175,10 +176,33 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rOPA)
 		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "0123456789",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("(opa) no need to register package version because it is ignored", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(rOPA)
+		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{
+			RepositoryID: rOPA.RepositoryID,
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: "package-name",
+				},
+			},
+		}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 
 		// Run tracker and check expectations
@@ -193,8 +217,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rFalco)
 		tw.rc.On("CloneRepository", tw.ctx, rFalco).Return(".", "testdata/path7", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rFalco.RepositoryID}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rFalco.RepositoryID).Return(nil, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, rFalco.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
@@ -256,8 +280,8 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(rOPA)
 		tw.rc.On("CloneRepository", tw.ctx, rOPA).Return(".", "testdata/path5", nil)
-		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{RepositoryID: rOPA.RepositoryID}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, rOPA.RepositoryID).Return(nil, nil)
 		tw.rm.On("SetVerifiedPublisher", tw.ctx, rOPA.RepositoryID, true).Return(nil)
 		tw.is.On("SaveImage", tw.ctx, imageData).Return("logoImageID", nil)
 		tw.pm.On("Register", tw.ctx, &hub.Package{
@@ -319,11 +343,11 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path6", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "",
 			"package-name@2.0.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "package-name",
 			Version:    "1.0.0",
@@ -343,11 +367,11 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path1", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "",
 			"package-name@2.0.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 
 		// Run tracker and check expectations
 		err := tw.t.Track()
@@ -361,14 +385,48 @@ func TestTracker(t *testing.T) {
 		// Setup tracker and expectations
 		tw := newTrackerWrapper(r)
 		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path6", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
 			"package-name@1.0.0": "",
 			"package-name@2.0.0": "",
 		}, nil)
-		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{}, nil)
 		tw.pm.On("Unregister", tw.ctx, &hub.Package{
 			Name:       "package-name",
 			Version:    "1.0.0",
+			Repository: r,
+		}).Return(nil)
+
+		// Run tracker and check expectations
+		err := tw.t.Track()
+		assert.NoError(t, err)
+		tw.assertExpectations(t)
+	})
+
+	t.Run("all package version unregistered because package is ignored", func(t *testing.T) {
+		t.Parallel()
+
+		// Setup tracker and expectations
+		tw := newTrackerWrapper(r)
+		tw.rc.On("CloneRepository", tw.ctx, r).Return(".", "testdata/path6", nil)
+		tw.rm.On("GetMetadata", mock.Anything).Return(&hub.RepositoryMetadata{
+			Ignore: []*hub.RepositoryIgnoreEntry{
+				{
+					Name: "package-name",
+				},
+			},
+		}, nil)
+		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(map[string]string{
+			"package-name@1.0.0": "",
+			"package-name@2.0.0": "",
+		}, nil)
+		tw.pm.On("Unregister", tw.ctx, &hub.Package{
+			Name:       "package-name",
+			Version:    "1.0.0",
+			Repository: r,
+		}).Return(nil)
+		tw.pm.On("Unregister", tw.ctx, &hub.Package{
+			Name:       "package-name",
+			Version:    "2.0.0",
 			Repository: r,
 		}).Return(nil)
 

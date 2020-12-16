@@ -102,6 +102,14 @@ func (t *Tracker) Track() error {
 		go w.Run(&workersWg, t.queue)
 	}
 
+	// Get repository metadata
+	var rmd *hub.RepositoryMetadata
+	u, _ := url.Parse(t.r.URL)
+	if repo.SchemeIsHTTP(u) {
+		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
+		rmd, _ = t.svc.Rm.GetMetadata(u.String())
+	}
+
 	// Load packages already registered from this repository
 	packagesRegistered, err := t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
 	if err != nil {
@@ -117,23 +125,39 @@ func (t *Tracker) Track() error {
 	}
 	for _, chartVersions := range charts {
 		for i, chartVersion := range chartVersions {
+			// Return ASAP if context is cancelled
 			select {
 			case <-t.svc.Ctx.Done():
 				return nil
 			default:
 			}
+
+			// Check if the logo of this chart version should be stored. Only
+			// the most recent version's logo is stored.
 			var storeLogo bool
 			if i == 0 {
 				storeLogo = true
 			}
-			md := chartVersion.Metadata
-			sv, err := semver.NewVersion(md.Version)
+
+			// Parse package version
+			cvmd := chartVersion.Metadata
+			sv, err := semver.NewVersion(cvmd.Version)
 			if err != nil {
-				t.warn(fmt.Errorf("invalid package %s version (%s): %w", md.Name, md.Version, err))
+				t.warn(fmt.Errorf("invalid package %s version (%s): %w", cvmd.Name, cvmd.Version, err))
 				continue
 			}
-			key := fmt.Sprintf("%s@%s", md.Name, sv.String())
+
+			// Build package key and track its availability
+			key := fmt.Sprintf("%s@%s", cvmd.Name, sv.String())
 			packagesAvailable[key] = struct{}{}
+
+			// Check if this package should be ignored
+			if tracker.ShouldIgnorePackage(rmd, cvmd.Name, sv.String()) {
+				continue
+			}
+
+			// Register package if it isn't already registered, if its digest
+			// has changed or if the tracker is bypassing the digest check
 			digest, ok := packagesRegistered[key]
 			if !ok || chartVersion.Digest != digest || bypassDigestCheck {
 				t.queue <- &Job{
@@ -145,18 +169,24 @@ func (t *Tracker) Track() error {
 		}
 	}
 
-	// Generate jobs to unregister packages not available anymore
+	// Generate jobs to unregister packages not available anymore or ignored
 	if len(packagesAvailable) > 0 {
 		for key := range packagesRegistered {
+			// Return ASAP if context is cancelled
 			select {
 			case <-t.svc.Ctx.Done():
 				return nil
 			default:
 			}
-			if _, ok := packagesAvailable[key]; !ok {
-				p := strings.Split(key, "@")
-				name := p[0]
-				version := p[1]
+
+			// Extract package name and version from key
+			p := strings.Split(key, "@")
+			name := p[0]
+			version := p[1]
+
+			// Unregister pkg if it's not available anymore or if it's ignored
+			_, ok := packagesAvailable[key]
+			if !ok || tracker.ShouldIgnorePackage(rmd, name, version) {
 				t.queue <- &Job{
 					Kind: Unregister,
 					ChartVersion: &helmrepo.ChartVersion{
@@ -170,19 +200,9 @@ func (t *Tracker) Track() error {
 		}
 	}
 
-	// Set verified publisher flag if needed
-	u, _ := url.Parse(t.r.URL)
-	if repo.SchemeIsHTTP(u) {
-		u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-		err = tracker.SetVerifiedPublisherFlag(
-			t.svc.Ctx,
-			t.svc.Rm,
-			t.r,
-			u.String(),
-		)
-		if err != nil {
-			t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
-		}
+	// Set verified publisher flag
+	if err := tracker.SetVerifiedPublisherFlag(t.svc.Ctx, t.svc.Rm, t.r, rmd); err != nil {
+		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 
 	return nil

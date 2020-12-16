@@ -147,6 +147,16 @@ type RepositoryManager interface {
 // usually provided by repositories publishers, to provide some extra context
 // about the repository they'd like to publish.
 type RepositoryMetadata struct {
-	RepositoryID string   `yaml:"repositoryID"`
-	Owners       []*Owner `yaml:"owners"`
+	RepositoryID string                   `yaml:"repositoryID"`
+	Owners       []*Owner                 `yaml:"owners"`
+	Ignore       []*RepositoryIgnoreEntry `yaml:"ignore"`
+}
+
+// RepositoryIgnoreEntry represents an entry in the ignore list. This list is
+// meant to be used as a way to exclude packages from being indexed by Artifact
+// Hub. The name corresponds to a package name, and it must be an exact match.
+// The version field is a regular expression.
+type RepositoryIgnoreEntry struct {
+	Name    string `yaml:"name"`
+	Version string `yaml:"version"`
 }

@@ -56,6 +56,11 @@ func (t *Tracker) Track() error {
 		return fmt.Errorf("error cloning repository: %w", err)
 	}
 	defer os.RemoveAll(tmpDir)
+	basePath := filepath.Join(tmpDir, packagesPath)
+
+	// Get repository metadata
+	var md *hub.RepositoryMetadata
+	md, _ = t.svc.Rm.GetMetadata(filepath.Join(basePath, hub.RepositoryMetadataFile))
 
 	// Load packages already registered from this repository
 	packagesRegistered, err := t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
@@ -66,7 +71,6 @@ func (t *Tracker) Track() error {
 	// Register available packages when needed
 	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
-	basePath := filepath.Join(tmpDir, packagesPath)
 	err = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
 		if err != nil {
 			return fmt.Errorf("error reading packages: %w", err)
@@ -142,14 +146,8 @@ func (t *Tracker) Track() error {
 		}
 	}
 
-	// Set verified publisher flag if needed
-	err = tracker.SetVerifiedPublisherFlag(
-		t.svc.Ctx,
-		t.svc.Rm,
-		t.r,
-		filepath.Join(basePath, hub.RepositoryMetadataFile),
-	)
-	if err != nil {
+	// Set verified publisher flag
+	if err := tracker.SetVerifiedPublisherFlag(t.svc.Ctx, t.svc.Rm, t.r, md); err != nil {
 		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 

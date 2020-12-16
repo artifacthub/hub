@@ -90,6 +90,11 @@ func (t *Tracker) Track() error {
 		}
 	}
 	defer os.RemoveAll(tmpDir)
+	basePath := filepath.Join(tmpDir, packagesPath)
+
+	// Get repository metadata
+	var md *hub.RepositoryMetadata
+	md, _ = t.svc.Rm.GetMetadata(filepath.Join(basePath, hub.RepositoryMetadataFile))
 
 	// Load packages already registered from this repository
 	packagesRegistered, err := t.svc.Rm.GetPackagesDigest(t.svc.Ctx, t.r.RepositoryID)
@@ -100,7 +105,6 @@ func (t *Tracker) Track() error {
 	// Register available packages when needed
 	bypassDigestCheck := t.svc.Cfg.GetBool("tracker.bypassDigestCheck")
 	packagesAvailable := make(map[string]struct{})
-	basePath := filepath.Join(tmpDir, packagesPath)
 	err = filepath.Walk(basePath, func(pkgPath string, info os.FileInfo, err error) error {
 		if err != nil {
 			return fmt.Errorf("error reading packages: %w", err)
@@ -147,14 +151,15 @@ func (t *Tracker) Track() error {
 
 		// Process package versions found
 		for i, entryV := range versions {
+			// Return ASAP if context is cancelled
 			select {
 			case <-t.svc.Ctx.Done():
 				return nil
 			default:
 			}
-			version := entryV.Name()
 
 			// Get package version CSV
+			version := entryV.Name()
 			pkgVersionPath := filepath.Join(pkgPath, version)
 			csv, csvData, err := t.getPackageVersionCSV(pkgVersionPath)
 			if err != nil {
@@ -166,6 +171,11 @@ func (t *Tracker) Track() error {
 			key := fmt.Sprintf("%s@%s", pkgName, getPackageVersion(csv))
 			packagesAvailable[key] = struct{}{}
 			if _, ok := packagesRegistered[key]; ok && !bypassDigestCheck {
+				continue
+			}
+
+			// Check if this package should be ignored
+			if tracker.ShouldIgnorePackage(md, pkgName, getPackageVersion(csv)) {
 				continue
 			}
 
@@ -190,15 +200,21 @@ func (t *Tracker) Track() error {
 	// Unregister packages not available anymore
 	if len(packagesAvailable) > 0 {
 		for key := range packagesRegistered {
+			// Return ASAP if context is cancelled
 			select {
 			case <-t.svc.Ctx.Done():
 				return nil
 			default:
 			}
-			if _, ok := packagesAvailable[key]; !ok {
-				p := strings.Split(key, "@")
-				name := p[0]
-				version := p[1]
+
+			// Extract package name and version from key
+			p := strings.Split(key, "@")
+			name := p[0]
+			version := p[1]
+
+			// Unregister pkg if it's not available anymore or if it's ignored
+			_, ok := packagesAvailable[key]
+			if !ok || tracker.ShouldIgnorePackage(md, name, version) {
 				t.logger.Debug().Str("name", name).Str("v", version).Msg("unregistering package")
 				if err := t.unregisterPackage(name, version); err != nil {
 					t.warn(fmt.Errorf("error unregistering package %s version %s: %w", name, version, err))
@@ -207,14 +223,8 @@ func (t *Tracker) Track() error {
 		}
 	}
 
-	// Set verified publisher flag if needed
-	err = tracker.SetVerifiedPublisherFlag(
-		t.svc.Ctx,
-		t.svc.Rm,
-		t.r,
-		filepath.Join(basePath, hub.RepositoryMetadataFile),
-	)
-	if err != nil {
+	// Set verified publisher flag
+	if err := tracker.SetVerifiedPublisherFlag(t.svc.Ctx, t.svc.Rm, t.r, md); err != nil {
 		t.warn(fmt.Errorf("error setting verified publisher flag: %w", err))
 	}
 

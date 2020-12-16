@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"regexp"
 
 	"github.com/artifacthub/hub/internal/hub"
 	"github.com/artifacthub/hub/internal/img"
@@ -148,11 +149,10 @@ func SetVerifiedPublisherFlag(
 	ctx context.Context,
 	rm hub.RepositoryManager,
 	r *hub.Repository,
-	mdFile string,
+	md *hub.RepositoryMetadata,
 ) error {
 	var verifiedPublisher bool
-	md, err := rm.GetMetadata(mdFile)
-	if err == nil {
+	if md != nil {
 		if r.RepositoryID == md.RepositoryID {
 			verifiedPublisher = true
 		}
@@ -164,4 +164,36 @@ func SetVerifiedPublisherFlag(
 		}
 	}
 	return nil
+}
+
+// ShouldIgnorePackage checks if the package provided should be ignored.
+func ShouldIgnorePackage(md *hub.RepositoryMetadata, name, version string) bool {
+	if md == nil {
+		return false
+	}
+	for _, ignoreEntry := range md.Ignore {
+		if matchesEntry(ignoreEntry, name, version) {
+			return true
+		}
+	}
+	return false
+}
+
+// matchesEntry checks if the package name and version provide match a given
+// ignore entry.
+func matchesEntry(ignoreEntry *hub.RepositoryIgnoreEntry, name, version string) bool {
+	if ignoreEntry.Name != name {
+		return false
+	}
+	if version == "" {
+		return true
+	}
+	versionMatch, err := regexp.Match(ignoreEntry.Version, []byte(version))
+	if err != nil {
+		return false
+	}
+	if versionMatch {
+		return true
+	}
+	return false
 }

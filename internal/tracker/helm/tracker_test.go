@@ -3,9 +3,7 @@ package helm
 import (
 	"context"
 	"fmt"
-	"net/url"
 	"os"
-	"path"
 	"testing"
 
 	"github.com/artifacthub/hub/internal/hub"
@@ -48,6 +46,8 @@ func TestTracker(t *testing.T) {
 			URL:          "http://localhost",
 		}
 		tw := newTrackerWrapper(r)
+		mdFile := r.URL + "/" + hub.RepositoryMetadataFile
+		tw.rm.On("GetMetadata", mdFile).Return(&hub.RepositoryMetadata{RepositoryID: r.RepositoryID}, nil)
 		tw.rm.On("GetPackagesDigest", tw.ctx, r.RepositoryID).Return(nil, nil)
 		tw.il.On("LoadIndex", r).Return(nil, "", tests.ErrFake)
 
@@ -107,6 +107,7 @@ func TestTracker(t *testing.T) {
 		testCases := []struct {
 			n              int
 			r              *hub.Repository
+			md             *hub.RepositoryMetadata
 			indexFile      map[string]*helmrepo.IndexFile
 			packagesDigest map[string]map[string]string
 			expectedJobs   []*Job
@@ -114,6 +115,9 @@ func TestTracker(t *testing.T) {
 			{
 				1,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -135,6 +139,32 @@ func TestTracker(t *testing.T) {
 			{
 				2,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+					Ignore: []*hub.RepositoryIgnoreEntry{
+						{
+							Name: "pkg1",
+						},
+					},
+				},
+				map[string]*helmrepo.IndexFile{
+					repo1ID: {
+						Entries: map[string]helmrepo.ChartVersions{
+							"pkg1": []*helmrepo.ChartVersion{
+								pkg1V1,
+							},
+						},
+					},
+				},
+				nil,
+				nil,
+			},
+			{
+				3,
+				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -160,8 +190,11 @@ func TestTracker(t *testing.T) {
 				},
 			},
 			{
-				3,
+				4,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -179,8 +212,11 @@ func TestTracker(t *testing.T) {
 				nil,
 			},
 			{
-				4,
+				5,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -200,8 +236,11 @@ func TestTracker(t *testing.T) {
 				nil,
 			},
 			{
-				5,
+				6,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -227,8 +266,11 @@ func TestTracker(t *testing.T) {
 				},
 			},
 			{
-				6,
+				7,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -257,8 +299,11 @@ func TestTracker(t *testing.T) {
 				},
 			},
 			{
-				7,
+				8,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: nil,
@@ -272,8 +317,11 @@ func TestTracker(t *testing.T) {
 				nil,
 			},
 			{
-				8,
+				9,
 				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+				},
 				map[string]*helmrepo.IndexFile{
 					repo1ID: {
 						Entries: map[string]helmrepo.ChartVersions{
@@ -312,6 +360,67 @@ func TestTracker(t *testing.T) {
 					},
 				},
 			},
+			{
+				10,
+				repo1,
+				&hub.RepositoryMetadata{
+					RepositoryID: repo1ID,
+					Ignore: []*hub.RepositoryIgnoreEntry{
+						{
+							Name: "pkg1",
+						},
+						{
+							Name: "pkg2",
+						},
+					},
+				},
+				map[string]*helmrepo.IndexFile{
+					repo1ID: {
+						Entries: map[string]helmrepo.ChartVersions{
+							"pkg1": []*helmrepo.ChartVersion{
+								pkg1V2,
+							},
+							"pkg2": nil,
+						},
+					},
+				},
+				map[string]map[string]string{
+					repo1ID: {
+						"pkg1@1.0.0": "pkg1-1.0.0",
+						"pkg1@2.0.0": "pkg1-2.0.0",
+						"pkg2@1.0.0": "pkg2-1.0.0",
+					},
+				},
+				[]*Job{
+					{
+						Kind: Unregister,
+						ChartVersion: &helmrepo.ChartVersion{
+							Metadata: &chart.Metadata{
+								Name:    "pkg1",
+								Version: "1.0.0",
+							},
+						},
+					},
+					{
+						Kind: Unregister,
+						ChartVersion: &helmrepo.ChartVersion{
+							Metadata: &chart.Metadata{
+								Name:    "pkg1",
+								Version: "2.0.0",
+							},
+						},
+					},
+					{
+						Kind: Unregister,
+						ChartVersion: &helmrepo.ChartVersion{
+							Metadata: &chart.Metadata{
+								Name:    "pkg2",
+								Version: "1.0.0",
+							},
+						},
+					},
+				},
+			},
 		}
 		for _, tc := range testCases {
 			tc := tc
@@ -320,14 +429,11 @@ func TestTracker(t *testing.T) {
 
 				// Setup tracker and expectations
 				tw := newTrackerWrapper(tc.r)
+				mdFile := tc.r.URL + "/" + hub.RepositoryMetadataFile
+				tw.rm.On("GetMetadata", mdFile).Return(tc.md, nil)
 				tw.rm.On("GetPackagesDigest", tw.ctx, tc.r.RepositoryID).
 					Return(tc.packagesDigest[tc.r.RepositoryID], nil)
 				tw.il.On("LoadIndex", tc.r).Return(tc.indexFile[tc.r.RepositoryID], "", nil)
-				u, _ := url.Parse(tc.r.URL)
-				u.Path = path.Join(u.Path, hub.RepositoryMetadataFile)
-				tw.rm.On("GetMetadata", u.String()).Return(&hub.RepositoryMetadata{
-					RepositoryID: tc.r.RepositoryID,
-				}, nil)
 				tw.rm.On("SetVerifiedPublisher", tw.ctx, tc.r.RepositoryID, true).Return(nil)
 
 				// Run tracker and check expectations
