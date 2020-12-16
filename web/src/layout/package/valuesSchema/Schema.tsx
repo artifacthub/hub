@@ -20,7 +20,7 @@ const Schema = (props: Props) => {
   const [savedOpts, setSavedOpts] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
-    const { yamlContent, paths } = compoundJSONSchemaYAML(props.schema, props.schema.definitions || {}, savedOpts);
+    const { yamlContent, paths } = compoundJSONSchemaYAML(props.schema, savedOpts);
     if (yamlContent) {
       setValuesYAML(yamlContent);
     }

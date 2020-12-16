@@ -1,6 +1,4 @@
-import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { JSONSchema4, JSONSchema6 } from 'json-schema';
-import merger from 'json-schema-merge-allof';
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isNull, isUndefined, repeat, trim } from 'lodash';
 
 import getJMESPathForValuesSchema from './getJMESPathForValuesSchema';
@@ -10,7 +8,7 @@ interface FormattedValuesSchema {
   paths: string[];
 }
 
-export default (schema: JSONSchema, definitions: any, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
+export default (schema: JSONSchema, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
   let content: string = '';
   const title = schema.title ? `# ${schema.title}` : '';
   let paths: string[] = [];
@@ -48,20 +46,14 @@ export default (schema: JSONSchema, definitions: any, savedOpts: { [key: string]
     }
   };
 
-  const checkProperties = (props: any, level: number, path?: string) => {
+  function checkProperties(props: any, level: number, path?: string) {
     Object.keys(props).forEach((propName: string) => {
       const currentPath = getJMESPathForValuesSchema(propName, path);
       paths.push(currentPath);
       let value: JSONSchema | undefined = props[propName] as JSONSchema;
 
       const checkCombinations = (valueToCheck: JSONSchema) => {
-        if (valueToCheck.allOf) {
-          try {
-            value = merger(valueToCheck);
-          } catch {
-            value = valueToCheck.allOf![savedOpts[currentPath] || 0] as JSONSchema;
-          }
-        } else if (valueToCheck.oneOf) {
+        if (valueToCheck.oneOf) {
           value = valueToCheck.oneOf[savedOpts[currentPath] || 0] as JSONSchema;
         } else if (valueToCheck.anyOf) {
           value = valueToCheck.anyOf[savedOpts[currentPath] || 0] as JSONSchema;
@@ -71,25 +63,7 @@ export default (schema: JSONSchema, definitions: any, savedOpts: { [key: string]
       if (isUndefined(value.$ref)) {
         checkCombinations(value);
       } else {
-        const sample: JSONSchema4 | JSONSchema6 = {
-          title: 'deref',
-          type: 'object',
-          properties: { test: value as any },
-          definitions: definitions,
-        };
-
-        try {
-          const formattedValue = $RefParser.dereference(sample) as any;
-          if (formattedValue && formattedValue.properties && formattedValue.properties.test) {
-            if (isUndefined(formattedValue.properties.test.$ref)) {
-              checkCombinations(formattedValue.properties.test);
-            } else {
-              value = undefined;
-            }
-          }
-        } catch (err) {
-          value = undefined;
-        }
+        value = undefined;
       }
 
       if (isUndefined(value)) return;
@@ -103,7 +77,7 @@ export default (schema: JSONSchema, definitions: any, savedOpts: { [key: string]
         checkProperties(value.properties, level + 1, currentPath);
       }
     });
-  };
+  }
 
   if (schema.properties) {
     checkProperties(schema.properties, 0);

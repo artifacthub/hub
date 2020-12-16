@@ -1,6 +1,4 @@
-import $RefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { JSONSchema4, JSONSchema6 } from 'json-schema';
-import merger from 'json-schema-merge-allof';
+import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
@@ -38,13 +36,7 @@ const SchemaLine = (props: Prop) => {
     let comb = null;
 
     const checkCombinations = (valueToCheck: JSONSchema) => {
-      if (valueToCheck.allOf) {
-        try {
-          options = [merger(valueToCheck)];
-        } catch {
-          error = true;
-        }
-      } else if (valueToCheck.oneOf) {
+      if (valueToCheck.oneOf) {
         options = valueToCheck.oneOf as JSONSchema[];
         comb = 'anyOf';
       } else if (valueToCheck.anyOf) {
@@ -54,28 +46,7 @@ const SchemaLine = (props: Prop) => {
     };
 
     if (currentValue.$ref) {
-      const sample: JSONSchema4 | JSONSchema6 = {
-        title: 'deref',
-        type: 'object',
-        properties: { test: currentValue as any },
-        definitions: props.definitions,
-      };
-
-      try {
-        const formattedValue = (await $RefParser.dereference(sample)) as any;
-        if (formattedValue && formattedValue.properties && formattedValue.properties.test) {
-          if (formattedValue.properties.test.$ref) {
-            error = true;
-          } else {
-            options = formattedValue ? [formattedValue.properties.test as JSONSchema] : options;
-            checkCombinations(formattedValue.properties.test);
-          }
-        } else {
-          error = true;
-        }
-      } catch (err) {
-        error = true;
-      }
+      error = true;
     } else {
       checkCombinations(currentValue);
     }
