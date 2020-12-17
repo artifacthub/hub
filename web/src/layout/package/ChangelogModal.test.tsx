@@ -261,7 +261,23 @@ describe('ChangelogModal', () => {
         expect(API.getChangelog).toHaveBeenCalledTimes(1);
       });
 
-      expect(getByText('Contains security updates'));
+      expect(getByText('Contains security updates')).toBeInTheDocument();
+    });
+
+    it('dislays pre-release badge', async () => {
+      const mockChangelog = getMockChangelog('9');
+      mocked(API).getChangelog.mockResolvedValue(mockChangelog);
+
+      const { getByText } = render(<ChangelogModal {...defaultProps} />);
+
+      const btn = getByText('Changelog');
+      fireEvent.click(btn);
+
+      await waitFor(() => {
+        expect(API.getChangelog).toHaveBeenCalledTimes(1);
+      });
+
+      expect(getByText('Pre-release')).toBeInTheDocument();
     });
   });
 });
