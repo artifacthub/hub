@@ -36,20 +36,6 @@ const InstallationModal = (props: Props) => {
   const [installMethods, setInstallMethods] = useState<InstallMethodOutput | null>(null);
   const isDisabled = !isNull(installMethods) && !isUndefined(installMethods.errorMessage);
 
-  const isPrerelease = (): boolean => {
-    let isPrerelease = false;
-    if (props.package && props.package.availableVersions) {
-      const currentVersion = props.package.availableVersions.find(
-        (vers: Version) => vers.version === props.package!.version
-      );
-      if (currentVersion) {
-        isPrerelease = currentVersion.prerelease;
-      }
-    }
-
-    return isPrerelease;
-  };
-
   const onOpenModal = () => {
     if (!isDisabled) {
       setOpenStatus(true);
@@ -115,7 +101,7 @@ const InstallationModal = (props: Props) => {
         <>
           {installMethods.methods.length > 0 && (
             <>
-              {isPrerelease() && (
+              {props.package && props.package.prerelease && (
                 <div className="alert alert-warning mt-1 mb-4" data-testid="prerelease-alert">
                   This package version is a <span className="font-weight-bold">pre-release</span> and it is not ready
                   for production use.

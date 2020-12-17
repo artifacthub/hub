@@ -79,6 +79,8 @@ export interface Package {
   hasValuesSchema?: boolean;
   hasChangelog?: boolean;
   contentUrl?: string;
+  containsSecurityUpdates?: boolean;
+  prerelease?: boolean;
 }
 
 export interface ContainerImage {

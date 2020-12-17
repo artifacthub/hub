@@ -27,6 +27,8 @@ const defaultProps = {
     isOperator: false,
     signed: false,
     createdAt: 0,
+    prerelease: true,
+    containsSecurityUpdates: false,
     keywords: ['key1', 'key2'],
     repository: {
       repositoryid: 'id',
