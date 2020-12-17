@@ -39,9 +39,10 @@ const packageItem: Package = {
     {
       version: '1.0.0',
       containsSecurityUpdates: false,
+      prerelease: false,
       createdAt: 1,
     },
-    { version: '1.0.1', containsSecurityUpdates: false, createdAt: 1 },
+    { version: '1.0.1', containsSecurityUpdates: false, prerelease: false, createdAt: 1 },
   ],
 };
 
@@ -49,6 +50,7 @@ const defaultProps = {
   isActive: false,
   version: '1.0.1',
   containsSecurityUpdates: false,
+  prerelease: false,
   createdAt: 0,
   packageItem: packageItem,
 };
@@ -107,7 +109,7 @@ describe('Version', () => {
       waitFor(() => expect(getByRole('status')).toBeInTheDocument());
     });
 
-    it('renders security badge', () => {
+    it('renders security updates badge', () => {
       const { getByText } = render(
         <Router>
           <Version {...defaultProps} containsSecurityUpdates />
@@ -115,6 +117,16 @@ describe('Version', () => {
       );
 
       expect(getByText('Contains security updates')).toBeInTheDocument();
+    });
+
+    it('renders pre-release badge', () => {
+      const { getByText } = render(
+        <Router>
+          <Version {...defaultProps} prerelease />
+        </Router>
+      );
+
+      expect(getByText('Pre-release')).toBeInTheDocument();
     });
   });
 });

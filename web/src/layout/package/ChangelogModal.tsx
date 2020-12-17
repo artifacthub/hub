@@ -160,11 +160,18 @@ const ChangelogModal = (props: Props) => {
                       </button>
                     </div>
 
-                    {item.containsSecurityUpdates && (
+                    {(item.containsSecurityUpdates || item.prerelease) && (
                       <div className={styles.badgesWrapper}>
-                        <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
-                          Contains security updates
-                        </span>
+                        {item.prerelease && (
+                          <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
+                            Pre-release
+                          </span>
+                        )}
+                        {item.containsSecurityUpdates && (
+                          <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
+                            Contains security updates
+                          </span>
+                        )}
                       </div>
                     )}
 

@@ -36,6 +36,20 @@ const InstallationModal = (props: Props) => {
   const [installMethods, setInstallMethods] = useState<InstallMethodOutput | null>(null);
   const isDisabled = !isNull(installMethods) && !isUndefined(installMethods.errorMessage);
 
+  const isPrerelease = (): boolean => {
+    let isPrerelease = false;
+    if (props.package && props.package.availableVersions) {
+      const currentVersion = props.package.availableVersions.find(
+        (vers: Version) => vers.version === props.package!.version
+      );
+      if (currentVersion) {
+        isPrerelease = currentVersion.prerelease;
+      }
+    }
+
+    return isPrerelease;
+  };
+
   const onOpenModal = () => {
     if (!isDisabled) {
       setOpenStatus(true);
@@ -100,63 +114,72 @@ const InstallationModal = (props: Props) => {
       <Modal header={<ModalHeader package={props.package!} />} onClose={onCloseModal} open={openStatus}>
         <>
           {installMethods.methods.length > 0 && (
-            <Tabs
-              tabs={installMethods.methods.map((method: InstallMethod) => ({
-                name: method.label,
-                title: method.title,
-                shortTitle: method.shortTitle,
-                content: (
-                  <>
-                    {(() => {
-                      switch (method.kind) {
-                        case InstallMethodKind.Custom:
-                          return <CustomInstall install={method.props.install!} />;
-                        case InstallMethodKind.Helm:
-                          return (
-                            <HelmInstall
-                              name={method.props.name!}
-                              version={method.props.version}
-                              repository={method.props.repository!}
-                              contentUrl={method.props.contentUrl}
-                              label={method.label}
-                            />
-                          );
-                        case InstallMethodKind.HelmOCI:
-                          return (
-                            <HelmOCIInstall
-                              name={method.props.name!}
-                              version={method.props.version}
-                              repository={method.props.repository!}
-                            />
-                          );
-                        case InstallMethodKind.OLM:
-                          return (
-                            <OLMInstall
-                              name={method.props.name!}
-                              activeChannel={method.props.activeChannel!}
-                              isGlobalOperator={method.props.isGlobalOperator}
-                            />
-                          );
-                        case InstallMethodKind.OLMOCI:
-                          return (
-                            <OLMOCIInstall
-                              name={method.props.name!}
-                              repository={method.props.repository!}
-                              activeChannel={method.props.activeChannel!}
-                            />
-                          );
-                        case InstallMethodKind.Falco:
-                          return <FalcoInstall normalizedName={method.props.normalizedName!} />;
-                        default:
-                          return null;
-                      }
-                    })()}
-                  </>
-                ),
-              }))}
-              active={installMethods.methods[0].label}
-              noDataContent="Sorry, the information for installation is missing."
-            />
+            <>
+              {isPrerelease() && (
+                <div className="alert alert-warning mt-1 mb-4" data-testid="prerelease-alert">
+                  This package version is a <span className="font-weight-bold">pre-release</span> and it is not ready
+                  for production use.
+                </div>
+              )}
+
+              <Tabs
+                tabs={installMethods.methods.map((method: InstallMethod) => ({
+                  name: method.label,
+                  title: method.title,
+                  shortTitle: method.shortTitle,
+                  content: (
+                    <>
+                      {(() => {
+                        switch (method.kind) {
+                          case InstallMethodKind.Custom:
+                            return <CustomInstall install={method.props.install!} />;
+                          case InstallMethodKind.Helm:
+                            return (
+                              <HelmInstall
+                                name={method.props.name!}
+                                version={method.props.version}
+                                repository={method.props.repository!}
+                                contentUrl={method.props.contentUrl}
+                                label={method.label}
+                              />
+                            );
+                          case InstallMethodKind.HelmOCI:
+                            return (
+                              <HelmOCIInstall
+                                name={method.props.name!}
+                                version={method.props.version}
+                                repository={method.props.repository!}
+                              />
+                            );
+                          case InstallMethodKind.OLM:
+                            return (
+                              <OLMInstall
+                                name={method.props.name!}
+                                activeChannel={method.props.activeChannel!}
+                                isGlobalOperator={method.props.isGlobalOperator}
+                              />
+                            );
+                          case InstallMethodKind.OLMOCI:
+                            return (
+                              <OLMOCIInstall
+                                name={method.props.name!}
+                                repository={method.props.repository!}
+                                activeChannel={method.props.activeChannel!}
+                              />
+                            );
+                          case InstallMethodKind.Falco:
+                            return <FalcoInstall normalizedName={method.props.normalizedName!} />;
+                          default:
+                            return null;
+                        }
+                      })()}
+                    </>
+                  ),
+                }))}
+                active={installMethods.methods[0].label}
+                noDataContent="Sorry, the information for installation is missing."
+              />
+            </>
           )}
         </>
       </Modal>

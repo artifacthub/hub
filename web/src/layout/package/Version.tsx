@@ -10,6 +10,7 @@ interface Props {
   isActive: boolean;
   version: string;
   containsSecurityUpdates: boolean;
+  prerelease: boolean;
   createdAt: number;
   packageItem: Package;
   searchUrlReferer?: SearchFiltersURL;
@@ -40,12 +41,21 @@ const Version = (props: Props) => {
 
   const getBadges = () => (
     <>
-      {props.containsSecurityUpdates && (
+      {(props.containsSecurityUpdates || props.prerelease) && (
         <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
-          <div className="d-flex flex-row align-items-center">
-            <div className={`${styles.badgeDecorator} position-relative mx-1`} />
-            <span className={`badge badge-pill my-1 ${styles.badge}`}>Contains security updates</span>
-          </div>
+          {props.prerelease && (
+            <div className="d-flex flex-row align-items-center">
+              <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+              <span className={`badge badge-pill my-1 ${styles.badge}`}>Pre-release</span>
+            </div>
+          )}
+
+          {props.containsSecurityUpdates && (
+            <div className="d-flex flex-row align-items-center">
+              <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+              <span className={`badge badge-pill my-1 ${styles.badge}`}>Contains security updates</span>
+            </div>
+          )}
         </div>
       )}
     </>
