@@ -1,0 +1,23 @@
+[
+  {
+    "version": "0.5.0",
+    "createdAt": 1604048487,
+    "containsSecurityUpdates": true,
+    "changes": [
+      "Introduce verified publisher concept",
+      "Add dark mode support",
+      "Improve search facets filtering",
+      "Notify repository owners of tracking errors",
+      "Track and list Helm charts dependencies",
+      "Display links to source in Helm packages",
+      "Add repositories kind filter to tracker",
+      "Add Monocular compatible search API",
+      "Some bugs fixes and improvements"
+    ]
+  },
+  {
+    "version": "0.4.0",
+    "containsSecurityUpdates": false,
+    "createdAt": 1604048487
+  }
+]

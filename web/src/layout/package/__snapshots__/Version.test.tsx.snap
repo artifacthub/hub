@@ -17,7 +17,7 @@ exports[`Version creates snapshot 1`] = `
       <small
         class="text-muted"
       >
-        (Invalid date)
+        (1 Jan, 1970)
       </small>
     </div>
   </div>

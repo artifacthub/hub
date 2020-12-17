@@ -97,10 +97,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -127,7 +127,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -175,10 +175,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -205,7 +205,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -250,10 +250,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -280,7 +280,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -328,10 +328,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -358,7 +358,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -403,10 +403,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -433,7 +433,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -475,10 +475,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -505,7 +505,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
@@ -553,10 +553,10 @@ exports[`ChangelogModal creates snapshot 1`] = `
                 data-testid="changelogBlock"
               >
                 <div
-                  class="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2"
+                  class="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2"
                 >
                   <div
-                    class="flex-grow-1 d-flex flex-row align-items-baseline versionWrapper"
+                    class="d-flex flex-row align-items-baseline versionWrapper"
                   >
                     <div
                       class="h5 text-secondary text-truncate mb-0"
@@ -583,7 +583,7 @@ exports[`ChangelogModal creates snapshot 1`] = `
                     </button>
                   </div>
                   <div
-                    class="ml-0 ml-md-2 text-nowrap"
+                    class="ml-auto pl-0 pl-md-2 text-nowrap"
                   >
                     <small
                       class="text-muted"
