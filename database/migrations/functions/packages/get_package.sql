@@ -53,6 +53,8 @@ begin
         'app_version', s.app_version,
         'digest', s.digest,
         'deprecated', s.deprecated,
+        'contains_security_updates', s.contains_security_updates,
+        'prerelease', s.prerelease,
         'license', s.license,
         'signed', s.signed,
         'content_url', s.content_url,
