@@ -6,10 +6,11 @@ returns setof json as $$
         'version', version,
         'created_at', floor(extract(epoch from created_at)),
         'changes', changes,
-        'contains_security_updates', contains_security_updates
+        'contains_security_updates', contains_security_updates,
+        'prerelease', prerelease
     ))), '[]')
     from (
-        select version, created_at, changes, contains_security_updates
+        select version, created_at, changes, contains_security_updates, prerelease
         from snapshot
         where package_id = p_package_id
         and changes is not null

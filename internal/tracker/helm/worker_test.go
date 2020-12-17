@@ -329,6 +329,7 @@ func TestWorker(t *testing.T) {
 					"Fixed minor bug",
 				},
 				ContainsSecurityUpdates: true,
+				Prerelease:              true,
 				Repository: &hub.Repository{
 					RepositoryID: "repo1",
 				},
@@ -729,6 +730,47 @@ func TestEnrichPackageFromAnnotations(t *testing.T) {
 			},
 			&hub.Package{
 				Capabilities: "Basic Install",
+			},
+			"",
+		},
+		// Prerelease
+		{
+			&hub.Package{},
+			map[string]string{
+				prereleaseAnnotation: "invalid",
+			},
+			&hub.Package{},
+			"invalid prerelease value",
+		},
+		{
+			&hub.Package{},
+			map[string]string{
+				prereleaseAnnotation: "true",
+			},
+			&hub.Package{
+				Prerelease: true,
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				Prerelease: true,
+			},
+			map[string]string{
+				prereleaseAnnotation: "false",
+			},
+			&hub.Package{
+				Prerelease: false,
+			},
+			"",
+		},
+		{
+			&hub.Package{
+				Prerelease: true,
+			},
+			map[string]string{},
+			&hub.Package{
+				Prerelease: true,
 			},
 			"",
 		},

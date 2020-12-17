@@ -22,6 +22,10 @@ Use this annotation to provide a list of the images that should not be scanned f
 
 Use this annotation to indicate the operator's license. It must be a valid [SPDX identifier](https://spdx.org/licenses/).
 
+- **artifacthub.io/prerelease** *(boolean string, see example below)*
+
+Use this annotation to indicate that this operator version is a pre-release. This status will be displayed in the UI's package view, as well as in new releases notifications emails.
+
 ## Example
 
 Artifact Hub annotations in `CSV` file:
@@ -37,6 +41,7 @@ metadata:
       - repo/img2:2.0.0
       - repo/img3:3.0.0
     artifacthub.io/license: Apache-2.0
+    artifacthub.io/prerelease: "false"
 spec:
     ...
 ```

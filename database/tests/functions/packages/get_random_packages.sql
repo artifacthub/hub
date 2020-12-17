@@ -65,7 +65,7 @@ insert into snapshot (
     'readme',
     false,
     false,
-    '2020-12-16 12:31:27'
+    '2020-12-16 12:31:27+00'
 );
 insert into package (
     package_id,

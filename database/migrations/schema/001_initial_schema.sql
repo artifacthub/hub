@@ -152,6 +152,7 @@ create table if not exists snapshot (
     values_schema jsonb,
     changes text[],
     contains_security_updates boolean,
+    prerelease boolean,
     created_at timestamptz default current_timestamp not null,
     primary key (package_id, version),
     unique (package_id, digest)

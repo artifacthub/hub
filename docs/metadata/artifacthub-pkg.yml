@@ -16,6 +16,7 @@ containersImages: # (optional)
 containsSecurityUpdates: Whether this package version contains security updates (optional, boolean)
 operator: Whether this package is an Operator (optional, boolean)
 deprecated: Whether this package is deprecated (optional, boolean)
+prerelease: Whether this package version is a pre-release (optional, boolean)
 keywords: # (optional)
   - A list of keywords about this package
   - Using one or more categories names as keywords will improve package visibility

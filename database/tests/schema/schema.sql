@@ -187,6 +187,7 @@ select columns_are('snapshot', array[
     'values_schema',
     'changes',
     'contains_security_updates',
+    'prerelease',
     'created_at'
 ]);
 select columns_are('subscription', array[

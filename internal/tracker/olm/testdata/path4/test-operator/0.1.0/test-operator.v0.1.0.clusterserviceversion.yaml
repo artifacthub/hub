@@ -9,6 +9,7 @@ metadata:
     artifacthub.io/imagesWhitelist: |
       - registry.io/image2:1.0.0
     artifacthub.io/license: Apache-2.0
+    artifacthub.io/prerelease: "true"
     capabilities: Basic Install
     categories: Application Runtime
     containerImage: repo.url:latest

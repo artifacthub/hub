@@ -96,6 +96,7 @@ insert into snapshot (
     values_schema,
     changes,
     contains_security_updates,
+    prerelease,
     created_at
 ) values (
     :'package1ID',
@@ -124,6 +125,7 @@ insert into snapshot (
     '{"key": "value"}',
     '{"feature 1", "fix 1"}',
     true,
+    true,
     '2020-06-16 11:20:34+02'
 );
 insert into snapshot (
@@ -142,6 +144,7 @@ insert into snapshot (
     data,
     values_schema,
     contains_security_updates,
+    prerelease,
     created_at
 ) values (
     :'package1ID',
@@ -158,6 +161,7 @@ insert into snapshot (
     'basic install',
     '{"key": "value"}',
     '{}',
+    false,
     false,
     '2020-06-16 11:20:33+02'
 );
@@ -254,11 +258,13 @@ select is(
             {
                 "version": "0.0.9",
                 "contains_security_updates": false,
+                "prerelease": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
+                "prerelease": true,
                 "created_at": 1592299234
             }
         ],
@@ -363,11 +369,13 @@ select is(
             {
                 "version": "0.0.9",
                 "contains_security_updates": false,
+                "prerelease": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
+                "prerelease": true,
                 "created_at": 1592299234
             }
         ],
@@ -462,11 +470,13 @@ select is(
             {
                 "version": "0.0.9",
                 "contains_security_updates": false,
+                "prerelease": false,
                 "created_at": 1592299233
             },
             {
                 "version": "1.0.0",
                 "contains_security_updates": true,
+                "prerelease": true,
                 "created_at": 1592299234
             }
         ],

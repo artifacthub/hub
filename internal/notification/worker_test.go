@@ -68,6 +68,7 @@ func TestWorker(t *testing.T) {
 			"Bug fixed",
 		},
 		ContainsSecurityUpdates: true,
+		Prerelease:              true,
 		Repository: &hub.Repository{
 			Kind:             hub.Helm,
 			Name:             "repo1",
@@ -269,6 +270,7 @@ func TestWorker(t *testing.T) {
 			"url": "http://baseURL/packages/helm/repo1/package1/1.0.0",
 			"changes": ["Cool feature", "Bug fixed"],
 			"containsSecurityUpdates": true,
+			"prerelease": true,
 			"repository": {
 				"kind": "helm",
 				"name": "repo1",

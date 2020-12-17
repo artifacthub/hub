@@ -285,6 +285,7 @@ func (w *Worker) preparePkgNotificationTemplateData(
 			"url":                     pkg.BuildURL(w.baseURL, p, e.PackageVersion),
 			"changes":                 p.Changes,
 			"containsSecurityUpdates": p.ContainsSecurityUpdates,
+			"prerelease":              p.Prerelease,
 			"repository": map[string]interface{}{
 				"kind":      hub.GetKindName(p.Repository.Kind),
 				"name":      p.Repository.Name,
@@ -356,6 +357,7 @@ var DefaultWebhookPayloadTmpl = template.Must(template.New("").Parse(`
 			"url": "{{ .Package.url }}",
 			"changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
 			"containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
+			"prerelease": {{ .Package.prerelease }},
 			"repository": {
 				"kind": "{{ .Package.repository.kind }}",
 				"name": "{{ .Package.repository.name }}",
