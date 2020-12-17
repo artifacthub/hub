@@ -184,6 +184,7 @@ var webhookTestTemplateData = &hub.PackageNotificationTemplateData{
 			"Bug fixed",
 		},
 		"containsSecurityUpdates": true,
+		"prerelease":              true,
 		"repository": map[string]interface{}{
 			"kind":      "helm",
 			"name":      "repo1",

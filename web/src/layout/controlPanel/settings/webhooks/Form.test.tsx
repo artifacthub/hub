@@ -259,6 +259,7 @@ describe('WebhookForm', () => {
             "url": "{{ .Package.url }}",
             "changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
             "containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
+            "prerelease": {{ .Package.prerelease }},
             "repository": {
                 "kind": "{{ .Package.repository.kind }}",
                 "name": "{{ .Package.repository.name }}",

@@ -93,6 +93,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					"fix 1",
 				},
 				ContainsSecurityUpdates: true,
+				Prerelease:              true,
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "maintainer1",
@@ -137,6 +138,7 @@ func TestPreparePackageFromMetadata(t *testing.T) {
 					"fix 1",
 				},
 				ContainsSecurityUpdates: true,
+				Prerelease:              true,
 				Maintainers: []*hub.Maintainer{
 					{
 						Name:  "maintainer1",

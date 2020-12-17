@@ -13,6 +13,7 @@ containersImages:
 containsSecurityUpdates: true
 operator: false
 deprecated: false
+prerelease: true
 keywords:
   - kw1
   - kw2

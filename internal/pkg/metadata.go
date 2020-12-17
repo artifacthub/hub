@@ -59,6 +59,7 @@ func PreparePackageFromMetadata(md *hub.PackageMetadata) (*hub.Package, error) {
 		Install:                 md.Install,
 		Changes:                 md.Changes,
 		ContainsSecurityUpdates: md.ContainsSecurityUpdates,
+		Prerelease:              md.Prerelease,
 		Links:                   md.Links,
 		Version:                 md.Version,
 		AppVersion:              md.AppVersion,

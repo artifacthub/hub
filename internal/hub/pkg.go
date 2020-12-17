@@ -83,6 +83,7 @@ type Package struct {
 	HasChangeLog            bool                   `json:"has_changelog"`
 	Changes                 []string               `json:"changes"`
 	ContainsSecurityUpdates bool                   `json:"contains_security_updates"`
+	Prerelease              bool                   `json:"prerelease"`
 	Maintainers             []*Maintainer          `json:"maintainers"`
 	Repository              *Repository            `json:"repository"`
 	CreatedAt               int64                  `json:"created_at,omitempty"`
@@ -133,6 +134,7 @@ type PackageMetadata struct {
 	Install                 string            `yaml:"install"`
 	Changes                 []string          `yaml:"changes"`
 	ContainsSecurityUpdates bool              `yaml:"containsSecurityUpdates"`
+	Prerelease              bool              `json:"prerelease"`
 	Maintainers             []*Maintainer     `yaml:"maintainers"`
 	Provider                *Provider         `yaml:"provider"`
 	Ignore                  []string          `yaml:"ignore"`

@@ -27,12 +27,14 @@ insert into snapshot (
     version,
     created_at,
     changes,
-    contains_security_updates
+    contains_security_updates,
+    prerelease
 ) values (
     :'package1ID',
     '1.0.0',
     '2020-06-16 11:20:34+02',
     '{"feature 3", "fix 3"}',
+    true,
     true
 );
 insert into snapshot (
@@ -40,12 +42,14 @@ insert into snapshot (
     version,
     created_at,
     changes,
-    contains_security_updates
+    contains_security_updates,
+    prerelease
 ) values (
     :'package1ID',
     '0.0.9',
     '2020-06-16 11:20:33+02',
     '{"feature 2", "fix 2"}',
+    false,
     false
 );
 insert into snapshot (
@@ -68,13 +72,15 @@ select is(
             "version": "1.0.0",
             "created_at": 1592299234,
             "changes": ["feature 3", "fix 3"],
-            "contains_security_updates": true
+            "contains_security_updates": true,
+            "prerelease": true
         },
         {
             "version": "0.0.9",
             "created_at": 1592299233,
             "changes": ["feature 2", "fix 2"],
-            "contains_security_updates": false
+            "contains_security_updates": false,
+            "prerelease": false
         },
         {
             "version": "0.0.8",

@@ -29,6 +29,7 @@ const (
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
 	licenseAnnotation         = "artifacthub.io/license"
+	prereleaseAnnotation      = "artifacthub.io/prerelease"
 	securityUpdatesAnnotation = "artifacthub.io/containsSecurityUpdates"
 )
 
@@ -406,6 +407,10 @@ func (t *Tracker) registerPackage(
 	containsSecurityUpdates, err := strconv.ParseBool(csv.Annotations[securityUpdatesAnnotation])
 	if err == nil {
 		p.ContainsSecurityUpdates = containsSecurityUpdates
+	}
+	prerelease, err := strconv.ParseBool(csv.Annotations[prereleaseAnnotation])
+	if err == nil {
+		p.Prerelease = prerelease
 	}
 	p.Data = map[string]interface{}{
 		"isGlobalOperator": isGlobalOperator,

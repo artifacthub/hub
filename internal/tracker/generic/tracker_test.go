@@ -252,6 +252,7 @@ func TestTracker(t *testing.T) {
 				"fix 1",
 			},
 			ContainsSecurityUpdates: true,
+			Prerelease:              true,
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "Maintainer",

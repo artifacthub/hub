@@ -54,6 +54,7 @@ export const DEFAULT_PAYLOAD_TEMPLATE = `{
             "url": "{{ .Package.url }}",
             "changes": [{{range $i, $e := .Package.changes}}{{if $i}}, {{end}}"{{.}}"{{end}}],
             "containsSecurityUpdates": {{ .Package.containsSecurityUpdates }},
+            "prerelease": {{ .Package.prerelease }},
             "repository": {
                 "kind": "{{ .Package.repository.kind }}",
                 "name": "{{ .Package.repository.name }}",
@@ -675,6 +676,12 @@ const WebhookForm = (props: Props) => {
                           <span className="text-nowrap">{`{{ .Package.containsSecurityUpdates }}`}</span>
                         </th>
                         <td>Boolean flag that indicates whether this package contains security updates or not.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          <span className="text-nowrap">{`{{ .Package.prerelease }}`}</span>
+                        </th>
+                        <td>Boolean flag that indicates whether this package version is a pre-release or not.</td>
                       </tr>
                       <tr>
                         <th scope="row">

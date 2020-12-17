@@ -1302,6 +1302,7 @@ paths:
                     - version
                     - created_at
                     - contains_security_updates
+                    - prerelease
                   properties:
                     version:
                       type: string
@@ -1315,6 +1316,9 @@ paths:
                         type: string
                       nullable: false
                     contains_security_updates:
+                      type: boolean
+                      nullable: false
+                    prerelease:
                       type: boolean
                       nullable: false
         "429":
@@ -2215,6 +2219,7 @@ components:
             - has_values_schema
             - has_changelog
             - contains_security_updates
+            - prerelease
           properties:
             signed:
               type: boolean
@@ -2342,6 +2347,9 @@ components:
               format: uri
               nullable: false
             contains_security_updates:
+              type: boolean
+              nullable: false
+            prerelease:
               type: boolean
               nullable: false
     PackageSummary:
