@@ -147,8 +147,8 @@ const ChangelogModal = (props: Props) => {
               if (isNull(item.changes) || isUndefined(item.changes)) return null;
               return (
                 <div key={`v_${item.version}`} data-testid="changelogBlock">
-                  <div className="d-inline-block d-md-flex flex-row justify-content-between align-items-baseline border-bottom w-100 mb-3 pb-2">
-                    <div className={`flex-grow-1 d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
+                  <div className="d-inline-block d-md-flex flex-row align-items-baseline border-bottom w-100 mb-3 pb-2">
+                    <div className={`d-flex flex-row align-items-baseline ${styles.versionWrapper}`}>
                       <div className="h5 text-secondary text-truncate mb-0" data-testid="changelogBlockTitle">
                         {item.version}
                       </div>
@@ -160,7 +160,15 @@ const ChangelogModal = (props: Props) => {
                       </button>
                     </div>
 
-                    <div className="ml-0 ml-md-2 text-nowrap">
+                    {item.containsSecurityUpdates && (
+                      <div className={styles.badgesWrapper}>
+                        <span className={`badge badge-sm badge-pill mr-2 position-relative ${styles.badge}`}>
+                          Contains security updates
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="ml-auto pl-0 pl-md-2 text-nowrap">
                       <small className="text-muted">Released {moment(item.createdAt * 1000).fromNow()}</small>
                     </div>
                   </div>

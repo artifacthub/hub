@@ -2218,7 +2218,6 @@ components:
             - created_at
             - has_values_schema
             - has_changelog
-            - contains_security_updates
             - prerelease
           properties:
             signed:
@@ -2269,12 +2268,16 @@ components:
                 type: object
                 required:
                   - version
+                  - contains_security_updates
                   - created_at
                 properties:
                   version:
                     type: string
                     nullable: false
                     example: 1.0.0
+                  contains_security_updates:
+                    type: boolean
+                    nullable: false
                   created_at:
                     type: integer
                     nullable: false
@@ -2345,9 +2348,6 @@ components:
             content_url:
               type: string
               format: uri
-              nullable: false
-            contains_security_updates:
-              type: boolean
               nullable: false
             prerelease:
               type: boolean

@@ -9,6 +9,7 @@ import styles from './Version.module.css';
 interface Props {
   isActive: boolean;
   version: string;
+  containsSecurityUpdates: boolean;
   createdAt: number;
   packageItem: Package;
   searchUrlReferer?: SearchFiltersURL;
@@ -37,25 +38,45 @@ const Version = (props: Props) => {
 
   const formattedDate = moment(props.createdAt! * 1000).format('D MMM, YYYY');
 
+  const getBadges = () => (
+    <>
+      {props.containsSecurityUpdates && (
+        <div className={`d-flex flex-column mb-1 ${styles.badgesWrapper}`}>
+          <div className="d-flex flex-row align-items-center">
+            <div className={`${styles.badgeDecorator} position-relative mx-1`} />
+            <span className={`badge badge-pill my-1 ${styles.badge}`}>Contains security updates</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
+
   return (
     <div className="py-1 py-sm-0 w-100 text-truncate">
       {props.isActive ? (
-        <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
-          <div className="text-truncate">{props.version}</div>
-          <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
-        </div>
+        <>
+          <div className="d-flex flex-row align-items-baseline activeVersion mw-100">
+            <div className="text-truncate">{props.version}</div>
+            <small className={`text-muted ${styles.activeVersionDate}`}>({formattedDate})</small>
+          </div>
+          {getBadges()}
+        </>
       ) : (
-        <div className="d-flex flex-row align-items-baseline">
-          <button
-            data-testid="version"
-            onClick={() => openPackagePage()}
-            className="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
-          >
-            {props.version}
-          </button>
-          <small className="text-muted">({formattedDate})</small>
-          {isLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" />}
-        </div>
+        <>
+          <div className="d-flex flex-row align-items-baseline">
+            <button
+              data-testid="version"
+              onClick={() => openPackagePage()}
+              className="btn btn-link pl-0 pt-0 pb-0 border-0 text-truncate d-block mw-100 text-left"
+            >
+              {props.version}
+            </button>
+            <small className="text-muted">({formattedDate})</small>
+            {isLoading && <span className="spinner-border spinner-border-sm ml-2" role="status" />}
+          </div>
+
+          {getBadges()}
+        </>
       )}
     </div>
   );

@@ -15,6 +15,12 @@
   width: 230px;
 }
 
+.badge {
+  top: -3px;
+  border: 1px solid var(--orange);
+  color: var(--orange);
+}
+
 @media only screen and (max-width: 767.98px) {
   .title {
     font-size: 1.25rem;
@@ -22,6 +28,11 @@
 
   .list {
     font-size: 80%;
+  }
+
+  .badgesWrapper {
+    font-size: 80%;
+    margin-top: 0.5rem;
   }
 }
 

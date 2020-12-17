@@ -88,6 +88,7 @@ export interface ContainerImage {
 
 export interface Version {
   version: string;
+  containsSecurityUpdates: boolean;
   createdAt: number;
 }
 
@@ -507,6 +508,7 @@ export interface CVSSVectorOpt {
 export interface ChangeLog {
   version: string;
   createdAt: number;
+  containsSecurityUpdates: boolean;
   changes?: string[] | null;
 }
 
