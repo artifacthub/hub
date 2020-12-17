@@ -123,8 +123,24 @@ var newReleaseEmailTmpl = template.Must(template.New("").Parse(`
                           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                             <tbody>
                               <tr>
+                                <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: {{ if .Package.containsSecurityUpdates }} 15px; {{ else }} 30px;{{ end }}">
+                                  <div style="color: #ffffff; color: #856404; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        {{ end }}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        {{ if .Package.containsSecurityUpdates }}
+                          <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
+                            <tbody>
+                              <tr>
                                 <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-top: 5px; padding-bottom: 30px;">
-                                  <div style="color: #ffffff; color: #856404; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 25px; text-align: left;">This package version is a <b>pre-release</b> and it is not ready for production use.</div>
+                                  <div style="color: #ffffff; color: #856404; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; box-sizing: border-box; cursor: pointer; font-size: 14px; font-weight: 400; margin: 0; padding: 12px 20px; text-align: left;">This package version contains security updates.</div>
                                 </td>
                               </tr>
                             </tbody>
