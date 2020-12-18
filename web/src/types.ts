@@ -12,6 +12,7 @@ export interface Repository {
   name: string;
   displayName?: string | null;
   url: string;
+  branch?: string | null;
   organizationName?: string | null;
   organizationDisplayName?: string | null;
   userAlias?: string | null;

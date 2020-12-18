@@ -26,6 +26,7 @@ const repoMock: Repository = {
   name: 'repoTest',
   displayName: 'Repo test',
   url: 'http://test.repo',
+  branch: null,
   disabled: false,
   scannerDisabled: false,
   authUser: null,
@@ -101,6 +102,7 @@ describe('Repository Modal - repositories section', () => {
             {
               name: 'name',
               url: 'http://test.com',
+              branch: null,
               displayName: 'Pretty name',
               kind: 0,
               disabled: false,
@@ -136,6 +138,7 @@ describe('Repository Modal - repositories section', () => {
             {
               name: 'name',
               url: 'http://test.com',
+              branch: null,
               displayName: 'Pretty name',
               kind: 0,
               disabled: false,
@@ -366,6 +369,7 @@ describe('Repository Modal - repositories section', () => {
             {
               name: 'name',
               url: 'http://test.com',
+              branch: null,
               displayName: 'Pretty name',
               kind: 0,
               disabled: true,
@@ -548,6 +552,7 @@ describe('Repository Modal - repositories section', () => {
             {
               name: 'name',
               url: 'http://test.com',
+              branch: null,
               displayName: 'Pretty name',
               kind: 0,
               disabled: false,

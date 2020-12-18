@@ -84,6 +84,7 @@ create table if not exists repository (
     name text not null check (name <> '') unique,
     display_name text check (display_name <> ''),
     url text not null check (url <> ''),
+    branch text check (branch <> ''),
     auth_user text check (auth_user <> ''),
     auth_pass text check (auth_pass <> ''),
     last_tracking_ts timestamptz,
