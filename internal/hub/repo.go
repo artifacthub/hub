@@ -91,6 +91,7 @@ type Repository struct {
 	Name                    string         `json:"name"`
 	DisplayName             string         `json:"display_name"`
 	URL                     string         `json:"url"`
+	Branch                  string         `json:"branch"`
 	Private                 bool           `json:"private"`
 	AuthUser                string         `json:"auth_user"`
 	AuthPass                string         `json:"auth_pass"`

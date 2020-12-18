@@ -135,6 +135,7 @@ select columns_are('repository', array[
     'name',
     'display_name',
     'url',
+    'branch',
     'auth_user',
     'auth_pass',
     'last_tracking_ts',

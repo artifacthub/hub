@@ -2469,6 +2469,9 @@ components:
             scanner_disabled:
               type: boolean
               nullable: false
+            branch:
+              type: string
+              nullable: false
     RepositoryKind:
       type: integer
       enum:

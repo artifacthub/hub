@@ -127,6 +127,7 @@ const RepositoryModal = (props: Props) => {
           kind: selectedKind,
           name: !isUndefined(props.repository) ? props.repository.name : (formData.get('name') as string),
           url: formData.get('url') as string,
+          branch: formData.get('branch') as string,
           displayName: formData.get('displayName') as string,
           disabled: isDisabled,
           scannerDisabled: isScannerDisabled,
@@ -438,6 +439,26 @@ const RepositoryModal = (props: Props) => {
             )}
 
             {getAdditionalInfo()}
+
+            {[RepositoryKind.Falco, RepositoryKind.OLM, RepositoryKind.OPA].includes(selectedKind) && (
+              <div className="mt-4">
+                <InputField
+                  type="text"
+                  label="Branch"
+                  name="branch"
+                  placeholder="master"
+                  additionalInfo={
+                    <small className="text-muted text-break mt-1">
+                      <p className="mb-0">
+                        Branch used in git based repositories. The <span className="font-weight-bold">master</span>{' '}
+                        branch is used by default when none is provided.
+                      </p>
+                    </small>
+                  }
+                  value={!isUndefined(props.repository) && props.repository.branch ? props.repository.branch : ''}
+                />
+              </div>
+            )}
 
             <div className="mt-4 mb-3">
               <div className="custom-control custom-switch pl-0">

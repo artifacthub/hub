@@ -19,8 +19,8 @@ values (:'org1ID', 'org1', 'Organization 1', 'Description 1', 'https://org1.com'
 insert into user__organization (user_id, organization_id, confirmed) values(:'user1ID', :'org1ID', true);
 insert into repository (repository_id, name, display_name, url, repository_kind_id, user_id)
 values (:'repo1ID', 'repo1', 'Repo 1', 'https://repo1.com', 0, :'user1ID');
-insert into repository (repository_id, name, display_name, url, repository_kind_id, organization_id)
-values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 0, :'org1ID');
+insert into repository (repository_id, name, display_name, url, branch, repository_kind_id, organization_id)
+values (:'repo2ID', 'repo2', 'Repo 2', 'https://repo2.com', 'main', 0, :'org1ID');
 insert into package (
     package_id,
     name,
@@ -65,6 +65,7 @@ select throws_ok(
             "name": "repo1",
             "display_name": "Repo 1 updated",
             "url": "https://repo1.com/updated",
+            "branch": "main",
             "auth_user": "user1",
             "auth_pass": "pass1",
             "disabled": false,
@@ -85,6 +86,7 @@ select throws_ok(
             "name": "repo2",
             "display_name": "Repo 2 updated",
             "url": "https://repo2.com/updated",
+            "branch": "main",
             "auth_user": "user1",
             "auth_pass": "pass1",
             "disabled": false,
@@ -103,6 +105,7 @@ select update_repository(:'user1ID', '
     "name": "repo1",
     "display_name": "Repo 1 updated",
     "url": "https://repo1.com/updated",
+    "branch": "main",
     "auth_user": "user1",
     "auth_pass": "pass1",
     "disabled": true,
@@ -111,12 +114,12 @@ select update_repository(:'user1ID', '
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, auth_user, auth_pass, disabled
+        select name, display_name, url, branch, auth_user, auth_pass, disabled
         from repository
         where name = 'repo1'
     $$,
     $$
-        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'user1', 'pass1', true)
+        values ('repo1', 'Repo 1 updated', 'https://repo1.com/updated', 'main', 'user1', 'pass1', true)
     $$,
     'Repository should have been updated by user who owns it'
 );
@@ -140,12 +143,12 @@ select update_repository(:'user1ID', '
 '::jsonb);
 select results_eq(
     $$
-        select name, display_name, url, auth_user, auth_pass, disabled
+        select name, display_name, url, branch, auth_user, auth_pass, disabled
         from repository
         where name = 'repo2'
     $$,
     $$
-        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated', 'user1', 'pass1', false)
+        values ('repo2', 'Repo 2 updated', 'https://repo2.com/updated', null, 'user1', 'pass1', false)
     $$,
     'Repository should have been updated by user who belongs to owning organization'
 );

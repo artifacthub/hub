@@ -11,6 +11,10 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 )
 
+const (
+	defaultBranch = "master"
+)
+
 // Cloner is a hub.RepositoryCloner implementation.
 type Cloner struct{}
 
@@ -37,9 +41,13 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	if err != nil {
 		return "", "", fmt.Errorf("error creating temp dir: %w", err)
 	}
+	branch := r.Branch
+	if branch == "" {
+		branch = defaultBranch
+	}
 	_, err = git.PlainCloneContext(ctx, tmpDir, false, &git.CloneOptions{
 		URL:           repoBaseURL,
-		ReferenceName: plumbing.NewBranchReferenceName("master"),
+		ReferenceName: plumbing.NewBranchReferenceName(branch),
 		SingleBranch:  true,
 		Depth:         1,
 	})
