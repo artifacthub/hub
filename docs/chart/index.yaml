@@ -3,6 +3,64 @@ entries:
   artifact-hub:
     - annotations:
         artifacthub.io/changes: |
+          - Display `contains security updates` status in UI and new release emails
+          - Display `pre-release` status in UI and new release emails
+          - Add buttons to download and copy configurations
+          - Trackers can now ignore selected packages or versions
+          - Add search capabilities to values schema modal
+          - Add support for combine keywords in values schema
+          - Enrich default webhook payload template with some extra fields
+          - Falco and OPA packages are now indexed by a generic tracker
+          - Add support for multiple rules files in Falco package UI view
+          - Add support for custom install section in UI
+          - Allow package metadata files to use either .yaml or .yml extension
+          - Improve repository URL uniqueness check
+          - Bump Trivy to 0.14.0
+          - Some bugs fixes and other improvements
+        artifacthub.io/containsSecurityUpdates: "true"
+        artifacthub.io/images: |
+          - name: db-migrator
+            image: artifacthub/db-migrator:v0.12.0
+          - name: hub
+            image: artifacthub/hub:v0.12.0
+          - name: tracker
+            image: artifacthub/tracker:v0.12.0
+          - name: scanner
+            image: artifacthub/scanner:v0.12.0
+          - name: trivy
+            image: aquasec/trivy:0.14.0
+      apiVersion: v2
+      appVersion: 0.12.0
+      created: "2020-12-18T08:22:45.574425+01:00"
+      dependencies:
+        - condition: postgresql.enabled
+          name: postgresql
+          repository: https://kubernetes-charts.storage.googleapis.com/
+          version: 8.2.1
+      description:
+        Artifact Hub is a web-based application that enables finding, installing,
+        and publishing Kubernetes packages.
+      digest: 87d8b7beb035fd477ca4acf7ec5ff71f85dd272560675f54836ce8a2fec9efb0
+      home: https://artifacthub.io
+      icon: https://artifacthub.github.io/hub/chart/logo.png
+      keywords:
+        - kubernetes
+        - helm
+        - falco
+        - opa
+        - olm
+      maintainers:
+        - email: tegioz@icloud.com
+          name: Sergio
+        - email: cynthiasg@icloud.com
+          name: Cintia
+      name: artifact-hub
+      type: application
+      urls:
+        - https://artifacthub.github.io/hub/chart/artifact-hub-0.12.0.tgz
+      version: 0.12.0
+    - annotations:
+        artifacthub.io/changes: |
           - Allow disabling repositories from control panel
           - Allow disabling security scanner per repository
           - Gitpodify Artifact Hub git repository
@@ -476,4 +534,4 @@ entries:
       urls:
         - https://artifacthub.github.io/hub/chart/artifact-hub-0.2.0.tgz
       version: 0.2.0
-generated: "2020-12-03T15:41:44.236436+01:00"
+generated: "2020-12-18T08:22:45.562605+01:00"
