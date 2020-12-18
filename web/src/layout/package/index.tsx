@@ -590,7 +590,7 @@ const PackageView = (props: Props) => {
                     </>
                   )}
 
-                  <div className="col col-auto pl-5 pb-4 d-none d-md-block">
+                  <div className="col col-auto pl-5 pb-5 d-none d-md-block">
                     {!isNull(detail) && (
                       <div className={styles.rightColumnWrapper}>
                         {getInstallationModal('mb-2')}

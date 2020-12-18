@@ -127,7 +127,7 @@ L:
 				t = helm.NewTracker(svc, r)
 			case hub.OLM:
 				t = olm.NewTracker(svc, r)
-			case hub.OPA:
+			case hub.OPA, hub.TBAction:
 				t = generic.NewTracker(svc, r)
 			}
 			if err := tracker.TrackRepository(ctx, cfg, rm, t, r); err != nil {

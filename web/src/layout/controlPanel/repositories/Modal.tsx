@@ -173,7 +173,7 @@ const RepositoryModal = (props: Props) => {
   };
 
   const getAdditionalInfo = (): JSX.Element | undefined => {
-    let link: JSX.Element;
+    let link: JSX.Element | undefined;
 
     switch (selectedKind) {
       case RepositoryKind.Helm:
@@ -204,7 +204,16 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.TBAction:
+        link = (
+          <ExternalLink href="/docs/repositories#tinkerbell-actions-repositories" className="text-reset">
+            <u>Tinkerbell actions</u>
+          </ExternalLink>
+        );
+        break;
     }
+
+    if (isUndefined(link)) return;
 
     return (
       <small className="text-muted text-break mt-1">
@@ -440,7 +449,9 @@ const RepositoryModal = (props: Props) => {
 
             {getAdditionalInfo()}
 
-            {[RepositoryKind.Falco, RepositoryKind.OLM, RepositoryKind.OPA].includes(selectedKind) && (
+            {[RepositoryKind.Falco, RepositoryKind.OLM, RepositoryKind.OPA, RepositoryKind.TBAction].includes(
+              selectedKind
+            ) && (
               <div className="mt-4">
                 <InputField
                   type="text"

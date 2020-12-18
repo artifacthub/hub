@@ -94,6 +94,13 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.OLM} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.TBAction,
+    label: 'tbaction',
+    name: 'Tinkerbell actions',
+    icon: <RepositoryIcon kind={RepositoryKind.TBAction} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [

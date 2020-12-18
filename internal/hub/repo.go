@@ -32,19 +32,24 @@ const (
 
 	// OLM represents a repository with OLM operators.
 	OLM RepositoryKind = 3
+
+	// TBAction represents a repository with Tinkerbell actions.
+	TBAction RepositoryKind = 4
 )
 
 // GetKindName returns the name of the provided repository kind.
 func GetKindName(kind RepositoryKind) string {
 	switch kind {
-	case Helm:
-		return "helm"
 	case Falco:
 		return "falco"
-	case OPA:
-		return "opa"
+	case Helm:
+		return "helm"
 	case OLM:
 		return "olm"
+	case OPA:
+		return "opa"
+	case TBAction:
+		return "tbaction"
 	default:
 		return ""
 	}
@@ -54,14 +59,16 @@ func GetKindName(kind RepositoryKind) string {
 // provided.
 func GetKindFromName(kind string) (RepositoryKind, error) {
 	switch kind {
-	case "helm":
-		return Helm, nil
 	case "falco":
 		return Falco, nil
+	case "helm":
+		return Helm, nil
 	case "olm":
 		return OLM, nil
 	case "opa":
 		return OPA, nil
+	case "tbaction":
+		return TBAction, nil
 	default:
 		return -1, errors.New("invalid kind name")
 	}

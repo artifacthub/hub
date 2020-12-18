@@ -574,7 +574,7 @@ exports[`Package index creates snapshot 2`] = `
           </div>
         </div>
         <div
-          class="col col-auto pl-5 pb-4 d-none d-md-block"
+          class="col col-auto pl-5 pb-5 d-none d-md-block"
         >
           <div
             class="rightColumnWrapper"

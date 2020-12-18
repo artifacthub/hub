@@ -22,7 +22,11 @@ The image used by an OLM operator is extracted from the `containerImage` annotat
 
 ### OPA policies
 
-Images used by a package containing OPA policies can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/a3ffcb7cee0aa3923c3e4cf9bcf8ac0f2f437a2b/docs/metadata/artifacthub-pkg.yml#L12-L14).
+Images used by a package containing OPA policies can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
+
+### Tinkerbell actions
+
+Images used by a package containing Tinkerbell actions can be listed using the `containersImages` field in the package's `artifacthub-pkg.yml` [metadata file](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-pkg.yml).
 
 ## Application dependencies
 
