@@ -471,7 +471,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/{^helm$|^falco$|^opa$|^olm$}":
+  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction$}":
     get:
       tags:
         - Repositories
@@ -1107,6 +1107,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/tbaction/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TBActionPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/helm/{repoName}/{packageName}/{version}":
     get:
       tags:
@@ -1189,6 +1210,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OLMPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/tbaction/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package version details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TBActionPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2207,6 +2250,8 @@ components:
                     policy1: |
                       - macro: text
                         condition: (evt.num < 0)
+    TBActionPackage:
+      $ref: "#/components/schemas/Package"
     Package:
       allOf:
         - $ref: "#/components/schemas/PackageSummary"
@@ -2479,12 +2524,14 @@ components:
         - 1
         - 2
         - 3
+        - 4
       description: |
         Repository kind:
           * `0` - Helm charts
           * `1` - Falco rules
           * `2` - OPA policies
           * `3` - OLM operators
+          * `4` - Tinkerbell actions
     RepositoryKindParam:
       type: string
       enum:
@@ -2492,12 +2539,14 @@ components:
         - opa
         - falco
         - olm
+        - tbaction
       description: |
         Repository kind name:
         * `helm` - Helm charts
         * `falco` - Falco rules
         * `opa` - OPA policies
         * `olm` - OLM operators
+        * `tbaction` - Tinkerbell actions
     RepositorySummary:
       type: object
       required:
@@ -2929,6 +2978,7 @@ components:
           * `1` - Falco rules
           * `2` - OPA policies
           * `3` - OLM operators
+          * `4` - Tinkerbell actions
     PackageNameParam:
       in: path
       name: packageName
@@ -2939,7 +2989,7 @@ components:
       description: Package name
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$|^olm$
+      name: ^helm$|^falco$|^opa$|^olm|^tbaction$
       schema:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true

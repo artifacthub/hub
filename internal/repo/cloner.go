@@ -23,7 +23,7 @@ func (c *Cloner) CloneRepository(ctx context.Context, r *hub.Repository) (string
 	// Parse repository url
 	var repoBaseURL, packagesPath string
 	switch r.Kind {
-	case hub.Falco, hub.OLM, hub.OPA:
+	case hub.Falco, hub.OLM, hub.OPA, hub.TBAction:
 		matches := GitRepoURLRE.FindStringSubmatch(r.URL)
 		if len(matches) < 2 {
 			return "", "", fmt.Errorf("invalid repository url")

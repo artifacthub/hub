@@ -26,6 +26,10 @@ const ICONS = {
     default: '/static/media/olm-operators.svg',
     white: '/static/media/olm-operators-light.svg',
   },
+  [RepositoryKind.TBAction]: {
+    default: '/static/media/tinkerbell-actions.svg',
+    white: '/static/media/tinkerbell-actions-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

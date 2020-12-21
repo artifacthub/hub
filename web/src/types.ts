@@ -5,6 +5,7 @@ export enum RepositoryKind {
   Falco,
   OPA,
   OLM,
+  TBAction,
 }
 
 export interface Repository {

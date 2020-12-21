@@ -438,7 +438,8 @@ select results_eq(
         (0, 'Helm charts'),
         (1, 'Falco rules'),
         (2, 'OPA policies'),
-        (3, 'OLM operators')
+        (3, 'OLM operators'),
+        (4, 'Tinkerbell actions')
     $$,
     'Repository kinds should exist'
 );

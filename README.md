@@ -6,11 +6,11 @@
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub)](https://artifacthub.io/packages/helm/artifact-hub/artifact-hub)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/artifacthub/hub)
 
-Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, and OLM operators.
+Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, OLM operators and Tinkerbell actions.
 
 Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.
 
-The project, accessible at [https://artifacthub.io](https://artifacthub.io), is currently in development in a beta state. Support for Helm charts, Falco configurations, OPA policies, and OLM operators is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [dev.md](./docs/dev.md) for more details.
+The project, accessible at [https://artifacthub.io](https://artifacthub.io), is currently in development in a beta state. Support for Helm charts, Falco configurations, OPA policies, OLM operators and Tinkerbell actions is in development with plans to support more projects to follow. Pull requests, especially those to support other CNCF projects, are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [dev.md](./docs/dev.md) for more details.
 
 Feel free to ask any questions on the #artifact-hub channel in the CNCF Slack. To get an invite please visit [http://slack.cncf.io/](http://slack.cncf.io/).
 
