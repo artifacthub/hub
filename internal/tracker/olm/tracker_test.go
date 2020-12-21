@@ -241,6 +241,7 @@ func TestTracker(t *testing.T) {
 			},
 			ContainsSecurityUpdates: true,
 			Prerelease:              true,
+			Install:                 "Install instructions (markdown)\n",
 			Maintainers: []*hub.Maintainer{
 				{
 					Name:  "Test",

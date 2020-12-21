@@ -28,6 +28,7 @@ import (
 const (
 	changesAnnotation         = "artifacthub.io/changes"
 	imagesWhitelistAnnotation = "artifacthub.io/imagesWhitelist"
+	installAnnotation         = "artifacthub.io/install"
 	licenseAnnotation         = "artifacthub.io/license"
 	prereleaseAnnotation      = "artifacthub.io/prerelease"
 	securityUpdatesAnnotation = "artifacthub.io/containsSecurityUpdates"
@@ -328,6 +329,7 @@ func (t *Tracker) registerPackage(
 		License:          csv.Annotations[licenseAnnotation],
 		Provider:         csv.Spec.Provider.Name,
 		ContainersImages: getContainersImages(csv, csvData),
+		Install:          csv.Annotations[installAnnotation],
 		Repository:       t.r,
 	}
 	createdAt, err := time.Parse(time.RFC3339, csv.Annotations["createdAt"])

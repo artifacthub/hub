@@ -8,6 +8,8 @@ metadata:
     artifacthub.io/containsSecurityUpdates: "true"
     artifacthub.io/imagesWhitelist: |
       - registry.io/image2:1.0.0
+    artifacthub.io/install: |
+      Install instructions (markdown)
     artifacthub.io/license: Apache-2.0
     artifacthub.io/prerelease: "true"
     capabilities: Basic Install
