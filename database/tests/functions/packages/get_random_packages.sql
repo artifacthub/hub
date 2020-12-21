@@ -65,7 +65,7 @@ insert into snapshot (
     'readme',
     false,
     false,
-    '2020-12-16 12:31:27+00'
+    current_timestamp - '3 months'::interval
 );
 insert into package (
     package_id,
@@ -178,36 +178,39 @@ insert into snapshot (
     '2019-06-16 11:20:34+02'
 );
 
--- Some packages have just been seeded
+-- Run some tests
+select floor(extract(epoch from created_at)) as p1v1_created_at
+from snapshot
+where package_id = :'package1ID' and version = '1.0.0' \gset
+select jsonb_set('[
+    {
+        "package_id": "00000000-0000-0000-0000-000000000001",
+        "name": "package1",
+        "normalized_name": "package1",
+        "logo_image_id": "00000000-0000-0000-0000-000000000001",
+        "stars": 10,
+        "display_name": "Package 1",
+        "description": "description",
+        "version": "1.0.0",
+        "deprecated": false,
+        "signed": false,
+        "repository": {
+            "repository_id": "00000000-0000-0000-0000-000000000002",
+            "kind": 0,
+            "name": "repo2",
+            "display_name": "Repo 2",
+            "url": "https://repo2.com",
+            "private": false,
+            "verified_publisher": false,
+            "official": false,
+            "organization_name": "org1",
+            "organization_display_name": "Organization 1"
+        }
+    }
+]', '{0, created_at}', :'p1v1_created_at') as expected_random_packages \gset
 select is(
     get_random_packages()::jsonb,
-    '[
-        {
-            "package_id": "00000000-0000-0000-0000-000000000001",
-            "name": "package1",
-            "normalized_name": "package1",
-            "logo_image_id": "00000000-0000-0000-0000-000000000001",
-            "stars": 10,
-            "display_name": "Package 1",
-            "description": "description",
-            "version": "1.0.0",
-            "deprecated": false,
-            "signed": false,
-            "created_at": 1608121887,
-            "repository": {
-                "repository_id": "00000000-0000-0000-0000-000000000002",
-                "kind": 0,
-                "name": "repo2",
-                "display_name": "Repo 2",
-                "url": "https://repo2.com",
-                "private": false,
-                "verified_publisher": false,
-                "official": false,
-                "organization_name": "org1",
-                "organization_display_name": "Organization 1"
-            }
-        }
-    ]'::jsonb,
+    :'expected_random_packages',
     'One random package expected (package1)'
 );
 
