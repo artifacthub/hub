@@ -18,6 +18,10 @@ Use this annotation to indicate that this operator version contains security upd
 
 Use this annotation to provide a list of the images that should not be scanned for security vulnerabilities.
 
+- **artifacthub.io/install** *(yaml string, see example below)*
+
+This annotation can be used to provide custom installation instructions for your package. They **must** be in markdown format.
+
 - **artifacthub.io/license** *(string)*
 
 Use this annotation to indicate the operator's license. It must be a valid [SPDX identifier](https://spdx.org/licenses/).
@@ -40,6 +44,10 @@ metadata:
     artifacthub.io/imagesWhitelist: |
       - repo/img2:2.0.0
       - repo/img3:3.0.0
+    artifacthub.io/install: |
+      Brief install instructions in markdown format
+
+      Content added here will be displayed when the INSTALL button on the package details page is clicked.
     artifacthub.io/license: Apache-2.0
     artifacthub.io/prerelease: "false"
 spec:
