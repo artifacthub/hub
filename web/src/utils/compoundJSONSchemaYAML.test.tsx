@@ -1,11 +1,16 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
 
-import compoundJSONSchemaYAML from './compoundJSONSchemaYAML';
+import compoundJSONSchemaYAML, { shouldIgnorePath } from './compoundJSONSchemaYAML';
 
 interface Tests {
   input: JSONSchema;
   opts?: { [key: string]: number };
   output: { yamlContent?: string; paths: string[] };
+}
+
+interface TestsIgnorePath {
+  input: any;
+  output: boolean;
 }
 
 const tests: Tests[] = [
@@ -404,21 +409,272 @@ podSecurityContext: {}`,
         'agent.registerjson.deregisterAgentOnDrainstop',
         'agent.jitterbitconf',
       ],
-      yamlContent: `# Agent Group Chart Configuration
-
-agent:${` `}
-  registerjson:${` `}
-    cloudUrl:${` `}
-    password:${` `}
-    username:${` `}
-    retryCount:${` `}
-    agentGroupId:${` `}
-    agentNamePrefix:${` `}
-    retryIntervalSeconds:${` `}
-    deregisterAgentOnDrainstop:${` `}
-  jitterbitconf:${` `}`,
+      yamlContent: undefined,
     },
   },
+  {
+    input: {
+      type: 'object',
+      title: 'CMAK operator Helm values',
+      required: ['cmak'],
+      properties: {
+        cmak: {
+          type: 'object',
+          required: ['basicAuth', 'clustersCommon', 'clusters'],
+          additionalProperties: false,
+          properties: {
+            clusters: {
+              type: 'array',
+              items: {
+                type: 'object',
+                required: ['name', 'curatorConfig'],
+                properties: {
+                  kafkaVersion: {
+                    type: 'string',
+                    default: '2.2.0',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  enabled: {
+                    type: 'boolean',
+                    default: true,
+                  },
+                  curatorConfig: {
+                    type: 'object',
+                    required: ['zkConnect'],
+                    properties: {
+                      zkMaxRetry: {
+                        type: 'integer',
+                        default: 100,
+                      },
+                      maxSleepTimeMs: {
+                        type: 'integer',
+                        default: 1000,
+                      },
+                      baseSleepTimeMs: {
+                        type: 'integer',
+                        default: 100,
+                      },
+                      zkConnect: {
+                        type: 'string',
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            basicAuth: {
+              type: 'object',
+              required: ['enabled'],
+              additionalProperties: false,
+              properties: {
+                enabled: {
+                  type: 'boolean',
+                  title: 'enable Basic auth',
+                  default: false,
+                },
+                password: {
+                  type: 'string',
+                  title: 'password for Basic auth',
+                  default: '',
+                },
+                username: {
+                  type: 'string',
+                  title: 'username for Basic auth',
+                  default: '',
+                },
+              },
+            },
+            clustersCommon: {
+              type: 'object',
+              required: ['curatorConfig'],
+              properties: {
+                kafkaVersion: {
+                  type: 'string',
+                  default: '2.2.0',
+                },
+                curatorConfig: {
+                  type: 'object',
+                  properties: {
+                    zkMaxRetry: {
+                      type: 'integer',
+                      default: 100,
+                    },
+                    maxSleepTimeMs: {
+                      type: 'integer',
+                      default: 1000,
+                    },
+                    baseSleepTimeMs: {
+                      type: 'integer',
+                      default: 100,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    output: {
+      yamlContent: `# CMAK operator Helm values
+
+cmak:${' '}
+  basicAuth:${' '}
+    # enable Basic auth
+    enabled: false
+    # password for Basic auth
+    password: ""
+    # username for Basic auth
+    username: ""
+  clustersCommon:${' '}
+    kafkaVersion: 2.2.0
+    curatorConfig:${' '}
+      zkMaxRetry: 100
+      maxSleepTimeMs: 1000
+      baseSleepTimeMs: 100`,
+      paths: [
+        'cmak',
+        'cmak.clusters',
+        'cmak.basicAuth',
+        'cmak.basicAuth.enabled',
+        'cmak.basicAuth.password',
+        'cmak.basicAuth.username',
+        'cmak.clustersCommon',
+        'cmak.clustersCommon.kafkaVersion',
+        'cmak.clustersCommon.curatorConfig',
+        'cmak.clustersCommon.curatorConfig.zkMaxRetry',
+        'cmak.clustersCommon.curatorConfig.maxSleepTimeMs',
+        'cmak.clustersCommon.curatorConfig.baseSleepTimeMs',
+      ],
+    },
+  },
+  {
+    input: {
+      type: 'object',
+      properties: {
+        reconcile: {
+          type: 'object',
+          required: ['schedule'],
+          additionalProperties: false,
+          properties: {
+            schedule: {
+              type: 'string',
+              title: 'cron expression for periodic reconciliation',
+            },
+            overwriteZk: {
+              type: 'boolean',
+              title: 'allow overwrite Zookeeper settings of CMAK',
+              default: true,
+            },
+            failedJobsHistoryLimit: {
+              type: ['null', 'integer'],
+              title: 'how many failed jobs should be kept',
+              default: null,
+            },
+            successfulJobsHistoryLimit: {
+              type: ['null', 'integer'],
+              title: 'how many completed jobs should be kept',
+              default: null,
+            },
+          },
+        },
+      },
+    },
+    output: {
+      yamlContent: `
+
+reconcile:${' '}
+  # allow overwrite Zookeeper settings of CMAK
+  overwriteZk: true
+  # how many failed jobs should be kept
+  failedJobsHistoryLimit: null
+  # how many completed jobs should be kept
+  successfulJobsHistoryLimit: null`,
+      paths: [
+        'reconcile',
+        'reconcile.schedule',
+        'reconcile.overwriteZk',
+        'reconcile.failedJobsHistoryLimit',
+        'reconcile.successfulJobsHistoryLimit',
+      ],
+    },
+  },
+];
+
+const testsIgnore: TestsIgnorePath[] = [
+  {
+    input: {},
+    output: true,
+  },
+  {
+    input: { level: 2, value: `""`, title: 'username for Basic auth' },
+    output: false,
+  },
+  {
+    input: { level: 2, value: undefined, title: 'username for Basic auth' },
+    output: true,
+  },
+  {
+    input: {
+      level: 1,
+      properties: {
+        kafkaVersion: { level: 2, value: '2.2.0' },
+        curatorConfig: {
+          level: 2,
+          properties: {
+            zkMaxRetry: { level: 3, value: '100' },
+            maxSleepTimeMs: { level: 3, value: '1000' },
+            baseSleepTimeMs: { level: 3, value: '100' },
+          },
+        },
+      },
+    },
+    output: false,
+  },
+  {
+    input: {
+      level: 1,
+      properties: {
+        kafkaVersion: { level: 2 },
+        curatorConfig: {
+          level: 2,
+          properties: {
+            zkMaxRetry: { level: 3 },
+          },
+        },
+      },
+    },
+    output: true,
+  },
+  {
+    input: {
+      level: 1,
+      properties: {
+        kafkaVersion: { level: 2 },
+        curatorConfig: {
+          level: 2,
+          properties: {
+            zkMaxRetry: {
+              level: 3,
+              properties: {
+                level: 4,
+                value: 'value',
+              },
+            },
+          },
+        },
+      },
+    },
+    output: true,
+  },
+  {
+    input: { level: 2, value: 'false', title: 'enable Basic auth' },
+    output: false,
+  },
+  { input: { level: 3, value: '100' }, output: false },
+  { input: { level: 3 }, output: true },
 ];
 
 describe('compoundJSONSchemaYAML', () => {
@@ -426,6 +682,13 @@ describe('compoundJSONSchemaYAML', () => {
     it('returns proper content', () => {
       const actual = compoundJSONSchemaYAML(tests[i].input, tests[i].opts || {});
       expect(actual).toEqual(tests[i].output);
+    });
+  }
+
+  for (let i = 0; i < testsIgnore.length; i++) {
+    it('ignoring path', () => {
+      const actual = shouldIgnorePath(testsIgnore[i].input);
+      expect(actual).toEqual(testsIgnore[i].output);
     });
   }
 });

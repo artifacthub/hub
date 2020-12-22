@@ -1,5 +1,5 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
-import { isArray, isEmpty, isNull, isUndefined, repeat, trim } from 'lodash';
+import { isArray, isEmpty, isNull, isObject, isUndefined, repeat, set, trim } from 'lodash';
 
 import getJMESPathForValuesSchema from './getJMESPathForValuesSchema';
 
@@ -8,14 +8,99 @@ interface FormattedValuesSchema {
   paths: string[];
 }
 
+interface ItemValue {
+  level: number;
+  value?: string;
+  title?: string;
+  props?: { [key: string]: ItemValue };
+}
+
+const renderValueLine = (item: ItemValue, name: string): string => {
+  return `\n${item.level === 0 ? '\n' : ''}${
+    item.title ? `${repeat(' ', item.level * 2)}# ${item.title}\n` : ''
+  }${repeat(' ', item.level * 2)}${name}: ${item.value || ''}`;
+};
+
+const isObjectUndefined = (obj: any): boolean => {
+  for (const item in obj.properties) {
+    if (obj.properties[item].hasOwnProperty('properties')) {
+      return isObjectUndefined(obj.properties[item]);
+    } else if (!isUndefined(obj.properties[item].value)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export const shouldIgnorePath = (item: any): boolean => {
+  if (item.hasOwnProperty('properties')) {
+    return isObjectUndefined(item);
+  } else {
+    return isUndefined(item.value);
+  }
+};
+
+const prepareValueFile = (obj: any) => {
+  let newObj = {};
+
+  const checkOpts = (el: any, path: string) => {
+    if (isObject(el)) {
+      if (el.hasOwnProperty('properties')) {
+        const properties = (el as any).properties;
+        if (!shouldIgnorePath(el)) {
+          set(newObj, path, { ...el, properties: {} });
+          Object.keys(properties).forEach((item: any) => {
+            const currentPath = isUndefined(path) ? `properties.${item}` : `${path}.properties.${item}`;
+            checkOpts(properties[item], currentPath);
+          });
+        }
+      } else {
+        if (path && !shouldIgnorePath(el)) {
+          set(newObj, path, el);
+        }
+      }
+    }
+  };
+
+  Object.keys(obj).forEach((propName: string) => {
+    checkOpts(obj[propName], propName);
+  });
+
+  return newObj;
+};
+
+const prepareContent = (content: any): string => {
+  let yamlContent: string = '';
+  const cleanContent = prepareValueFile(content);
+
+  if (!isEmpty(cleanContent)) {
+    const checkContent = (obj: any) => {
+      Object.keys(obj).forEach((item: string) => {
+        if (obj[item].value) {
+          yamlContent += renderValueLine(obj[item], item);
+        } else {
+          if (obj[item].properties && !isEmpty(obj[item].properties)) {
+            yamlContent += renderValueLine(obj[item], item);
+            checkContent(obj[item].properties);
+          }
+        }
+      });
+    };
+
+    checkContent(cleanContent);
+  }
+
+  return yamlContent;
+};
+
 export default (schema: JSONSchema, savedOpts: { [key: string]: number }): FormattedValuesSchema => {
-  let content: string = '';
   const title = schema.title ? `# ${schema.title}` : '';
   let paths: string[] = [];
 
-  const getValue = (value: JSONSchema, level: number): string => {
+  const getValue = (value: JSONSchema, level: number): string | undefined => {
     if (isUndefined(value.default)) {
-      return '';
+      return undefined;
     }
 
     if (isNull(value.default)) {
@@ -42,12 +127,15 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
           return (value.default as string) || `""`;
         }
       default:
-        return value.default ? value.default.toString() : '';
+        return value.default ? value.default.toString() : undefined;
     }
   };
 
-  function checkProperties(props: any, level: number, path?: string) {
+  const items = {};
+
+  function checkProperties(props: any, level: number, pathSteps: string[] = [], path?: string) {
     Object.keys(props).forEach((propName: string) => {
+      const currentSteps: string[] = [...pathSteps, propName];
       const currentPath = getJMESPathForValuesSchema(propName, path);
       paths.push(currentPath);
       let value: JSONSchema | undefined = props[propName] as JSONSchema;
@@ -69,12 +157,20 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
       if (isUndefined(value)) return;
 
       const defaultValue = getValue(value, level);
-      content += `\n${level === 0 ? '\n' : ''}${
-        value.title ? `${repeat(' ', level * 2)}# ${value.title}\n` : ''
-      }${repeat(' ', level * 2)}${propName}: ${defaultValue}`;
 
       if (value.properties) {
-        checkProperties(value.properties, level + 1, currentPath);
+        set(items, currentSteps, {
+          level: level,
+          title: value.title,
+          properties: {},
+        });
+        checkProperties(value.properties, level + 1, [...currentSteps, 'properties'], currentPath);
+      } else if (!isUndefined(defaultValue)) {
+        set(items, currentSteps, {
+          level: level,
+          value: defaultValue,
+          title: value.title,
+        });
       }
     });
   }
@@ -83,8 +179,10 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
     checkProperties(schema.properties, 0);
   }
 
+  const yamlContent = prepareContent(items);
+
   return {
-    yamlContent: trim(content) !== '' ? `${title}${content}` : undefined,
+    yamlContent: trim(yamlContent) !== '' ? `${title}${yamlContent}` : undefined,
     paths: paths,
   };
 };
