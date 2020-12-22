@@ -1,4 +1,5 @@
 import { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import classnames from 'classnames';
 import { isArray, isEmpty, isNull, isUndefined } from 'lodash';
 import React, { useEffect, useState } from 'react';
 
@@ -68,37 +69,39 @@ const SchemaLine = (props: Prop) => {
 
   if (isNull(value) || isNull(activeValue)) return null;
 
-  const getValue = (): ValueProp => {
-    if (isUndefined(activeValue.default)) {
+  const getValue = (newValue?: any): ValueProp => {
+    const valueToCheck = newValue || activeValue;
+
+    if (isUndefined(valueToCheck.default)) {
       return {
         content: null,
       };
     }
 
-    if (isNull(activeValue.default)) {
+    if (isNull(valueToCheck.default)) {
       return {
         content: <span>null</span>,
         className: 'text-danger',
       };
     }
 
-    switch (isArray(activeValue.type) ? activeValue.type[0] : activeValue.type) {
+    switch (isArray(valueToCheck.type) ? valueToCheck.type[0] : valueToCheck.type) {
       case 'object':
         return {
-          content: <span>{isEmpty(activeValue.default) ? '{}' : JSON.stringify(activeValue.default)}</span>,
+          content: <span>{isEmpty(valueToCheck.default) ? '{}' : JSON.stringify(valueToCheck.default)}</span>,
           className: 'text-warning',
         };
       case 'array':
         return {
           content: (
             <>
-              {isArray(activeValue.default) && (
+              {isArray(valueToCheck.default) && (
                 <>
-                  {activeValue.default.length === 0 ? (
+                  {valueToCheck.default.length === 0 ? (
                     <>{`[]`}</>
                   ) : (
                     <>
-                      {(activeValue.default as string[]).map((listItem: string) => (
+                      {(valueToCheck.default as string[]).map((listItem: string) => (
                         <div
                           className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}
                           key={listItem}
@@ -117,7 +120,7 @@ const SchemaLine = (props: Prop) => {
       case 'boolean':
       case 'integer':
         return {
-          content: <span>{activeValue.default!.toString()}</span>,
+          content: <span>{valueToCheck.default!.toString()}</span>,
           className: 'text-danger',
         };
       case 'null':
@@ -126,21 +129,21 @@ const SchemaLine = (props: Prop) => {
           className: 'text-danger',
         };
       case 'string':
-        const isLongText = (activeValue.default as string).length > 40;
+        const isLongText = (valueToCheck.default as string).length > 40;
         if (isLongText) {
           return {
             content: (
               <>
                 |-
                 <br />
-                <div className={`${styles.line} ${styles.level1}`}>{activeValue.default}</div>
+                <div className={`${styles.line} ${styles.level1}`}>{valueToCheck.default}</div>
               </>
             ),
             className: 'text-warning',
           };
         } else {
           return {
-            content: <span>{activeValue.default === '' ? `""` : activeValue.default}</span>,
+            content: <span>{valueToCheck.default === '' ? `""` : valueToCheck.default}</span>,
             className: 'text-warning',
           };
         }
@@ -160,6 +163,46 @@ const SchemaLine = (props: Prop) => {
     props.saveSelectedOption(currentPath, newValue.active);
   };
 
+  const checkIfAlternativeValue = (): JSX.Element | null => {
+    let alternative = null;
+
+    const getObjectValues = (el: JSONSchema, level: number): JSX.Element | null => {
+      if (isUndefined(el.properties)) {
+        return null;
+      } else {
+        return (
+          <>
+            {Object.keys(el.properties!).map((propName: string) => {
+              const item: JSONSchema = el.properties![propName] as JSONSchema;
+              const { className, content } = getValue(item);
+              return (
+                <div className={classnames(styles[`level${level}`])} key={`prop_${propName}`}>
+                  {propName}:{' '}
+                  {content && (
+                    <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
+                      {content}
+                    </span>
+                  )}
+                  {item.properties && <>{getObjectValues(item, level + 1)}</>}
+                </div>
+              );
+            })}
+          </>
+        );
+      }
+    };
+
+    if (props.value.type === 'array' && props.value.items && (props.value.items as any).hasOwnProperty('properties')) {
+      alternative = (
+        <div className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}>
+          {getObjectValues(props.value.items as JSONSchema, 0)}
+        </div>
+      );
+    }
+
+    return alternative;
+  };
+
   return (
     <React.Fragment>
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
@@ -171,7 +214,7 @@ const SchemaLine = (props: Prop) => {
             {activeValue.title && <div className="text-muted text-truncate"># {activeValue.title}</div>}
             {props.name}:{' '}
             <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
-              {content}
+              {content ? <>{content}</> : <>{checkIfAlternativeValue()}</>}
             </span>
           </div>
         </div>
