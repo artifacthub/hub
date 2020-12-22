@@ -109,5 +109,23 @@ describe('SchemaLine', () => {
       expect(defaultValue).toHaveTextContent('{}');
       expect(defaultValue).toHaveClass('text-warning');
     });
+
+    it('renders array with defined object as value', () => {
+      const { getByText, getAllByText } = render(<SchemaLine {...getProps('10')} />);
+
+      expect(getByText('clusters:')).toBeInTheDocument();
+      expect(getByText('kafkaVersion:')).toBeInTheDocument();
+      expect(getByText('2.2.0')).toBeInTheDocument();
+      expect(getByText('name:')).toBeInTheDocument();
+      expect(getByText('enabled:')).toBeInTheDocument();
+      expect(getByText('true')).toBeInTheDocument();
+      expect(getByText('curatorConfig:')).toBeInTheDocument();
+      expect(getByText('zkMaxRetry:')).toBeInTheDocument();
+      expect(getByText('maxSleepTimeMs:')).toBeInTheDocument();
+      expect(getByText('baseSleepTimeMs:')).toBeInTheDocument();
+      expect(getByText('zkConnect:')).toBeInTheDocument();
+      expect(getAllByText('100')).toHaveLength(2);
+      expect(getByText('1000')).toBeInTheDocument();
+    });
   });
 });

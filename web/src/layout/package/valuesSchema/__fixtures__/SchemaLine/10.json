@@ -1,0 +1,86 @@
+{
+  "definitions": {
+    "clusterConfig": {
+      "type": "object",
+      "required": ["name", "curatorConfig"],
+      "properties": {
+        "kafkaVersion": { "type": "string", "default": "2.2.0" },
+        "name": { "type": "string" },
+        "enabled": { "type": "boolean", "default": true },
+        "curatorConfig": {
+          "type": "object",
+          "required": ["zkConnect"],
+          "properties": {
+            "zkMaxRetry": { "type": "integer", "default": 100 },
+            "maxSleepTimeMs": { "type": "integer", "default": 1000 },
+            "baseSleepTimeMs": { "type": "integer", "default": 100 },
+            "zkConnect": { "type": "string" }
+          }
+        }
+      }
+    },
+    "curatorConfig": {
+      "type": "object",
+      "required": ["zkConnect"],
+      "properties": {
+        "zkMaxRetry": { "type": "integer", "default": 100 },
+        "maxSleepTimeMs": { "type": "integer", "default": 1000 },
+        "baseSleepTimeMs": { "type": "integer", "default": 100 },
+        "zkConnect": { "type": "string" }
+      }
+    },
+    "clusterConfigCommon": {
+      "type": "object",
+      "required": ["curatorConfig"],
+      "properties": {
+        "kafkaVersion": { "type": "string", "default": "2.2.0" },
+        "curatorConfig": {
+          "type": "object",
+          "properties": {
+            "zkMaxRetry": { "type": "integer", "default": 100 },
+            "maxSleepTimeMs": { "type": "integer", "default": 1000 },
+            "baseSleepTimeMs": { "type": "integer", "default": 100 }
+          }
+        }
+      }
+    },
+    "clusterConfigShared": {
+      "type": "object",
+      "properties": { "kafkaVersion": { "type": "string", "default": "2.2.0" } }
+    },
+    "curatorConfigCommon": {
+      "type": "object",
+      "properties": {
+        "zkMaxRetry": { "type": "integer", "default": 100 },
+        "maxSleepTimeMs": { "type": "integer", "default": 1000 },
+        "baseSleepTimeMs": { "type": "integer", "default": 100 }
+      }
+    }
+  },
+  "value": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": ["name", "curatorConfig"],
+      "properties": {
+        "kafkaVersion": { "type": "string", "default": "2.2.0" },
+        "name": { "type": "string" },
+        "enabled": { "type": "boolean", "default": true },
+        "curatorConfig": {
+          "type": "object",
+          "required": ["zkConnect"],
+          "properties": {
+            "zkMaxRetry": { "type": "integer", "default": 100 },
+            "maxSleepTimeMs": { "type": "integer", "default": 1000 },
+            "baseSleepTimeMs": { "type": "integer", "default": 100 },
+            "zkConnect": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "name": "clusters",
+  "level": 1,
+  "isRequired": true,
+  "path": "cmak"
+}
