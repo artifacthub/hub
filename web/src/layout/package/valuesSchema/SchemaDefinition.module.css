@@ -1,3 +1,7 @@
+.contentWrapper {
+  min-width: 0;
+}
+
 .btn {
   font-size: inherit;
 }

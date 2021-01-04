@@ -67,6 +67,7 @@ interface Props {
   hash?: string;
   channel?: string;
   visibleModal?: string;
+  visibleValuesSchemaPath?: string;
 }
 
 const PackageView = (props: Props) => {
@@ -606,6 +607,11 @@ const PackageView = (props: Props) => {
                               fromStarredPage={props.fromStarredPage}
                               visibleValuesSchema={
                                 !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                              }
+                              visibleValuesSchemaPath={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                  ? props.visibleValuesSchemaPath
+                                  : undefined
                               }
                             />
                           </div>

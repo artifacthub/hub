@@ -23,6 +23,7 @@ interface Props {
   hasValuesSchema?: boolean;
   searchUrlReferer?: SearchFiltersURL;
   fromStarredPage?: boolean;
+  visibleValuesSchemaPath?: string;
 }
 
 const ValuesSchema = (props: Props) => {
@@ -111,10 +112,17 @@ const ValuesSchema = (props: Props) => {
         getValuesSchema();
       }
       history.replace({
-        search: '?modal=values-schema',
+        search: `?modal=values-schema${props.visibleValuesSchemaPath ? `&path=${props.visibleValuesSchemaPath}` : ''}`,
         state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
       });
     }
+  };
+
+  const onPathChange = (path?: string) => {
+    history.replace({
+      search: `?modal=values-schema${path ? `&path=${path}` : ''}`,
+      state: { searchUrlReferer: props.searchUrlReferer, fromStarredPage: props.fromStarredPage },
+    });
   };
 
   const onCloseModal = () => {
@@ -181,7 +189,12 @@ const ValuesSchema = (props: Props) => {
         >
           <ErrorBoundary message="Something went wrong rendering the VALUES SCHEMA of this package.">
             <div className="mb-3 mx-3 mw-100">
-              <Schema schema={valuesSchema} normalizedName={props.normalizedName} />
+              <Schema
+                schema={valuesSchema}
+                normalizedName={props.normalizedName}
+                visibleValuesSchemaPath={props.visibleValuesSchemaPath}
+                onPathChange={onPathChange}
+              />
               <div className="row">
                 <div className="col-7 pt-3 bg-dark" />
               </div>

@@ -8,7 +8,7 @@ import getJMESPathForValuesSchema from '../../../utils/getJMESPathForValuesSchem
 import SchemaDefinition from './SchemaDefinition';
 import styles from './SchemaLine.module.css';
 
-interface Prop {
+interface Props {
   definitions?: {
     [k: string]: any;
   };
@@ -19,8 +19,10 @@ interface Prop {
   className?: string;
   path?: string;
   activePath?: string;
-  setActivePath: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onActivePathChange: (path?: string) => void;
   saveSelectedOption: (path: string, index: number) => void;
+  hasDecorator?: boolean;
+  isArrayParent?: boolean;
 }
 
 interface ValueProp {
@@ -28,7 +30,89 @@ interface ValueProp {
   className?: string;
 }
 
-const SchemaLine = (props: Prop) => {
+const getValue = (newValue: any): ValueProp => {
+  const valueToCheck = newValue;
+
+  if (isUndefined(valueToCheck.default)) {
+    return {
+      content: null,
+    };
+  }
+
+  if (isNull(valueToCheck.default)) {
+    return {
+      content: <span>null</span>,
+      className: 'text-danger',
+    };
+  }
+
+  switch (isArray(valueToCheck.type) ? valueToCheck.type[0] : valueToCheck.type) {
+    case 'object':
+      return {
+        content: <span>{isEmpty(valueToCheck.default) ? '{}' : JSON.stringify(valueToCheck.default)}</span>,
+        className: 'text-warning',
+      };
+    case 'array':
+      return {
+        content: (
+          <>
+            {isArray(valueToCheck.default) && (
+              <>
+                {valueToCheck.default.length === 0 ? (
+                  <>{`[]`}</>
+                ) : (
+                  <>
+                    {(valueToCheck.default as string[]).map((listItem: string) => (
+                      <div className={`level1 ${styles.line} ${styles.listItem} position-relative`} key={listItem}>
+                        {listItem}
+                      </div>
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </>
+        ),
+        className: 'text-warning',
+      };
+    case 'boolean':
+    case 'integer':
+      return {
+        content: <span>{valueToCheck.default!.toString()}</span>,
+        className: 'text-danger',
+      };
+    case 'null':
+      return {
+        content: <span>null</span>,
+        className: 'text-danger',
+      };
+    case 'string':
+      const isLongText = (valueToCheck.default as string).length > 40;
+      if (isLongText) {
+        return {
+          content: (
+            <>
+              |-
+              <br />
+              <div className={`${styles.line} level1`}>{valueToCheck.default}</div>
+            </>
+          ),
+          className: 'text-warning',
+        };
+      } else {
+        return {
+          content: <span>{valueToCheck.default === '' ? `""` : valueToCheck.default}</span>,
+          className: 'text-warning',
+        };
+      }
+    default:
+      return {
+        content: null,
+      };
+  }
+};
+
+const SchemaLine = (props: Props) => {
   async function getCurrentJSON() {
     let currentValue = props.value;
     let error = false;
@@ -60,7 +144,12 @@ const SchemaLine = (props: Prop) => {
     });
   }
 
-  const [value, setValue] = useState<ActiveJSONSchemaValue | null>(null);
+  const [value, setValue] = useState<ActiveJSONSchemaValue | null>({
+    active: 0,
+    combinationType: null,
+    options: [props.value],
+    error: false,
+  });
   const activeValue = value ? value.options[value.active] : null;
 
   useEffect(() => {
@@ -69,93 +158,20 @@ const SchemaLine = (props: Prop) => {
 
   if (isNull(value) || isNull(activeValue)) return null;
 
-  const getValue = (newValue?: any): ValueProp => {
-    const valueToCheck = newValue || activeValue;
+  const { className, content } = getValue(activeValue);
 
-    if (isUndefined(valueToCheck.default)) {
-      return {
-        content: null,
-      };
-    }
+  let children = activeValue.properties;
+  let isArrayParent = false;
+  if (
+    props.value.type === 'array' &&
+    props.value.items &&
+    (props.value.items as JSONSchema).hasOwnProperty('properties')
+  ) {
+    isArrayParent = true;
+    children = (props.value.items as JSONSchema).properties;
+  }
 
-    if (isNull(valueToCheck.default)) {
-      return {
-        content: <span>null</span>,
-        className: 'text-danger',
-      };
-    }
-
-    switch (isArray(valueToCheck.type) ? valueToCheck.type[0] : valueToCheck.type) {
-      case 'object':
-        return {
-          content: <span>{isEmpty(valueToCheck.default) ? '{}' : JSON.stringify(valueToCheck.default)}</span>,
-          className: 'text-warning',
-        };
-      case 'array':
-        return {
-          content: (
-            <>
-              {isArray(valueToCheck.default) && (
-                <>
-                  {valueToCheck.default.length === 0 ? (
-                    <>{`[]`}</>
-                  ) : (
-                    <>
-                      {(valueToCheck.default as string[]).map((listItem: string) => (
-                        <div
-                          className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}
-                          key={listItem}
-                        >
-                          {listItem}
-                        </div>
-                      ))}
-                    </>
-                  )}
-                </>
-              )}
-            </>
-          ),
-          className: 'text-warning',
-        };
-      case 'boolean':
-      case 'integer':
-        return {
-          content: <span>{valueToCheck.default!.toString()}</span>,
-          className: 'text-danger',
-        };
-      case 'null':
-        return {
-          content: <span>null</span>,
-          className: 'text-danger',
-        };
-      case 'string':
-        const isLongText = (valueToCheck.default as string).length > 40;
-        if (isLongText) {
-          return {
-            content: (
-              <>
-                |-
-                <br />
-                <div className={`${styles.line} ${styles.level1}`}>{valueToCheck.default}</div>
-              </>
-            ),
-            className: 'text-warning',
-          };
-        } else {
-          return {
-            content: <span>{valueToCheck.default === '' ? `""` : valueToCheck.default}</span>,
-            className: 'text-warning',
-          };
-        }
-      default:
-        return {
-          content: null,
-        };
-    }
-  };
-
-  const { className, content } = getValue();
-  const currentPath = getJMESPathForValuesSchema(props.name, props.path);
+  const currentPath = getJMESPathForValuesSchema(isArrayParent ? `${props.name}[0]` : props.name, props.path);
   const isExpanded = !isUndefined(props.activePath) && props.activePath === currentPath;
 
   const onChangeSelectedValue = (newValue: ActiveJSONSchemaValue) => {
@@ -163,58 +179,21 @@ const SchemaLine = (props: Prop) => {
     props.saveSelectedOption(currentPath, newValue.active);
   };
 
-  const checkIfAlternativeValue = (): JSX.Element | null => {
-    let alternative = null;
-
-    const getObjectValues = (el: JSONSchema, level: number): JSX.Element | null => {
-      if (isUndefined(el.properties)) {
-        return null;
-      } else {
-        return (
-          <>
-            {Object.keys(el.properties!).map((propName: string) => {
-              const item: JSONSchema = el.properties![propName] as JSONSchema;
-              const { className, content } = getValue(item);
-              return (
-                <div className={classnames(styles[`level${level}`])} key={`prop_${propName}`}>
-                  {propName}:{' '}
-                  {content && (
-                    <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
-                      {content}
-                    </span>
-                  )}
-                  {item.properties && <>{getObjectValues(item, level + 1)}</>}
-                </div>
-              );
-            })}
-          </>
-        );
-      }
-    };
-
-    if (props.value.type === 'array' && props.value.items && (props.value.items as any).hasOwnProperty('properties')) {
-      alternative = (
-        <div className={`${styles.level1} ${styles.line} ${styles.listItem} position-relative`}>
-          {getObjectValues(props.value.items as JSONSchema, 0)}
-        </div>
-      );
-    }
-
-    return alternative;
-  };
-
   return (
     <React.Fragment>
       <div className={`row position-relative ${styles.wrapper}`} data-testid="schemaLine">
         <div
+          data-testid="lineContent"
           className={`col-7 bg-dark text-light position-relative py-1 user-select-none ${styles.content} ${props.className}`}
-          onClick={() => props.setActivePath(!isExpanded ? currentPath : undefined)}
+          onClick={() => props.onActivePathChange(!isExpanded ? currentPath : undefined)}
         >
-          <div className={`${styles[`level${props.level}`]} text-monospace`}>
+          <div className={`level${props.level} text-monospace`}>
             {activeValue.title && <div className="text-muted text-truncate"># {activeValue.title}</div>}
-            {props.name}:{' '}
+            <span className={classnames({ [`position-relative ${styles.hasDecorator}`]: props.hasDecorator })}>
+              {props.name}:{' '}
+            </span>
             <span data-testid="defaultValue" className={`${className} ${styles.line}`}>
-              {content ? <>{content}</> : <>{checkIfAlternativeValue()}</>}
+              {content}
             </span>
           </div>
         </div>
@@ -227,29 +206,36 @@ const SchemaLine = (props: Prop) => {
             defaultValue={content}
             isExpanded={isExpanded}
             path={currentPath}
-            setActivePath={props.setActivePath}
+            onActivePathChange={props.onActivePathChange}
           />
         </div>
       </div>
 
-      {activeValue.properties && (
+      {children && (
         <>
-          {Object.keys(activeValue.properties).map((propName: string) => {
-            const currentValue = activeValue.properties![propName] as JSONSchema;
+          {Object.keys(children).map((propName: string, index: number) => {
+            const currentValue = children![propName] as JSONSchema;
             if (isUndefined(value)) return null;
-            const isRequired = activeValue.required ? activeValue.required.includes(propName) : false;
+            let isRequired = activeValue.required ? activeValue.required.includes(propName) : false;
+            if (isArrayParent) {
+              isRequired =
+                (props.value.items as JSONSchema).hasOwnProperty('required') &&
+                ((props.value.items! as JSONSchema).required as string[]).includes(propName);
+            }
             return (
               <React.Fragment key={`${props.name}_${propName}`}>
                 <SchemaLine
                   definitions={props.definitions}
                   value={currentValue}
                   name={propName}
-                  level={props.level + 1}
+                  level={isArrayParent ? props.level + 2 : props.level + 1}
                   isRequired={isRequired}
                   path={currentPath}
                   activePath={props.activePath}
-                  setActivePath={props.setActivePath}
+                  onActivePathChange={props.onActivePathChange}
                   saveSelectedOption={props.saveSelectedOption}
+                  hasDecorator={isArrayParent && index === 0}
+                  isArrayParent={isArrayParent}
                 />
               </React.Fragment>
             );

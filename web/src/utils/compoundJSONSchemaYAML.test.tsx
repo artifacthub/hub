@@ -521,6 +521,13 @@ podSecurityContext: {}`,
       yamlContent: `# CMAK operator Helm values
 
 cmak:${' '}
+  clusters:${' '}
+    - kafkaVersion: 2.2.0
+      enabled: true
+      curatorConfig:${' '}
+        zkMaxRetry: 100
+        maxSleepTimeMs: 1000
+        baseSleepTimeMs: 100
   basicAuth:${' '}
     # enable Basic auth
     enabled: false
@@ -536,7 +543,15 @@ cmak:${' '}
       baseSleepTimeMs: 100`,
       paths: [
         'cmak',
-        'cmak.clusters',
+        'cmak.clusters[0]',
+        'cmak.clusters[0].kafkaVersion',
+        'cmak.clusters[0].name',
+        'cmak.clusters[0].enabled',
+        'cmak.clusters[0].curatorConfig',
+        'cmak.clusters[0].curatorConfig.zkMaxRetry',
+        'cmak.clusters[0].curatorConfig.maxSleepTimeMs',
+        'cmak.clusters[0].curatorConfig.baseSleepTimeMs',
+        'cmak.clusters[0].curatorConfig.zkConnect',
         'cmak.basicAuth',
         'cmak.basicAuth.enabled',
         'cmak.basicAuth.password',
