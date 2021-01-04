@@ -23,6 +23,11 @@ describe('OAuth', () => {
       writable: true,
     });
     /* eslint-enable no-native-reassign */
+    (window as any).config = {
+      githubAuth: 'true',
+      googleAuth: 'true',
+      oidcAuth: 'true',
+    };
   });
 
   afterEach(() => {
@@ -41,6 +46,7 @@ describe('OAuth', () => {
 
       expect(getByText('Github')).toBeInTheDocument();
       expect(getByText('Google')).toBeInTheDocument();
+      expect(getByText('OpenID Connect')).toBeInTheDocument();
     });
 
     it('goes to correct route on Github btn click', () => {
@@ -75,6 +81,23 @@ describe('OAuth', () => {
       });
 
       expect(window.location.href).toBe('/oauth/google?redirect_url=/control-panel');
+    });
+
+    it('goes to correct route on OpenID btn click', () => {
+      const { getByText } = render(<OAuth {...defaultProps} />);
+
+      const btn = getByText('OpenID Connect');
+      fireEvent.click(btn);
+
+      waitFor(() => {
+        expect(setIsLoadingMock).toHaveBeenCalledTimes(1);
+        expect(setIsLoadingMock).toHaveBeenCalledWith({
+          name: 'oidc',
+          status: true,
+        });
+      });
+
+      expect(window.location.href).toBe('/oauth/oidc?redirect_url=/control-panel');
     });
   });
 });

@@ -1000,10 +1000,11 @@ func newHandlersWrapper() *handlersWrapper {
 	cfg := viper.New()
 	cfg.Set("server.baseURL", "baseURL")
 	um := &user.ManagerMock{}
+	h, _ := NewHandlers(context.Background(), um, cfg)
 
 	return &handlersWrapper{
 		cfg: cfg,
 		um:  um,
-		h:   NewHandlers(um, cfg),
+		h:   h,
 	}
 }

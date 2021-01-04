@@ -55,6 +55,7 @@ func main() {
 	}
 
 	// Setup and launch http server
+	ctx, stop := context.WithCancel(context.Background())
 	hSvc := &handlers.Services{
 		OrganizationManager: org.NewManager(db, es, az),
 		UserManager:         user.NewManager(db, es),
@@ -66,13 +67,17 @@ func main() {
 		ImageStore:          pg.NewImageStore(db),
 		Authorizer:          az,
 	}
+	h, err := handlers.Setup(ctx, cfg, hSvc)
+	if err != nil {
+		log.Fatal().Err(err).Msg("handlers setup failed")
+	}
 	addr := cfg.GetString("server.addr")
 	srv := &http.Server{
 		Addr:         addr,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 30 * time.Second,
 		IdleTimeout:  1 * time.Minute,
-		Handler:      handlers.Setup(cfg, hSvc).Router,
+		Handler:      h.Router,
 	}
 	go func() {
 		if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
@@ -91,7 +96,6 @@ func main() {
 	}()
 
 	// Setup and launch events dispatcher
-	ctx, stop := context.WithCancel(context.Background())
 	var wg sync.WaitGroup
 	eSvc := &event.Services{
 		DB:                  db,

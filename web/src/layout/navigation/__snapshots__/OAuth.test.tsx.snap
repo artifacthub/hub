@@ -56,6 +56,25 @@ exports[`OAuth creates snapshot 1`] = `
           </div>
         </div>
       </button>
+      <button
+        class="btn btn-outline-secondary mb-3 btn-block btn"
+        type="button"
+      >
+        <div
+          class="d-flex align-items-center"
+        >
+          <img
+            alt="OpenID Logo"
+            class="logo"
+            src="/static/media/openid.svg"
+          />
+          <div
+            class="flex-grow-1 text-center"
+          >
+            OpenID Connect
+          </div>
+        </div>
+      </button>
     </div>
   </div>
 </DocumentFragment>

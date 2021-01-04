@@ -12,6 +12,14 @@ const defaultProps = {
 };
 
 describe('SignUp', () => {
+  beforeEach(() => {
+    (window as any).config = {
+      githubAuth: 'true',
+      googleAuth: 'true',
+      oidcAuth: 'true',
+    };
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -30,6 +38,7 @@ describe('SignUp', () => {
       expect(getByTestId('signUpBtn')).toBeInTheDocument();
       expect(getByText('Github')).toBeInTheDocument();
       expect(getByText('Google')).toBeInTheDocument();
+      expect(getByText('OpenID Connect')).toBeInTheDocument();
     });
 
     it('renders create an account form to click Sign up button', () => {

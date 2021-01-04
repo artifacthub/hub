@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/containerd/containerd v1.4.3
+	github.com/coreos/go-oidc v2.2.1+incompatible
 	github.com/deislabs/oras v0.8.1
 	github.com/disintegration/imaging v1.6.2
 	github.com/domodwyer/mailyak v3.1.1+incompatible

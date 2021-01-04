@@ -150,6 +150,9 @@ func (h *Handlers) ServeIndex(w http.ResponseWriter, r *http.Request) {
 		"description":              description,
 		"gaTrackingID":             h.cfg.GetString("analytics.gaTrackingID"),
 		"allowPrivateRepositories": h.cfg.GetBool("server.allowPrivateRepositories"),
+		"githubAuth":               h.cfg.IsSet("server.oauth.github"),
+		"googleAuth":               h.cfg.IsSet("server.oauth.google"),
+		"oidcAuth":                 h.cfg.IsSet("server.oauth.oidc"),
 	}
 	if err := h.indexTmpl.Execute(w, data); err != nil {
 		h.logger.Error().Err(err).Msg("Error executing index template")
