@@ -272,6 +272,15 @@ func (h *Handlers) setupRouter() {
 
 		// Images
 		r.With(h.Users.RequireLogin).Post("/images", h.Static.SaveImage)
+
+		// Harbor replication
+		//
+		// This endpoint is used by the Harbor replication Artifact Hub adapter.
+		// It returns some information about all packages versions of Helm kind
+		// available so that they can be synchronized in Harbor deployments. It
+		// will probably start being used in Harbor 2.2.0, so we need to be
+		// careful to not introduce breaking changes.
+		r.Get("/harborReplication", h.Packages.GetHarborReplicationDump)
 	})
 
 	// Monocular compatible search API

@@ -94,6 +94,7 @@ type Package struct {
 type PackageManager interface {
 	Get(ctx context.Context, input *GetPackageInput) (*Package, error)
 	GetChangeLogJSON(ctx context.Context, pkgID string) ([]byte, error)
+	GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error)
 	GetJSON(ctx context.Context, input *GetPackageInput) ([]byte, error)
 	GetRandomJSON(ctx context.Context) ([]byte, error)
 	GetSnapshotSecurityReportJSON(ctx context.Context, pkgID, version string) ([]byte, error)

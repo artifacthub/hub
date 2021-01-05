@@ -134,6 +134,43 @@ func TestGetChangeLog(t *testing.T) {
 	})
 }
 
+func TestGetHarborReplicationDump(t *testing.T) {
+	t.Run("get harbor replication dump succeeded", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetHarborReplicationDumpJSON", r.Context()).Return([]byte("dataJSON"), nil)
+		hw.h.GetHarborReplicationDump(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+		h := resp.Header
+		data, _ := ioutil.ReadAll(resp.Body)
+
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		assert.Equal(t, "application/json", h.Get("Content-Type"))
+		assert.Equal(t, helpers.BuildCacheControlHeader(1*time.Hour), h.Get("Cache-Control"))
+		assert.Equal(t, []byte("dataJSON"), data)
+		hw.pm.AssertExpectations(t)
+	})
+
+	t.Run("error getting harbor replication dump", func(t *testing.T) {
+		t.Parallel()
+		w := httptest.NewRecorder()
+		r, _ := http.NewRequest("GET", "/", nil)
+
+		hw := newHandlersWrapper()
+		hw.pm.On("GetHarborReplicationDumpJSON", r.Context()).Return(nil, tests.ErrFakeDB)
+		hw.h.GetHarborReplicationDump(w, r)
+		resp := w.Result()
+		defer resp.Body.Close()
+
+		assert.Equal(t, http.StatusInternalServerError, resp.StatusCode)
+		hw.pm.AssertExpectations(t)
+	})
+}
+
 func TestGetRandom(t *testing.T) {
 	t.Run("get random packages succeeded", func(t *testing.T) {
 		t.Parallel()

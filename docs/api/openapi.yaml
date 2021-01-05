@@ -25,6 +25,8 @@ tags:
     description: ""
   - name: Availability checks
     description: ""
+  - name: Integrations
+    description: ""
 paths:
   /users:
     post:
@@ -1837,6 +1839,84 @@ paths:
           description: "Found, the value is not available"
         "404":
           description: "Not found, the value is available"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  /harborReplication:
+    get:
+      tags:
+        - Integrations
+      summary: Get Harbor replication dump
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - repository
+                    - package
+                    - version
+                    - url
+                properties:
+                  repository:
+                    type: string
+                    nullable: false
+                  package:
+                    type: string
+                    nullable: false
+                  version:
+                    type: string
+                    nullable: false
+                  url:
+                    type: string
+                    format: uri
+                    nullable: false
+                example:
+                  - repository: bitnami
+                    package: nginx-ingress-controller
+                    version: 5.6.10
+                    url: https://charts.bitnami.com/bitnami/nginx-ingress-controller-5.6.10.tgz
+                  - repository: bitnami
+                    package: mediawiki
+                    version: 6.3.6
+                    url: https://charts.bitnami.com/bitnami/mediawiki-6.3.6.tgz
+                  - repository: crossplane
+                    package: crossplane
+                    version: 0.0.0-793.c9c71f8
+                    url: https://charts.crossplane.io/master/crossplane-0.0.0-793.c9c71f8.tgz
+                  - repository: choerodon
+                    package: devops-service
+                    version: 0.22.0
+                    url: https://openchart.choerodon.com.cn/choerodon/c7n/charts/devops-service-0.22.0.tgz
+                  - repository: t3n
+                    package: snipeit
+                    version: 2.4.0
+                    url: https://storage.googleapis.com/t3n-helm-charts/snipeit-2.4.0.tgz
+                  - repository: bitnami
+                    package: osclass
+                    version: 7.0.10
+                    url: https://charts.bitnami.com/bitnami/osclass-7.0.10.tgz
+                  - repository: choerodon
+                    package: asgard-service
+                    version: 0.13.0
+                    url: https://openchart.choerodon.com.cn/choerodon/c7n/charts/asgard-service-0.13.0.tgz
+                  - repository: bitnami
+                    package: osclass
+                    version: 3.2.0
+                    url: https://charts.bitnami.com/bitnami/osclass-3.2.0.tgz
+                  - repository: cronce
+                    package: torrentor
+                    version: 0.3.0
+                    url: https://charts.cronce.io/charts/torrentor-0.3.0.tgz
+                  - repository: banzaicloud-stable
+                    package: kafka-operator
+                    version: 0.0.12
+                    url: https://kubernetes-charts.banzaicloud.com/charts/kafka-operator-0.0.12.tgz
         "429":
           $ref: "#/components/responses/TooManyRequests"
         "500":
