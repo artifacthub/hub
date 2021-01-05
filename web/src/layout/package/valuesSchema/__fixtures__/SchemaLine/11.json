@@ -1,0 +1,7 @@
+{
+  "value": { "type": "string", "title": "Database host", "default": "" },
+  "name": "host",
+  "level": 1,
+  "isRequired": true,
+  "path": "db"
+}

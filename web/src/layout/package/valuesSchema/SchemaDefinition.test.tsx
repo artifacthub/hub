@@ -7,7 +7,7 @@ const getProps = (fixtureId: string): any => {
   return require(`./__fixtures__/SchemaDefinition/${fixtureId}.json`) as any;
 };
 
-const setActivePathMock = jest.fn();
+const onActivePathChangeMock = jest.fn();
 const setValueMock = jest.fn();
 const scrollIntoViewMock = jest.fn();
 
@@ -17,7 +17,7 @@ const defaultProps = {
   isRequired: false,
   isExpanded: true,
   path: 'currentPath',
-  setActivePath: setActivePathMock,
+  onActivePathChange: onActivePathChangeMock,
   setValue: setValueMock,
 };
 
@@ -129,8 +129,8 @@ describe('SchemaDefinition', () => {
       const btn = getByTestId('expandBtn');
       fireEvent.click(btn);
 
-      expect(setActivePathMock).toHaveBeenCalledTimes(1);
-      expect(setActivePathMock).toHaveBeenCalledWith('currentPath');
+      expect(onActivePathChangeMock).toHaveBeenCalledTimes(1);
+      expect(onActivePathChangeMock).toHaveBeenCalledWith('currentPath');
     });
 
     it('renders ENUM', () => {

@@ -8,6 +8,7 @@ exports[`SchemaLine creates snapshot 1`] = `
   >
     <div
       class="col-7 bg-dark text-light position-relative py-1 user-select-none content undefined"
+      data-testid="lineContent"
     >
       <div
         class="level1 text-monospace"
@@ -17,7 +18,11 @@ exports[`SchemaLine creates snapshot 1`] = `
         >
           # Database host
         </div>
-        host: 
+        <span
+          class=""
+        >
+          host: 
+        </span>
         <span
           class="text-warning line"
           data-testid="defaultValue"
@@ -34,94 +39,98 @@ exports[`SchemaLine creates snapshot 1`] = `
       <div
         class="position-relative w-100"
       >
-        <button
-          class="btn btn-block text-reset text-left p-0 position-relative btn"
-          data-testid="expandBtn"
+        <div
+          class="contentWrapper"
         >
-          <div
-            class="d-flex flex-column"
+          <button
+            class="btn btn-block text-reset text-left p-0 position-relative btn"
+            data-testid="expandBtn"
           >
             <div
-              class="d-flex flex-row align-items-start"
+              class="d-flex flex-column"
             >
               <div
-                class="pr-2 text-secondary icon"
-              >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="d-flex flex-column flex-grow-1 content"
+                class="d-flex flex-row align-items-start"
               >
                 <div
-                  class="font-weight-bold text-truncate"
+                  class="pr-2 text-secondary icon"
                 >
-                  Database host
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 16 16"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 011.659-.753l5.48 4.796a1 1 0 010 1.506z"
+                    />
+                  </svg>
                 </div>
                 <div
-                  class="d-flex flex-row align-items-center w-100"
+                  class="d-flex flex-column flex-grow-1 content"
                 >
                   <div
-                    class="text-nowrap"
+                    class="font-weight-bold text-truncate"
                   >
-                    <small
-                      class="text-muted text-uppercase"
-                    >
-                      Type
-                    </small>
-                    : 
-                    <span
-                      class="ml-1 font-weight-bold"
-                    >
-                      string
-                    </span>
+                    Database host
                   </div>
                   <div
-                    class="ml-3 text-truncate"
+                    class="d-flex flex-row align-items-center w-100"
                   >
-                    <small
-                      class="text-muted text-uppercase"
+                    <div
+                      class="text-nowrap"
                     >
-                      Default
-                    </small>
-                    : 
-                    <span
-                      class="text-truncate default"
-                    >
-                      <span
-                        class="ml-1"
+                      <small
+                        class="text-muted text-uppercase"
                       >
-                        <span>
-                          ""
+                        Type
+                      </small>
+                      : 
+                      <span
+                        class="ml-1 font-weight-bold"
+                      >
+                        string
+                      </span>
+                    </div>
+                    <div
+                      class="ml-3 text-truncate"
+                    >
+                      <small
+                        class="text-muted text-uppercase"
+                      >
+                        Default
+                      </small>
+                      : 
+                      <span
+                        class="text-truncate default"
+                      >
+                        <span
+                          class="ml-1"
+                        >
+                          <span>
+                            ""
+                          </span>
                         </span>
                       </span>
-                    </span>
-                  </div>
-                  <div
-                    class="ml-auto pl-2"
-                  >
-                    <span
-                      class="badge badge-sm badge-pill badge-success text-uppercase position-relative badge"
+                    </div>
+                    <div
+                      class="ml-auto pl-2"
                     >
-                      Required
-                    </span>
+                      <span
+                        class="badge badge-sm badge-pill badge-success text-uppercase position-relative badge"
+                      >
+                        Required
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   </div>

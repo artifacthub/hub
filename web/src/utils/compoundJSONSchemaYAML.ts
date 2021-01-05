@@ -13,12 +13,18 @@ interface ItemValue {
   value?: string;
   title?: string;
   props?: { [key: string]: ItemValue };
+  hasDecorator?: boolean;
+  isArrayParent?: boolean;
 }
 
 const renderValueLine = (item: ItemValue, name: string): string => {
-  return `\n${item.level === 0 ? '\n' : ''}${
-    item.title ? `${repeat(' ', item.level * 2)}# ${item.title}\n` : ''
-  }${repeat(' ', item.level * 2)}${name}: ${item.value || ''}`;
+  let activeLevel = item.level;
+  if (item.isArrayParent && (isUndefined(item.hasDecorator) || !item.hasDecorator)) {
+    activeLevel = activeLevel + 1;
+  }
+  return `\n${activeLevel === 0 ? '\n' : ''}${
+    item.title ? `${repeat(' ', activeLevel * 2)}# ${item.title}\n` : ''
+  }${repeat(' ', activeLevel * 2)}${item.hasDecorator ? '- ' : ''}${name}: ${item.value || ''}`;
 };
 
 const isObjectUndefined = (obj: any): boolean => {
@@ -133,12 +139,17 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
 
   const items = {};
 
-  function checkProperties(props: any, level: number, pathSteps: string[] = [], path?: string) {
-    Object.keys(props).forEach((propName: string) => {
-      const currentSteps: string[] = [...pathSteps, propName];
-      const currentPath = getJMESPathForValuesSchema(propName, path);
-      paths.push(currentPath);
+  function checkProperties(props: any, level: number, isArrayParent: boolean, pathSteps: string[] = [], path?: string) {
+    Object.keys(props).forEach((propName: string, index: number) => {
       let value: JSONSchema | undefined = props[propName] as JSONSchema;
+      let isCurrentArrayParent = false;
+      if (value.type === 'array' && value.items && (value.items as JSONSchema).hasOwnProperty('properties')) {
+        isCurrentArrayParent = true;
+      }
+
+      const currentSteps: string[] = [...pathSteps, propName];
+      const currentPath = getJMESPathForValuesSchema(isCurrentArrayParent ? `${propName}[0]` : propName, path);
+      paths.push(currentPath);
 
       const checkCombinations = (valueToCheck: JSONSchema) => {
         if (valueToCheck.oneOf) {
@@ -158,25 +169,50 @@ export default (schema: JSONSchema, savedOpts: { [key: string]: number }): Forma
 
       const defaultValue = getValue(value, level);
 
-      if (value.properties) {
+      if (isCurrentArrayParent) {
         set(items, currentSteps, {
           level: level,
           title: value.title,
           properties: {},
         });
-        checkProperties(value.properties, level + 1, [...currentSteps, 'properties'], currentPath);
-      } else if (!isUndefined(defaultValue)) {
-        set(items, currentSteps, {
-          level: level,
-          value: defaultValue,
-          title: value.title,
-        });
+        checkProperties(
+          (value.items as JSONSchema).properties!,
+          level + 1,
+          isCurrentArrayParent,
+          [...currentSteps, 'properties'],
+          currentPath
+        );
+      } else {
+        if (value.properties) {
+          set(items, currentSteps, {
+            level: level,
+            title: value.title,
+            properties: {},
+            hasDecorator: isArrayParent && index === 0,
+            isArrayParent: isArrayParent,
+          });
+          checkProperties(
+            value.properties,
+            isArrayParent ? level + 2 : level + 1,
+            isCurrentArrayParent,
+            [...currentSteps, 'properties'],
+            currentPath
+          );
+        } else if (!isUndefined(defaultValue)) {
+          set(items, currentSteps, {
+            level: level,
+            value: defaultValue,
+            title: value.title,
+            hasDecorator: isArrayParent && index === 0,
+            isArrayParent: isArrayParent,
+          });
+        }
       }
     });
   }
 
   if (schema.properties) {
-    checkProperties(schema.properties, 0);
+    checkProperties(schema.properties, 0, false);
   }
 
   const yamlContent = prepareContent(items);

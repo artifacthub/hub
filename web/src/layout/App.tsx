@@ -113,6 +113,7 @@ export default function App() {
                       hash={location.hash}
                       channel={getQueryParam(location.search, 'channel')}
                       visibleModal={getQueryParam(location.search, 'modal') || undefined}
+                      visibleValuesSchemaPath={getQueryParam(location.search, 'path') || undefined}
                       isLoadingPackage={isLoadingPackage}
                       setIsLoadingPackage={setIsLoadingPackage}
                       {...location.state}

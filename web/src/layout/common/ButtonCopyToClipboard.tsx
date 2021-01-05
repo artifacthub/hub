@@ -13,6 +13,7 @@ interface Props {
   tooltipClassName?: string;
   visibleBtnText?: boolean;
   contentBtn?: string;
+  icon?: JSX.Element;
 }
 
 const ButtonCopyToClipboard = (props: Props) => {
@@ -81,7 +82,7 @@ const ButtonCopyToClipboard = (props: Props) => {
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && props.contentBtn && (
             <div className="mr-2">{props.contentBtn}</div>
           )}
-          <FiCopy />
+          {props.icon ? <>{props.icon}</> : <FiCopy />}
           {!isUndefined(props.visibleBtnText) && props.visibleBtnText && isUndefined(props.contentBtn) && (
             <div className="ml-2">Copy to clipboard</div>
           )}

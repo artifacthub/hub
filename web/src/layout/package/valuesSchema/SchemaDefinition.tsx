@@ -11,14 +11,14 @@ import { ActiveJSONSchemaValue } from '../../../types';
 import ButtonCopyToClipboard from '../../common/ButtonCopyToClipboard';
 import styles from './SchemaDefinition.module.css';
 
-interface Prop {
+interface Props {
   def: ActiveJSONSchemaValue;
   setValue: (newValue: ActiveJSONSchemaValue) => void;
   isRequired: boolean;
   defaultValue: JSX.Element | null;
   isExpanded: boolean;
   path: string;
-  setActivePath: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onActivePathChange: (path?: string) => void;
 }
 
 interface KeywordPropsByType {
@@ -109,7 +109,7 @@ const SCHEMA_PROPS_PER_TYPE: KeywordPropsByType = {
   ],
 };
 
-const SchemaDefinition = (props: Prop) => {
+const SchemaDefinition = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const def = props.def.options[props.def.active];
 
@@ -135,9 +135,9 @@ const SchemaDefinition = (props: Prop) => {
   useEffect(() => {
     // Scrolls content into view when a definition is expanded
     if (props.isExpanded && ref && ref.current) {
-      ref.current.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+      ref.current!.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     }
-  }, [props.isExpanded]);
+  }, [props.isExpanded, ref]);
 
   useEffect(() => {
     setActiveType(getInitialType());
@@ -266,178 +266,180 @@ const SchemaDefinition = (props: Prop) => {
   };
 
   const changeActivePath = () => {
-    props.setActivePath(!props.isExpanded ? props.path : undefined);
+    props.onActivePathChange(!props.isExpanded ? props.path : undefined);
   };
 
   return (
     <div className="position-relative w-100" ref={ref}>
-      <button
-        data-testid="expandBtn"
-        className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
-        onClick={changeActivePath}
-      >
-        <div className="d-flex flex-column">
-          <div className="d-flex flex-row align-items-start">
-            <div className={`pr-2 text-secondary ${styles.icon}`}>
-              {props.isExpanded ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
-            </div>
-            <div className={`d-flex flex-column flex-grow-1 ${styles.content}`}>
-              {props.def.error || isUndefined(activeType) ? (
-                <small className={`text-muted text-uppercase ${styles.errorMsg}`}>Raw</small>
-              ) : (
-                <>
-                  {def.title && <div className="font-weight-bold text-truncate">{def.title}</div>}
+      <div className={styles.contentWrapper}>
+        <button
+          data-testid="expandBtn"
+          className={`btn btn-block text-reset text-left p-0 position-relative ${styles.btn}`}
+          onClick={changeActivePath}
+        >
+          <div className="d-flex flex-column">
+            <div className="d-flex flex-row align-items-start">
+              <div className={`pr-2 text-secondary ${styles.icon}`}>
+                {props.isExpanded ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
+              </div>
+              <div className={`d-flex flex-column flex-grow-1 ${styles.content}`}>
+                {props.def.error || isUndefined(activeType) ? (
+                  <small className={`text-muted text-uppercase ${styles.errorMsg}`}>Raw</small>
+                ) : (
+                  <>
+                    {def.title && <div className="font-weight-bold text-truncate">{def.title}</div>}
 
-                  {!isNull(props.def.combinationType) && (
-                    <>
-                      <select
-                        className={classnames('w-50', { 'my-2': def.title }, { 'mb-2': isUndefined(def.title) })}
-                        value={props.def.active}
-                        onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
-                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                          props.setValue({
-                            ...props.def,
-                            active: parseInt(e.target.value),
-                          });
-                          if (!props.isExpanded) {
-                            changeActivePath();
-                          }
-                        }}
-                      >
-                        {props.def.options.map((sch: JSONSchema, index: number) => (
-                          <option value={index} key={`opt_${index}`}>
-                            Option {index + 1}
-                          </option>
-                        ))}
-                      </select>
-                    </>
-                  )}
-
-                  <div className="d-flex flex-row align-items-center w-100">
-                    <div className="text-nowrap">
-                      <small className="text-muted text-uppercase">Type</small>:{' '}
-                      {isArray(def.type) ? (
+                    {!isNull(props.def.combinationType) && (
+                      <>
                         <select
-                          value={activeType}
+                          className={classnames('w-50', { 'my-2': def.title }, { 'mb-2': isUndefined(def.title) })}
+                          value={props.def.active}
                           onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
                           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                            setActiveType(e.target.value as string);
+                            props.setValue({
+                              ...props.def,
+                              active: parseInt(e.target.value),
+                            });
                             if (!props.isExpanded) {
                               changeActivePath();
                             }
                           }}
                         >
-                          {def.type.map((type: string, index: number) => (
-                            <option value={type} key={`opt_${index}`}>
-                              {type}
+                          {props.def.options.map((sch: JSONSchema, index: number) => (
+                            <option value={index} key={`opt_${index}`}>
+                              Option {index + 1}
                             </option>
                           ))}
                         </select>
-                      ) : (
-                        <span className="ml-1 font-weight-bold">{activeType}</span>
-                      )}
-                      {activeType === 'array' && def.items && <>{getItemsDef(def.items)}</>}
-                    </div>
-
-                    {!isUndefined(def.default) && (
-                      <div className="ml-3 text-truncate">
-                        <small className="text-muted text-uppercase">Default</small>:{' '}
-                        <span className={`text-truncate ${styles.default}`}>{formatDefaultResume()}</span>
-                      </div>
+                      </>
                     )}
 
-                    <div className="ml-auto pl-2">
-                      {props.isRequired && (
-                        <span
-                          className={`badge badge-sm badge-pill badge-success text-uppercase position-relative ${styles.badge}`}
-                        >
-                          Required
-                        </span>
+                    <div className="d-flex flex-row align-items-center w-100">
+                      <div className="text-nowrap">
+                        <small className="text-muted text-uppercase">Type</small>:{' '}
+                        {isArray(def.type) ? (
+                          <select
+                            value={activeType}
+                            onClick={(e: React.MouseEvent<HTMLSelectElement, MouseEvent>) => e.stopPropagation()}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                              setActiveType(e.target.value as string);
+                              if (!props.isExpanded) {
+                                changeActivePath();
+                              }
+                            }}
+                          >
+                            {def.type.map((type: string, index: number) => (
+                              <option value={type} key={`opt_${index}`}>
+                                {type}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <span className="ml-1 font-weight-bold">{activeType}</span>
+                        )}
+                        {activeType === 'array' && def.items && <>{getItemsDef(def.items)}</>}
+                      </div>
+
+                      {!isUndefined(def.default) && (
+                        <div className="ml-3 text-truncate">
+                          <small className="text-muted text-uppercase">Default</small>:{' '}
+                          <span className={`text-truncate ${styles.default}`}>{formatDefaultResume()}</span>
+                        </div>
                       )}
+
+                      <div className="ml-auto pl-2">
+                        {props.isRequired && (
+                          <span
+                            className={`badge badge-sm badge-pill badge-success text-uppercase position-relative ${styles.badge}`}
+                          >
+                            Required
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </button>
+
+        {props.isExpanded && (
+          <div className={`${styles.moreInfo} border-top my-2 pt-2`}>
+            <div className="d-flex flex-column">
+              {isNull(typeDef) ? (
+                <div className="mt-2">
+                  <SyntaxHighlighter language="json" style={tomorrowNight}>
+                    {JSON.stringify(def, null, 2)}
+                  </SyntaxHighlighter>
+                </div>
+              ) : (
+                <>
+                  <div className="d-flex flex-row align-items-between">
+                    <div className="font-weight-bold mb-1">Annotations</div>
+                    <div className="ml-auto">
+                      <ButtonCopyToClipboard
+                        text={props.path}
+                        contentBtn="Copy path to clipboard"
+                        className={`btn-link text-muted p-0 ${styles.btnClip}`}
+                        visibleBtnText
+                      />
                     </div>
                   </div>
+                  <div>
+                    <small className="text-muted text-uppercase">Description</small>:{' '}
+                    <span className="ml-1">
+                      {def.description ? (
+                        <span className={styles.wordBreak}>{def.description}</span>
+                      ) : (
+                        <>
+                          {def.type === 'array' && def.items ? (
+                            <span className={styles.desc}>{getArrayDesc(def.items)}</span>
+                          ) : (
+                            <>-</>
+                          )}
+                        </>
+                      )}
+                    </span>
+                  </div>
+
+                  {!isUndefined(props.defaultValue) && typeof def.default === 'object' && !isEmpty(def.default) && (
+                    <div>
+                      <small className="text-muted text-uppercase">Default</small>: {props.defaultValue}
+                    </div>
+                  )}
+
+                  {!isUndefined(typeDef) && (
+                    <>
+                      <div className="font-weight-bold mt-2 mb-1">Constraints</div>
+                      {typeDef.map((keyword: KeywordProp) => (
+                        <React.Fragment key={keyword.label}>
+                          {isArray(keyword.value) ? (
+                            <>
+                              <div className="d-flex flex-row">
+                                {keyword.value.map((subKeyword: KeywordProp) => (
+                                  <React.Fragment key={subKeyword.label}>
+                                    {getTypeSpecificKeyword(subKeyword, 'mr-3')}
+                                  </React.Fragment>
+                                ))}
+                              </div>
+                            </>
+                          ) : (
+                            <>{getTypeSpecificKeyword(keyword)}</>
+                          )}
+                        </React.Fragment>
+                      ))}
+                      <div>
+                        <small className="text-muted text-uppercase">Enum</small>: {formatPropValue(def.enum)}
+                      </div>
+                    </>
+                  )}
                 </>
               )}
             </div>
           </div>
-        </div>
-      </button>
-
-      {props.isExpanded && (
-        <div className={`${styles.moreInfo} border-top my-2 pt-2`}>
-          <div className="d-flex flex-column">
-            {isNull(typeDef) ? (
-              <div className="mt-2">
-                <SyntaxHighlighter language="json" style={tomorrowNight}>
-                  {JSON.stringify(def, null, 2)}
-                </SyntaxHighlighter>
-              </div>
-            ) : (
-              <>
-                <div className="d-flex flex-row align-items-between">
-                  <div className="font-weight-bold mb-1">Annotations</div>
-                  <div className="ml-auto">
-                    <ButtonCopyToClipboard
-                      text={props.path}
-                      contentBtn="Copy path to clipboard"
-                      className={`btn-link text-muted p-0 ${styles.btnClip}`}
-                      visibleBtnText
-                    />
-                  </div>
-                </div>
-                <div>
-                  <small className="text-muted text-uppercase">Description</small>:{' '}
-                  <span className="ml-1">
-                    {def.description ? (
-                      <span className={styles.wordBreak}>{def.description}</span>
-                    ) : (
-                      <>
-                        {def.type === 'array' && def.items ? (
-                          <span className={styles.desc}>{getArrayDesc(def.items)}</span>
-                        ) : (
-                          <>-</>
-                        )}
-                      </>
-                    )}
-                  </span>
-                </div>
-
-                {!isUndefined(props.defaultValue) && typeof def.default === 'object' && !isEmpty(def.default) && (
-                  <div>
-                    <small className="text-muted text-uppercase">Default</small>: {props.defaultValue}
-                  </div>
-                )}
-
-                {!isUndefined(typeDef) && (
-                  <>
-                    <div className="font-weight-bold mt-2 mb-1">Constraints</div>
-                    {typeDef.map((keyword: KeywordProp) => (
-                      <React.Fragment key={keyword.label}>
-                        {isArray(keyword.value) ? (
-                          <>
-                            <div className="d-flex flex-row">
-                              {keyword.value.map((subKeyword: KeywordProp) => (
-                                <React.Fragment key={subKeyword.label}>
-                                  {getTypeSpecificKeyword(subKeyword, 'mr-3')}
-                                </React.Fragment>
-                              ))}
-                            </div>
-                          </>
-                        ) : (
-                          <>{getTypeSpecificKeyword(keyword)}</>
-                        )}
-                      </React.Fragment>
-                    ))}
-                    <div>
-                      <small className="text-muted text-uppercase">Enum</small>: {formatPropValue(def.enum)}
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

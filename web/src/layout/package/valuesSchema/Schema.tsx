@@ -11,6 +11,8 @@ import SchemaValuesSearch from './SchemaValuesSearch';
 interface Props {
   schema: JSONSchema;
   normalizedName: string;
+  visibleValuesSchemaPath?: string;
+  onPathChange: (path?: string) => void;
 }
 
 const Schema = (props: Props) => {
@@ -28,7 +30,7 @@ const Schema = (props: Props) => {
   }, [props.schema, savedOpts]);
 
   const onSearch = (selectedPath?: string) => {
-    setActivePath(selectedPath);
+    onPathChange(selectedPath);
   };
 
   const saveSelectedOption = (path: string, index: number) => {
@@ -37,6 +39,15 @@ const Schema = (props: Props) => {
       [path]: index,
     });
   };
+
+  const onPathChange = (path?: string) => {
+    setActivePath(path);
+    props.onPathChange(path);
+  };
+
+  useEffect(() => {
+    setActivePath(props.visibleValuesSchemaPath);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
     <>
@@ -72,7 +83,7 @@ const Schema = (props: Props) => {
                   isRequired={isRequired}
                   className="pt-4"
                   activePath={activePath}
-                  setActivePath={setActivePath}
+                  onActivePathChange={onPathChange}
                   saveSelectedOption={saveSelectedOption}
                 />
               </React.Fragment>

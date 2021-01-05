@@ -156,3 +156,10 @@ button {
     max-width: 1400px;
   }
 }
+
+// Indentation for values schema
+@for $i from 0 through 30 {
+  .level#{$i} {
+    margin-left: $i * 20px;
+  }
+}
