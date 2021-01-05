@@ -26,6 +26,13 @@ func (m *ManagerMock) GetChangeLogJSON(ctx context.Context, pkgID string) ([]byt
 	return data, args.Error(1)
 }
 
+// GetHarborReplicationDumpJSON implements the PackageManager interface.
+func (m *ManagerMock) GetHarborReplicationDumpJSON(ctx context.Context) ([]byte, error) {
+	args := m.Called(ctx)
+	data, _ := args.Get(0).([]byte)
+	return data, args.Error(1)
+}
+
 // GetJSON implements the PackageManager interface.
 func (m *ManagerMock) GetJSON(ctx context.Context, input *hub.GetPackageInput) ([]byte, error) {
 	args := m.Called(ctx, input)

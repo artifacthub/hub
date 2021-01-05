@@ -30,6 +30,7 @@
 {{ template "organizations/user_belongs_to_organization.sql" }}
 
 {{ template "packages/generate_package_tsdoc.sql" }}
+{{ template "packages/get_harbor_replication_dump.sql" }}
 {{ template "packages/get_package.sql" }}
 {{ template "packages/get_package_changelog.sql" }}
 {{ template "packages/get_package_summary.sql" }}
