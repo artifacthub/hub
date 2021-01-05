@@ -21,7 +21,7 @@ interface FormValidation {
 
 interface Loading {
   status: boolean;
-  type?: 'log' | 'google' | 'github';
+  type?: 'log' | 'google' | 'github' | 'oidc';
 }
 
 interface Props {

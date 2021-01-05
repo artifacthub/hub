@@ -324,6 +324,44 @@
                                             "uniqueItems": true
                                         }
                                     }
+                                },
+                                "oidc": {
+                                    "type": "object",
+                                    "properties": {
+                                        "issuerURL": {
+                                            "title": "OpenID connect issuer url",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "clientID": {
+                                            "title": "OpenID connect oauth client id",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "clientSecret": {
+                                            "title": "OpenID connect oauth client secret",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "redirectURL": {
+                                            "title": "OpenID connect oauth redirect url",
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "scopes": {
+                                            "title": "OpenID connect oauth scopes",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "default": [
+                                                "openid",
+                                                "profile",
+                                                "email"
+                                            ],
+                                            "uniqueItems": true
+                                        }
+                                    }
                                 }
                             }
                         },

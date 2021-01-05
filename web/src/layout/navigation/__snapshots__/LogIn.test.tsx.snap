@@ -116,62 +116,6 @@ exports[`LogIn creates snapshot 1`] = `
                 </button>
               </div>
             </form>
-            <div
-              class="undefined my-4 position-relative text-center separator"
-            >
-              <span
-                class="p-3 m-auto separatorContent"
-              >
-                or sign in with
-              </span>
-              <div
-                class="divider"
-              />
-            </div>
-            <div>
-              <div
-                class="d-flex flex-column mb-1"
-              >
-                <button
-                  class="btn btn-outline-secondary mb-3 btn-block btn"
-                  type="button"
-                >
-                  <div
-                    class="d-flex align-items-center"
-                  >
-                    <img
-                      alt="Github Logo"
-                      class="logo"
-                      src="/static/media/github-mark.svg"
-                    />
-                    <div
-                      class="flex-grow-1 text-center"
-                    >
-                      Github
-                    </div>
-                  </div>
-                </button>
-                <button
-                  class="btn btn-outline-secondary mb-3 btn-block btn"
-                  type="button"
-                >
-                  <div
-                    class="d-flex align-items-center"
-                  >
-                    <img
-                      alt="Google Logo"
-                      class="logo"
-                      src="/static/media/google.svg"
-                    />
-                    <div
-                      class="flex-grow-1 text-center"
-                    >
-                      Google
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
             <div>
               <div
                 class="alertWrapper"

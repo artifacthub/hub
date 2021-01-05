@@ -11,7 +11,7 @@ import InputField from '../common/InputField';
 
 interface Loading {
   status: boolean;
-  type?: 'log' | 'google' | 'github';
+  type?: 'log' | 'google' | 'github' | 'oidc';
 }
 interface FormValidation {
   isValid: boolean;

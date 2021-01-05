@@ -14,6 +14,17 @@ server:
     enabled: false
     username: hub
     password: changeme
+  oauth:
+    oidc:
+      # Dex example app config: https://dexidp.io/docs/getting-started/
+      issuerURL: http://127.0.0.1:5556/dex
+      clientID: example-app
+      clientSecret: ZXhhbXBsZS1hcHAtc2VjcmV0
+      redirectURL: http://localhost:8000/oauth/oidc/callback
+      scopes:
+        - openid
+        - profile
+        - email
   cookie:
     hashKey: default-unsafe-key
     secure: false

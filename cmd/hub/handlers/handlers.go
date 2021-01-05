@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -67,7 +68,11 @@ type Handlers struct {
 }
 
 // Setup creates a new Handlers instance.
-func Setup(cfg *viper.Viper, svc *Services) *Handlers {
+func Setup(ctx context.Context, cfg *viper.Viper, svc *Services) (*Handlers, error) {
+	userHandlers, err := user.NewHandlers(ctx, svc.UserManager, cfg)
+	if err != nil {
+		return nil, err
+	}
 	h := &Handlers{
 		cfg:     cfg,
 		svc:     svc,
@@ -75,7 +80,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		logger:  log.With().Str("handlers", "root").Logger(),
 
 		Organizations: org.NewHandlers(svc.OrganizationManager, svc.Authorizer, cfg),
-		Users:         user.NewHandlers(svc.UserManager, cfg),
+		Users:         userHandlers,
 		Repositories:  repo.NewHandlers(svc.RepositoryManager),
 		Packages:      pkg.NewHandlers(svc.PackageManager, cfg),
 		Subscriptions: subscription.NewHandlers(svc.SubscriptionManager),
@@ -84,7 +89,7 @@ func Setup(cfg *viper.Viper, svc *Services) *Handlers {
 		Static:        static.NewHandlers(cfg, svc.ImageStore),
 	}
 	h.setupRouter()
-	return h
+	return h, nil
 }
 
 // setupMetrics creates and registers some metrics
