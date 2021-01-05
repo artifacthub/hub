@@ -3,7 +3,7 @@
 exports[`Organization settings index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container p-0"
+    class="p-0"
     role="main"
   >
     <div
@@ -40,7 +40,7 @@ exports[`Organization settings index creates snapshot 1`] = `
 exports[`Organization settings index creates snapshot 2`] = `
 <DocumentFragment>
   <main
-    class="container p-0"
+    class="p-0"
     role="main"
   >
     <div

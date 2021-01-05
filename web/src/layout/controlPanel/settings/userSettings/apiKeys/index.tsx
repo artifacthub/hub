@@ -53,7 +53,7 @@ const APIKeysSection = (props: Props) => {
     <div className="d-flex flex-column flex-grow-1">
       {(isUndefined(apiKeysList) || isLoading) && <Loading />}
 
-      <main role="main" className="container p-0">
+      <main role="main" className="p-0">
         <div className="flex-grow-1">
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">
             <div className={`h3 pb-0 ${styles.title}`}>API keys</div>

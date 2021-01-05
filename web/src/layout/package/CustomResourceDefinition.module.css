@@ -1,3 +1,7 @@
+.wrapper {
+  margin: 0 -15px;
+}
+
 .lineClamp {
   display: -webkit-box;
   -webkit-line-clamp: 3;

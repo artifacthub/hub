@@ -67,7 +67,7 @@ const ProfileSection = (props: Props) => {
   }, [selectedOrg]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <main role="main" className="container p-0">
+    <main role="main" className="p-0">
       <div className={`h3 pb-2 border-bottom ${styles.title}`}>Profile information</div>
 
       <div className={`mt-4 mt-md-5 ${styles.form}`}>

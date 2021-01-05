@@ -3,7 +3,7 @@
 exports[`Authorization settings index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container p-0"
+    class="p-0"
     role="main"
   >
     <div
@@ -77,7 +77,7 @@ exports[`Authorization settings index creates snapshot 1`] = `
 exports[`Authorization settings index creates snapshot 2`] = `
 <DocumentFragment>
   <main
-    class="container p-0"
+    class="p-0"
     role="main"
   >
     <div

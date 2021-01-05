@@ -7,7 +7,7 @@ exports[`Search index creates snapshot 1`] = `
     role="navigation"
   >
     <div
-      class="container d-flex justify-content-between flex-nowrap"
+      class="container-lg px-sm-4 px-lg-0 d-flex justify-content-between flex-nowrap"
     >
       <div
         class="d-flex align-items-center text-truncate"
@@ -71,11 +71,11 @@ exports[`Search index creates snapshot 1`] = `
       </div>
     </div>
     <main
-      class="container d-flex flex-row justify-content-between"
+      class="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between"
       role="main"
     >
       <div
-        class="flex-grow-1 mt-3 list emptyList"
+        class="flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0 list emptyList"
       />
     </main>
   </div>
@@ -89,7 +89,7 @@ exports[`Search index creates snapshot 2`] = `
     role="navigation"
   >
     <div
-      class="container d-flex justify-content-between flex-nowrap"
+      class="container-lg px-sm-4 px-lg-0 d-flex justify-content-between flex-nowrap"
     >
       <div
         class="d-flex align-items-center text-truncate"
@@ -874,11 +874,11 @@ exports[`Search index creates snapshot 2`] = `
     class="d-flex position-relative pt-3 pb-3 flex-grow-1"
   >
     <main
-      class="container d-flex flex-row justify-content-between"
+      class="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between"
       role="main"
     >
       <nav
-        class="d-none d-md-block sidebar"
+        class="px-xs-0 px-sm-3 px-lg-0 d-none d-md-block sidebar"
       >
         <div
           class="mr-5"
@@ -1486,7 +1486,7 @@ exports[`Search index creates snapshot 2`] = `
         </div>
       </nav>
       <div
-        class="flex-grow-1 mt-3 list"
+        class="flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0 list"
       >
         <div
           class="row mb-2"

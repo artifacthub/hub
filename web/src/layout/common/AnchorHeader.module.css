@@ -52,9 +52,8 @@
   }
 }
 
-@media only screen and (max-width: 575.98px) {
+@media only screen and (max-width: 991.98px) {
   .headingLink {
-    opacity: 1;
     margin-left: -25px;
     width: 25px;
   }
@@ -63,7 +62,12 @@
     width: 13px;
     height: 13px;
   }
+}
 
+@media only screen and (max-width: 575.98px) {
+  .headingLink {
+    opacity: 1;
+  }
   .header h1 {
     font-size: 1.35rem;
   }

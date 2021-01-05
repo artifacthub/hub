@@ -3,285 +3,288 @@
 exports[`CustomResourceDefinition creates snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="row mt-4"
+    class="wrapper"
   >
     <div
-      class="col-12 col-lg-6 col-xxl-4 mb-4"
+      class="d-flex flex-wrap mt-4"
     >
       <div
-        class="card h-100"
-        data-testid="resourceDefinition"
+        class="col-12 col-lg-6 col-xxl-4 mb-4"
       >
         <div
-          class="card-body d-flex flex-column"
+          class="card h-100"
+          data-testid="resourceDefinition"
         >
-          <h6
-            class="card-title mb-3"
-          >
-            API
-          </h6>
-          <small
-            class="card-text text-muted overflow-hidden lineClamp"
-          >
-            API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode. 
-          </small>
           <div
-            class="mt-auto d-flex flex-column"
+            class="card-body d-flex flex-column"
           >
+            <h6
+              class="card-title mb-3"
+            >
+              API
+            </h6>
+            <small
+              class="card-text text-muted overflow-hidden lineClamp"
+            >
+              API holds API-related information. You can see the API definition and data structure for API here. API takes the Swagger definition as a configMap along with replica count and micro-gateway deployment mode. 
+            </small>
             <div
-              class="separator separator"
-            />
-            <div
-              class="w-100 extraInfo"
+              class="mt-auto d-flex flex-column"
             >
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="separator separator"
+              />
+              <div
+                class="w-100 extraInfo"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  Kind:
-                </small>
-                <span
-                  class="text-truncate"
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Kind:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    API
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  API
-                </span>
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Name:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    apis.wso2.com
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
+                >
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Version:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    v1alpha1
+                  </span>
+                </div>
               </div>
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="text-right mt-1 example"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <button
+                  class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
+                  data-testid="resourceDefinitionBtn"
                 >
-                  Name:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  apis.wso2.com
-                </span>
+                  View YAML example
+                </button>
               </div>
-              <div
-                class="d-flex flex-row align-items-baseline"
-              >
-                <small
-                  class="text-muted text-uppercase mr-1"
-                >
-                  Version:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  v1alpha1
-                </span>
-              </div>
-            </div>
-            <div
-              class="text-right mt-1 example"
-            >
-              <button
-                class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-                data-testid="resourceDefinitionBtn"
-              >
-                View YAML example
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="col-12 col-lg-6 col-xxl-4 mb-4"
-    >
       <div
-        class="card h-100"
-        data-testid="resourceDefinition"
+        class="col-12 col-lg-6 col-xxl-4 mb-4"
       >
         <div
-          class="card-body d-flex flex-column"
+          class="card h-100"
+          data-testid="resourceDefinition"
         >
-          <h6
-            class="card-title mb-3"
-          >
-            Security
-          </h6>
-          <small
-            class="card-text text-muted overflow-hidden lineClamp"
-          >
-            Security holds security-related information. You can see the API definition and data structure for Security\` here. Security supports different security types: basic-auth, OAuth2, JWT, etc. The following YAML shows a sample payload for Security with JWT.
-          </small>
           <div
-            class="mt-auto d-flex flex-column"
+            class="card-body d-flex flex-column"
           >
+            <h6
+              class="card-title mb-3"
+            >
+              Security
+            </h6>
+            <small
+              class="card-text text-muted overflow-hidden lineClamp"
+            >
+              Security holds security-related information. You can see the API definition and data structure for Security\` here. Security supports different security types: basic-auth, OAuth2, JWT, etc. The following YAML shows a sample payload for Security with JWT.
+            </small>
             <div
-              class="separator separator"
-            />
-            <div
-              class="w-100 extraInfo"
+              class="mt-auto d-flex flex-column"
             >
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="separator separator"
+              />
+              <div
+                class="w-100 extraInfo"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  Kind:
-                </small>
-                <span
-                  class="text-truncate"
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Kind:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    Security
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  Security
-                </span>
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Name:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    securities.wso2.com
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
+                >
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Version:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    v1alpha1
+                  </span>
+                </div>
               </div>
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="text-right mt-1 example"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <button
+                  class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
+                  data-testid="resourceDefinitionBtn"
                 >
-                  Name:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  securities.wso2.com
-                </span>
+                  View YAML example
+                </button>
               </div>
-              <div
-                class="d-flex flex-row align-items-baseline"
-              >
-                <small
-                  class="text-muted text-uppercase mr-1"
-                >
-                  Version:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  v1alpha1
-                </span>
-              </div>
-            </div>
-            <div
-              class="text-right mt-1 example"
-            >
-              <button
-                class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-                data-testid="resourceDefinitionBtn"
-              >
-                View YAML example
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="col-12 col-lg-6 col-xxl-4 mb-4"
-    >
       <div
-        class="card h-100"
-        data-testid="resourceDefinition"
+        class="col-12 col-lg-6 col-xxl-4 mb-4"
       >
         <div
-          class="card-body d-flex flex-column"
+          class="card h-100"
+          data-testid="resourceDefinition"
         >
-          <h6
-            class="card-title mb-3"
-          >
-            RateLimiting
-          </h6>
-          <small
-            class="card-text text-muted overflow-hidden lineClamp"
-          >
-            RateLimiting holds rate-limiting related information. You can see the API definition and data structure for RateLimiting here. 
-          </small>
           <div
-            class="mt-auto d-flex flex-column"
+            class="card-body d-flex flex-column"
           >
+            <h6
+              class="card-title mb-3"
+            >
+              RateLimiting
+            </h6>
+            <small
+              class="card-text text-muted overflow-hidden lineClamp"
+            >
+              RateLimiting holds rate-limiting related information. You can see the API definition and data structure for RateLimiting here. 
+            </small>
             <div
-              class="separator separator"
-            />
-            <div
-              class="w-100 extraInfo"
+              class="mt-auto d-flex flex-column"
             >
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="separator separator"
+              />
+              <div
+                class="w-100 extraInfo"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  Kind:
-                </small>
-                <span
-                  class="text-truncate"
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Kind:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    RateLimiting
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  RateLimiting
-                </span>
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Name:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    ratelimitings.wso2.com
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
+                >
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Version:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    v1alpha1
+                  </span>
+                </div>
               </div>
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="text-right mt-1 example"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <button
+                  class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
+                  data-testid="resourceDefinitionBtn"
                 >
-                  Name:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  ratelimitings.wso2.com
-                </span>
+                  View YAML example
+                </button>
               </div>
-              <div
-                class="d-flex flex-row align-items-baseline"
-              >
-                <small
-                  class="text-muted text-uppercase mr-1"
-                >
-                  Version:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  v1alpha1
-                </span>
-              </div>
-            </div>
-            <div
-              class="text-right mt-1 example"
-            >
-              <button
-                class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-                data-testid="resourceDefinitionBtn"
-              >
-                View YAML example
-              </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="col-12 col-lg-6 col-xxl-4 mb-4"
-    >
       <div
-        class="card h-100"
-        data-testid="resourceDefinition"
+        class="col-12 col-lg-6 col-xxl-4 mb-4"
       >
         <div
-          class="card-body d-flex flex-column"
+          class="card h-100"
+          data-testid="resourceDefinition"
         >
-          <h6
-            class="card-title mb-3"
+          <div
+            class="card-body d-flex flex-column"
           >
-            TargetEndpoint
-          </h6>
-          <small
-            class="card-text text-muted overflow-hidden lineClamp"
-          >
-            TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here. 
+            <h6
+              class="card-title mb-3"
+            >
+              TargetEndpoint
+            </h6>
+            <small
+              class="card-text text-muted overflow-hidden lineClamp"
+            >
+              TargetEndpoint holds endpoint related information. You can see the API definition and data for TargetEndpoint here. 
 API gateway can be deployed in three patterns: shared, private-jet, and sidecar.
 
 If your backend is already running and you need to expose it via a microgateway, you can define the target URL in the Swagger itself.
@@ -291,68 +294,69 @@ If your backend service is not running, but you plan to run it in the same Kuber
 Then APIM Operator will spin-up the corresponding Kubernetes deployment for the defined backend service itself with the microgateway.
 
 In shared and private-jet mode, the backend can be running in separate PODs, but in sidecar mode, the gateway will run in the same POD adjacent to the backend service.
-          </small>
-          <div
-            class="mt-auto d-flex flex-column"
-          >
+            </small>
             <div
-              class="separator separator"
-            />
-            <div
-              class="w-100 extraInfo"
+              class="mt-auto d-flex flex-column"
             >
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="separator separator"
+              />
+              <div
+                class="w-100 extraInfo"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  Kind:
-                </small>
-                <span
-                  class="text-truncate"
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Kind:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    TargetEndpoint
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
                 >
-                  TargetEndpoint
-                </span>
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Name:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    targetendpoints.wso2.com
+                  </span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-baseline"
+                >
+                  <small
+                    class="text-muted text-uppercase mr-1"
+                  >
+                    Version:
+                  </small>
+                  <span
+                    class="text-truncate"
+                  >
+                    v1alpha1
+                  </span>
+                </div>
               </div>
               <div
-                class="d-flex flex-row align-items-baseline"
+                class="text-right mt-1 example"
               >
-                <small
-                  class="text-muted text-uppercase mr-1"
+                <button
+                  class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
+                  data-testid="resourceDefinitionBtn"
                 >
-                  Name:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  targetendpoints.wso2.com
-                </span>
+                  View YAML example
+                </button>
               </div>
-              <div
-                class="d-flex flex-row align-items-baseline"
-              >
-                <small
-                  class="text-muted text-uppercase mr-1"
-                >
-                  Version:
-                </small>
-                <span
-                  class="text-truncate"
-                >
-                  v1alpha1
-                </span>
-              </div>
-            </div>
-            <div
-              class="text-right mt-1 example"
-            >
-              <button
-                class="font-weight-bold btn btn-link btn-sm px-0 text-secondary"
-                data-testid="resourceDefinitionBtn"
-              >
-                View YAML example
-              </button>
             </div>
           </div>
         </div>

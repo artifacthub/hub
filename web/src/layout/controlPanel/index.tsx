@@ -130,12 +130,12 @@ const ControlPanelView = (props: Props) => {
   return (
     <main role="main" className="d-flex flex-column flex-grow-1 position-relative">
       <div className={`pt-3 position-relative navWrapper ${styles.navWrapper}`}>
-        <div className="container">
-          <div className="d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
+        <div className="container-lg px-sm-4 px-lg-0">
+          <div className="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column-reverse flex-sm-row justify-content-between align-items-end">
             <ul className="mr-auto mr-md-0 nav nav-tabs" role="tablist">
               {CONTROL_PANEL_SECTIONS[context].map((section: Section) => {
                 return (
-                  <li key={`section_${section.name}`} className={`nav-item mx-1 ${styles.navItem}`} role="tab">
+                  <li key={`section_${section.name}`} className={`nav-item ${styles.navItem}`} role="tab">
                     <Link
                       to={{
                         pathname: `/control-panel/${section.name}`,
@@ -164,7 +164,7 @@ const ControlPanelView = (props: Props) => {
 
       {isLoggedIn && (
         <div className="py-4 flex-grow-1 position-relative">
-          <div className="container">
+          <div className="container-lg px-sm-4 px-lg-0">
             {(() => {
               switch (activeSection) {
                 case 'repositories':

@@ -1,3 +1,7 @@
+.wrapper {
+  margin: 0 -15px;
+}
+
 .copyBtn {
   background-color: transparent !important;
 }

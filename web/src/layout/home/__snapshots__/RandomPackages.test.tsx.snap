@@ -6,7 +6,7 @@ exports[`RandomPackages creates snapshot 1`] = `
     class="position-relative wrapper"
   >
     <div
-      class="container my-4 my-md-5"
+      class="container-lg px-sm-4 px-lg-0 my-4 my-md-5"
     >
       <div
         class="d-flex flex-wrap justify-content-center"
@@ -41,7 +41,7 @@ exports[`RandomPackages creates snapshot 2`] = `
     class="position-relative wrapper"
   >
     <div
-      class="container my-4 my-md-5"
+      class="container-lg px-sm-4 px-lg-0 my-4 my-md-5"
     >
       <div
         class="d-flex flex-wrap justify-content-center"

@@ -47,7 +47,7 @@ const StarredPackagesView = () => {
     <div className="d-flex flex-column flex-grow-1 position-relative">
       {(isUndefined(packages) || isLoading) && <Loading />}
 
-      <main role="main" className="container py-5">
+      <main role="main" className="container-lg px-sm-4 px-lg-0 py-5">
         <div className="flex-grow-1 position-relative">
           <div className="h3 pb-0">
             <div className="d-flex align-items-center justify-content-center">

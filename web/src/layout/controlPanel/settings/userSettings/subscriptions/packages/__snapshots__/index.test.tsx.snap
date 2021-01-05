@@ -6,7 +6,7 @@ exports[`PackagesSection renders correctly 1`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container p-0"
+      class="p-0"
       role="main"
     >
       <div
@@ -277,7 +277,7 @@ exports[`PackagesSection renders correctly 2`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container p-0"
+      class="p-0"
       role="main"
     >
       <div

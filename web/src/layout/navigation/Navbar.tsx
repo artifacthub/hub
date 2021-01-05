@@ -39,7 +39,7 @@ const Navbar = (props: Props) => {
         [styles.homeNavbar]: props.fromHome,
       })}
     >
-      <div className="container">
+      <div className="container-lg px-sm-4 px-lg-0">
         <div className={`d-flex flex-row ${styles.mobileWrapper}`}>
           <Link data-testid="brandLink" className="navbar-brand d-flex align-items-center" to="/">
             <FiHexagon className="mr-2" />

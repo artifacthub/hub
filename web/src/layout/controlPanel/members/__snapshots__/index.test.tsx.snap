@@ -3,7 +3,7 @@
 exports[`Members section index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     role="main"
   >
     <div
@@ -98,7 +98,7 @@ exports[`Members section index creates snapshot 1`] = `
 exports[`Members section index creates snapshot 2`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     role="main"
   >
     <div
