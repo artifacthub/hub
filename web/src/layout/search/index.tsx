@@ -408,9 +408,9 @@ const SearchView = (props: Props) => {
       <div className="d-flex position-relative pt-3 pb-3 flex-grow-1">
         {(isSearching || isNull(searchResults.data.packages)) && <Loading className="position-fixed" />}
 
-        <main role="main" className="container d-flex flex-row justify-content-between">
+        <main role="main" className="container-lg px-sm-4 px-lg-0 d-flex flex-row justify-content-between">
           {!isEmptyFacets() && (
-            <nav className={`d-none d-md-block ${styles.sidebar}`}>
+            <nav className={`px-xs-0 px-sm-3 px-lg-0 d-none d-md-block ${styles.sidebar}`}>
               <div className="mr-5">
                 <Filters
                   facets={searchResults.data.facets}
@@ -435,7 +435,7 @@ const SearchView = (props: Props) => {
           )}
 
           <div
-            className={classnames('flex-grow-1 mt-3', styles.list, {
+            className={classnames('flex-grow-1 mt-3 px-xs-0 px-sm-3 px-lg-0', styles.list, {
               [styles.emptyList]: isNull(searchResults.data.packages) || searchResults.data.packages.length === 0,
             })}
           >

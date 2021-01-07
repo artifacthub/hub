@@ -145,8 +145,8 @@ const HomeView = (props: Props) => {
       <RandomPackages />
 
       <div className={`py-5 textLight ${styles.about}`}>
-        <div className="container py-0 py-md-5">
-          <div className="text-center px-3 px-md-0">
+        <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
+          <div className="text-center px-4 px-xs-0">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open
             Policy Agent (OPA) policies, OLM operators and Tinkerbell actions.
@@ -176,8 +176,8 @@ const HomeView = (props: Props) => {
       </div>
 
       <div className={`py-5 text-secondary ${styles.extraInfo}`}>
-        <div className="container py-0 py-md-5">
-          <div className="text-center px-3 px-md-0">
+        <div className="container-lg px-sm-4 px-lg-0 py-0 py-md-5">
+          <div className="text-center px-4 px-xs-0">
             <img
               className={styles.logo}
               src="/static/media/cncf-sandbox-horizontal-color.png"

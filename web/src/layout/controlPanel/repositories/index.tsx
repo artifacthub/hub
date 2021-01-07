@@ -78,7 +78,10 @@ const RepositoriesSection = (props: Props) => {
   }, [ctx.prefs.controlPanel.selectedOrg]);
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
+    <main
+      role="main"
+      className="pr-xs-0 pr-sm-3 pr-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
+    >
       <div className="flex-grow-1 w-100">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">

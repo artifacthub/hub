@@ -367,7 +367,7 @@ const PackageView = (props: Props) => {
           <>
             {!isNull(detail) && (
               <div className={`jumbotron package-detail-jumbotron ${styles.jumbotron}`}>
-                <div className="container position-relative">
+                <div className="container-lg px-sm-4 px-lg-0 position-relative">
                   <div className="d-flex align-items-start w-100 mb-3">
                     <div className="d-flex align-items-center flex-grow-1 mw-100">
                       <div
@@ -495,7 +495,7 @@ const PackageView = (props: Props) => {
               </div>
             )}
 
-            <div className="container">
+            <div className="container-lg px-sm-4 px-lg-0">
               {isNull(detail) && !isLoadingPackage ? (
                 <NoData className={styles.noDataWrapper}>
                   {isNull(apiError) ? (
@@ -505,12 +505,72 @@ const PackageView = (props: Props) => {
                   )}
                 </NoData>
               ) : (
-                <div className="row">
+                <div className="px-xs-0 px-sm-3 px-lg-0">
+                  <div className={`ml-5 mb-5 d-none d-md-block position-relative ${styles.additionalInfo}`}>
+                    {!isNull(detail) && (
+                      <div className={styles.rightColumnWrapper}>
+                        {getInstallationModal('mb-2')}
+
+                        {detail.repository.kind === RepositoryKind.Helm && (
+                          <div className="mb-2">
+                            <ValuesSchema
+                              hasValuesSchema={detail.hasValuesSchema}
+                              packageId={detail.packageId}
+                              version={detail.version!}
+                              normalizedName={detail.normalizedName}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                              visibleValuesSchema={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                              }
+                              visibleValuesSchemaPath={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
+                                  ? props.visibleValuesSchemaPath
+                                  : undefined
+                              }
+                            />
+                          </div>
+                        )}
+
+                        <div className="mb-2">
+                          <ChangelogModal
+                            packageItem={detail}
+                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
+                            searchUrlReferer={props.searchUrlReferer}
+                            fromStarredPage={props.fromStarredPage}
+                          />
+                        </div>
+
+                        <div className={`card shadow-sm position-relative info ${styles.info}`}>
+                          <div className={`card-body ${styles.detailsBody}`}>
+                            <Details
+                              package={detail}
+                              activeChannel={activeChannel}
+                              onChannelChange={onChannelChange}
+                              sortedVersions={sortedVersions}
+                              searchUrlReferer={props.searchUrlReferer}
+                              fromStarredPage={props.fromStarredPage}
+                              visibleSecurityReport={
+                                !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div className={styles.relatedPackagesWrapper}>
+                          <RelatedPackages packageId={detail.packageId} name={detail.name} keywords={detail.keywords} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {!isNull(detail) && (
                     <>
                       <div className={styles.mainContent}>
                         {isNull(detail.readme) || isUndefined(detail.readme) ? (
-                          <NoData>No README file available for this package</NoData>
+                          <div className={styles.noReadmeWrapper}>
+                            <NoData>No README file available for this package</NoData>
+                          </div>
                         ) : (
                           <Readme
                             packageName={detail.displayName || detail.name}
@@ -590,64 +650,6 @@ const PackageView = (props: Props) => {
                       </div>
                     </>
                   )}
-
-                  <div className="col col-auto pl-5 pb-5 d-none d-md-block">
-                    {!isNull(detail) && (
-                      <div className={styles.rightColumnWrapper}>
-                        {getInstallationModal('mb-2')}
-
-                        {detail.repository.kind === RepositoryKind.Helm && (
-                          <div className="mb-2">
-                            <ValuesSchema
-                              hasValuesSchema={detail.hasValuesSchema}
-                              packageId={detail.packageId}
-                              version={detail.version!}
-                              normalizedName={detail.normalizedName}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                              visibleValuesSchema={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                              }
-                              visibleValuesSchemaPath={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'values-schema'
-                                  ? props.visibleValuesSchemaPath
-                                  : undefined
-                              }
-                            />
-                          </div>
-                        )}
-
-                        <div className="mb-2">
-                          <ChangelogModal
-                            packageItem={detail}
-                            visibleChangelog={!isUndefined(props.visibleModal) && props.visibleModal === 'changelog'}
-                            searchUrlReferer={props.searchUrlReferer}
-                            fromStarredPage={props.fromStarredPage}
-                          />
-                        </div>
-
-                        <div className={`card shadow-sm position-relative info ${styles.info}`}>
-                          <div className={`card-body ${styles.detailsBody}`}>
-                            <Details
-                              package={detail}
-                              activeChannel={activeChannel}
-                              onChannelChange={onChannelChange}
-                              sortedVersions={sortedVersions}
-                              searchUrlReferer={props.searchUrlReferer}
-                              fromStarredPage={props.fromStarredPage}
-                              visibleSecurityReport={
-                                !isUndefined(props.visibleModal) && props.visibleModal === 'security-report'
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div className={styles.relatedPackagesWrapper}>
-                          <RelatedPackages packageId={detail.packageId} name={detail.name} keywords={detail.keywords} />
-                        </div>
-                      </div>
-                    )}
-                  </div>
                 </div>
               )}
             </div>

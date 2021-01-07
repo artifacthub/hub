@@ -383,7 +383,7 @@ const AuthorizationSection = (props: Props) => {
   }, [orgPolicy]); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <main role="main" className="container p-0">
+    <main role="main" className="p-0">
       {(isUndefined(orgPolicy) || isLoading) && <Loading />}
       <Prompt
         when={!isNull(orgPolicy) && !isUndefined(orgPolicy) && !notGetPolicyAllowed && checkIfUnsavedChanges()}

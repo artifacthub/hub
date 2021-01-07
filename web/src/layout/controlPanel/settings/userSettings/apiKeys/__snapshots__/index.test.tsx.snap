@@ -24,7 +24,7 @@ exports[`API keys section index creates snapshot 1`] = `
       </div>
     </div>
     <main
-      class="container p-0"
+      class="p-0"
       role="main"
     >
       <div
@@ -174,7 +174,7 @@ exports[`API keys section index creates snapshot 2`] = `
     class="d-flex flex-column flex-grow-1"
   >
     <main
-      class="container p-0"
+      class="p-0"
       role="main"
     >
       <div

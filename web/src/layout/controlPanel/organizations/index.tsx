@@ -50,7 +50,10 @@ const OrganizationsSection = (props: Props) => {
   }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   return (
-    <main role="main" className="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0">
+    <main
+      role="main"
+      className="px-xs-0 px-sm-3 px-lg-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
+    >
       <div className="flex-grow-1 w-100">
         <div>
           <div className="d-flex flex-row align-items-center justify-content-between pb-2 border-bottom">

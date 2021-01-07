@@ -3,7 +3,7 @@
 exports[`Repository index creates snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="pr-xs-0 pr-sm-3 pr-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     role="main"
   >
     <div
@@ -194,7 +194,7 @@ exports[`Repository index creates snapshot 1`] = `
 exports[`Repository index creates snapshot 2`] = `
 <DocumentFragment>
   <main
-    class="container d-flex flex-column flex-md-row justify-content-between my-md-4 p-0"
+    class="pr-xs-0 pr-sm-3 pr-md-0 d-flex flex-column flex-md-row justify-content-between my-md-4"
     role="main"
   >
     <div

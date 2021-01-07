@@ -31,7 +31,7 @@ const ProfileSection = (props: Props) => {
   }, [props]);
 
   return (
-    <main role="main" className="container p-0">
+    <main role="main" className="p-0">
       {profile && (
         <div className="mb-5">
           <div className={`h3 mb-4 pb-2 border-bottom ${styles.title}`}>Profile information</div>

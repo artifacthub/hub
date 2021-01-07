@@ -22,8 +22,8 @@ const ResourcesList = (props: Props) => {
   const [selectedResource, setSelectedResource] = useState<SelectedResource | null>(null);
 
   return (
-    <>
-      <div className="row mt-4">
+    <div className={styles.wrapper}>
+      <div className="d-flex flex-wrap mt-4">
         {Object.keys(props.resources).map((resource: string, index: number) => {
           const pathFile = resource.split('/');
           const fileName = pathFile.pop();
@@ -103,7 +103,7 @@ const ResourcesList = (props: Props) => {
           </Modal>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

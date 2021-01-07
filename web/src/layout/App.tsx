@@ -170,7 +170,7 @@ export default function App() {
               [styles.invisibleFooter]: isSearching || isLoadingPackage,
             })}
           >
-            <div className={classnames('container', { invisible: isSearching || isLoadingPackage })}>
+            <div className={classnames('container-lg px-4', { invisible: isSearching || isLoadingPackage })}>
               <div
                 className={`d-flex flex-row flex-wrap align-items-stretch justify-content-between ${styles.footerContent}`}
               >

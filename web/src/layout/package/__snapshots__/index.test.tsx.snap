@@ -19,7 +19,7 @@ exports[`Package index creates snapshot 2`] = `
       class="jumbotron package-detail-jumbotron jumbotron"
     >
       <div
-        class="container position-relative"
+        class="container-lg px-sm-4 px-lg-0 position-relative"
       >
         <div
           class="d-flex align-items-start w-100 mb-3"
@@ -554,27 +554,13 @@ exports[`Package index creates snapshot 2`] = `
       </div>
     </div>
     <div
-      class="container"
+      class="container-lg px-sm-4 px-lg-0"
     >
       <div
-        class="row"
+        class="px-xs-0 px-sm-3 px-lg-0"
       >
         <div
-          class="mainContent"
-        >
-          <div
-            class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper undefined"
-            data-testid="noData"
-          >
-            <div
-              class="h4"
-            >
-              No README file available for this package
-            </div>
-          </div>
-        </div>
-        <div
-          class="col col-auto pl-5 pb-5 d-none d-md-block"
+          class="ml-5 mb-5 d-none d-md-block position-relative additionalInfo"
         >
           <div
             class="rightColumnWrapper"
@@ -802,6 +788,24 @@ exports[`Package index creates snapshot 2`] = `
             <div
               class="relatedPackagesWrapper"
             />
+          </div>
+        </div>
+        <div
+          class="mainContent"
+        >
+          <div
+            class="noReadmeWrapper"
+          >
+            <div
+              class="alert alert-primary ml-auto mr-auto my-5 text-center p-4 p-sm-5 border wrapper undefined"
+              data-testid="noData"
+            >
+              <div
+                class="h4"
+              >
+                No README file available for this package
+              </div>
+            </div>
           </div>
         </div>
       </div>

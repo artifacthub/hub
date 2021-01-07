@@ -24,7 +24,7 @@ exports[`StarredPackagesView renders correctly 1`] = `
       </div>
     </div>
     <main
-      class="container py-5"
+      class="container-lg px-sm-4 px-lg-0 py-5"
       role="main"
     >
       <div
@@ -56,7 +56,7 @@ exports[`StarredPackagesView renders correctly 2`] = `
     class="d-flex flex-column flex-grow-1 position-relative"
   >
     <main
-      class="container py-5"
+      class="container-lg px-sm-4 px-lg-0 py-5"
       role="main"
     >
       <div

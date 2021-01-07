@@ -50,10 +50,9 @@ const RelatedPackages = (props: Props) => {
   if (isUndefined(packages) || packages.length === 0) return null;
 
   return (
-    <div className="my-4 w-100">
+    <div className="mt-4 w-100">
       <SmallTitle text="Related packages" />
-
-      <div className="mt-3">
+      <div className="pt-1">
         {packages.map((item: Package) => (
           <div key={`reltedCard_${item.packageId}`}>
             <RelatedPackageCard package={item} />

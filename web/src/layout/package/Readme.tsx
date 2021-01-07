@@ -80,7 +80,7 @@ const Readme = (props: Props) => {
   };
 
   const Table: React.ElementType = (data: TableProps) => (
-    <div className="w-100 overflow-auto">
+    <div className="mw-100 overflow-auto">
       <table>{data.children}</table>
     </div>
   );

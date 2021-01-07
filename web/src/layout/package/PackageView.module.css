@@ -1,8 +1,5 @@
 .mainContent {
-  flex: 0 0 calc(100% - 300px);
-  max-width: calc(100% - 300px);
-  padding-right: 15px;
-  padding-left: 15px;
+  margin-top: 35px;
 }
 
 .jumbotron {
@@ -90,7 +87,7 @@
 .optsWrapper {
   top: 0;
   right: 0;
-  padding-right: 15px;
+  padding-right: 1.5rem;
 }
 
 .mobileIcon {
@@ -139,12 +136,16 @@
   line-height: 1.5rem;
 }
 
-@media only screen and (max-width: 767.98px) {
-  .mainContent {
-    max-width: 100%;
-    flex-basis: 100%;
-  }
+.additionalInfo {
+  float: right;
+  z-index: 1;
+}
 
+.noReadmeWrapper {
+  margin-right: 250px;
+}
+
+@media only screen and (max-width: 767.98px) {
   .imageWrapper {
     min-width: 50px;
     width: 50px;
@@ -176,17 +177,26 @@
 
   .optsWrapper {
     justify-content: space-between;
-    padding-right: 0;
   }
 
   .noDataWrapper {
     margin-top: 3rem !important;
   }
+
+  .noReadmeWrapper {
+    margin-right: 0;
+  }
 }
 
 @media only screen and (min-width: 768px) {
   .rightColumnWrapper {
-    margin-top: 35px;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .optsWrapper {
+    padding-right: 0;
   }
 }
 

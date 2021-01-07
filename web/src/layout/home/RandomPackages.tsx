@@ -32,7 +32,7 @@ const RandomPackages = () => {
 
   return (
     <div className={`position-relative ${styles.wrapper}`}>
-      <div className="container my-4 my-md-5">
+      <div className="container-lg px-sm-4 px-lg-0 my-4 my-md-5">
         <div className="d-flex flex-wrap justify-content-center">
           {!isUndefined(packages) && !isLoading ? (
             <>

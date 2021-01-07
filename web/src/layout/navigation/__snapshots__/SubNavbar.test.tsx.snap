@@ -7,7 +7,7 @@ exports[`SubNavbar creates snapshot 1`] = `
     role="navigation"
   >
     <div
-      class="container d-flex justify-content-between flex-nowrap"
+      class="container-lg px-sm-4 px-lg-0 d-flex justify-content-between flex-nowrap"
     >
       <div
         data-testid="children"
