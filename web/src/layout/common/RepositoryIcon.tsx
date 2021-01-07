@@ -30,6 +30,10 @@ const ICONS = {
     default: '/static/media/tinkerbell-actions.svg',
     white: '/static/media/tinkerbell-actions-light.svg',
   },
+  [RepositoryKind.Krew]: {
+    default: '/static/media/krew-plugins.svg',
+    white: '/static/media/krew-plugins-light.svg',
+  },
 };
 
 const RepositoryIcon = (props: Props) => {

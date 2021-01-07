@@ -232,4 +232,8 @@
   .relatedPackagesWrapper {
     max-width: 310px;
   }
+
+  .noReadmeWrapper {
+    margin-right: 0;
+  }
 }

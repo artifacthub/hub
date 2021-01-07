@@ -35,6 +35,10 @@ const (
 
 	// TBAction represents a repository with Tinkerbell actions.
 	TBAction RepositoryKind = 4
+
+	// Krew represents a repository with kubectl plugins that can be managed by
+	// the Krew plugin manager.
+	Krew RepositoryKind = 5
 )
 
 // GetKindName returns the name of the provided repository kind.
@@ -44,6 +48,8 @@ func GetKindName(kind RepositoryKind) string {
 		return "falco"
 	case Helm:
 		return "helm"
+	case Krew:
+		return "krew"
 	case OLM:
 		return "olm"
 	case OPA:
@@ -63,6 +69,8 @@ func GetKindFromName(kind string) (RepositoryKind, error) {
 		return Falco, nil
 	case "helm":
 		return Helm, nil
+	case "krew":
+		return Krew, nil
 	case "olm":
 		return OLM, nil
 	case "opa":

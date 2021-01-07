@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KrewInstall creates snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
+      Add repository
+    </small>
+  </div>
+  <div
+    class="d-flex align-items-start"
+  >
+    <div
+      class="flex-grow-1 mr-3 blockWrapper"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+      >
+        <code
+          class="language-bash"
+        >
+          <span>
+            kubectl krew index add repo http://repo.test
+          </span>
+        </code>
+      </pre>
+    </div>
+    <div>
+      <div
+        class="position-relative undefined"
+      >
+        <button
+          class="btn btn-sm btn-primary rounded-circle copyBtn"
+          data-testid="ctcBtn"
+          type="button"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx="2"
+                ry="2"
+                width="13"
+                x="9"
+                y="9"
+              />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="my-2"
+  >
+    <small
+      class="text-muted mt-2 mb-1"
+    >
+      Install plugin
+    </small>
+  </div>
+  <div
+    class="d-flex align-items-start"
+  >
+    <div
+      class="flex-grow-1 mr-3 blockWrapper"
+    >
+      <pre
+        style="display: block; overflow-x: auto; padding: 0.5em; color: rgb(0, 0, 0); background: rgb(248, 248, 255);"
+      >
+        <code
+          class="language-bash"
+        >
+          <span>
+            kubectl krew install repo/packageName
+          </span>
+        </code>
+      </pre>
+    </div>
+    <div>
+      <div
+        class="position-relative undefined"
+      >
+        <button
+          class="btn btn-sm btn-primary rounded-circle copyBtn"
+          data-testid="ctcBtn"
+          type="button"
+        >
+          <div
+            class="d-flex flex-row align-items-center"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                height="13"
+                rx="2"
+                ry="2"
+                width="13"
+                x="9"
+                y="9"
+              />
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mt-2 d-flex flex-row justify-content-between align-items-baseline"
+  >
+    <a
+      class="link btn btn-link pl-0"
+      href="https://krew.sigs.k8s.io/docs/user-guide/setup/install/"
+      rel="noopener noreferrer"
+      role="button"
+      target="_blank"
+    >
+      Need Krew?
+    </a>
+  </div>
+</DocumentFragment>
+`;

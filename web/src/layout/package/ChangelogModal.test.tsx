@@ -81,6 +81,22 @@ describe('ChangelogModal', () => {
       });
     });
 
+    it('does not render component when repo kind is Krew or Falco', async () => {
+      const props = {
+        ...defaultProps,
+        packageItem: {
+          ...defaultProps.packageItem,
+          repository: {
+            ...defaultProps.packageItem.repository,
+            kind: 5,
+          },
+        },
+      };
+      const { container } = render(<ChangelogModal {...props} />);
+
+      expect(container).toBeEmptyDOMElement();
+    });
+
     it('renders disabled button when package has not changelog and does not call getChangelog', async () => {
       const props = {
         ...defaultProps,

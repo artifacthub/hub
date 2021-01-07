@@ -6,6 +6,7 @@ export enum RepositoryKind {
   OPA,
   OLM,
   TBAction,
+  Krew,
 }
 
 export interface Repository {

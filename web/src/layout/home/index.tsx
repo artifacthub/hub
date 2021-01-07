@@ -149,8 +149,8 @@ const HomeView = (props: Props) => {
           <div className="text-center px-4 px-xs-0">
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open
-            Policy Agent (OPA) policies, OLM operators and Tinkerbell actions.
-            <div className="mx-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around">
+            Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around">
               <ExternalLink href="https://helm.sh">
                 <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
               </ExternalLink>
@@ -160,11 +160,16 @@ const HomeView = (props: Props) => {
               <ExternalLink href="https://www.openpolicyagent.org">
                 <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
               </ExternalLink>
+            </div>
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around">
               <ExternalLink href="https://github.com/operator-framework">
                 <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
               </ExternalLink>
               <ExternalLink href="https://tinkerbell.org">
                 <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
+              </ExternalLink>
+              <ExternalLink href="https://krew.sigs.k8s.io">
+                <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
               </ExternalLink>
             </div>
             Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share

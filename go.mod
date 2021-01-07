@@ -50,6 +50,10 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
 	helm.sh/helm/v3 v3.4.2
 	rsc.io/letsencrypt v0.0.3 // indirect
+	sigs.k8s.io/krew v0.4.0
+	sigs.k8s.io/yaml v1.2.0
 )
 
 replace github.com/docker/docker => github.com/moby/moby v0.7.3-0.20190826074503-38ab9da00309
+
+replace k8s.io/client-go => k8s.io/client-go v0.19.4

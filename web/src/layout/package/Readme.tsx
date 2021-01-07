@@ -79,6 +79,10 @@ const Readme = (props: Props) => {
     }
   };
 
+  const LinkRef: React.ElementType = (data: LinkProps) => {
+    return <span className="font-weight-bold">{data.children}</span>;
+  };
+
   const Table: React.ElementType = (data: TableProps) => (
     <div className="mw-100 overflow-auto">
       <table>{data.children}</table>
@@ -117,6 +121,7 @@ const Readme = (props: Props) => {
             code: Code,
             image: Image,
             link: Link,
+            linkReference: LinkRef,
             table: Table,
             heading: Heading,
           }}
