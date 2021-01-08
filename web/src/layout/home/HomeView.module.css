@@ -43,11 +43,18 @@
 
 .aboutIcon {
   width: 75px;
-  margin: 0.5rem;
+}
+
+.legendIcon {
+  font-size: 80%;
 }
 
 .socialBtn {
   width: 110px;
+}
+
+.iconLink:hover {
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 767.98px) {
