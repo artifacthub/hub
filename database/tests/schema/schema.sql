@@ -440,7 +440,8 @@ select results_eq(
         (1, 'Falco rules'),
         (2, 'OPA policies'),
         (3, 'OLM operators'),
-        (4, 'Tinkerbell actions')
+        (4, 'Tinkerbell actions'),
+        (5, 'Krew kubectl plugins')
     $$,
     'Repository kinds should exist'
 );

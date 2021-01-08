@@ -6,6 +6,7 @@ The following repositories kinds are supported at the moment:
 
 - [Falco rules repositories](#falco-rules-repositories)
 - [Helm charts repositories](#helm-charts-repositories)
+- [Krew kubectl plugins repositories](#krew-kubectl-plugins-repositories)
 - [OLM operators repositories](#olm-operators-repositories)
 - [OPA policies repositories](#opa-policies-repositories)
 - [Tinkerbell actions repositories](#tinkerbell-actions-repositories)
@@ -105,6 +106,21 @@ Please note that there are some features that are not yet available for Helm rep
 - Force an existing version to be reindexed by changing its digest
 
 For additional information about Helm OCI support, please see the [HIP-0006](https://github.com/helm/community/blob/master/hips/hip-0006.md).
+
+## Krew kubectl plugins repositories
+
+Artifact Hub is able to process kubectl plugins listed in [Krew index repositories](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/). Repositories are expected to be hosted in Github or Gitlab repos. When adding your repository to Artifact Hub, the url used **must** follow the following format:
+
+- `https://github.com/user/repo`
+- `https://gitlab.com/user/repo`
+
+By default the `master` branch is used, but it's possible to specify a different one from the UI.
+
+For more information about the structure of the Krew index repository, please see the [Hosting Custom Plugin Indexes](https://krew.sigs.k8s.io/docs/developer-guide/custom-indexes/) official documentation.
+
+Most of the metadata Artifact Hub needs is extracted from the [plugin's manifest](https://krew.sigs.k8s.io/docs/developer-guide/plugin-manifest/) file. However, there is some extra Artifact Hub specific metadata that you can set using some special annotations in the `plugin manifest` file. For more information, please see the [Artifact Hub Krew annotations documentation](https://github.com/artifacthub/hub/blob/master/docs/krew_annotations.md).
+
+There is an extra metadata file that you can add to your repository named [artifacthub-repo.yml](https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml), which can be used to setup features like [Verified Publisher](#verified-publisher) or [Ownership claim](#ownership-claim). This file must be located at the root of the repository.
 
 ## OLM operators repositories
 

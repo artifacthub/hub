@@ -473,7 +473,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction$}":
+  "/repositories/{^helm$|^falco$|^opa$|^olm|^tbaction|^krew$}":
     get:
       tags:
         - Repositories
@@ -1067,6 +1067,27 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+  "/packages/krew/{repoName}/{packageName}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KrewPluginsPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
   "/packages/opa/{repoName}/{packageName}":
     get:
       tags:
@@ -1168,6 +1189,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FalcoPackage"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/packages/krew/{repoName}/{packageName}/{version}":
+    get:
+      tags:
+        - Packages
+      summary: Get package details
+      parameters:
+        - $ref: "#/components/parameters/RepoNameParam"
+        - $ref: "#/components/parameters/PackageNameParam"
+        - $ref: "#/components/parameters/VersionParam"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KrewPluginsPackage"
         "404":
           $ref: "#/components/responses/NotFoundResponse"
         "429":
@@ -2173,6 +2216,8 @@ components:
                       type: string
                       nullable: false
                       example: "http://repo.url"
+    KrewPluginsPackage:
+      $ref: "#/components/schemas/Package"
     Link:
       type: object
       nullable: false
@@ -2605,6 +2650,7 @@ components:
         - 2
         - 3
         - 4
+        - 5
       description: |
         Repository kind:
           * `0` - Helm charts
@@ -2612,6 +2658,7 @@ components:
           * `2` - OPA policies
           * `3` - OLM operators
           * `4` - Tinkerbell actions
+          * `5` - Krew kubectl plugins
     RepositoryKindParam:
       type: string
       enum:
@@ -2620,6 +2667,7 @@ components:
         - falco
         - olm
         - tbaction
+        - krew
       description: |
         Repository kind name:
         * `helm` - Helm charts
@@ -2627,6 +2675,7 @@ components:
         * `opa` - OPA policies
         * `olm` - OLM operators
         * `tbaction` - Tinkerbell actions
+        * `krew` - Krew kubectl plugins
     RepositorySummary:
       type: object
       required:
@@ -3069,7 +3118,7 @@ components:
       description: Package name
     RepoKindParam:
       in: path
-      name: ^helm$|^falco$|^opa$|^olm|^tbaction$
+      name: ^helm$|^falco$|^opa$|^olm|^tbaction|^krew$
       schema:
         $ref: "#/components/schemas/RepositoryKindParam"
       required: true

@@ -38,6 +38,20 @@ describe('RepositoryIcon', () => {
     expect(icon).toHaveProperty('src', 'http://localhost/static/media/olm-operators.svg');
   });
 
+  it('renders Tinkerbell icon', () => {
+    const { getByAltText } = render(<RepositoryIcon kind={RepositoryKind.TBAction} />);
+    const icon = getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/tinkerbell-actions.svg');
+  });
+
+  it('renders Krew icon', () => {
+    const { getByAltText } = render(<RepositoryIcon kind={RepositoryKind.Krew} />);
+    const icon = getByAltText('Icon');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveProperty('src', 'http://localhost/static/media/krew-plugins.svg');
+  });
+
   it('renders Chart icon - light version', () => {
     const { getByAltText } = render(<RepositoryIcon kind={RepositoryKind.Helm} type="white" />);
     const icon = getByAltText('Icon');

@@ -35,6 +35,10 @@ const Image = (props: Props) => {
           return '/static/media/placeholder_pkg_opa.png';
         case RepositoryKind.Falco:
           return '/static/media/placeholder_pkg_falco.png';
+        case RepositoryKind.TBAction:
+          return '/static/media/placeholder_pkg_tbaction.png';
+        case RepositoryKind.Krew:
+          return '/static/media/placeholder_pkg_krew.png';
         default:
           return PLACEHOLDER_SRC;
       }

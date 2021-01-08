@@ -324,9 +324,9 @@ exports[`Home index creates snapshot 1`] = `
         <div
           class="text-center px-4 px-xs-0"
         >
-          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, OLM operators and Tinkerbell actions.
+          Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
           <div
-            class="mx-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around"
           >
             <a
               class="link undefined"
@@ -367,6 +367,10 @@ exports[`Home index creates snapshot 1`] = `
                 src="/static/media/opa-policies-light.svg"
               />
             </a>
+          </div>
+          <div
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around"
+          >
             <a
               class="link undefined"
               href="https://github.com/operator-framework"
@@ -391,6 +395,19 @@ exports[`Home index creates snapshot 1`] = `
                 alt="Icon"
                 class="aboutIcon repoIcon"
                 src="/static/media/tinkerbell-actions-light.svg"
+              />
+            </a>
+            <a
+              class="link undefined"
+              href="https://krew.sigs.k8s.io"
+              rel="noopener noreferrer"
+              role="button"
+              target="_blank"
+            >
+              <img
+                alt="Icon"
+                class="aboutIcon repoIcon"
+                src="/static/media/krew-plugins-light.svg"
               />
             </a>
           </div>

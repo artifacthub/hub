@@ -101,6 +101,13 @@ export const REPOSITORY_KINDS: RepoKindDef[] = [
     icon: <RepositoryIcon kind={RepositoryKind.TBAction} className="mw-100 mh-100" />,
     active: true,
   },
+  {
+    kind: RepositoryKind.Krew,
+    label: 'krew',
+    name: 'Krew kubectl plugins',
+    icon: <RepositoryIcon kind={RepositoryKind.Krew} className="mw-100 mh-100" />,
+    active: true,
+  },
 ];
 
 export const PAYLOAD_KINDS_LIST: PayloadKindsItem[] = [

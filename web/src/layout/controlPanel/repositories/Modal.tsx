@@ -211,6 +211,13 @@ const RepositoryModal = (props: Props) => {
           </ExternalLink>
         );
         break;
+      case RepositoryKind.Krew:
+        link = (
+          <ExternalLink href="/docs/repositories#krew-kubectl-plugins-repositories" className="text-reset">
+            <u>Krew kubectl plugins</u>
+          </ExternalLink>
+        );
+        break;
     }
 
     if (isUndefined(link)) return;
@@ -449,9 +456,13 @@ const RepositoryModal = (props: Props) => {
 
             {getAdditionalInfo()}
 
-            {[RepositoryKind.Falco, RepositoryKind.OLM, RepositoryKind.OPA, RepositoryKind.TBAction].includes(
-              selectedKind
-            ) && (
+            {[
+              RepositoryKind.Falco,
+              RepositoryKind.OLM,
+              RepositoryKind.OPA,
+              RepositoryKind.TBAction,
+              RepositoryKind.Krew,
+            ].includes(selectedKind) && (
               <div className="mt-4">
                 <InputField
                   type="text"
@@ -502,28 +513,30 @@ const RepositoryModal = (props: Props) => {
               </small>
             </div>
 
-            <div className="mt-4 mb-3">
-              <div className="custom-control custom-switch pl-0">
-                <input
-                  id="scannerDisabledRepo"
-                  type="checkbox"
-                  className="custom-control-input"
-                  value="true"
-                  onChange={() => setIsScannerDisabled(!isScannerDisabled)}
-                  checked={isScannerDisabled}
-                />
-                <label
-                  htmlFor="scannerDisabledRepo"
-                  className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
-                >
-                  Security scanner disabled
-                </label>
-              </div>
+            {selectedKind !== RepositoryKind.Krew && (
+              <div className="mt-4 mb-3">
+                <div className="custom-control custom-switch pl-0">
+                  <input
+                    id="scannerDisabledRepo"
+                    type="checkbox"
+                    className="custom-control-input"
+                    value="true"
+                    onChange={() => setIsScannerDisabled(!isScannerDisabled)}
+                    checked={isScannerDisabled}
+                  />
+                  <label
+                    htmlFor="scannerDisabledRepo"
+                    className={`custom-control-label font-weight-bold ${styles.label} ${styles.customControlRightLabel}`}
+                  >
+                    Security scanner disabled
+                  </label>
+                </div>
 
-              <small className="form-text text-muted mt-2">
-                Use this switch to disable the security scanning of the packages in this repository.
-              </small>
-            </div>
+                <small className="form-text text-muted mt-2">
+                  Use this switch to disable the security scanning of the packages in this repository.
+                </small>
+              </div>
+            )}
           </form>
         )}
       </div>

@@ -38,6 +38,7 @@ export enum InstallMethodKind {
   OLM,
   OLMOCI,
   Falco,
+  Krew,
 }
 
 const SPECIAL_OLM = 'community-operators';
@@ -144,6 +145,19 @@ export default (props: PackageInfo): InstallMethodOutput => {
               kind: InstallMethodKind.Falco,
               props: {
                 normalizedName: pkg.normalizedName,
+              },
+            });
+          }
+          break;
+        case RepositoryKind.Krew:
+          if (isUndefined(pkg.install)) {
+            output.methods.push({
+              label: 'krew',
+              title: 'Krew',
+              kind: InstallMethodKind.Krew,
+              props: {
+                name: pkg.name,
+                repository: pkg.repository,
               },
             });
           }
