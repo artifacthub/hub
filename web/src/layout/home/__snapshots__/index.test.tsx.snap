@@ -326,89 +326,155 @@ exports[`Home index creates snapshot 1`] = `
         >
           Artifact Hub is a web-based application that enables finding, installing, and publishing packages and configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around"
           >
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://helm.sh"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/helm-chart-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/helm-chart-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    Helm chart
+                  </small>
+                </div>
+              </div>
             </a>
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://falco.org"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/falco-rules-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/falco-rules-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    Falco rules
+                  </small>
+                </div>
+              </div>
             </a>
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://www.openpolicyagent.org"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/opa-policies-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/opa-policies-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    OPA policies
+                  </small>
+                </div>
+              </div>
             </a>
           </div>
           <div
-            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around"
+            class="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around"
           >
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://github.com/operator-framework"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/olm-operators-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/olm-operators-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    OLM operators
+                  </small>
+                </div>
+              </div>
             </a>
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://tinkerbell.org"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/tinkerbell-actions-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/tinkerbell-actions-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    Tinkerbell actions
+                  </small>
+                </div>
+              </div>
             </a>
             <a
-              class="link undefined"
+              class="link col iconLink"
               href="https://krew.sigs.k8s.io"
               rel="noopener noreferrer"
               role="button"
               target="_blank"
             >
-              <img
-                alt="Icon"
-                class="aboutIcon repoIcon"
-                src="/static/media/krew-plugins-light.svg"
-              />
+              <div
+                class="d-flex flex-column justify-content-between align-items-center h-100"
+              >
+                <img
+                  alt="Icon"
+                  class="aboutIcon repoIcon"
+                  src="/static/media/krew-plugins-light.svg"
+                />
+                <div
+                  class="d-none d-sm-block text-light legendIcon"
+                >
+                  <small>
+                    Krew kubectl plugins
+                  </small>
+                </div>
+              </div>
             </a>
           </div>
           Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share artifacts creates its own Hub this creates a fair amount of repeat work for each project and a fractured experience for those trying to find the artifacts to consume. The Artifact Hub attempts to solve that by providing a single experience for consumers that any CNCF project can leverage.

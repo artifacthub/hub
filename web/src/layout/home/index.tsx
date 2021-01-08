@@ -150,26 +150,56 @@ const HomeView = (props: Props) => {
             Artifact Hub is a web-based application that enables finding, installing, and publishing packages and
             configurations for CNCF projects. For example, this could include Helm charts, Falco configurations, Open
             Policy Agent (OPA) policies, OLM operators, Tinkerbell actions and kubectl plugins.
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around">
-              <ExternalLink href="https://helm.sh">
-                <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-sm-5 d-flex flex-row align-items-strecht justify-content-around">
+              <ExternalLink href="https://helm.sh" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.Helm} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>Helm chart</small>
+                  </div>
+                </div>
               </ExternalLink>
-              <ExternalLink href="https://falco.org">
-                <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+              <ExternalLink href="https://falco.org" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.Falco} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>Falco rules</small>
+                  </div>
+                </div>
               </ExternalLink>
-              <ExternalLink href="https://www.openpolicyagent.org">
-                <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+              <ExternalLink href="https://www.openpolicyagent.org" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.OPA} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>OPA policies</small>
+                  </div>
+                </div>
               </ExternalLink>
             </div>
-            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row flex-wrap align-items-center justify-content-around">
-              <ExternalLink href="https://github.com/operator-framework">
-                <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+            <div className="mx-0 mx-md-3 mx-lg-5 my-4 my-lg-5 d-flex flex-row align-items-center justify-content-around">
+              <ExternalLink href="https://github.com/operator-framework" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.OLM} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>OLM operators</small>
+                  </div>
+                </div>
               </ExternalLink>
-              <ExternalLink href="https://tinkerbell.org">
-                <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
+              <ExternalLink href="https://tinkerbell.org" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.TBAction} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>Tinkerbell actions</small>
+                  </div>
+                </div>
               </ExternalLink>
-              <ExternalLink href="https://krew.sigs.k8s.io">
-                <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
+              <ExternalLink href="https://krew.sigs.k8s.io" className={`col ${styles.iconLink}`}>
+                <div className="d-flex flex-column justify-content-between align-items-center h-100">
+                  <RepositoryIcon kind={RepositoryKind.Krew} type="white" className={styles.aboutIcon} />
+                  <div className={`d-none d-sm-block text-light ${styles.legendIcon}`}>
+                    <small>Krew kubectl plugins</small>
+                  </div>
+                </div>
               </ExternalLink>
             </div>
             Discovering artifacts to use with CNCF projects can be difficult. If every CNCF project that needs to share
